@@ -1,12 +1,13 @@
 :root {
-  color-scheme: dark;
-  --background: #111315;
-  --surface: #181b1e;
-  --surface-raised: #1e2225;
-  --text: #f0f0ec;
-  --muted: #a6aaac;
-  --line: #35393c;
-  --accent: #69d7c8;
+  color-scheme: light;
+  --background: #ffffff;
+  --surface: #f8faf9;
+  --surface-raised: #f2f5f3;
+  --text: #171a18;
+  --muted: #59635f;
+  --line: #d7deda;
+  --control-line: #87928d;
+  --accent: #006f63;
   --content: 1120px;
 }
 
@@ -52,7 +53,7 @@ a:hover { text-decoration-color: var(--accent); }
 
 .site-header {
   border-bottom: 1px solid var(--line);
-  background: #111315;
+  background: var(--background);
 }
 
 .header-inner {
@@ -116,7 +117,7 @@ h1 {
 .lead {
   max-width: 740px;
   margin-bottom: 2rem;
-  color: #d7d8d5;
+  color: #37413d;
   font-size: clamp(1.05rem, 2vw, 1.3rem);
 }
 
@@ -155,9 +156,9 @@ code {
   max-width: calc(100vw - 1.5rem - env(safe-area-inset-left) - env(safe-area-inset-right));
   min-height: 2.5rem;
   padding: 0.5rem 0.8rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control-line);
   border-radius: 3px;
-  background: rgba(24, 27, 30, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   color: var(--text);
   cursor: pointer;
   font: inherit;
@@ -186,7 +187,7 @@ code {
 .paper-context p {
   max-width: 740px;
   margin-bottom: 1rem;
-  color: #d7d8d5;
+  color: #37413d;
 }
 
 .paper-context .overline { color: var(--muted); }
