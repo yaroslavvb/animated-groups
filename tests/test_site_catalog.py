@@ -172,6 +172,15 @@ class SiteCatalogTests(unittest.TestCase):
         self.assertIn("inline: true", config)
         self.assertNotIn("assistive-mml", config)
 
+    def test_page_uses_the_white_light_theme(self) -> None:
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        styles = (ROOT / "site.css").read_text(encoding="utf-8")
+        self.assertIn('<meta name="theme-color" content="#ffffff">', index)
+        self.assertIn("color-scheme: light", styles)
+        self.assertIn("--background: #ffffff", styles)
+        self.assertNotIn("color-scheme: dark", styles)
+        self.assertNotIn("#111315", styles)
+
     def test_ke_wu_connection_and_row_provenance_are_visible(self) -> None:
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="ke-wu"', index)
