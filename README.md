@@ -16,6 +16,16 @@ contain the pure period `(identity, T)`, which an ordinary GIF needs.
 The paper's genuinely non-Floquet groups without any pure temporal period are
 intentionally excluded: no finite GIF can represent them as an exact loop.
 
+## Candidate spacetime-orbifold notation
+
+The gallery labels each action as `Q ⟦g ↦ τ_a, h ↦ ι_b⟧`.  The prefix `Q`
+is the standard Conway orbifold or rosette signature of the projected spatial
+action.  The brackets are a proposed extension—not standard orbifold
+notation—that record its action on animation phase: `τ_a` advances time by
+`aT`, while `ι_b` sends `t` to `-t+bT`.  The precise convention, all eleven
+labels, and their limitations are documented in
+[the orbifold-notation note](docs/orbifold_notation.md).
+
 ## Generate everything
 
 ```bash
@@ -178,6 +188,7 @@ one.
 - `animated_groups/catalog/` — exact enumeration, pattern recipes, catalog renderer, and motif variants.
 - `scripts/` — small entry points for each requested animation.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
+- `docs/orbifold_notation.md` — proposed phase decoration of spatial Conway symbols.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.
 - `docs/systematic_catalog.md` — bounded scope, equivalence convention, and catalog tiers.
 
