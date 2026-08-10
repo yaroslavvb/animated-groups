@@ -176,6 +176,7 @@ class SiteCatalogTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         styles = (ROOT / "site.css").read_text(encoding="utf-8")
         self.assertIn('<meta name="theme-color" content="#ffffff">', index)
+        self.assertIn('href="site.css?v=light-theme"', index)
         self.assertIn("color-scheme: light", styles)
         self.assertIn("--background: #ffffff", styles)
         self.assertNotIn("color-scheme: dark", styles)
