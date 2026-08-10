@@ -3,233 +3,223 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Exact looping animations of non-product symmetries in 2+1-dimensional spacetime.">
-  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="A visual catalog of eleven exact, infinitely looping spacetime symmetries.">
+  <meta name="theme-color" content="#111315">
   <title>Animated spacetime groups</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site.css">
   <script src="site.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#gallery">Skip to gallery</a>
+  <a class="skip-link" href="#catalog">Skip to catalog</a>
 
-  <header class="hero" id="top">
-    <nav class="nav" aria-label="Primary navigation">
-      <a class="brand" href="./" aria-label="Animated spacetime groups home">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Animated groups</span>
-      </a>
-      <div class="nav-links">
-        <a href="#systematic">Systematic set</a>
-        <a href="#originals">Original set</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Animated spacetime groups</a>
+      <nav aria-label="Project links">
+        <a href="README.md">README</a>
+        <a href="docs/systematic_catalog.md">Method</a>
+        <a href="output/systematic_catalog/catalog.json">JSON</a>
+        <a href="output/systematic_catalog/catalog.csv">CSV</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
-      </div>
-    </nav>
-
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Space × time, coupled</p>
-        <h1>Symmetry that only appears <em>in motion.</em></h1>
-        <p class="lede">
-          Exact, seamless loops built from rotations, reflections, translations,
-          phase shifts, and playback reversal. Each animation realizes a spacetime
-          group that does not factor into independent spatial and temporal symmetries.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="#gallery">Explore the loops</a>
-          <a class="button secondary" href="output/systematic_catalog/catalog.json">Download catalog JSON</a>
-        </div>
-      </div>
-
-      <div class="hero-orbit" aria-hidden="true">
-        <div class="orbit orbit-one"></div>
-        <div class="orbit orbit-two"></div>
-        <div class="orbit orbit-three"></div>
-        <div class="orbit-core"></div>
-        <span class="satellite s1"></span>
-        <span class="satellite s2"></span>
-        <span class="satellite s3"></span>
-        <span class="satellite s4"></span>
-      </div>
+      </nav>
     </div>
-
-    <dl class="stats" aria-label="Project statistics">
-      <div><dt>11</dt><dd>exact loops</dd></div>
-      <div><dt>468</dt><dd>catalog actions</dd></div>
-      <div><dt>2–12</dt><dd>phase orders</dd></div>
-      <div><dt>∞</dt><dd>GIF repeats</dd></div>
-    </dl>
   </header>
 
-  <main id="gallery">
-    <section class="principle" aria-labelledby="principle-title">
-      <div>
-        <p class="section-kicker">The construction</p>
-        <h2 id="principle-title">A spatial move advances the clock.</h2>
-      </div>
-      <div class="principle-copy">
+  <main id="catalog">
+    <section class="introduction" aria-labelledby="page-title">
+      <p class="overline">Visual catalog · 11 symmetry types · 33 loops</p>
+      <h1 id="page-title">Space and time, coupled</h1>
+      <p class="lead">
+        Each row shows one spacetime symmetry with three different motifs. A generator acts on
+        position and animation phase together: <code>(x, t) ↦ (g·x, ±t + δ)</code>. The combined
+        move is a symmetry even when its spatial and temporal parts are not symmetries separately.
+      </p>
+      <div class="catalog-meta">
         <p>
-          A generator acts on a point and on animation phase at once:
-          <span class="formula">(x, t) ↦ (g·x, ±t + δ)</span>.
-          The coupled operation is a symmetry even when its spatial and temporal
-          factors are not symmetries separately.
+          Every file has 60 frames at 20 fps, omits the duplicate endpoint, and sets
+          <code>loop=0</code> for infinite playback. The bounded catalog contains 468 normalized
+          non-product actions over phase orders 2–12.
         </p>
-        <p>
-          Every GIF samples <span class="formula">t<sub>k</sub> = k/N</span>, omits
-          the duplicate endpoint, and carries the infinite-loop extension. The saved
-          files are decoded again to audit timing and the last-to-first seam.
-        </p>
-      </div>
-    </section>
-
-    <section class="gallery-section" id="systematic" aria-labelledby="systematic-title">
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">Pattern experiments</p>
-          <h2 id="systematic-title">Four visual languages, four mechanisms.</h2>
-        </div>
         <button class="motion-toggle" type="button" aria-pressed="false">
-          <span class="pause-icon" aria-hidden="true">Ⅱ</span>
+          <span class="motion-icon" aria-hidden="true">Ⅱ</span>
           <span class="motion-label">Pause animations</span>
         </button>
       </div>
-
-      <div class="featured-grid">
-        <article class="card feature-card">
-          <div class="media iris-bg">
-            <img src="output/systematic_catalog/gifs/iris_c6_time_screw.gif" alt="Six connected petals breathe in a rotational phase chase" width="600" height="600">
-            <span class="order-badge">C6</span>
-          </div>
-          <div class="card-copy">
-            <p class="card-index">01 · time screw</p>
-            <h3>Kinetic iris</h3>
-            <p>One sixth-turn in space is inseparable from one sixth-period in time.</p>
-            <code>S = (R<sub>60°</sub>, t + T/6)</code>
-          </div>
-        </article>
-
-        <article class="card feature-card">
-          <div class="media loom-bg">
-            <img src="output/systematic_catalog/gifs/wave_loom_c5_relay.gif" alt="Two woven ribbons relay waves across five periodic cells" width="600" height="600">
-            <span class="order-badge">C5</span>
-          </div>
-          <div class="card-copy">
-            <p class="card-index">02 · translation relay</p>
-            <h3>Wave loom</h3>
-            <p>A one-cell lattice translation hands the motion forward by a fifth-cycle.</p>
-            <code>D = (x + a, t + T/5)</code>
-          </div>
-        </article>
-
-        <article class="card feature-card">
-          <div class="media elastic-bg">
-            <img src="output/systematic_catalog/gifs/elastic_d4_choreography.gif" alt="Four elastic square edges exchange color and curvature under D4 choreography" width="600" height="600" loading="lazy">
-            <span class="order-badge">D4</span>
-          </div>
-          <div class="card-copy">
-            <p class="card-index">03 · reversible choreography</p>
-            <h3>Elastic square</h3>
-            <p>Quarter-time rotation and mirror playback reversal obey the dihedral law.</p>
-            <code>MSM = S<sup>−1</sup></code>
-          </div>
-        </article>
-
-        <article class="card feature-card">
-          <div class="media liquid-bg">
-            <img src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.gif" alt="Liquid levels exchange between diagonally paired cells on a square torus" width="600" height="600" loading="lazy">
-            <span class="order-badge">C2</span>
-          </div>
-          <div class="card-copy">
-            <p class="card-index">04 · centered lattice</p>
-            <h3>Liquid cells</h3>
-            <p>A diagonal half-lattice shift is locked to half an animation period.</p>
-            <code>L = (x + ½a + ½b, t + T/2)</code>
-          </div>
-        </article>
-      </div>
+      <p class="motion-status visually-hidden" aria-live="polite"></p>
     </section>
 
-    <section class="catalog-band" aria-labelledby="catalog-title">
-      <div>
-        <p class="section-kicker">Machine-readable classification</p>
-        <h2 id="catalog-title">The gallery is selected from an exact catalog.</h2>
-        <p>
-          192 finite point actions, 265 square-lattice translation characters,
-          and 11 reversible wallpaper relays. Fractions stay exact; kernels,
-          phase images, and splitting behavior are recorded separately.
-        </p>
-      </div>
-      <div class="catalog-links">
-        <a href="output/systematic_catalog/catalog.json"><strong>JSON</strong><span>authoritative data</span></a>
-        <a href="output/systematic_catalog/catalog.csv"><strong>CSV</strong><span>flat analysis table</span></a>
-        <a href="output/systematic_catalog/catalog.md"><strong>MD</strong><span>readable index</span></a>
-        <a href="output/systematic_catalog/loop_report.json"><strong>QA</strong><span>decoded loop audit</span></a>
-      </div>
-    </section>
+    <ol class="symmetry-list">
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">01</p>
+            <div><h2>C2 time glide</h2><p>A reflection becomes a symmetry only when paired with a half-period advance.</p></div>
+            <code class="formula">G:(x,y,t) ↦ (−x,y,t+T/2), &nbsp;G²=(1,T)</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/time_glide_c2.gif" width="600" height="600" alt="Kite motifs realizing a C2 time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same C2 time-glide action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same C2 time-glide action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
 
-    <section class="gallery-section originals" id="originals" aria-labelledby="originals-title">
-      <div class="section-heading compact">
-        <div>
-          <p class="section-kicker">Original sparse studies</p>
-          <h2 id="originals-title">Seven ways space and time refuse to separate.</h2>
-        </div>
-      </div>
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">02</p>
+            <div><h2>C4 time screw</h2><p>A quarter-turn advances the loop by one quarter; four applications close the cycle.</p></div>
+            <code class="formula">S:(x,t) ↦ (R<sub>π/2</sub>x,t+T/4), &nbsp;S⁴=(1,T)</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/time_screw_c4.gif" width="600" height="600" alt="Four kite motifs realizing a C4 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same C4 time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same C4 time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
 
-      <div class="study-grid">
-        <article class="card study-card">
-          <div class="media"><img src="output/time_glide_c2.gif" alt="Two mirrored kite motifs exchange phase under a time glide" width="600" height="600" loading="lazy"></div>
-          <div class="card-copy"><p class="card-index">reflection + T/2</p><h3>Time glide</h3><code>G² = (1, T)</code></div>
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">03</p>
+            <div><h2>C3 diagonal relay</h2><p>A one-cell translation and a third-period advance occur only as a coupled operation.</p></div>
+            <code class="formula">D:(x,t) ↦ (x+a,t+T/3), &nbsp;D³=(x+3a,t+T)</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/diagonal_relay_c3.gif" width="600" height="600" alt="Three kite motifs realizing a diagonal C3 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/diagonal_relay__discs.gif" width="600" height="600" alt="Discs realizing the same diagonal C3 relay" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/diagonal_relay__bars.gif" width="600" height="600" alt="Bars realizing the same diagonal C3 relay" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
         </article>
-        <article class="card study-card">
-          <div class="media"><img src="output/time_screw_c4.gif" alt="Four orbiting motifs realize a quarter-turn time screw" width="600" height="600" loading="lazy"></div>
-          <div class="card-copy"><p class="card-index">quarter-turn + T/4</p><h3>Time screw</h3><code>S⁴ = (1, T)</code></div>
-        </article>
-        <article class="card study-card">
-          <div class="media"><img src="output/diagonal_relay_c3.gif" alt="Three cells relay motif motion and color around a spatial circle" width="600" height="600" loading="lazy"></div>
-          <div class="card-copy"><p class="card-index">translation + T/3</p><h3>Diagonal relay</h3><code>D³ = (1, T)</code></div>
-        </article>
-        <article class="card study-card">
-          <div class="media"><img src="output/mixed_time_glide.gif" alt="Four motifs realize reflection, half-cell glide, and half-time together" width="600" height="600" loading="lazy"></div>
-          <div class="card-copy"><p class="card-index">mirror + glide + T/2</p><h3>Mixed time glide</h3><code>G² = 1</code></div>
-        </article>
-        <article class="card study-card">
-          <div class="media"><img src="output/glide_time_reversal.gif" alt="A paired motif collision reverses playback after a half-cell glide" width="600" height="600" loading="lazy"></div>
-          <div class="card-copy"><p class="card-index">glide + playback reversal</p><h3>Glide reversal</h3><code>Q: t ↦ −t</code></div>
-        </article>
-        <article class="card study-card">
-          <div class="media"><img src="output/rotary_time_reversal_4prime.gif" alt="Four motifs form a rotary time-reversal symmetry" width="600" height="600" loading="lazy"></div>
-          <div class="card-copy"><p class="card-index">R90 + playback reversal</p><h3>Rotary reversal 4′</h3><code>Q² = R<sub>180°</sub></code></div>
-        </article>
-        <article class="card study-card wide-study">
-          <div class="media"><img src="output/dihedral_choreography_d3.gif" alt="Three motifs obey rotational phase advance and mirror time reversal" width="600" height="600" loading="lazy"></div>
-          <div class="card-copy"><p class="card-index">rotation + reversible mirror</p><h3>Dihedral choreography</h3><code>MSM = S<sup>−1</sup></code></div>
-        </article>
-      </div>
-    </section>
+      </li>
 
-    <section class="method" aria-labelledby="method-title">
-      <div>
-        <p class="section-kicker">Reproduce it</p>
-        <h2 id="method-title">Procedural, exact, inspectable.</h2>
-      </div>
-      <div class="terminal" role="region" aria-label="Commands to regenerate the animations">
-        <div class="terminal-bar"><span></span><span></span><span></span></div>
-        <pre><code><span class="prompt">$</span> python3 -m pip install -r requirements.txt
-<span class="prompt">$</span> python3 scripts/generate_all.py
-<span class="prompt">$</span> python3 scripts/generate_catalog.py
-<span class="prompt">$</span> python3 -m unittest discover -s tests -v</code></pre>
-      </div>
-      <div class="method-links">
-        <a href="README.md">Read the construction notes <span>→</span></a>
-        <a href="docs/systematic_catalog.md">Inspect the catalog boundary <span>→</span></a>
-        <a href="docs/non_product_examples.md">See the non-product proofs <span>→</span></a>
-      </div>
-    </section>
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">04</p>
+            <div><h2>Mixed space–time glide</h2><p>Reflection, a half-cell glide, and a half-period advance are inseparable.</p></div>
+            <code class="formula">G:(x,y,t) ↦ (−x,y+b/2,t+T/2), &nbsp;G²=YU</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/mixed_time_glide.gif" width="600" height="600" alt="Kites realizing a mixed space–time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/mixed_time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/mixed_time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">05</p>
+            <div><h2>Glide time reversal</h2><p>A half-cell translation is locked to reversing the direction of playback.</p></div>
+            <code class="formula">Q:(x,y,t) ↦ (x+a/2,y,−t), &nbsp;Q²=X</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/glide_time_reversal.gif" width="600" height="600" alt="Kites realizing glide time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/glide_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/glide_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">06</p>
+            <div><h2>4′ rotary time reversal</h2><p>A quarter-turn reverses playback; its square leaves a pure half-turn.</p></div>
+            <code class="formula">Q:(x,t) ↦ (R<sub>π/2</sub>x,−t), &nbsp;Q²=R<sub>π</sub>, &nbsp;Q⁴=1</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/rotary_time_reversal_4prime.gif" width="600" height="600" alt="Kites realizing 4-prime rotary time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/rotary_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/rotary_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">07</p>
+            <div><h2>D3 dihedral choreography</h2><p>A threefold time screw and mirror/playback reversal obey the dihedral relation.</p></div>
+            <code class="formula">S³=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/dihedral_choreography_d3.gif" width="600" height="600" alt="Dart motifs realizing D3 dihedral choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/dihedral_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same D3 dihedral choreography" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/dihedral_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same D3 dihedral choreography" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">08</p>
+            <div><h2>C6 kinetic-iris time screw</h2><p>Six connected petals expose a sixth-period phase chase around a rotation center.</p></div>
+            <code class="formula">S:(x,t) ↦ (R<sub>π/3</sub>x,t+T/6), &nbsp;S⁶=(1,T)</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/iris_c6_time_screw.gif" width="600" height="600" alt="Kinetic iris realizing a C6 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/iris_c6_time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same C6 time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/iris_c6_time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same C6 time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">09</p>
+            <div><h2>C5 wave-loom relay</h2><p>A lattice translation hands one fifth of the cycle from ribbon to ribbon.</p></div>
+            <code class="formula">W:(x,t) ↦ (x+a,t+T/5), &nbsp;W⁵=(x+5a,t+T)</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/wave_loom_c5_relay.gif" width="600" height="600" alt="Bezier wave loom realizing a C5 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/wave_loom_c5_relay__discs.gif" width="600" height="600" alt="Discs realizing the same C5 relay action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/wave_loom_c5_relay__bars.gif" width="600" height="600" alt="Bars realizing the same C5 relay action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">10</p>
+            <div><h2>D4 elastic-square choreography</h2><p>A quarter-time screw and a mirror/time reversal deform one closed square.</p></div>
+            <code class="formula">S⁴=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/elastic_d4_choreography.gif" width="600" height="600" alt="Elastic square realizing D4 choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/elastic_d4_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same D4 choreography" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/elastic_d4_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same D4 choreography" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+
+      <li>
+        <article class="symmetry">
+          <header>
+            <p class="index" aria-hidden="true">11</p>
+            <div><h2>C2 centered-lattice liquid cells</h2><p>A diagonal half-lattice shift exchanges two phases separated by half a period.</p></div>
+            <code class="formula">L:(x,y,t) ↦ (x+a/2,y+b/2,t+T/2), &nbsp;L²=XYU</code>
+          </header>
+          <div class="motif-strip">
+            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.gif" width="600" height="600" alt="Liquid cells realizing a centered C2 lattice action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/liquid_c2_centered_lattice__discs.gif" width="600" height="600" alt="Discs realizing the same centered C2 lattice action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/motif_variants/liquid_c2_centered_lattice__bars.gif" width="600" height="600" alt="Bars realizing the same centered C2 lattice action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+          </div>
+        </article>
+      </li>
+    </ol>
+
+    <footer>
+      <p>Exact state models and generators are documented in the <a href="README.md">README</a> and <a href="docs/non_product_examples.md">construction notes</a>.</p>
+      <p><a href="output/systematic_catalog/catalog.json">Catalog JSON</a> · <a href="output/systematic_catalog/catalog.csv">Catalog CSV</a> · <a href="output/loop_report.json">Base audit</a> · <a href="output/systematic_catalog/loop_report.json">Catalog audit</a> · <a href="output/motif_variants/loop_report.json">Variant audit</a> · <a href="https://github.com/yaroslavvb/animated-groups">GitHub source</a></p>
+    </footer>
   </main>
-
-  <footer>
-    <p>Built with exact group actions and Pillow rasterization.</p>
-    <p><a href="https://arxiv.org/abs/2604.05619">Ke–Wu spacetime groups</a> · <a href="https://github.com/yaroslavvb/animated-groups">GitHub</a></p>
-  </footer>
 </body>
 </html>

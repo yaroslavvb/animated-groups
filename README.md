@@ -3,7 +3,9 @@
 Small Pillow programs turn exact continuous colored-spacetime-group state
 models into seamless, infinitely looping GIFs.  The original gallery contains
 seven sparse motif scenes; a separate systematic catalog enumerates bounded
-phase actions and experiments with four additional visual languages.
+phase actions and experiments with four additional symmetry mechanisms.  The
+web gallery shows three motif realizations—base, discs, and bars—for each of
+the eleven showcased symmetry types.
 
 **Live gallery:** [yaroslavvb.github.io/animated-groups](https://yaroslavvb.github.io/animated-groups/)
 
@@ -54,7 +56,17 @@ equivalence convention, decomposition labels, and deferred families are
 spelled out in
 [docs/systematic_catalog.md](docs/systematic_catalog.md).
 
-The default render is 600 x 600, 60 frames, and 20 fps.  A frame count must be
+Generate the two additional motif families with:
+
+```bash
+python3 scripts/generate_motif_variants.py
+```
+
+This writes 22 more audited loops to `output/motif_variants/`, giving three
+visual realizations for each symmetry in the web gallery.
+
+The base and catalog renders default to 600 x 600; the motif variants default
+to 420 x 420.  All use 60 frames at 20 fps.  A frame count must be
 divisible by each example's phase/sampling order so every fractional time
 translation is an integer number of frames.  The `all` command therefore requires at least 12 frames, a
 multiple of 12, and a canvas size divisible by 6.  GIF timing is stored in 10 ms units; non-exact requested
@@ -161,10 +173,11 @@ one.
 
 - `animated_groups/groups.py` — exact group actions, color permutations, poses.
 - `animated_groups/rendering.py` — motif art, frame sampling, GIF writer/auditor.
+- `animated_groups/motif_variants.py` — disc and bar renderers for the original seven actions.
 - `animated_groups/cli.py` — shared command-line interface.
-- `animated_groups/catalog/` — exact enumeration, exports, pattern recipes, and catalog renderer.
+- `animated_groups/catalog/` — exact enumeration, pattern recipes, catalog renderer, and motif variants.
 - `scripts/` — small entry points for each requested animation.
-- `tests/test_groups.py` — group-law and GIF-loop regression tests.
+- `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.
 - `docs/systematic_catalog.md` — bounded scope, equivalence convention, and catalog tiers.
 
