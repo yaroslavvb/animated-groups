@@ -67,6 +67,52 @@ the spatial translation is zero.
 The notation records geometric space-time symmetry only. It deliberately
 omits the palette permutations used to make equivariance visible in the GIFs.
 
+## Relation to Ke–Wu
+
+In [*Two-Dimensional Space-Time Groups: Classification and Applications*](https://arxiv.org/abs/2604.05619),
+Chenhang Ke and Congjun Wu write the general affine space-time action as
+
+\[
+(\mathbf r,t)\longmapsto(R\mathbf r+\mathbf u,\,st+\tau)
+\]
+
+in [Eq. (1)](https://arxiv.org/html/2604.05619v1#S2.E1). The gallery's
+relationship to that paper is:
+
+- Rows 01, 02, 04, and 05 are coordinate-level examples written explicitly
+  in the paper: the
+  [time glide](https://arxiv.org/html/2604.05619v1#S4.F2),
+  [fourfold time screw](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px3),
+  [mixed reflection/translation/time glide](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px1),
+  and the coordinate part of
+  [glide time reversal](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px2).
+- Row 06 specializes the `4′` magnetic point class listed in
+  [Table 1](https://arxiv.org/html/2604.05619v1#S2.T1). Rows 07, 08, and 10
+  are finite-loop specializations or combinations of paper-supported
+  mechanisms, including the explicit
+  [threefold screw](https://arxiv.org/html/2604.05619v1#S3.E4), the general
+  time-screw family, and the listed magnetic point classes. Their complete
+  finite motif graphs are constructions of this project.
+- Rows 03, 09, and 11 are this project's mixed-translation/phase-graph
+  constructions, grounded in the paper's
+  [space-time translation lattice](https://arxiv.org/html/2604.05619v1#S2.p3)
+  and [Bravais-lattice framework](https://arxiv.org/html/2604.05619v1#S2.F1),
+  rather than coordinate examples assigned exact group identifiers there.
+
+The paper does not use this double-bracket orbifold notation. In particular,
+`C_n` and `D_n` in the gallery name phase-circle quotients or relay orders,
+not official identifiers among the 275 classified groups. The term **graph
+non-product** means that the coupled action is the graph of nontrivial phase
+monodromy; it is not synonymous with the paper's crystallographic
+[non-symmorphic condition](https://arxiv.org/html/2604.05619v1#S2.p4), which
+concerns a fractional lift `(g|u)` relative to the full translation lattice.
+
+Finally, `iota` in these GIFs is literal coordinate/playback reversal. It is
+not antiunitary quantum time reversal: Ke and Wu explicitly distinguish
+`phi(r,t) -> phi(r,-t)` without complex conjugation from physical time
+reversal in their
+[coordinate-space discussion](https://arxiv.org/html/2604.05619v1#S4.p7).
+
 ## Standard spatial prefixes
 
 The following prefix meanings are standard Conway or Conway-style rosette
