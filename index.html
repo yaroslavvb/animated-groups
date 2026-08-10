@@ -19,6 +19,7 @@
       <nav aria-label="Project links">
         <a href="README.md">README</a>
         <a href="docs/systematic_catalog.md">Method</a>
+        <a href="docs/orbifold_notation.md">Notation</a>
         <a href="output/systematic_catalog/catalog.json">JSON</a>
         <a href="output/systematic_catalog/catalog.csv">CSV</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
@@ -34,6 +35,12 @@
         Each row shows one spacetime symmetry with three different motifs. A generator acts on
         position and animation phase together: <code>(x, t) ↦ (g·x, ±t + δ)</code>. The combined
         move is a symmetry even when its spatial and temporal parts are not symmetries separately.
+      </p>
+      <p class="notation-legend">
+        In the candidate notation below, the spatial prefix uses standard Conway orbifold or
+        rosette notation; the double brackets are proposed here. <code>τ<sub>a</sub></code> advances
+        normalized phase by <code>a</code>, while <code>ι<sub>b</sub></code> reverses it and then
+        shifts by <code>b</code>. <a href="docs/orbifold_notation.md">Notation and limitations</a>.
       </p>
       <div class="catalog-meta">
         <p>
@@ -55,7 +62,10 @@
           <header>
             <p class="index" aria-hidden="true">01</p>
             <div><h2>C2 time glide</h2><p>A reflection becomes a symmetry only when paired with a half-period advance.</p></div>
-            <code class="formula">G:(x,y,t) ↦ (−x,y,t+T/2), &nbsp;G²=(1,T)</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C2 time glide">
+              <code class="orbifold" aria-label="Candidate orbifold notation: star one bullet; m maps to tau one half">*1• ⟦m ↦ τ<sub>1/2</sub>⟧</code>
+              <code class="formula">G:(x,y,t) ↦ (−x,y,t+T/2), &nbsp;G²=(1,T)</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/time_glide_c2.gif" width="600" height="600" alt="Kite motifs realizing a C2 time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -70,7 +80,10 @@
           <header>
             <p class="index" aria-hidden="true">02</p>
             <div><h2>C4 time screw</h2><p>A quarter-turn advances the loop by one quarter; four applications close the cycle.</p></div>
-            <code class="formula">S:(x,t) ↦ (R<sub>π/2</sub>x,t+T/4), &nbsp;S⁴=(1,T)</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C4 time screw">
+              <code class="orbifold" aria-label="Candidate orbifold notation: four bullet; r maps to tau one quarter">4• ⟦r ↦ τ<sub>1/4</sub>⟧</code>
+              <code class="formula">S:(x,t) ↦ (R<sub>π/2</sub>x,t+T/4), &nbsp;S⁴=(1,T)</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/time_screw_c4.gif" width="600" height="600" alt="Four kite motifs realizing a C4 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -85,7 +98,10 @@
           <header>
             <p class="index" aria-hidden="true">03</p>
             <div><h2>C3 diagonal relay</h2><p>A one-cell translation and a third-period advance occur only as a coupled operation.</p></div>
-            <code class="formula">D:(x,t) ↦ (x+a,t+T/3), &nbsp;D³=(x+3a,t+T)</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C3 diagonal relay">
+              <code class="orbifold" aria-label="Candidate orbifold notation: infinity infinity; a maps to tau one third">∞∞ ⟦a ↦ τ<sub>1/3</sub>⟧</code>
+              <code class="formula">D:(x,t) ↦ (x+a,t+T/3), &nbsp;D³=(x+3a,t+T)</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/diagonal_relay_c3.gif" width="600" height="600" alt="Three kite motifs realizing a diagonal C3 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -100,7 +116,10 @@
           <header>
             <p class="index" aria-hidden="true">04</p>
             <div><h2>Mixed space–time glide</h2><p>Reflection, a half-cell glide, and a half-period advance are inseparable.</p></div>
-            <code class="formula">G:(x,y,t) ↦ (−x,y+b/2,t+T/2), &nbsp;G²=YU</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for mixed space-time glide">
+              <code class="orbifold" aria-label="Candidate orbifold notation: cross cross; g sub zero comma b over two maps to tau one half">×× ⟦g<sub>(0,b/2)</sub> ↦ τ<sub>1/2</sub>⟧</code>
+              <code class="formula">G:(x,y,t) ↦ (−x,y+b/2,t+T/2), &nbsp;G²=YU</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/mixed_time_glide.gif" width="600" height="600" alt="Kites realizing a mixed space–time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -115,7 +134,10 @@
           <header>
             <p class="index" aria-hidden="true">05</p>
             <div><h2>Glide time reversal</h2><p>A half-cell translation is locked to reversing the direction of playback.</p></div>
-            <code class="formula">Q:(x,y,t) ↦ (x+a/2,y,−t), &nbsp;Q²=X</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for glide time reversal">
+              <code class="orbifold" aria-label="Candidate orbifold notation: infinity infinity; q sub a over two comma zero maps to iota zero">∞∞ ⟦q<sub>(a/2,0)</sub> ↦ ι<sub>0</sub>⟧</code>
+              <code class="formula">Q:(x,y,t) ↦ (x+a/2,y,−t), &nbsp;Q²=X</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/glide_time_reversal.gif" width="600" height="600" alt="Kites realizing glide time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -130,7 +152,10 @@
           <header>
             <p class="index" aria-hidden="true">06</p>
             <div><h2>4′ rotary time reversal</h2><p>A quarter-turn reverses playback; its square leaves a pure half-turn.</p></div>
-            <code class="formula">Q:(x,t) ↦ (R<sub>π/2</sub>x,−t), &nbsp;Q²=R<sub>π</sub>, &nbsp;Q⁴=1</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for rotary time reversal">
+              <code class="orbifold" aria-label="Candidate orbifold notation: four bullet; r maps to iota zero">4• ⟦r ↦ ι<sub>0</sub>⟧</code>
+              <code class="formula">Q:(x,t) ↦ (R<sub>π/2</sub>x,−t), &nbsp;Q²=R<sub>π</sub>, &nbsp;Q⁴=1</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/rotary_time_reversal_4prime.gif" width="600" height="600" alt="Kites realizing 4-prime rotary time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -145,7 +170,10 @@
           <header>
             <p class="index" aria-hidden="true">07</p>
             <div><h2>D3 dihedral choreography</h2><p>A threefold time screw and mirror/playback reversal obey the dihedral relation.</p></div>
-            <code class="formula">S³=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generators for D3 dihedral choreography">
+              <code class="orbifold" aria-label="Candidate orbifold notation: star three bullet; r maps to tau one third, m maps to iota zero">*3• ⟦r ↦ τ<sub>1/3</sub>, m ↦ ι<sub>0</sub>⟧</code>
+              <code class="formula">S³=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/dihedral_choreography_d3.gif" width="600" height="600" alt="Dart motifs realizing D3 dihedral choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -160,7 +188,10 @@
           <header>
             <p class="index" aria-hidden="true">08</p>
             <div><h2>C6 kinetic-iris time screw</h2><p>Six connected petals expose a sixth-period phase chase around a rotation center.</p></div>
-            <code class="formula">S:(x,t) ↦ (R<sub>π/3</sub>x,t+T/6), &nbsp;S⁶=(1,T)</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C6 kinetic-iris time screw">
+              <code class="orbifold" aria-label="Candidate orbifold notation: six bullet; r maps to tau one sixth">6• ⟦r ↦ τ<sub>1/6</sub>⟧</code>
+              <code class="formula">S:(x,t) ↦ (R<sub>π/3</sub>x,t+T/6), &nbsp;S⁶=(1,T)</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/iris_c6_time_screw.gif" width="600" height="600" alt="Kinetic iris realizing a C6 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -175,7 +206,10 @@
           <header>
             <p class="index" aria-hidden="true">09</p>
             <div><h2>C5 wave-loom relay</h2><p>A lattice translation hands one fifth of the cycle from ribbon to ribbon.</p></div>
-            <code class="formula">W:(x,t) ↦ (x+a,t+T/5), &nbsp;W⁵=(x+5a,t+T)</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C5 wave-loom relay">
+              <code class="orbifold" aria-label="Candidate orbifold notation: o; a maps to tau one fifth">o ⟦a ↦ τ<sub>1/5</sub>⟧</code>
+              <code class="formula">W:(x,t) ↦ (x+a,t+T/5), &nbsp;W⁵=(x+5a,t+T)</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/wave_loom_c5_relay.gif" width="600" height="600" alt="Bezier wave loom realizing a C5 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -190,7 +224,10 @@
           <header>
             <p class="index" aria-hidden="true">10</p>
             <div><h2>D4 elastic-square choreography</h2><p>A quarter-time screw and a mirror/time reversal deform one closed square.</p></div>
-            <code class="formula">S⁴=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generators for D4 elastic-square choreography">
+              <code class="orbifold" aria-label="Candidate orbifold notation: star four bullet; r maps to tau one quarter, m maps to iota zero">*4• ⟦r ↦ τ<sub>1/4</sub>, m ↦ ι<sub>0</sub>⟧</code>
+              <code class="formula">S⁴=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/elastic_d4_choreography.gif" width="600" height="600" alt="Elastic square realizing D4 choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -205,7 +242,10 @@
           <header>
             <p class="index" aria-hidden="true">11</p>
             <div><h2>C2 centered-lattice liquid cells</h2><p>A diagonal half-lattice shift exchanges two phases separated by half a period.</p></div>
-            <code class="formula">L:(x,y,t) ↦ (x+a/2,y+b/2,t+T/2), &nbsp;L²=XYU</code>
+            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C2 centered-lattice liquid cells">
+              <code class="orbifold" aria-label="Candidate orbifold notation: o; ell sub a over two comma b over two maps to tau one half">o ⟦ℓ<sub>(a/2,b/2)</sub> ↦ τ<sub>1/2</sub>⟧</code>
+              <code class="formula">L:(x,y,t) ↦ (x+a/2,y+b/2,t+T/2), &nbsp;L²=XYU</code>
+            </div>
           </header>
           <div class="motif-strip">
             <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.gif" width="600" height="600" alt="Liquid cells realizing a centered C2 lattice action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
@@ -217,7 +257,7 @@
     </ol>
 
     <footer>
-      <p>Exact state models and generators are documented in the <a href="README.md">README</a> and <a href="docs/non_product_examples.md">construction notes</a>.</p>
+      <p>Exact state models and generators are documented in the <a href="README.md">README</a>, <a href="docs/non_product_examples.md">construction notes</a>, and <a href="docs/orbifold_notation.md">notation proposal</a>.</p>
       <p><a href="output/systematic_catalog/catalog.json">Catalog JSON</a> · <a href="output/systematic_catalog/catalog.csv">Catalog CSV</a> · <a href="output/loop_report.json">Base audit</a> · <a href="output/systematic_catalog/loop_report.json">Catalog audit</a> · <a href="output/motif_variants/loop_report.json">Variant audit</a> · <a href="https://github.com/yaroslavvb/animated-groups">GitHub source</a></p>
     </footer>
   </main>
