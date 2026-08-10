@@ -1,15 +1,14 @@
-# Candidate space-time orbifold notation
+# Proposed phase-decorated spacetime-orbifold notation
 
 ## Status of the notation
 
 > **Only the Conway/rosette prefix is standard notation. The double-bracket
-> time-monodromy decoration introduced here is our proposal. It is not standard
+> time-monodromy decoration is introduced here. It is not standard
 > or established Conway, IUCr, or space-time-group notation.**
 
-The purpose of this notation is modest: give the animations in this repository
-short labels that retain familiar spatial orbifold information while making an
-intertwined action on animation time visible. It is designed to sit beside the
-full affine formulas, not replace them.
+This notation assigns compact labels to the visualized actions while retaining
+the spatial orbifold data and recording the induced action on periodic time. It
+supplements, rather than replaces, the full affine formulas.
 
 Normalize the animation phase to
 
@@ -25,21 +24,31 @@ Two isometries of the phase circle will be used:
 \iota_\beta(\theta)=-\theta+\beta,
 \]
 
-with all phase parameters understood modulo one. Here `tau` advances phase,
-whereas `iota` reverses playback and can then change its reference phase. On
-the lifted time axis, `tau_1` is the full-period translation `U`; on the phase
-circle it is the identity.
+with all phase parameters understood modulo one. Here `tau` translates the
+periodic time coordinate, whereas `iota` reverses that coordinate and then
+changes its reference phase. On the phase circle, `tau_1` is the identity; its
+chosen lift to the real time axis is the full-period translation
+`U:t -> t+T`.
 
-After quotienting lifted time by `U`, let `H` be the spatial projection and
-let
+For the examples considered here, let
+$\bar\Sigma=\Sigma/\langle U\rangle$ and let $H$ be its spatial image.
+Projection from $\bar\Sigma$ to $H$ is injective. There is therefore a
+homomorphism
 
 \[
 \Theta:H\longrightarrow \operatorname{Isom}(S^1)\cong O(2)
 \]
 
-be its phase monodromy. The double brackets list the images under `Theta` of a
-chosen generating set for `H`; equivalently, the coupled action is the graph
-of `Theta` on the phase circle.
+such that
+
+\[
+\bar\Sigma=\Gamma_\Theta
+=\{(h,\Theta(h)):h\in H\}.
+\]
+
+The double brackets list the images under `Theta` of a chosen generating set
+for `H`. This graph-subgroup description is not asserted for spacetime groups
+with a nontrivial pure-phase kernel after quotienting by `U`.
 
 The proposed syntax is
 
@@ -64,7 +73,7 @@ have identity time monodromy, `tau_0`. Spatial-vector subscripts are measured
 in the lattice basis used by the accompanying formula. They are omitted when
 the spatial translation is zero.
 
-The notation records geometric space-time symmetry only. It deliberately
+The notation records geometric spacetime symmetry only. It deliberately
 omits the palette permutations used to make equivariance visible in the GIFs.
 
 ## Relation to Ke–Wu
@@ -86,12 +95,12 @@ relationship to that paper is:
   [mixed reflection/translation/time glide](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px1),
   and the coordinate part of
   [glide time reversal](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px2).
-- Row 06 specializes the `4′` magnetic point class listed in
+- Row 06 realizes the coordinate action of the `4′` magnetic point group listed in
   [Table 1](https://arxiv.org/html/2604.05619v1#S2.T1). Rows 07, 08, and 10
   are finite-loop specializations or combinations of paper-supported
   mechanisms, including the explicit
   [threefold screw](https://arxiv.org/html/2604.05619v1#S3.E4), the general
-  time-screw family, and the listed magnetic point classes. Their complete
+  time-screw family, and the listed magnetic point groups. Their complete
   finite motif graphs are constructions of this project.
 - Rows 03, 09, and 11 are this project's mixed-translation/phase-graph
   constructions, grounded in the paper's
@@ -101,14 +110,15 @@ relationship to that paper is:
 
 The paper does not use this double-bracket orbifold notation. In particular,
 `C_n` and `D_n` in the gallery name phase-circle quotients or relay orders,
-not official identifiers among the 275 classified groups. The term **graph
-non-product** means that the coupled action is the graph of nontrivial phase
-monodromy; it is not synonymous with the paper's crystallographic
+not official identifiers among the 275 classified groups. For the injective
+projections considered here, **graph non-product** means that
+$\bar\Sigma=\Gamma_\Theta$ for nontrivial phase monodromy $\Theta$; it is not
+synonymous with the paper's crystallographic
 [non-symmorphic condition](https://arxiv.org/html/2604.05619v1#S2.p4), which
 concerns a fractional lift `(g|u)` relative to the full translation lattice.
 
-Finally, `iota` in these GIFs is literal coordinate/playback reversal. It is
-not antiunitary quantum time reversal: Ke and Wu explicitly distinguish
+Finally, `iota` denotes reversal of the periodic time coordinate. It is not an
+antiunitary quantum time-reversal operator: Ke and Wu explicitly distinguish
 `phi(r,t) -> phi(r,-t)` without complex conjugation from physical time
 reversal in their
 [coordinate-space discussion](https://arxiv.org/html/2604.05619v1#S4.p7).
@@ -165,9 +175,9 @@ X: (x,y,t) ↦ (x+a,y,t)
 Y: (x,y,t) ↦ (x,y+b,t)
 ```
 
-for a full animation period and the displayed spatial lattice translations.
+for the pure temporal period and the displayed spatial lattice translations.
 
-### 1. C2 time glide
+### 1. Order-two time glide
 
 ```text
 Proposed label: *1• ⟦m ↦ τ_1/2⟧
@@ -176,10 +186,11 @@ G² = (1,T) = U
 ```
 
 The standard prefix says that the spatial projection is a single mirror. The
-proposed decoration says that its lift advances the animation by half a
-period. Neither operation is being represented by a new meaning for `*`.
+proposed decoration says that its lift translates the periodic time coordinate
+by half a period. Neither operation is being represented by a new meaning for
+`*`.
 
-### 2. C4 time screw
+### 2. Order-four time screw
 
 ```text
 Proposed label: 4• ⟦r ↦ τ_1/4⟧
@@ -190,7 +201,7 @@ S⁴ = (1,T) = U
 The prefix is a standard fourfold cyclic rosette; the decoration distinguishes
 the time screw from an ordinary static `C4` rotation.
 
-### 3. C3 diagonal relay
+### 3. Order-three translation–phase graph action
 
 ```text
 Proposed label: ∞∞ ⟦a ↦ τ_1/3⟧
@@ -199,10 +210,10 @@ D³: (x,t) ↦ (x+3a,t+T)
 ```
 
 The spatial projection is a one-directional translation group. The order
-three in the gallery name refers to the phase relay, not to a spatial
-threefold rotation.
+three in the gallery name refers to the phase image, not to a spatial threefold
+rotation.
 
-### 4. Mixed space-time glide
+### 4. Mixed spatial–temporal glide
 
 ```text
 Proposed label: ×× ⟦g_(0,b/2) ↦ τ_1/2⟧
@@ -212,7 +223,7 @@ G² = YU
 
 The standard `××` prefix identifies the glide-reflection spatial projection.
 The vector subscript and the proposed phase decoration retain the particular
-half-cell, half-period lift used by the animation.
+half-cell, half-period lift represented in the visualization.
 
 ### 5. Glide time reversal
 
@@ -224,10 +235,10 @@ QUQ⁻¹ = U⁻¹
 ```
 
 The spatial projection is translational, while the proposed `iota_0`
-decoration records reversal of the animation phase. The square is a full
-spatial translation rather than the identity.
+decoration records reversal of the periodic time coordinate. The square is a
+full spatial translation rather than the identity.
 
-### 6. 4-prime rotary time reversal
+### 6. `4′` rotary time reversal
 
 ```text
 Proposed label: 4• ⟦r ↦ ι_0⟧
@@ -238,10 +249,10 @@ Q⁴ = 1
 
 `4•` is the standard spatial rosette. The double brackets, rather than a
 redefinition of the Conway prefix, distinguish this reversing lift. The
-familiar name `4-prime` comes from magnetic point-group notation, not Conway
+designation `4-prime` comes from magnetic point-group notation, not Conway
 orbifold notation.
 
-### 7. D3 dihedral choreography
+### 7. Dihedral `D3` spacetime action
 
 ```text
 Proposed label: *3• ⟦r ↦ τ_1/3, m ↦ ι_0⟧
@@ -250,11 +261,11 @@ M: (x,t) ↦ (m x,-t)
 S³ = U,  M² = 1,  MSM = S⁻¹
 ```
 
-Here `*3•` already supplies the standard spatial `D3` rosette. The two
-decorations give its rotation and mirror the matching forward and reversing
-phase actions.
+Here `*3•` already supplies the standard spatial `D3` rosette. The decorations
+assign third-period translation to the rotation and time-coordinate reversal
+to the reflection.
 
-### 8. C6 kinetic-iris time screw
+### 8. Order-six time screw
 
 ```text
 Proposed label: 6• ⟦r ↦ τ_1/6⟧
@@ -264,7 +275,7 @@ S⁶ = (1,T) = U
 
 This is the sixfold analogue of the `4•` time screw.
 
-### 9. C5 wave-loom relay
+### 9. Order-five translation–phase graph action
 
 ```text
 Proposed label: o ⟦a ↦ τ_1/5⟧
@@ -273,13 +284,13 @@ W⁵: (x,t) ↦ (x+5a,t+T)
 b ↦ τ_0
 ```
 
-The wave loom lives on a two-directional translation lattice, so its standard
-prefix is `o`. Only the `a`-direction participates in the five-phase relay.
+The spatial action is defined on a two-directional translation lattice, so its
+standard prefix is `o`. Only the `a`-direction has nontrivial phase monodromy.
 The inert `b` generator has identity time monodromy and would normally be
 omitted under the proposed convention; it is written above to make that fact
 explicit.
 
-### 10. D4 elastic-square choreography
+### 10. Dihedral `D4` spacetime action
 
 ```text
 Proposed label: *4• ⟦r ↦ τ_1/4, m ↦ ι_0⟧
@@ -289,9 +300,9 @@ S⁴ = U,  M² = 1,  MSM = S⁻¹
 ```
 
 The standard prefix gives the spatial `D4` rosette; the proposed monodromy
-decoration records the quarter-period screw and playback-reversing mirror.
+decoration records the quarter-period screw and time-reversing reflection.
 
-### 11. C2 centered-lattice liquid cells
+### 11. Centered-lattice half-period translation
 
 ```text
 Proposed label: o ⟦ℓ_(a/2,b/2) ↦ τ_1/2⟧
@@ -301,7 +312,7 @@ L² = XYU
 
 The standard `o` prefix gives the translation-only spatial torus. The proposed
 decoration singles out the diagonal centered-lattice lift that exchanges the
-two animation phases.
+two phase classes.
 
 ## Limits and equivalences
 
@@ -323,15 +334,15 @@ classification of space-time groups.
    for the diagonal and glide examples.
 6. **Palette actions are absent.** Color permutations in the renderer are
    representation data for the motifs, not part of these geometric labels.
-7. **Playback reversal is not automatically quantum time reversal.** In the
-   GIFs, `iota` means the literal reversal of the phase coordinate. A quantum
+7. **Time-coordinate reversal and quantum time reversal are distinct.** The
+   symbol `iota` denotes reversal of the periodic time coordinate. A quantum
    realization may additionally require an antiunitary action.
 
 A canonical notation for all 275 groups in the 2+1-dimensional classification
 would need, at minimum, a conventional space-time Bravais basis, a fixed
 presentation for every spatial or magnetic point group, canonical cocycle
 representatives, and explicit equivalence rules. The double-bracket notation
-does not yet provide those choices and should not be advertised as doing so.
+does not provide these data and is not a canonical classification notation.
 
 ## References
 

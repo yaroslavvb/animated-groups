@@ -176,7 +176,7 @@ class SiteCatalogTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         styles = (ROOT / "site.css").read_text(encoding="utf-8")
         self.assertIn('<meta name="theme-color" content="#ffffff">', index)
-        self.assertIn('href="site.css?v=light-theme"', index)
+        self.assertIn('href="site.css?v=professional-exposition"', index)
         self.assertIn("color-scheme: light", styles)
         self.assertIn("--background: #ffffff", styles)
         self.assertNotIn("color-scheme: dark", styles)
@@ -192,9 +192,37 @@ class SiteCatalogTests(unittest.TestCase):
             index,
         )
         self.assertEqual(index.count('class="paper-status"'), 11)
-        self.assertEqual(index.count("<strong>Direct.</strong>"), 4)
-        self.assertEqual(index.count("<strong>Paper-listed.</strong>"), 1)
-        self.assertEqual(index.count("<strong>Derived.</strong>"), 6)
+        self.assertEqual(
+            index.count("<strong>Ke–Wu coordinate operation.</strong>"),
+            4,
+        )
+        self.assertEqual(
+            index.count("<strong>Ke–Wu magnetic point group.</strong>"),
+            1,
+        )
+        self.assertEqual(index.count("<strong>Project construction.</strong>"), 6)
+
+    def test_page_states_its_mathematical_scope_without_exhibit_copy(self) -> None:
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn(
+            '<h1 id="page-title">Visualizations of two-dimensional spacetime groups</h1>',
+            index,
+        )
+        self.assertIn("finite periodic renderings of exact equivariant motif models", index)
+        self.assertIn(r"S^1_T=\mathbb R/T\mathbb Z", index)
+        self.assertIn("Relation to the Ke–Wu classification", index)
+
+        for informal_copy in (
+            "Space and time, coupled",
+            ">D3 dihedral choreography<",
+            ">C6 kinetic-iris time screw<",
+            ">C5 wave-loom relay<",
+            ">D4 elastic-square choreography<",
+            ">C2 centered-lattice liquid cells<",
+            "phase chase",
+            "hands one fifth",
+        ):
+            self.assertNotIn(informal_copy, index)
 
     def test_spacetime_orbifold_notation_is_complete_ordered_and_tex(self) -> None:
         self.assertEqual(len(self.parser.orbifold_notation), 11)

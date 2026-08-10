@@ -78,17 +78,17 @@ collapsed into one ambiguous “nonsymmorphic” flag.  On relay rows,
 `quotient_projection_split=true` and `product_lattice_cover_split=false`
 state the two levels directly.
 
-## The four pattern experiments
+## Four representative motif systems
 
-The gallery deliberately avoids reusing the kite motif from the original
-seven examples:
+The four catalog representatives use motif systems distinct from those in the
+initial seven examples:
 
 | Pattern | Catalog mechanism | Visual encoding |
 | --- | --- | --- |
-| Kinetic iris | `C6`, rotation plus `T/6` | Six connected petals breathe and skew in a rotational chase. |
-| Wave loom | lattice translation plus `T/5` | Five periodic Bézier ribbons hand a wave from cell to cell. |
-| Elastic square | diagonal `D4` action | Four curved edges realize a quarter-time screw and mirror/time reversal. |
-| Liquid cells | diagonal half-lattice shift plus `T/2` | A two-phase fill moves between diagonally paired torus cells. |
+| Six-petal system | `C6`, rotation plus `T/6` | Six connected petals encode the order-six phase action about a rotation center. |
+| Periodic-curve system | lattice translation plus `T/5` | Five periodic Bézier curves represent the five translation–phase classes. |
+| Deformable-square system | diagonal `D4` action | Four curved edges realize an order-four time screw and reflection/time reversal. |
+| Two-phase cellular system | diagonal half-lattice shift plus `T/2` | A scalar field represents the two phase classes on diagonally related torus cells. |
 
 Every recipe is evaluated at `t = k/N` for `k=0,...,N-1`; the duplicate
 endpoint is omitted.  The generated GIFs carry `loop=0`, and the decoded files
