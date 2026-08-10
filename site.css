@@ -87,7 +87,7 @@ main {
 }
 
 .introduction {
-  max-width: 800px;
+  max-width: 860px;
   padding: clamp(3.5rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
 }
 
@@ -108,27 +108,41 @@ p { margin-top: 0; }
 
 h1 {
   margin-bottom: 1.25rem;
-  font-size: clamp(2.5rem, 7vw, 5.3rem);
+  max-width: 820px;
+  font-size: clamp(2.35rem, 5.5vw, 4.35rem);
   font-weight: 570;
-  line-height: 0.98;
-  letter-spacing: -0.055em;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
 }
 
 .lead {
-  max-width: 740px;
+  max-width: 780px;
+  margin-bottom: 1.25rem;
+  color: #37413d;
+  font-size: clamp(1.03rem, 1.7vw, 1.2rem);
+}
+
+.scope-statement {
+  max-width: 780px;
   margin-bottom: 2rem;
   color: #37413d;
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-size: 0.98rem;
 }
 
 .notation-legend {
-  max-width: 740px;
+  max-width: 780px;
   margin-bottom: 2rem;
   color: var(--muted);
   font-size: 0.92rem;
 }
 
 .inline-math { white-space: normal; }
+
+.no-break-math,
+.no-break-math mjx-container {
+  display: inline-block;
+  white-space: nowrap;
+}
 
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;

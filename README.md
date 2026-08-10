@@ -1,20 +1,22 @@
-# Animated spacetime groups
+# Visualizations of two-dimensional spacetime groups
 
-Small Pillow programs turn exact continuous colored-spacetime-group state
-models into seamless, infinitely looping GIFs.  The original gallery contains
-seven sparse motif scenes; a separate systematic catalog enumerates bounded
-phase actions and experiments with four additional symmetry mechanisms.  The
-web gallery shows three motif realizations—base, discs, and bars—for each of
-the eleven showcased symmetry types.
+This repository constructs finite periodic renderings of exact equivariant
+motif models for selected `(2+1)`-dimensional spacetime-group operations
+appearing in, or motivated by, the classification of Chenhang Ke and Congjun
+Wu. The web catalog contains eleven actions, each represented by three motif
+families. Four rows reproduce coordinate operations stated in the paper, one
+realizes the coordinate action of the listed `4′` magnetic point group, and six
+are project-specific finite-loop specializations or constructions in the same
+affine framework.
 
 **Live gallery:** [yaroslavvb.github.io/animated-groups](https://yaroslavvb.github.io/animated-groups/)
 
-The catalog is drawn from the looping/Floquet subset of the 2+1-dimensional
-space-time groups classified by Ke and Wu in
-[Two-Dimensional Space-Time Groups](https://arxiv.org/abs/2604.05619).  All seven
-contain the pure period `(identity, T)`, which an ordinary GIF needs.
-The paper's genuinely non-Floquet groups without any pure temporal period are
-intentionally excluded: no finite GIF can represent them as an exact loop.
+Every displayed action admits the pure temporal period
+`U:(x,t) -> (x,t+T)`, which acts trivially on the represented state. The action
+therefore descends to periodic time `S^1_T = R/TZ`. The catalog is a restricted
+selection from the Ke–Wu classification, not a realization of all 275 groups;
+groups without a pure temporal period are outside the scope of the faithful
+periodic representations considered here.
 
 ## Relation to Ke–Wu
 
@@ -28,7 +30,7 @@ Chenhang Ke and Congjun Wu write a general space-time operation as
 [mixed glide](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px1), and the
 coordinate part of
 [glide time reversal](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px2).
-Row 06 realizes the listed `4′` class in
+Row 06 realizes the coordinate action of the listed `4′` magnetic point group in
 [Table 1](https://arxiv.org/html/2604.05619v1#S2.T1). Rows 07, 08, and 10
 are finite-loop specializations or combinations of paper-supported point
 mechanisms, including the
@@ -38,25 +40,25 @@ grounded in the paper's
 [space-time translation lattice](https://arxiv.org/html/2604.05619v1#S2.p3)
 and [Bravais-lattice framework](https://arxiv.org/html/2604.05619v1#S2.F1).
 
-The paper does not use the candidate double-bracket notation below. The
+The paper does not use the proposed double-bracket notation below. The
 `C_n` and `D_n` names in this gallery denote phase-circle quotients or relay
 orders, not official identifiers among the 275 classified groups. Likewise,
-the gallery's **graph non-product** label means that space and phase form the
-graph of a nontrivial homomorphism; it is not synonymous with Ke and Wu's
+the gallery's **graph non-product** label refers to a graph subgroup defined by
+a nontrivial phase homomorphism; it is not synonymous with Ke and Wu's
 crystallographic
 [non-symmorphic condition](https://arxiv.org/html/2604.05619v1#S2.p4) for a
-fractional lift `(g|u)` relative to the translation lattice. In the GIFs,
-`iota` is literal coordinate/playback reversal, not antiunitary quantum time
-reversal; the paper makes that distinction explicitly in
+fractional lift `(g|u)` relative to the translation lattice. In the
+visualizations, `iota` denotes reversal of the periodic time coordinate, not
+antiunitary quantum time reversal; the paper makes that distinction in
 [its coordinate-space discussion](https://arxiv.org/html/2604.05619v1#S4.p7).
 
-## Candidate spacetime-orbifold notation
+## Proposed spacetime-orbifold notation
 
 The gallery labels each action as `Q ⟦g ↦ τ_a, h ↦ ι_b⟧`.  The prefix `Q`
 is the standard Conway orbifold or rosette signature of the projected spatial
 action.  The brackets are a proposed extension—not standard orbifold
-notation—that record its action on animation phase: `τ_a` advances time by
-`aT`, while `ι_b` sends `t` to `-t+bT`.  The precise convention, all eleven
+notation—that record its action on periodic time: `τ_a` sends `t` to `t+aT`,
+while `ι_b` sends `t` to `-t+bT`. The precise convention, all eleven
 labels, and their limitations are documented in
 [the orbifold-notation note](docs/orbifold_notation.md).
 
@@ -125,7 +127,7 @@ neutral guides are designed to be invariant without recoloring.  Raster
 anti-aliasing can introduce subpixel discrepancies; the exact identities are
 regression-tested on the continuous motif states.
 
-## The original three groups
+## Initial three constructions
 
 ### Time glide: reflection plus half a period
 
@@ -172,19 +174,19 @@ Every individual ambient operation can of course be written formally as a
 spatial map followed by a time map.  “Non-product” here means that those two
 factors are not themselves members of the symmetry group.
 
-## Four more non-product groups
+## Four additional non-product actions
 
 | Example | Coupled generator(s) | Distinguishing structure |
 | --- | --- | --- |
-| Mixed time glide | `(-x, y+b/2, t+T/2)` | Reflection, spatial half-glide, and half-time are inseparable. |
-| Glide time reversal | `(x+a/2, y, -t)` | A genuinely non-split glide/playback-reversal extension. |
+| Mixed spatial–temporal glide | `(-x, y+b/2, t+T/2)` | One generator combines reflection, a spatial half-translation, and temporal translation by `T/2`. |
+| Glide time reversal | `(x+a/2, y, -t)` | A non-split extension pairing a spatial half-translation with time-coordinate reversal. |
 | Rotary time reversal `4'` | `(R_90 x, -t)` | `Q^2=R_180`; the resulting `C4` is not `C2 x C2`. |
-| Dihedral choreography | `S=(R_120,t+T/3)`, `M=(mirror,-t)` | Nonabelian diagonal `D3`, with `MSM=S^-1`. |
+| Dihedral spacetime action | `S=(R_120,t+T/3)`, `M=(mirror,-t)` | Nonabelian diagonal `D3`, with `MSM=S^-1`. |
 
 The precise presentations, non-product proofs, color actions, and literature
 links are in [docs/non_product_examples.md](docs/non_product_examples.md).
 
-## Why the GIFs loop cleanly
+## Loop construction and verification
 
 The renderer evaluates only
 
@@ -210,8 +212,7 @@ python3 -m unittest discover -s tests -v
 ```
 
 The unit tests also verify the defining group equations directly on the
-continuous motif states, including the hidden equality between phases zero and
-one.
+continuous motif states, including the endpoint identification `t=0 mod T`.
 
 ## Code map
 
@@ -227,6 +228,6 @@ one.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.
 - `docs/systematic_catalog.md` — bounded scope, equivalence convention, and catalog tiers.
 
-For more construction ideas, the orbit-sum viewpoint is closely related to
+Related orbit-sum constructions appear in
 [Choreographic Crystals](https://arxiv.org/abs/1407.5876) and the phase-decorated
 space groups of [Padmanabhan et al.](https://arxiv.org/abs/1701.04088).
