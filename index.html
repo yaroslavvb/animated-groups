@@ -7,9 +7,9 @@
   <meta name="theme-color" content="#ffffff">
   <title>Spacetime-group visualizations</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="site.css?v=professional-exposition">
+  <link rel="stylesheet" href="site.css?v=individual-controls">
   <script src="mathjax-config.js"></script>
-  <script src="site.js" defer></script>
+  <script src="site.js?v=individual-controls" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js" defer></script>
 </head>
 <body>
@@ -32,7 +32,7 @@
 
   <button class="motion-toggle" type="button" hidden>
     <span class="motion-icon" aria-hidden="true">▶</span>
-    <span class="motion-label">Play animations</span>
+    <span class="motion-label">Play all animations</span>
   </button>
 
   <main id="catalog">
@@ -67,9 +67,10 @@
       </p>
       <div class="catalog-meta">
         <p>
-          Each GIF has 60 frames at 20 fps, omits the repeated endpoint, and declares infinite
-          playback with <code>loop=0</code>. The bounded computational catalog contains 468
-          normalized non-product actions with phase orders
+          Each canonical GIF has 60 frames at 20 fps, omits the repeated endpoint, and declares
+          infinite playback with <code>loop=0</code>. The page uses seekable playback proxies with
+          one slider position for each sampled phase. The bounded computational catalog contains
+          468 normalized non-product actions with phase orders
           <span class="inline-math">\(2\leq n\leq 12\)</span>.
         </p>
       </div>
@@ -121,9 +122,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/time_glide_c2.webp" data-poster-src="output/posters/time_glide_c2.webp" data-motion-src="output/time_glide_c2.gif" width="600" height="600" alt="Kite motifs realizing an order-two time-glide action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_glide__discs.webp" data-poster-src="output/posters/motif_variants/time_glide__discs.webp" data-motion-src="output/motif_variants/time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same order-two time-glide action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_glide__bars.webp" data-poster-src="output/posters/motif_variants/time_glide__bars.webp" data-motion-src="output/motif_variants/time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same order-two time-glide action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/time_glide_c2.webp" data-poster-src="output/posters/time_glide_c2.webp" data-motion-src="output/time_glide_c2.gif" data-video-src="output/time_glide_c2.mp4" width="600" height="600" alt="Kite motifs realizing an order-two time-glide action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_glide__discs.webp" data-poster-src="output/posters/motif_variants/time_glide__discs.webp" data-motion-src="output/motif_variants/time_glide__discs.gif" data-video-src="output/motif_variants/time_glide__discs.mp4" width="600" height="600" alt="Discs realizing the same order-two time-glide action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_glide__bars.webp" data-poster-src="output/posters/motif_variants/time_glide__bars.webp" data-motion-src="output/motif_variants/time_glide__bars.gif" data-video-src="output/motif_variants/time_glide__bars.mp4" width="600" height="600" alt="Bars realizing the same order-two time-glide action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -145,9 +146,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/time_screw_c4.webp" data-poster-src="output/posters/time_screw_c4.webp" data-motion-src="output/time_screw_c4.gif" width="600" height="600" alt="Four kite motifs realizing an order-four time-screw action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_screw__discs.webp" data-poster-src="output/posters/motif_variants/time_screw__discs.webp" data-motion-src="output/motif_variants/time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same order-four time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_screw__bars.webp" data-poster-src="output/posters/motif_variants/time_screw__bars.webp" data-motion-src="output/motif_variants/time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same order-four time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/time_screw_c4.webp" data-poster-src="output/posters/time_screw_c4.webp" data-motion-src="output/time_screw_c4.gif" data-video-src="output/time_screw_c4.mp4" width="600" height="600" alt="Four kite motifs realizing an order-four time-screw action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_screw__discs.webp" data-poster-src="output/posters/motif_variants/time_screw__discs.webp" data-motion-src="output/motif_variants/time_screw__discs.gif" data-video-src="output/motif_variants/time_screw__discs.mp4" width="600" height="600" alt="Discs realizing the same order-four time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_screw__bars.webp" data-poster-src="output/posters/motif_variants/time_screw__bars.webp" data-motion-src="output/motif_variants/time_screw__bars.gif" data-video-src="output/motif_variants/time_screw__bars.mp4" width="600" height="600" alt="Bars realizing the same order-four time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -169,9 +170,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/diagonal_relay_c3.webp" data-poster-src="output/posters/diagonal_relay_c3.webp" data-motion-src="output/diagonal_relay_c3.gif" width="600" height="600" alt="Three kite motifs realizing an order-three translation–phase graph action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/diagonal_relay__discs.webp" data-poster-src="output/posters/motif_variants/diagonal_relay__discs.webp" data-motion-src="output/motif_variants/diagonal_relay__discs.gif" width="600" height="600" alt="Discs realizing the same order-three translation–phase graph action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/diagonal_relay__bars.webp" data-poster-src="output/posters/motif_variants/diagonal_relay__bars.webp" data-motion-src="output/motif_variants/diagonal_relay__bars.gif" width="600" height="600" alt="Bars realizing the same order-three translation–phase graph action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/diagonal_relay_c3.webp" data-poster-src="output/posters/diagonal_relay_c3.webp" data-motion-src="output/diagonal_relay_c3.gif" data-video-src="output/diagonal_relay_c3.mp4" width="600" height="600" alt="Three kite motifs realizing an order-three translation–phase graph action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/diagonal_relay__discs.webp" data-poster-src="output/posters/motif_variants/diagonal_relay__discs.webp" data-motion-src="output/motif_variants/diagonal_relay__discs.gif" data-video-src="output/motif_variants/diagonal_relay__discs.mp4" width="600" height="600" alt="Discs realizing the same order-three translation–phase graph action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/diagonal_relay__bars.webp" data-poster-src="output/posters/motif_variants/diagonal_relay__bars.webp" data-motion-src="output/motif_variants/diagonal_relay__bars.gif" data-video-src="output/motif_variants/diagonal_relay__bars.mp4" width="600" height="600" alt="Bars realizing the same order-three translation–phase graph action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -193,9 +194,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/mixed_time_glide.webp" data-poster-src="output/posters/mixed_time_glide.webp" data-motion-src="output/mixed_time_glide.gif" width="600" height="600" alt="Kites realizing a mixed space–time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/mixed_time_glide__discs.webp" data-poster-src="output/posters/motif_variants/mixed_time_glide__discs.webp" data-motion-src="output/motif_variants/mixed_time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/mixed_time_glide__bars.webp" data-poster-src="output/posters/motif_variants/mixed_time_glide__bars.webp" data-motion-src="output/motif_variants/mixed_time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/mixed_time_glide.webp" data-poster-src="output/posters/mixed_time_glide.webp" data-motion-src="output/mixed_time_glide.gif" data-video-src="output/mixed_time_glide.mp4" width="600" height="600" alt="Kites realizing a mixed space–time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/mixed_time_glide__discs.webp" data-poster-src="output/posters/motif_variants/mixed_time_glide__discs.webp" data-motion-src="output/motif_variants/mixed_time_glide__discs.gif" data-video-src="output/motif_variants/mixed_time_glide__discs.mp4" width="600" height="600" alt="Discs realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/mixed_time_glide__bars.webp" data-poster-src="output/posters/motif_variants/mixed_time_glide__bars.webp" data-motion-src="output/motif_variants/mixed_time_glide__bars.gif" data-video-src="output/motif_variants/mixed_time_glide__bars.mp4" width="600" height="600" alt="Bars realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -217,9 +218,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/glide_time_reversal.webp" data-poster-src="output/posters/glide_time_reversal.webp" data-motion-src="output/glide_time_reversal.gif" width="600" height="600" alt="Kites realizing glide time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/glide_time_reversal__discs.webp" data-poster-src="output/posters/motif_variants/glide_time_reversal__discs.webp" data-motion-src="output/motif_variants/glide_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/glide_time_reversal__bars.webp" data-poster-src="output/posters/motif_variants/glide_time_reversal__bars.webp" data-motion-src="output/motif_variants/glide_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/glide_time_reversal.webp" data-poster-src="output/posters/glide_time_reversal.webp" data-motion-src="output/glide_time_reversal.gif" data-video-src="output/glide_time_reversal.mp4" width="600" height="600" alt="Kites realizing glide time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/glide_time_reversal__discs.webp" data-poster-src="output/posters/motif_variants/glide_time_reversal__discs.webp" data-motion-src="output/motif_variants/glide_time_reversal__discs.gif" data-video-src="output/motif_variants/glide_time_reversal__discs.mp4" width="600" height="600" alt="Discs realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/glide_time_reversal__bars.webp" data-poster-src="output/posters/motif_variants/glide_time_reversal__bars.webp" data-motion-src="output/motif_variants/glide_time_reversal__bars.gif" data-video-src="output/motif_variants/glide_time_reversal__bars.mp4" width="600" height="600" alt="Bars realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -241,9 +242,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/rotary_time_reversal_4prime.webp" data-poster-src="output/posters/rotary_time_reversal_4prime.webp" data-motion-src="output/rotary_time_reversal_4prime.gif" width="600" height="600" alt="Kites realizing 4-prime rotary time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/rotary_time_reversal__discs.webp" data-poster-src="output/posters/motif_variants/rotary_time_reversal__discs.webp" data-motion-src="output/motif_variants/rotary_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/rotary_time_reversal__bars.webp" data-poster-src="output/posters/motif_variants/rotary_time_reversal__bars.webp" data-motion-src="output/motif_variants/rotary_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/rotary_time_reversal_4prime.webp" data-poster-src="output/posters/rotary_time_reversal_4prime.webp" data-motion-src="output/rotary_time_reversal_4prime.gif" data-video-src="output/rotary_time_reversal_4prime.mp4" width="600" height="600" alt="Kites realizing 4-prime rotary time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/rotary_time_reversal__discs.webp" data-poster-src="output/posters/motif_variants/rotary_time_reversal__discs.webp" data-motion-src="output/motif_variants/rotary_time_reversal__discs.gif" data-video-src="output/motif_variants/rotary_time_reversal__discs.mp4" width="600" height="600" alt="Discs realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/rotary_time_reversal__bars.webp" data-poster-src="output/posters/motif_variants/rotary_time_reversal__bars.webp" data-motion-src="output/motif_variants/rotary_time_reversal__bars.gif" data-video-src="output/motif_variants/rotary_time_reversal__bars.mp4" width="600" height="600" alt="Bars realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -265,9 +266,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/dihedral_choreography_d3.webp" data-poster-src="output/posters/dihedral_choreography_d3.webp" data-motion-src="output/dihedral_choreography_d3.gif" width="600" height="600" alt="Dart motifs realizing a dihedral D3 spacetime action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/dihedral_choreography__discs.webp" data-poster-src="output/posters/motif_variants/dihedral_choreography__discs.webp" data-motion-src="output/motif_variants/dihedral_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same dihedral D3 spacetime action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/dihedral_choreography__bars.webp" data-poster-src="output/posters/motif_variants/dihedral_choreography__bars.webp" data-motion-src="output/motif_variants/dihedral_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same dihedral D3 spacetime action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/dihedral_choreography_d3.webp" data-poster-src="output/posters/dihedral_choreography_d3.webp" data-motion-src="output/dihedral_choreography_d3.gif" data-video-src="output/dihedral_choreography_d3.mp4" width="600" height="600" alt="Dart motifs realizing a dihedral D3 spacetime action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/dihedral_choreography__discs.webp" data-poster-src="output/posters/motif_variants/dihedral_choreography__discs.webp" data-motion-src="output/motif_variants/dihedral_choreography__discs.gif" data-video-src="output/motif_variants/dihedral_choreography__discs.mp4" width="600" height="600" alt="Discs realizing the same dihedral D3 spacetime action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/dihedral_choreography__bars.webp" data-poster-src="output/posters/motif_variants/dihedral_choreography__bars.webp" data-motion-src="output/motif_variants/dihedral_choreography__bars.gif" data-video-src="output/motif_variants/dihedral_choreography__bars.mp4" width="600" height="600" alt="Bars realizing the same dihedral D3 spacetime action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -289,9 +290,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/iris_c6_time_screw.webp" data-poster-src="output/posters/systematic_catalog/gifs/iris_c6_time_screw.webp" data-motion-src="output/systematic_catalog/gifs/iris_c6_time_screw.gif" width="600" height="600" alt="Six-petal motif realizing an order-six time-screw action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/iris_c6_time_screw__discs.webp" data-poster-src="output/posters/motif_variants/iris_c6_time_screw__discs.webp" data-motion-src="output/motif_variants/iris_c6_time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same order-six time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/iris_c6_time_screw__bars.webp" data-poster-src="output/posters/motif_variants/iris_c6_time_screw__bars.webp" data-motion-src="output/motif_variants/iris_c6_time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same order-six time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/iris_c6_time_screw.webp" data-poster-src="output/posters/systematic_catalog/gifs/iris_c6_time_screw.webp" data-motion-src="output/systematic_catalog/gifs/iris_c6_time_screw.gif" data-video-src="output/systematic_catalog/gifs/iris_c6_time_screw.mp4" width="600" height="600" alt="Six-petal motif realizing an order-six time-screw action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/iris_c6_time_screw__discs.webp" data-poster-src="output/posters/motif_variants/iris_c6_time_screw__discs.webp" data-motion-src="output/motif_variants/iris_c6_time_screw__discs.gif" data-video-src="output/motif_variants/iris_c6_time_screw__discs.mp4" width="600" height="600" alt="Discs realizing the same order-six time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/iris_c6_time_screw__bars.webp" data-poster-src="output/posters/motif_variants/iris_c6_time_screw__bars.webp" data-motion-src="output/motif_variants/iris_c6_time_screw__bars.gif" data-video-src="output/motif_variants/iris_c6_time_screw__bars.mp4" width="600" height="600" alt="Bars realizing the same order-six time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -313,9 +314,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/wave_loom_c5_relay.webp" data-poster-src="output/posters/systematic_catalog/gifs/wave_loom_c5_relay.webp" data-motion-src="output/systematic_catalog/gifs/wave_loom_c5_relay.gif" width="600" height="600" alt="Periodic-curve motif realizing an order-five translation–phase graph action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/wave_loom_c5_relay__discs.webp" data-poster-src="output/posters/motif_variants/wave_loom_c5_relay__discs.webp" data-motion-src="output/motif_variants/wave_loom_c5_relay__discs.gif" width="600" height="600" alt="Discs realizing the same order-five translation–phase graph action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/wave_loom_c5_relay__bars.webp" data-poster-src="output/posters/motif_variants/wave_loom_c5_relay__bars.webp" data-motion-src="output/motif_variants/wave_loom_c5_relay__bars.gif" width="600" height="600" alt="Bars realizing the same order-five translation–phase graph action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/wave_loom_c5_relay.webp" data-poster-src="output/posters/systematic_catalog/gifs/wave_loom_c5_relay.webp" data-motion-src="output/systematic_catalog/gifs/wave_loom_c5_relay.gif" data-video-src="output/systematic_catalog/gifs/wave_loom_c5_relay.mp4" width="600" height="600" alt="Periodic-curve motif realizing an order-five translation–phase graph action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/wave_loom_c5_relay__discs.webp" data-poster-src="output/posters/motif_variants/wave_loom_c5_relay__discs.webp" data-motion-src="output/motif_variants/wave_loom_c5_relay__discs.gif" data-video-src="output/motif_variants/wave_loom_c5_relay__discs.mp4" width="600" height="600" alt="Discs realizing the same order-five translation–phase graph action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/wave_loom_c5_relay__bars.webp" data-poster-src="output/posters/motif_variants/wave_loom_c5_relay__bars.webp" data-motion-src="output/motif_variants/wave_loom_c5_relay__bars.gif" data-video-src="output/motif_variants/wave_loom_c5_relay__bars.mp4" width="600" height="600" alt="Bars realizing the same order-five translation–phase graph action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -337,9 +338,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/elastic_d4_choreography.webp" data-poster-src="output/posters/systematic_catalog/gifs/elastic_d4_choreography.webp" data-motion-src="output/systematic_catalog/gifs/elastic_d4_choreography.gif" width="600" height="600" alt="Deformable square motif realizing a dihedral D4 spacetime action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/elastic_d4_choreography__discs.webp" data-poster-src="output/posters/motif_variants/elastic_d4_choreography__discs.webp" data-motion-src="output/motif_variants/elastic_d4_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same dihedral D4 spacetime action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/elastic_d4_choreography__bars.webp" data-poster-src="output/posters/motif_variants/elastic_d4_choreography__bars.webp" data-motion-src="output/motif_variants/elastic_d4_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same dihedral D4 spacetime action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/elastic_d4_choreography.webp" data-poster-src="output/posters/systematic_catalog/gifs/elastic_d4_choreography.webp" data-motion-src="output/systematic_catalog/gifs/elastic_d4_choreography.gif" data-video-src="output/systematic_catalog/gifs/elastic_d4_choreography.mp4" width="600" height="600" alt="Deformable square motif realizing a dihedral D4 spacetime action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/elastic_d4_choreography__discs.webp" data-poster-src="output/posters/motif_variants/elastic_d4_choreography__discs.webp" data-motion-src="output/motif_variants/elastic_d4_choreography__discs.gif" data-video-src="output/motif_variants/elastic_d4_choreography__discs.mp4" width="600" height="600" alt="Discs realizing the same dihedral D4 spacetime action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/elastic_d4_choreography__bars.webp" data-poster-src="output/posters/motif_variants/elastic_d4_choreography__bars.webp" data-motion-src="output/motif_variants/elastic_d4_choreography__bars.gif" data-video-src="output/motif_variants/elastic_d4_choreography__bars.mp4" width="600" height="600" alt="Bars realizing the same dihedral D4 spacetime action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -361,9 +362,9 @@
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/liquid_c2_centered_lattice.webp" data-poster-src="output/posters/systematic_catalog/gifs/liquid_c2_centered_lattice.webp" data-motion-src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.gif" width="600" height="600" alt="Cellular motif realizing a centered-lattice half-period translation" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/liquid_c2_centered_lattice__discs.webp" data-poster-src="output/posters/motif_variants/liquid_c2_centered_lattice__discs.webp" data-motion-src="output/motif_variants/liquid_c2_centered_lattice__discs.gif" width="600" height="600" alt="Discs realizing the same centered-lattice half-period translation" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/liquid_c2_centered_lattice__bars.webp" data-poster-src="output/posters/motif_variants/liquid_c2_centered_lattice__bars.webp" data-motion-src="output/motif_variants/liquid_c2_centered_lattice__bars.gif" width="600" height="600" alt="Bars realizing the same centered-lattice half-period translation" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/liquid_c2_centered_lattice.webp" data-poster-src="output/posters/systematic_catalog/gifs/liquid_c2_centered_lattice.webp" data-motion-src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.gif" data-video-src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.mp4" width="600" height="600" alt="Cellular motif realizing a centered-lattice half-period translation" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/liquid_c2_centered_lattice__discs.webp" data-poster-src="output/posters/motif_variants/liquid_c2_centered_lattice__discs.webp" data-motion-src="output/motif_variants/liquid_c2_centered_lattice__discs.gif" data-video-src="output/motif_variants/liquid_c2_centered_lattice__discs.mp4" width="600" height="600" alt="Discs realizing the same centered-lattice half-period translation" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/liquid_c2_centered_lattice__bars.webp" data-poster-src="output/posters/motif_variants/liquid_c2_centered_lattice__bars.webp" data-motion-src="output/motif_variants/liquid_c2_centered_lattice__bars.gif" data-video-src="output/motif_variants/liquid_c2_centered_lattice__bars.mp4" width="600" height="600" alt="Bars realizing the same centered-lattice half-period translation" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
