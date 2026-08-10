@@ -16,6 +16,40 @@ contain the pure period `(identity, T)`, which an ordinary GIF needs.
 The paper's genuinely non-Floquet groups without any pure temporal period are
 intentionally excluded: no finite GIF can represent them as an exact loop.
 
+## Relation to Ke–Wu
+
+In [*Two-Dimensional Space-Time Groups: Classification and Applications*](https://arxiv.org/abs/2604.05619),
+Chenhang Ke and Congjun Wu write a general space-time operation as
+`(r,t) -> (Rr+u, st+tau)` in
+[Eq. (1)](https://arxiv.org/html/2604.05619v1#S2.E1). Rows 01, 02, 04, and
+05 visualize coordinate operations stated explicitly in the paper: the
+[time glide](https://arxiv.org/html/2604.05619v1#S4.F2),
+[quarter-period time screw](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px3),
+[mixed glide](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px1), and the
+coordinate part of
+[glide time reversal](https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px2).
+Row 06 realizes the listed `4′` class in
+[Table 1](https://arxiv.org/html/2604.05619v1#S2.T1). Rows 07, 08, and 10
+are finite-loop specializations or combinations of paper-supported point
+mechanisms, including the
+[threefold screw](https://arxiv.org/html/2604.05619v1#S3.E4). Rows 03, 09,
+and 11 are this project's mixed-translation/phase-graph constructions,
+grounded in the paper's
+[space-time translation lattice](https://arxiv.org/html/2604.05619v1#S2.p3)
+and [Bravais-lattice framework](https://arxiv.org/html/2604.05619v1#S2.F1).
+
+The paper does not use the candidate double-bracket notation below. The
+`C_n` and `D_n` names in this gallery denote phase-circle quotients or relay
+orders, not official identifiers among the 275 classified groups. Likewise,
+the gallery's **graph non-product** label means that space and phase form the
+graph of a nontrivial homomorphism; it is not synonymous with Ke and Wu's
+crystallographic
+[non-symmorphic condition](https://arxiv.org/html/2604.05619v1#S2.p4) for a
+fractional lift `(g|u)` relative to the translation lattice. In the GIFs,
+`iota` is literal coordinate/playback reversal, not antiunitary quantum time
+reversal; the paper makes that distinction explicitly in
+[its coordinate-space discussion](https://arxiv.org/html/2604.05619v1#S4.p7).
+
 ## Candidate spacetime-orbifold notation
 
 The gallery labels each action as `Q ⟦g ↦ τ_a, h ↦ ι_b⟧`.  The prefix `Q`
@@ -187,6 +221,7 @@ one.
 - `animated_groups/cli.py` — shared command-line interface.
 - `animated_groups/catalog/` — exact enumeration, pattern recipes, catalog renderer, and motif variants.
 - `scripts/` — small entry points for each requested animation.
+- `scripts/generate_posters.py` — extracts a lossless first-frame WebP poster for each gallery GIF.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
 - `docs/orbifold_notation.md` — proposed phase decoration of spatial Conway symbols.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.

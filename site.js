@@ -2,58 +2,56 @@
   const button = document.querySelector('.motion-toggle');
   const status = document.querySelector('.motion-status');
   const images = [...document.querySelectorAll('.motion-image')];
+
+  if (!button || !status || !images.length) return;
+
+  const hasSources = images.every((image) => (
+    image.dataset.posterSrc && image.dataset.motionSrc
+  ));
+  if (!hasSources) {
+    console.error('Motion controls require poster and animated sources for every image.');
+    return;
+  }
+
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let paused = preference.matches;
+  let playing = !preference.matches;
   let userOverride = false;
 
-  function addSnapshot(image) {
-    const media = image.closest('.media');
-    if (!media || media.querySelector('.motion-snapshot') || !image.naturalWidth) return;
+  function renderState({ announce = false } = {}) {
+    images.forEach((image) => {
+      const source = playing ? image.dataset.motionSrc : image.dataset.posterSrc;
+      if (image.getAttribute('src') !== source) image.setAttribute('src', source);
+    });
 
-    const canvas = document.createElement('canvas');
-    canvas.className = 'motion-snapshot';
-    canvas.width = image.naturalWidth;
-    canvas.height = image.naturalHeight;
-    canvas.setAttribute('aria-hidden', 'true');
-    canvas.getContext('2d').drawImage(image, 0, 0);
-    media.appendChild(canvas);
-  }
-
-  function removeSnapshots() {
-    document.querySelectorAll('.motion-snapshot').forEach((canvas) => canvas.remove());
-  }
-
-  function renderState() {
-    if (paused) {
-      images.forEach((image) => {
-        if (image.complete) addSnapshot(image);
-      });
-    } else {
-      removeSnapshots();
+    button.querySelector('.motion-icon').textContent = playing ? '■' : '▶';
+    button.querySelector('.motion-label').textContent = (
+      playing ? 'Stop animations' : 'Play animations'
+    );
+    if (announce) {
+      status.textContent = playing ? 'Animations playing.' : 'Animations stopped.';
     }
-
-    button.setAttribute('aria-pressed', String(paused));
-    button.querySelector('.motion-icon').textContent = paused ? '▶' : 'Ⅱ';
-    button.querySelector('.motion-label').textContent = paused ? 'Play animations' : 'Pause animations';
-    status.textContent = paused ? 'Animations paused.' : 'Animations playing.';
   }
-
-  images.forEach((image) => image.addEventListener('load', () => {
-    if (paused) addSnapshot(image);
-  }));
 
   button.addEventListener('click', () => {
     userOverride = true;
-    paused = !paused;
-    renderState();
+    playing = !playing;
+    renderState({ announce: true });
   });
 
-  preference.addEventListener('change', (event) => {
+  const handlePreferenceChange = (event) => {
     if (!userOverride) {
-      paused = event.matches;
-      renderState();
+      playing = !event.matches;
+      renderState({ announce: true });
     }
-  });
+  };
 
+  if (typeof preference.addEventListener === 'function') {
+    preference.addEventListener('change', handlePreferenceChange);
+  } else {
+    preference.addListener(handlePreferenceChange);
+  }
+
+  button.removeAttribute('aria-pressed');
   renderState();
+  button.hidden = false;
 })();

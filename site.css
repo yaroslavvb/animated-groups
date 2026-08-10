@@ -127,6 +127,8 @@ h1 {
   font-size: 0.92rem;
 }
 
+.inline-math { white-space: normal; }
+
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.92em;
@@ -134,10 +136,6 @@ code {
 }
 
 .catalog-meta {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 2rem;
   padding-top: 1.4rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
@@ -150,15 +148,24 @@ code {
 }
 
 .motion-toggle {
-  flex: none;
+  position: fixed;
+  z-index: 9;
+  right: max(0.75rem, env(safe-area-inset-right));
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  max-width: calc(100vw - 1.5rem - env(safe-area-inset-left) - env(safe-area-inset-right));
   min-height: 2.5rem;
   padding: 0.5rem 0.8rem;
   border: 1px solid var(--line);
   border-radius: 3px;
-  background: var(--surface);
+  background: rgba(24, 27, 30, 0.96);
   color: var(--text);
   cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  white-space: nowrap;
 }
+
+.motion-toggle[hidden] { display: none; }
 
 .motion-toggle:hover { border-color: var(--accent); }
 
@@ -166,6 +173,28 @@ code {
   display: inline-block;
   width: 1.2rem;
   color: var(--accent);
+}
+
+.paper-context {
+  max-width: 800px;
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+  border-top: 1px solid var(--line);
+}
+
+.paper-context h2 { margin-bottom: 1rem; }
+
+.paper-context p {
+  max-width: 740px;
+  margin-bottom: 1rem;
+  color: #d7d8d5;
+}
+
+.paper-context .overline { color: var(--muted); }
+
+.paper-context .paper-caveat {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 
 .symmetry-list {
@@ -183,11 +212,13 @@ code {
 
 .symmetry > header {
   display: grid;
-  grid-template-columns: 2.5rem minmax(260px, 1fr) minmax(280px, auto);
+  grid-template-columns: 2.5rem minmax(0, 1fr) minmax(0, 1.15fr);
   align-items: start;
   gap: 1rem 1.5rem;
   margin-bottom: 1.6rem;
 }
+
+.symmetry > header > * { min-width: 0; }
 
 .index {
   margin: 0.35rem 0 0;
@@ -209,31 +240,60 @@ h2 {
   font-size: 0.94rem;
 }
 
+.symmetry header p.paper-status {
+  margin-top: 0.65rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.paper-status strong {
+  color: var(--text);
+  font-weight: 620;
+}
+
 .symmetry-math {
+  width: 100%;
+  min-width: 0;
   display: grid;
   justify-items: end;
   gap: 0.2rem;
 }
 
 .orbifold {
-  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  overflow-x: auto;
   color: var(--text);
   font-size: 1rem;
   font-weight: 650;
-  white-space: nowrap;
+  text-align: right;
 }
 
-.orbifold sub,
-.notation-legend sub {
-  font-size: 0.72em;
-  line-height: 0;
+.symmetry header p.orbifold {
+  color: var(--text);
+  font-size: 1rem;
 }
 
 .formula {
-  display: block;
-  padding: 0.15rem 0 0.45rem;
-  text-align: right;
-  white-space: nowrap;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  color: var(--accent);
+  scrollbar-width: thin;
+}
+
+.orbifold mjx-container {
+  max-width: 100%;
+  margin: 0 !important;
+}
+
+.formula mjx-container[display="true"] {
+  max-width: 100%;
+  margin: 0.15rem 0 0.45rem !important;
+  text-align: right !important;
 }
 
 .motif-strip {
@@ -253,17 +313,11 @@ figure { margin: 0; }
   background: var(--surface-raised);
 }
 
-.media img,
-.motion-snapshot {
+.media img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.motion-snapshot {
-  position: absolute;
-  inset: 0;
 }
 
 figcaption { margin-top: 0.55rem; }
@@ -307,12 +361,9 @@ footer p { margin-bottom: 0.45rem; }
     justify-items: start;
   }
 
-  .formula {
-    text-align: left;
-    white-space: normal;
-  }
+  .orbifold { text-align: left; }
 
-  .orbifold { white-space: normal; }
+  .formula mjx-container[display="true"] { text-align: left !important; }
 
   .motif-strip { margin-left: 3rem; }
 }
@@ -322,8 +373,6 @@ footer p { margin-bottom: 0.45rem; }
   .header-inner { width: min(calc(100% - 1.25rem), var(--content)); }
 
   .introduction { padding-top: 3.5rem; }
-
-  .catalog-meta { flex-direction: column; }
 
   .symmetry > header {
     grid-template-columns: 1.7rem 1fr;

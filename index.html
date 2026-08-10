@@ -8,7 +8,9 @@
   <title>Animated spacetime groups</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site.css">
+  <script src="mathjax-config.js"></script>
   <script src="site.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#catalog">Skip to catalog</a>
@@ -17,6 +19,7 @@
     <div class="header-inner">
       <a class="site-name" href="./">Animated spacetime groups</a>
       <nav aria-label="Project links">
+        <a href="#ke-wu">Paper</a>
         <a href="README.md">README</a>
         <a href="docs/systematic_catalog.md">Method</a>
         <a href="docs/orbifold_notation.md">Notation</a>
@@ -27,20 +30,27 @@
     </div>
   </header>
 
+  <button class="motion-toggle" type="button" hidden>
+    <span class="motion-icon" aria-hidden="true">▶</span>
+    <span class="motion-label">Play animations</span>
+  </button>
+
   <main id="catalog">
     <section class="introduction" aria-labelledby="page-title">
       <p class="overline">Visual catalog · 11 symmetry types · 33 loops</p>
       <h1 id="page-title">Space and time, coupled</h1>
       <p class="lead">
         Each row shows one spacetime symmetry with three different motifs. A generator acts on
-        position and animation phase together: <code>(x, t) ↦ (g·x, ±t + δ)</code>. The combined
+        position and animation phase together: <span class="inline-math">\((x,t)\mapsto(g\mathbin{\cdot}x,\pm t+\delta)\)</span>. The combined
         move is a symmetry even when its spatial and temporal parts are not symmetries separately.
       </p>
       <p class="notation-legend">
         In the candidate notation below, the spatial prefix uses standard Conway orbifold or
-        rosette notation; the double brackets are proposed here. <code>τ<sub>a</sub></code> advances
-        normalized phase by <code>a</code>, while <code>ι<sub>b</sub></code> reverses it and then
-        shifts by <code>b</code>. <a href="docs/orbifold_notation.md">Notation and limitations</a>.
+        rosette notation; the double brackets are proposed here. <span class="inline-math">\(\tau_a\)</span>
+        advances normalized phase by <span class="inline-math">\(a\)</span>, while
+        <span class="inline-math">\(\iota_b\)</span> reverses it and then shifts by
+        <span class="inline-math">\(b\)</span>.
+        <a href="docs/orbifold_notation.md">Notation and limitations</a>.
       </p>
       <div class="catalog-meta">
         <p>
@@ -48,12 +58,30 @@
           <code>loop=0</code> for infinite playback. The bounded catalog contains 468 normalized
           non-product actions over phase orders 2–12.
         </p>
-        <button class="motion-toggle" type="button" aria-pressed="false">
-          <span class="motion-icon" aria-hidden="true">Ⅱ</span>
-          <span class="motion-label">Pause animations</span>
-        </button>
       </div>
       <p class="motion-status visually-hidden" aria-live="polite"></p>
+    </section>
+
+    <section id="ke-wu" class="paper-context" aria-labelledby="ke-wu-title">
+      <p class="overline">Paper connection</p>
+      <h2 id="ke-wu-title">Relation to Ke and Wu</h2>
+      <p>
+        In Chenhang Ke and Congjun Wu's paper
+        <a href="https://arxiv.org/abs/2604.05619"><cite>Two-Dimensional Space-Time Groups: Classification and Applications</cite></a>
+        (arXiv:2604.05619), a general spacetime-group action is written as
+        <span class="inline-math">\((\mathbf r,t)\mapsto(R\mathbf r+\mathbf u,\,st+\tau)\)</span>
+        in <a href="https://arxiv.org/html/2604.05619v1#S2.E1">Eq. (1)</a>. Rows 01, 02, 04,
+        and 05 below visualize operations stated explicitly in the paper; row 06 uses its listed
+        <span class="inline-math">\(4'\)</span> class. The remaining rows derive or specialize the
+        same screw, glide, reversal, and mixed-translation mechanisms.
+      </p>
+      <p class="paper-caveat">
+        The paper does not use our candidate orbifold notation. The C<sub>n</sub>/D<sub>n</sub>
+        titles here name displayed quotient or relay orders, not official identifiers in the
+        paper's 275-group catalog. Our “graph-nonproduct” construction is not synonymous with the
+        paper's “nonsymmorphic” classification, and <span class="inline-math">\(\iota_b\)</span>
+        denotes playback reversal in these visuals—not antiunitary quantum time reversal.
+      </p>
     </section>
 
     <ol class="symmetry-list">
@@ -61,16 +89,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">01</p>
-            <div><h2>C2 time glide</h2><p>A reflection becomes a symmetry only when paired with a half-period advance.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C2 time glide">
-              <code class="orbifold" aria-label="Candidate orbifold notation: star one bullet; m maps to tau one half">*1• ⟦m ↦ τ<sub>1/2</sub>⟧</code>
-              <code class="formula">G:(x,y,t) ↦ (−x,y,t+T/2), &nbsp;G²=(1,T)</code>
+            <div>
+              <h2>C2 time glide</h2>
+              <p>A reflection becomes a symmetry only when paired with a half-period advance.</p>
+              <p class="paper-status"><strong>Direct.</strong> <a href="https://arxiv.org/html/2604.05619v1#S4.p7">Time-glide example</a>; see also <a href="https://arxiv.org/html/2604.05619v1#S4.F2">Fig. 2</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="*1• ⟦m ↦ τ1/2⟧">\(\ST{\mathord{*}1\mathord{\bullet}}{m\mapsto\tau_{1/2}}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[G\colon(x,y,t)\mapsto(-x,y,t+T/2),\allowbreak\quad G^2=(1,T)\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/time_glide_c2.gif" width="600" height="600" alt="Kite motifs realizing a C2 time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same C2 time-glide action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same C2 time-glide action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/time_glide_c2.webp" data-poster-src="output/posters/time_glide_c2.webp" data-motion-src="output/time_glide_c2.gif" width="600" height="600" alt="Kite motifs realizing a C2 time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_glide__discs.webp" data-poster-src="output/posters/motif_variants/time_glide__discs.webp" data-motion-src="output/motif_variants/time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same C2 time-glide action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_glide__bars.webp" data-poster-src="output/posters/motif_variants/time_glide__bars.webp" data-motion-src="output/motif_variants/time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same C2 time-glide action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -79,16 +113,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">02</p>
-            <div><h2>C4 time screw</h2><p>A quarter-turn advances the loop by one quarter; four applications close the cycle.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C4 time screw">
-              <code class="orbifold" aria-label="Candidate orbifold notation: four bullet; r maps to tau one quarter">4• ⟦r ↦ τ<sub>1/4</sub>⟧</code>
-              <code class="formula">S:(x,t) ↦ (R<sub>π/2</sub>x,t+T/4), &nbsp;S⁴=(1,T)</code>
+            <div>
+              <h2>C4 time screw</h2>
+              <p>A quarter-turn advances the loop by one quarter; four applications close the cycle.</p>
+              <p class="paper-status"><strong>Direct.</strong> <a href="https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px3">Time-screw example</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="4• ⟦r ↦ τ1/4⟧">\(\ST{4\mathord{\bullet}}{r\mapsto\tau_{1/4}}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[S\colon(x,t)\mapsto(R_{\pi/2}x,t+T/4),\allowbreak\quad S^4=(1,T)\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/time_screw_c4.gif" width="600" height="600" alt="Four kite motifs realizing a C4 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same C4 time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same C4 time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/time_screw_c4.webp" data-poster-src="output/posters/time_screw_c4.webp" data-motion-src="output/time_screw_c4.gif" width="600" height="600" alt="Four kite motifs realizing a C4 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_screw__discs.webp" data-poster-src="output/posters/motif_variants/time_screw__discs.webp" data-motion-src="output/motif_variants/time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same C4 time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/time_screw__bars.webp" data-poster-src="output/posters/motif_variants/time_screw__bars.webp" data-motion-src="output/motif_variants/time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same C4 time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -97,16 +137,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">03</p>
-            <div><h2>C3 diagonal relay</h2><p>A one-cell translation and a third-period advance occur only as a coupled operation.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C3 diagonal relay">
-              <code class="orbifold" aria-label="Candidate orbifold notation: infinity infinity; a maps to tau one third">∞∞ ⟦a ↦ τ<sub>1/3</sub>⟧</code>
-              <code class="formula">D:(x,t) ↦ (x+a,t+T/3), &nbsp;D³=(x+3a,t+T)</code>
+            <div>
+              <h2>C3 diagonal relay</h2>
+              <p>A one-cell translation and a third-period advance occur only as a coupled operation.</p>
+              <p class="paper-status"><strong>Derived.</strong> Mixed translation/phase graph inspired by the spacetime lattices in <a href="https://arxiv.org/html/2604.05619v1#S2.F1">Fig. 1</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="∞∞ ⟦a ↦ τ1/3⟧">\(\ST{\infty\infty}{a\mapsto\tau_{1/3}}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[D\colon(x,t)\mapsto(x+a,t+T/3),\allowbreak\quad D^3=(x+3a,t+T)\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/diagonal_relay_c3.gif" width="600" height="600" alt="Three kite motifs realizing a diagonal C3 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/diagonal_relay__discs.gif" width="600" height="600" alt="Discs realizing the same diagonal C3 relay" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/diagonal_relay__bars.gif" width="600" height="600" alt="Bars realizing the same diagonal C3 relay" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/diagonal_relay_c3.webp" data-poster-src="output/posters/diagonal_relay_c3.webp" data-motion-src="output/diagonal_relay_c3.gif" width="600" height="600" alt="Three kite motifs realizing a diagonal C3 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/diagonal_relay__discs.webp" data-poster-src="output/posters/motif_variants/diagonal_relay__discs.webp" data-motion-src="output/motif_variants/diagonal_relay__discs.gif" width="600" height="600" alt="Discs realizing the same diagonal C3 relay" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/diagonal_relay__bars.webp" data-poster-src="output/posters/motif_variants/diagonal_relay__bars.webp" data-motion-src="output/motif_variants/diagonal_relay__bars.gif" width="600" height="600" alt="Bars realizing the same diagonal C3 relay" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -115,16 +161,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">04</p>
-            <div><h2>Mixed space–time glide</h2><p>Reflection, a half-cell glide, and a half-period advance are inseparable.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for mixed space-time glide">
-              <code class="orbifold" aria-label="Candidate orbifold notation: cross cross; g sub zero comma b over two maps to tau one half">×× ⟦g<sub>(0,b/2)</sub> ↦ τ<sub>1/2</sub>⟧</code>
-              <code class="formula">G:(x,y,t) ↦ (−x,y+b/2,t+T/2), &nbsp;G²=YU</code>
+            <div>
+              <h2>Mixed space–time glide</h2>
+              <p>Reflection, a half-cell glide, and a half-period advance are inseparable.</p>
+              <p class="paper-status"><strong>Direct.</strong> <a href="https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px1">Mixed space–time glide example</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="×× ⟦g(0,b/2) ↦ τ1/2⟧">\(\ST{\times\!\times}{g_{(0,b/2)}\mapsto\tau_{1/2}}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[G\colon(x,y,t)\mapsto(-x,y+b/2,t+T/2),\allowbreak\quad G^2=YU\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/mixed_time_glide.gif" width="600" height="600" alt="Kites realizing a mixed space–time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/mixed_time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/mixed_time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/mixed_time_glide.webp" data-poster-src="output/posters/mixed_time_glide.webp" data-motion-src="output/mixed_time_glide.gif" width="600" height="600" alt="Kites realizing a mixed space–time glide" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/mixed_time_glide__discs.webp" data-poster-src="output/posters/motif_variants/mixed_time_glide__discs.webp" data-motion-src="output/motif_variants/mixed_time_glide__discs.gif" width="600" height="600" alt="Discs realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/mixed_time_glide__bars.webp" data-poster-src="output/posters/motif_variants/mixed_time_glide__bars.webp" data-motion-src="output/motif_variants/mixed_time_glide__bars.gif" width="600" height="600" alt="Bars realizing the same mixed space–time glide" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -133,16 +185,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">05</p>
-            <div><h2>Glide time reversal</h2><p>A half-cell translation is locked to reversing the direction of playback.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for glide time reversal">
-              <code class="orbifold" aria-label="Candidate orbifold notation: infinity infinity; q sub a over two comma zero maps to iota zero">∞∞ ⟦q<sub>(a/2,0)</sub> ↦ ι<sub>0</sub>⟧</code>
-              <code class="formula">Q:(x,y,t) ↦ (x+a/2,y,−t), &nbsp;Q²=X</code>
+            <div>
+              <h2>Glide time reversal</h2>
+              <p>A half-cell translation is locked to reversing the direction of playback.</p>
+              <p class="paper-status"><strong>Direct.</strong> <a href="https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px2">Glide time-reversal example</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="∞∞ ⟦q(a/2,0) ↦ ι0⟧">\(\ST{\infty\infty}{q_{(a/2,0)}\mapsto\iota_0}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[Q\colon(x,y,t)\mapsto(x+a/2,y,-t),\allowbreak\quad Q^2=X\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/glide_time_reversal.gif" width="600" height="600" alt="Kites realizing glide time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/glide_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/glide_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/glide_time_reversal.webp" data-poster-src="output/posters/glide_time_reversal.webp" data-motion-src="output/glide_time_reversal.gif" width="600" height="600" alt="Kites realizing glide time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/glide_time_reversal__discs.webp" data-poster-src="output/posters/motif_variants/glide_time_reversal__discs.webp" data-motion-src="output/motif_variants/glide_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/glide_time_reversal__bars.webp" data-poster-src="output/posters/motif_variants/glide_time_reversal__bars.webp" data-motion-src="output/motif_variants/glide_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same glide time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -151,16 +209,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">06</p>
-            <div><h2>4′ rotary time reversal</h2><p>A quarter-turn reverses playback; its square leaves a pure half-turn.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for rotary time reversal">
-              <code class="orbifold" aria-label="Candidate orbifold notation: four bullet; r maps to iota zero">4• ⟦r ↦ ι<sub>0</sub>⟧</code>
-              <code class="formula">Q:(x,t) ↦ (R<sub>π/2</sub>x,−t), &nbsp;Q²=R<sub>π</sub>, &nbsp;Q⁴=1</code>
+            <div>
+              <h2>4′ rotary time reversal</h2>
+              <p>A quarter-turn reverses playback; its square leaves a pure half-turn.</p>
+              <p class="paper-status"><strong>Paper-listed.</strong> The <span class="inline-math">\(4'\)</span> class appears in <a href="https://arxiv.org/html/2604.05619v1#S2.T1">Table 1</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="4• ⟦r ↦ ι0⟧">\(\ST{4\mathord{\bullet}}{r\mapsto\iota_0}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[Q\colon(x,t)\mapsto(R_{\pi/2}x,-t),\allowbreak\quad Q^2=R_\pi,\allowbreak\quad Q^4=1\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/rotary_time_reversal_4prime.gif" width="600" height="600" alt="Kites realizing 4-prime rotary time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/rotary_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/rotary_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/rotary_time_reversal_4prime.webp" data-poster-src="output/posters/rotary_time_reversal_4prime.webp" data-motion-src="output/rotary_time_reversal_4prime.gif" width="600" height="600" alt="Kites realizing 4-prime rotary time reversal" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/rotary_time_reversal__discs.webp" data-poster-src="output/posters/motif_variants/rotary_time_reversal__discs.webp" data-motion-src="output/motif_variants/rotary_time_reversal__discs.gif" width="600" height="600" alt="Discs realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/rotary_time_reversal__bars.webp" data-poster-src="output/posters/motif_variants/rotary_time_reversal__bars.webp" data-motion-src="output/motif_variants/rotary_time_reversal__bars.gif" width="600" height="600" alt="Bars realizing the same rotary time-reversal action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -169,16 +233,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">07</p>
-            <div><h2>D3 dihedral choreography</h2><p>A threefold time screw and mirror/playback reversal obey the dihedral relation.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generators for D3 dihedral choreography">
-              <code class="orbifold" aria-label="Candidate orbifold notation: star three bullet; r maps to tau one third, m maps to iota zero">*3• ⟦r ↦ τ<sub>1/3</sub>, m ↦ ι<sub>0</sub>⟧</code>
-              <code class="formula">S³=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+            <div>
+              <h2>D3 dihedral choreography</h2>
+              <p>A threefold time screw and mirror/playback reversal obey the dihedral relation.</p>
+              <p class="paper-status"><strong>Derived.</strong> Combines dihedral reversal with the C3 screw used in <a href="https://arxiv.org/html/2604.05619v1#S3.E4">Eq. (4)</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="*3• ⟦r ↦ τ1/3, m ↦ ι0⟧">\(\ST{\mathord{*}3\mathord{\bullet}}{r\mapsto\tau_{1/3},\;m\mapsto\iota_0}\)</p>
+              <span class="visually-hidden">Exact generator relations:</span>
+              <div class="formula">\[S^3=U,\allowbreak\quad M^2=1,\allowbreak\quad MSM=S^{-1}\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/dihedral_choreography_d3.gif" width="600" height="600" alt="Dart motifs realizing D3 dihedral choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/dihedral_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same D3 dihedral choreography" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/dihedral_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same D3 dihedral choreography" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/dihedral_choreography_d3.webp" data-poster-src="output/posters/dihedral_choreography_d3.webp" data-motion-src="output/dihedral_choreography_d3.gif" width="600" height="600" alt="Dart motifs realizing D3 dihedral choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/dihedral_choreography__discs.webp" data-poster-src="output/posters/motif_variants/dihedral_choreography__discs.webp" data-motion-src="output/motif_variants/dihedral_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same D3 dihedral choreography" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/dihedral_choreography__bars.webp" data-poster-src="output/posters/motif_variants/dihedral_choreography__bars.webp" data-motion-src="output/motif_variants/dihedral_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same D3 dihedral choreography" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -187,16 +257,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">08</p>
-            <div><h2>C6 kinetic-iris time screw</h2><p>Six connected petals expose a sixth-period phase chase around a rotation center.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C6 kinetic-iris time screw">
-              <code class="orbifold" aria-label="Candidate orbifold notation: six bullet; r maps to tau one sixth">6• ⟦r ↦ τ<sub>1/6</sub>⟧</code>
-              <code class="formula">S:(x,t) ↦ (R<sub>π/3</sub>x,t+T/6), &nbsp;S⁶=(1,T)</code>
+            <div>
+              <h2>C6 kinetic-iris time screw</h2>
+              <p>Six connected petals expose a sixth-period phase chase around a rotation center.</p>
+              <p class="paper-status"><strong>Derived.</strong> C6 specialization of the paper's <a href="https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px3">time-screw mechanism</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="6• ⟦r ↦ τ1/6⟧">\(\ST{6\mathord{\bullet}}{r\mapsto\tau_{1/6}}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[S\colon(x,t)\mapsto(R_{\pi/3}x,t+T/6),\allowbreak\quad S^6=(1,T)\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/iris_c6_time_screw.gif" width="600" height="600" alt="Kinetic iris realizing a C6 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/iris_c6_time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same C6 time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/iris_c6_time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same C6 time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/iris_c6_time_screw.webp" data-poster-src="output/posters/systematic_catalog/gifs/iris_c6_time_screw.webp" data-motion-src="output/systematic_catalog/gifs/iris_c6_time_screw.gif" width="600" height="600" alt="Kinetic iris realizing a C6 time screw" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/iris_c6_time_screw__discs.webp" data-poster-src="output/posters/motif_variants/iris_c6_time_screw__discs.webp" data-motion-src="output/motif_variants/iris_c6_time_screw__discs.gif" width="600" height="600" alt="Discs realizing the same C6 time-screw action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/iris_c6_time_screw__bars.webp" data-poster-src="output/posters/motif_variants/iris_c6_time_screw__bars.webp" data-motion-src="output/motif_variants/iris_c6_time_screw__bars.gif" width="600" height="600" alt="Bars realizing the same C6 time-screw action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -205,16 +281,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">09</p>
-            <div><h2>C5 wave-loom relay</h2><p>A lattice translation hands one fifth of the cycle from ribbon to ribbon.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C5 wave-loom relay">
-              <code class="orbifold" aria-label="Candidate orbifold notation: o; a maps to tau one fifth">o ⟦a ↦ τ<sub>1/5</sub>⟧</code>
-              <code class="formula">W:(x,t) ↦ (x+a,t+T/5), &nbsp;W⁵=(x+5a,t+T)</code>
+            <div>
+              <h2>C5 wave-loom relay</h2>
+              <p>A lattice translation hands one fifth of the cycle from ribbon to ribbon.</p>
+              <p class="paper-status"><strong>Derived.</strong> Mixed translation/phase graph inspired by the spacetime lattices in <a href="https://arxiv.org/html/2604.05619v1#S2.F1">Fig. 1</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="o ⟦a ↦ τ1/5⟧">\(\ST{\mathrm{o}}{a\mapsto\tau_{1/5}}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[W\colon(x,t)\mapsto(x+a,t+T/5),\allowbreak\quad W^5=(x+5a,t+T)\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/wave_loom_c5_relay.gif" width="600" height="600" alt="Bezier wave loom realizing a C5 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/wave_loom_c5_relay__discs.gif" width="600" height="600" alt="Discs realizing the same C5 relay action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/wave_loom_c5_relay__bars.gif" width="600" height="600" alt="Bars realizing the same C5 relay action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/wave_loom_c5_relay.webp" data-poster-src="output/posters/systematic_catalog/gifs/wave_loom_c5_relay.webp" data-motion-src="output/systematic_catalog/gifs/wave_loom_c5_relay.gif" width="600" height="600" alt="Bezier wave loom realizing a C5 relay" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/wave_loom_c5_relay__discs.webp" data-poster-src="output/posters/motif_variants/wave_loom_c5_relay__discs.webp" data-motion-src="output/motif_variants/wave_loom_c5_relay__discs.gif" width="600" height="600" alt="Discs realizing the same C5 relay action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/wave_loom_c5_relay__bars.webp" data-poster-src="output/posters/motif_variants/wave_loom_c5_relay__bars.webp" data-motion-src="output/motif_variants/wave_loom_c5_relay__bars.gif" width="600" height="600" alt="Bars realizing the same C5 relay action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -223,16 +305,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">10</p>
-            <div><h2>D4 elastic-square choreography</h2><p>A quarter-time screw and a mirror/time reversal deform one closed square.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generators for D4 elastic-square choreography">
-              <code class="orbifold" aria-label="Candidate orbifold notation: star four bullet; r maps to tau one quarter, m maps to iota zero">*4• ⟦r ↦ τ<sub>1/4</sub>, m ↦ ι<sub>0</sub>⟧</code>
-              <code class="formula">S⁴=U, &nbsp;M²=1, &nbsp;MSM=S⁻¹</code>
+            <div>
+              <h2>D4 elastic-square choreography</h2>
+              <p>A quarter-time screw and a mirror/time reversal deform one closed square.</p>
+              <p class="paper-status"><strong>Derived.</strong> D4 choreography built from the paper's <a href="https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px3">screw</a> and <a href="https://arxiv.org/html/2604.05619v1#S2.SS2.SSS0.Px2">reversal</a> mechanisms.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="*4• ⟦r ↦ τ1/4, m ↦ ι0⟧">\(\ST{\mathord{*}4\mathord{\bullet}}{r\mapsto\tau_{1/4},\;m\mapsto\iota_0}\)</p>
+              <span class="visually-hidden">Exact generator relations:</span>
+              <div class="formula">\[S^4=U,\allowbreak\quad M^2=1,\allowbreak\quad MSM=S^{-1}\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/elastic_d4_choreography.gif" width="600" height="600" alt="Elastic square realizing D4 choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/elastic_d4_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same D4 choreography" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/elastic_d4_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same D4 choreography" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/elastic_d4_choreography.webp" data-poster-src="output/posters/systematic_catalog/gifs/elastic_d4_choreography.webp" data-motion-src="output/systematic_catalog/gifs/elastic_d4_choreography.gif" width="600" height="600" alt="Elastic square realizing D4 choreography" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/elastic_d4_choreography__discs.webp" data-poster-src="output/posters/motif_variants/elastic_d4_choreography__discs.webp" data-motion-src="output/motif_variants/elastic_d4_choreography__discs.gif" width="600" height="600" alt="Discs realizing the same D4 choreography" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/elastic_d4_choreography__bars.webp" data-poster-src="output/posters/motif_variants/elastic_d4_choreography__bars.webp" data-motion-src="output/motif_variants/elastic_d4_choreography__bars.gif" width="600" height="600" alt="Bars realizing the same D4 choreography" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
@@ -241,16 +329,22 @@
         <article class="symmetry">
           <header>
             <p class="index" aria-hidden="true">11</p>
-            <div><h2>C2 centered-lattice liquid cells</h2><p>A diagonal half-lattice shift exchanges two phases separated by half a period.</p></div>
-            <div class="symmetry-math" role="group" aria-label="Candidate orbifold notation and exact generator for C2 centered-lattice liquid cells">
-              <code class="orbifold" aria-label="Candidate orbifold notation: o; ell sub a over two comma b over two maps to tau one half">o ⟦ℓ<sub>(a/2,b/2)</sub> ↦ τ<sub>1/2</sub>⟧</code>
-              <code class="formula">L:(x,y,t) ↦ (x+a/2,y+b/2,t+T/2), &nbsp;L²=XYU</code>
+            <div>
+              <h2>C2 centered-lattice liquid cells</h2>
+              <p>A diagonal half-lattice shift exchanges two phases separated by half a period.</p>
+              <p class="paper-status"><strong>Derived.</strong> Mixed translation/phase graph inspired by the spacetime lattices in <a href="https://arxiv.org/html/2604.05619v1#S2.F1">Fig. 1</a>.</p>
+            </div>
+            <div class="symmetry-math">
+              <span class="visually-hidden">Candidate orbifold notation:</span>
+              <p class="orbifold" data-notation="o ⟦ℓ(a/2,b/2) ↦ τ1/2⟧">\(\ST{\mathrm{o}}{\ell_{(a/2,b/2)}\mapsto\tau_{1/2}}\)</p>
+              <span class="visually-hidden">Exact generator:</span>
+              <div class="formula">\[L\colon(x,y,t)\mapsto(x+a/2,y+b/2,t+T/2),\allowbreak\quad L^2=XYU\]</div>
             </div>
           </header>
           <div class="motif-strip">
-            <figure><div class="media"><img class="motion-image" src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.gif" width="600" height="600" alt="Liquid cells realizing a centered C2 lattice action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/liquid_c2_centered_lattice__discs.gif" width="600" height="600" alt="Discs realizing the same centered C2 lattice action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
-            <figure><div class="media"><img class="motion-image" src="output/motif_variants/liquid_c2_centered_lattice__bars.gif" width="600" height="600" alt="Bars realizing the same centered C2 lattice action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/systematic_catalog/gifs/liquid_c2_centered_lattice.webp" data-poster-src="output/posters/systematic_catalog/gifs/liquid_c2_centered_lattice.webp" data-motion-src="output/systematic_catalog/gifs/liquid_c2_centered_lattice.gif" width="600" height="600" alt="Liquid cells realizing a centered C2 lattice action" loading="lazy"></div><figcaption>Base motif</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/liquid_c2_centered_lattice__discs.webp" data-poster-src="output/posters/motif_variants/liquid_c2_centered_lattice__discs.webp" data-motion-src="output/motif_variants/liquid_c2_centered_lattice__discs.gif" width="600" height="600" alt="Discs realizing the same centered C2 lattice action" loading="lazy"></div><figcaption>Discs</figcaption></figure>
+            <figure><div class="media"><img class="motion-image" src="output/posters/motif_variants/liquid_c2_centered_lattice__bars.webp" data-poster-src="output/posters/motif_variants/liquid_c2_centered_lattice__bars.webp" data-motion-src="output/motif_variants/liquid_c2_centered_lattice__bars.gif" width="600" height="600" alt="Bars realizing the same centered C2 lattice action" loading="lazy"></div><figcaption>Bars</figcaption></figure>
           </div>
         </article>
       </li>
