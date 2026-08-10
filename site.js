@@ -1,42 +1,59 @@
 (() => {
   const button = document.querySelector('.motion-toggle');
-  if (!button) return;
+  const status = document.querySelector('.motion-status');
+  const images = [...document.querySelectorAll('.motion-image')];
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = preference.matches;
+  let userOverride = false;
 
-  const animatedImages = [...document.querySelectorAll('.media img[src$=".gif"]')];
-  let paused = false;
+  function addSnapshot(image) {
+    const media = image.closest('.media');
+    if (!media || media.querySelector('.motion-snapshot') || !image.naturalWidth) return;
 
-  function snapshot(image) {
     const canvas = document.createElement('canvas');
-    canvas.width = image.naturalWidth || image.width;
-    canvas.height = image.naturalHeight || image.height;
-    canvas.setAttribute('aria-hidden', 'true');
     canvas.className = 'motion-snapshot';
-    canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
-    image.parentElement.appendChild(canvas);
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    canvas.setAttribute('aria-hidden', 'true');
+    canvas.getContext('2d').drawImage(image, 0, 0);
+    media.appendChild(canvas);
   }
 
-  function pause() {
+  function removeSnapshots() {
     document.querySelectorAll('.motion-snapshot').forEach((canvas) => canvas.remove());
-    animatedImages.filter((image) => image.complete).forEach(snapshot);
-    document.body.classList.add('is-paused');
-    button.setAttribute('aria-pressed', 'true');
-    button.querySelector('.pause-icon').textContent = '▶';
-    button.querySelector('.motion-label').textContent = 'Play animations';
-    paused = true;
   }
 
-  function play() {
-    document.body.classList.remove('is-paused');
-    document.querySelectorAll('.motion-snapshot').forEach((canvas) => canvas.remove());
-    button.setAttribute('aria-pressed', 'false');
-    button.querySelector('.pause-icon').textContent = 'Ⅱ';
-    button.querySelector('.motion-label').textContent = 'Pause animations';
-    paused = false;
+  function renderState() {
+    if (paused) {
+      images.forEach((image) => {
+        if (image.complete) addSnapshot(image);
+      });
+    } else {
+      removeSnapshots();
+    }
+
+    button.setAttribute('aria-pressed', String(paused));
+    button.querySelector('.motion-icon').textContent = paused ? '▶' : 'Ⅱ';
+    button.querySelector('.motion-label').textContent = paused ? 'Play animations' : 'Pause animations';
+    status.textContent = paused ? 'Animations paused.' : 'Animations playing.';
   }
 
-  button.addEventListener('click', () => (paused ? play() : pause()));
+  images.forEach((image) => image.addEventListener('load', () => {
+    if (paused) addSnapshot(image);
+  }));
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    window.addEventListener('load', pause, { once: true });
-  }
+  button.addEventListener('click', () => {
+    userOverride = true;
+    paused = !paused;
+    renderState();
+  });
+
+  preference.addEventListener('change', (event) => {
+    if (!userOverride) {
+      paused = event.matches;
+      renderState();
+    }
+  });
+
+  renderState();
 })();
