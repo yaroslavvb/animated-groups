@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "animated-groups"
+version = "0.1.0"
+description = "Small, exact, looping animations of 2+1D spacetime symmetries"
+requires-python = ">=3.10"
+dependencies = ["Pillow>=10.0"]
+
+[project.scripts]
+animated-groups = "animated_groups.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["animated_groups*"]
