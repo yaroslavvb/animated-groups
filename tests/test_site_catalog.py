@@ -198,7 +198,7 @@ class SiteCatalogTests(unittest.TestCase):
         )
 
     def test_motion_controls_create_seekable_individual_video_players(self) -> None:
-        script = (ROOT / "site.js").read_text(encoding="utf-8")
+        script = (ROOT / "site-controls-v2.js").read_text(encoding="utf-8")
         self.assertIn("document.createElement('video')", script)
         self.assertIn("animation-controls", script)
         self.assertIn("animation-toggle", script)
@@ -214,7 +214,20 @@ class SiteCatalogTests(unittest.TestCase):
         self.assertIn("if (player.loaded && !player.error)", script)
         self.assertIn("globalButton.disabled = true", script)
         self.assertIn("schedulePhaseUpdates()", script)
+        self.assertIn("const playback = player.video.play()", script)
+        self.assertIn("playPlayer(player, { userInitiated: true })", script)
+        self.assertLess(
+            script.index("const playback = player.video.play()"),
+            script.index("await Promise.all([loading, playback])"),
+        )
         self.assertNotIn("images.every", script)
+
+    def test_legacy_controller_survives_stale_gallery_markup(self) -> None:
+        script = (ROOT / "site.js").read_text(encoding="utf-8")
+        self.assertIn("images.every((image) => image.dataset.videoSrc)", script)
+        self.assertIn("controller.src = 'site-controls-v2.js'", script)
+        self.assertIn("image.dataset.motionSrc", script)
+        self.assertIn("startLegacyControls", script)
 
     def test_video_generator_preserves_the_sampled_cycle(self) -> None:
         script = (ROOT / "scripts" / "generate_videos.py").read_text(encoding="utf-8")
@@ -225,7 +238,7 @@ class SiteCatalogTests(unittest.TestCase):
 
     def test_mathjax_is_pinned_configured_and_does_not_block_controls(self) -> None:
         index = (ROOT / "index.html").read_text(encoding="utf-8")
-        site_script = '<script src="site.js?v=individual-controls" defer></script>'
+        site_script = '<script src="site-controls-v2.js" defer></script>'
         mathjax_script = (
             '<script src="https://cdn.jsdelivr.net/npm/'
             'mathjax@4.1.3/tex-chtml.js" defer></script>'
@@ -234,6 +247,7 @@ class SiteCatalogTests(unittest.TestCase):
         self.assertIn(site_script, index)
         self.assertIn(mathjax_script, index)
         self.assertLess(index.index(site_script), index.index(mathjax_script))
+        self.assertNotIn("site-controls-v2.js?", index)
 
         config = (ROOT / "mathjax-config.js").read_text(encoding="utf-8")
         self.assertIn("ST:", config)
@@ -243,11 +257,14 @@ class SiteCatalogTests(unittest.TestCase):
 
     def test_page_uses_the_white_light_theme(self) -> None:
         index = (ROOT / "index.html").read_text(encoding="utf-8")
-        styles = (ROOT / "site.css").read_text(encoding="utf-8")
+        styles = (ROOT / "site-controls-v2.css").read_text(encoding="utf-8")
+        legacy_styles = (ROOT / "site.css").read_text(encoding="utf-8")
         self.assertIn('<meta name="theme-color" content="#ffffff">', index)
-        self.assertIn('href="site.css?v=individual-controls"', index)
+        self.assertIn('href="site-controls-v2.css"', index)
+        self.assertEqual(styles, legacy_styles)
         self.assertIn("color-scheme: light", styles)
         self.assertIn("--background: #ffffff", styles)
+        self.assertIn(".media img[hidden],\n.media video[hidden]", styles)
         self.assertNotIn("color-scheme: dark", styles)
         self.assertNotIn("#111315", styles)
 
