@@ -328,7 +328,8 @@ figure { margin: 0; }
   background: var(--surface-raised);
 }
 
-.media img {
+.media img,
+.media video {
   display: block;
   width: 100%;
   height: 100%;
@@ -336,6 +337,67 @@ figure { margin: 0; }
 }
 
 figcaption { margin-top: 0.55rem; }
+
+.animation-controls {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(4rem, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+}
+
+.animation-toggle {
+  min-height: 2.75rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--control-line);
+  border-radius: 3px;
+  background: var(--background);
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font: inherit;
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+.animation-toggle:hover { border-color: var(--accent); }
+
+.animation-icon {
+  width: 0.9rem;
+  color: var(--accent);
+  text-align: center;
+}
+
+.phase-slider {
+  width: 100%;
+  min-width: 0;
+  height: 2.75rem;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.phase-output {
+  min-width: 3.25rem;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.animation-controls[data-state="error"] {
+  opacity: 0.68;
+}
+
+.animation-toggle:disabled,
+.phase-slider:disabled {
+  cursor: not-allowed;
+}
 
 footer {
   padding: 3rem 0 4rem;
@@ -381,6 +443,15 @@ footer p { margin-bottom: 0.45rem; }
   .formula mjx-container[display="true"] { text-align: left !important; }
 
   .motif-strip { margin-left: 3rem; }
+}
+
+@media (min-width: 621px) and (max-width: 800px) {
+  .animation-toggle {
+    width: 2.75rem;
+    padding-inline: 0;
+  }
+
+  .animation-label { display: none; }
 }
 
 @media (max-width: 620px) {

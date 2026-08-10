@@ -24,6 +24,7 @@ def _classes(attributes: dict[str, str | None]) -> set[str]:
 class PosterSource:
     gif: str
     poster: str
+    video: str
 
 
 class _GalleryParser(HTMLParser):
@@ -42,7 +43,12 @@ class _GalleryParser(HTMLParser):
 
         missing = [
             name
-            for name in ("src", "data-poster-src", "data-motion-src")
+            for name in (
+                "src",
+                "data-poster-src",
+                "data-motion-src",
+                "data-video-src",
+            )
             if not attributes.get(name)
         ]
         if missing:
@@ -53,11 +59,12 @@ class _GalleryParser(HTMLParser):
         source = attributes["src"] or ""
         poster = attributes["data-poster-src"] or ""
         motion = attributes["data-motion-src"] or ""
+        video = attributes["data-video-src"] or ""
         if source != poster:
             raise ValueError(
                 f"motion image src must equal data-poster-src: {source!r} != {poster!r}"
             )
-        self.sources.append(PosterSource(gif=motion, poster=poster))
+        self.sources.append(PosterSource(gif=motion, poster=poster, video=video))
 
 
 def _local_path(root: Path, value: str, *, kind: str) -> Path:

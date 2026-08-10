@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 from html.parser import HTMLParser
+import json
 from pathlib import Path
+import shutil
+import subprocess
 import unittest
 
 from PIL import Image
@@ -110,25 +113,72 @@ class SiteCatalogTests(unittest.TestCase):
         self.assertEqual(self.parser.symmetry_figures, 33)
         self.assertEqual(len(self.parser.motion_images), 33)
 
-    def test_motion_images_have_unique_static_and_animated_sources(self) -> None:
-        pairs: list[tuple[str, str]] = []
+    def test_motion_images_have_unique_poster_gif_and_video_sources(self) -> None:
+        source_sets: list[tuple[str, str, str]] = []
         for attributes in self.parser.motion_images:
             source = attributes.get("src") or ""
             poster = attributes.get("data-poster-src") or ""
-            motion = attributes.get("data-motion-src") or ""
+            gif = attributes.get("data-motion-src") or ""
+            video = attributes.get("data-video-src") or ""
             self.assertEqual(source, poster)
             self.assertTrue(poster.lower().endswith(".webp"), poster)
-            self.assertTrue(motion.lower().endswith(".gif"), motion)
+            self.assertTrue(gif.lower().endswith(".gif"), gif)
+            self.assertTrue(video.lower().endswith(".mp4"), video)
             self.assertTrue((ROOT / poster).is_file(), poster)
-            self.assertTrue((ROOT / motion).is_file(), motion)
-            pairs.append((poster, motion))
-        self.assertEqual(len(set(pairs)), 33)
+            self.assertTrue((ROOT / gif).is_file(), gif)
+            self.assertTrue((ROOT / video).is_file(), video)
+
+            video_bytes = (ROOT / video).read_bytes()
+            self.assertEqual(video_bytes[4:8], b"ftyp", video)
+            self.assertGreater(video_bytes.find(b"moov"), 0, video)
+            self.assertGreater(video_bytes.find(b"mdat"), 0, video)
+            self.assertLess(video_bytes.find(b"moov"), video_bytes.find(b"mdat"), video)
+            source_sets.append((poster, gif, video))
+        self.assertEqual(len(set(source_sets)), 33)
+
+    @unittest.skipUnless(shutil.which("ffprobe"), "ffprobe is required for MP4 audit")
+    def test_every_video_proxy_has_sixty_frames_at_twenty_fps(self) -> None:
+        ffprobe = shutil.which("ffprobe")
+        assert ffprobe is not None
+        for attributes in self.parser.motion_images:
+            video = ROOT / (attributes.get("data-video-src") or "")
+            result = subprocess.run(
+                (
+                    ffprobe,
+                    "-v",
+                    "error",
+                    "-select_streams",
+                    "v:0",
+                    "-count_frames",
+                    "-show_entries",
+                    "stream=codec_name,width,height,r_frame_rate,nb_read_frames:format=duration",
+                    "-of",
+                    "json",
+                    str(video),
+                ),
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            payload = json.loads(result.stdout)
+            stream = payload["streams"][0]
+            self.assertEqual(stream["codec_name"], "h264", video)
+            self.assertEqual(stream["r_frame_rate"], "20/1", video)
+            self.assertEqual(int(stream["nb_read_frames"]), 60, video)
+            self.assertAlmostEqual(float(payload["format"]["duration"]), 3.0, places=3)
+            gif = ROOT / (attributes.get("data-motion-src") or "")
+            with Image.open(gif) as source:
+                expected_size = source.size
+            self.assertEqual(
+                (int(stream["width"]), int(stream["height"])),
+                expected_size,
+            )
 
     def test_every_poster_exactly_matches_its_gif_first_frame(self) -> None:
         for attributes in self.parser.motion_images:
             poster_path = ROOT / (attributes.get("data-poster-src") or "")
-            motion_path = ROOT / (attributes.get("data-motion-src") or "")
-            with Image.open(motion_path) as motion:
+            gif_path = ROOT / (attributes.get("data-motion-src") or "")
+            with Image.open(gif_path) as motion:
                 motion.seek(0)
                 expected = motion.convert("RGB")
             with Image.open(poster_path) as poster:
@@ -144,19 +194,38 @@ class SiteCatalogTests(unittest.TestCase):
         self.assertNotIn("aria-pressed", attributes)
         self.assertEqual(
             _normalized_notation(self.parser.motion_button_text[0]),
-            _normalized_notation("▶ Play animations"),
+            _normalized_notation("▶ Play all animations"),
         )
 
-    def test_motion_control_swaps_between_posters_and_gifs(self) -> None:
+    def test_motion_controls_create_seekable_individual_video_players(self) -> None:
         script = (ROOT / "site.js").read_text(encoding="utf-8")
-        self.assertIn("image.dataset.posterSrc", script)
-        self.assertIn("image.dataset.motionSrc", script)
-        self.assertIn("Stop animations", script)
-        self.assertNotIn("motion-snapshot", script)
+        self.assertIn("document.createElement('video')", script)
+        self.assertIn("animation-controls", script)
+        self.assertIn("animation-toggle", script)
+        self.assertIn("phase-slider", script)
+        self.assertIn("slider.min = '0'", script)
+        self.assertIn("slider.max = String(FRAME_COUNT - 1)", script)
+        self.assertIn("player.video.currentTime = frame / FPS", script)
+        self.assertIn("player.slider.addEventListener('input'", script)
+        self.assertIn("pausePlayer(player)", script)
+        self.assertIn("Stop all animations", script)
+        self.assertIn("IntersectionObserver", script)
+        self.assertIn("Animation unavailable for", script)
+        self.assertIn("if (player.loaded && !player.error)", script)
+        self.assertIn("globalButton.disabled = true", script)
+        self.assertIn("schedulePhaseUpdates()", script)
+        self.assertNotIn("images.every", script)
+
+    def test_video_generator_preserves_the_sampled_cycle(self) -> None:
+        script = (ROOT / "scripts" / "generate_videos.py").read_text(encoding="utf-8")
+        self.assertIn('"-frames:v"', script)
+        self.assertIn('"libx264"', script)
+        self.assertIn('"+faststart"', script)
+        self.assertIn("keyframe_interval", script)
 
     def test_mathjax_is_pinned_configured_and_does_not_block_controls(self) -> None:
         index = (ROOT / "index.html").read_text(encoding="utf-8")
-        site_script = '<script src="site.js" defer></script>'
+        site_script = '<script src="site.js?v=individual-controls" defer></script>'
         mathjax_script = (
             '<script src="https://cdn.jsdelivr.net/npm/'
             'mathjax@4.1.3/tex-chtml.js" defer></script>'
@@ -176,7 +245,7 @@ class SiteCatalogTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         styles = (ROOT / "site.css").read_text(encoding="utf-8")
         self.assertIn('<meta name="theme-color" content="#ffffff">', index)
-        self.assertIn('href="site.css?v=professional-exposition"', index)
+        self.assertIn('href="site.css?v=individual-controls"', index)
         self.assertIn("color-scheme: light", styles)
         self.assertIn("--background: #ffffff", styles)
         self.assertNotIn("color-scheme: dark", styles)

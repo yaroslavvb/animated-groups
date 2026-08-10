@@ -7,7 +7,9 @@ Wu. The web catalog contains eleven actions, each represented by three motif
 families. Four rows reproduce coordinate operations stated in the paper, one
 realizes the coordinate action of the listed `4′` magnetic point group, and six
 are project-specific finite-loop specializations or constructions in the same
-affine framework.
+affine framework. The canonical artifacts remain infinitely looping GIFs; the
+web page uses seekable H.264 playback proxies so that every motif has an
+independent Play/Pause button and a 60-position phase slider.
 
 **Live gallery:** [yaroslavvb.github.io/animated-groups](https://yaroslavvb.github.io/animated-groups/)
 
@@ -110,6 +112,18 @@ python3 scripts/generate_motif_variants.py
 
 This writes 22 more audited loops to `output/motif_variants/`, giving three
 visual realizations for each symmetry in the web gallery.
+
+After generating the GIF catalog, create the web posters and seekable playback
+proxies with:
+
+```bash
+python3 scripts/generate_posters.py
+python3 scripts/generate_videos.py
+```
+
+The video step requires `ffmpeg` on `PATH`. It produces a 60-frame, 20 fps H.264
+proxy for each GIF. These files support individual pause and phase seeking in
+the browser; they do not replace the GIFs or their loop audits.
 
 The base and catalog renders default to 600 x 600; the motif variants default
 to 420 x 420.  All use 60 frames at 20 fps.  A frame count must be
@@ -223,6 +237,7 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `animated_groups/catalog/` — exact enumeration, pattern recipes, catalog renderer, and motif variants.
 - `scripts/` — small entry points for each requested animation.
 - `scripts/generate_posters.py` — extracts a lossless first-frame WebP poster for each gallery GIF.
+- `scripts/generate_videos.py` — transcodes each gallery GIF to a seekable H.264 playback proxy.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
 - `docs/orbifold_notation.md` — proposed phase decoration of spatial Conway symbols.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.
