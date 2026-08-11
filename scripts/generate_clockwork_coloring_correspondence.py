@@ -36,6 +36,7 @@ import math
 from pathlib import Path
 import sys
 from typing import Any, Iterable
+from urllib.parse import urlencode
 
 from PIL import Image, ImageDraw
 
@@ -53,6 +54,7 @@ CATALOG_ROOT = "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?
 CATALOG_DATA_URL = "https://yaroslavvb.github.io/animated-groups-fable/data/catalog.json"
 BOOK_RECORD_URL = "https://books.google.com/books?id=EtQCk0TNafsC"
 BOOK_PAGE_URL = BOOK_RECORD_URL + "&pg=PA{page}"
+BOOK_EXCERPT_TARGET = "clockwork-book-excerpt"
 BOOK_ERRATA_URL = "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html"
 FARRIS_URL = "https://archive.bridgesmathart.org/2017/bridges2017-131.pdf#page=6"
 
@@ -1295,8 +1297,17 @@ def _phase_profile(record: dict[str, Any]) -> str:
 
 def _book_link(reference: dict[str, Any], css_class: str) -> str:
     excerpt = BOOK_EXCERPTS[reference["excerpt_key"]]
+    viewer_url = "book-excerpt.html?" + urlencode(
+        {
+            "image": excerpt["image"],
+            "title": excerpt["title"],
+            "context": excerpt["context"],
+            "alt": excerpt["alt"],
+            "source": reference["url"],
+        }
+    )
     return (
-        f'<a class="{css_class}" href="{escape(reference["url"])}" '
+        f'<a class="{css_class}" href="{escape(viewer_url)}" '
         f'data-printed-page="{reference["printed_page"]}" '
         f'data-pdf-page="{reference["pdf_page"]}" '
         f'data-book-excerpt="{escape(excerpt["key"])}" '
@@ -1304,9 +1315,10 @@ def _book_link(reference: dict[str, Any], css_class: str) -> str:
         f'data-book-title="{escape(excerpt["title"])}" '
         f'data-book-context="{escape(excerpt["context"])}" '
         f'data-book-alt="{escape(excerpt["alt"])}" '
-        'aria-haspopup="dialog" aria-controls="book-excerpt-dialog">'
+        f'data-book-source="{escape(reference["url"])}" '
+        f'target="{BOOK_EXCERPT_TARGET}">'
         f'{escape(reference["label"])} · printed p. {reference["printed_page"]} '
-        f'(attached PDF p. {reference["pdf_page"]}) · view annotated excerpt</a>'
+        f'(attached PDF p. {reference["pdf_page"]}) · view annotated excerpt in the excerpt tab</a>'
     )
 
 
@@ -1662,28 +1674,6 @@ python3 scripts/generate_tos_book_excerpts.py --source-pdf "/path/to/The Symmetr
       <p><a href="./">Visualization gallery</a> · <a href="future-directions.html">Colour census</a> · <a href="README.md">README</a> · <a href="https://github.com/yaroslavvb/animated-groups">GitHub source</a></p>
     </footer>
   </main>
-
-  <dialog class="book-excerpt-dialog" id="book-excerpt-dialog" role="dialog" aria-modal="true" aria-labelledby="book-excerpt-title" aria-describedby="book-excerpt-context">
-    <article class="book-excerpt-panel">
-      <header class="book-excerpt-header">
-        <p class="overline">Annotated book evidence</p>
-        <button class="book-excerpt-close" type="button" data-book-dialog-close aria-label="Close book excerpt">×</button>
-        <h2 id="book-excerpt-title">The Symmetries of Things</h2>
-        <p id="book-excerpt-context"></p>
-      </header>
-      <div class="book-excerpt-media" data-book-excerpt-media data-state="idle">
-        <img data-book-excerpt-image alt="" decoding="async">
-        <p class="book-excerpt-status" data-book-excerpt-status role="status">Loading annotated excerpt…</p>
-      </div>
-      <footer class="book-excerpt-footer">
-        <p>This annotated evidence crop keeps its horizontal framing and shows five times the previous vertical context where the source page permits, stopping at page edges. The baked-in outline marks the cited item; the faint copyright notice identifies the excerpt.</p>
-        <div class="book-excerpt-actions">
-          <button class="book-excerpt-zoom" type="button" data-book-zoom-toggle aria-pressed="false">Actual size</button>
-          <a class="book-excerpt-source" data-book-excerpt-source href="{BOOK_RECORD_URL}" target="_blank" rel="noopener">Open the cited page at Google Books</a>
-        </div>
-      </footer>
-    </article>
-  </dialog>
 
   <script type="module" src="clockwork-coloring-correspondence.js"></script>
 </body>
