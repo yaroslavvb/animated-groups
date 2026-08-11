@@ -50,7 +50,7 @@ class CorrespondenceParser(HTMLParser):
             self.family_ids.append(attributes.get("id", ""))
             if "is-empty" in classes:
                 self.empty_family_ids.append(attributes.get("id", ""))
-        if tag == "p" and "data-trivial-product" in attributes:
+        if tag == "aside" and "data-trivial-product" in attributes:
             self.trivial_product_ids.append(attributes.get("id", ""))
         if tag == "nav" and "clockwork-tabbar" in classes:
             self.tabbar_count += 1
@@ -168,6 +168,33 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertTrue(group["product"])
             self.assertEqual(group["clock_order"], 1)
             self.assertEqual(group["parent"], group["kernel"])
+
+        for index, base in enumerate(correspondence.BASE_ORDER):
+            start = self.page.index(f'id="wallpaper-{base}"')
+            if index + 1 < len(correspondence.BASE_ORDER):
+                end = self.page.index(
+                    f'id="wallpaper-{correspondence.BASE_ORDER[index + 1]}"'
+                )
+            else:
+                end = self.page.index('<section class="provenance"')
+            family_html = self.page[start:end]
+            trivial_position = family_html.index("data-trivial-product")
+            content_marker = (
+                "data-clockwork-tabs"
+                if any(group["parent"]["hm"] == base for group in self.display_groups)
+                else 'class="family-empty"'
+            )
+            self.assertGreater(trivial_position, family_html.index(content_marker), base)
+            self.assertEqual(family_html.count("data-trivial-product"), 1, base)
+            self.assertIn('class="trivial-product"', family_html)
+
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".trivial-product", css)
+        self.assertIn("background: #f1f2f1", css)
+        self.assertIn("color: #7b837f", css)
+        self.assertNotIn("family-omission", self.page)
 
     def test_17_wallpaper_sections_have_tabs_only_for_nontrivial_groups(self) -> None:
         self.assertEqual(
