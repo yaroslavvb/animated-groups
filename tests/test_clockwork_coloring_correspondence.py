@@ -689,6 +689,8 @@ process.stdout.write(JSON.stringify({
         self.assertTrue(script_path.is_file())
         script = script_path.read_text(encoding="utf-8")
         self.assertIn("this.playingIntent = false", script)
+        self.assertIn("if (!this.active) this.activate();", script)
+        self.assertIn("else this.resizeAndDraw();", script)
         self.assertIn("phase - placement.tau", script)
         self.assertIn("const HAND_TAIL = 1.4", script)
         self.assertIn("const tip = -Math.PI / 2 + frac(theta) * TWO_PI", script)
