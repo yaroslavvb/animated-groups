@@ -25,7 +25,8 @@
       "edition": 2008,
       "record_url": "https://books.google.com/books?id=EtQCk0TNafsC",
       "errata_url": "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html",
-      "note": "Printed-page links use the Google Books record; attached-PDF page indices are stored separately for audit reproducibility."
+      "note": "Printed-page links open local highlighted evidence crops with Google Books as the no-JavaScript and complete-page fallback; attached-PDF indices are stored separately for audit reproducibility.",
+      "annotated_excerpt_count": 62
     },
     "kernel_method": "Classify the tau=0 spatial operations plus their own translation lattice against the 17 canonical wallpaper groups.",
     "image_palette": [
@@ -81,14 +82,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::◦"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -180,14 +183,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::2222"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -302,7 +307,8 @@
             "role": "primary",
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::2222/◦"
           }
         ],
         "prime_chain": []
@@ -424,7 +430,8 @@
             "role": "primary",
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::2222/2222"
           }
         ],
         "prime_chain": []
@@ -570,14 +577,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::*×"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -692,7 +701,8 @@
             "role": "primary",
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::*×/◦"
           }
         ],
         "prime_chain": []
@@ -808,14 +818,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::**"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -967,14 +979,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::××"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -1126,14 +1140,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::*2222"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -1290,7 +1306,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*2222/2222"
           }
         ],
         "prime_chain": []
@@ -1442,14 +1459,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::22*"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -1606,7 +1625,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::22*/2222"
           }
         ],
         "prime_chain": []
@@ -1758,14 +1778,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::22×"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -1922,7 +1944,8 @@
             "role": "primary",
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::22×/2222"
           }
         ],
         "prime_chain": []
@@ -2080,7 +2103,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*2222/**"
           }
         ],
         "prime_chain": []
@@ -2238,7 +2262,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::22*/××"
           }
         ],
         "prime_chain": []
@@ -2396,7 +2421,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::22*/**"
           }
         ],
         "prime_chain": []
@@ -2554,7 +2580,8 @@
             "role": "primary",
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::22×/××"
           }
         ],
         "prime_chain": []
@@ -2719,7 +2746,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*2222/*2222"
           }
         ],
         "prime_chain": []
@@ -2956,7 +2984,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*2222/22*"
           }
         ],
         "prime_chain": []
@@ -3193,7 +3222,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::22*/22*"
           }
         ],
         "prime_chain": []
@@ -3430,7 +3460,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::22*/22×"
           }
         ],
         "prime_chain": []
@@ -3660,14 +3691,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::2*22"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -3902,7 +3935,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::2*22/2222"
           }
         ],
         "prime_chain": []
@@ -4138,7 +4172,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::2*22/*×"
           }
         ],
         "prime_chain": []
@@ -4375,7 +4410,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::2*22/*2222"
           }
         ],
         "prime_chain": []
@@ -4612,7 +4648,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::2*22/22×"
           }
         ],
         "prime_chain": []
@@ -4849,7 +4886,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::2*22/22*"
           }
         ],
         "prime_chain": []
@@ -5087,7 +5125,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*2222/2*22"
           }
         ],
         "prime_chain": []
@@ -5479,14 +5518,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -5495,14 +5536,16 @@
             "index": 2,
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::22×/2222"
           },
           {
             "notation": "2222/2222",
             "index": 2,
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::2222/2222"
           }
         ],
         "intermediate_orbifold": "2222"
@@ -5870,14 +5913,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::442"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -6034,7 +6079,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::442/2222"
           }
         ],
         "prime_chain": []
@@ -6202,14 +6248,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -6218,14 +6266,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::442/2222"
           },
           {
             "notation": "2222/◦",
             "index": 2,
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::2222/◦"
           }
         ],
         "intermediate_orbifold": "2222"
@@ -6393,14 +6443,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -6409,14 +6461,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::442/2222"
           },
           {
             "notation": "2222/◦",
             "index": 2,
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::2222/◦"
           }
         ],
         "intermediate_orbifold": "2222"
@@ -6581,7 +6635,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::442/442"
           }
         ],
         "prime_chain": []
@@ -6828,14 +6883,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -6844,14 +6901,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::442/2222"
           },
           {
             "notation": "2222/2222",
             "index": 2,
             "printed_page": 141,
             "pdf_page": 160,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA141",
+            "excerpt_key": "p141::2222/2222"
           }
         ],
         "intermediate_orbifold": "2222"
@@ -7081,14 +7140,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::*442"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -7324,7 +7385,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*442/*2222"
           }
         ],
         "prime_chain": []
@@ -7560,7 +7622,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*442/2*22"
           }
         ],
         "prime_chain": []
@@ -7795,7 +7858,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*442/442"
           }
         ],
         "prime_chain": []
@@ -8025,14 +8089,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::4*2"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -8268,7 +8334,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::4*2/22×"
           }
         ],
         "prime_chain": []
@@ -8504,7 +8571,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::4*2/2*22"
           }
         ],
         "prime_chain": []
@@ -8739,7 +8807,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::4*2/442"
           }
         ],
         "prime_chain": []
@@ -8983,7 +9052,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*442/*442"
           }
         ],
         "prime_chain": []
@@ -9383,14 +9453,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -9399,14 +9471,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::4*2/2*22"
           },
           {
             "notation": "2*22/*2222",
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::2*22/*2222"
           }
         ],
         "intermediate_orbifold": "2*22"
@@ -9794,7 +9868,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*442/4*2"
           }
         ],
         "prime_chain": []
@@ -10194,14 +10269,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -10210,14 +10287,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::4*2/2*22"
           },
           {
             "notation": "2*22/22×",
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::2*22/22×"
           }
         ],
         "intermediate_orbifold": "2*22"
@@ -10579,14 +10658,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::333"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -10725,7 +10806,8 @@
             "role": "primary",
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::333³/◦"
           }
         ],
         "prime_chain": []
@@ -10864,7 +10946,8 @@
             "role": "primary",
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::333³/◦"
           }
         ],
         "prime_chain": []
@@ -11011,7 +11094,8 @@
             "role": "primary",
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::333³/333"
           }
         ],
         "prime_chain": []
@@ -11253,14 +11337,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::*333"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -11453,7 +11539,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*333/333"
           }
         ],
         "prime_chain": []
@@ -11641,14 +11728,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::3*3"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -11841,7 +11930,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::3*3/333"
           }
         ],
         "prime_chain": []
@@ -12050,21 +12140,24 @@
             "role": "primary",
             "printed_page": 164,
             "pdf_page": 183,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA164"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA164",
+            "excerpt_key": "p164::g234-single-slash-table"
           },
           {
             "label": "Table 12.1 · conflicting threefold table",
             "role": "conflict",
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::3*3³//*333"
           },
           {
             "label": "Threefold derivation · conflicting prose",
             "role": "conflict",
             "printed_page": 158,
             "pdf_page": 177,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA158"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA158",
+            "excerpt_key": "p158::g234-prose-conflict"
           }
         ],
         "independent_reference": {
@@ -12508,14 +12601,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -12524,14 +12619,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::3*3/333"
           },
           {
             "notation": "333³/333",
             "index": 3,
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::333³/333"
           }
         ],
         "intermediate_orbifold": "333"
@@ -12941,14 +13038,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::632"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -13154,7 +13253,8 @@
             "role": "primary",
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::632³/2222"
           }
         ],
         "prime_chain": []
@@ -13360,7 +13460,8 @@
             "role": "primary",
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::632³/2222"
           }
         ],
         "prime_chain": []
@@ -13559,7 +13660,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::632/333"
           }
         ],
         "prime_chain": []
@@ -13780,14 +13882,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -13796,14 +13900,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::632/333"
           },
           {
             "notation": "333³/◦",
             "index": 3,
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::333³/◦"
           }
         ],
         "intermediate_orbifold": "333"
@@ -14024,14 +14130,16 @@
             "role": "primary",
             "printed_page": 155,
             "pdf_page": 174,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA155",
+            "excerpt_key": "p155::slash-rule"
           },
           {
             "label": "End of the book's primefold enumeration",
             "role": "scope",
             "printed_page": 169,
             "pdf_page": 188,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA169",
+            "excerpt_key": "p169::primefold-scope"
           }
         ],
         "prime_chain": [
@@ -14040,14 +14148,16 @@
             "index": 2,
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::632/333"
           },
           {
             "notation": "333³/◦",
             "index": 3,
             "printed_page": 156,
             "pdf_page": 175,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
+            "excerpt_key": "p156::333³/◦"
           }
         ],
         "intermediate_orbifold": "333"
@@ -14247,14 +14357,16 @@
             "role": "primary",
             "printed_page": 40,
             "pdf_page": 59,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA40",
+            "excerpt_key": "p40::*632"
           },
           {
             "label": "Onefold and n-fold colorings",
             "role": "supporting",
             "printed_page": 153,
             "pdf_page": 172,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA153",
+            "excerpt_key": "p153::onefold-nfold-definition"
           }
         ],
         "prime_chain": []
@@ -14568,7 +14680,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*632/3*3"
           }
         ],
         "prime_chain": []
@@ -14881,7 +14994,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*632/632"
           }
         ],
         "prime_chain": []
@@ -15195,7 +15309,8 @@
             "role": "primary",
             "printed_page": 140,
             "pdf_page": 159,
-            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140"
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA140",
+            "excerpt_key": "p140::*632/*333"
           }
         ],
         "prime_chain": []

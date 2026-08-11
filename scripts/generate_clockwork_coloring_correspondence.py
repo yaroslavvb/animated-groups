@@ -39,6 +39,8 @@ from typing import Any, Iterable
 
 from PIL import Image, ImageDraw
 
+from tos_book_excerpt_specs import BOOK_EXCERPTS
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "data" / "color-forward-manifest.json"
@@ -234,13 +236,18 @@ def book_reference(
     label: str,
     *,
     role: str,
+    excerpt_key: str,
 ) -> dict[str, Any]:
+    excerpt = BOOK_EXCERPTS.get(excerpt_key)
+    if not excerpt or excerpt["printed_page"] != printed_page:
+        raise ValueError(f"invalid excerpt key for printed p. {printed_page}: {excerpt_key}")
     return {
         "label": label,
         "role": role,
         "printed_page": printed_page,
         "pdf_page": printed_page + 19,
         "url": BOOK_PAGE_URL.format(page=printed_page),
+        "excerpt_key": excerpt_key,
     }
 
 
@@ -262,8 +269,18 @@ def book_audit(
                 "this a onefold coloring; it does not write a G¹/G color type."
             ),
             "references": [
-                book_reference(40, "Table 3.2 · the 17 plane groups", role="primary"),
-                book_reference(153, "Onefold and n-fold colorings", role="supporting"),
+                book_reference(
+                    40,
+                    "Table 3.2 · the 17 plane groups",
+                    role="primary",
+                    excerpt_key=f"p40::{parent}",
+                ),
+                book_reference(
+                    153,
+                    "Onefold and n-fold colorings",
+                    role="supporting",
+                    excerpt_key="p153::onefold-nfold-definition",
+                ),
             ],
             "prime_chain": [],
         }
@@ -280,7 +297,12 @@ def book_audit(
                 "book's G/K notation for a regular two-colour action."
             ),
             "references": [
-                book_reference(page, "Table 11.1 · twofold color types", role="primary")
+                book_reference(
+                    page,
+                    "Table 11.1 · twofold color types",
+                    role="primary",
+                    excerpt_key=f"p{page}::{notation}",
+                )
             ],
             "prime_chain": [],
         }
@@ -296,7 +318,12 @@ def book_audit(
                 "Here the stabilizer H of one colour equals the all-colours kernel K."
             ),
             "references": [
-                book_reference(156, "Table 12.1 · threefold color types", role="primary")
+                book_reference(
+                    156,
+                    "Table 12.1 · threefold color types",
+                    role="primary",
+                    excerpt_key=f"p156::{notation}",
+                )
             ],
             "prime_chain": [],
         }
@@ -315,9 +342,24 @@ def book_audit(
                 "p31m/3 p3m1 construction by Frank Farris."
             ),
             "references": [
-                book_reference(164, "Table 13.1 · later primefold summary", role="primary"),
-                book_reference(156, "Table 12.1 · conflicting threefold table", role="conflict"),
-                book_reference(158, "Threefold derivation · conflicting prose", role="conflict"),
+                book_reference(
+                    164,
+                    "Table 13.1 · later primefold summary",
+                    role="primary",
+                    excerpt_key="p164::g234-single-slash-table",
+                ),
+                book_reference(
+                    156,
+                    "Table 12.1 · conflicting threefold table",
+                    role="conflict",
+                    excerpt_key="p156::3*3³//*333",
+                ),
+                book_reference(
+                    158,
+                    "Threefold derivation · conflicting prose",
+                    role="conflict",
+                    excerpt_key="p158::g234-prose-conflict",
+                ),
             ],
             "independent_reference": {
                 "label": "Farris, Natural Color Symmetry, p. 136",
@@ -337,6 +379,7 @@ def book_audit(
                 "printed_page": page,
                 "pdf_page": page + 19,
                 "url": BOOK_PAGE_URL.format(page=page),
+                "excerpt_key": f"p{page}::{step_notation}",
             }
             for step_notation, index, page in chain["steps"]
         ]
@@ -356,8 +399,18 @@ def book_audit(
                 "notation follows the rule on p. 155."
             ),
             "references": [
-                book_reference(155, "Gⁿ/H/K notation and slash rule", role="primary"),
-                book_reference(169, "End of the book's primefold enumeration", role="scope"),
+                book_reference(
+                    155,
+                    "Gⁿ/H/K notation and slash rule",
+                    role="primary",
+                    excerpt_key="p155::slash-rule",
+                ),
+                book_reference(
+                    169,
+                    "End of the book's primefold enumeration",
+                    role="scope",
+                    excerpt_key="p169::primefold-scope",
+                ),
             ],
             "prime_chain": steps,
             "intermediate_orbifold": chain["intermediate"],
@@ -655,9 +708,11 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
                 "record_url": BOOK_RECORD_URL,
                 "errata_url": BOOK_ERRATA_URL,
                 "note": (
-                    "Printed-page links use the Google Books record; attached-PDF page "
+                    "Printed-page links open local highlighted evidence crops with Google "
+                    "Books as the no-JavaScript and complete-page fallback; attached-PDF "
                     "indices are stored separately for audit reproducibility."
                 ),
+                "annotated_excerpt_count": len(BOOK_EXCERPTS),
             },
             "kernel_method": (
                 "Classify the tau=0 spatial operations plus their own translation lattice "
@@ -743,6 +798,19 @@ def validate_payload(payload: dict[str, Any]) -> None:
         ]
         if len(primary_refs) != 1:
             raise ValueError(f"book audit needs one primary page in {group_id}")
+        for reference in group["book_audit"]["references"]:
+            excerpt = BOOK_EXCERPTS.get(reference.get("excerpt_key"))
+            if not excerpt:
+                raise ValueError(f"book reference lacks an excerpt asset in {group_id}")
+            if (
+                excerpt["printed_page"] != reference["printed_page"]
+                or excerpt["pdf_page"] != reference["pdf_page"]
+            ):
+                raise ValueError(f"book reference page and excerpt differ in {group_id}")
+        for step in group["book_audit"]["prime_chain"]:
+            excerpt = BOOK_EXCERPTS.get(step.get("excerpt_key"))
+            if not excerpt or excerpt["printed_page"] != step["printed_page"]:
+                raise ValueError(f"prime-chain link lacks an excerpt asset in {group_id}")
         if group["catalog_url"] != f"{CATALOG_ROOT}#{group_id}":
             raise ValueError(f"catalog deep link mismatch in {group_id}")
         if [row["index"] for row in group["phase_residues"]] != list(range(order)):
@@ -981,12 +1049,19 @@ def _phase_profile(record: dict[str, Any]) -> str:
 
 
 def _book_link(reference: dict[str, Any], css_class: str) -> str:
+    excerpt = BOOK_EXCERPTS[reference["excerpt_key"]]
     return (
         f'<a class="{css_class}" href="{escape(reference["url"])}" '
         f'data-printed-page="{reference["printed_page"]}" '
-        f'data-pdf-page="{reference["pdf_page"]}">'
+        f'data-pdf-page="{reference["pdf_page"]}" '
+        f'data-book-excerpt="{escape(excerpt["key"])}" '
+        f'data-book-image="{escape(excerpt["image"])}" '
+        f'data-book-title="{escape(excerpt["title"])}" '
+        f'data-book-context="{escape(excerpt["context"])}" '
+        f'data-book-alt="{escape(excerpt["alt"])}" '
+        'aria-haspopup="dialog" aria-controls="book-excerpt-dialog">'
         f'{escape(reference["label"])} · printed p. {reference["printed_page"]} '
-        f'(attached PDF p. {reference["pdf_page"]})</a>'
+        f'(attached PDF p. {reference["pdf_page"]}) · view annotated excerpt</a>'
     )
 
 
@@ -1010,11 +1085,17 @@ def _book_audit_html(record: dict[str, Any]) -> str:
     if audit["prime_chain"]:
         steps = []
         for step in audit["prime_chain"]:
+            step_reference = {
+                "label": f"Table on p. {step['printed_page']}",
+                "url": step["url"],
+                "printed_page": step["printed_page"],
+                "pdf_page": step["pdf_page"],
+                "excerpt_key": step["excerpt_key"],
+            }
             steps.append(
                 "<li>"
                 f"<span>{escape(step['notation'])} · index {step['index']}</span>"
-                f"<a class=\"book-chain-link\" href=\"{escape(step['url'])}\">"
-                f"Table on p. {step['printed_page']}</a>"
+                f"{_book_link(step_reference, 'book-chain-link')}"
                 "</li>"
             )
         chain_html = (
@@ -1252,10 +1333,11 @@ def page_html(payload: dict[str, Any]) -> str:
         Chapters 11–13 stop after primefold types (p. 169). The six fourfold and three sixfold
         records are therefore labelled as extensions of the notation on p. 155. Each is checked
         through its tabulated prime-index subgroup chain, while the operation audit establishes
-        that the full quotient is cyclic. Printed-page links use
-        <a href="{BOOK_RECORD_URL}">Google Books</a>; the matching attached-PDF index is shown in
-        every row. Preview availability can vary by region, and the supplied PDF is not
-        republished here. See also the book's <a href="{BOOK_ERRATA_URL}">official errata</a>.
+        that the full quotient is cyclic. Each printed-page link opens a tightly cropped,
+        highlighted excerpt made from the supplied PDF; complete pages and the source PDF are not
+        published. Every crop is marked <q>© COPYRIGHTED EXCERPT</q>, and the original link to
+        <a href="{BOOK_RECORD_URL}">Google Books</a> remains available in the popup and without
+        JavaScript. See also the book's <a href="{BOOK_ERRATA_URL}">official errata</a>.
       </p>
     </section>
 
@@ -1276,21 +1358,45 @@ def page_html(payload: dict[str, Any]) -> str:
       <h2 id="provenance-title">Data and reproduction</h2>
       <p>
         The <a href="data/clockwork-coloring-correspondence.json">68-record JSON</a>, this HTML,
-        all 68 lossless WebP plates, and the local paused-film controller are generated or tracked
-        in this repository. The data and page come from
-        <a href="scripts/generate_clockwork_coloring_correspondence.py">one checked-in script</a>.
+        all 68 lossless WebP plates, 62 annotated book excerpts, and the local paused-film
+        controller are generated or tracked in this repository. The data and page come from the
+        <a href="scripts/generate_clockwork_coloring_correspondence.py">correspondence generator</a>;
+        the <a href="scripts/tos_book_excerpt_specs.py">excerpt coordinates</a> and
+        <a href="scripts/generate_tos_book_excerpts.py">crop renderer</a> are checked in separately.
         The read-only source snapshot has SHA-256 <code>{escape(digest)}</code>. Each row links to
         its exact entry in the external forward catalog; no runtime data or code is loaded from
         that site. Film canvases read only the checked-in correspondence JSON.
       </p>
       <pre><code>python3 scripts/generate_clockwork_coloring_correspondence.py
-python3 scripts/generate_clockwork_coloring_correspondence.py --check</code></pre>
+python3 scripts/generate_clockwork_coloring_correspondence.py --check
+python3 scripts/generate_tos_book_excerpts.py --source-pdf "/path/to/The Symmetries of Things.pdf"
+python3 scripts/generate_tos_book_excerpts.py --source-pdf "/path/to/The Symmetries of Things.pdf" --check</code></pre>
     </section>
 
     <footer>
       <p><a href="./">Visualization gallery</a> · <a href="future-directions.html">Colour census</a> · <a href="README.md">README</a> · <a href="https://github.com/yaroslavvb/animated-groups">GitHub source</a></p>
     </footer>
   </main>
+
+  <dialog class="book-excerpt-dialog" id="book-excerpt-dialog" role="dialog" aria-modal="true" aria-labelledby="book-excerpt-title" aria-describedby="book-excerpt-context">
+    <article class="book-excerpt-panel">
+      <header class="book-excerpt-header">
+        <p class="overline">Annotated book evidence</p>
+        <button class="book-excerpt-close" type="button" data-book-dialog-close aria-label="Close book excerpt">×</button>
+        <h2 id="book-excerpt-title">The Symmetries of Things</h2>
+        <p id="book-excerpt-context"></p>
+      </header>
+      <div class="book-excerpt-media" data-book-excerpt-media data-state="idle">
+        <img data-book-excerpt-image alt="" decoding="async">
+        <p class="book-excerpt-status" data-book-excerpt-status role="status">Loading annotated excerpt…</p>
+      </div>
+      <footer class="book-excerpt-footer">
+        <p>This is a low-resolution, annotated evidence crop—not a complete page. The baked-in outline marks the cited item; the faint copyright notice identifies the excerpt.</p>
+        <a class="book-excerpt-source" data-book-excerpt-source href="{BOOK_RECORD_URL}" target="_blank" rel="noopener">Open the cited page at Google Books</a>
+      </footer>
+    </article>
+  </dialog>
+
   <script type="module" src="clockwork-coloring-correspondence.js"></script>
 </body>
 </html>
