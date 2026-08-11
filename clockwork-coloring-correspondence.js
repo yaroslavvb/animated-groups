@@ -694,6 +694,7 @@ function initializeBookExcerptDialog() {
   const image = dialog.querySelector("[data-book-excerpt-image]");
   const status = dialog.querySelector("[data-book-excerpt-status]");
   const source = dialog.querySelector("[data-book-excerpt-source]");
+  const zoomButton = dialog.querySelector("[data-book-zoom-toggle]");
   const closeButton = dialog.querySelector("[data-book-dialog-close]");
   const supportsNativeDialog = typeof dialog.showModal === "function";
   let opener = null;
@@ -701,10 +702,19 @@ function initializeBookExcerptDialog() {
   dialog.dataset.enhanced = "true";
   dialog.dataset.mode = supportsNativeDialog ? "native" : "fallback";
 
+  function setZoom(actualSize) {
+    media.dataset.zoom = actualSize ? "actual" : "fit";
+    zoomButton.setAttribute("aria-pressed", String(actualSize));
+    zoomButton.textContent = actualSize ? "Fit excerpt" : "Actual size";
+    media.scrollTop = 0;
+    media.scrollLeft = 0;
+  }
+
   function resetExcerpt() {
     image.removeAttribute("src");
     image.alt = "";
     media.dataset.state = "idle";
+    setZoom(false);
     status.hidden = false;
     document.documentElement.classList.remove("book-dialog-open");
     if (opener && opener.isConnected) opener.focus();
@@ -729,6 +739,7 @@ function initializeBookExcerptDialog() {
     source.href = link.href;
     image.alt = link.dataset.bookAlt || "Annotated excerpt from The Symmetries of Things.";
     image.removeAttribute("src");
+    setZoom(false);
     media.dataset.state = "loading";
     status.hidden = false;
     status.textContent = "Loading annotated excerpt…";
@@ -778,7 +789,7 @@ function initializeBookExcerptDialog() {
       return;
     }
     if (event.key !== "Tab") return;
-    const focusable = [closeButton, source].filter((element) => !element.hidden);
+    const focusable = [closeButton, zoomButton, source].filter((element) => !element.hidden);
     if (focusable.length === 0) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -805,6 +816,9 @@ function initializeBookExcerptDialog() {
   });
 
   closeButton.addEventListener("click", closeExcerpt);
+  zoomButton.addEventListener("click", () => {
+    setZoom(media.dataset.zoom !== "actual");
+  });
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) closeExcerpt();
   });

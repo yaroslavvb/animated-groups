@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import generate_clockwork_coloring_correspondence as correspondence  # noqa: E402
+import generate_tos_book_excerpts as book_excerpts  # noqa: E402
 
 
 class CorrespondenceParser(HTMLParser):
@@ -306,7 +307,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             set(correspondence.BOOK_EXCERPTS),
         )
 
-    def test_the_single_accessible_dialog_lazy_loads_62_tight_watermarked_webps(self) -> None:
+    def test_the_single_accessible_dialog_lazy_loads_62_contextual_watermarked_webps(self) -> None:
         self.assertEqual(self.parser.book_dialog_ids, ["book-excerpt-dialog"])
         self.assertEqual(len(self.parser.book_excerpt_images), 1)
         self.assertNotIn("src", self.parser.book_excerpt_images[0])
@@ -315,16 +316,62 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             path = ROOT / excerpt["image"]
             self.assertTrue(path.is_file(), key)
             self.assertEqual(excerpt["pdf_page"], excerpt["printed_page"] + 19)
+            focus_x, focus_y, focus_width, focus_height = excerpt["crop"]
+            context_x, context_y, context_width, context_height = (
+                book_excerpts.expanded_crop(excerpt["crop"])
+            )
+            highlight_x, highlight_y, highlight_width, highlight_height = excerpt["highlight"]
+
+            self.assertGreaterEqual(
+                context_width * context_height,
+                focus_width * focus_height * 5,
+                key,
+            )
+            self.assertGreaterEqual(context_x, 0, key)
+            self.assertGreaterEqual(context_y, 0, key)
+            self.assertLessEqual(context_x + context_width, book_excerpts.PDF_WIDTH, key)
+            self.assertLessEqual(context_y + context_height, book_excerpts.PDF_HEIGHT, key)
+            self.assertLessEqual(context_x, focus_x, key)
+            self.assertLessEqual(context_y, focus_y, key)
+            self.assertGreaterEqual(context_x + context_width, focus_x + focus_width, key)
+            self.assertGreaterEqual(context_y + context_height, focus_y + focus_height, key)
+            self.assertLessEqual(context_x, highlight_x, key)
+            self.assertLessEqual(context_y, highlight_y, key)
+            self.assertGreaterEqual(
+                context_x + context_width,
+                highlight_x + highlight_width,
+                key,
+            )
+            self.assertGreaterEqual(
+                context_y + context_height,
+                highlight_y + highlight_height,
+                key,
+            )
             with Image.open(path) as image:
                 self.assertEqual(image.format, "WEBP")
                 width, height = image.size
-            self.assertLessEqual(width, 1100, key)
-            self.assertLessEqual(height, 460, key)
-            self.assertGreater(width, 450, key)
-            self.assertGreater(height, 120, key)
+            content_width = width - 24
+            content_height = height - 78
+            focus_pixel_area = (
+                focus_width * book_excerpts.RENDER_DPI / 72
+                * focus_height * book_excerpts.RENDER_DPI / 72
+            )
+            self.assertGreaterEqual(content_width * content_height, focus_pixel_area * 5, key)
+            self.assertLessEqual(
+                width,
+                book_excerpts.PDF_WIDTH * book_excerpts.RENDER_DPI / 72 + 24,
+                key,
+            )
+            self.assertLessEqual(
+                height,
+                book_excerpts.PDF_HEIGHT * book_excerpts.RENDER_DPI / 72 + 78,
+                key,
+            )
 
         self.assertIn("© COPYRIGHTED EXCERPT", self.page)
         self.assertIn("not a complete page", self.page)
+        self.assertIn("at least five times the original focus area", self.page)
+        self.assertIn("data-book-zoom-toggle", self.page)
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
         self.assertIn("initializeBookExcerptDialog", script)
         self.assertIn("typeof dialog.showModal", script)
@@ -334,10 +381,14 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('event.key === "Escape"', script)
         self.assertIn("event.metaKey", script)
         self.assertIn("opener.focus()", script)
+        self.assertIn("function setZoom(actualSize)", script)
+        self.assertIn('media.dataset.zoom = actualSize ? "actual" : "fit"', script)
+        self.assertIn("media.scrollTop = 0", script)
         excerpt_script = (ROOT / "scripts" / "generate_tos_book_excerpts.py").read_text(
             encoding="utf-8"
         )
         self.assertIn('WATERMARK = "© COPYRIGHTED EXCERPT"', excerpt_script)
+        self.assertIn('highlight = _box(spec["highlight"]', excerpt_script)
 
     def test_inverse_clock_pairs_explain_68_to_64(self) -> None:
         paired_rows = {
