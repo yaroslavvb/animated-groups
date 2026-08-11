@@ -314,28 +314,12 @@ nav a[aria-current="page"] {
   vertical-align: 0.68em;
 }
 
-.clockwork-identity {
+.entry-identity {
   margin: 0.58rem 0 0;
   color: var(--muted);
   font-size: 0.74rem;
-}
-
-.clockwork-identity > span:first-child {
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.clockwork-symbol {
-  margin-left: 0.22rem;
-  color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.12em;
-}
-
-.clockwork-symbol sub,
-.clockwork-symbol sup {
-  font-size: 0.66em;
-  line-height: 0;
 }
 
 .group-id {
@@ -714,7 +698,7 @@ a[data-book-excerpt]::after {
   line-height: 1.42;
 }
 
-.clockwork-description,
+.phase-description,
 .coloring-description {
   margin-bottom: 0.9rem;
   font-size: 0.92rem;

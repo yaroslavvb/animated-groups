@@ -48,8 +48,8 @@ MANIFEST = ROOT / "data" / "color-forward-manifest.json"
 DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=book-notation-audit"
-CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=excerpt-window-handshake"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=no-catalog-notation"
+CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=no-catalog-notation"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
 CATALOG_ROOT = "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward"
@@ -119,7 +119,7 @@ WALLPAPER_SUMMARIES = {
     ),
     "p2": (
         "A sphere with four order-2 cone points.",
-        "Both displayed lifts use two colours: 2₁2₁2₁2₁ has K = ◦, while c222₁2₁ has an index-two kernel whose signature is again 2222.",
+        "Both displayed lifts use two colours; their colour-fixing kernels are ◦ and 2222.",
     ),
     "pm": (
         "Two mirror-boundary components.",
@@ -131,7 +131,7 @@ WALLPAPER_SUMMARIES = {
     ),
     "cm": (
         "One mirror boundary and one crosscap.",
-        "Its non-product member ~*×½ exchanges two phases and has translation-only kernel K = ◦.",
+        "Its single nontrivial lift exchanges two phases and has translation-only kernel K = ◦.",
     ),
     "pmm": (
         "A mirror quadrilateral with four order-2 corners.",
@@ -143,7 +143,7 @@ WALLPAPER_SUMMARIES = {
     ),
     "pgg": (
         "Two order-2 cone points and one crosscap.",
-        "Among its three nontrivial lifts, c22₁×¼ reaches four colours; its quarter-period glide has kernel K = 2222.",
+        "Among its three nontrivial lifts, one reaches four colours; its quarter-period glide has kernel K = 2222.",
     ),
     "cmm": (
         "One order-2 cone point and a mirror boundary with two order-2 corners.",
@@ -151,7 +151,7 @@ WALLPAPER_SUMMARIES = {
     ),
     "p4": (
         "A sphere with cone points of orders 4, 4, and 2.",
-        "Three lifts use four colours; 4₁4₁2₁ and 4₃4₃2₁ are the inverse-clock pair.",
+        "Three lifts use four colours; two form an inverse-clock pair with the same traditional colour type.",
     ),
     "p4m": (
         "A mirror triangle with corner orders 4, 4, and 2.",
@@ -159,19 +159,19 @@ WALLPAPER_SUMMARIES = {
     ),
     "p4g": (
         "One order-4 cone point and a mirror boundary with one order-2 corner.",
-        "Three lifts use two colours and two use four; the four-colour cases are c4₃*2 and c4₁*2.",
+        "Three lifts use two colours and two use four; the four-colour cases have different colour-fixing kernels.",
     ),
     "p3": (
         "A sphere with three order-3 cone points.",
-        "Its three nontrivial lifts use three colours: the uniform 3₁ and 3₂ screws form an inverse-clock pair, while r33₁3₂ retains a kernel with signature 333.",
+        "Its three nontrivial lifts use three colours: two form an inverse-clock pair, while the third retains a kernel with signature 333.",
     ),
     "p3m1": (
         "A mirror triangle with three order-3 corners.",
-        "There is one nontrivial lift: the two-colour *~3~3~3, where the odd-corner relation makes the mirror arcs change phase together.",
+        "There is one nontrivial two-colour lift; the odd-corner relation makes the mirror arcs change phase together.",
     ),
     "p31m": (
         "One order-3 cone point and a mirror boundary with one order-3 corner.",
-        "Its displayed lifts have N = 2, 3, and 6; r3₂*~3 combines a third-period screw with a half-period mirror shift, producing N = 6.",
+        "Its displayed lifts have N = 2, 3, and 6; the six-colour action combines a third-period rotation with a half-period mirror shift.",
     ),
     "p6": (
         "A sphere with cone points of orders 6, 3, and 2.",
@@ -313,8 +313,6 @@ M_ID = ((1, 0), (0, 1))
 
 SUPERSCRIPT = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
 SUPERSCRIPT_TO_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
-SUBSCRIPT_TO_ASCII = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
-SUPERSCRIPT_LETTERS = {"ᵃ": "a", "ᵇ": "b", "ᶜ": "c", "ᵈ": "d"}
 
 # The distinct G/K signatures in Table 11.1, pp. 140--141.  The book counts
 # 46 types because **/** has two inequivalent variants; no forward row here
@@ -534,30 +532,6 @@ def superscript_html(value: str) -> str:
             flush()
             output.append(escape(character))
     flush()
-    return "".join(output)
-
-
-def clockwork_symbol_html(value: str) -> str:
-    """Typeset the secondary catalog symbol without changing its notation."""
-
-    output: list[str] = []
-    subscript: list[str] = []
-
-    def flush_subscript() -> None:
-        if subscript:
-            output.append(f"<sub>{''.join(subscript)}</sub>")
-            subscript.clear()
-
-    for character in value:
-        if character in "₀₁₂₃₄₅₆₇₈₉":
-            subscript.append(character.translate(SUBSCRIPT_TO_ASCII))
-            continue
-        flush_subscript()
-        if character in SUPERSCRIPT_LETTERS:
-            output.append(f"<sup>{SUPERSCRIPT_LETTERS[character]}</sup>")
-        else:
-            output.append(escape(character))
-    flush_subscript()
     return "".join(output)
 
 
@@ -953,24 +927,19 @@ def phase_character_signature(
 
 
 def clockwork_description(group: dict[str, Any], order: int) -> str:
-    symbol = group["symbol"]
     parent = ORBIFOLD_BY_BASE[group["base"]]
     if order == 1:
         return (
-            f"{symbol} is the direct-product forward lift over a plane symmetry group "
-            f"with orbifold signature {parent}. Its phase character is trivial: "
-            "every spatial operation maps "
-            "to phase 0."
+            f"The direct-product lift over plane orbifold {parent} has trivial "
+            "phase character: every spatial operation maps to phase 0."
         )
     profile = phase_profile(group["render"]["ops"])
     assignments = "; ".join(
         f"{row['operation']}: {', '.join(row['phases'])}" for row in profile
     )
     return (
-        f"Clockwork notation {symbol} is a lift of the plane orbifold signature "
-        f"{parent} with nontrivial phase map onto C{order}. Catalog subscripts, "
-        "tildes, and fractions encode clock shifts; they are not the book's raised "
-        f"permutation orders. The operation phases are {assignments}."
+        f"The phase character maps the plane orbifold {parent} onto C{order}. "
+        f"The operation phases are {assignments}."
     )
 
 
@@ -1077,9 +1046,8 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "catalog_url": f"{CATALOG_ROOT}#{group_id}",
             "image": f"output/clockwork-colorings/{group_id}.webp",
             "image_alt": (
-                f"Static perfect {order}-colouring induced by clockwork group "
-                f"{group['symbol']}: asymmetric motifs carry phase colours for "
-                f"Conway type {notation}."
+                f"Static perfect {order}-colouring for group {group_id}: "
+                f"asymmetric motifs carry phase colours for Conway type {notation}."
             ),
             "render": group["render"],
         }
@@ -1159,6 +1127,10 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
             source_like, order, record["kernel"]["hm"]
         )
         record["book_audit"] = book_audit(group_id, order, parent, kernel)
+        record["image_alt"] = (
+            f"Static perfect {order}-colouring for group {group_id}: "
+            f"asymmetric motifs carry phase colours for Conway type {notation}."
+        )
 
     meta = payload["meta"]
     meta["schema_version"] = 4
@@ -1592,7 +1564,6 @@ def _book_audit_html(record: dict[str, Any]) -> str:
 
 def _film_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
-    symbol = escape(record["symbol"])
     return f"""
               <figure class="clockwork-film" data-clockwork-player data-group-id="{group_id}">
                 <div class="clockwork-stage" data-film-stage data-state="loading">
@@ -1604,7 +1575,7 @@ def _film_html(record: dict[str, Any]) -> str:
                     <span class="animation-icon" aria-hidden="true">▶</span>
                     <span data-film-toggle-label>Play</span>
                   </button>
-                  <label class="visually-hidden" for="{group_id}-phase">Phase of {symbol}</label>
+                  <label class="visually-hidden" for="{group_id}-phase">Phase for colour action {group_id}</label>
                   <input class="phase-slider" id="{group_id}-phase" data-film-slider type="range" min="0" max="1" step="0.001" value="0" aria-valuetext="phase 0.000 of one period" disabled>
                   <output class="phase-output" data-film-output for="{group_id}-phase">0.000</output>
                 </div>
@@ -1619,12 +1590,11 @@ def _signature_source_label(record: dict[str, Any]) -> str:
 
 
 def _notation_crosswalk_html(record: dict[str, Any]) -> str:
-    """Keep the clock, short-signature, and colour-type numerals distinct."""
+    """Keep the short-signature and full colour-type numerals distinct."""
 
     order = record["clock_order"]
     parent = record["parent"]["orbifold"]
     kernel = record["kernel"]["orbifold"]
-    clockwork = clockwork_symbol_html(record["symbol"])
     short_signature = superscript_html(record["book_color_signature"])
     colour_type = color_type_html(parent, kernel, order)
     evidence = record["signature_evidence"]
@@ -1652,10 +1622,6 @@ def _notation_crosswalk_html(record: dict[str, Any]) -> str:
     return f"""
               <dl class="notation-crosswalk" aria-label="Notation crosswalk">
                 <div>
-                  <dt>Clockwork symbol</dt>
-                  <dd><span class="notation-mark clockwork-symbol">{clockwork}</span><span class="notation-explanation">Subscripts, tildes, and fractions are phase shifts.</span></dd>
-                </div>
-                <div>
                   <dt>Short colour signature</dt>
                   <dd><span class="notation-mark book-color-signature">{short_signature}</span><span class="notation-explanation">Superscripts are permutation orders. A reduced clock phase a/b induces permutation order b.{escape(lossy_note)} {escape(signature_source)}</span></dd>
                 </div>
@@ -1677,7 +1643,6 @@ def _entry_html(
     kernel = record["kernel"]
     short_signature = record["book_color_signature"]
     short_signature_html = superscript_html(short_signature)
-    catalog_symbol_html = clockwork_symbol_html(record["symbol"])
     type_html = color_type_html(parent["orbifold"], kernel["orbifold"], order)
     signature_source_label = _signature_source_label(record)
     mate_note = ""
@@ -1686,8 +1651,8 @@ def _entry_html(
         mate_note = (
             "<aside class=\"orientation-note\">"
             "<strong>Clock orientation.</strong> This has the same traditional colour group as "
-            f"<a href=\"#{escape(mate['id'])}\">{clockwork_symbol_html(mate['symbol'])} "
-            f"({escape(mate['id'])})</a>, but traverses the cyclic palette in the opposite "
+            f"<a href=\"#{escape(mate['id'])}\">{escape(mate['id'])}</a>, "
+            "but traverses the cyclic palette in the opposite "
             "time order.</aside>"
         )
     entry = f"""
@@ -1698,7 +1663,7 @@ def _entry_html(
             <div>
               <p class="entry-kicker">{escape(signature_source_label)}</p>
               <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="{escape(signature_source_label)} {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
-              <p class="clockwork-identity"><span>clockwork</span> <span class="clockwork-symbol">{catalog_symbol_html}</span> · base orbifold {escape(parent['orbifold'])} · phase image C<sub>{order}</sub></p>
+              <p class="entry-identity">Base orbifold {escape(parent['orbifold'])} · regular colour action C<sub>{order}</sub></p>
             </div>
             <div class="entry-badges" aria-label="Correspondence summary">
               <span>C<sub>{order}</sub></span>
@@ -1729,7 +1694,7 @@ def _entry_html(
                 <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
               </dl>
               {_notation_crosswalk_html(record)}
-              <p class="clockwork-description">{escape(record['clockwork_description'])}</p>
+              <p class="phase-description">{escape(record['clockwork_description'])}</p>
               <p class="coloring-description">{escape(record['coloring_description'])}</p>
               {_book_audit_html(record)}
               <div class="phase-assignment">
@@ -1737,7 +1702,7 @@ def _entry_html(
                 {_phase_profile(record)}
               </div>
               {mate_note}
-              <p class="catalog-action"><a href="{escape(record['catalog_url'])}" aria-label="Open {escape(record['symbol'])}, {group_id}, in the forward catalog">forward catalog · {group_id} ↗</a></p>
+              <p class="catalog-action"><a href="{escape(record['catalog_url'])}" aria-label="Open {group_id} in the forward catalog">forward catalog · {group_id} ↗</a></p>
             </div>
           </div>
         </section>
@@ -1751,7 +1716,7 @@ def _tab_html(record: dict[str, Any]) -> str:
     return (
         f'<a class="clockwork-tab" id="tab-{group_id}" href="#{group_id}" '
         f'data-clockwork-tab data-panel-id="{group_id}" '
-        f'aria-label="{escape(signature)}, clockwork group {group_id}">'
+        f'aria-label="{escape(signature)}, colour action {group_id}">'
         f'<span class="tab-signature">{superscript_html(signature)}</span>'
         f'<span class="tab-meta">{group_id} · C<sub>{record["clock_order"]}</sub></span>'
         "</a>"
@@ -1805,7 +1770,7 @@ def _family_html(
     if rows:
         contents = f"""
       <div class="clockwork-tabs" data-clockwork-tabs>
-        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Nontrivial clockwork groups over orbifold {escape(orbifold)}">
+        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Nontrivial colour actions over orbifold {escape(orbifold)}">
           {tabs}
         </nav>
         <ol class="correspondence-list">
