@@ -59,6 +59,21 @@ FARRIS_URL = "https://archive.bridgesmathart.org/2017/bridges2017-131.pdf#page=6
 IMAGE_WIDTH = 720
 IMAGE_HEIGHT = 420
 ANTIALIAS = 2
+REFERENCE_STAGE_WIDTH_PX = 507
+MIN_VISIBLE_MOTIF_DIAMETER_PX = 38
+# At the reference card width, a radius of 36 output pixels gives the plate's
+# asymmetric stamp a 38 CSS-pixel circumscribed diameter after image scaling.
+PLATE_MIN_MOTIF_RADIUS_PX = 36
+PLATE_MOTIF_DIAMETER_FACTOR = 1.5057224179774968
+PLATE_MOTIF_SHAPE = (
+    (-0.58, -0.44),
+    (-0.03, -0.68),
+    (0.56, -0.28),
+    (0.25, 0.02),
+    (0.48, 0.58),
+    (-0.12, 0.40),
+    (-0.64, 0.14),
+)
 PALETTE = (
     "#0072B2",  # blue
     "#E69F00",  # orange
@@ -1159,10 +1174,14 @@ def _site_geometry(
         return b1, b2, radius
 
     b1, b2, radius = radius_for(cell)
-    minimum_radius = 14 * ANTIALIAS
+    minimum_radius = PLATE_MIN_MOTIF_RADIUS_PX * ANTIALIAS
     if 0 < radius < minimum_radius:
-        cell = min(cell * minimum_radius / radius, cell_for(3))
+        cell *= minimum_radius / radius
         b1, b2, radius = radius_for(cell)
+    if radius + 1e-6 < minimum_radius:
+        raise ValueError(
+            f"plate motif radius {radius / ANTIALIAS:.3f}px is below the minimum"
+        )
 
     inverse = _mat_inv([[b1[0], b2[0]], [b1[1], b2[1]]])
     m1s: list[float] = []
@@ -1196,15 +1215,6 @@ def render_plate(record: dict[str, Any]) -> bytes:
 
     # A deliberately asymmetric, chiral stamp; its transformed copies make
     # rotations, reflections and glides visible without a clock overlay.
-    local_shape = (
-        (-0.58, -0.44),
-        (-0.03, -0.68),
-        (0.56, -0.28),
-        (0.25, 0.02),
-        (0.48, 0.58),
-        (-0.12, 0.40),
-        (-0.64, 0.14),
-    )
     local_mark = (0.16, -0.34)
 
     for operation in spec["ops"]:
@@ -1225,7 +1235,7 @@ def render_plate(record: dict[str, Any]) -> bytes:
                         -2 * radius <= y <= height + 2 * radius):
                     continue
                 points = []
-                for local_x, local_y in local_shape:
+                for local_x, local_y in PLATE_MOTIF_SHAPE:
                     dx = radius * (transform[0][0] * local_x + transform[0][1] * local_y)
                     dy = radius * (transform[1][0] * local_x + transform[1][1] * local_y)
                     points.append((x + dx, y + dy))

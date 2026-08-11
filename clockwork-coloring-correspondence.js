@@ -8,15 +8,19 @@
  * viewer explicitly presses Play.
  */
 
+import {
+  RING_MID,
+  RING_W,
+  buildClockworkGeometry,
+  frac,
+} from "./clockwork-coloring-geometry.js";
+
 "use strict";
 
 const DATA_URL = new URL("data/clockwork-coloring-correspondence.json", import.meta.url);
 const PERIOD_MS = 4000;
 const DPR_LIMIT = 1.5;
 const TWO_PI = Math.PI * 2;
-const CELLS = 4;
-const MIN_CELLS = 3;
-const MAX_COLUMNS = 18;
 const STEP = 1 / 24;
 const FINE_STEP = 1 / 240;
 
@@ -70,46 +74,11 @@ const COMMA = (() => {
 
 // Screen-space phase ruler, ported from animated-groups-fable 950b021.
 // The ruler stays fixed while a short hand sweeps one turn per film period.
-const RING_MID = 0.76;
-const RING_W = 0.12;
 const RING_MIN_PX = 6.5;
 const ARROW_MIN_PX = 9;
 const HEAD_LEN = 1.7;
 const HEAD_HALF = 1.15;
 const HAND_TAIL = 1.4;
-
-function frac(value) {
-  return ((value % 1) + 1) % 1;
-}
-
-function multiply2(left, right) {
-  return [
-    [
-      left[0][0] * right[0][0] + left[0][1] * right[1][0],
-      left[0][0] * right[0][1] + left[0][1] * right[1][1],
-    ],
-    [
-      left[1][0] * right[0][0] + left[1][1] * right[1][0],
-      left[1][0] * right[0][1] + left[1][1] * right[1][1],
-    ],
-  ];
-}
-
-function invert2(matrix) {
-  const determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-  if (Math.abs(determinant) < 1e-10) {
-    throw new Error("singular wallpaper basis");
-  }
-  return [
-    [matrix[1][1] / determinant, -matrix[0][1] / determinant],
-    [-matrix[1][0] / determinant, matrix[0][0] / determinant],
-  ];
-}
-
-function latticeToPixel(matrix, b1, b2) {
-  const basis = [[b1[0], b2[0]], [b1[1], b2[1]]];
-  return multiply2(multiply2(basis, matrix), invert2(basis));
-}
 
 function bodyPath(context, radius) {
   const segments = COMMA.segments;
@@ -291,8 +260,8 @@ class ClockworkPlayer {
   resizeAndDraw() {
     if (!this.active) return;
     const bounds = this.stage.getBoundingClientRect();
-    const width = Math.max(260, Math.round(bounds.width));
-    const height = Math.max(152, Math.round(bounds.height));
+    const width = Math.max(1, Math.round(bounds.width));
+    const height = Math.max(1, Math.round(bounds.height));
     const dpr = Math.min(window.devicePixelRatio || 1, DPR_LIMIT);
     const targetWidth = Math.max(1, Math.round(width * dpr));
     const targetHeight = Math.max(1, Math.round(height * dpr));
@@ -300,130 +269,9 @@ class ClockworkPlayer {
       this.canvas.width = targetWidth;
       this.canvas.height = targetHeight;
     }
-    this.geometry = this.buildGeometry(width, height, dpr);
+    this.geometry = buildClockworkGeometry(this.record.render, width, height, dpr);
+    this.stage.dataset.motifCircleDiameter = this.geometry.circleDiameter.toFixed(2);
     this.draw(this.phase);
-  }
-
-  buildGeometry(width, height, dpr) {
-    const spec = this.record.render;
-    const basis = spec.basis;
-    const shortSide = Math.min(width, height);
-    const horizontalExtent = Math.max(Math.abs(basis[0][0]), Math.abs(basis[1][0])) || 1;
-    const verticalExtent = Math.max(Math.abs(basis[0][1]), Math.abs(basis[1][1])) || 1;
-    const limitingExtent = shortSide === height ? verticalExtent : horizontalExtent;
-    const cellFor = (count) => Math.max(shortSide / (count * limitingExtent), 24);
-    const uniqueSites = new Set(spec.ops.map((operation) => (
-      `${operation.M.flat().join(",")}|${operation.v.map((value) => Math.round(frac(value) * 1e6)).join(",")}`
-    ))).size;
-    const basisDeterminant = Math.abs(
-      basis[0][0] * basis[1][1] - basis[0][1] * basis[1][0],
-    ) || 1;
-
-    const measure = (cell) => {
-      const b1 = [basis[0][0] * cell, -basis[0][1] * cell];
-      const b2 = [basis[1][0] * cell, -basis[1][1] * cell];
-      const sites = [];
-      const base = spec.base || [0.31, 0.17];
-      for (const operation of spec.ops) {
-        const x = frac(
-          operation.M[0][0] * base[0]
-          + operation.M[0][1] * base[1]
-          + operation.v[0],
-        );
-        const y = frac(
-          operation.M[1][0] * base[0]
-          + operation.M[1][1] * base[1]
-          + operation.v[1],
-        );
-        for (const shiftX of [0, 1]) {
-          for (const shiftY of [0, 1]) sites.push([x + shiftX, y + shiftY]);
-        }
-      }
-      let minimumDistance = Math.min(Math.hypot(...b1), Math.hypot(...b2));
-      for (let left = 0; left < sites.length; left += 1) {
-        for (let right = left + 1; right < sites.length; right += 1) {
-          const deltaX = (sites[left][0] - sites[right][0]) * b1[0]
-            + (sites[left][1] - sites[right][1]) * b2[0];
-          const deltaY = (sites[left][0] - sites[right][0]) * b1[1]
-            + (sites[left][1] - sites[right][1]) * b2[1];
-          const distance = Math.hypot(deltaX, deltaY);
-          if (distance > 1e-6 && distance < minimumDistance) minimumDistance = distance;
-        }
-      }
-      return {
-        b1,
-        b2,
-        motifRadius: Math.min(
-          0.40 * Math.min(Math.hypot(...b1), Math.hypot(...b2)),
-          0.52 * minimumDistance,
-        ),
-      };
-    };
-
-    let cell = cellFor(CELLS);
-    let measured = measure(cell);
-    if (measured.motifRadius > 0 && measured.motifRadius < 13) {
-      cell = Math.max(cell, Math.min(cell * (13 / measured.motifRadius), cellFor(MIN_CELLS)));
-      measured = measure(cell);
-    }
-    const columns = width / Math.sqrt(basisDeterminant * cell * cell / uniqueSites);
-    if (columns > MAX_COLUMNS) {
-      cell *= columns / MAX_COLUMNS;
-      measured = measure(cell);
-    }
-
-    const { b1, b2, motifRadius } = measured;
-    const inverse = invert2([[b1[0], b2[0]], [b1[1], b2[1]]]);
-    const centerX = width / 2;
-    const centerY = height / 2;
-    let min1 = Infinity;
-    let max1 = -Infinity;
-    let min2 = Infinity;
-    let max2 = -Infinity;
-    for (const [pixelX, pixelY] of [[0, 0], [width, 0], [0, height], [width, height]]) {
-      const x = pixelX - centerX;
-      const y = pixelY - centerY;
-      const lattice1 = inverse[0][0] * x + inverse[0][1] * y;
-      const lattice2 = inverse[1][0] * x + inverse[1][1] * y;
-      min1 = Math.min(min1, lattice1);
-      max1 = Math.max(max1, lattice1);
-      min2 = Math.min(min2, lattice2);
-      max2 = Math.max(max2, lattice2);
-    }
-
-    const placements = [];
-    const base = spec.base || [0.31, 0.17];
-    const pad = 1.6;
-    for (const operation of spec.ops) {
-      const baseX = operation.M[0][0] * base[0]
-        + operation.M[0][1] * base[1]
-        + operation.v[0];
-      const baseY = operation.M[1][0] * base[0]
-        + operation.M[1][1] * base[1]
-        + operation.v[1];
-      const transform = latticeToPixel(operation.M, b1, b2);
-      for (let lattice1 = Math.floor(min1 - pad); lattice1 <= Math.ceil(max1 + pad); lattice1 += 1) {
-        for (let lattice2 = Math.floor(min2 - pad); lattice2 <= Math.ceil(max2 + pad); lattice2 += 1) {
-          const position1 = baseX + lattice1;
-          const position2 = baseY + lattice2;
-          const pixelX = position1 * b1[0] + position2 * b2[0];
-          const pixelY = position1 * b1[1] + position2 * b2[1];
-          if (
-            pixelX < -width / 2 - motifRadius * 3
-            || pixelX > width / 2 + motifRadius * 3
-            || pixelY < -height / 2 - motifRadius * 3
-            || pixelY > height / 2 + motifRadius * 3
-          ) continue;
-          placements.push({
-            pixelX,
-            pixelY,
-            transform,
-            tau: operation.tau,
-          });
-        }
-      }
-    }
-    return { width, height, dpr, motifRadius, placements };
   }
 
   draw(phase) {
