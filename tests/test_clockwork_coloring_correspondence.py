@@ -5,6 +5,7 @@ from html import escape
 from html.parser import HTMLParser
 import json
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
@@ -518,6 +519,89 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 for residue in group["phase_residues"]
             }
             self.assertTrue(expected_colors.issubset(colors), relative)
+
+    def test_every_live_phase_circle_meets_the_measured_reference_size(self) -> None:
+        geometry_module = ROOT / "clockwork-coloring-geometry.js"
+        self.assertTrue(geometry_module.is_file())
+        node_script = r"""
+import fs from "node:fs";
+import {
+  MIN_PHASE_CIRCLE_DIAMETER_PX,
+  buildClockworkGeometry,
+} from "./clockwork-coloring-geometry.js";
+const payload = JSON.parse(
+  fs.readFileSync("data/clockwork-coloring-correspondence.json", "utf8"),
+);
+const sizes = [[507, 296], [411, 240], [325, 190], [260, 152]];
+const measurements = [];
+for (const group of payload.groups.filter((record) => record.clock_order > 1)) {
+  for (const [width, height] of sizes) {
+    const geometry = buildClockworkGeometry(group.render, width, height, 1);
+    measurements.push({
+      id: group.id,
+      width,
+      height,
+      diameter: geometry.circleDiameter,
+    });
+  }
+}
+process.stdout.write(JSON.stringify({
+  floor: MIN_PHASE_CIRCLE_DIAMETER_PX,
+  measurements,
+}));
+"""
+        result = subprocess.run(
+            ["node", "--input-type=module", "-e", node_script],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        report = json.loads(result.stdout)
+        self.assertEqual(report["floor"], correspondence.MIN_VISIBLE_MOTIF_DIAMETER_PX)
+        self.assertEqual(
+            len(report["measurements"]),
+            correspondence.DISPLAYED_GROUP_COUNT * 4,
+        )
+        for measurement in report["measurements"]:
+            self.assertGreaterEqual(
+                measurement["diameter"] + 1e-6,
+                report["floor"],
+                f"{measurement['id']} at {measurement['width']}×{measurement['height']}",
+            )
+
+        controller = (ROOT / "clockwork-coloring-correspondence.js").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('from "./clockwork-coloring-geometry.js"', controller)
+        self.assertIn("buildClockworkGeometry(this.record.render", controller)
+        self.assertNotIn("MIN_CELLS", controller)
+
+    def test_every_static_plate_uses_the_same_reference_scale(self) -> None:
+        minimum_visible = float("inf")
+        for group in self.display_groups:
+            _b1, _b2, radius, _ranges = correspondence._site_geometry(
+                group["render"],
+                correspondence.IMAGE_WIDTH * correspondence.ANTIALIAS,
+                correspondence.IMAGE_HEIGHT * correspondence.ANTIALIAS,
+            )
+            output_radius = radius / correspondence.ANTIALIAS
+            self.assertGreaterEqual(
+                output_radius + 1e-6,
+                correspondence.PLATE_MIN_MOTIF_RADIUS_PX,
+                group["id"],
+            )
+            visible_diameter = (
+                correspondence.PLATE_MOTIF_DIAMETER_FACTOR
+                * output_radius
+                * correspondence.REFERENCE_STAGE_WIDTH_PX
+                / correspondence.IMAGE_WIDTH
+            )
+            minimum_visible = min(minimum_visible, visible_diameter)
+        self.assertGreaterEqual(
+            minimum_visible,
+            correspondence.MIN_VISIBLE_MOTIF_DIAMETER_PX,
+        )
 
     def test_all_51_nontrivial_films_are_local_and_stopped_by_default(self) -> None:
         ids = [group["id"] for group in self.display_groups]
