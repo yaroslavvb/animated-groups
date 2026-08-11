@@ -3,10 +3,15 @@
 
 The page reads each forward entry of one pinned 275-group catalog as a
 regular cyclic colouring.  For an operation ``(M, v, tau)``, the colour
-character is ``kappa(M, v) = N*tau mod N``.  Its kernel is the subgroup of
+character is ``kappa(M, v) = N*tau mod N``.  Its kernel K is the subgroup of
 zero-phase operations.  The kernel wallpaper types below were independently
 identified against the 17 canonical wallpaper models, using the kernel's own
 translation lattice (not the usually finer projected parent lattice).
+
+The displayed colour notation follows Conway--Burgiel--Goodman-Strauss,
+*The Symmetries of Things*: G/K for twofold colourings and G^N/K for the
+regular cyclic N-fold action when N > 2.  Their double slash is reserved for
+nonregular actions where the stabilizer H of one colour is larger than K.
 
 The source catalog is always read-only.  A normal run rebuilds the HTML and
 static WebP plates from the checked-in correspondence JSON.  Pass the pinned
@@ -44,6 +49,10 @@ IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
 CATALOG_ROOT = "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward"
 CATALOG_DATA_URL = "https://yaroslavvb.github.io/animated-groups-fable/data/catalog.json"
+BOOK_RECORD_URL = "https://books.google.com/books?id=EtQCk0TNafsC"
+BOOK_PAGE_URL = BOOK_RECORD_URL + "&pg=PA{page}"
+BOOK_ERRATA_URL = "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html"
+FARRIS_URL = "https://archive.bridgesmathart.org/2017/bridges2017-131.pdf#page=6"
 
 IMAGE_WIDTH = 720
 IMAGE_HEIGHT = 420
@@ -63,7 +72,7 @@ BASE_ORDER = (
 )
 
 ORBIFOLD_BY_BASE = {
-    "p1": "o",
+    "p1": "◦",
     "p2": "2222",
     "pm": "**",
     "pg": "××",
@@ -82,7 +91,7 @@ ORBIFOLD_BY_BASE = {
     "p6m": "*632",
 }
 
-# H = ker(kappa), classified using zero-phase cosets plus Z^2 translations.
+# K = ker(kappa), classified using zero-phase cosets plus Z^2 translations.
 KERNEL_BASE_BY_ID = {
     "g1": "p1", "g5": "p2", "g6": "p1", "g7": "p2",
     "g8": "cm", "g9": "p1", "g10": "pm", "g11": "pg",
@@ -113,7 +122,84 @@ INVERSE_CLOCK_MATE = {
 }
 
 EXPECTED_ORDER_COUNTS = {1: 17, 2: 36, 3: 6, 4: 6, 5: 0, 6: 3}
+EXPECTED_BOOK_AUDIT_COUNTS = {
+    "plane-group": 17,
+    "direct-table": 41,
+    "internal-discrepancy": 1,
+    "composite-extension": 9,
+}
 M_ID = ((1, 0), (0, 1))
+
+SUPERSCRIPT = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
+
+# The distinct G/K signatures in Table 11.1, pp. 140--141.  The book counts
+# 46 types because **/** has two inequivalent variants; no forward row here
+# has that exceptional pair.
+TOS_TWO_FOLD_TYPES = {
+    "*632/3*3", "*632/*333", "*632/632", "632/333",
+    "*442/*442", "*442/4*2", "*442/*2222", "*442/2*22", "*442/442",
+    "4*2/442", "4*2/2*22", "4*2/22×", "442/442", "442/2222",
+    "*333/333", "3*3/333",
+    "*2222/*2222", "*2222/2*22", "*2222/**", "*2222/22*", "*2222/2222",
+    "2*22/22*", "2*22/2222", "2*22/*2222", "2*22/*×", "2*22/22×",
+    "22*/2222", "22*/22*", "22*/22×", "22*/**", "22*/××",
+    "22×/2222", "22×/××", "2222/2222", "2222/◦",
+    "**/◦", "**/**", "**/*×", "**/××",
+    "*×/**", "*×/××", "*×/◦", "××/××", "××/◦", "◦/◦",
+}
+
+TOS_TWO_FOLD_PAGE_BY_PARENT = {
+    "*632": 140, "632": 140, "*442": 140, "4*2": 140,
+    "442": 140, "*333": 140, "3*3": 140, "333": 140,
+    "*2222": 140, "2*22": 140, "22*": 140,
+    "22×": 141, "2222": 141, "**": 141, "*×": 141,
+    "××": 141, "◦": 141,
+}
+
+TOS_THREE_FOLD_DIRECT_TYPES = {"333³/◦", "333³/333", "632³/2222"}
+
+# Composite cyclic colourings are not enumerated by Chapters 11--13.  Each
+# one is nevertheless checked through the prime-index layers that the book
+# does tabulate.  The phase image check below is what distinguishes C4/C6
+# from another extension of the same prime quotients.
+COMPOSITE_BOOK_CHAINS = {
+    "g75": {
+        "intermediate": "2222",
+        "steps": (("22×/2222", 2, 141), ("2222/2222", 2, 141)),
+    },
+    "g96": {
+        "intermediate": "2222",
+        "steps": (("442/2222", 2, 140), ("2222/◦", 2, 141)),
+    },
+    "g97": {
+        "intermediate": "2222",
+        "steps": (("442/2222", 2, 140), ("2222/◦", 2, 141)),
+    },
+    "g99": {
+        "intermediate": "2222",
+        "steps": (("442/2222", 2, 140), ("2222/2222", 2, 141)),
+    },
+    "g137": {
+        "intermediate": "2*22",
+        "steps": (("4*2/2*22", 2, 140), ("2*22/*2222", 2, 140)),
+    },
+    "g139": {
+        "intermediate": "2*22",
+        "steps": (("4*2/2*22", 2, 140), ("2*22/22×", 2, 140)),
+    },
+    "g235": {
+        "intermediate": "333",
+        "steps": (("3*3/333", 2, 140), ("333³/333", 3, 156)),
+    },
+    "g247": {
+        "intermediate": "333",
+        "steps": (("632/333", 2, 140), ("333³/◦", 3, 156)),
+    },
+    "g248": {
+        "intermediate": "333",
+        "steps": (("632/333", 2, 140), ("333³/◦", 3, 156)),
+    },
+}
 
 
 def exact_fraction(value: Any) -> Fraction:
@@ -131,6 +217,153 @@ def fraction_label(value: Fraction) -> str:
     if value == 0:
         return "0"
     return f"{value.numerator}/{value.denominator}"
+
+
+def tos_notation(parent: str, kernel: str, order: int) -> str:
+    """Return the book's abbreviated notation for this regular action."""
+
+    if order == 1:
+        return parent
+    if order == 2:
+        return f"{parent}/{kernel}"
+    return f"{parent}{str(order).translate(SUPERSCRIPT)}/{kernel}"
+
+
+def book_reference(
+    printed_page: int,
+    label: str,
+    *,
+    role: str,
+) -> dict[str, Any]:
+    return {
+        "label": label,
+        "role": role,
+        "printed_page": printed_page,
+        "pdf_page": printed_page + 19,
+        "url": BOOK_PAGE_URL.format(page=printed_page),
+    }
+
+
+def book_audit(
+    group_id: str,
+    order: int,
+    parent: str,
+    kernel: str,
+) -> dict[str, Any]:
+    """Describe exactly what the attached book does and does not verify."""
+
+    notation = tos_notation(parent, kernel, order)
+    if order == 1:
+        return {
+            "status": "plane-group",
+            "status_label": "ordinary plane-group table",
+            "summary": (
+                f"Table 3.2 lists {parent} among the 17 plane groups. The book calls "
+                "this a onefold coloring; it does not write a G¹/G color type."
+            ),
+            "references": [
+                book_reference(40, "Table 3.2 · the 17 plane groups", role="primary"),
+                book_reference(153, "Onefold and n-fold colorings", role="supporting"),
+            ],
+            "prime_chain": [],
+        }
+
+    if order == 2:
+        if notation not in TOS_TWO_FOLD_TYPES:
+            raise ValueError(f"twofold type is absent from Table 11.1: {notation}")
+        page = TOS_TWO_FOLD_PAGE_BY_PARENT[parent]
+        return {
+            "status": "direct-table",
+            "status_label": "direct Table 11.1 match",
+            "summary": (
+                f"{notation} appears directly in Table 11.1. Its single slash is the "
+                "book's G/K notation for a regular two-colour action."
+            ),
+            "references": [
+                book_reference(page, "Table 11.1 · twofold color types", role="primary")
+            ],
+            "prime_chain": [],
+        }
+
+    if order == 3 and group_id != "g234":
+        if notation not in TOS_THREE_FOLD_DIRECT_TYPES:
+            raise ValueError(f"threefold type is absent from Table 12.1: {notation}")
+        return {
+            "status": "direct-table",
+            "status_label": "direct Table 12.1 match",
+            "summary": (
+                f"{notation} appears as a regular cyclic case in Table 12.1. "
+                "Here the stabilizer H of one colour equals the all-colours kernel K."
+            ),
+            "references": [
+                book_reference(156, "Table 12.1 · threefold color types", role="primary")
+            ],
+            "prime_chain": [],
+        }
+
+    if group_id == "g234":
+        if notation != "3*3³/*333":
+            raise ValueError(f"unexpected exceptional notation for g234: {notation}")
+        return {
+            "status": "internal-discrepancy",
+            "status_label": "book-internal discrepancy",
+            "summary": (
+                "The clock operations give the regular type 3*3³/*333. Table 13.1 "
+                "prints that type, but Table 12.1 instead prints the nonregular S3 type "
+                "3*3³//*333 and the derivation on p. 158 gives 3*3³/◦. The page keeps "
+                "the computed kernel, flags the conflict, and links an independent "
+                "p31m/3 p3m1 construction by Frank Farris."
+            ),
+            "references": [
+                book_reference(164, "Table 13.1 · later primefold summary", role="primary"),
+                book_reference(156, "Table 12.1 · conflicting threefold table", role="conflict"),
+                book_reference(158, "Threefold derivation · conflicting prose", role="conflict"),
+            ],
+            "independent_reference": {
+                "label": "Farris, Natural Color Symmetry, p. 136",
+                "url": FARRIS_URL,
+            },
+            "prime_chain": [],
+        }
+
+    if order in (4, 6):
+        chain = COMPOSITE_BOOK_CHAINS.get(group_id)
+        if not chain:
+            raise ValueError(f"composite coloring lacks a prime-chain audit: {group_id}")
+        steps = [
+            {
+                "notation": step_notation,
+                "index": index,
+                "printed_page": page,
+                "pdf_page": page + 19,
+                "url": BOOK_PAGE_URL.format(page=page),
+            }
+            for step_notation, index, page in chain["steps"]
+        ]
+        for step in steps:
+            if step["index"] == 2 and step["notation"] not in TOS_TWO_FOLD_TYPES:
+                raise ValueError(f"composite twofold layer is absent: {step}")
+            if step["index"] == 3 and step["notation"] not in TOS_THREE_FOLD_DIRECT_TYPES:
+                raise ValueError(f"composite threefold layer is absent: {step}")
+        layers = " then ".join(step["notation"] for step in steps)
+        return {
+            "status": "composite-extension",
+            "status_label": f"regular cyclic C{order} extension",
+            "summary": (
+                f"The book stops after primefold enumeration, so it does not list {notation}. "
+                f"Its prime-index layers {layers} are tabulated; the checked phase image "
+                f"establishes that their extension is cyclic C{order}. The superscripted "
+                "notation follows the rule on p. 155."
+            ),
+            "references": [
+                book_reference(155, "Gⁿ/H/K notation and slash rule", role="primary"),
+                book_reference(169, "End of the book's primefold enumeration", role="scope"),
+            ],
+            "prime_chain": steps,
+            "intermediate_orbifold": chain["intermediate"],
+        }
+
+    raise ValueError(f"unsupported book audit for {group_id}, order {order}")
 
 
 def matrix(operation: dict[str, Any]) -> tuple[tuple[int, int], tuple[int, int]]:
@@ -308,16 +541,19 @@ def clockwork_description(group: dict[str, Any], order: int) -> str:
 def coloring_description(group: dict[str, Any], order: int, kernel_base: str) -> str:
     parent = ORBIFOLD_BY_BASE[group["base"]]
     kernel = ORBIFOLD_BY_BASE[kernel_base]
-    pair = f"{parent}//{kernel}"
+    notation = tos_notation(parent, kernel, order)
     if order == 1:
         return (
-            f"The phase character is trivial, so H = G and the associated traditional "
-            f"plane pattern is the one-colour group {pair}. The static plate is monochrome."
+            f"The phase character is trivial, so K = G. In the book's terminology this is "
+            f"the onefold plane group {notation}, not a G¹/G colour-type label. The static "
+            "plate is monochrome."
         )
     return (
-        f"The zero-phase kernel H is orbifold {kernel} ({kernel_base}); it preserves every "
+        f"The zero-phase kernel K is orbifold {kernel} ({kernel_base}); it preserves every "
         f"colour and is the frame-preserving wallpaper subgroup. The traditional perfect "
-        f"cyclic colouring is {pair}, with [G:H] = {order} and G/H isomorphic to C{order}. "
+        f"cyclic colouring is {notation}, with [G:K] = {order} and G/K isomorphic to C{order}. "
+        "Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so "
+        "the notation has one slash. "
         f"An operation at phase j/{order} sends colour k to k+j modulo {order}."
     )
 
@@ -355,6 +591,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
         kernel_base = KERNEL_BASE_BY_ID[group_id]
         parent_orbifold = ORBIFOLD_BY_BASE[group["base"]]
         kernel_orbifold = ORBIFOLD_BY_BASE[kernel_base]
+        notation = tos_notation(parent_orbifold, kernel_orbifold, order)
         validate_render(group_id, group["render"], order)
         residues = [
             {
@@ -374,20 +611,23 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "symmorphic": bool(group["symmorphic"]),
             "parent": {"orbifold": parent_orbifold, "hm": group["base"]},
             "kernel": {"orbifold": kernel_orbifold, "hm": kernel_base},
-            "color_pair": f"{parent_orbifold}//{kernel_orbifold}",
+            "tos_notation": notation,
             "clock_order": order,
             "cyclic_group": f"C_{order}",
             "phase_residues": residues,
             "phase_profile": phase_profile(group["render"]["ops"]),
             "clockwork_description": clockwork_description(group, order),
             "coloring_description": coloring_description(group, order, kernel_base),
+            "book_audit": book_audit(
+                group_id, order, parent_orbifold, kernel_orbifold
+            ),
             "inverse_clock_mate": INVERSE_CLOCK_MATE.get(group_id),
             "catalog_url": f"{CATALOG_ROOT}#{group_id}",
             "image": f"output/clockwork-colorings/{group_id}.webp",
             "image_alt": (
                 f"Static {order}-colour wallpaper plate induced by clockwork group "
                 f"{group['symbol']}: asymmetric motifs carry phase colours for "
-                f"{parent_orbifold}//{kernel_orbifold}."
+                f"{notation}."
             ),
             "render": group["render"],
         }
@@ -395,7 +635,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 1,
+            "schema_version": 2,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -403,7 +643,22 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "selection": "group.forward == true",
             "forward_groups": 68,
             "traditional_color_classes_after_clock_inversion": 64,
-            "definition": "kappa(M,v) = N*tau mod N; H = ker(kappa); color group = G//H",
+            "definition": (
+                "kappa(M,v) = N*tau mod N; K = ker(kappa); regular action has H = K; "
+                "ToS type is G for N=1, G/K for N=2, and G^N/K for N>2"
+            ),
+            "book_audit_counts": EXPECTED_BOOK_AUDIT_COUNTS,
+            "book": {
+                "title": "The Symmetries of Things",
+                "authors": ["John H. Conway", "Heidi Burgiel", "Chaim Goodman-Strauss"],
+                "edition": 2008,
+                "record_url": BOOK_RECORD_URL,
+                "errata_url": BOOK_ERRATA_URL,
+                "note": (
+                    "Printed-page links use the Google Books record; attached-PDF page "
+                    "indices are stored separately for audit reproducibility."
+                ),
+            },
             "kernel_method": (
                 "Classify the tau=0 spatial operations plus their own translation lattice "
                 "against the 17 canonical wallpaper groups."
@@ -420,6 +675,8 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
+    if meta.get("schema_version") != 2:
+        raise ValueError("correspondence data must use schema version 2")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -447,6 +704,12 @@ def validate_payload(payload: dict[str, Any]) -> None:
     if {n: counts.get(n, 0) for n in range(1, 7)} != EXPECTED_ORDER_COUNTS:
         raise ValueError(f"unexpected clock-order distribution: {counts}")
 
+    audit_counts = Counter(group["book_audit"]["status"] for group in groups)
+    if dict(audit_counts) != EXPECTED_BOOK_AUDIT_COUNTS:
+        raise ValueError(f"unexpected book-audit distribution: {audit_counts}")
+    if meta.get("book_audit_counts") != EXPECTED_BOOK_AUDIT_COUNTS:
+        raise ValueError("book-audit totals differ from the row statuses")
+
     for group in groups:
         group_id = group["id"]
         order = group["clock_order"]
@@ -456,9 +719,30 @@ def validate_payload(payload: dict[str, Any]) -> None:
             raise ValueError(f"kernel type mismatch in {group_id}")
         if group["kernel"]["orbifold"] != ORBIFOLD_BY_BASE[group["kernel"]["hm"]]:
             raise ValueError(f"kernel notation mismatch in {group_id}")
-        expected_pair = f"{group['parent']['orbifold']}//{group['kernel']['orbifold']}"
-        if group["color_pair"] != expected_pair:
-            raise ValueError(f"orbifold pair mismatch in {group_id}")
+        expected_notation = tos_notation(
+            group["parent"]["orbifold"], group["kernel"]["orbifold"], order
+        )
+        if group["tos_notation"] != expected_notation:
+            raise ValueError(f"ToS notation mismatch in {group_id}")
+        if "//" in group["tos_notation"]:
+            raise ValueError(f"regular cyclic action uses a double slash in {group_id}")
+        if group["parent"]["hm"] == "p1" and "◦" not in group["parent"]["orbifold"]:
+            raise ValueError(f"p1 does not use the ToS wonder-ring in {group_id}")
+        expected_audit = book_audit(
+            group_id,
+            order,
+            group["parent"]["orbifold"],
+            group["kernel"]["orbifold"],
+        )
+        if group["book_audit"] != expected_audit:
+            raise ValueError(f"book audit mismatch in {group_id}")
+        primary_refs = [
+            reference
+            for reference in group["book_audit"]["references"]
+            if reference["role"] == "primary"
+        ]
+        if len(primary_refs) != 1:
+            raise ValueError(f"book audit needs one primary page in {group_id}")
         if group["catalog_url"] != f"{CATALOG_ROOT}#{group_id}":
             raise ValueError(f"catalog deep link mismatch in {group_id}")
         if [row["index"] for row in group["phase_residues"]] != list(range(order)):
@@ -696,6 +980,90 @@ def _phase_profile(record: dict[str, Any]) -> str:
     return "<ul class=\"phase-profile\">" + "\n".join(rows) + "</ul>"
 
 
+def _book_link(reference: dict[str, Any], css_class: str) -> str:
+    return (
+        f'<a class="{css_class}" href="{escape(reference["url"])}" '
+        f'data-printed-page="{reference["printed_page"]}" '
+        f'data-pdf-page="{reference["pdf_page"]}">'
+        f'{escape(reference["label"])} · printed p. {reference["printed_page"]} '
+        f'(attached PDF p. {reference["pdf_page"]})</a>'
+    )
+
+
+def _book_audit_html(record: dict[str, Any]) -> str:
+    audit = record["book_audit"]
+    primary = next(
+        reference for reference in audit["references"] if reference["role"] == "primary"
+    )
+    supporting = [
+        reference for reference in audit["references"] if reference["role"] != "primary"
+    ]
+    supporting_html = ""
+    if supporting:
+        links = "\n".join(
+            f"<li>{_book_link(reference, 'book-cross-reference')}</li>"
+            for reference in supporting
+        )
+        supporting_html = f'<ul class="book-reference-list">{links}</ul>'
+
+    chain_html = ""
+    if audit["prime_chain"]:
+        steps = []
+        for step in audit["prime_chain"]:
+            steps.append(
+                "<li>"
+                f"<span>{escape(step['notation'])} · index {step['index']}</span>"
+                f"<a class=\"book-chain-link\" href=\"{escape(step['url'])}\">"
+                f"Table on p. {step['printed_page']}</a>"
+                "</li>"
+            )
+        chain_html = (
+            '<div class="prime-chain"><h3>Prime-index cross-check</h3><ol>'
+            + "\n".join(steps)
+            + "</ol></div>"
+        )
+
+    independent_html = ""
+    if audit.get("independent_reference"):
+        reference = audit["independent_reference"]
+        independent_html = (
+            '<p class="independent-reference"><strong>Independent check.</strong> '
+            f'<a href="{escape(reference["url"])}">{escape(reference["label"])}</a>.</p>'
+        )
+
+    return f"""
+              <aside class="book-audit book-audit--{escape(audit['status'])}">
+                <p class="book-audit-label">Book audit · {escape(audit['status_label'])}</p>
+                <p>{escape(audit['summary'])}</p>
+                <p class="book-primary-reference">{_book_link(primary, 'book-page-link')}</p>
+                {supporting_html}
+                {chain_html}
+                {independent_html}
+              </aside>"""
+
+
+def _film_html(record: dict[str, Any]) -> str:
+    group_id = escape(record["id"])
+    symbol = escape(record["symbol"])
+    return f"""
+              <figure class="clockwork-film" data-clockwork-player data-group-id="{group_id}">
+                <div class="clockwork-stage" data-film-stage data-state="loading">
+                  <canvas class="clockwork-canvas" id="{group_id}-film" width="1" height="1" role="img" aria-describedby="{group_id}-film-caption">JavaScript is needed for this film; the static coloured plate remains available below.</canvas>
+                  <p class="film-status" data-film-status>Loading local film data…</p>
+                </div>
+                <div class="animation-controls" data-film-controls data-state="loading">
+                  <button class="animation-toggle" type="button" data-film-toggle aria-controls="{group_id}-film" aria-pressed="false" disabled>
+                    <span class="animation-icon" aria-hidden="true">▶</span>
+                    <span data-film-toggle-label>Play</span>
+                  </button>
+                  <label class="visually-hidden" for="{group_id}-phase">Phase of {symbol}</label>
+                  <input class="phase-slider" id="{group_id}-phase" data-film-slider type="range" min="0" max="1" step="0.001" value="0" aria-valuetext="phase 0.000 of one period" disabled>
+                  <output class="phase-output" data-film-output for="{group_id}-phase">0.000</output>
+                </div>
+                <figcaption id="{group_id}-film-caption">Clockwork film · paused by default</figcaption>
+              </figure>"""
+
+
 def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
     group_id = escape(record["id"])
     order = record["clock_order"]
@@ -722,32 +1090,36 @@ def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str
             </div>
             <div class="entry-badges" aria-label="Correspondence summary">
               <span>C<sub>{order}</sub></span>
-              <span>{escape(record['color_pair'])}</span>
+              <span>{escape(record['tos_notation'])}</span>
             </div>
           </header>
 
           <div class="entry-grid">
-            <figure class="colour-plate">
-              <img src="{escape(record['image'])}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
-              <figcaption>
-                <span>Static phase colouring</span>
-                <ol class="colour-key" aria-label="Colour and phase key">
-                  {_phase_legend(record)}
-                </ol>
-              </figcaption>
-            </figure>
+            <div class="entry-visuals">
+              {_film_html(record)}
+              <figure class="colour-plate">
+                <img src="{escape(record['image'])}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
+                <figcaption>
+                  <span>Traditional coloured wallpaper plate</span>
+                  <ol class="colour-key" aria-label="Colour and phase key">
+                    {_phase_legend(record)}
+                  </ol>
+                </figcaption>
+              </figure>
+            </div>
 
             <div class="entry-copy">
-              <p class="pair-label">Traditional orbifold pair</p>
-              <p class="orbifold-pair">{escape(record['color_pair'])}</p>
+              <p class="pair-label">Conway–Burgiel–Goodman-Strauss colour type</p>
+              <p class="orbifold-pair">{escape(record['tos_notation'])}</p>
               <dl class="group-data">
-                <div><dt>Full symmetry Γ</dt><dd>{escape(parent['orbifold'])} <span>({escape(parent['hm'])})</span></dd></div>
-                <div><dt>Colour-preserving H</dt><dd>{escape(kernel['orbifold'])} <span>({escape(kernel['hm'])})</span></dd></div>
-                <div><dt>Quotient</dt><dd>Γ/H ≅ C<sub>{order}</sub>; [Γ:H] = {order}</dd></div>
+                <div><dt>Full symmetry G</dt><dd>{escape(parent['orbifold'])} <span>({escape(parent['hm'])})</span></dd></div>
+                <div><dt>All-colours kernel K</dt><dd>{escape(kernel['orbifold'])} <span>({escape(kernel['hm'])})</span></dd></div>
+                <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
                 <div><dt>Catalog type</dt><dd>{'product' if record['product'] else 'non-product'} · {'symmorphic' if record['symmorphic'] else 'non-symmorphic'}</dd></div>
               </dl>
               <p class="clockwork-description">{escape(record['clockwork_description'])}</p>
               <p class="coloring-description">{escape(record['coloring_description'])}</p>
+              {_book_audit_html(record)}
               <div class="phase-assignment">
                 <h3>Phase assignment in the displayed cosets</h3>
                 {_phase_profile(record)}
@@ -790,7 +1162,7 @@ def page_html(payload: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An exact 68-row correspondence from forward clockwork groups to perfect cyclic coloured wallpaper groups, with traditional static colour plates.">
+  <meta name="description" content="An audited 68-row correspondence from forward clockwork groups to regular cyclic coloured wallpaper groups, with paused films, traditional plates, and book-page checks.">
   <meta name="theme-color" content="#ffffff">
   <title>Clockwork/coloring correspondence</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -816,16 +1188,17 @@ def page_html(payload: dict[str, Any]) -> str:
 
   <main class="correspondence-page">
     <section class="page-introduction" aria-labelledby="page-title">
-      <p class="overline">68 forward groups · static cyclic colourings</p>
+      <p class="overline">68 forward groups · live films paused by default</p>
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="lead">
         Each forward clockwork group assigns a phase to every operation of its projected wallpaper
         group. Reading those phases as colour shifts turns the film into a traditional perfect
-        cyclic colouring. This page records the induced map for all 68 canonical forward entries.
+        cyclic colouring. Every row pairs the paused film with a conventional static colour plate
+        and records its audit against <cite>The Symmetries of Things</cite>.
       </p>
       <div class="result-card">
         <p class="overline">The map in one line</p>
-        <p class="map-formula">κ(M,v) = Nτ mod N <span>·</span> H = ker κ <span>·</span> colour group = Γ//H</p>
+        <p class="map-formula">κ(M,v) = Nτ mod N <span>·</span> K = ker κ <span>·</span> G/K ≅ C<sub>N</sub></p>
         <p>
           The exact clock-order distribution is C<sub>1</sub>: {counts[1]}, C<sub>2</sub>: {counts[2]},
           C<sub>3</sub>: {counts[3]}, C<sub>4</sub>: {counts[4]}, C<sub>5</sub>: {counts[5]}, and
@@ -833,31 +1206,57 @@ def page_html(payload: dict[str, Any]) -> str:
           orientation, leaving 64 traditional colour classes after global colour relabelling.
         </p>
       </div>
+      <div class="audit-summary" aria-label="Book audit totals">
+        <div><strong>58</strong><span>direct plane-group or colour-table matches</span></div>
+        <div><strong>1</strong><span>disclosed internal book discrepancy</span></div>
+        <div><strong>9</strong><span>composite C<sub>4</sub>/C<sub>6</sub> extensions checked by prime layers</span></div>
+      </div>
     </section>
 
     <section class="method" aria-labelledby="reading-title">
       <p class="section-number">How to read a row</p>
-      <h2 id="reading-title">The parent, the kernel, and the plate</h2>
+      <h2 id="reading-title">The full group, the kernel, and the slash</h2>
       <div class="method-grid">
         <p>
-          Γ is the wallpaper group obtained by forgetting time. H consists of the operations at
-          phase zero; it preserves every colour and is the wallpaper symmetry guaranteed in a
-          generic frame. The Conway pair Γ//H is the traditional coloured-orbifold label, while
-          [Γ:H] = N records the number of colours. Hermann–Mauguin labels appear only as secondary
-          cross-references.
+          G is the wallpaper group obtained by forgetting time. K consists of the phase-zero
+          operations and fixes every colour. The book calls H the stabilizer of one chosen colour.
+          Here C<sub>N</sub> acts regularly, so H = K: onefold rows are simply G, twofold rows are
+          G/K, and higher rows are G<sup>N</sup>/K. A double slash would incorrectly assert H ≠ K.
         </p>
         <p>
-          Every plate repeats one asymmetric motif under the catalog's spatial operations and
-          colours a copy by its phase residue. The pictures are static—no clock rings and no
-          animation—so rotations into new colours, colour-swapping glides, and coloured
-          translations appear in the conventional wallpaper-pattern form.
+          The upper canvas repeats one continuously animated asymmetric motif under the exact
+          catalog operations. It never starts itself: use Play or seek with the phase slider. The
+          lower plate freezes the same phase character into N conventional colours, making
+          colour-turning rotations, glides, and translations readable as a wallpaper pattern.
         </p>
       </div>
       <aside>
         This is an induced correspondence, not a bijection of classification tables. Orbifold
-        types alone do not determine the embedding: a label such as 2222//2222 can still have
-        index two because the colour-preserving subgroup has a larger translation cell.
+        signatures alone do not determine the embedding: a type such as 2222/2222 can have index
+        two because K has a larger translation cell. The book's exceptional twofold ambiguity
+        **/** does not occur among these 36 two-colour rows.
       </aside>
+    </section>
+
+    <section class="book-method" aria-labelledby="book-method-title">
+      <p class="section-number">Source check</p>
+      <h2 id="book-method-title">What the book verifies</h2>
+      <p>
+        The 2008 Conway–Burgiel–Goodman-Strauss edition was checked at full-page resolution.
+        Table 3.2 verifies the 17 ordinary plane signatures; Table 11.1 directly contains all 36
+        twofold G/K pairs; and Table 12.1 directly contains five of the six regular threefold
+        cases. The g234 row exposes a conflict between Tables 12.1 and 13.1 and the prose on
+        p. 158, so it is flagged rather than forced into the book's nonregular S<sub>3</sub> type.
+      </p>
+      <p>
+        Chapters 11–13 stop after primefold types (p. 169). The six fourfold and three sixfold
+        records are therefore labelled as extensions of the notation on p. 155. Each is checked
+        through its tabulated prime-index subgroup chain, while the operation audit establishes
+        that the full quotient is cyclic. Printed-page links use
+        <a href="{BOOK_RECORD_URL}">Google Books</a>; the matching attached-PDF index is shown in
+        every row. Preview availability can vary by region, and the supplied PDF is not
+        republished here. See also the book's <a href="{BOOK_ERRATA_URL}">official errata</a>.
+      </p>
     </section>
 
     <nav class="directory" aria-labelledby="directory-title">
@@ -877,10 +1276,12 @@ def page_html(payload: dict[str, Any]) -> str:
       <h2 id="provenance-title">Data and reproduction</h2>
       <p>
         The <a href="data/clockwork-coloring-correspondence.json">68-record JSON</a>, this HTML,
-        and all 68 lossless WebP plates are generated by
+        all 68 lossless WebP plates, and the local paused-film controller are generated or tracked
+        in this repository. The data and page come from
         <a href="scripts/generate_clockwork_coloring_correspondence.py">one checked-in script</a>.
         The read-only source snapshot has SHA-256 <code>{escape(digest)}</code>. Each row links to
-        its exact entry in the external forward catalog; no runtime data or code is loaded from it.
+        its exact entry in the external forward catalog; no runtime data or code is loaded from
+        that site. Film canvases read only the checked-in correspondence JSON.
       </p>
       <pre><code>python3 scripts/generate_clockwork_coloring_correspondence.py
 python3 scripts/generate_clockwork_coloring_correspondence.py --check</code></pre>
@@ -890,6 +1291,7 @@ python3 scripts/generate_clockwork_coloring_correspondence.py --check</code></pr
       <p><a href="./">Visualization gallery</a> · <a href="future-directions.html">Colour census</a> · <a href="README.md">README</a> · <a href="https://github.com/yaroslavvb/animated-groups">GitHub source</a></p>
     </footer>
   </main>
+  <script type="module" src="clockwork-coloring-correspondence.js"></script>
 </body>
 </html>
 """
