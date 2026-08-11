@@ -822,7 +822,7 @@ a[data-book-excerpt]::after {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  width: min(64rem, calc(100vw - 2rem));
+  width: min(90rem, calc(100vw - 1rem));
   max-width: none;
   max-height: 94dvh;
   margin: auto;
@@ -913,7 +913,9 @@ a[data-book-excerpt]::after {
   position: relative;
   display: grid;
   min-height: 8rem;
-  max-height: min(66dvh, 48rem);
+  min-width: 0;
+  max-height: min(70dvh, 60rem);
+  flex: 0 1 auto;
   overflow: auto;
   place-items: center;
   background: #e8e4da;
@@ -923,8 +925,20 @@ a[data-book-excerpt]::after {
   display: block;
   width: auto;
   max-width: 100%;
+  max-height: min(70dvh, 60rem);
   height: auto;
   margin: auto;
+  object-fit: contain;
+}
+
+.book-excerpt-media[data-zoom="actual"] {
+  place-items: start;
+}
+
+.book-excerpt-media[data-zoom="actual"] img {
+  max-width: none;
+  max-height: none;
+  margin: 0;
 }
 
 .book-excerpt-media:not([data-state="ready"]) img {
@@ -972,6 +986,30 @@ a[data-book-excerpt]::after {
   flex: 0 0 auto;
   font-size: 0.8rem;
   font-weight: 650;
+}
+
+.book-excerpt-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.book-excerpt-zoom {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--control-line);
+  border-radius: 3px;
+  background: var(--surface-raised);
+  color: var(--text);
+  font: 650 0.75rem/1 ui-sans-serif, sans-serif;
+  cursor: pointer;
+}
+
+.book-excerpt-zoom:hover,
+.book-excerpt-zoom:focus-visible,
+.book-excerpt-zoom[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 @media (max-width: 900px) {
@@ -1030,6 +1068,11 @@ a[data-book-excerpt]::after {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.55rem;
+  }
+
+  .book-excerpt-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 

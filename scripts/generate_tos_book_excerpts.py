@@ -2,7 +2,7 @@
 """Generate the annotated *Symmetries of Things* excerpt assets.
 
 The source PDF is intentionally not part of the site.  This script renders
-only the 62 narrowly scoped evidence crops listed in
+only the 62 contextual evidence crops listed in
 ``tos_book_excerpt_specs.py``, bakes in the highlight and copyright notice,
 and writes lossless WebP files for the correspondence-page dialog.
 """
@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import math
 from pathlib import Path
 import shutil
 import subprocess
@@ -29,6 +30,7 @@ RENDER_DPI = 216
 PDF_WIDTH = 612.0
 PDF_HEIGHT = 792.0
 WATERMARK = "© COPYRIGHTED EXCERPT"
+CONTEXT_AREA_MULTIPLIER = 5.25
 
 
 def _font(size: int, *, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
@@ -76,6 +78,41 @@ def _box(rect: tuple[float, float, float, float], sx: float, sy: float) -> tuple
     )
 
 
+def expanded_crop(
+    rect: tuple[float, float, float, float],
+) -> tuple[float, float, float, float]:
+    """Expand a focus crop beyond five times its area without leaving the page."""
+
+    x, y, width, height = rect
+    if width <= 0 or height <= 0:
+        raise ValueError(f"crop must have positive dimensions: {rect}")
+    target_area = width * height * CONTEXT_AREA_MULTIPLIER
+    if target_area > PDF_WIDTH * PDF_HEIGHT:
+        raise ValueError(f"fivefold crop does not fit on the source page: {rect}")
+    aspect_ratio = width / height
+    expanded_width = math.sqrt(target_area * aspect_ratio)
+    expanded_height = target_area / expanded_width
+
+    if expanded_width > PDF_WIDTH:
+        expanded_width = PDF_WIDTH
+        expanded_height = target_area / expanded_width
+    if expanded_height > PDF_HEIGHT:
+        expanded_height = PDF_HEIGHT
+        expanded_width = target_area / expanded_height
+
+    center_x = x + width / 2
+    center_y = y + height / 2
+    expanded_x = min(
+        max(0.0, center_x - expanded_width / 2),
+        PDF_WIDTH - expanded_width,
+    )
+    expanded_y = min(
+        max(0.0, center_y - expanded_height / 2),
+        PDF_HEIGHT - expanded_height,
+    )
+    return expanded_x, expanded_y, expanded_width, expanded_height
+
+
 def _watermark_layer(size: tuple[int, int]) -> Image.Image:
     width, height = size
     font_size = max(12, min(46, round(width / 15), round(height * 0.38)))
@@ -102,7 +139,7 @@ def _watermark_layer(size: tuple[int, int]) -> Image.Image:
 def render_excerpt(page: Image.Image, spec: dict[str, Any]) -> bytes:
     sx = page.width / PDF_WIDTH
     sy = page.height / PDF_HEIGHT
-    crop_box = _box(spec["crop"], sx, sy)
+    crop_box = _box(expanded_crop(spec["crop"]), sx, sy)
     excerpt = page.crop(crop_box).convert("RGBA")
 
     excerpt.alpha_composite(_watermark_layer(excerpt.size))
