@@ -375,7 +375,13 @@ class ClockworkPlayer {
     this.toggle.setAttribute("aria-pressed", "true");
     this.toggleLabel.textContent = "Pause";
     this.toggle.querySelector(".animation-icon").textContent = "❚❚";
-    if (this.nearViewport && !document.hidden) this.startFrames();
+    // An IntersectionObserver exit clears the backing store but deliberately
+    // leaves the controls usable. A viewer's explicit Play request must win
+    // over that lazy-rendering state: rebuild the selected film before its
+    // first animation frame instead of advancing an invisible canvas.
+    if (!this.active) this.activate();
+    else this.resizeAndDraw();
+    if (!document.hidden) this.startFrames();
   }
 
   pause() {
