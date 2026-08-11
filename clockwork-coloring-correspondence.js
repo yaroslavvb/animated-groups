@@ -222,7 +222,7 @@ class ClockworkPlayer {
 
     this.canvas.setAttribute(
       "aria-label",
-      `Paused clockwork film for ${record.symbol}, group ${record.id}, with ${record.clock_order} phase interval${record.clock_order === 1 ? "" : "s"}.`,
+      `Paused clockwork film for colour action ${record.id}, with ${record.clock_order} phase interval${record.clock_order === 1 ? "" : "s"}.`,
     );
     this.toggle.addEventListener("click", () => this.togglePlayback());
     this.slider.addEventListener("input", () => this.scrub(Number(this.slider.value)));

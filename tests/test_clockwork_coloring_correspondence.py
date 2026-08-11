@@ -342,10 +342,18 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(self.page.count('class="notation-crosswalk"'), 51)
         self.assertIn("A reduced clock phase a/b induces permutation order b", self.page)
         self.assertNotIn("non-product forward lift", self.page)
-        self.assertIn(
-            '<span class="clockwork-symbol">*2<sub>1</sub>~2<sub>1</sub>2<sub>1</sub>~2<sub>1</sub></span>',
-            self.page,
+        self.assertNotIn("Clockwork symbol", self.page)
+        self.assertNotIn("Clockwork notation", self.page)
+        self.assertNotIn('class="clockwork-symbol"', self.page)
+        self.assertNotIn('class="clockwork-description"', self.page)
+        self.assertEqual(self.page.count('class="phase-description"'), 51)
+        for group in self.display_groups:
+            self.assertNotIn(escape(group["symbol"]), self.page, group["id"])
+
+        script = (ROOT / "clockwork-coloring-correspondence.js").read_text(
+            encoding="utf-8"
         )
+        self.assertNotIn("record.symbol", script)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -394,7 +402,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertTrue({"system", "bravais", "symmorphic"} <= group.keys())
             self.assertNotIn("classified in", group["clockwork_description"].lower())
             self.assertIn(
-                f"orbifold signature {group['parent']['orbifold']}",
+                f"plane orbifold {group['parent']['orbifold']}",
                 group["clockwork_description"],
             )
             if group["clock_order"] > 1:
