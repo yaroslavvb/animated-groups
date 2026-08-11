@@ -2,7 +2,7 @@
 """Generate the annotated *Symmetries of Things* excerpt assets.
 
 The source PDF is intentionally not part of the site.  This script renders
-only the 62 contextual evidence crops listed in
+only the 65 contextual evidence crops listed in
 ``tos_book_excerpt_specs.py``, bakes in the highlight and copyright notice,
 and writes lossless WebP files for the correspondence-page dialog.
 """

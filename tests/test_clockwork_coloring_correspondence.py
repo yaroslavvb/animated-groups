@@ -20,6 +20,42 @@ import generate_clockwork_coloring_correspondence as correspondence  # noqa: E40
 import generate_tos_book_excerpts as book_excerpts  # noqa: E402
 
 
+BOOK_REPRESENTATIVE_FIXTURE = {
+    "g7": 6,
+    "g60": 2,
+    "g63": 2,
+    "g64": 4,
+    "g65": 4,
+    "g66": 2,
+    "g67": 2,
+    "g70": 2,
+    "g73": 2,
+    "g74": 4,
+    "g98": 2,
+    "g136": 2,
+    "g138": 2,
+}
+BOOK_DISCREPANCY_FIXTURE = {"g234", "g244", "g245"}
+COMPOSITE_EXTENSION_FIXTURE = {
+    "g75", "g96", "g97", "g99", "g137", "g139", "g235", "g247", "g248"
+}
+SUPERSCRIPT_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
+
+
+def superscript_orders(signature: str) -> list[int]:
+    runs: list[str] = []
+    current = ""
+    for character in signature:
+        if character in "⁰¹²³⁴⁵⁶⁷⁸⁹":
+            current += character.translate(SUPERSCRIPT_ASCII)
+        elif current:
+            runs.append(current)
+            current = ""
+    if current:
+        runs.append(current)
+    return [int(run) for run in runs]
+
+
 class CorrespondenceParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -241,6 +277,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         groups = self.payload["groups"]
         self.assertEqual(len(correspondence.BOOK_TWO_FOLD_SIGNATURE_BY_TYPE), 36)
         self.assertEqual(len(correspondence.BOOK_HIGHER_SIGNATURE_BY_ID), 15)
+        self.assertEqual(
+            correspondence.BOOK_REPRESENTATIVE_MULTIPLICITY_BY_ID,
+            BOOK_REPRESENTATIVE_FIXTURE,
+        )
         counts = Counter(group["clock_order"] for group in groups)
         self.assertEqual(
             {n: counts.get(n, 0) for n in range(1, 7)},
@@ -266,12 +306,29 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     group["clock_order"],
                 ),
             )
+            self.assertEqual(
+                group["signature_evidence"],
+                correspondence.signature_evidence(
+                    group["id"],
+                    group["clock_order"],
+                    group["tos_notation"],
+                ),
+            )
             self.assertNotIn("//", group["tos_notation"])
             if group["parent"]["hm"] == "p1":
                 self.assertEqual(group["parent"]["orbifold"], "◦")
             if group["kernel"]["hm"] == "p1":
                 self.assertEqual(group["kernel"]["orbifold"], "◦")
             self.assertEqual(len(group["phase_residues"]), group["clock_order"])
+            if group["clock_order"] > 1:
+                for permutation_order in superscript_orders(
+                    group["book_color_signature"]
+                ):
+                    self.assertEqual(
+                        group["clock_order"] % permutation_order,
+                        0,
+                        group["id"],
+                    )
         for group in self.display_groups:
             self.assertIn(escape(group["clockwork_description"]), self.page)
             self.assertIn(escape(group["coloring_description"]), self.page)
@@ -282,6 +339,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             '*<sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2',
             self.page,
         )
+        self.assertEqual(self.page.count('class="notation-crosswalk"'), 51)
+        self.assertIn("A reduced clock phase a/b induces permutation order b", self.page)
+        self.assertNotIn("non-product forward lift", self.page)
         self.assertIn(
             '<span class="clockwork-symbol">*2<sub>1</sub>~2<sub>1</sub>2<sub>1</sub>~2<sub>1</sub></span>',
             self.page,
@@ -339,7 +399,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
             if group["clock_order"] > 1:
                 self.assertIn(
-                    f"orbifold signature {group['kernel']['orbifold']}",
+                    f"kernel K = {group['kernel']['orbifold']}",
                     group["coloring_description"],
                 )
 
@@ -350,6 +410,17 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(
             self.payload["meta"]["book_audit_counts"],
             correspondence.EXPECTED_BOOK_AUDIT_COUNTS,
+        )
+        signature_statuses = Counter(
+            group["signature_evidence"]["status"] for group in groups
+        )
+        self.assertEqual(
+            dict(signature_statuses),
+            correspondence.EXPECTED_SIGNATURE_EVIDENCE_COUNTS,
+        )
+        self.assertEqual(
+            self.payload["meta"]["signature_evidence_counts"],
+            correspondence.EXPECTED_SIGNATURE_EVIDENCE_COUNTS,
         )
         expected_primary = []
         for group in self.display_groups:
@@ -376,7 +447,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             if order == 2:
                 self.assertIn(group["tos_notation"], correspondence.TOS_TWO_FOLD_TYPES)
                 self.assertEqual(audit["status"], "direct-table")
-            elif order == 3 and group["id"] != "g234":
+            elif order == 3 and group["id"] in BOOK_DISCREPANCY_FIXTURE:
+                self.assertEqual(audit["status"], "internal-discrepancy")
+            elif order == 3:
                 self.assertIn(
                     group["tos_notation"], correspondence.TOS_THREE_FOLD_DIRECT_TYPES
                 )
@@ -386,6 +459,32 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 self.assertEqual(len(audit["prime_chain"]), 2)
                 self.assertIn(group["id"], correspondence.COMPOSITE_BOOK_CHAINS)
 
+        displayed_by_id = {group["id"]: group for group in self.display_groups}
+        self.assertEqual(
+            {
+                group_id
+                for group_id, group in displayed_by_id.items()
+                if group["signature_evidence"]["status"] == "type-representative"
+            },
+            set(BOOK_REPRESENTATIVE_FIXTURE),
+        )
+        for group_id, multiplicity in BOOK_REPRESENTATIVE_FIXTURE.items():
+            evidence = displayed_by_id[group_id]["signature_evidence"]
+            self.assertEqual(evidence["variant_count"], multiplicity)
+            self.assertIn(
+                f"Table 11.1 groups {multiplicity} equivalent generator signatures",
+                evidence["summary"],
+            )
+
+        self.assertEqual(
+            {
+                group_id
+                for group_id, group in displayed_by_id.items()
+                if group["signature_evidence"]["status"] == "rule-extension"
+            },
+            COMPOSITE_EXTENSION_FIXTURE,
+        )
+
         exceptional = next(group for group in groups if group["id"] == "g234")
         self.assertEqual(exceptional["tos_notation"], "3*3³/*333")
         self.assertEqual(exceptional["book_audit"]["status"], "internal-discrepancy")
@@ -394,9 +493,28 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             [164, 156, 158],
         )
         self.assertEqual(
+            exceptional["book_audit"]["references"][1]["excerpt_key"],
+            "p156::3*3³/◦-conflict",
+        )
+        self.assertEqual(
             exceptional["book_audit"]["independent_reference"]["url"],
             correspondence.FARRIS_URL,
         )
+
+        for group_id in ("g244", "g245"):
+            group = displayed_by_id[group_id]
+            self.assertEqual(group["book_color_signature"], "³6³3¹2")
+            self.assertNotEqual(group["book_color_signature"], "³6²3²2")
+            self.assertEqual(group["tos_notation"], "632³/2222")
+            self.assertEqual(group["book_audit"]["status"], "internal-discrepancy")
+            self.assertEqual(
+                [
+                    (reference["role"], reference["printed_page"])
+                    for reference in group["book_audit"]["references"]
+                ],
+                [("primary", 164), ("supporting", 157), ("conflict", 156)],
+            )
+        self.assertIn("official errata does not list that typo", self.page)
 
     def test_all_book_links_open_separate_annotated_excerpt_pages(self) -> None:
         expected_references = []
@@ -412,8 +530,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     }
                 )
 
-        self.assertEqual(len(expected_references), 80)
-        self.assertEqual(len(self.parser.book_excerpt_links), 80)
+        self.assertEqual(len(expected_references), 84)
+        self.assertEqual(len(self.parser.book_excerpt_links), 84)
         for attributes, reference in zip(self.parser.book_excerpt_links, expected_references):
             excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
             viewer = urlparse(attributes.get("href") or "")
@@ -442,16 +560,16 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertNotIn("aria-controls", attributes)
 
         expected_excerpt_keys = {reference["excerpt_key"] for reference in expected_references}
-        self.assertEqual(len(expected_excerpt_keys), 44)
+        self.assertEqual(len(expected_excerpt_keys), 46)
         self.assertEqual(
             {attributes["data-book-excerpt"] for attributes in self.parser.book_excerpt_links},
             expected_excerpt_keys,
         )
 
-    def test_the_separate_viewer_loads_62_contextual_watermarked_webps(self) -> None:
+    def test_the_separate_viewer_loads_65_contextual_watermarked_webps(self) -> None:
         self.assertEqual(self.parser.book_dialog_ids, [])
         self.assertEqual(self.parser.book_excerpt_images, [])
-        self.assertEqual(len(correspondence.BOOK_EXCERPTS), 62)
+        self.assertEqual(len(correspondence.BOOK_EXCERPTS), 65)
         for key, excerpt in correspondence.BOOK_EXCERPTS.items():
             path = ROOT / excerpt["image"]
             self.assertTrue(path.is_file(), key)
@@ -523,6 +641,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 book_excerpts.PDF_HEIGHT * book_excerpts.RENDER_DPI / 72 + 78,
                 key,
             )
+
+        for key in (
+            "p156::333³/◦",
+            "p156::333³/333",
+            "p156::632³/2222",
+            "p156::3*3³//*333",
+        ):
+            context = correspondence.BOOK_EXCERPTS[key]["context"]
+            self.assertIn("with threefold understood", context)
+            self.assertIn("normalizes it as", context)
+        self.assertIn("correct regular 632 derivation", correspondence.BOOK_EXCERPTS[
+            "p157::632-regular-derivation"
+        ]["title"].lower())
 
         viewer_page = (ROOT / "book-excerpt.html").read_text(encoding="utf-8")
         viewer_script = (ROOT / "book-excerpt.js").read_text(encoding="utf-8")

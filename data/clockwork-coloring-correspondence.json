@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": 3,
+    "schema_version": 4,
     "title": "Clockwork/coloring correspondence",
     "source_catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/data/catalog.json",
     "source_catalog_sha256": "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0",
@@ -11,8 +11,8 @@
     "definition": "kappa(M,v) = N*tau mod N; K = ker(kappa); regular action has H = K; ToS type is G for N=1, G/K for N=2, and G^N/K for N>2",
     "book_audit_counts": {
       "plane-group": 17,
-      "direct-table": 41,
-      "internal-discrepancy": 1,
+      "direct-table": 39,
+      "internal-discrepancy": 3,
       "composite-extension": 9
     },
     "book": {
@@ -26,7 +26,7 @@
       "record_url": "https://books.google.com/books?id=EtQCk0TNafsC",
       "errata_url": "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html",
       "note": "Printed-page links open local highlighted evidence crops with Google Books as the no-JavaScript and complete-page fallback; attached-PDF indices are stored separately for audit reproducibility.",
-      "annotated_excerpt_count": 62
+      "annotated_excerpt_count": 65
     },
     "kernel_method": "Classify the tau=0 spatial operations plus their own translation lattice against the 17 canonical wallpaper groups.",
     "image_palette": [
@@ -40,7 +40,14 @@
     "image_size": [
       720,
       420
-    ]
+    ],
+    "signature_evidence_counts": {
+      "onefold": 17,
+      "exact-printed": 26,
+      "type-representative": 13,
+      "book-internal-discrepancy": 3,
+      "rule-extension": 9
+    }
   },
   "groups": [
     {
@@ -136,6 +143,11 @@
           0.0851,
           0.0785
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -256,6 +268,11 @@
           0.847,
           0.1182
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -298,8 +315,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁2₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2222. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 2222/◦, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 2₁2₁2₁2₁ is a lift of the plane orbifold signature 2222 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2.",
+      "coloring_description": "The book colour type is 2222/◦: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -373,6 +390,11 @@
           0.847,
           0.1182
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -422,8 +444,8 @@
           ]
         }
       ],
-      "clockwork_description": "c222₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2222. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 2222/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c222₁2₁ is a lift of the plane orbifold signature 2222 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2.",
+      "coloring_description": "The book colour type is 2222/2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -533,6 +555,12 @@
           0.228,
           0.8642
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 6 equivalent generator signatures under the same colour type 2222/2222. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 6
       }
     },
     {
@@ -653,6 +681,11 @@
           0.1566,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -695,8 +728,8 @@
           ]
         }
       ],
-      "clockwork_description": "~*×½ is a non-product forward lift over a plane symmetry group with orbifold signature *×. Its phase character has image C2; the phase residues by operation type are reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type *×/◦, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation ~*×½ is a lift of the plane orbifold signature *× with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is *×/◦: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -770,6 +803,11 @@
           0.1566,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -932,6 +970,11 @@
           0.0851,
           0.8404
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -1094,6 +1137,11 @@
           0.0851,
           0.8404
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -1256,6 +1304,11 @@
           0.2518,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -1304,8 +1357,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~2~2~2~2 is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *~2~2~2~2 is a lift of the plane orbifold signature *2222 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is *2222/2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -1415,6 +1468,11 @@
           0.2518,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -1577,6 +1635,11 @@
           0.2518,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -1625,8 +1688,8 @@
           ]
         }
       ],
-      "clockwork_description": "22~* is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 22~* is a lift of the plane orbifold signature 22* with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is 22*/2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -1736,6 +1799,11 @@
           0.2518,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -1898,6 +1966,11 @@
           0.3232,
           0.4357
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -1946,8 +2019,8 @@
           ]
         }
       ],
-      "clockwork_description": "22×½ is a non-product forward lift over a plane symmetry group with orbifold signature 22×. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 22×/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 22×½ is a lift of the plane orbifold signature 22× with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is 22×/2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2057,6 +2130,11 @@
           0.3232,
           0.4357
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -2106,8 +2184,8 @@
           ]
         }
       ],
-      "clockwork_description": "*2₁~2₁2₁~2₁ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ** and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/**, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *2₁~2₁2₁~2₁ is a lift of the plane orbifold signature *2222 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *2222/**: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = **. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2217,6 +2295,12 @@
           0.2518,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type *2222/**. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -2266,8 +2350,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁~* is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ×× and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/××, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 2₁2₁~* is a lift of the plane orbifold signature 22* with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 22*/××: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = ××. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2377,6 +2461,11 @@
           0.2518,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -2426,8 +2515,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁* is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ** and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/**, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 2₁2₁* is a lift of the plane orbifold signature 22* with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 22*/**: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = **. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2537,6 +2626,11 @@
           0.2518,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -2586,8 +2680,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁× is a non-product forward lift over a plane symmetry group with orbifold signature 22×. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ×× and preserves every colour. The resulting regular cyclic colouring has Conway type 22×/××, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 2₁2₁× is a lift of the plane orbifold signature 22× with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 22×/××: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = ××. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2697,6 +2791,12 @@
           0.3232,
           0.4357
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 22×/××. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -2753,8 +2853,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*222₁2₁ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c*222₁2₁ᵃ is a lift of the plane orbifold signature *2222 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *2222/*2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = *2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2936,6 +3036,12 @@
           0.7518,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 4 equivalent generator signatures under the same colour type *2222/*2222. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 4
       }
     },
     {
@@ -2992,8 +3098,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*222₁2₁ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22* and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c*222₁2₁ᵇ is a lift of the plane orbifold signature *2222 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *2222/22*: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 22*. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -3175,6 +3281,12 @@
           0.7518,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 4 equivalent generator signatures under the same colour type *2222/22*. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 4
       }
     },
     {
@@ -3231,8 +3343,8 @@
           ]
         }
       ],
-      "clockwork_description": "c22₁*ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22* and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c22₁*ᵃ is a lift of the plane orbifold signature 22* with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 22*/22*: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 22*. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -3414,6 +3526,12 @@
           0.3708,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 22*/22*. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -3470,8 +3588,8 @@
           ]
         }
       ],
-      "clockwork_description": "c22₁*ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c22₁*ᵇ is a lift of the plane orbifold signature 22* with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 22*/22×: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 22×. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -3653,6 +3771,12 @@
           0.3708,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 22*/22×. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -3893,6 +4017,11 @@
           0.7518,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -3947,8 +4076,8 @@
           ]
         }
       ],
-      "clockwork_description": "2*~2~2 is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 0; 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 2*~2~2 is a lift of the plane orbifold signature 2*22 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 0; 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is 2*22/2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4130,6 +4259,11 @@
           0.7518,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -4185,8 +4319,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁*2₁~2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 0; 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *× and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/*×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 2₁*2₁~2₁ is a lift of the plane orbifold signature 2*22 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 0; 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 2*22/*×: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = *×. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4368,6 +4502,12 @@
           0.7518,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 2*22/*×. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -4424,8 +4564,8 @@
           ]
         }
       ],
-      "clockwork_description": "c2₁*22ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c2₁*22ᵃ is a lift of the plane orbifold signature 2*22 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 2*22/*2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = *2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4607,6 +4747,11 @@
           0.7518,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -4663,8 +4808,8 @@
           ]
         }
       ],
-      "clockwork_description": "c2₁*22ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c2₁*22ᵇ is a lift of the plane orbifold signature 2*22 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 2*22/22×: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 22×. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4846,6 +4991,11 @@
           0.7518,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -4902,8 +5052,8 @@
           ]
         }
       ],
-      "clockwork_description": "c2*2₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22* and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c2*2₁2₁ is a lift of the plane orbifold signature 2*22 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 2*22/22*: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 22*. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -5085,6 +5235,12 @@
           0.3708,
           0.5071
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 2*22/22*. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -5142,8 +5298,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*22₁22₁ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2*22 and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c*22₁22₁ is a lift of the plane orbifold signature *2222 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *2222/2*22: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2*22. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -5469,6 +5625,12 @@
           0.3708,
           0.3642
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 4 equivalent generator signatures under the same colour type *2222/2*22. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 4
       }
     },
     {
@@ -5536,8 +5698,8 @@
           ]
         }
       ],
-      "clockwork_description": "c22₁×¼ is a non-product forward lift over a plane symmetry group with orbifold signature 22×. Its phase character has image C4; the phase residues by operation type are translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 1/4, 3/4.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 22×⁴/2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "Clockwork notation c22₁×¼ is a lift of the plane orbifold signature 22× with nontrivial phase map onto C4. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 1/4, 3/4.",
+      "coloring_description": "The book-style colour type is 22×⁴/2222: the exponent 4 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 4 and G/K is isomorphic to C4. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -5889,6 +6051,11 @@
           0.2756,
           0.2214
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C4 extension",
+        "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -6051,6 +6218,11 @@
           0.3232,
           0.8166
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -6099,8 +6271,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₂4₂2 is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 442/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 4₂4₂2 is a lift of the plane orbifold signature 442 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 4-fold rotations: 1/2.",
+      "coloring_description": "The book colour type is 442/2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -6210,6 +6382,11 @@
           0.3232,
           0.8166
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -6269,8 +6446,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₁4₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C4; the phase residues by operation type are 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 442⁴/◦, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "Clockwork notation 4₁4₁2₁ is a lift of the plane orbifold signature 442 with nontrivial phase map onto C4. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
+      "coloring_description": "The book-style colour type is 442⁴/◦: the exponent 4 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 4 and G/K is isomorphic to C4. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -6406,6 +6583,11 @@
           0.3232,
           0.8166
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C4 extension",
+        "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -6465,8 +6647,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₃4₃2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C4; the phase residues by operation type are 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 442⁴/◦, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "Clockwork notation 4₃4₃2₁ is a lift of the plane orbifold signature 442 with nontrivial phase map onto C4. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
+      "coloring_description": "The book-style colour type is 442⁴/◦: the exponent 4 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 4 and G/K is isomorphic to C4. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -6602,6 +6784,11 @@
           0.3232,
           0.8166
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C4 extension",
+        "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -6658,8 +6845,8 @@
           ]
         }
       ],
-      "clockwork_description": "c44₂2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 442 and preserves every colour. The resulting regular cyclic colouring has Conway type 442/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c44₂2₁ is a lift of the plane orbifold signature 442 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2.",
+      "coloring_description": "The book colour type is 442/442: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 442. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -6841,6 +7028,12 @@
           0.7518,
           0.0309
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 442/442. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -6907,8 +7100,8 @@
           ]
         }
       ],
-      "clockwork_description": "c4₁4₃2 is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C4; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 442⁴/2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "Clockwork notation c4₁4₃2 is a lift of the plane orbifold signature 442 with nontrivial phase map onto C4. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4.",
+      "coloring_description": "The book-style colour type is 442⁴/2222: the exponent 4 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 4 and G/K is isomorphic to C4. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -7116,6 +7309,11 @@
           0.4899,
           0.4357
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C4 extension",
+        "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -7356,6 +7554,11 @@
           0.1566,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -7411,8 +7614,8 @@
           ]
         }
       ],
-      "clockwork_description": "*4₂~4₂2 is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *4₂~4₂2 is a lift of the plane orbifold signature *442 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *442/*2222: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = *2222. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -7594,6 +7797,11 @@
           0.1566,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -7649,8 +7857,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~4₂4₂~2 is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2*22 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *~4₂4₂~2 is a lift of the plane orbifold signature *442 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *442/2*22: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2*22. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -7832,6 +8040,11 @@
           0.1566,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -7886,8 +8099,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~4~4~2 is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 442 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *~4~4~2 is a lift of the plane orbifold signature *442 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is *442/442: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 442. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -8069,6 +8282,11 @@
           0.1566,
           0.65
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -8309,6 +8527,11 @@
           0.2518,
           0.5071
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -8364,8 +8587,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₂*~2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 4₂*~2 is a lift of the plane orbifold signature 4*2 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 4*2/22×: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 22×. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -8547,6 +8770,11 @@
           0.2518,
           0.5071
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -8602,8 +8830,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₂*2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2*22 and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 4₂*2 is a lift of the plane orbifold signature 4*2 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is 4*2/2*22: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 2*22. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -8785,6 +9013,11 @@
           0.2518,
           0.5071
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -8839,8 +9072,8 @@
           ]
         }
       ],
-      "clockwork_description": "4*~2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 442 and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 4*~2 is a lift of the plane orbifold signature 4*2 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is 4*2/442: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 442. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -9022,6 +9255,11 @@
           0.2518,
           0.5071
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -9085,8 +9323,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*44₂2₁ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *442 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/*442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c*44₂2₁ᵃ is a lift of the plane orbifold signature *442 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *442/*442: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = *442. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -9412,6 +9650,12 @@
           0.1089,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type *442/*442. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -9487,8 +9731,8 @@
           ]
         }
       ],
-      "clockwork_description": "c4₃*2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C4; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2⁴/*2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "Clockwork notation c4₃*2 is a lift of the plane orbifold signature 4*2 with nontrivial phase map onto C4. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
+      "coloring_description": "The book-style colour type is 4*2⁴/*2222: the exponent 4 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = *2222. Here [G:K] = 4 and G/K is isomorphic to C4. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -9840,6 +10084,11 @@
           0.1327,
           0.3881
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C4 extension",
+        "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -9903,8 +10152,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*44₂2₁ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 4*2 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/4*2, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation c*44₂2₁ᵇ is a lift of the plane orbifold signature *442 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *442/4*2: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 4*2. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -10230,6 +10479,12 @@
           0.1089,
           0.2452
         ]
+      },
+      "signature_evidence": {
+        "status": "type-representative",
+        "label": "book-normalized representative",
+        "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type *442/4*2. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
+        "variant_count": 2
       }
     },
     {
@@ -10305,8 +10560,8 @@
           ]
         }
       ],
-      "clockwork_description": "c4₁*2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C4; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2⁴/22×, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "Clockwork notation c4₁*2 is a lift of the plane orbifold signature 4*2 with nontrivial phase map onto C4. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
+      "coloring_description": "The book-style colour type is 4*2⁴/22×: the exponent 4 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = 22×. Here [G:K] = 4 and G/K is isomorphic to C4. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -10658,6 +10913,11 @@
           0.1327,
           0.3881
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C4 extension",
+        "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -10796,6 +11056,11 @@
           0.6804,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -10844,8 +11109,8 @@
           ]
         }
       ],
-      "clockwork_description": "3₂3₂3₂ is a non-product forward lift over a plane symmetry group with orbifold signature 333. Its phase character has image C3; the phase residues by operation type are 3-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 333³/◦, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "Clockwork notation 3₂3₂3₂ is a lift of the plane orbifold signature 333 with nontrivial phase map onto C3. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 3-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The book colour type is 333³/◦: the exponent 3 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 3 and G/K is isomorphic to C3. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -10937,6 +11202,11 @@
           0.6804,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "exact Table 12.1 short signature",
+        "summary": "Table 12.1 prints this order-only short signature for the cited type."
       }
     },
     {
@@ -10985,8 +11255,8 @@
           ]
         }
       ],
-      "clockwork_description": "3₁3₁3₁ is a non-product forward lift over a plane symmetry group with orbifold signature 333. Its phase character has image C3; the phase residues by operation type are 3-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 333³/◦, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "Clockwork notation 3₁3₁3₁ is a lift of the plane orbifold signature 333 with nontrivial phase map onto C3. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 3-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The book colour type is 333³/◦: the exponent 3 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 3 and G/K is isomorphic to C3. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -11078,6 +11348,11 @@
           0.6804,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "exact Table 12.1 short signature",
+        "summary": "Table 12.1 prints this order-only short signature for the cited type."
       }
     },
     {
@@ -11134,8 +11409,8 @@
           ]
         }
       ],
-      "clockwork_description": "r33₁3₂ is a non-product forward lift over a plane symmetry group with orbifold signature 333. Its phase character has image C3; the phase residues by operation type are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 333³/333, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "Clockwork notation r33₁3₂ is a lift of the plane orbifold signature 333 with nontrivial phase map onto C3. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3.",
+      "coloring_description": "The book colour type is 333³/333: the exponent 3 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = 333. Here [G:K] = 3 and G/K is isomorphic to C3. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -11335,6 +11610,11 @@
           0.4423,
           0.2214
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "exact Table 12.1 short signature",
+        "summary": "Table 12.1 prints this order-only short signature for the cited type."
       }
     },
     {
@@ -11533,6 +11813,11 @@
           0.6804,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -11581,8 +11866,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~3~3~3 is a non-product forward lift over a plane symmetry group with orbifold signature *333. Its phase character has image C2; the phase residues by operation type are 3-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type *333/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *~3~3~3 is a lift of the plane orbifold signature *333 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 3-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is *333/333: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 333. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -11728,6 +12013,11 @@
           0.6804,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -11926,6 +12216,11 @@
           0.5851,
           0.7928
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -11974,8 +12269,8 @@
           ]
         }
       ],
-      "clockwork_description": "3*~3 is a non-product forward lift over a plane symmetry group with orbifold signature 3*3. Its phase character has image C2; the phase residues by operation type are 3-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 3*3/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 3*~3 is a lift of the plane orbifold signature 3*3 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 3-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is 3*3/333: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 333. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -12121,6 +12416,11 @@
           0.5851,
           0.7928
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -12185,12 +12485,12 @@
           ]
         }
       ],
-      "clockwork_description": "r3₂*3 is a non-product forward lift over a plane symmetry group with orbifold signature 3*3. Its phase character has image C3; the phase residues by operation type are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 0, 1/3, 2/3.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *333 and preserves every colour. The resulting regular cyclic colouring has Conway type 3*3³/*333, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "Clockwork notation r3₂*3 is a lift of the plane orbifold signature 3*3 with nontrivial phase map onto C3. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 0, 1/3, 2/3.",
+      "coloring_description": "The book colour type is 3*3³/*333: the exponent 3 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = *333. Here [G:K] = 3 and G/K is isomorphic to C3. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "internal-discrepancy",
         "status_label": "book-internal discrepancy",
-        "summary": "The clock operations give the regular type 3*3³/*333. Table 13.1 prints that type, but Table 12.1 instead prints the nonregular S3 type 3*3³//*333 and the derivation on p. 158 gives 3*3³/◦. The page keeps the computed kernel, flags the conflict, and links Frank Farris's independent construction of the same 3*3³/*333 type.",
+        "summary": "No one book row contains both the displayed short generator signature and the computed kernel. Table 12.1 and the derivation on p. 158 pair the short form ³3*¹3 with type 3*3³/◦ (the exponent 3 is understood there), while Table 13.1 prints the computed type 3*3³/*333 beside a differently positioned full cycle label. The page keeps the kernel computed from the clock operations and links Frank Farris's independent p31m/3p3m1 construction as a check on that parent/kernel type.",
         "references": [
           {
             "label": "Table 13.1 · later primefold summary",
@@ -12201,12 +12501,12 @@
             "excerpt_key": "p164::g234-single-slash-table"
           },
           {
-            "label": "Table 12.1 · conflicting threefold table",
+            "label": "Table 12.1 · same short form, conflicting kernel",
             "role": "conflict",
             "printed_page": 156,
             "pdf_page": 175,
             "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
-            "excerpt_key": "p156::3*3³//*333"
+            "excerpt_key": "p156::3*3³/◦-conflict"
           },
           {
             "label": "Threefold derivation · conflicting prose",
@@ -12568,6 +12868,11 @@
           0.7994,
           0.7928
         ]
+      },
+      "signature_evidence": {
+        "status": "book-internal-discrepancy",
+        "label": "signature and kernel split across book rows",
+        "summary": "No single book row contains both the displayed order-only signature and the computed kernel *333. Page 158 supports the short signature but gives kernel ◦; Table 13.1 supports the 3*3³/*333 type but prints a differently positioned full cycle label. The page therefore states the synthesis explicitly instead of calling it a direct book signature."
       }
     },
     {
@@ -12647,8 +12952,8 @@
           ]
         }
       ],
-      "clockwork_description": "r3₂*~3 is a non-product forward lift over a plane symmetry group with orbifold signature 3*3. Its phase character has image C6; the phase residues by operation type are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 1/6, 1/2, 5/6.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 3*3⁶/333, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
+      "clockwork_description": "Clockwork notation r3₂*~3 is a lift of the plane orbifold signature 3*3 with nontrivial phase map onto C6. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 1/6, 1/2, 5/6.",
+      "coloring_description": "The book-style colour type is 3*3⁶/333: the exponent 6 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = 333. Here [G:K] = 6 and G/K is isomorphic to C6. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/6 sends colour k to k+j modulo 6.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C6 extension",
@@ -13036,6 +13341,11 @@
           0.7994,
           0.7928
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C6 extension",
+        "summary": "The book does not enumerate composite C6 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -13240,6 +13550,11 @@
           0.728,
           0.15
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -13301,16 +13616,32 @@
           ]
         }
       ],
-      "clockwork_description": "6₂3₂2 is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C3; the phase residues by operation type are 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 632³/2222, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "Clockwork notation 6₂3₂2 is a lift of the plane orbifold signature 632 with nontrivial phase map onto C3. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The book colour type is 632³/2222: the exponent 3 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 3 and G/K is isomorphic to C3. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
-        "status": "direct-table",
-        "status_label": "direct Table 12.1 match",
-        "summary": "632³/2222 appears as a regular cyclic case in Table 12.1. Here the stabilizer H of one colour equals the all-colours kernel K.",
+        "status": "internal-discrepancy",
+        "status_label": "book typo resolved by pp. 157 and 164",
+        "summary": "The page's ³6³3¹2 is derived in the prose on p. 157 and Table 13.1 assigns the three generators a 3-cycle, its inverse, and the identity for type 632³/2222. Table 12.1 on p. 156 instead prints ³6²3²2 beside 632/2222. Those raised 2s denote transpositions and cannot describe a regular C3 action. We therefore treat p. 156 as a book error; it is not listed in the authors' online errata.",
         "references": [
           {
-            "label": "Table 12.1 · threefold color types",
+            "label": "Table 13.1 · exact later signature and type",
             "role": "primary",
+            "printed_page": 164,
+            "pdf_page": 183,
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA164",
+            "excerpt_key": "p164::632³/2222-exact"
+          },
+          {
+            "label": "Threefold derivation · correct short signature",
+            "role": "supporting",
+            "printed_page": 157,
+            "pdf_page": 176,
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA157",
+            "excerpt_key": "p157::632-regular-derivation"
+          },
+          {
+            "label": "Table 12.1 · conflicting earlier short signature",
+            "role": "conflict",
             "printed_page": 156,
             "pdf_page": 175,
             "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
@@ -13448,6 +13779,11 @@
           0.728,
           0.15
         ]
+      },
+      "signature_evidence": {
+        "status": "book-internal-discrepancy",
+        "label": "p. 156 typo corrected by pp. 157 and 164",
+        "summary": "The displayed ³6³3¹2 is derived on p. 157 and printed with full permutations in Table 13.1. Table 12.1 instead has the inconsistent ³6²3²2; the official errata does not list that typo."
       }
     },
     {
@@ -13509,16 +13845,32 @@
           ]
         }
       ],
-      "clockwork_description": "6₄3₁2 is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C3; the phase residues by operation type are 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 632³/2222, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "Clockwork notation 6₄3₁2 is a lift of the plane orbifold signature 632 with nontrivial phase map onto C3. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The book colour type is 632³/2222: the exponent 3 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = 2222. Here [G:K] = 3 and G/K is isomorphic to C3. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
-        "status": "direct-table",
-        "status_label": "direct Table 12.1 match",
-        "summary": "632³/2222 appears as a regular cyclic case in Table 12.1. Here the stabilizer H of one colour equals the all-colours kernel K.",
+        "status": "internal-discrepancy",
+        "status_label": "book typo resolved by pp. 157 and 164",
+        "summary": "The page's ³6³3¹2 is derived in the prose on p. 157 and Table 13.1 assigns the three generators a 3-cycle, its inverse, and the identity for type 632³/2222. Table 12.1 on p. 156 instead prints ³6²3²2 beside 632/2222. Those raised 2s denote transpositions and cannot describe a regular C3 action. We therefore treat p. 156 as a book error; it is not listed in the authors' online errata.",
         "references": [
           {
-            "label": "Table 12.1 · threefold color types",
+            "label": "Table 13.1 · exact later signature and type",
             "role": "primary",
+            "printed_page": 164,
+            "pdf_page": 183,
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA164",
+            "excerpt_key": "p164::632³/2222-exact"
+          },
+          {
+            "label": "Threefold derivation · correct short signature",
+            "role": "supporting",
+            "printed_page": 157,
+            "pdf_page": 176,
+            "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA157",
+            "excerpt_key": "p157::632-regular-derivation"
+          },
+          {
+            "label": "Table 12.1 · conflicting earlier short signature",
+            "role": "conflict",
             "printed_page": 156,
             "pdf_page": 175,
             "url": "https://books.google.com/books?id=EtQCk0TNafsC&pg=PA156",
@@ -13656,6 +14008,11 @@
           0.728,
           0.15
         ]
+      },
+      "signature_evidence": {
+        "status": "book-internal-discrepancy",
+        "label": "p. 156 typo corrected by pp. 157 and 164",
+        "summary": "The displayed ³6³3¹2 is derived on p. 157 and printed with full permutations in Table 13.1. Table 12.1 instead has the inconsistent ³6²3²2; the official errata does not list that typo."
       }
     },
     {
@@ -13710,8 +14067,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₃32₁ is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 632/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation 6₃32₁ is a lift of the plane orbifold signature 632 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2.",
+      "coloring_description": "The book colour type is 632/333: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 333. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -13857,6 +14214,11 @@
           0.728,
           0.15
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -13933,8 +14295,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₅3₂2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C6; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 632⁶/◦, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
+      "clockwork_description": "Clockwork notation 6₅3₂2₁ is a lift of the plane orbifold signature 632 with nontrivial phase map onto C6. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
+      "coloring_description": "The book-style colour type is 632⁶/◦: the exponent 6 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 6 and G/K is isomorphic to C6. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/6 sends colour k to k+j modulo 6.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C6 extension",
@@ -14106,6 +14468,11 @@
           0.728,
           0.15
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C6 extension",
+        "summary": "The book does not enumerate composite C6 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -14182,8 +14549,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₁3₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C6; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 632⁶/◦, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
+      "clockwork_description": "Clockwork notation 6₁3₁2₁ is a lift of the plane orbifold signature 632 with nontrivial phase map onto C6. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
+      "coloring_description": "The book-style colour type is 632⁶/◦: the exponent 6 on G counts the colours, and the orbifold signature after the slash is the colour-fixing kernel K = ◦. Here [G:K] = 6 and G/K is isomorphic to C6. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/6 sends colour k to k+j modulo 6.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C6 extension",
@@ -14355,6 +14722,11 @@
           0.728,
           0.15
         ]
+      },
+      "signature_evidence": {
+        "status": "rule-extension",
+        "label": "Goodman–Strauss-style C6 extension",
+        "summary": "The book does not enumerate composite C6 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
       }
     },
     {
@@ -14673,6 +15045,11 @@
           0.5613,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "onefold",
+        "label": "ordinary onefold plane group",
+        "summary": "No nontrivial short colour signature is needed."
       }
     },
     {
@@ -14734,8 +15111,8 @@
           ]
         }
       ],
-      "clockwork_description": "*6₃~3~2₁ is a non-product forward lift over a plane symmetry group with orbifold signature *632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 3*3 and preserves every colour. The resulting regular cyclic colouring has Conway type *632/3*3, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *6₃~3~2₁ is a lift of the plane orbifold signature *632 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *632/3*3: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 3*3. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -14989,6 +15366,11 @@
           0.5613,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -15049,8 +15431,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~6~3~2 is a non-product forward lift over a plane symmetry group with orbifold signature *632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 3-fold rotations: 0; 6-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature 632 and preserves every colour. The resulting regular cyclic colouring has Conway type *632/632, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *~6~3~2 is a lift of the plane orbifold signature *632 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 0; 3-fold rotations: 0; 6-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The book colour type is *632/632: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = 632. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -15304,6 +15686,11 @@
           0.5613,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     },
     {
@@ -15365,8 +15752,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~6₃32₁ is a non-product forward lift over a plane symmetry group with orbifold signature *632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The colour-fixing subgroup K has orbifold signature *333 and preserves every colour. The resulting regular cyclic colouring has Conway type *632/*333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "Clockwork notation *~6₃32₁ is a lift of the plane orbifold signature *632 with nontrivial phase map onto C2. Catalog subscripts, tildes, and fractions encode clock shifts; they are not the book's raised permutation orders. The operation phases are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The book colour type is *632/*333: twofold is understood, so no exponent 2 is printed, and the orbifold signature after the slash is the colour-fixing kernel K = *333. Here [G:K] = 2 and G/K is isomorphic to C2. The one-slash form is valid because this cyclic colour action is regular, so the stabilizer H of one chosen colour equals K. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -15620,6 +16007,11 @@
           0.5613,
           0.6738
         ]
+      },
+      "signature_evidence": {
+        "status": "exact-printed",
+        "label": "unique Table 11.1 short signature",
+        "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
       }
     }
   ]

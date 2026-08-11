@@ -48,6 +48,7 @@ MANIFEST = ROOT / "data" / "color-forward-manifest.json"
 DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=book-notation-audit"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=excerpt-window-handshake"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -225,10 +226,10 @@ BOOK_TWO_FOLD_SIGNATURE_BY_TYPE = {
     "*×/◦": "*²×²",
 }
 
-# Primefold signatures are printed in Table 12.1 (with the g234 correction
-# supported by pp. 158 and 164).  The composite C4/C6 cases extend the same
-# short-signature convention from p. 155 and are computed from the audited
-# standard-generator phases.
+# Primefold signatures are checked against Tables 12.1 and 13.1 plus their
+# intervening derivations.  g234, g244, and g245 retain explicit discrepancy
+# records rather than pretending the book is internally uniform.  Composite
+# C4/C6 cases extend the p. 155 convention from audited generator phases.
 BOOK_HIGHER_SIGNATURE_BY_ID = {
     "g75": "¹2²2×⁴",
     "g96": "⁴4⁴4²2",
@@ -282,9 +283,31 @@ DISPLAYED_GROUP_COUNT = 51
 OMITTED_TRIVIAL_COUNT = 17
 EXPECTED_BOOK_AUDIT_COUNTS = {
     "plane-group": 17,
-    "direct-table": 41,
-    "internal-discrepancy": 1,
+    "direct-table": 39,
+    "internal-discrepancy": 3,
     "composite-extension": 9,
+}
+BOOK_REPRESENTATIVE_MULTIPLICITY_BY_ID = {
+    "g7": 6,
+    "g60": 2,
+    "g63": 2,
+    "g64": 4,
+    "g65": 4,
+    "g66": 2,
+    "g67": 2,
+    "g70": 2,
+    "g73": 2,
+    "g74": 4,
+    "g98": 2,
+    "g136": 2,
+    "g138": 2,
+}
+EXPECTED_SIGNATURE_EVIDENCE_COUNTS = {
+    "onefold": 17,
+    "exact-printed": 26,
+    "type-representative": 13,
+    "book-internal-discrepancy": 3,
+    "rule-extension": 9,
 }
 M_ID = ((1, 0), (0, 1))
 
@@ -413,6 +436,84 @@ def book_color_signature(
         return BOOK_HIGHER_SIGNATURE_BY_ID[group_id]
     except KeyError as error:
         raise ValueError(f"missing higher-fold short signature: {group_id}") from error
+
+
+def signature_evidence(
+    group_id: str,
+    order: int,
+    notation: str,
+) -> dict[str, Any]:
+    """Classify how literally the visible short signature follows the book."""
+
+    if order == 1:
+        return {
+            "status": "onefold",
+            "label": "ordinary onefold plane group",
+            "summary": "No nontrivial short colour signature is needed.",
+        }
+    if group_id in BOOK_REPRESENTATIVE_MULTIPLICITY_BY_ID:
+        multiplicity = BOOK_REPRESENTATIVE_MULTIPLICITY_BY_ID[group_id]
+        return {
+            "status": "type-representative",
+            "label": "book-normalized representative",
+            "summary": (
+                f"Table 11.1 groups {multiplicity} equivalent generator signatures "
+                f"under the same colour type {notation}. The page uses the first printed "
+                "short signature as a stable representative; the G/K type, not this "
+                "choice of generators, is the invariant correspondence."
+            ),
+            "variant_count": multiplicity,
+        }
+    if order == 2:
+        return {
+            "status": "exact-printed",
+            "label": "unique Table 11.1 short signature",
+            "summary": (
+                "Table 11.1 prints one short generator signature for this colour type, "
+                "and the page reproduces it."
+            ),
+        }
+    if group_id == "g234":
+        return {
+            "status": "book-internal-discrepancy",
+            "label": "signature and kernel split across book rows",
+            "summary": (
+                "No single book row contains both the displayed order-only signature and "
+                "the computed kernel *333. Page 158 supports the short signature but gives "
+                "kernel ◦; Table 13.1 supports the 3*3³/*333 type but prints a differently "
+                "positioned full cycle label. The page therefore states the synthesis "
+                "explicitly instead of calling it a direct book signature."
+            ),
+        }
+    if group_id in {"g244", "g245"}:
+        return {
+            "status": "book-internal-discrepancy",
+            "label": "p. 156 typo corrected by pp. 157 and 164",
+            "summary": (
+                "The displayed ³6³3¹2 is derived on p. 157 and printed with full "
+                "permutations in Table 13.1. Table 12.1 instead has the inconsistent "
+                "³6²3²2; the official errata does not list that typo."
+            ),
+        }
+    if order == 3:
+        return {
+            "status": "exact-printed",
+            "label": "exact Table 12.1 short signature",
+            "summary": (
+                "Table 12.1 prints this order-only short signature for the cited type."
+            ),
+        }
+    if order in (4, 6):
+        return {
+            "status": "rule-extension",
+            "label": f"Goodman–Strauss-style C{order} extension",
+            "summary": (
+                f"The book does not enumerate composite C{order} colourings. This short "
+                "signature is derived from its rule: replace each generator permutation "
+                "by its order."
+            ),
+        }
+    raise ValueError(f"unsupported signature evidence for {group_id}")
 
 
 def superscript_html(value: str) -> str:
@@ -547,6 +648,45 @@ def book_audit(
             "prime_chain": [],
         }
 
+    if order == 3 and group_id in {"g244", "g245"}:
+        if notation != "632³/2222":
+            raise ValueError(
+                f"unexpected later-table notation for {group_id}: {notation}"
+            )
+        return {
+            "status": "internal-discrepancy",
+            "status_label": "book typo resolved by pp. 157 and 164",
+            "summary": (
+                "The page's ³6³3¹2 is derived in the prose on p. 157 and Table "
+                "13.1 assigns the three generators a 3-cycle, its inverse, and the "
+                "identity for type 632³/2222. Table 12.1 on p. 156 instead prints "
+                "³6²3²2 beside 632/2222. Those raised 2s denote transpositions and "
+                "cannot describe a regular C3 action. We therefore treat p. 156 as "
+                "a book error; it is not listed in the authors' online errata."
+            ),
+            "references": [
+                book_reference(
+                    164,
+                    "Table 13.1 · exact later signature and type",
+                    role="primary",
+                    excerpt_key="p164::632³/2222-exact",
+                ),
+                book_reference(
+                    157,
+                    "Threefold derivation · correct short signature",
+                    role="supporting",
+                    excerpt_key="p157::632-regular-derivation",
+                ),
+                book_reference(
+                    156,
+                    "Table 12.1 · conflicting earlier short signature",
+                    role="conflict",
+                    excerpt_key="p156::632³/2222",
+                ),
+            ],
+            "prime_chain": [],
+        }
+
     if order == 3 and group_id != "g234":
         if notation not in TOS_THREE_FOLD_DIRECT_TYPES:
             raise ValueError(f"threefold type is absent from Table 12.1: {notation}")
@@ -575,11 +715,13 @@ def book_audit(
             "status": "internal-discrepancy",
             "status_label": "book-internal discrepancy",
             "summary": (
-                "The clock operations give the regular type 3*3³/*333. Table 13.1 "
-                "prints that type, but Table 12.1 instead prints the nonregular S3 type "
-                "3*3³//*333 and the derivation on p. 158 gives 3*3³/◦. The page keeps "
-                "the computed kernel, flags the conflict, and links Frank Farris's "
-                "independent construction of the same 3*3³/*333 type."
+                "No one book row contains both the displayed short generator signature "
+                "and the computed kernel. Table 12.1 and the derivation on p. 158 pair "
+                "the short form ³3*¹3 with type 3*3³/◦ (the exponent 3 is understood "
+                "there), while Table 13.1 prints the computed type 3*3³/*333 beside a "
+                "differently positioned full cycle label. The page keeps the kernel "
+                "computed from the clock operations and links Frank Farris's independent "
+                "p31m/3p3m1 construction as a check on that parent/kernel type."
             ),
             "references": [
                 book_reference(
@@ -590,9 +732,9 @@ def book_audit(
                 ),
                 book_reference(
                     156,
-                    "Table 12.1 · conflicting threefold table",
+                    "Table 12.1 · same short form, conflicting kernel",
                     role="conflict",
-                    excerpt_key="p156::3*3³//*333",
+                    excerpt_key="p156::3*3³/◦-conflict",
                 ),
                 book_reference(
                     158,
@@ -825,10 +967,10 @@ def clockwork_description(group: dict[str, Any], order: int) -> str:
         f"{row['operation']}: {', '.join(row['phases'])}" for row in profile
     )
     return (
-        f"{symbol} is a non-product forward lift over a plane symmetry group with "
-        f"orbifold signature {parent}. "
-        f"Its phase character has image C{order}; the phase residues by operation "
-        f"type are {assignments}."
+        f"Clockwork notation {symbol} is a lift of the plane orbifold signature "
+        f"{parent} with nontrivial phase map onto C{order}. Catalog subscripts, "
+        "tildes, and fractions encode clock shifts; they are not the book's raised "
+        f"permutation orders. The operation phases are {assignments}."
     )
 
 
@@ -842,12 +984,23 @@ def coloring_description(group: dict[str, Any], order: int, kernel_base: str) ->
             f"the onefold plane group {notation}, not a G¹/G colour-type label. The static "
             "plate is monochrome."
         )
+    if order == 2:
+        type_opening = (
+            f"The book colour type is {notation}: twofold is understood, so no "
+            "exponent 2 is printed, and the orbifold signature after the slash is "
+            f"the colour-fixing kernel K = {kernel}."
+        )
+    else:
+        qualifier = "book-style" if order in (4, 6) else "book"
+        type_opening = (
+            f"The {qualifier} colour type is {notation}: the exponent {order} on G "
+            "counts the colours, and the orbifold signature after the slash is the "
+            f"colour-fixing kernel K = {kernel}."
+        )
     return (
-        f"The colour-fixing subgroup K has orbifold signature {kernel} and preserves every "
-        f"colour. The resulting regular cyclic colouring has Conway type {notation}, with "
-        f"[G:K] = {order} and G/K isomorphic to C{order}. "
-        "Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so "
-        "the notation has one slash. "
+        f"{type_opening} Here [G:K] = {order} and G/K is isomorphic to C{order}. "
+        "The one-slash form is valid because this cyclic colour action is regular, so "
+        "the stabilizer H of one chosen colour equals K. "
         f"An operation at phase j/{order} sends colour k to k+j modulo {order}."
     )
 
@@ -910,6 +1063,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "kernel": {"orbifold": kernel_orbifold, "hm": kernel_base},
             "tos_notation": notation,
             "book_color_signature": short_signature,
+            "signature_evidence": signature_evidence(group_id, order, notation),
             "clock_order": order,
             "cyclic_group": f"C_{order}",
             "phase_residues": residues,
@@ -933,7 +1087,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 3,
+            "schema_version": 4,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -946,6 +1100,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
                 "ToS type is G for N=1, G/K for N=2, and G^N/K for N>2"
             ),
             "book_audit_counts": EXPECTED_BOOK_AUDIT_COUNTS,
+            "signature_evidence_counts": EXPECTED_SIGNATURE_EVIDENCE_COUNTS,
             "book": {
                 "title": "The Symmetries of Things",
                 "authors": ["John H. Conway", "Heidi Burgiel", "Chaim Goodman-Strauss"],
@@ -972,11 +1127,52 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
     return payload
 
 
+def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """Refresh prose and book-audit fields without rereading the source catalog.
+
+    Geometry and classifications remain pinned in the checked-in extract. This
+    narrow migration is useful when source-facing wording or book evidence is
+    corrected without changing any group operation.
+    """
+
+    for record in payload.get("groups", []):
+        order = record["clock_order"]
+        group_id = record["id"]
+        parent = record["parent"]["orbifold"]
+        kernel = record["kernel"]["orbifold"]
+        source_like = {
+            "symbol": record["symbol"],
+            "base": record["parent"]["hm"],
+            "render": record["render"],
+        }
+        notation = tos_notation(parent, kernel, order)
+        record["tos_notation"] = notation
+        record["book_color_signature"] = book_color_signature(
+            group_id, parent, notation, order
+        )
+        record["signature_evidence"] = signature_evidence(
+            group_id, order, notation
+        )
+        record["phase_profile"] = phase_profile(record["render"]["ops"])
+        record["clockwork_description"] = clockwork_description(source_like, order)
+        record["coloring_description"] = coloring_description(
+            source_like, order, record["kernel"]["hm"]
+        )
+        record["book_audit"] = book_audit(group_id, order, parent, kernel)
+
+    meta = payload["meta"]
+    meta["schema_version"] = 4
+    meta["book_audit_counts"] = EXPECTED_BOOK_AUDIT_COUNTS
+    meta["signature_evidence_counts"] = EXPECTED_SIGNATURE_EVIDENCE_COUNTS
+    meta["book"]["annotated_excerpt_count"] = len(BOOK_EXCERPTS)
+    return payload
+
+
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 3:
-        raise ValueError("correspondence data must use schema version 3")
+    if meta.get("schema_version") != 4:
+        raise ValueError("correspondence data must use schema version 4")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -1010,6 +1206,14 @@ def validate_payload(payload: dict[str, Any]) -> None:
     if meta.get("book_audit_counts") != EXPECTED_BOOK_AUDIT_COUNTS:
         raise ValueError("book-audit totals differ from the row statuses")
 
+    signature_counts = Counter(
+        group["signature_evidence"]["status"] for group in groups
+    )
+    if dict(signature_counts) != EXPECTED_SIGNATURE_EVIDENCE_COUNTS:
+        raise ValueError(f"unexpected signature-evidence distribution: {signature_counts}")
+    if meta.get("signature_evidence_counts") != EXPECTED_SIGNATURE_EVIDENCE_COUNTS:
+        raise ValueError("signature-evidence totals differ from the row statuses")
+
     for group in groups:
         group_id = group["id"]
         order = group["clock_order"]
@@ -1032,6 +1236,11 @@ def validate_payload(payload: dict[str, Any]) -> None:
         )
         if group.get("book_color_signature") != expected_short_signature:
             raise ValueError(f"book color signature mismatch in {group_id}")
+        expected_signature_evidence = signature_evidence(
+            group_id, order, expected_notation
+        )
+        if group.get("signature_evidence") != expected_signature_evidence:
+            raise ValueError(f"signature evidence mismatch in {group_id}")
         if "//" in group["tos_notation"]:
             raise ValueError(f"regular cyclic action uses a double slash in {group_id}")
         if group["parent"]["hm"] == "p1" and "◦" not in group["parent"]["orbifold"]:
@@ -1403,6 +1612,60 @@ def _film_html(record: dict[str, Any]) -> str:
               </figure>"""
 
 
+def _signature_source_label(record: dict[str, Any]) -> str:
+    """Say exactly how the visible short signature is sourced."""
+
+    return f"Short colour signature · {record['signature_evidence']['label']}"
+
+
+def _notation_crosswalk_html(record: dict[str, Any]) -> str:
+    """Keep the clock, short-signature, and colour-type numerals distinct."""
+
+    order = record["clock_order"]
+    parent = record["parent"]["orbifold"]
+    kernel = record["kernel"]["orbifold"]
+    clockwork = clockwork_symbol_html(record["symbol"])
+    short_signature = superscript_html(record["book_color_signature"])
+    colour_type = color_type_html(parent, kernel, order)
+    evidence = record["signature_evidence"]
+    signature_source = evidence["summary"]
+    if order == 2:
+        type_term = "Book colour type"
+        type_explanation = (
+            "Twofold is understood, so the book omits an exponent 2; the group "
+            "after the slash is K, the all-colours kernel."
+        )
+    else:
+        type_term = (
+            "Book-style colour type" if order in (4, 6) else "Book colour type"
+        )
+        type_explanation = (
+            f"The exponent {order} counts colours; the group after the slash is K, "
+            "the all-colours kernel."
+        )
+    lossy_note = (
+        " For three or more colours this order-only summary can lose permutation "
+        "information; the full colour type disambiguates it."
+        if order >= 3
+        else ""
+    )
+    return f"""
+              <dl class="notation-crosswalk" aria-label="Notation crosswalk">
+                <div>
+                  <dt>Clockwork symbol</dt>
+                  <dd><span class="notation-mark clockwork-symbol">{clockwork}</span><span class="notation-explanation">Subscripts, tildes, and fractions are phase shifts.</span></dd>
+                </div>
+                <div>
+                  <dt>Short colour signature</dt>
+                  <dd><span class="notation-mark book-color-signature">{short_signature}</span><span class="notation-explanation">Superscripts are permutation orders. A reduced clock phase a/b induces permutation order b.{escape(lossy_note)} {escape(signature_source)}</span></dd>
+                </div>
+                <div>
+                  <dt>{escape(type_term)}</dt>
+                  <dd><span class="notation-mark color-type">{colour_type}</span><span class="notation-explanation">{escape(type_explanation)}</span></dd>
+                </div>
+              </dl>"""
+
+
 def _entry_html(
     record: dict[str, Any],
     by_id: dict[str, dict[str, Any]],
@@ -1416,6 +1679,7 @@ def _entry_html(
     short_signature_html = superscript_html(short_signature)
     catalog_symbol_html = clockwork_symbol_html(record["symbol"])
     type_html = color_type_html(parent["orbifold"], kernel["orbifold"], order)
+    signature_source_label = _signature_source_label(record)
     mate_note = ""
     if record["inverse_clock_mate"]:
         mate = by_id[record["inverse_clock_mate"]]
@@ -1432,8 +1696,8 @@ def _entry_html(
           <header class="entry-header">
             <p class="entry-number">{display_ordinal:02d} / {DISPLAYED_GROUP_COUNT}</p>
             <div>
-              <p class="entry-kicker">Goodman–Strauss short colour signature</p>
-              <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Book short colour signature {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
+              <p class="entry-kicker">{escape(signature_source_label)}</p>
+              <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="{escape(signature_source_label)} {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
               <p class="clockwork-identity"><span>clockwork</span> <span class="clockwork-symbol">{catalog_symbol_html}</span> · base orbifold {escape(parent['orbifold'])} · phase image C<sub>{order}</sub></p>
             </div>
             <div class="entry-badges" aria-label="Correspondence summary">
@@ -1464,6 +1728,7 @@ def _entry_html(
                 <div><dt>Colour-fixing subgroup K</dt><dd>{escape(kernel['orbifold'])}</dd></div>
                 <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
               </dl>
+              {_notation_crosswalk_html(record)}
               <p class="clockwork-description">{escape(record['clockwork_description'])}</p>
               <p class="coloring-description">{escape(record['coloring_description'])}</p>
               {_book_audit_html(record)}
@@ -1618,7 +1883,7 @@ def page_html(payload: dict[str, Any]) -> str:
   <title>Clockwork/coloring correspondence</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="clockwork-coloring-correspondence.css">
+  <link rel="stylesheet" href="{CORRESPONDENCE_STYLE_SRC}">
 </head>
 <body>
   <a class="skip-link" href="#correspondences">Skip to correspondences</a>
@@ -1656,11 +1921,12 @@ def page_html(payload: dict[str, Any]) -> str:
       <p>
         The <a href="data/clockwork-coloring-correspondence.json">68-record JSON</a> and all 68
         lossless WebP plates retain the complete audited source, including the 17 omitted products.
-        This HTML displays its 51 nontrivial rows; 62 annotated book excerpts and the local paused-film
+        This HTML displays its 51 nontrivial rows; {len(BOOK_EXCERPTS)} annotated book excerpts and the local paused-film
         controller are generated or tracked in this repository. The data and page come from the
         <a href="scripts/generate_clockwork_coloring_correspondence.py">correspondence generator</a>;
         the <a href="scripts/tos_book_excerpt_specs.py">excerpt coordinates</a> and
         <a href="scripts/generate_tos_book_excerpts.py">crop renderer</a> are checked in separately.
+        The audit also checks the <a href="{BOOK_ERRATA_URL}">authors' published errata</a>.
         The read-only source snapshot has SHA-256 <code>{escape(digest)}</code>. Each tab links to
         its exact entry in the external forward catalog; no runtime data or code is loaded from
         that site. Film canvases read only the checked-in correspondence JSON.
@@ -1730,8 +1996,16 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         help="read-only path to the pinned 275-group source catalog",
     )
+    parser.add_argument(
+        "--refresh-derived-data",
+        action="store_true",
+        help="refresh descriptions and book evidence in the checked-in extract",
+    )
     parser.add_argument("--check", action="store_true", help="fail if generated outputs are stale")
     args = parser.parse_args(argv)
+
+    if args.source_catalog and args.refresh_derived_data:
+        parser.error("choose either --source-catalog or --refresh-derived-data")
 
     if args.source_catalog:
         payload = build_payload(args.source_catalog)
@@ -1744,6 +2018,12 @@ def main(argv: list[str] | None = None) -> int:
         if not DATA.exists():
             parser.error("correspondence data is missing; provide --source-catalog to create it")
         payload = json.loads(DATA.read_text(encoding="utf-8"))
+        if args.refresh_derived_data:
+            payload = refresh_derived_payload(payload)
+            DATA.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
         validate_payload(payload)
 
     if args.check:
