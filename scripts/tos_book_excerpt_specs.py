@@ -1,10 +1,10 @@
 """Exact evidence crops from *The Symmetries of Things* used by the site.
 
 Coordinates are PDF points on 612 x 792 media-box pages, measured from the
-top-left corner. Each ``crop`` is the original focus region; the renderer
-expands it to at least five times that page area while retaining the exact
-``highlight`` rectangle. The stored WebPs are annotated excerpts, not complete
-book pages.
+top-left corner. Each ``crop`` is the original focus region; the renderer first
+expands it to at least five times that page area, then makes that contextual
+crop five times taller where the page bounds permit. The exact ``highlight``
+rectangle is retained.
 """
 
 from __future__ import annotations

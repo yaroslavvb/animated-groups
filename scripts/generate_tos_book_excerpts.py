@@ -31,6 +31,7 @@ PDF_WIDTH = 612.0
 PDF_HEIGHT = 792.0
 WATERMARK = "© COPYRIGHTED EXCERPT"
 CONTEXT_AREA_MULTIPLIER = 5.25
+VERTICAL_CONTEXT_MULTIPLIER = 5.0
 
 
 def _font(size: int, *, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
@@ -78,7 +79,7 @@ def _box(rect: tuple[float, float, float, float], sx: float, sy: float) -> tuple
     )
 
 
-def expanded_crop(
+def area_context_crop(
     rect: tuple[float, float, float, float],
 ) -> tuple[float, float, float, float]:
     """Expand a focus crop beyond five times its area without leaving the page."""
@@ -111,6 +112,21 @@ def expanded_crop(
         PDF_HEIGHT - expanded_height,
     )
     return expanded_x, expanded_y, expanded_width, expanded_height
+
+
+def expanded_crop(
+    rect: tuple[float, float, float, float],
+) -> tuple[float, float, float, float]:
+    """Make the established context five times taller, bounded by the page."""
+
+    x, y, width, height = area_context_crop(rect)
+    expanded_height = min(PDF_HEIGHT, height * VERTICAL_CONTEXT_MULTIPLIER)
+    center_y = y + height / 2
+    expanded_y = min(
+        max(0.0, center_y - expanded_height / 2),
+        PDF_HEIGHT - expanded_height,
+    )
+    return x, expanded_y, width, expanded_height
 
 
 def _watermark_layer(size: tuple[int, int]) -> Image.Image:
