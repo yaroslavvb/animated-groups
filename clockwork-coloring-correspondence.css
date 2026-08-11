@@ -167,16 +167,25 @@ nav a[aria-current="page"] {
   font-size: 0.88rem;
 }
 
-.family-omission {
+.trivial-product {
   max-width: 820px;
-  margin: 0 0 0.55rem;
-  color: var(--muted);
+  margin-top: clamp(1.8rem, 4vw, 3rem);
+  padding: 0.8rem 1rem;
+  border: 1px solid #d7dbd9;
+  border-left: 4px solid #c3c9c6;
+  border-radius: 6px;
+  background: #f1f2f1;
+  color: #7b837f;
   font-size: 0.78rem;
   scroll-margin-top: 1rem;
 }
 
-.family-omission strong {
-  color: #555f5b;
+.trivial-product p {
+  margin: 0;
+}
+
+.trivial-product strong {
+  color: #666e6a;
 }
 
 .family-census {

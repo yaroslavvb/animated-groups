@@ -1489,14 +1489,16 @@ def _order_census_html(rows: list[dict[str, Any]]) -> str:
     return " · ".join(parts)
 
 
-def _trivial_omission_html(record: dict[str, Any]) -> str:
+def _trivial_product_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     orbifold = escape(record["parent"]["orbifold"])
     return (
-        f'<p class="family-omission" id="{group_id}" data-trivial-product>'
-        "<strong>C<sub>1</sub> product omitted.</strong> "
+        f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
+        'aria-label="Trivial time group">'
+        "<p><strong>Trivial time group · C<sub>1</sub>.</strong> "
         f"The inherited one-colour lift {orbifold} ({group_id}) has κ = 0 and K = G; "
-        "it remains in the 68-record audit data but is not included in these tabs.</p>"
+        "it remains in the 68-record audit data but is not included in the tabs above.</p>"
+        "</aside>"
     )
 
 
@@ -1544,10 +1546,10 @@ def _family_html(
         <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{escape(orbifold)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
         <p class="family-summary">{escape(summary)}</p>
         <p class="family-note"><strong>Forward note.</strong> {escape(note)}</p>
-        {_trivial_omission_html(trivial_record)}
         <p class="family-census">{census}</p>
       </header>
 {contents}
+      {_trivial_product_html(trivial_record)}
     </section>"""
 
 
