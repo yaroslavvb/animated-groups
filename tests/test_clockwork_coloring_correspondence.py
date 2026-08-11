@@ -28,6 +28,7 @@ class CorrespondenceParser(HTMLParser):
         self.trivial_product_ids: list[str] = []
         self.tabbar_count = 0
         self.tabs: list[tuple[str, str, str]] = []
+        self.wallpaper_links: list[str] = []
         self.catalog_links: list[str] = []
         self.plate_images: list[tuple[str, str, str, str]] = []
         self.book_links: list[tuple[str, str, str]] = []
@@ -61,6 +62,8 @@ class CorrespondenceParser(HTMLParser):
                     attributes.get("data-panel-id", ""),
                 )
             )
+        if tag == "a" and "wallpaper-chip" in classes:
+            self.wallpaper_links.append(attributes.get("href", ""))
         if tag == "a" and (attributes.get("href") or "").startswith(
             correspondence.CATALOG_ROOT
         ):
@@ -186,8 +189,6 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertIn(escape(summary), self.page)
             self.assertIn(escape(note), self.page)
 
-        self.assertIn("51 nontrivial forward groups", self.page)
-        self.assertIn("17 one-colour products omitted", self.page)
         self.assertIn("No nontrivial forward lift occurs", self.page)
         self.assertIn("Nontrivial orders · none", self.page)
 
@@ -285,7 +286,21 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(self.page.count("Projected group G"), 51)
         self.assertEqual(self.page.count("Colour-fixing subgroup K"), 51)
         self.assertEqual(self.page.count("Static perfect-colouring plate"), 51)
-        self.assertIn("Jump to an underlying orbifold signature", self.page)
+        self.assertEqual(
+            self.parser.wallpaper_links,
+            [f"#wallpaper-{base}" for base in correspondence.BASE_ORDER],
+        )
+        directory_start = self.page.index('<nav class="directory"')
+        atlas_start = self.page.index('<div class="correspondence-atlas"')
+        first_family = self.page.index('<section class="wallpaper-family')
+        self.assertLess(directory_start, atlas_start)
+        self.assertLess(atlas_start, first_family)
+        self.assertNotIn('class="page-introduction"', self.page)
+        self.assertNotIn('class="method"', self.page)
+        self.assertNotIn('class="book-method"', self.page)
+        self.assertNotIn("The map in one line", self.page)
+        self.assertNotIn("The superscripts, the kernel, and the slash", self.page)
+        self.assertNotIn("What the book verifies", self.page)
 
         for group in self.payload["groups"]:
             self.assertTrue({"system", "bravais", "symmorphic"} <= group.keys())
@@ -452,7 +467,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 key,
             )
 
-        self.assertIn("© COPYRIGHTED EXCERPT", self.page)
+        self.assertIn("faint copyright notice", self.page)
         self.assertIn("not a complete page", self.page)
         self.assertIn("at least five times the original focus area", self.page)
         self.assertIn("data-book-zoom-toggle", self.page)
@@ -488,7 +503,6 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             64,
         )
         self.assertEqual(len(self.display_groups) - len(unordered), 47)
-        self.assertIn("47 nontrivial", self.page)
 
     def test_every_static_plate_exists_and_contains_its_phase_palette(self) -> None:
         self.assertEqual(len(self.parser.plate_images), correspondence.DISPLAYED_GROUP_COUNT)
