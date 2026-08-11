@@ -48,6 +48,7 @@ MANIFEST = ROOT / "data" / "color-forward-manifest.json"
 DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
+CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=reusable-excerpt-window"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
 CATALOG_ROOT = "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward"
@@ -1675,7 +1676,7 @@ python3 scripts/generate_tos_book_excerpts.py --source-pdf "/path/to/The Symmetr
     </footer>
   </main>
 
-  <script type="module" src="clockwork-coloring-correspondence.js"></script>
+  <script type="module" src="{CORRESPONDENCE_SCRIPT_SRC}"></script>
 </body>
 </html>
 """

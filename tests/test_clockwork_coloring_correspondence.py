@@ -707,7 +707,7 @@ process.stdout.write(JSON.stringify({
         )
         self.assertEqual(
             self.parser.scripts,
-            [("clockwork-coloring-correspondence.js", "module")],
+            [(correspondence.CORRESPONDENCE_SCRIPT_SRC, "module")],
         )
         script_path = ROOT / "clockwork-coloring-correspondence.js"
         self.assertTrue(script_path.is_file())
