@@ -8,98 +8,26 @@ nav a[aria-current="page"] {
   font-weight: 650;
 }
 
-.page-introduction {
-  max-width: 940px;
-  padding: clamp(3.5rem, 8vw, 7rem) 0 clamp(2.7rem, 6vw, 4.8rem);
-}
-
-.page-introduction h1 {
-  max-width: 900px;
-}
-
-.page-introduction .lead {
-  max-width: 850px;
-}
-
-.result-card,
-.method aside,
 .orientation-note {
   border: 1px solid var(--line);
   border-left: 4px solid var(--accent);
   background: var(--surface);
 }
 
-.result-card {
-  max-width: 880px;
-  margin-top: 2rem;
-  padding: 1.25rem 1.4rem 0.35rem;
+.directory {
+  padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(2.4rem, 5vw, 4rem);
 }
 
-.trivial-scope {
-  margin-top: 1rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.88rem;
+.directory h1 {
+  max-width: 900px;
+  margin-bottom: clamp(1.6rem, 4vw, 2.6rem);
 }
 
-.audit-summary {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  max-width: 880px;
-  margin-top: 1rem;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--line);
-}
-
-.audit-summary div {
-  display: flex;
-  min-width: 0;
-  padding: 0.9rem 1rem;
-  background: var(--background);
-  flex-direction: column;
-}
-
-.audit-summary strong {
-  color: var(--accent);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.7rem;
-  font-weight: 570;
-  line-height: 1;
-}
-
-.audit-summary span {
-  margin-top: 0.35rem;
-  color: var(--muted);
-  font-size: 0.74rem;
-  line-height: 1.35;
-}
-
-.map-formula {
-  overflow-wrap: anywhere;
-  color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.02rem, 2vw, 1.24rem);
-}
-
-.map-formula span {
-  padding: 0 0.45rem;
-  color: var(--accent);
-}
-
-.method,
-.book-method,
-.directory,
 .provenance {
   padding: clamp(2.5rem, 5vw, 4.5rem) 0;
   border-top: 1px solid var(--line);
 }
 
-.method h2,
-.book-method h2,
-.directory h2,
 .provenance h2 {
   max-width: 800px;
   margin-bottom: 1.4rem;
@@ -107,15 +35,6 @@ nav a[aria-current="page"] {
   font-weight: 570;
   line-height: 1.12;
   letter-spacing: -0.035em;
-}
-
-.book-method {
-  max-width: 920px;
-}
-
-.book-method p {
-  max-width: 850px;
-  color: #37413d;
 }
 
 .section-number,
@@ -132,26 +51,6 @@ nav a[aria-current="page"] {
   margin-bottom: 0.55rem;
   color: var(--accent);
   font-weight: 650;
-}
-
-.method-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.2rem, 4vw, 3.2rem);
-  max-width: 920px;
-  color: #37413d;
-}
-
-.method aside {
-  max-width: 900px;
-  margin-top: 1.5rem;
-  padding: 1rem 1.2rem;
-  color: #37413d;
-}
-
-.directory-intro {
-  max-width: 720px;
-  color: var(--muted);
 }
 
 .wallpaper-jump-list {
@@ -1060,15 +959,6 @@ a[data-book-excerpt]::after {
 }
 
 @media (max-width: 700px) {
-  .audit-summary {
-    grid-template-columns: 1fr;
-  }
-
-  .method-grid {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
   .entry-header {
     grid-template-columns: 1fr;
     gap: 0.45rem;
