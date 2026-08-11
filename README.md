@@ -240,6 +240,10 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `scripts/generate_videos.py` — transcodes each gallery GIF to a seekable H.264 playback proxy.
 - `site-controls-v2.js` / `site-controls-v2.css` — physically versioned interactive gallery assets.
 - `site.js` — backward-compatible GIF controller for stale pre-video gallery markup.
+- `future-directions.html` — colour-group and forward-time census through six colours.
+- `future-directions.js` / `future-directions.css` — generated census tables and report styles.
+- `scripts/generate_color_forward_census.py` — validates the 68-record manifest and regenerates the census downloads.
+- `data/color-forward-*` — pinned forward manifest, JSON census, and CSV audit tables.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
 - `docs/orbifold_notation.md` — proposed phase decoration of spatial Conway symbols.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.
