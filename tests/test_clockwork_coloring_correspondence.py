@@ -23,6 +23,9 @@ class CorrespondenceParser(HTMLParser):
         super().__init__()
         self.section_ids: list[str] = []
         self.family_ids: list[str] = []
+        self.empty_family_ids: list[str] = []
+        self.trivial_product_ids: list[str] = []
+        self.tabbar_count = 0
         self.tabs: list[tuple[str, str, str]] = []
         self.catalog_links: list[str] = []
         self.plate_images: list[tuple[str, str, str, str]] = []
@@ -43,6 +46,12 @@ class CorrespondenceParser(HTMLParser):
             self.section_ids.append(attributes.get("id", ""))
         if tag == "section" and "wallpaper-family" in classes:
             self.family_ids.append(attributes.get("id", ""))
+            if "is-empty" in classes:
+                self.empty_family_ids.append(attributes.get("id", ""))
+        if tag == "p" and "data-trivial-product" in attributes:
+            self.trivial_product_ids.append(attributes.get("id", ""))
+        if tag == "nav" and "clockwork-tabbar" in classes:
+            self.tabbar_count += 1
         if tag == "a" and "data-clockwork-tab" in attributes:
             self.tabs.append(
                 (
@@ -124,20 +133,39 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             group
             for base in correspondence.BASE_ORDER
             for group in cls.payload["groups"]
-            if group["parent"]["hm"] == base
+            if group["parent"]["hm"] == base and group["clock_order"] > 1
+        ]
+        cls.trivial_groups = [
+            group
+            for base in correspondence.BASE_ORDER
+            for group in cls.payload["groups"]
+            if group["parent"]["hm"] == base and group["clock_order"] == 1
         ]
 
-    def test_exactly_68_literal_sections_match_the_forward_manifest(self) -> None:
+    def test_68_record_source_renders_exactly_51_nontrivial_sections(self) -> None:
         groups = self.payload["groups"]
         manifest = json.loads(correspondence.MANIFEST.read_text(encoding="utf-8"))
         ids = [group["id"] for group in groups]
         display_ids = [group["id"] for group in self.display_groups]
+        trivial_ids = [group["id"] for group in self.trivial_groups]
         self.assertEqual(len(groups), 68)
+        self.assertEqual(len(display_ids), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(len(trivial_ids), correspondence.OMITTED_TRIVIAL_COUNT)
         self.assertEqual(self.parser.section_ids, display_ids)
+        self.assertTrue(set(display_ids).isdisjoint(trivial_ids))
+        self.assertEqual(self.parser.trivial_product_ids, trivial_ids)
         self.assertEqual(ids, [group["id"] for group in manifest["groups"]])
         self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(
+            [group["parent"]["hm"] for group in self.trivial_groups],
+            list(correspondence.BASE_ORDER),
+        )
+        for group in self.trivial_groups:
+            self.assertTrue(group["product"])
+            self.assertEqual(group["clock_order"], 1)
+            self.assertEqual(group["parent"], group["kernel"])
 
-    def test_17_wallpaper_sections_have_one_horizontal_tab_per_group(self) -> None:
+    def test_17_wallpaper_sections_have_tabs_only_for_nontrivial_groups(self) -> None:
         self.assertEqual(
             self.parser.family_ids,
             [f"wallpaper-{base}" for base in correspondence.BASE_ORDER],
@@ -147,10 +175,20 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.parser.tabs,
             [(f"tab-{group_id}", f"#{group_id}", group_id) for group_id in display_ids],
         )
+        self.assertEqual(self.parser.tabbar_count, 14)
+        self.assertEqual(
+            self.parser.empty_family_ids,
+            ["wallpaper-p1", "wallpaper-pm", "wallpaper-pg"],
+        )
         for base in correspondence.BASE_ORDER:
             summary, note = correspondence.WALLPAPER_SUMMARIES[base]
             self.assertIn(escape(summary), self.page)
             self.assertIn(escape(note), self.page)
+
+        self.assertIn("51 nontrivial forward groups", self.page)
+        self.assertIn("17 one-colour products omitted", self.page)
+        self.assertIn("No nontrivial forward lift occurs", self.page)
+        self.assertIn("Nontrivial orders · none", self.page)
 
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
         self.assertIn("initializeClockworkTabs", script)
@@ -204,6 +242,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             if group["kernel"]["hm"] == "p1":
                 self.assertEqual(group["kernel"]["orbifold"], "◦")
             self.assertEqual(len(group["phase_residues"]), group["clock_order"])
+        for group in self.display_groups:
             self.assertIn(escape(group["clockwork_description"]), self.page)
             self.assertIn(escape(group["coloring_description"]), self.page)
 
@@ -287,8 +326,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     }
                 )
 
-        self.assertEqual(len(expected_references), 114)
-        self.assertEqual(len(self.parser.book_excerpt_links), 114)
+        self.assertEqual(len(expected_references), 80)
+        self.assertEqual(len(self.parser.book_excerpt_links), 80)
         for attributes, reference in zip(self.parser.book_excerpt_links, expected_references):
             excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
             self.assertEqual(attributes.get("href"), reference["url"])
@@ -302,9 +341,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertEqual(attributes.get("aria-haspopup"), "dialog")
             self.assertEqual(attributes.get("aria-controls"), "book-excerpt-dialog")
 
+        expected_excerpt_keys = {reference["excerpt_key"] for reference in expected_references}
+        self.assertEqual(len(expected_excerpt_keys), 44)
         self.assertEqual(
             {attributes["data-book-excerpt"] for attributes in self.parser.book_excerpt_links},
-            set(correspondence.BOOK_EXCERPTS),
+            expected_excerpt_keys,
         )
 
     def test_the_single_accessible_dialog_lazy_loads_62_contextual_watermarked_webps(self) -> None:
@@ -403,14 +444,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.payload["meta"]["traditional_color_classes_after_clock_inversion"],
             64,
         )
+        self.assertEqual(len(self.display_groups) - len(unordered), 47)
+        self.assertIn("47 nontrivial", self.page)
 
     def test_every_static_plate_exists_and_contains_its_phase_palette(self) -> None:
-        self.assertEqual(len(self.parser.plate_images), 68)
+        self.assertEqual(len(self.parser.plate_images), correspondence.DISPLAYED_GROUP_COUNT)
         by_path = {group["image"]: group for group in self.payload["groups"]}
+        displayed_paths = {group["image"] for group in self.display_groups}
+        self.assertEqual(
+            {relative for relative, _alt, _width, _height in self.parser.plate_images},
+            displayed_paths,
+        )
         for relative, alt, width, height in self.parser.plate_images:
             self.assertIn(relative, by_path)
             self.assertTrue(alt)
             self.assertEqual((width, height), ("720", "420"))
+        for relative, group in by_path.items():
             path = ROOT / relative
             self.assertTrue(path.is_file(), relative)
             with Image.open(path) as image:
@@ -424,26 +473,25 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 }
             expected_colors = {
                 tuple(bytes.fromhex(residue["color"].lstrip("#")))
-                for residue in by_path[relative]["phase_residues"]
+                for residue in group["phase_residues"]
             }
             self.assertTrue(expected_colors.issubset(colors), relative)
 
-    def test_all_68_films_are_local_and_stopped_by_default(self) -> None:
-        groups = self.payload["groups"]
+    def test_all_51_nontrivial_films_are_local_and_stopped_by_default(self) -> None:
         ids = [group["id"] for group in self.display_groups]
         self.assertEqual(self.parser.film_group_ids, ids)
         self.assertEqual(
             self.parser.canvases,
             [(f"{group_id}-film", "1", "1") for group_id in ids],
         )
-        self.assertEqual(len(self.parser.buttons), 68)
+        self.assertEqual(len(self.parser.buttons), correspondence.DISPLAYED_GROUP_COUNT)
         self.assertTrue(all(disabled for disabled, _pressed, _controls in self.parser.buttons))
         self.assertTrue(all(pressed == "false" for _disabled, pressed, _controls in self.parser.buttons))
         self.assertEqual(
             [controls for _disabled, _pressed, controls in self.parser.buttons],
             [f"{group_id}-film" for group_id in ids],
         )
-        self.assertEqual(len(self.parser.sliders), 68)
+        self.assertEqual(len(self.parser.sliders), correspondence.DISPLAYED_GROUP_COUNT)
         self.assertTrue(
             all(
                 disabled and value == "0" and input_type == "range"

@@ -14,8 +14,8 @@ independent Play/Pause button and a 60-position phase slider.
 **Live gallery:** [yaroslavvb.github.io/animated-groups](https://yaroslavvb.github.io/animated-groups/)
 
 The site also includes the [colour-group census](https://yaroslavvb.github.io/animated-groups/future-directions.html)
-and an exact [68-row clockwork/coloring correspondence](https://yaroslavvb.github.io/animated-groups/clockwork-coloring-correspondence.html)
-with Conway orbifold pairs and static coloured-wallpaper plates.
+and an exact [51-row nontrivial clockwork/coloring correspondence](https://yaroslavvb.github.io/animated-groups/clockwork-coloring-correspondence.html),
+backed by the complete 68-record audit, with Conway orbifold pairs and static coloured-wallpaper plates.
 
 Every displayed action admits the pure temporal period
 `U:(x,t) -> (x,t+T)`, which acts trivially on the represented state. The action
@@ -248,7 +248,7 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `future-directions.js` / `future-directions.css` — generated census tables and report styles.
 - `scripts/generate_color_forward_census.py` — validates the 68-record manifest and regenerates the census downloads.
 - `data/color-forward-*` — pinned forward manifest, JSON census, and CSV audit tables.
-- `clockwork-coloring-correspondence.html` / `.css` — the literal 68-section orbifold-pair atlas and its responsive styles.
+- `clockwork-coloring-correspondence.html` / `.css` — the 51-row nontrivial orbifold-pair atlas, backed by 68 audited records, and its responsive styles.
 - `scripts/generate_clockwork_coloring_correspondence.py` — validates the phase characters and regenerates the atlas, JSON, and 68 static plates.
 - `data/clockwork-coloring-correspondence.json` / `output/clockwork-colorings/` — the pinned correspondence records and lossless WebP visualizations.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
