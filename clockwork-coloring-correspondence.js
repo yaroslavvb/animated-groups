@@ -12,12 +12,13 @@
 
 const DATA_URL = new URL("data/clockwork-coloring-correspondence.json", import.meta.url);
 const PERIOD_MS = 4000;
-const FRAME_MS = 1000 / 30;
 const DPR_LIMIT = 1.5;
 const TWO_PI = Math.PI * 2;
 const CELLS = 4;
 const MIN_CELLS = 3;
 const MAX_COLUMNS = 18;
+const STEP = 1 / 24;
+const FINE_STEP = 1 / 240;
 
 const COLORS = {
   background: "#faf8f1",
@@ -66,6 +67,16 @@ const COMMA = (() => {
     bottom: Math.max(...normalizedY),
   };
 })();
+
+// Screen-space phase ruler, ported from animated-groups-fable 950b021.
+// The ruler stays fixed while a short hand sweeps one turn per film period.
+const RING_MID = 0.76;
+const RING_W = 0.12;
+const RING_MIN_PX = 6.5;
+const ARROW_MIN_PX = 9;
+const HEAD_LEN = 1.7;
+const HEAD_HALF = 1.15;
+const HAND_TAIL = 1.4;
 
 function frac(value) {
   return ((value % 1) + 1) % 1;
@@ -147,23 +158,55 @@ function drawMotif(context, theta, radius, layer) {
   context.restore();
 }
 
-function drawPhaseRing(context, theta, radius, order) {
-  if (radius < 6.5) return;
-  const lit = order > 1 ? Math.floor(frac(theta) * order) % order : 0;
-  const ringRadius = 0.76 * radius;
-  const lineWidth = Math.max(1.1, 0.12 * radius);
+function drawPhaseRing(context, theta, radius, order, direction = 1) {
+  if (radius < RING_MIN_PX) return;
+  const ringRadius = RING_MID * radius;
+  const lineWidth = Math.max(1.1, RING_W * radius);
   const gap = Math.min(0.125 / order, 0.022) * TWO_PI;
+  const sweepDirection = direction < 0 ? -1 : 1;
+  const pointAt = (angle, distance) => [
+    distance * Math.cos(angle),
+    distance * Math.sin(angle),
+  ];
+
   context.save();
   context.lineWidth = lineWidth;
   context.lineCap = "butt";
+
+  // The fixed N-interval ruler. No sector flashes when a boundary is crossed;
+  // the continuously moving hand below carries both phase and direction.
+  context.globalAlpha = 0.4;
+  context.strokeStyle = COLORS.beatOff;
   for (let index = 0; index < order; index += 1) {
     const start = -Math.PI / 2 + (index / order) * TWO_PI + gap;
     const end = -Math.PI / 2 + ((index + 1) / order) * TWO_PI - gap;
-    context.globalAlpha = order === 1 ? 0.55 : (index === lit ? 1 : 0.38);
-    context.strokeStyle = index === lit && order > 1 ? COLORS.beatOn : COLORS.beatOff;
     context.beginPath();
     context.arc(0, 0, ringRadius, start, end);
     context.stroke();
+  }
+
+  if (radius >= ARROW_MIN_PX) {
+    context.globalAlpha = 1;
+    const tip = -Math.PI / 2 + frac(theta) * TWO_PI;
+    const headLength = (HEAD_LEN * lineWidth) / ringRadius;
+    const base = tip - sweepDirection * headLength;
+    const tail = base - sweepDirection * headLength * HAND_TAIL;
+
+    context.strokeStyle = COLORS.beatOn;
+    context.beginPath();
+    context.arc(0, 0, ringRadius, Math.min(base, tail), Math.max(base, tail));
+    context.stroke();
+
+    const [baseX1, baseY1] = pointAt(base, ringRadius - HEAD_HALF * lineWidth);
+    const [baseX2, baseY2] = pointAt(base, ringRadius + HEAD_HALF * lineWidth);
+    const [tipX, tipY] = pointAt(tip, ringRadius);
+    context.beginPath();
+    context.moveTo(baseX1, baseY1);
+    context.lineTo(baseX2, baseY2);
+    context.lineTo(tipX, tipY);
+    context.closePath();
+    context.fillStyle = COLORS.beatOn;
+    context.fill();
   }
   context.restore();
 }
@@ -204,7 +247,6 @@ class ClockworkPlayer {
     this.nearViewport = false;
     this.active = false;
     this.frameRequest = 0;
-    this.lastPaint = 0;
     this.startedAt = 0;
     this.geometry = null;
 
@@ -213,7 +255,9 @@ class ClockworkPlayer {
       `Paused clockwork film for ${record.symbol}, group ${record.id}, with ${record.clock_order} phase interval${record.clock_order === 1 ? "" : "s"}.`,
     );
     this.toggle.addEventListener("click", () => this.togglePlayback());
-    this.slider.addEventListener("input", () => this.seek(Number(this.slider.value)));
+    this.slider.addEventListener("input", () => this.scrub(Number(this.slider.value)));
+    this.controls.addEventListener("keydown", (event) => this.controlKeyDown(event));
+    this.slider.title = "Scrub phase · arrow keys jump between clock marks · Shift+arrow steps finely";
     this.resizeObserver = new ResizeObserver(() => {
       if (this.active) this.resizeAndDraw();
     });
@@ -406,7 +450,7 @@ class ClockworkPlayer {
     for (const placement of placements) {
       context.save();
       context.translate(placement.pixelX, placement.pixelY);
-      drawPhaseRing(context, phase - placement.tau, motifRadius, this.record.clock_order);
+      drawPhaseRing(context, phase - placement.tau, motifRadius, this.record.clock_order, 1);
       context.restore();
     }
     context.restore();
@@ -420,11 +464,57 @@ class ClockworkPlayer {
     this.output.textContent = text;
   }
 
-  seek(value) {
-    this.pause();
+  setPhase(value) {
     this.phase = frac(Number.isFinite(value) ? value : 0);
+    if (this.playingIntent) this.startedAt = performance.now() - this.phase * PERIOD_MS;
     this.updateReadout();
     this.draw(this.phase);
+  }
+
+  scrub(value) {
+    this.pause();
+    this.setPhase(value);
+  }
+
+  seek(value) {
+    this.setPhase(value);
+  }
+
+  step(delta) {
+    this.scrub(this.phase + delta);
+  }
+
+  stepMark(direction) {
+    if (this.record.clock_order < 2) {
+      this.step(direction * STEP);
+      return;
+    }
+    const marks = Array.from(
+      { length: this.record.clock_order },
+      (_unused, index) => index / this.record.clock_order,
+    );
+    const epsilon = 1e-4;
+    const next = direction > 0
+      ? marks.find((mark) => mark > this.phase + epsilon)
+      : [...marks].reverse().find((mark) => mark < this.phase - epsilon);
+    this.scrub(next === undefined
+      ? (direction > 0 ? marks[0] : marks[marks.length - 1])
+      : next);
+  }
+
+  // Adapted from animated-groups-fable 94c55bc: the whole control bar owns
+  // arrow/Home/End scrubbing, so the keys still work after clicking Play.
+  controlKeyDown(event) {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    const step = (direction) => (
+      event.shiftKey ? this.step(direction * FINE_STEP) : this.stepMark(direction)
+    );
+    if (event.key === "ArrowRight" || event.key === "ArrowUp") step(1);
+    else if (event.key === "ArrowLeft" || event.key === "ArrowDown") step(-1);
+    else if (event.key === "Home") this.seek(0);
+    else if (event.key === "End") this.seek(1 - STEP);
+    else return;
+    event.preventDefault();
   }
 
   togglePlayback() {
@@ -451,16 +541,12 @@ class ClockworkPlayer {
   startFrames() {
     if (this.frameRequest || !this.active || !this.playingIntent) return;
     this.startedAt = performance.now() - this.phase * PERIOD_MS;
-    this.lastPaint = 0;
     const tick = (timestamp) => {
       this.frameRequest = 0;
       if (!this.playingIntent || !this.nearViewport || document.hidden || !this.active) return;
-      if (!this.lastPaint || timestamp - this.lastPaint >= FRAME_MS) {
-        this.phase = frac((timestamp - this.startedAt) / PERIOD_MS);
-        this.updateReadout();
-        this.draw(this.phase);
-        this.lastPaint = timestamp;
-      }
+      this.phase = frac((timestamp - this.startedAt) / PERIOD_MS);
+      this.updateReadout();
+      this.draw(this.phase);
       this.frameRequest = requestAnimationFrame(tick);
     };
     this.frameRequest = requestAnimationFrame(tick);
