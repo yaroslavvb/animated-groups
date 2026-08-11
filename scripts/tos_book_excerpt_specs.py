@@ -184,16 +184,43 @@ _THREEFOLD_P156 = {
     "632³/2222": ((325, 183, 160, 22), (424, 185, 52, 18)),
     "3*3³//*333": ((325, 247, 160, 22), (424, 249, 52, 18)),
 }
+_THREEFOLD_PRINTED_FORM = {
+    "333³/◦": "333/◦",
+    "333³/333": "333/333",
+    "632³/2222": "632/2222",
+    "3*3³//*333": "3*3//*333",
+}
 for _type, (_crop, _highlight) in _THREEFOLD_P156.items():
+    _printed = _THREEFOLD_PRINTED_FORM[_type]
     _add(
         f"p156::{_type}",
         156,
         _crop,
         _highlight,
         f"Threefold colour type {_type}",
-        f"Table 12.1 on printed p. 156; the outline marks {_type}.",
-        f"Annotated Table 12.1 row with the threefold colour type {_type} outlined.",
+        f"Table 12.1 on printed p. 156 prints {_printed}, with threefold understood; the site normalizes it as {_type}.",
+        f"Annotated Table 12.1 row with printed type {_printed}, normalized on the site as {_type}, outlined.",
     )
+
+_add(
+    "p156::3*3³/◦-conflict",
+    156,
+    (325, 232, 160, 24),
+    (325, 235, 150, 19),
+    "The earlier 3*3 kernel conflict",
+    "Table 12.1 on printed p. 156 pairs the short form ³3*¹3 with printed type 3*3/◦; threefold is understood. The clockwork kernel is instead *333.",
+    "Annotated Table 12.1 row pairing the short color signature 3,1 with type 3*3 over the wonder-ring.",
+)
+
+_add(
+    "p157::632-regular-derivation",
+    157,
+    (85, 266, 445, 50),
+    (88, 270, 438, 43),
+    "The correct regular 632 derivation",
+    "Printed p. 157 derives the regular C3 case: the 6- and 3-generators act by inverse 3-cycles and the 2-generator is the identity, giving short orders 3,3,1 and type 632/2222.",
+    "Annotated p. 157 derivation of the regular three-color 632 over 2222 case.",
+)
 
 
 _add(
@@ -217,6 +244,16 @@ _add(
 )
 
 _add(
+    "p164::632³/2222-exact",
+    164,
+    (300, 350, 145, 28),
+    (307, 354, 134, 18),
+    "The later exact 632³/2222 row",
+    "Table 13.1 on printed p. 164; the outline joins generator permutations of a 3-cycle, its inverse, and the identity to regular type 632³/2222.",
+    "Annotated Table 13.1 excerpt with the exact permutation signature and 632 cubed over 2222 type outlined.",
+)
+
+_add(
     "p169::primefold-scope",
     169,
     (84, 415, 338, 90),
@@ -227,8 +264,8 @@ _add(
 )
 
 
-if len(BOOK_EXCERPTS) != 62:
-    raise ValueError(f"expected 62 book excerpt specifications, found {len(BOOK_EXCERPTS)}")
+if len(BOOK_EXCERPTS) != 65:
+    raise ValueError(f"expected 65 book excerpt specifications, found {len(BOOK_EXCERPTS)}")
 
-if len({excerpt["image"] for excerpt in BOOK_EXCERPTS.values()}) != 62:
+if len({excerpt["image"] for excerpt in BOOK_EXCERPTS.values()}) != 65:
     raise ValueError("book excerpt asset names are not unique")
