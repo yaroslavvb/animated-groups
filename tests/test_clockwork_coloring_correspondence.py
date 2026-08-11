@@ -21,6 +21,8 @@ class CorrespondenceParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.section_ids: list[str] = []
+        self.family_ids: list[str] = []
+        self.tabs: list[tuple[str, str, str]] = []
         self.catalog_links: list[str] = []
         self.plate_images: list[tuple[str, str, str, str]] = []
         self.book_links: list[tuple[str, str, str]] = []
@@ -38,6 +40,16 @@ class CorrespondenceParser(HTMLParser):
         classes = set((attributes.get("class") or "").split())
         if tag == "section" and "correspondence-entry" in classes:
             self.section_ids.append(attributes.get("id", ""))
+        if tag == "section" and "wallpaper-family" in classes:
+            self.family_ids.append(attributes.get("id", ""))
+        if tag == "a" and "data-clockwork-tab" in attributes:
+            self.tabs.append(
+                (
+                    attributes.get("id", ""),
+                    attributes.get("href", ""),
+                    attributes.get("data-panel-id", ""),
+                )
+            )
         if tag == "a" and (attributes.get("href") or "").startswith(
             correspondence.CATALOG_ROOT
         ):
@@ -107,25 +119,59 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         cls.page = correspondence.PAGE.read_text(encoding="utf-8")
         cls.parser = CorrespondenceParser()
         cls.parser.feed(cls.page)
+        cls.display_groups = [
+            group
+            for base in correspondence.BASE_ORDER
+            for group in cls.payload["groups"]
+            if group["parent"]["hm"] == base
+        ]
 
     def test_exactly_68_literal_sections_match_the_forward_manifest(self) -> None:
         groups = self.payload["groups"]
         manifest = json.loads(correspondence.MANIFEST.read_text(encoding="utf-8"))
         ids = [group["id"] for group in groups]
+        display_ids = [group["id"] for group in self.display_groups]
         self.assertEqual(len(groups), 68)
-        self.assertEqual(self.parser.section_ids, ids)
+        self.assertEqual(self.parser.section_ids, display_ids)
         self.assertEqual(ids, [group["id"] for group in manifest["groups"]])
         self.assertEqual(len(ids), len(set(ids)))
+
+    def test_17_wallpaper_sections_have_one_horizontal_tab_per_group(self) -> None:
+        self.assertEqual(
+            self.parser.family_ids,
+            [f"wallpaper-{base}" for base in correspondence.BASE_ORDER],
+        )
+        display_ids = [group["id"] for group in self.display_groups]
+        self.assertEqual(
+            self.parser.tabs,
+            [(f"tab-{group_id}", f"#{group_id}", group_id) for group_id in display_ids],
+        )
+        for base in correspondence.BASE_ORDER:
+            summary, note = correspondence.WALLPAPER_SUMMARIES[base]
+            self.assertIn(escape(summary), self.page)
+            self.assertIn(escape(note), self.page)
+
+        script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
+        self.assertIn("initializeClockworkTabs", script)
+        self.assertIn('setAttribute("role", "tablist")', script)
+        self.assertIn('setAttribute("role", "tab")', script)
+        self.assertIn('setAttribute("role", "tabpanel")', script)
+        self.assertIn('event.key === "ArrowRight"', script)
+        self.assertIn('event.key === "Home"', script)
+        self.assertIn('window.addEventListener("hashchange"', script)
+        self.assertIn('window.addEventListener("popstate"', script)
 
     def test_every_row_has_an_exact_forward_catalog_deep_link(self) -> None:
         expected = [
             f"{correspondence.CATALOG_ROOT}#{group['id']}"
-            for group in self.payload["groups"]
+            for group in self.display_groups
         ]
         self.assertEqual(self.parser.catalog_links, expected)
 
     def test_tos_notation_and_clock_orders_are_complete(self) -> None:
         groups = self.payload["groups"]
+        self.assertEqual(len(correspondence.BOOK_TWO_FOLD_SIGNATURE_BY_TYPE), 36)
+        self.assertEqual(len(correspondence.BOOK_HIGHER_SIGNATURE_BY_ID), 15)
         counts = Counter(group["clock_order"] for group in groups)
         self.assertEqual(
             {n: counts.get(n, 0) for n in range(1, 7)},
@@ -142,6 +188,15 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     group["clock_order"],
                 ),
             )
+            self.assertEqual(
+                group["book_color_signature"],
+                correspondence.book_color_signature(
+                    group["id"],
+                    group["parent"]["orbifold"],
+                    group["tos_notation"],
+                    group["clock_order"],
+                ),
+            )
             self.assertNotIn("//", group["tos_notation"])
             if group["parent"]["hm"] == "p1":
                 self.assertEqual(group["parent"]["orbifold"], "◦")
@@ -150,6 +205,17 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertEqual(len(group["phase_residues"]), group["clock_order"])
             self.assertIn(escape(group["clockwork_description"]), self.page)
             self.assertIn(escape(group["coloring_description"]), self.page)
+
+        g60 = next(group for group in groups if group["id"] == "g60")
+        self.assertEqual(g60["book_color_signature"], "*¹2²2¹2²2")
+        self.assertIn(
+            '*<sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2',
+            self.page,
+        )
+        self.assertIn(
+            '<span class="clockwork-symbol">*2<sub>1</sub>~2<sub>1</sub>2<sub>1</sub>~2<sub>1</sub></span>',
+            self.page,
+        )
 
     def test_every_row_has_a_book_page_and_honest_coverage_status(self) -> None:
         groups = self.payload["groups"]
@@ -160,7 +226,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.EXPECTED_BOOK_AUDIT_COUNTS,
         )
         expected_primary = []
-        for group in groups:
+        for group in self.display_groups:
             primary = [
                 reference
                 for reference in group["book_audit"]["references"]
@@ -208,7 +274,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
 
     def test_all_book_links_open_exact_annotated_excerpts_with_external_fallbacks(self) -> None:
         expected_references = []
-        for group in self.payload["groups"]:
+        for group in self.display_groups:
             expected_references.extend(group["book_audit"]["references"])
             for step in group["book_audit"]["prime_chain"]:
                 expected_references.append(
@@ -313,7 +379,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
 
     def test_all_68_films_are_local_and_stopped_by_default(self) -> None:
         groups = self.payload["groups"]
-        ids = [group["id"] for group in groups]
+        ids = [group["id"] for group in self.display_groups]
         self.assertEqual(self.parser.film_group_ids, ids)
         self.assertEqual(
             self.parser.canvases,
@@ -350,7 +416,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('event.key === "ArrowRight"', script)
         self.assertIn('event.key === "Home"', script)
         self.assertIn("fixed phase ruler, smooth hand", self.page)
-        self.assertIn("red hand sweeps", self.page)
+        self.assertNotIn("The upper canvas repeats one continuously animated asymmetric motif", self.page)
         self.assertNotIn("autoplay", self.page.lower())
         self.assertNotIn("autoplay", script.lower())
         self.assertNotIn("<iframe", self.page)

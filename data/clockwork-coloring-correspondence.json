@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": 2,
+    "schema_version": 3,
     "title": "Clockwork/coloring correspondence",
     "source_catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/data/catalog.json",
     "source_catalog_sha256": "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0",
@@ -60,6 +60,7 @@
         "hm": "p1"
       },
       "tos_notation": "◦",
+      "book_color_signature": "◦",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -154,6 +155,7 @@
         "hm": "p2"
       },
       "tos_notation": "2222",
+      "book_color_signature": "2222",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -273,6 +275,7 @@
         "hm": "p1"
       },
       "tos_notation": "2222/◦",
+      "book_color_signature": "²2²2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -389,6 +392,7 @@
         "hm": "p2"
       },
       "tos_notation": "2222/2222",
+      "book_color_signature": "¹2¹2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -548,6 +552,7 @@
         "hm": "cm"
       },
       "tos_notation": "*×",
+      "book_color_signature": "*×",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -667,6 +672,7 @@
         "hm": "p1"
       },
       "tos_notation": "*×/◦",
+      "book_color_signature": "*²×²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -783,6 +789,7 @@
         "hm": "pm"
       },
       "tos_notation": "**",
+      "book_color_signature": "**",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -944,6 +951,7 @@
         "hm": "pg"
       },
       "tos_notation": "××",
+      "book_color_signature": "××",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -1105,6 +1113,7 @@
         "hm": "pmm"
       },
       "tos_notation": "*2222",
+      "book_color_signature": "*2222",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -1266,6 +1275,7 @@
         "hm": "p2"
       },
       "tos_notation": "*2222/2222",
+      "book_color_signature": "*²2²2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -1424,6 +1434,7 @@
         "hm": "pmg"
       },
       "tos_notation": "22*",
+      "book_color_signature": "22*",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -1585,6 +1596,7 @@
         "hm": "p2"
       },
       "tos_notation": "22*/2222",
+      "book_color_signature": "¹2¹2*²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -1743,6 +1755,7 @@
         "hm": "pgg"
       },
       "tos_notation": "22×",
+      "book_color_signature": "22×",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -1904,6 +1917,7 @@
         "hm": "p2"
       },
       "tos_notation": "22×/2222",
+      "book_color_signature": "¹2¹2×²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2062,6 +2076,7 @@
         "hm": "pm"
       },
       "tos_notation": "*2222/**",
+      "book_color_signature": "*¹2²2¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2221,6 +2236,7 @@
         "hm": "pg"
       },
       "tos_notation": "22*/××",
+      "book_color_signature": "²2²2*²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2380,6 +2396,7 @@
         "hm": "pm"
       },
       "tos_notation": "22*/**",
+      "book_color_signature": "²2²2*¹",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2539,6 +2556,7 @@
         "hm": "pg"
       },
       "tos_notation": "22×/××",
+      "book_color_signature": "²2²2×¹",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2698,6 +2716,7 @@
         "hm": "pmm"
       },
       "tos_notation": "*2222/*2222",
+      "book_color_signature": "*¹2¹2¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2936,6 +2955,7 @@
         "hm": "pmg"
       },
       "tos_notation": "*2222/22*",
+      "book_color_signature": "*¹2²2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -3174,6 +3194,7 @@
         "hm": "pmg"
       },
       "tos_notation": "22*/22*",
+      "book_color_signature": "¹2²2*¹",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -3412,6 +3433,7 @@
         "hm": "pgg"
       },
       "tos_notation": "22*/22×",
+      "book_color_signature": "¹2²2*²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -3650,6 +3672,7 @@
         "hm": "cmm"
       },
       "tos_notation": "2*22",
+      "book_color_signature": "2*22",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -3889,6 +3912,7 @@
         "hm": "p2"
       },
       "tos_notation": "2*22/2222",
+      "book_color_signature": "¹2*²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -4125,6 +4149,7 @@
         "hm": "cm"
       },
       "tos_notation": "2*22/*×",
+      "book_color_signature": "²2*¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -4362,6 +4387,7 @@
         "hm": "pmm"
       },
       "tos_notation": "2*22/*2222",
+      "book_color_signature": "²2*¹2¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -4600,6 +4626,7 @@
         "hm": "pgg"
       },
       "tos_notation": "2*22/22×",
+      "book_color_signature": "²2*²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -4838,6 +4865,7 @@
         "hm": "pmg"
       },
       "tos_notation": "2*22/22*",
+      "book_color_signature": "¹2*¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -5076,6 +5104,7 @@
         "hm": "cmm"
       },
       "tos_notation": "*2222/2*22",
+      "book_color_signature": "*¹2¹2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -5459,6 +5488,7 @@
         "hm": "p2"
       },
       "tos_notation": "22×⁴/2222",
+      "book_color_signature": "¹2²2×⁴",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -5878,6 +5908,7 @@
         "hm": "p4"
       },
       "tos_notation": "442",
+      "book_color_signature": "442",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -6039,6 +6070,7 @@
         "hm": "p2"
       },
       "tos_notation": "442/2222",
+      "book_color_signature": "²4²4¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -6197,6 +6229,7 @@
         "hm": "p1"
       },
       "tos_notation": "442⁴/◦",
+      "book_color_signature": "⁴4⁴4²2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -6392,6 +6425,7 @@
         "hm": "p1"
       },
       "tos_notation": "442⁴/◦",
+      "book_color_signature": "⁴4⁴4²2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -6587,6 +6621,7 @@
         "hm": "p4"
       },
       "tos_notation": "442/442",
+      "book_color_signature": "¹4²4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -6825,6 +6860,7 @@
         "hm": "p2"
       },
       "tos_notation": "442⁴/2222",
+      "book_color_signature": "⁴4⁴4¹2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -7099,6 +7135,7 @@
         "hm": "p4m"
       },
       "tos_notation": "*442",
+      "book_color_signature": "*442",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -7338,6 +7375,7 @@
         "hm": "pmm"
       },
       "tos_notation": "*442/*2222",
+      "book_color_signature": "*¹4²4¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -7575,6 +7613,7 @@
         "hm": "cmm"
       },
       "tos_notation": "*442/2*22",
+      "book_color_signature": "*²4¹4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -7812,6 +7851,7 @@
         "hm": "p4"
       },
       "tos_notation": "*442/442",
+      "book_color_signature": "*²4²4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -8048,6 +8088,7 @@
         "hm": "p4g"
       },
       "tos_notation": "4*2",
+      "book_color_signature": "4*2",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -8287,6 +8328,7 @@
         "hm": "pgg"
       },
       "tos_notation": "4*2/22×",
+      "book_color_signature": "²4*²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -8524,6 +8566,7 @@
         "hm": "cmm"
       },
       "tos_notation": "4*2/2*22",
+      "book_color_signature": "²4*¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -8761,6 +8804,7 @@
         "hm": "p4"
       },
       "tos_notation": "4*2/442",
+      "book_color_signature": "¹4*²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -8997,6 +9041,7 @@
         "hm": "p4m"
       },
       "tos_notation": "*442/*442",
+      "book_color_signature": "*¹4¹4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -9386,6 +9431,7 @@
         "hm": "pmm"
       },
       "tos_notation": "4*2⁴/*2222",
+      "book_color_signature": "⁴4*¹2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -9813,6 +9859,7 @@
         "hm": "p4g"
       },
       "tos_notation": "*442/4*2",
+      "book_color_signature": "*¹4²4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -10202,6 +10249,7 @@
         "hm": "pgg"
       },
       "tos_notation": "4*2⁴/22×",
+      "book_color_signature": "⁴4*²2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -10629,6 +10677,7 @@
         "hm": "p3"
       },
       "tos_notation": "333",
+      "book_color_signature": "333",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -10766,6 +10815,7 @@
         "hm": "p1"
       },
       "tos_notation": "333³/◦",
+      "book_color_signature": "³3³3³3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -10906,6 +10956,7 @@
         "hm": "p1"
       },
       "tos_notation": "333³/◦",
+      "book_color_signature": "³3³3³3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -11046,6 +11097,7 @@
         "hm": "p3"
       },
       "tos_notation": "333³/333",
+      "book_color_signature": "³3³3¹3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -11302,6 +11354,7 @@
         "hm": "p3m1"
       },
       "tos_notation": "*333",
+      "book_color_signature": "*333",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -11499,6 +11552,7 @@
         "hm": "p3"
       },
       "tos_notation": "*333/333",
+      "book_color_signature": "*²3²3²3",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -11693,6 +11747,7 @@
         "hm": "p31m"
       },
       "tos_notation": "3*3",
+      "book_color_signature": "3*3",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -11890,6 +11945,7 @@
         "hm": "p3"
       },
       "tos_notation": "3*3/333",
+      "book_color_signature": "¹3*²3",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -12084,6 +12140,7 @@
         "hm": "p3m1"
       },
       "tos_notation": "3*3³/*333",
+      "book_color_signature": "³3*¹3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -12530,6 +12587,7 @@
         "hm": "p3"
       },
       "tos_notation": "3*3⁶/333",
+      "book_color_signature": "³3*²3",
       "clock_order": 6,
       "cyclic_group": "C_6",
       "phase_residues": [
@@ -12997,6 +13055,7 @@
         "hm": "p6"
       },
       "tos_notation": "632",
+      "book_color_signature": "632",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -13200,6 +13259,7 @@
         "hm": "p2"
       },
       "tos_notation": "632³/2222",
+      "book_color_signature": "³6³3¹2",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -13407,6 +13467,7 @@
         "hm": "p2"
       },
       "tos_notation": "632³/2222",
+      "book_color_signature": "³6³3¹2",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -13614,6 +13675,7 @@
         "hm": "p3"
       },
       "tos_notation": "632/333",
+      "book_color_signature": "²6¹3²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -13814,6 +13876,7 @@
         "hm": "p1"
       },
       "tos_notation": "632⁶/◦",
+      "book_color_signature": "⁶6³3²2",
       "clock_order": 6,
       "cyclic_group": "C_6",
       "phase_residues": [
@@ -14062,6 +14125,7 @@
         "hm": "p1"
       },
       "tos_notation": "632⁶/◦",
+      "book_color_signature": "⁶6³3²2",
       "clock_order": 6,
       "cyclic_group": "C_6",
       "phase_residues": [
@@ -14310,6 +14374,7 @@
         "hm": "p6m"
       },
       "tos_notation": "*632",
+      "book_color_signature": "*632",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -14627,6 +14692,7 @@
         "hm": "p31m"
       },
       "tos_notation": "*632/3*3",
+      "book_color_signature": "*¹6²3²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -14942,6 +15008,7 @@
         "hm": "p6"
       },
       "tos_notation": "*632/632",
+      "book_color_signature": "*²6²3²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -15256,6 +15323,7 @@
         "hm": "p3m1"
       },
       "tos_notation": "*632/*333",
+      "book_color_signature": "*²6¹3¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [

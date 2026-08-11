@@ -93,6 +93,142 @@ ORBIFOLD_BY_BASE = {
     "p6m": "*632",
 }
 
+WALLPAPER_SUMMARIES = {
+    "p1": (
+        "Translations only; the quotient orbifold is a torus.",
+        "Its sole forward clockwork lift is the product: K = G = ◦, so the traditional plate has one colour.",
+    ),
+    "p2": (
+        "Four families of half-turn centres; the quotient is a pillowcase with four order-2 cone points.",
+        "Both non-product lifts are dichromatic: 2₁2₁2₁2₁ has K = ◦, while c222₁2₁ has an index-two kernel again of type 2222.",
+    ),
+    "pm": (
+        "Translations and parallel mirror lines; the quotient has two mirror-boundary components.",
+        "The forward catalog contributes only the product lift, so this section is monochrome.",
+    ),
+    "pg": (
+        "Glide reflections without mirror lines; the quotient has two crosscaps.",
+        "Each × is Conway's crosscap or ‘miracle’ symbol, not a mirror boundary; the sole forward representative is the product.",
+    ),
+    "cm": (
+        "A centred rectangular pattern with an interleaved mirror family and glide family.",
+        "Its non-product member ~*×½ exchanges two phases and has translation-only kernel K = ◦.",
+    ),
+    "pmm": (
+        "The rectangular kaleidoscope: perpendicular mirror families meeting in four classes of order-2 corners.",
+        "Its five non-product lifts are all dichromatic, with phase-zero kernels 2222, **, *2222, 22*, and 2*22.",
+    ),
+    "pmg": (
+        "Two classes of half-turn centres beside one mirror family, with glides in the perpendicular direction.",
+        "Its five non-product lifts are dichromatic; their kernels range through 2222, ××, **, 22*, and 22×.",
+    ),
+    "pgg": (
+        "Two classes of half-turn centres together with glide reflections, but no mirror lines.",
+        "This rectangular family reaches four colours in c22₁×¼, whose quarter-period glide has kernel K = 2222.",
+    ),
+    "cmm": (
+        "The centred rectangular kaleidoscope, with half-turn centres both on and off its mirrors.",
+        "Its five dichromatic lifts have kernels 2222, *×, *2222, 22×, and 22*.",
+    ),
+    "p4": (
+        "The orientation-preserving square group: two classes of fourfold centres and one class of half-turn centres, with no mirrors.",
+        "Three lifts use four colours; 4₁4₁2₁ and 4₃4₃2₁ are the inverse-clock pair.",
+    ),
+    "p4m": (
+        "The full square kaleidoscope, whose mirror triangle has corner orders 4, 4, and 2.",
+        "All five non-product lifts are dichromatic, despite the fourfold spatial centres; their kernels are *2222, 2*22, 442, *442, and 4*2.",
+    ),
+    "p4g": (
+        "Fourfold centres beside mirrors, with glide lines between the mirrored parts of the pattern.",
+        "Three lifts use two colours and two use four; the four-colour cases are the centred c4₃*2 and c4₁*2 lifts.",
+    ),
+    "p3": (
+        "Three classes of threefold rotation centres and no mirrors.",
+        "Its three non-product lifts use three colours: the uniform 3₁ and 3₂ screws form an inverse-clock pair, while r33₁3₂ retains a kernel of type 333.",
+    ),
+    "p3m1": (
+        "The equilateral-triangle kaleidoscope, with every threefold centre lying on a mirror.",
+        "There is one non-product lift: the dichromatic *~3~3~3, where the odd-corner relation makes the mirror arcs change phase together.",
+    ),
+    "p31m": (
+        "One class of threefold centres lies off the mirrors and another lies on them.",
+        "This section has one group at each of N = 1, 2, 3, and 6; r3₂*~3 combines a third-period screw with a half-period mirror shift, producing N = 6.",
+    ),
+    "p6": (
+        "The orientation-preserving hexagonal group, with sixfold, threefold, and twofold centres and no mirrors.",
+        "Its non-product lifts comprise one N = 2 group, an inverse-clock pair at N = 3, and another inverse-clock pair at N = 6.",
+    ),
+    "p6m": (
+        "The full hexagonal kaleidoscope, whose mirror triangle has corner orders 6, 3, and 2.",
+        "Its three non-product lifts are all dichromatic, with phase-zero kernels 3*3, 632, and *333.",
+    ),
+}
+
+# Canonical first short color signature printed for each relevant type in
+# Table 11.1.  The raised number is the order of the induced permutation on
+# colors (p. 136), not a clock-screw numerator.  Several table rows give
+# equivalent alternatives; choosing the first keeps each tab label stable.
+BOOK_TWO_FOLD_SIGNATURE_BY_TYPE = {
+    "*632/3*3": "*¹6²3²2",
+    "*632/*333": "*²6¹3¹2",
+    "*632/632": "*²6²3²2",
+    "632/333": "²6¹3²2",
+    "*442/*442": "*¹4¹4²2",
+    "*442/4*2": "*¹4²4²2",
+    "*442/*2222": "*¹4²4¹2",
+    "*442/2*22": "*²4¹4²2",
+    "*442/442": "*²4²4²2",
+    "4*2/442": "¹4*²2",
+    "4*2/2*22": "²4*¹2",
+    "4*2/22×": "²4*²2",
+    "442/442": "¹4²4²2",
+    "442/2222": "²4²4¹2",
+    "*333/333": "*²3²3²3",
+    "3*3/333": "¹3*²3",
+    "*2222/*2222": "*¹2¹2¹2²2",
+    "*2222/2*22": "*¹2¹2²2²2",
+    "*2222/**": "*¹2²2¹2²2",
+    "*2222/22*": "*¹2²2²2²2",
+    "*2222/2222": "*²2²2²2²2",
+    "2*22/22*": "¹2*¹2²2",
+    "2*22/2222": "¹2*²2²2",
+    "2*22/*2222": "²2*¹2¹2",
+    "2*22/*×": "²2*¹2²2",
+    "2*22/22×": "²2*²2²2",
+    "22*/2222": "¹2¹2*²",
+    "22*/22*": "¹2²2*¹",
+    "22*/22×": "¹2²2*²",
+    "22*/**": "²2²2*¹",
+    "22*/××": "²2²2*²",
+    "22×/2222": "¹2¹2×²",
+    "22×/××": "²2²2×¹",
+    "2222/2222": "¹2¹2²2²2",
+    "2222/◦": "²2²2²2²2",
+    "*×/◦": "*²×²",
+}
+
+# Primefold signatures are printed in Table 12.1 (with the g234 correction
+# supported by pp. 158 and 164).  The composite C4/C6 cases extend the same
+# short-signature convention from p. 155 and are computed from the audited
+# standard-generator phases.
+BOOK_HIGHER_SIGNATURE_BY_ID = {
+    "g75": "¹2²2×⁴",
+    "g96": "⁴4⁴4²2",
+    "g97": "⁴4⁴4²2",
+    "g99": "⁴4⁴4¹2",
+    "g137": "⁴4*¹2",
+    "g139": "⁴4*²2",
+    "g225": "³3³3³3",
+    "g226": "³3³3³3",
+    "g227": "³3³3¹3",
+    "g234": "³3*¹3",
+    "g235": "³3*²3",
+    "g244": "³6³3¹2",
+    "g245": "³6³3¹2",
+    "g247": "⁶6³3²2",
+    "g248": "⁶6³3²2",
+}
+
 # K = ker(kappa), classified using zero-phase cosets plus Z^2 translations.
 KERNEL_BASE_BY_ID = {
     "g1": "p1", "g5": "p2", "g6": "p1", "g7": "p2",
@@ -133,6 +269,9 @@ EXPECTED_BOOK_AUDIT_COUNTS = {
 M_ID = ((1, 0), (0, 1))
 
 SUPERSCRIPT = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
+SUPERSCRIPT_TO_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
+SUBSCRIPT_TO_ASCII = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
+SUPERSCRIPT_LETTERS = {"ᵃ": "a", "ᵇ": "b", "ᶜ": "c", "ᵈ": "d"}
 
 # The distinct G/K signatures in Table 11.1, pp. 140--141.  The book counts
 # 46 types because **/** has two inequivalent variants; no forward row here
@@ -229,6 +368,87 @@ def tos_notation(parent: str, kernel: str, order: int) -> str:
     if order == 2:
         return f"{parent}/{kernel}"
     return f"{parent}{str(order).translate(SUPERSCRIPT)}/{kernel}"
+
+
+def book_color_signature(
+    group_id: str,
+    parent: str,
+    notation: str,
+    order: int,
+) -> str:
+    """Return the book's short generator-permutation signature.
+
+    The superscripts are permutation orders.  They are deliberately stored
+    separately from the catalog's clockwork subscripts and tildes.
+    """
+
+    if order == 1:
+        return parent
+    if order == 2:
+        try:
+            return BOOK_TWO_FOLD_SIGNATURE_BY_TYPE[notation]
+        except KeyError as error:
+            raise ValueError(f"missing Table 11.1 short signature: {notation}") from error
+    try:
+        return BOOK_HIGHER_SIGNATURE_BY_ID[group_id]
+    except KeyError as error:
+        raise ValueError(f"missing higher-fold short signature: {group_id}") from error
+
+
+def superscript_html(value: str) -> str:
+    """Render Unicode superscript digits as semantic HTML ``sup`` elements."""
+
+    output: list[str] = []
+    run: list[str] = []
+
+    def flush() -> None:
+        if run:
+            output.append(f"<sup>{''.join(run)}</sup>")
+            run.clear()
+
+    for character in value:
+        if character in "⁰¹²³⁴⁵⁶⁷⁸⁹":
+            run.append(character.translate(SUPERSCRIPT_TO_ASCII))
+        else:
+            flush()
+            output.append(escape(character))
+    flush()
+    return "".join(output)
+
+
+def clockwork_symbol_html(value: str) -> str:
+    """Typeset the secondary catalog symbol without changing its notation."""
+
+    output: list[str] = []
+    subscript: list[str] = []
+
+    def flush_subscript() -> None:
+        if subscript:
+            output.append(f"<sub>{''.join(subscript)}</sub>")
+            subscript.clear()
+
+    for character in value:
+        if character in "₀₁₂₃₄₅₆₇₈₉":
+            subscript.append(character.translate(SUBSCRIPT_TO_ASCII))
+            continue
+        flush_subscript()
+        if character in SUPERSCRIPT_LETTERS:
+            output.append(f"<sup>{SUPERSCRIPT_LETTERS[character]}</sup>")
+        else:
+            output.append(escape(character))
+    flush_subscript()
+    return "".join(output)
+
+
+def color_type_html(parent: str, kernel: str, order: int) -> str:
+    """Typeset G/K while keeping the higher-fold exponent on the whole G."""
+
+    parent_html = escape(parent)
+    if order == 1:
+        return parent_html
+    if order == 2:
+        return f"{parent_html}/{escape(kernel)}"
+    return f'<span class="color-type-group">{parent_html}</span><sup>{order}</sup>/{escape(kernel)}'
 
 
 def book_reference(
@@ -645,6 +865,9 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
         parent_orbifold = ORBIFOLD_BY_BASE[group["base"]]
         kernel_orbifold = ORBIFOLD_BY_BASE[kernel_base]
         notation = tos_notation(parent_orbifold, kernel_orbifold, order)
+        short_signature = book_color_signature(
+            group_id, parent_orbifold, notation, order
+        )
         validate_render(group_id, group["render"], order)
         residues = [
             {
@@ -665,6 +888,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "parent": {"orbifold": parent_orbifold, "hm": group["base"]},
             "kernel": {"orbifold": kernel_orbifold, "hm": kernel_base},
             "tos_notation": notation,
+            "book_color_signature": short_signature,
             "clock_order": order,
             "cyclic_group": f"C_{order}",
             "phase_residues": residues,
@@ -688,7 +912,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 2,
+            "schema_version": 3,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -730,8 +954,8 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 2:
-        raise ValueError("correspondence data must use schema version 2")
+    if meta.get("schema_version") != 3:
+        raise ValueError("correspondence data must use schema version 3")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -779,6 +1003,14 @@ def validate_payload(payload: dict[str, Any]) -> None:
         )
         if group["tos_notation"] != expected_notation:
             raise ValueError(f"ToS notation mismatch in {group_id}")
+        expected_short_signature = book_color_signature(
+            group_id,
+            group["parent"]["orbifold"],
+            expected_notation,
+            order,
+        )
+        if group.get("book_color_signature") != expected_short_signature:
+            raise ValueError(f"book color signature mismatch in {group_id}")
         if "//" in group["tos_notation"]:
             raise ValueError(f"regular cyclic action uses a double slash in {group_id}")
         if group["parent"]["hm"] == "p1" and "◦" not in group["parent"]["orbifold"]:
@@ -1150,28 +1382,33 @@ def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str
     order = record["clock_order"]
     parent = record["parent"]
     kernel = record["kernel"]
+    short_signature = record["book_color_signature"]
+    short_signature_html = superscript_html(short_signature)
+    catalog_symbol_html = clockwork_symbol_html(record["symbol"])
+    type_html = color_type_html(parent["orbifold"], kernel["orbifold"], order)
     mate_note = ""
     if record["inverse_clock_mate"]:
         mate = by_id[record["inverse_clock_mate"]]
         mate_note = (
             "<aside class=\"orientation-note\">"
             "<strong>Clock orientation.</strong> This has the same traditional colour group as "
-            f"<a href=\"#{escape(mate['id'])}\">{escape(mate['symbol'])} "
+            f"<a href=\"#{escape(mate['id'])}\">{clockwork_symbol_html(mate['symbol'])} "
             f"({escape(mate['id'])})</a>, but traverses the cyclic palette in the opposite "
             "time order.</aside>"
         )
     entry = f"""
-      <li>
-        <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clock-order="{order}">
+      <li class="correspondence-item">
+        <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clockwork-tabpanel data-clock-order="{order}">
           <header class="entry-header">
             <p class="entry-number">{record['ordinal']:02d} / 68</p>
             <div>
-              <h2 id="{group_id}-title"><span class="clockwork-symbol">{escape(record['symbol'])}</span> <span class="group-id">{group_id}</span></h2>
-              <p class="entry-kicker">clockwork orbifold · {escape(record['system'])} · {escape(record['bravais'])}</p>
+              <p class="entry-kicker">Goodman–Strauss short colour signature</p>
+              <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Book short colour signature {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
+              <p class="clockwork-identity"><span>clockwork</span> <span class="clockwork-symbol">{catalog_symbol_html}</span> · {escape(record['system'])} · {escape(record['bravais'])}</p>
             </div>
             <div class="entry-badges" aria-label="Correspondence summary">
               <span>C<sub>{order}</sub></span>
-              <span>{escape(record['tos_notation'])}</span>
+              <span class="color-type">{type_html}</span>
             </div>
           </header>
 
@@ -1191,7 +1428,7 @@ def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str
 
             <div class="entry-copy">
               <p class="pair-label">Conway–Burgiel–Goodman-Strauss colour type</p>
-              <p class="orbifold-pair">{escape(record['tos_notation'])}</p>
+              <p class="orbifold-pair">{type_html}</p>
               <dl class="group-data">
                 <div><dt>Full symmetry G</dt><dd>{escape(parent['orbifold'])} <span>({escape(parent['hm'])})</span></dd></div>
                 <div><dt>All-colours kernel K</dt><dd>{escape(kernel['orbifold'])} <span>({escape(kernel['hm'])})</span></dd></div>
@@ -1206,7 +1443,7 @@ def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str
                 {_phase_profile(record)}
               </div>
               {mate_note}
-              <p class="catalog-action"><a href="{escape(record['catalog_url'])}">Open {escape(record['symbol'])} ({group_id}) in the forward catalog</a></p>
+              <p class="catalog-action"><a href="{escape(record['catalog_url'])}" aria-label="Open {escape(record['symbol'])}, {group_id}, in the forward catalog">forward catalog · {group_id} ↗</a></p>
             </div>
           </div>
         </section>
@@ -1214,28 +1451,77 @@ def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str
     return "\n".join(line.rstrip() for line in entry.splitlines())
 
 
+def _tab_html(record: dict[str, Any]) -> str:
+    group_id = escape(record["id"])
+    signature = record["book_color_signature"]
+    return (
+        f'<a class="clockwork-tab" id="tab-{group_id}" href="#{group_id}" '
+        f'data-clockwork-tab data-panel-id="{group_id}" '
+        f'aria-label="{escape(signature)}, clockwork group {group_id}">'
+        f'<span class="tab-signature">{superscript_html(signature)}</span>'
+        f'<span class="tab-meta">{group_id} · C<sub>{record["clock_order"]}</sub></span>'
+        "</a>"
+    )
+
+
+def _order_census_html(rows: list[dict[str, Any]]) -> str:
+    counts = Counter(row["clock_order"] for row in rows)
+    parts = [
+        f'C<sub>{order}</sub>: {counts[order]}'
+        for order in sorted(counts)
+    ]
+    return " · ".join(parts)
+
+
+def _family_html(
+    base: str,
+    rows: list[dict[str, Any]],
+    family_index: int,
+    by_id: dict[str, dict[str, Any]],
+) -> str:
+    orbifold = ORBIFOLD_BY_BASE[base]
+    summary, note = WALLPAPER_SUMMARIES[base]
+    group_word = "group" if len(rows) == 1 else "groups"
+    tabs = "\n".join(_tab_html(row) for row in rows)
+    entries = "\n".join(_entry_html(row, by_id) for row in rows)
+    return f"""
+    <section class="wallpaper-family" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
+      <header class="family-header">
+        <p class="section-number">Wallpaper group {family_index:02d} / 17</p>
+        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{escape(orbifold)}</span> <span class="family-hm">{escape(base)}</span> <span class="family-count">{len(rows)} clockwork {group_word}</span></h2>
+        <p class="family-summary">{escape(summary)}</p>
+        <p class="family-note"><strong>Forward note.</strong> {escape(note)}</p>
+        <p class="family-census">{_order_census_html(rows)}</p>
+      </header>
+
+      <div class="clockwork-tabs" data-clockwork-tabs>
+        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Clockwork groups over {escape(orbifold)} ({escape(base)})">
+          {tabs}
+        </nav>
+        <ol class="correspondence-list">
+{entries}
+        </ol>
+      </div>
+    </section>"""
+
+
 def page_html(payload: dict[str, Any]) -> str:
     groups = payload["groups"]
     by_id = {group["id"]: group for group in groups}
-    entries = "\n".join(_entry_html(group, by_id) for group in groups)
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for group in groups:
         grouped[group["parent"]["hm"]].append(group)
-    directory_groups = []
-    for base in BASE_ORDER:
-        rows = grouped.get(base, [])
-        if not rows:
-            continue
-        links = "".join(
-            f'<li><a href="#{escape(row["id"])}">{escape(row["symbol"])}</a></li>'
-            for row in rows
-        )
-        directory_groups.append(
-            "<div class=\"directory-group\">"
-            f"<h3>{escape(ORBIFOLD_BY_BASE[base])} <span>{escape(base)}</span></h3>"
-            f"<ul>{links}</ul></div>"
-        )
-    directory = "\n".join(directory_groups)
+    families = "\n".join(
+        _family_html(base, grouped[base], index, by_id)
+        for index, base in enumerate(BASE_ORDER, 1)
+    )
+    directory = "\n".join(
+        f'<a class="wallpaper-chip" href="#wallpaper-{escape(base)}">'
+        f'<span class="chip-orbifold">{escape(ORBIFOLD_BY_BASE[base])}</span> '
+        f'<span class="chip-hm">{escape(base)}</span> '
+        f'<span class="chip-count">{len(grouped[base])}</span></a>'
+        for base in BASE_ORDER
+    )
     counts = EXPECTED_ORDER_COUNTS
     digest = payload["meta"]["source_catalog_sha256"]
     return f"""<!doctype html>
@@ -1274,8 +1560,9 @@ def page_html(payload: dict[str, Any]) -> str:
       <p class="lead">
         Each forward clockwork group assigns a phase to every operation of its projected wallpaper
         group. Reading those phases as colour shifts turns the film into a traditional perfect
-        cyclic colouring. Every row pairs the paused film with a conventional static colour plate
-        and records its audit against <cite>The Symmetries of Things</cite>.
+        cyclic colouring. The 68 correspondences are grouped under their 17 wallpaper groups;
+        each horizontal tab pairs a paused film with a conventional static colour plate and records
+        its audit against <cite>The Symmetries of Things</cite>.
       </p>
       <div class="result-card">
         <p class="overline">The map in one line</p>
@@ -1295,23 +1582,20 @@ def page_html(payload: dict[str, Any]) -> str:
     </section>
 
     <section class="method" aria-labelledby="reading-title">
-      <p class="section-number">How to read a row</p>
-      <h2 id="reading-title">The full group, the kernel, and the slash</h2>
+      <p class="section-number">How to read a tab</p>
+      <h2 id="reading-title">The superscripts, the kernel, and the slash</h2>
       <div class="method-grid">
         <p>
           G is the wallpaper group obtained by forgetting time. K consists of the phase-zero
           operations and fixes every colour. The book calls H the stabilizer of one chosen colour.
           Here C<sub>N</sub> acts regularly, so H = K: onefold rows are simply G, twofold rows are
-          G/K, and higher rows are G<sup>N</sup>/K. A double slash would incorrectly assert H ≠ K.
+          G/K, and higher-fold entries are G<sup>N</sup>/K. A double slash would incorrectly assert H ≠ K.
         </p>
         <p>
-          The upper canvas repeats one continuously animated asymmetric motif under the exact
-          catalog operations. Its faint N-arc circle is a fixed phase ruler; the red hand sweeps
-          smoothly once per period instead of flashing one sector at a time. It never starts
-          itself: use Play or seek with the phase slider. Arrow keys work from anywhere in the
-          control bar, and Shift+arrow makes a fine step. The lower plate freezes the same phase
-          character into N conventional colours, making colour-turning rotations, glides, and
-          translations readable as a wallpaper pattern.
+          The large label is the book's short colour signature. Each raised number is the order of
+          the colour permutation induced by that presentation generator: 1 fixes colours, while
+          2, 3, 4, or 6 cycles them with that order. It is not the clockwork screw numerator. The
+          smaller clockwork symbol below it retains the catalog's subscripts and tildes.
         </p>
       </div>
       <aside>
@@ -1345,16 +1629,17 @@ def page_html(payload: dict[str, Any]) -> str:
     </section>
 
     <nav class="directory" aria-labelledby="directory-title">
-      <p class="section-number">Jump by projected orbifold</p>
-      <h2 id="directory-title">All 68 clockwork groups</h2>
-      <div class="directory-grid">
+      <p class="section-number">Wallpaper index</p>
+      <h2 id="directory-title">Jump to an underlying wallpaper group</h2>
+      <p class="directory-intro">Each count is the number of forward clockwork groups available as tabs in that section.</p>
+      <div class="wallpaper-jump-list">
         {directory}
       </div>
     </nav>
 
-    <ol class="correspondence-list" id="correspondences">
-{entries}
-    </ol>
+    <div class="correspondence-atlas" id="correspondences">
+{families}
+    </div>
 
     <section class="provenance" aria-labelledby="provenance-title">
       <p class="section-number">Audit trail</p>
@@ -1366,7 +1651,7 @@ def page_html(payload: dict[str, Any]) -> str:
         <a href="scripts/generate_clockwork_coloring_correspondence.py">correspondence generator</a>;
         the <a href="scripts/tos_book_excerpt_specs.py">excerpt coordinates</a> and
         <a href="scripts/generate_tos_book_excerpts.py">crop renderer</a> are checked in separately.
-        The read-only source snapshot has SHA-256 <code>{escape(digest)}</code>. Each row links to
+        The read-only source snapshot has SHA-256 <code>{escape(digest)}</code>. Each tab links to
         its exact entry in the external forward catalog; no runtime data or code is loaded from
         that site. Film canvases read only the checked-in correspondence JSON.
       </p>
