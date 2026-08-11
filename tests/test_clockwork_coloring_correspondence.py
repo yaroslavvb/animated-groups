@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+from urllib.parse import parse_qs, urlparse
 
 from PIL import Image
 
@@ -71,7 +72,7 @@ class CorrespondenceParser(HTMLParser):
         if tag == "a" and "book-page-link" in classes:
             self.book_links.append(
                 (
-                    attributes.get("href", ""),
+                    attributes.get("data-book-source", ""),
                     attributes.get("data-printed-page", ""),
                     attributes.get("data-pdf-page", ""),
                 )
@@ -397,7 +398,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.FARRIS_URL,
         )
 
-    def test_all_book_links_open_exact_annotated_excerpts_with_external_fallbacks(self) -> None:
+    def test_all_book_links_open_separate_annotated_excerpt_pages(self) -> None:
         expected_references = []
         for group in self.display_groups:
             expected_references.extend(group["book_audit"]["references"])
@@ -415,7 +416,18 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(len(self.parser.book_excerpt_links), 80)
         for attributes, reference in zip(self.parser.book_excerpt_links, expected_references):
             excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
-            self.assertEqual(attributes.get("href"), reference["url"])
+            viewer = urlparse(attributes.get("href") or "")
+            self.assertEqual(viewer.path, "book-excerpt.html")
+            self.assertEqual(
+                parse_qs(viewer.query),
+                {
+                    "image": [excerpt["image"]],
+                    "title": [excerpt["title"]],
+                    "context": [excerpt["context"]],
+                    "alt": [excerpt["alt"]],
+                    "source": [reference["url"]],
+                },
+            )
             self.assertEqual(attributes.get("data-printed-page"), str(reference["printed_page"]))
             self.assertEqual(attributes.get("data-pdf-page"), str(reference["pdf_page"]))
             self.assertEqual(attributes.get("data-book-excerpt"), reference["excerpt_key"])
@@ -423,8 +435,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertEqual(attributes.get("data-book-title"), excerpt["title"])
             self.assertEqual(attributes.get("data-book-context"), excerpt["context"])
             self.assertEqual(attributes.get("data-book-alt"), excerpt["alt"])
-            self.assertEqual(attributes.get("aria-haspopup"), "dialog")
-            self.assertEqual(attributes.get("aria-controls"), "book-excerpt-dialog")
+            self.assertEqual(attributes.get("data-book-source"), reference["url"])
+            self.assertEqual(attributes.get("target"), correspondence.BOOK_EXCERPT_TARGET)
+            self.assertNotIn("rel", attributes)
+            self.assertNotIn("aria-haspopup", attributes)
+            self.assertNotIn("aria-controls", attributes)
 
         expected_excerpt_keys = {reference["excerpt_key"] for reference in expected_references}
         self.assertEqual(len(expected_excerpt_keys), 44)
@@ -433,10 +448,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             expected_excerpt_keys,
         )
 
-    def test_the_single_accessible_dialog_lazy_loads_62_contextual_watermarked_webps(self) -> None:
-        self.assertEqual(self.parser.book_dialog_ids, ["book-excerpt-dialog"])
-        self.assertEqual(len(self.parser.book_excerpt_images), 1)
-        self.assertNotIn("src", self.parser.book_excerpt_images[0])
+    def test_the_separate_viewer_loads_62_contextual_watermarked_webps(self) -> None:
+        self.assertEqual(self.parser.book_dialog_ids, [])
+        self.assertEqual(self.parser.book_excerpt_images, [])
         self.assertEqual(len(correspondence.BOOK_EXCERPTS), 62)
         for key, excerpt in correspondence.BOOK_EXCERPTS.items():
             path = ROOT / excerpt["image"]
@@ -510,22 +524,26 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 key,
             )
 
-        self.assertIn("faint copyright notice", self.page)
-        self.assertIn("five times the previous vertical context", self.page)
-        self.assertIn("stopping at page edges", self.page)
-        self.assertIn("data-book-zoom-toggle", self.page)
+        viewer_page = (ROOT / "book-excerpt.html").read_text(encoding="utf-8")
+        viewer_script = (ROOT / "book-excerpt.js").read_text(encoding="utf-8")
+        viewer_style = (ROOT / "book-excerpt.css").read_text(encoding="utf-8")
+        self.assertIn("five times the previous vertical context", viewer_page)
+        self.assertIn("stopping at page edges", viewer_page)
+        self.assertIn("data-zoom-toggle", viewer_page)
+        self.assertIn("data-excerpt-image", viewer_page)
+        self.assertIn("new URLSearchParams", viewer_script)
+        self.assertIn("output\\/book-excerpts", viewer_script)
+        self.assertIn('media.dataset.zoom = actual ? "actual" : "fit"', viewer_script)
+        self.assertIn('[data-zoom="actual"]', viewer_style)
+        self.assertIn('[data-zoom="fit"]', viewer_style)
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
-        self.assertIn("initializeBookExcerptDialog", script)
-        self.assertIn("typeof dialog.showModal", script)
-        self.assertIn('dialog.dataset.mode = supportsNativeDialog ? "native" : "fallback"', script)
-        self.assertIn('dialog.classList.add("is-fallback-open")', script)
-        self.assertIn('document.querySelectorAll("a[data-book-excerpt]")', script)
-        self.assertIn('event.key === "Escape"', script)
-        self.assertIn("event.metaKey", script)
-        self.assertIn("opener.focus()", script)
-        self.assertIn("function setZoom(actualSize)", script)
-        self.assertIn('media.dataset.zoom = actualSize ? "actual" : "fit"', script)
-        self.assertIn("media.scrollTop = 0", script)
+        self.assertNotIn("initializeBookExcerptDialog();", script)
+        self.assertNotIn("<dialog", self.page)
+        self.assertIn("view annotated excerpt in the excerpt tab", self.page)
+        self.assertEqual(
+            {attributes.get("target") for attributes in self.parser.book_excerpt_links},
+            {correspondence.BOOK_EXCERPT_TARGET},
+        )
         excerpt_script = (ROOT / "scripts" / "generate_tos_book_excerpts.py").read_text(
             encoding="utf-8"
         )

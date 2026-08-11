@@ -749,5 +749,4 @@ async function initialize() {
 }
 
 initializeClockworkTabs();
-initializeBookExcerptDialog();
 void initialize();
