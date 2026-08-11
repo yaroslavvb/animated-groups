@@ -538,6 +538,12 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('[data-zoom="fit"]', viewer_style)
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
         self.assertNotIn("initializeBookExcerptDialog();", script)
+        self.assertIn("initializeBookExcerptLinks();", script)
+        self.assertIn("let viewerWindow = null", script)
+        self.assertIn("viewerWindow && !viewerWindow.closed", script)
+        self.assertIn("viewerWindow.location.href = link.href", script)
+        self.assertIn("window.open(link.href, BOOK_EXCERPT_TARGET)", script)
+        self.assertIn("viewerWindow.focus()", script)
         self.assertNotIn("<dialog", self.page)
         self.assertIn("view annotated excerpt in the excerpt tab", self.page)
         self.assertEqual(

@@ -18,6 +18,7 @@ import {
 "use strict";
 
 const DATA_URL = new URL("data/clockwork-coloring-correspondence.json", import.meta.url);
+const BOOK_EXCERPT_TARGET = "clockwork-book-excerpt";
 const PERIOD_MS = 4000;
 const DPR_LIMIT = 1.5;
 const TWO_PI = Math.PI * 2;
@@ -679,6 +680,36 @@ function initializeBookExcerptDialog() {
   dialog.addEventListener("close", resetExcerpt);
 }
 
+function initializeBookExcerptLinks() {
+  let viewerWindow = null;
+  for (const link of document.querySelectorAll("a[data-book-excerpt]")) {
+    link.target = BOOK_EXCERPT_TARGET;
+    link.addEventListener("click", (event) => {
+      if (
+        event.defaultPrevented
+        || event.button !== 0
+        || event.metaKey
+        || event.ctrlKey
+        || event.shiftKey
+        || event.altKey
+      ) return;
+
+      if (viewerWindow && !viewerWindow.closed) {
+        event.preventDefault();
+        viewerWindow.location.href = link.href;
+        viewerWindow.focus();
+        return;
+      }
+
+      const opened = window.open(link.href, BOOK_EXCERPT_TARGET);
+      if (!opened) return;
+      event.preventDefault();
+      viewerWindow = opened;
+      viewerWindow.focus();
+    });
+  }
+}
+
 async function initialize() {
   const roots = [...document.querySelectorAll("[data-clockwork-player]")];
   if (roots.length === 0) return;
@@ -749,4 +780,5 @@ async function initialize() {
 }
 
 initializeClockworkTabs();
+initializeBookExcerptLinks();
 void initialize();
