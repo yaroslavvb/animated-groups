@@ -1,0 +1,422 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "source_description": "Pinned 275-group catalog snapshot",
+    "source_catalog_path": "docs/data/catalog.json",
+    "source_catalog_sha256": "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0",
+    "source_catalog_total_groups": 275,
+    "forward_groups": 68,
+    "selection": "catalog group.forward == true",
+    "canonical_clock_order": "LCM of the reduced denominators of all displayed temporal offsets tau in the canonical entry"
+  },
+  "groups": [
+    {
+      "id": "g1",
+      "symbol": "o",
+      "base": "p1",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g5",
+      "symbol": "2222",
+      "base": "p2",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g6",
+      "symbol": "2₁2₁2₁2₁",
+      "base": "p2",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g7",
+      "symbol": "c222₁2₁",
+      "base": "p2",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g8",
+      "symbol": "*×",
+      "base": "cm",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g9",
+      "symbol": "~*×½",
+      "base": "cm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g10",
+      "symbol": "**",
+      "base": "pm",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g11",
+      "symbol": "××",
+      "base": "pg",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g54",
+      "symbol": "*2222",
+      "base": "pmm",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g55",
+      "symbol": "*~2~2~2~2",
+      "base": "pmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g56",
+      "symbol": "22*",
+      "base": "pmg",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g57",
+      "symbol": "22~*",
+      "base": "pmg",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g58",
+      "symbol": "22×",
+      "base": "pgg",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g59",
+      "symbol": "22×½",
+      "base": "pgg",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g60",
+      "symbol": "*2₁~2₁2₁~2₁",
+      "base": "pmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g61",
+      "symbol": "2₁2₁~*",
+      "base": "pmg",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g62",
+      "symbol": "2₁2₁*",
+      "base": "pmg",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g63",
+      "symbol": "2₁2₁×",
+      "base": "pgg",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g64",
+      "symbol": "c*222₁2₁ᵃ",
+      "base": "pmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g65",
+      "symbol": "c*222₁2₁ᵇ",
+      "base": "pmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g66",
+      "symbol": "c22₁*ᵃ",
+      "base": "pmg",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g67",
+      "symbol": "c22₁*ᵇ",
+      "base": "pmg",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g68",
+      "symbol": "2*22",
+      "base": "cmm",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g69",
+      "symbol": "2*~2~2",
+      "base": "cmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g70",
+      "symbol": "2₁*2₁~2₁",
+      "base": "cmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g71",
+      "symbol": "c2₁*22ᵃ",
+      "base": "cmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g72",
+      "symbol": "c2₁*22ᵇ",
+      "base": "cmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g73",
+      "symbol": "c2*2₁2₁",
+      "base": "cmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g74",
+      "symbol": "c*22₁22₁",
+      "base": "pmm",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g75",
+      "symbol": "c22₁×¼",
+      "base": "pgg",
+      "canonical_clock_order": 4
+    },
+    {
+      "id": "g94",
+      "symbol": "442",
+      "base": "p4",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g95",
+      "symbol": "4₂4₂2",
+      "base": "p4",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g96",
+      "symbol": "4₁4₁2₁",
+      "base": "p4",
+      "canonical_clock_order": 4
+    },
+    {
+      "id": "g97",
+      "symbol": "4₃4₃2₁",
+      "base": "p4",
+      "canonical_clock_order": 4
+    },
+    {
+      "id": "g98",
+      "symbol": "c44₂2₁",
+      "base": "p4",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g99",
+      "symbol": "c4₁4₃2",
+      "base": "p4",
+      "canonical_clock_order": 4
+    },
+    {
+      "id": "g128",
+      "symbol": "*442",
+      "base": "p4m",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g129",
+      "symbol": "*4₂~4₂2",
+      "base": "p4m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g130",
+      "symbol": "*~4₂4₂~2",
+      "base": "p4m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g131",
+      "symbol": "*~4~4~2",
+      "base": "p4m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g132",
+      "symbol": "4*2",
+      "base": "p4g",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g133",
+      "symbol": "4₂*~2",
+      "base": "p4g",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g134",
+      "symbol": "4₂*2",
+      "base": "p4g",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g135",
+      "symbol": "4*~2",
+      "base": "p4g",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g136",
+      "symbol": "c*44₂2₁ᵃ",
+      "base": "p4m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g137",
+      "symbol": "c4₃*2",
+      "base": "p4g",
+      "canonical_clock_order": 4
+    },
+    {
+      "id": "g138",
+      "symbol": "c*44₂2₁ᵇ",
+      "base": "p4m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g139",
+      "symbol": "c4₁*2",
+      "base": "p4g",
+      "canonical_clock_order": 4
+    },
+    {
+      "id": "g224",
+      "symbol": "333",
+      "base": "p3",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g225",
+      "symbol": "3₂3₂3₂",
+      "base": "p3",
+      "canonical_clock_order": 3
+    },
+    {
+      "id": "g226",
+      "symbol": "3₁3₁3₁",
+      "base": "p3",
+      "canonical_clock_order": 3
+    },
+    {
+      "id": "g227",
+      "symbol": "r33₁3₂",
+      "base": "p3",
+      "canonical_clock_order": 3
+    },
+    {
+      "id": "g230",
+      "symbol": "*333",
+      "base": "p3m1",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g231",
+      "symbol": "*~3~3~3",
+      "base": "p3m1",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g232",
+      "symbol": "3*3",
+      "base": "p31m",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g233",
+      "symbol": "3*~3",
+      "base": "p31m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g234",
+      "symbol": "r3₂*3",
+      "base": "p31m",
+      "canonical_clock_order": 3
+    },
+    {
+      "id": "g235",
+      "symbol": "r3₂*~3",
+      "base": "p31m",
+      "canonical_clock_order": 6
+    },
+    {
+      "id": "g243",
+      "symbol": "632",
+      "base": "p6",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g244",
+      "symbol": "6₂3₂2",
+      "base": "p6",
+      "canonical_clock_order": 3
+    },
+    {
+      "id": "g245",
+      "symbol": "6₄3₁2",
+      "base": "p6",
+      "canonical_clock_order": 3
+    },
+    {
+      "id": "g246",
+      "symbol": "6₃32₁",
+      "base": "p6",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g247",
+      "symbol": "6₅3₂2₁",
+      "base": "p6",
+      "canonical_clock_order": 6
+    },
+    {
+      "id": "g248",
+      "symbol": "6₁3₁2₁",
+      "base": "p6",
+      "canonical_clock_order": 6
+    },
+    {
+      "id": "g268",
+      "symbol": "*632",
+      "base": "p6m",
+      "canonical_clock_order": 1
+    },
+    {
+      "id": "g269",
+      "symbol": "*6₃~3~2₁",
+      "base": "p6m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g270",
+      "symbol": "*~6~3~2",
+      "base": "p6m",
+      "canonical_clock_order": 2
+    },
+    {
+      "id": "g271",
+      "symbol": "*~6₃32₁",
+      "base": "p6m",
+      "canonical_clock_order": 2
+    }
+  ]
+}

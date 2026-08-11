@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reproducible comparison of coloured plane groups and forward-time spacetime groups through six colours.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Colour groups and forward-time spacetime groups</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <link rel="stylesheet" href="future-directions.css">
+  <script type="module" src="future-directions.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#report">Skip to report</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="future-directions.html" aria-current="page">Colours</a>
+        <a href="docs/orbifold_notation.md">Notation</a>
+        <a href="data/color-forward-census.json">Data</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="report" class="report">
+    <section class="report-introduction" aria-labelledby="page-title">
+      <p class="overline">Colour symmetry · exact orders one through six</p>
+      <h1 id="page-title">From coloured plane groups to forward-time spacetime groups</h1>
+      <p class="lead">
+        A forward-time film symmetry can be read as a wallpaper symmetry coloured by a circle of
+        phases. Finite cyclic colourings are the sampled version of that clock—but only after the
+        colour action, the spatial projection, and the spacetime equivalence are kept distinct.
+      </p>
+      <div class="result-card">
+        <p class="overline">Result</p>
+        <p>
+          The 68 forward representatives in the 275-class audit have canonical displayed clock
+          orders <strong id="result-clock-orders">loading…</strong> for exact orders
+          <span class="nowrap">N = 1, 2, 3, 4, 5, 6</span>. These are not Wieting's counts of all
+          perfect N-colourings; the exact bridge passes through regular cyclic colour groups.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="bridge-title">
+      <p class="section-number">01</p>
+      <h2 id="bridge-title">The exact bridge: a colour becomes a clock</h2>
+      <div class="prose">
+        <p>
+          Let Γ be a wallpaper group and H the subgroup preserving one selected colour. A perfect
+          N-colouring is a transitive coset action on Γ/H. It extends directly to one forward-time
+          clock precisely when H is normal and Γ/H is cyclic of order N:
+        </p>
+        <p class="display-formula">H ◁ Γ <span>and</span> Γ/H ≅ C<sub>N</sub>.</p>
+        <p>
+          Equivalently, a surjection χ: Γ ↠ C<sub>N</sub> assigns each spatial operation a phase
+          χ(γ)/N in ℝ/ℤ. The colour has become a time offset. Conversely, any forward-time group
+          with fixed spatial projection and finite phase image supplies such a cyclic character.
+          For N = 2 every index-two subgroup is normal with quotient C<sub>2</sub>, which is why the
+          regular-cyclic row reproduces the classical count 46 exactly.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="frame-title">
+      <p class="section-number">02</p>
+      <h2 id="frame-title">Spatial projection is not the symmetry of one frame</h2>
+      <div class="prose">
+        <p>
+          Forgetting every operation's time component places the 275 spacetime representatives
+          into the 17 wallpaper projection categories. That does <em>not</em> say that a generic
+          frame has the full projected wallpaper symmetry. Its guaranteed frame-preserving group
+          is the zero-phase kernel H, often a proper subgroup of the projection Γ. Special frames
+          may have larger stabilizers, and a particular motif may add accidental symmetries.
+        </p>
+        <aside>
+          Thus “275 groups partition into 17 wallpaper types” is true for the spatial projection.
+          “Every individual frame belongs to that same wallpaper type” is false in general.
+        </aside>
+      </div>
+    </section>
+
+    <section aria-labelledby="census-title">
+      <p class="section-number">03</p>
+      <h2 id="census-title">Three different censuses</h2>
+      <p class="prose">
+        Wieting counts every transitive perfect colouring. The middle row keeps only normal kernels
+        with cyclic quotient. The last row bins canonical forward-time representatives by the exact
+        order displayed after the broader spacetime re-basing equivalence.
+      </p>
+      <div class="table-scroll" id="census-table" aria-live="polite">
+        <p class="loading-note">Loading the generated census…</p>
+      </div>
+      <noscript>
+        <p class="data-warning">JavaScript is disabled. The three N = 1…6 rows are
+          17,46,23,96,14,90; 17,46,8,13,4,13; and 17,36,6,6,0,3.</p>
+      </noscript>
+      <aside class="prose">
+        Do not subtract the first row from the third. Their columns answer related questions under
+        different equivalence relations; they are not nested counts of one set.
+      </aside>
+    </section>
+
+    <section aria-labelledby="audit-title">
+      <p class="section-number">04</p>
+      <h2 id="audit-title">Audit by plane orbifold</h2>
+      <p class="prose">
+        Conway orbifold notation is primary in both tables. The downloadable JSON and detailed CSV
+        retain the corresponding International short (Hermann–Mauguin) code for traceability.
+        Every one of the 68 forward records occurs in exactly one cell of the second table.
+      </p>
+
+      <h3>Regular cyclic plane colour groups</h3>
+      <div class="table-scroll" id="cyclic-orbifold-table" aria-live="polite"></div>
+
+      <h3>Forward representatives by canonical clock order</h3>
+      <div class="table-scroll" id="film-orbifold-table" aria-live="polite"></div>
+    </section>
+
+    <section aria-labelledby="difference-title">
+      <p class="section-number">05</p>
+      <h2 id="difference-title">Why the cyclic and spacetime rows differ</h2>
+      <div class="comparison-grid">
+        <article>
+          <p class="overline">Why five disappears</p>
+          <p>
+            The four regular cyclic five-colour plane types carry C<sub>5</sub> through translations,
+            because planar crystallographic point groups have no order-five operation. Spacetime
+            re-basing gives their classes canonical representatives in lower clock-order bins, so
+            the displayed order-five bin is zero.
+          </p>
+        </article>
+        <article>
+          <p class="overline">Why one class can split</p>
+          <p>
+            Orbifold <span class="orbifold-symbol">333</span> has two regular-cyclic three-colour
+            types. Its gyrational kernel yields the chiral pair
+            <span class="orbifold-symbol">3₁3₁3₁</span> and
+            <span class="orbifold-symbol">3₂3₂3₂</span>; its sublattice kernel yields
+            <span class="orbifold-symbol">r33₁3₂</span>. Two unoriented colour kernels therefore
+            give three oriented spacetime normal forms.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="extension-title">
+      <p class="section-number">06</p>
+      <h2 id="extension-title">The next extension: coloured film groups</h2>
+      <div class="prose">
+        <p>
+          A genuinely coloured film carries two pieces of chromatic data: an internal finite colour
+          action and the phase clock. In the simplest abelian case this is a cocycle into
+          C<sub>M</sub> × ℝ/ℤ. Time reversal adds the black–white involution, which acts on the clock
+          by phase inversion. Non-cyclic perfect colourings—such as S<sub>3</sub> colour actions—would
+          require motifs with a non-abelian internal state rather than a single scalar clock.
+        </p>
+        <p>
+          No count of those coloured spacetime groups is asserted here. Such a census must first
+          specify whether equivalence is taken inside a fixed parent, under the full affine
+          normalizer, or under the Galilean re-basing used by the 275-class spacetime catalog.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="data-title">
+      <p class="section-number">07</p>
+      <h2 id="data-title">Data and reproduction</h2>
+      <div class="prose">
+        <p>
+          Download the generated <a href="data/color-forward-census.json">JSON census</a>,
+          <a href="data/color-forward-census.csv">summary CSV</a>,
+          <a href="data/color-forward-by-orbifold.csv">orbifold audit CSV</a>, or the
+          <a href="data/color-forward-manifest.json">68-record forward manifest</a>.
+        </p>
+        <pre><code>python3 scripts/generate_color_forward_census.py
+python3 scripts/generate_color_forward_census.py --check
+python3 -m unittest discover -s tests -p 'test_color_forward*.py'</code></pre>
+        <p>
+          The regular-cyclic cells were independently reconstructed with the pinned
+          <a href="https://github.com/yaroslavvb/wieting-subgroups/tree/dc192b34f206e6fd8e0533c6a25ab89a6055b9ff">Senechal–Wieting subgroup engine</a>:
+          normal index-N kernels are grouped into affine-normalizer orbits, with stability checked
+          across matrix-entry bounds one through six.
+        </p>
+        <p id="data-fingerprint" class="data-fingerprint">Loading data provenance…</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="sources-title">
+      <p class="section-number">08</p>
+      <h2 id="sources-title">Sources and terminology</h2>
+      <div class="prose sources">
+        <p>
+          T. W. Wieting, <cite>The Mathematical Theory of Chromatic Plane Ornaments</cite>
+          (1982), Table 11; totals preserved as <a href="https://oeis.org/A307293">OEIS A307293</a>.
+          M. Senechal, “Color groups,” <cite>Discrete Applied Mathematics</cite> 1 (1979), 51–73.
+          J. D. Jarratt and R. L. E. Schwarzenberger, “Coloured plane groups,”
+          <cite>Acta Crystallographica A</cite> 36 (1980).
+          J. H. Conway, H. Burgiel, and C. Goodman-Strauss,
+          <cite>The Symmetries of Things</cite> (2008), Part II.
+        </p>
+        <p>
+          “Forward-time group” here means that every symmetry preserves the direction of time. The
+          17 labels in the audit are standard Conway orbifold symbols for the projected plane
+          groups; the phase-decorated spacetime notation used elsewhere on this site is documented
+          in the <a href="docs/orbifold_notation.md">notation proposal</a>.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <p><a href="./">Visualization gallery</a> · <a href="README.md">README</a> · <a href="https://github.com/yaroslavvb/animated-groups">GitHub source</a></p>
+    </footer>
+  </main>
+</body>
+</html>

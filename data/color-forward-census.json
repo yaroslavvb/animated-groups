@@ -1,0 +1,929 @@
+{
+  "meta": {
+    "schema_version": 2,
+    "range": {
+      "minimum_colours": 1,
+      "maximum_colours": 6
+    },
+    "manifest_source": "color-forward-manifest.json",
+    "manifest_sha256": "e69cae9f528b264f240bd97b0eec14615ad83c186afcdd5284d719f165c1a4ad",
+    "source_catalog": {
+      "description": "Pinned 275-group catalog snapshot",
+      "path": "docs/data/catalog.json",
+      "sha256": "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0",
+      "total_groups": 275,
+      "forward_groups": 68
+    },
+    "label_conventions": {
+      "primary": "Conway orbifold notation",
+      "orbifold_field": "orbifold",
+      "traceability": "wallpaper_group retains the source catalog's International short (Hermann–Mauguin) code"
+    },
+    "definitions": {
+      "wieting_all_transitive": "Plane-affine classes of all index-N colour stabilizers.",
+      "regular_cyclic_kernels": "Plane-affine classes of normal index-N kernels with quotient C_N.",
+      "forward_catalog_canonical_clock_order": "Forward representatives in the 275-group source catalog whose displayed temporal offsets generate a cyclic group of exact order N."
+    },
+    "warning": "The three columns use different equivalence relations. The forward column is a canonical-representative statistic, not the number of all N-colourings of forward film groups.",
+    "sources": [
+      {
+        "label": "Wieting Table 11 totals (OEIS A307293)",
+        "url": "https://oeis.org/A307293"
+      },
+      {
+        "label": "Pinned Senechal-Wieting subgroup reconstruction",
+        "url": "https://github.com/yaroslavvb/wieting-subgroups/tree/dc192b34f206e6fd8e0533c6a25ab89a6055b9ff"
+      },
+      {
+        "label": "Jarratt-Schwarzenberger coloured plane groups",
+        "url": "https://doi.org/10.1107/S0567739480001866"
+      }
+    ]
+  },
+  "summary": [
+    {
+      "colours": 1,
+      "wieting_all_transitive": 17,
+      "regular_cyclic_kernels": 17,
+      "forward_catalog_canonical_clock_order": 17
+    },
+    {
+      "colours": 2,
+      "wieting_all_transitive": 46,
+      "regular_cyclic_kernels": 46,
+      "forward_catalog_canonical_clock_order": 36
+    },
+    {
+      "colours": 3,
+      "wieting_all_transitive": 23,
+      "regular_cyclic_kernels": 8,
+      "forward_catalog_canonical_clock_order": 6
+    },
+    {
+      "colours": 4,
+      "wieting_all_transitive": 96,
+      "regular_cyclic_kernels": 13,
+      "forward_catalog_canonical_clock_order": 6
+    },
+    {
+      "colours": 5,
+      "wieting_all_transitive": 14,
+      "regular_cyclic_kernels": 4,
+      "forward_catalog_canonical_clock_order": 0
+    },
+    {
+      "colours": 6,
+      "wieting_all_transitive": 90,
+      "regular_cyclic_kernels": 13,
+      "forward_catalog_canonical_clock_order": 3
+    }
+  ],
+  "by_wallpaper": [
+    {
+      "orbifold": "o",
+      "wallpaper_group": "p1",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 1
+    },
+    {
+      "orbifold": "2222",
+      "wallpaper_group": "p2",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 3
+    },
+    {
+      "orbifold": "**",
+      "wallpaper_group": "pm",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 5,
+        "3": 1,
+        "4": 3,
+        "5": 1,
+        "6": 5
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 1
+    },
+    {
+      "orbifold": "××",
+      "wallpaper_group": "pg",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 2,
+        "3": 1,
+        "4": 2,
+        "5": 1,
+        "6": 2
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 1
+    },
+    {
+      "orbifold": "*×",
+      "wallpaper_group": "cm",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 3,
+        "3": 1,
+        "4": 2,
+        "5": 1,
+        "6": 3
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 2
+    },
+    {
+      "orbifold": "*2222",
+      "wallpaper_group": "pmm",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 6
+    },
+    {
+      "orbifold": "22*",
+      "wallpaper_group": "pmg",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 6
+    },
+    {
+      "orbifold": "22×",
+      "wallpaper_group": "pgg",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 4
+    },
+    {
+      "orbifold": "2*22",
+      "wallpaper_group": "cmm",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 6
+    },
+    {
+      "orbifold": "442",
+      "wallpaper_group": "p4",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 2,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 3,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 6
+    },
+    {
+      "orbifold": "*442",
+      "wallpaper_group": "p4m",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 5,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 6
+    },
+    {
+      "orbifold": "4*2",
+      "wallpaper_group": "p4g",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 3,
+        "3": 0,
+        "4": 2,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 3,
+        "3": 0,
+        "4": 2,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 6
+    },
+    {
+      "orbifold": "333",
+      "wallpaper_group": "p3",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 0,
+        "3": 2,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 0,
+        "3": 3,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 4
+    },
+    {
+      "orbifold": "*333",
+      "wallpaper_group": "p3m1",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 2
+    },
+    {
+      "orbifold": "3*3",
+      "wallpaper_group": "p31m",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 1
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 1
+      },
+      "forward_total": 4
+    },
+    {
+      "orbifold": "632",
+      "wallpaper_group": "p6",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 0,
+        "5": 0,
+        "6": 1
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 1,
+        "3": 2,
+        "4": 0,
+        "5": 0,
+        "6": 2
+      },
+      "forward_total": 6
+    },
+    {
+      "orbifold": "*632",
+      "wallpaper_group": "p6m",
+      "regular_cyclic": {
+        "1": 1,
+        "2": 3,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_catalog": {
+        "1": 1,
+        "2": 3,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "forward_total": 4
+    }
+  ],
+  "forward_groups_by_order": {
+    "1": [
+      {
+        "id": "g1",
+        "symbol": "o",
+        "base": "p1",
+        "orbifold": "o",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g5",
+        "symbol": "2222",
+        "base": "p2",
+        "orbifold": "2222",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g10",
+        "symbol": "**",
+        "base": "pm",
+        "orbifold": "**",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g11",
+        "symbol": "××",
+        "base": "pg",
+        "orbifold": "××",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g8",
+        "symbol": "*×",
+        "base": "cm",
+        "orbifold": "*×",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g54",
+        "symbol": "*2222",
+        "base": "pmm",
+        "orbifold": "*2222",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g56",
+        "symbol": "22*",
+        "base": "pmg",
+        "orbifold": "22*",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g58",
+        "symbol": "22×",
+        "base": "pgg",
+        "orbifold": "22×",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g68",
+        "symbol": "2*22",
+        "base": "cmm",
+        "orbifold": "2*22",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g94",
+        "symbol": "442",
+        "base": "p4",
+        "orbifold": "442",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g128",
+        "symbol": "*442",
+        "base": "p4m",
+        "orbifold": "*442",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g132",
+        "symbol": "4*2",
+        "base": "p4g",
+        "orbifold": "4*2",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g224",
+        "symbol": "333",
+        "base": "p3",
+        "orbifold": "333",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g230",
+        "symbol": "*333",
+        "base": "p3m1",
+        "orbifold": "*333",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g232",
+        "symbol": "3*3",
+        "base": "p31m",
+        "orbifold": "3*3",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g243",
+        "symbol": "632",
+        "base": "p6",
+        "orbifold": "632",
+        "canonical_clock_order": 1
+      },
+      {
+        "id": "g268",
+        "symbol": "*632",
+        "base": "p6m",
+        "orbifold": "*632",
+        "canonical_clock_order": 1
+      }
+    ],
+    "2": [
+      {
+        "id": "g6",
+        "symbol": "2₁2₁2₁2₁",
+        "base": "p2",
+        "orbifold": "2222",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g7",
+        "symbol": "c222₁2₁",
+        "base": "p2",
+        "orbifold": "2222",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g9",
+        "symbol": "~*×½",
+        "base": "cm",
+        "orbifold": "*×",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g55",
+        "symbol": "*~2~2~2~2",
+        "base": "pmm",
+        "orbifold": "*2222",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g60",
+        "symbol": "*2₁~2₁2₁~2₁",
+        "base": "pmm",
+        "orbifold": "*2222",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g64",
+        "symbol": "c*222₁2₁ᵃ",
+        "base": "pmm",
+        "orbifold": "*2222",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g65",
+        "symbol": "c*222₁2₁ᵇ",
+        "base": "pmm",
+        "orbifold": "*2222",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g74",
+        "symbol": "c*22₁22₁",
+        "base": "pmm",
+        "orbifold": "*2222",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g57",
+        "symbol": "22~*",
+        "base": "pmg",
+        "orbifold": "22*",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g61",
+        "symbol": "2₁2₁~*",
+        "base": "pmg",
+        "orbifold": "22*",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g62",
+        "symbol": "2₁2₁*",
+        "base": "pmg",
+        "orbifold": "22*",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g66",
+        "symbol": "c22₁*ᵃ",
+        "base": "pmg",
+        "orbifold": "22*",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g67",
+        "symbol": "c22₁*ᵇ",
+        "base": "pmg",
+        "orbifold": "22*",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g59",
+        "symbol": "22×½",
+        "base": "pgg",
+        "orbifold": "22×",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g63",
+        "symbol": "2₁2₁×",
+        "base": "pgg",
+        "orbifold": "22×",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g69",
+        "symbol": "2*~2~2",
+        "base": "cmm",
+        "orbifold": "2*22",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g70",
+        "symbol": "2₁*2₁~2₁",
+        "base": "cmm",
+        "orbifold": "2*22",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g71",
+        "symbol": "c2₁*22ᵃ",
+        "base": "cmm",
+        "orbifold": "2*22",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g72",
+        "symbol": "c2₁*22ᵇ",
+        "base": "cmm",
+        "orbifold": "2*22",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g73",
+        "symbol": "c2*2₁2₁",
+        "base": "cmm",
+        "orbifold": "2*22",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g95",
+        "symbol": "4₂4₂2",
+        "base": "p4",
+        "orbifold": "442",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g98",
+        "symbol": "c44₂2₁",
+        "base": "p4",
+        "orbifold": "442",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g129",
+        "symbol": "*4₂~4₂2",
+        "base": "p4m",
+        "orbifold": "*442",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g130",
+        "symbol": "*~4₂4₂~2",
+        "base": "p4m",
+        "orbifold": "*442",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g131",
+        "symbol": "*~4~4~2",
+        "base": "p4m",
+        "orbifold": "*442",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g136",
+        "symbol": "c*44₂2₁ᵃ",
+        "base": "p4m",
+        "orbifold": "*442",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g138",
+        "symbol": "c*44₂2₁ᵇ",
+        "base": "p4m",
+        "orbifold": "*442",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g133",
+        "symbol": "4₂*~2",
+        "base": "p4g",
+        "orbifold": "4*2",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g134",
+        "symbol": "4₂*2",
+        "base": "p4g",
+        "orbifold": "4*2",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g135",
+        "symbol": "4*~2",
+        "base": "p4g",
+        "orbifold": "4*2",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g231",
+        "symbol": "*~3~3~3",
+        "base": "p3m1",
+        "orbifold": "*333",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g233",
+        "symbol": "3*~3",
+        "base": "p31m",
+        "orbifold": "3*3",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g246",
+        "symbol": "6₃32₁",
+        "base": "p6",
+        "orbifold": "632",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g269",
+        "symbol": "*6₃~3~2₁",
+        "base": "p6m",
+        "orbifold": "*632",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g270",
+        "symbol": "*~6~3~2",
+        "base": "p6m",
+        "orbifold": "*632",
+        "canonical_clock_order": 2
+      },
+      {
+        "id": "g271",
+        "symbol": "*~6₃32₁",
+        "base": "p6m",
+        "orbifold": "*632",
+        "canonical_clock_order": 2
+      }
+    ],
+    "3": [
+      {
+        "id": "g225",
+        "symbol": "3₂3₂3₂",
+        "base": "p3",
+        "orbifold": "333",
+        "canonical_clock_order": 3
+      },
+      {
+        "id": "g226",
+        "symbol": "3₁3₁3₁",
+        "base": "p3",
+        "orbifold": "333",
+        "canonical_clock_order": 3
+      },
+      {
+        "id": "g227",
+        "symbol": "r33₁3₂",
+        "base": "p3",
+        "orbifold": "333",
+        "canonical_clock_order": 3
+      },
+      {
+        "id": "g234",
+        "symbol": "r3₂*3",
+        "base": "p31m",
+        "orbifold": "3*3",
+        "canonical_clock_order": 3
+      },
+      {
+        "id": "g244",
+        "symbol": "6₂3₂2",
+        "base": "p6",
+        "orbifold": "632",
+        "canonical_clock_order": 3
+      },
+      {
+        "id": "g245",
+        "symbol": "6₄3₁2",
+        "base": "p6",
+        "orbifold": "632",
+        "canonical_clock_order": 3
+      }
+    ],
+    "4": [
+      {
+        "id": "g75",
+        "symbol": "c22₁×¼",
+        "base": "pgg",
+        "orbifold": "22×",
+        "canonical_clock_order": 4
+      },
+      {
+        "id": "g96",
+        "symbol": "4₁4₁2₁",
+        "base": "p4",
+        "orbifold": "442",
+        "canonical_clock_order": 4
+      },
+      {
+        "id": "g97",
+        "symbol": "4₃4₃2₁",
+        "base": "p4",
+        "orbifold": "442",
+        "canonical_clock_order": 4
+      },
+      {
+        "id": "g99",
+        "symbol": "c4₁4₃2",
+        "base": "p4",
+        "orbifold": "442",
+        "canonical_clock_order": 4
+      },
+      {
+        "id": "g137",
+        "symbol": "c4₃*2",
+        "base": "p4g",
+        "orbifold": "4*2",
+        "canonical_clock_order": 4
+      },
+      {
+        "id": "g139",
+        "symbol": "c4₁*2",
+        "base": "p4g",
+        "orbifold": "4*2",
+        "canonical_clock_order": 4
+      }
+    ],
+    "5": [],
+    "6": [
+      {
+        "id": "g235",
+        "symbol": "r3₂*~3",
+        "base": "p31m",
+        "orbifold": "3*3",
+        "canonical_clock_order": 6
+      },
+      {
+        "id": "g247",
+        "symbol": "6₅3₂2₁",
+        "base": "p6",
+        "orbifold": "632",
+        "canonical_clock_order": 6
+      },
+      {
+        "id": "g248",
+        "symbol": "6₁3₁2₁",
+        "base": "p6",
+        "orbifold": "632",
+        "canonical_clock_order": 6
+      }
+    ]
+  }
+}
