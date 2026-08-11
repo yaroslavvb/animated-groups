@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the 68-row clockwork/colouring correspondence page.
+"""Build the 68-record clockwork/colouring data and 51-row atlas page.
 
 The page reads each forward entry of one pinned 275-group catalog as a
 regular cyclic colouring.  For an operation ``(M, v, tau)``, the colour
@@ -96,7 +96,7 @@ ORBIFOLD_BY_BASE = {
 WALLPAPER_SUMMARIES = {
     "p1": (
         "Translations only; the quotient orbifold is a torus.",
-        "Its sole forward clockwork lift is the product: K = G = ◦, so the traditional plate has one colour.",
+        "Its sole forward catalog row is the omitted C1 product, so this family has no nontrivial colour action to display.",
     ),
     "p2": (
         "Four families of half-turn centres; the quotient is a pillowcase with four order-2 cone points.",
@@ -104,11 +104,11 @@ WALLPAPER_SUMMARIES = {
     ),
     "pm": (
         "Translations and parallel mirror lines; the quotient has two mirror-boundary components.",
-        "The forward catalog contributes only the product lift, so this section is monochrome.",
+        "The forward catalog contributes only the omitted C1 product, so this family has no nontrivial colour action to display.",
     ),
     "pg": (
         "Glide reflections without mirror lines; the quotient has two crosscaps.",
-        "Each × is Conway's crosscap or ‘miracle’ symbol, not a mirror boundary; the sole forward representative is the product.",
+        "Each × is Conway's crosscap or ‘miracle’ symbol, not a mirror boundary; the sole forward row is the omitted C1 product.",
     ),
     "cm": (
         "A centred rectangular pattern with an interleaved mirror family and glide family.",
@@ -152,7 +152,7 @@ WALLPAPER_SUMMARIES = {
     ),
     "p31m": (
         "One class of threefold centres lies off the mirrors and another lies on them.",
-        "This section has one group at each of N = 1, 2, 3, and 6; r3₂*~3 combines a third-period screw with a half-period mirror shift, producing N = 6.",
+        "Its displayed lifts have N = 2, 3, and 6; r3₂*~3 combines a third-period screw with a half-period mirror shift, producing N = 6.",
     ),
     "p6": (
         "The orientation-preserving hexagonal group, with sixfold, threefold, and twofold centres and no mirrors.",
@@ -260,6 +260,8 @@ INVERSE_CLOCK_MATE = {
 }
 
 EXPECTED_ORDER_COUNTS = {1: 17, 2: 36, 3: 6, 4: 6, 5: 0, 6: 3}
+DISPLAYED_GROUP_COUNT = 51
+OMITTED_TRIVIAL_COUNT = 17
 EXPECTED_BOOK_AUDIT_COUNTS = {
     "plane-group": 17,
     "direct-table": 41,
@@ -1377,7 +1379,11 @@ def _film_html(record: dict[str, Any]) -> str:
               </figure>"""
 
 
-def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str:
+def _entry_html(
+    record: dict[str, Any],
+    by_id: dict[str, dict[str, Any]],
+    display_ordinal: int,
+) -> str:
     group_id = escape(record["id"])
     order = record["clock_order"]
     parent = record["parent"]
@@ -1400,7 +1406,7 @@ def _entry_html(record: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> str
       <li class="correspondence-item">
         <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clockwork-tabpanel data-clock-order="{order}">
           <header class="entry-header">
-            <p class="entry-number">{record['ordinal']:02d} / 68</p>
+            <p class="entry-number">{display_ordinal:02d} / {DISPLAYED_GROUP_COUNT}</p>
             <div>
               <p class="entry-kicker">Goodman–Strauss short colour signature</p>
               <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Book short colour signature {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
@@ -1473,63 +1479,119 @@ def _order_census_html(rows: list[dict[str, Any]]) -> str:
     return " · ".join(parts)
 
 
+def _trivial_omission_html(record: dict[str, Any]) -> str:
+    group_id = escape(record["id"])
+    orbifold = escape(record["parent"]["orbifold"])
+    return (
+        f'<p class="family-omission" id="{group_id}" data-trivial-product>'
+        "<strong>C<sub>1</sub> product omitted.</strong> "
+        f"The inherited one-colour lift {orbifold} ({group_id}) has κ = 0 and K = G; "
+        "it remains in the 68-record audit data but is not included in these tabs.</p>"
+    )
+
+
 def _family_html(
     base: str,
     rows: list[dict[str, Any]],
+    trivial_record: dict[str, Any],
     family_index: int,
     by_id: dict[str, dict[str, Any]],
+    display_ordinals: dict[str, int],
 ) -> str:
     orbifold = ORBIFOLD_BY_BASE[base]
     summary, note = WALLPAPER_SUMMARIES[base]
-    group_word = "group" if len(rows) == 1 else "groups"
+    lift_word = "lift" if len(rows) == 1 else "lifts"
     tabs = "\n".join(_tab_html(row) for row in rows)
-    entries = "\n".join(_entry_html(row, by_id) for row in rows)
-    return f"""
-    <section class="wallpaper-family" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
-      <header class="family-header">
-        <p class="section-number">Wallpaper group {family_index:02d} / 17</p>
-        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{escape(orbifold)}</span> <span class="family-hm">{escape(base)}</span> <span class="family-count">{len(rows)} clockwork {group_word}</span></h2>
-        <p class="family-summary">{escape(summary)}</p>
-        <p class="family-note"><strong>Forward note.</strong> {escape(note)}</p>
-        <p class="family-census">{_order_census_html(rows)}</p>
-      </header>
-
+    entries = "\n".join(
+        _entry_html(row, by_id, display_ordinals[row["id"]])
+        for row in rows
+    )
+    family_class = "wallpaper-family" + (" is-empty" if not rows else "")
+    census = (
+        f"Nontrivial orders · {_order_census_html(rows)}"
+        if rows
+        else "Nontrivial orders · none"
+    )
+    if rows:
+        contents = f"""
       <div class="clockwork-tabs" data-clockwork-tabs>
-        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Clockwork groups over {escape(orbifold)} ({escape(base)})">
+        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Nontrivial clockwork groups over {escape(orbifold)} ({escape(base)})">
           {tabs}
         </nav>
         <ol class="correspondence-list">
 {entries}
         </ol>
-      </div>
+      </div>"""
+    else:
+        contents = """
+      <div class="family-empty" role="note">
+        <p><strong>No nontrivial forward lift occurs.</strong> After removing the inherited one-colour product, this wallpaper family contributes no entry to the 51-group atlas.</p>
+      </div>"""
+    return f"""
+    <section class="{family_class}" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
+      <header class="family-header">
+        <p class="section-number">Wallpaper group {family_index:02d} / 17</p>
+        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{escape(orbifold)}</span> <span class="family-hm">{escape(base)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
+        <p class="family-summary">{escape(summary)}</p>
+        <p class="family-note"><strong>Forward note.</strong> {escape(note)}</p>
+        {_trivial_omission_html(trivial_record)}
+        <p class="family-census">{census}</p>
+      </header>
+{contents}
     </section>"""
 
 
 def page_html(payload: dict[str, Any]) -> str:
     groups = payload["groups"]
     by_id = {group["id"]: group for group in groups}
+    displayed_groups = [group for group in groups if group["clock_order"] > 1]
+    trivial_groups = [group for group in groups if group["clock_order"] == 1]
+    if len(displayed_groups) != DISPLAYED_GROUP_COUNT:
+        raise ValueError(f"expected {DISPLAYED_GROUP_COUNT} nontrivial display groups")
+    if len(trivial_groups) != OMITTED_TRIVIAL_COUNT:
+        raise ValueError(f"expected {OMITTED_TRIVIAL_COUNT} trivial product groups")
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for group in groups:
+    for group in displayed_groups:
         grouped[group["parent"]["hm"]].append(group)
+    trivial_by_base = {group["parent"]["hm"]: group for group in trivial_groups}
+    if set(trivial_by_base) != set(BASE_ORDER):
+        raise ValueError("expected one trivial product for every wallpaper group")
+    ordered_display_groups = [
+        group
+        for base in BASE_ORDER
+        for group in grouped[base]
+    ]
+    display_ordinals = {
+        group["id"]: ordinal
+        for ordinal, group in enumerate(ordered_display_groups, 1)
+    }
     families = "\n".join(
-        _family_html(base, grouped[base], index, by_id)
+        _family_html(
+            base,
+            grouped[base],
+            trivial_by_base[base],
+            index,
+            by_id,
+            display_ordinals,
+        )
         for index, base in enumerate(BASE_ORDER, 1)
     )
     directory = "\n".join(
-        f'<a class="wallpaper-chip" href="#wallpaper-{escape(base)}">'
+        f'<a class="wallpaper-chip{" is-empty" if not grouped[base] else ""}" href="#wallpaper-{escape(base)}">'
         f'<span class="chip-orbifold">{escape(ORBIFOLD_BY_BASE[base])}</span> '
         f'<span class="chip-hm">{escape(base)}</span> '
         f'<span class="chip-count">{len(grouped[base])}</span></a>'
         for base in BASE_ORDER
     )
-    counts = EXPECTED_ORDER_COUNTS
+    counts = Counter(group["clock_order"] for group in displayed_groups)
+    audit_counts = Counter(group["book_audit"]["status"] for group in displayed_groups)
     digest = payload["meta"]["source_catalog_sha256"]
     return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An audited 68-row correspondence from forward clockwork groups to regular cyclic coloured wallpaper groups, with paused films, traditional plates, and book-page checks.">
+  <meta name="description" content="An audited atlas of 51 nontrivial forward clockwork groups and their regular cyclic coloured wallpaper groups, with paused films, traditional plates, and book-page checks.">
   <meta name="theme-color" content="#ffffff">
   <title>Clockwork/coloring correspondence</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -1555,12 +1617,13 @@ def page_html(payload: dict[str, Any]) -> str:
 
   <main class="correspondence-page">
     <section class="page-introduction" aria-labelledby="page-title">
-      <p class="overline">68 forward groups · live films paused by default</p>
+      <p class="overline">51 nontrivial forward groups · 17 one-colour products omitted · films paused by default</p>
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="lead">
         Each forward clockwork group assigns a phase to every operation of its projected wallpaper
         group. Reading those phases as colour shifts turns the film into a traditional perfect
-        cyclic colouring. The 68 correspondences are grouped under their 17 wallpaper groups;
+        cyclic colouring. The 51 nontrivial correspondences are organized beneath the complete
+        17-wallpaper-group index;
         each horizontal tab pairs a paused film with a conventional static colour plate and records
         its audit against <cite>The Symmetries of Things</cite>.
       </p>
@@ -1568,16 +1631,17 @@ def page_html(payload: dict[str, Any]) -> str:
         <p class="overline">The map in one line</p>
         <p class="map-formula">κ(M,v) = Nτ mod N <span>·</span> K = ker κ <span>·</span> G/K ≅ C<sub>N</sub></p>
         <p>
-          The exact clock-order distribution is C<sub>1</sub>: {counts[1]}, C<sub>2</sub>: {counts[2]},
-          C<sub>3</sub>: {counts[3]}, C<sub>4</sub>: {counts[4]}, C<sub>5</sub>: {counts[5]}, and
-          C<sub>6</sub>: {counts[6]}. Four inverse-clock pairs differ only by cyclic colour
-          orientation, leaving 64 traditional colour classes after global colour relabelling.
+          The displayed clock-order distribution is C<sub>2</sub>: {counts[2]},
+          C<sub>3</sub>: {counts[3]}, C<sub>4</sub>: {counts[4]}, and C<sub>6</sub>: {counts[6]}.
+          Four inverse-clock pairs differ only by cyclic colour orientation, leaving 47 nontrivial
+          traditional colour classes after global colour relabelling.
         </p>
+        <p class="trivial-scope"><strong>Why 51, not 68.</strong> Every wallpaper group G has one tautological forward lift with trivial phase character: κ = 0, K = G, and no operation changes colour. Those 17 one-colour products remain in the audit data but are deliberately omitted from the atlas.</p>
       </div>
       <div class="audit-summary" aria-label="Book audit totals">
-        <div><strong>58</strong><span>direct plane-group or colour-table matches</span></div>
-        <div><strong>1</strong><span>disclosed internal book discrepancy</span></div>
-        <div><strong>9</strong><span>composite C<sub>4</sub>/C<sub>6</sub> extensions checked by prime layers</span></div>
+        <div><strong>{audit_counts['direct-table']}</strong><span>direct colour-table matches</span></div>
+        <div><strong>{audit_counts['internal-discrepancy']}</strong><span>disclosed internal book discrepancy</span></div>
+        <div><strong>{audit_counts['composite-extension']}</strong><span>composite C<sub>4</sub>/C<sub>6</sub> extensions checked by prime layers</span></div>
       </div>
     </section>
 
@@ -1588,8 +1652,9 @@ def page_html(payload: dict[str, Any]) -> str:
         <p>
           G is the wallpaper group obtained by forgetting time. K consists of the phase-zero
           operations and fixes every colour. The book calls H the stabilizer of one chosen colour.
-          Here C<sub>N</sub> acts regularly, so H = K: onefold rows are simply G, twofold rows are
-          G/K, and higher-fold entries are G<sup>N</sup>/K. A double slash would incorrectly assert H ≠ K.
+          Here C<sub>N</sub> acts regularly, so H = K: the omitted onefold products are simply G,
+          displayed twofold rows are G/K, and higher-fold entries are G<sup>N</sup>/K. A double
+          slash would incorrectly assert H ≠ K.
         </p>
         <p>
           The large label is the book's short colour signature. Each raised number is the order of
@@ -1611,7 +1676,7 @@ def page_html(payload: dict[str, Any]) -> str:
       <h2 id="book-method-title">What the book verifies</h2>
       <p>
         The 2008 Conway–Burgiel–Goodman-Strauss edition was checked at full-page resolution.
-        Table 3.2 verifies the 17 ordinary plane signatures; Table 11.1 directly contains all 36
+        Table 3.2 verifies the 17 omitted ordinary one-colour products; Table 11.1 directly contains all 36
         twofold G/K pairs; and Table 12.1 directly contains five of the six regular threefold
         cases. The g234 row exposes a conflict between Tables 12.1 and 13.1 and the prose on
         p. 158, so it is flagged rather than forced into the book's nonregular S<sub>3</sub> type.
@@ -1631,7 +1696,7 @@ def page_html(payload: dict[str, Any]) -> str:
     <nav class="directory" aria-labelledby="directory-title">
       <p class="section-number">Wallpaper index</p>
       <h2 id="directory-title">Jump to an underlying wallpaper group</h2>
-      <p class="directory-intro">Each count is the number of forward clockwork groups available as tabs in that section.</p>
+      <p class="directory-intro">Each count is the number of nontrivial forward lifts available as tabs. Muted zeroes mark families represented only by their omitted C<sub>1</sub> product.</p>
       <div class="wallpaper-jump-list">
         {directory}
       </div>
@@ -1645,8 +1710,9 @@ def page_html(payload: dict[str, Any]) -> str:
       <p class="section-number">Audit trail</p>
       <h2 id="provenance-title">Data and reproduction</h2>
       <p>
-        The <a href="data/clockwork-coloring-correspondence.json">68-record JSON</a>, this HTML,
-        all 68 lossless WebP plates, 62 annotated book excerpts, and the local paused-film
+        The <a href="data/clockwork-coloring-correspondence.json">68-record JSON</a> and all 68
+        lossless WebP plates retain the complete audited source, including the 17 omitted products.
+        This HTML displays its 51 nontrivial rows; 62 annotated book excerpts and the local paused-film
         controller are generated or tracked in this repository. The data and page come from the
         <a href="scripts/generate_clockwork_coloring_correspondence.py">correspondence generator</a>;
         the <a href="scripts/tos_book_excerpt_specs.py">excerpt coordinates</a> and
@@ -1768,7 +1834,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     write_outputs(payload)
-    print("wrote 68 correspondence rows and static colour plates")
+    print("wrote 68 correspondence records, 51 displayed rows, and static colour plates")
     return 0
 
 
