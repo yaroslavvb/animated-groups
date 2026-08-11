@@ -9,6 +9,13 @@ const status = document.querySelector("[data-excerpt-status]");
 const source = document.querySelector("[data-excerpt-source]");
 const zoom = document.querySelector("[data-zoom-toggle]");
 
+if (window.opener) {
+  window.opener.postMessage(
+    { type: "clockwork:book-excerpt-ready" },
+    window.location.origin,
+  );
+}
+
 function validImagePath(value) {
   return /^output\/book-excerpts\/[a-z0-9-]+\.webp$/i.test(value || "");
 }

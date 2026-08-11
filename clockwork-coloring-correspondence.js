@@ -682,6 +682,14 @@ function initializeBookExcerptDialog() {
 
 function initializeBookExcerptLinks() {
   let viewerWindow = null;
+  window.addEventListener("message", (event) => {
+    if (
+      event.origin === window.location.origin
+      && event.data?.type === "clockwork:book-excerpt-ready"
+      && event.source
+    ) viewerWindow = event.source;
+  });
+
   for (const link of document.querySelectorAll("a[data-book-excerpt]")) {
     link.target = BOOK_EXCERPT_TARGET;
     link.addEventListener("click", (event) => {
@@ -701,11 +709,9 @@ function initializeBookExcerptLinks() {
         return;
       }
 
-      const opened = window.open(link.href, BOOK_EXCERPT_TARGET);
-      if (!opened) return;
-      event.preventDefault();
-      viewerWindow = opened;
-      viewerWindow.focus();
+      // Let the named-target anchor perform the first open natively. The
+      // viewer posts its WindowProxy back as soon as it loads, avoiding popup
+      // blockers while still giving later clicks an exact reusable window.
     });
   }
 }
