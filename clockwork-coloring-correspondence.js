@@ -487,6 +487,133 @@ class ClockworkPlayer {
   }
 }
 
+function initializeBookExcerptDialog() {
+  const dialog = document.querySelector("#book-excerpt-dialog");
+  if (!dialog) return;
+
+  const title = dialog.querySelector("#book-excerpt-title");
+  const context = dialog.querySelector("#book-excerpt-context");
+  const media = dialog.querySelector("[data-book-excerpt-media]");
+  const image = dialog.querySelector("[data-book-excerpt-image]");
+  const status = dialog.querySelector("[data-book-excerpt-status]");
+  const source = dialog.querySelector("[data-book-excerpt-source]");
+  const closeButton = dialog.querySelector("[data-book-dialog-close]");
+  const supportsNativeDialog = typeof dialog.showModal === "function";
+  let opener = null;
+
+  dialog.dataset.enhanced = "true";
+  dialog.dataset.mode = supportsNativeDialog ? "native" : "fallback";
+
+  function resetExcerpt() {
+    image.removeAttribute("src");
+    image.alt = "";
+    media.dataset.state = "idle";
+    status.hidden = false;
+    document.documentElement.classList.remove("book-dialog-open");
+    if (opener && opener.isConnected) opener.focus();
+    opener = null;
+  }
+
+  function closeExcerpt() {
+    if (!dialog.hasAttribute("open")) return;
+    if (supportsNativeDialog) {
+      dialog.close();
+      return;
+    }
+    dialog.removeAttribute("open");
+    dialog.classList.remove("is-fallback-open");
+    resetExcerpt();
+  }
+
+  function openExcerpt(link) {
+    opener = link;
+    title.textContent = link.dataset.bookTitle || "Annotated book excerpt";
+    context.textContent = link.dataset.bookContext || "Highlighted evidence from the cited page.";
+    source.href = link.href;
+    image.alt = link.dataset.bookAlt || "Annotated excerpt from The Symmetries of Things.";
+    image.removeAttribute("src");
+    media.dataset.state = "loading";
+    status.hidden = false;
+    status.textContent = "Loading annotated excerpt…";
+
+    if (supportsNativeDialog) {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+      dialog.classList.add("is-fallback-open");
+    }
+    document.documentElement.classList.add("book-dialog-open");
+    image.src = new URL(link.dataset.bookImage, document.baseURI).href;
+    closeButton.focus();
+  }
+
+  for (const link of document.querySelectorAll("a[data-book-excerpt]")) {
+    link.addEventListener("click", (event) => {
+      if (
+        event.defaultPrevented
+        || event.button !== 0
+        || event.metaKey
+        || event.ctrlKey
+        || event.shiftKey
+        || event.altKey
+      ) return;
+      event.preventDefault();
+      openExcerpt(event.currentTarget);
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (
+      !supportsNativeDialog
+      && dialog.hasAttribute("open")
+      && !dialog.contains(event.target)
+    ) {
+      event.preventDefault();
+      closeExcerpt();
+    }
+  }, true);
+
+  document.addEventListener("keydown", (event) => {
+    if (supportsNativeDialog || !dialog.hasAttribute("open")) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeExcerpt();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusable = [closeButton, source].filter((element) => !element.hidden);
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  image.addEventListener("load", () => {
+    if (!image.getAttribute("src")) return;
+    media.dataset.state = "ready";
+    status.hidden = true;
+  });
+
+  image.addEventListener("error", () => {
+    if (!image.getAttribute("src")) return;
+    media.dataset.state = "error";
+    status.hidden = false;
+    status.textContent = "The local excerpt could not be loaded. Use the Google Books link below.";
+  });
+
+  closeButton.addEventListener("click", closeExcerpt);
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) closeExcerpt();
+  });
+  dialog.addEventListener("close", resetExcerpt);
+}
+
 async function initialize() {
   const roots = [...document.querySelectorAll("[data-clockwork-player]")];
   if (roots.length === 0) return;
@@ -543,4 +670,5 @@ async function initialize() {
   });
 }
 
+initializeBookExcerptDialog();
 void initialize();

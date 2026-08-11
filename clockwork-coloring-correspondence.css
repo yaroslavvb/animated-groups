@@ -434,6 +434,19 @@ nav a[aria-current="page"] {
 .book-cross-reference,
 .book-chain-link {
   font-weight: 620;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.16em;
+}
+
+a[data-book-excerpt] {
+  display: inline-block;
+  cursor: zoom-in;
+}
+
+a[data-book-excerpt]::after {
+  content: "  ◫";
+  color: var(--accent);
+  font-size: 0.86em;
 }
 
 .book-reference-list {
@@ -636,6 +649,162 @@ nav a[aria-current="page"] {
   border-top: 1px solid var(--line);
 }
 
+.book-excerpt-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: min(64rem, calc(100vw - 2rem));
+  max-width: none;
+  max-height: 94dvh;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #706d65;
+  border-radius: 6px;
+  background: #faf8f2;
+  color: var(--text);
+  box-shadow: 0 22px 70px rgb(20 24 22 / 0.34);
+}
+
+.book-excerpt-dialog:not([open]) {
+  display: none;
+}
+
+.book-excerpt-dialog.is-fallback-open {
+  display: block;
+  box-shadow:
+    0 0 0 100vmax rgb(19 25 23 / 0.76),
+    0 22px 70px rgb(20 24 22 / 0.34);
+}
+
+.book-dialog-open {
+  overflow: hidden;
+}
+
+.book-excerpt-dialog::backdrop {
+  background: rgb(19 25 23 / 0.76);
+  backdrop-filter: blur(2px);
+}
+
+.book-excerpt-panel {
+  display: flex;
+  max-height: 94dvh;
+  margin: 0;
+  flex-direction: column;
+}
+
+.book-excerpt-header {
+  position: relative;
+  padding: 1.25rem 4.5rem 1rem 1.35rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--background);
+}
+
+.book-excerpt-header .overline {
+  margin: 0 0 0.28rem;
+}
+
+.book-excerpt-header h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1.15;
+}
+
+.book-excerpt-header p:last-child {
+  max-width: 48rem;
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.book-excerpt-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.9rem;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--control-line);
+  border-radius: 50%;
+  background: var(--surface-raised);
+  color: var(--text);
+  font: 400 1.65rem/1 ui-sans-serif, sans-serif;
+  cursor: pointer;
+}
+
+.book-excerpt-close:hover,
+.book-excerpt-close:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.book-excerpt-media {
+  position: relative;
+  display: grid;
+  min-height: 8rem;
+  max-height: min(66dvh, 48rem);
+  overflow: auto;
+  place-items: center;
+  background: #e8e4da;
+}
+
+.book-excerpt-media img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+}
+
+.book-excerpt-media:not([data-state="ready"]) img {
+  opacity: 0;
+}
+
+.book-excerpt-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  margin: 0;
+  padding: 1.5rem;
+  place-items: center;
+  color: #454c48;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.book-excerpt-status[hidden] {
+  display: none;
+}
+
+.book-excerpt-media[data-state="error"] .book-excerpt-status {
+  color: #8b3626;
+}
+
+.book-excerpt-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.85rem 1.35rem 1rem;
+  border-top: 1px solid var(--line);
+  background: var(--background);
+}
+
+.book-excerpt-footer p {
+  max-width: 43rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.book-excerpt-source {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
 @media (max-width: 900px) {
   .directory-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -677,6 +846,30 @@ nav a[aria-current="page"] {
     justify-content: flex-start;
     max-width: none;
   }
+
+  .book-excerpt-dialog {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .book-excerpt-panel {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  .book-excerpt-media {
+    max-height: none;
+    flex: 1 1 auto;
+  }
+
+  .book-excerpt-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
 }
 
 @media (max-width: 430px) {
@@ -704,6 +897,7 @@ nav a[aria-current="page"] {
   .directory,
   .clockwork-film,
   .catalog-action,
+  .book-excerpt-dialog,
   footer {
     display: none;
   }

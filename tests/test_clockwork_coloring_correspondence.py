@@ -24,6 +24,9 @@ class CorrespondenceParser(HTMLParser):
         self.catalog_links: list[str] = []
         self.plate_images: list[tuple[str, str, str, str]] = []
         self.book_links: list[tuple[str, str, str]] = []
+        self.book_excerpt_links: list[dict[str, str | None]] = []
+        self.book_dialog_ids: list[str] = []
+        self.book_excerpt_images: list[dict[str, str | None]] = []
         self.film_group_ids: list[str] = []
         self.canvases: list[tuple[str, str, str]] = []
         self.buttons: list[tuple[bool, str, str | None]] = []
@@ -47,6 +50,12 @@ class CorrespondenceParser(HTMLParser):
                     attributes.get("data-pdf-page", ""),
                 )
             )
+        if tag == "a" and attributes.get("data-book-excerpt"):
+            self.book_excerpt_links.append(attributes)
+        if tag == "dialog" and "book-excerpt-dialog" in classes:
+            self.book_dialog_ids.append(attributes.get("id", ""))
+        if tag == "img" and "data-book-excerpt-image" in attributes:
+            self.book_excerpt_images.append(attributes)
         if tag == "figure" and "clockwork-film" in classes:
             self.film_group_ids.append(attributes.get("data-group-id", ""))
         if tag == "canvas" and "clockwork-canvas" in classes:
@@ -196,6 +205,73 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             exceptional["book_audit"]["independent_reference"]["url"],
             correspondence.FARRIS_URL,
         )
+
+    def test_all_book_links_open_exact_annotated_excerpts_with_external_fallbacks(self) -> None:
+        expected_references = []
+        for group in self.payload["groups"]:
+            expected_references.extend(group["book_audit"]["references"])
+            for step in group["book_audit"]["prime_chain"]:
+                expected_references.append(
+                    {
+                        "url": step["url"],
+                        "printed_page": step["printed_page"],
+                        "pdf_page": step["pdf_page"],
+                        "excerpt_key": step["excerpt_key"],
+                    }
+                )
+
+        self.assertEqual(len(expected_references), 114)
+        self.assertEqual(len(self.parser.book_excerpt_links), 114)
+        for attributes, reference in zip(self.parser.book_excerpt_links, expected_references):
+            excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
+            self.assertEqual(attributes.get("href"), reference["url"])
+            self.assertEqual(attributes.get("data-printed-page"), str(reference["printed_page"]))
+            self.assertEqual(attributes.get("data-pdf-page"), str(reference["pdf_page"]))
+            self.assertEqual(attributes.get("data-book-excerpt"), reference["excerpt_key"])
+            self.assertEqual(attributes.get("data-book-image"), excerpt["image"])
+            self.assertEqual(attributes.get("data-book-title"), excerpt["title"])
+            self.assertEqual(attributes.get("data-book-context"), excerpt["context"])
+            self.assertEqual(attributes.get("data-book-alt"), excerpt["alt"])
+            self.assertEqual(attributes.get("aria-haspopup"), "dialog")
+            self.assertEqual(attributes.get("aria-controls"), "book-excerpt-dialog")
+
+        self.assertEqual(
+            {attributes["data-book-excerpt"] for attributes in self.parser.book_excerpt_links},
+            set(correspondence.BOOK_EXCERPTS),
+        )
+
+    def test_the_single_accessible_dialog_lazy_loads_62_tight_watermarked_webps(self) -> None:
+        self.assertEqual(self.parser.book_dialog_ids, ["book-excerpt-dialog"])
+        self.assertEqual(len(self.parser.book_excerpt_images), 1)
+        self.assertNotIn("src", self.parser.book_excerpt_images[0])
+        self.assertEqual(len(correspondence.BOOK_EXCERPTS), 62)
+        for key, excerpt in correspondence.BOOK_EXCERPTS.items():
+            path = ROOT / excerpt["image"]
+            self.assertTrue(path.is_file(), key)
+            self.assertEqual(excerpt["pdf_page"], excerpt["printed_page"] + 19)
+            with Image.open(path) as image:
+                self.assertEqual(image.format, "WEBP")
+                width, height = image.size
+            self.assertLessEqual(width, 1100, key)
+            self.assertLessEqual(height, 460, key)
+            self.assertGreater(width, 450, key)
+            self.assertGreater(height, 120, key)
+
+        self.assertIn("© COPYRIGHTED EXCERPT", self.page)
+        self.assertIn("not a complete page", self.page)
+        script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
+        self.assertIn("initializeBookExcerptDialog", script)
+        self.assertIn("typeof dialog.showModal", script)
+        self.assertIn('dialog.dataset.mode = supportsNativeDialog ? "native" : "fallback"', script)
+        self.assertIn('dialog.classList.add("is-fallback-open")', script)
+        self.assertIn('document.querySelectorAll("a[data-book-excerpt]")', script)
+        self.assertIn('event.key === "Escape"', script)
+        self.assertIn("event.metaKey", script)
+        self.assertIn("opener.focus()", script)
+        excerpt_script = (ROOT / "scripts" / "generate_tos_book_excerpts.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('WATERMARK = "© COPYRIGHTED EXCERPT"', excerpt_script)
 
     def test_inverse_clock_pairs_explain_68_to_64(self) -> None:
         paired_rows = {
