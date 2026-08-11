@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from html import escape
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -22,6 +23,12 @@ class CorrespondenceParser(HTMLParser):
         self.section_ids: list[str] = []
         self.catalog_links: list[str] = []
         self.plate_images: list[tuple[str, str, str, str]] = []
+        self.book_links: list[tuple[str, str, str]] = []
+        self.film_group_ids: list[str] = []
+        self.canvases: list[tuple[str, str, str]] = []
+        self.buttons: list[tuple[bool, str, str | None]] = []
+        self.sliders: list[tuple[bool, str, str, str | None]] = []
+        self.scripts: list[tuple[str, str]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
@@ -32,6 +39,45 @@ class CorrespondenceParser(HTMLParser):
             correspondence.CATALOG_ROOT
         ):
             self.catalog_links.append(attributes["href"] or "")
+        if tag == "a" and "book-page-link" in classes:
+            self.book_links.append(
+                (
+                    attributes.get("href", ""),
+                    attributes.get("data-printed-page", ""),
+                    attributes.get("data-pdf-page", ""),
+                )
+            )
+        if tag == "figure" and "clockwork-film" in classes:
+            self.film_group_ids.append(attributes.get("data-group-id", ""))
+        if tag == "canvas" and "clockwork-canvas" in classes:
+            self.canvases.append(
+                (
+                    attributes.get("id", ""),
+                    attributes.get("width", ""),
+                    attributes.get("height", ""),
+                )
+            )
+        if tag == "button" and "data-film-toggle" in attributes:
+            self.buttons.append(
+                (
+                    "disabled" in attributes,
+                    attributes.get("aria-pressed", ""),
+                    attributes.get("aria-controls"),
+                )
+            )
+        if tag == "input" and "data-film-slider" in attributes:
+            self.sliders.append(
+                (
+                    "disabled" in attributes,
+                    attributes.get("value", ""),
+                    attributes.get("type", ""),
+                    attributes.get("id"),
+                )
+            )
+        if tag == "script":
+            self.scripts.append(
+                (attributes.get("src", ""), attributes.get("type", ""))
+            )
         if tag == "img" and (attributes.get("src") or "").startswith(
             "output/clockwork-colorings/"
         ):
@@ -69,7 +115,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ]
         self.assertEqual(self.parser.catalog_links, expected)
 
-    def test_orbifold_pairs_and_clock_orders_are_complete(self) -> None:
+    def test_tos_notation_and_clock_orders_are_complete(self) -> None:
         groups = self.payload["groups"]
         counts = Counter(group["clock_order"] for group in groups)
         self.assertEqual(
@@ -80,12 +126,76 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertTrue(group["parent"]["orbifold"])
             self.assertTrue(group["kernel"]["orbifold"])
             self.assertEqual(
-                group["color_pair"],
-                f"{group['parent']['orbifold']}//{group['kernel']['orbifold']}",
+                group["tos_notation"],
+                correspondence.tos_notation(
+                    group["parent"]["orbifold"],
+                    group["kernel"]["orbifold"],
+                    group["clock_order"],
+                ),
             )
+            self.assertNotIn("//", group["tos_notation"])
+            if group["parent"]["hm"] == "p1":
+                self.assertEqual(group["parent"]["orbifold"], "◦")
+            if group["kernel"]["hm"] == "p1":
+                self.assertEqual(group["kernel"]["orbifold"], "◦")
             self.assertEqual(len(group["phase_residues"]), group["clock_order"])
-            self.assertIn(group["clockwork_description"], self.page)
-            self.assertIn(group["coloring_description"], self.page)
+            self.assertIn(escape(group["clockwork_description"]), self.page)
+            self.assertIn(escape(group["coloring_description"]), self.page)
+
+    def test_every_row_has_a_book_page_and_honest_coverage_status(self) -> None:
+        groups = self.payload["groups"]
+        statuses = Counter(group["book_audit"]["status"] for group in groups)
+        self.assertEqual(dict(statuses), correspondence.EXPECTED_BOOK_AUDIT_COUNTS)
+        self.assertEqual(
+            self.payload["meta"]["book_audit_counts"],
+            correspondence.EXPECTED_BOOK_AUDIT_COUNTS,
+        )
+        expected_primary = []
+        for group in groups:
+            primary = [
+                reference
+                for reference in group["book_audit"]["references"]
+                if reference["role"] == "primary"
+            ]
+            self.assertEqual(len(primary), 1, group["id"])
+            reference = primary[0]
+            expected_primary.append(
+                (
+                    reference["url"],
+                    str(reference["printed_page"]),
+                    str(reference["pdf_page"]),
+                )
+            )
+            self.assertEqual(reference["pdf_page"], reference["printed_page"] + 19)
+        self.assertEqual(self.parser.book_links, expected_primary)
+
+        for group in groups:
+            order = group["clock_order"]
+            audit = group["book_audit"]
+            if order == 2:
+                self.assertIn(group["tos_notation"], correspondence.TOS_TWO_FOLD_TYPES)
+                self.assertEqual(audit["status"], "direct-table")
+            elif order == 3 and group["id"] != "g234":
+                self.assertIn(
+                    group["tos_notation"], correspondence.TOS_THREE_FOLD_DIRECT_TYPES
+                )
+                self.assertEqual(audit["status"], "direct-table")
+            elif order in (4, 6):
+                self.assertEqual(audit["status"], "composite-extension")
+                self.assertEqual(len(audit["prime_chain"]), 2)
+                self.assertIn(group["id"], correspondence.COMPOSITE_BOOK_CHAINS)
+
+        exceptional = next(group for group in groups if group["id"] == "g234")
+        self.assertEqual(exceptional["tos_notation"], "3*3³/*333")
+        self.assertEqual(exceptional["book_audit"]["status"], "internal-discrepancy")
+        self.assertEqual(
+            [reference["printed_page"] for reference in exceptional["book_audit"]["references"]],
+            [164, 156, 158],
+        )
+        self.assertEqual(
+            exceptional["book_audit"]["independent_reference"]["url"],
+            correspondence.FARRIS_URL,
+        )
 
     def test_inverse_clock_pairs_explain_68_to_64(self) -> None:
         paired_rows = {
@@ -125,11 +235,46 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             }
             self.assertTrue(expected_colors.issubset(colors), relative)
 
-    def test_page_is_static_and_keeps_the_other_site_read_only(self) -> None:
-        self.assertNotIn("<script", self.page)
+    def test_all_68_films_are_local_and_stopped_by_default(self) -> None:
+        groups = self.payload["groups"]
+        ids = [group["id"] for group in groups]
+        self.assertEqual(self.parser.film_group_ids, ids)
+        self.assertEqual(
+            self.parser.canvases,
+            [(f"{group_id}-film", "1", "1") for group_id in ids],
+        )
+        self.assertEqual(len(self.parser.buttons), 68)
+        self.assertTrue(all(disabled for disabled, _pressed, _controls in self.parser.buttons))
+        self.assertTrue(all(pressed == "false" for _disabled, pressed, _controls in self.parser.buttons))
+        self.assertEqual(
+            [controls for _disabled, _pressed, controls in self.parser.buttons],
+            [f"{group_id}-film" for group_id in ids],
+        )
+        self.assertEqual(len(self.parser.sliders), 68)
+        self.assertTrue(
+            all(
+                disabled and value == "0" and input_type == "range"
+                for disabled, value, input_type, _slider_id in self.parser.sliders
+            )
+        )
+        self.assertEqual(
+            self.parser.scripts,
+            [("clockwork-coloring-correspondence.js", "module")],
+        )
+        script_path = ROOT / "clockwork-coloring-correspondence.js"
+        self.assertTrue(script_path.is_file())
+        script = script_path.read_text(encoding="utf-8")
+        self.assertIn("this.playingIntent = false", script)
+        self.assertIn("phase - placement.tau", script)
+        self.assertNotIn("autoplay", self.page.lower())
+        self.assertNotIn("autoplay", script.lower())
+        self.assertNotIn("<iframe", self.page)
+        self.assertNotIn("<video", self.page)
         self.assertNotIn('src="https://yaroslavvb.github.io/animated-groups-fable', self.page)
         self.assertNotIn('href="https://yaroslavvb.github.io/animated-groups-fable/js/', self.page)
-        self.assertIn("no runtime data or code is loaded from it", self.page)
+        self.assertNotIn("https://yaroslavvb.github.io/animated-groups-fable", script)
+        self.assertIn("no runtime data or code is loaded from", self.page)
+        self.assertIn("paused by default", self.page)
 
     def test_navigation_links_the_correspondence_from_both_existing_pages(self) -> None:
         for page in (ROOT / "index.html", ROOT / "future-directions.html"):

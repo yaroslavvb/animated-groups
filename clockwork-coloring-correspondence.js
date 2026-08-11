@@ -1,0 +1,546 @@
+/* Paused, local film renderer for the 68 clockwork/colouring rows.
+ *
+ * Every canvas is driven by the checked-in correspondence JSON.  No code or
+ * data is loaded from animated-groups-fable.  A film is the orbit of one
+ * asymmetric animated motif: an operation (M,v,1,tau) places it at
+ * M*base+v+lattice and shows its internal time t-tau.  Canvases are lazy,
+ * start at a 1x1 backing store, and never request an animation frame until a
+ * viewer explicitly presses Play.
+ */
+
+"use strict";
+
+const DATA_URL = new URL("data/clockwork-coloring-correspondence.json", import.meta.url);
+const PERIOD_MS = 4000;
+const FRAME_MS = 1000 / 30;
+const DPR_LIMIT = 1.5;
+const TWO_PI = Math.PI * 2;
+const CELLS = 4;
+const MIN_CELLS = 3;
+const MAX_COLUMNS = 18;
+
+const COLORS = {
+  background: "#faf8f1",
+  body: "#dbe6f2",
+  outline: "#657f99",
+  fill: "#28709e",
+  beatOn: "#b23a2c",
+  beatOff: "#b8ad97",
+};
+
+const RAW_COMMA = [
+  [[0.40, -0.30], [0.52, 0.18], [0.32, 0.56], [-0.52, 0.74]],
+  [[-0.52, 0.74], [-0.10, 0.52], [0.18, 0.26], [0.06, 0.02]],
+  [[0.06, 0.02], [-0.14, 0.02], [-0.40, -0.10], [-0.40, -0.30]],
+  [[-0.40, -0.30], [-0.40, -0.54], [-0.22, -0.68], [0.00, -0.68]],
+  [[0.00, -0.68], [0.24, -0.68], [0.40, -0.54], [0.40, -0.30]],
+];
+
+const COMMA = (() => {
+  const samples = [];
+  for (const [p0, p1, p2, p3] of RAW_COMMA) {
+    for (let index = 0; index <= 24; index += 1) {
+      const t = index / 24;
+      const m = 1 - t;
+      samples.push([
+        m ** 3 * p0[0] + 3 * m * m * t * p1[0] + 3 * m * t * t * p2[0] + t ** 3 * p3[0],
+        m ** 3 * p0[1] + 3 * m * m * t * p1[1] + 3 * m * t * t * p2[1] + t ** 3 * p3[1],
+      ]);
+    }
+  }
+  const xs = samples.map((point) => point[0]);
+  const ys = samples.map((point) => point[1]);
+  const centerX = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const centerY = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const scale = 0.64 / Math.max(
+    ...samples.map((point) => Math.hypot(point[0] - centerX, point[1] - centerY)),
+  );
+  const segments = RAW_COMMA.map((segment) => segment.map((point) => [
+    (point[0] - centerX) * scale,
+    (point[1] - centerY) * scale,
+  ]));
+  const normalizedY = samples.map((point) => (point[1] - centerY) * scale);
+  return {
+    segments,
+    top: Math.min(...normalizedY),
+    bottom: Math.max(...normalizedY),
+  };
+})();
+
+function frac(value) {
+  return ((value % 1) + 1) % 1;
+}
+
+function multiply2(left, right) {
+  return [
+    [
+      left[0][0] * right[0][0] + left[0][1] * right[1][0],
+      left[0][0] * right[0][1] + left[0][1] * right[1][1],
+    ],
+    [
+      left[1][0] * right[0][0] + left[1][1] * right[1][0],
+      left[1][0] * right[0][1] + left[1][1] * right[1][1],
+    ],
+  ];
+}
+
+function invert2(matrix) {
+  const determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+  if (Math.abs(determinant) < 1e-10) {
+    throw new Error("singular wallpaper basis");
+  }
+  return [
+    [matrix[1][1] / determinant, -matrix[0][1] / determinant],
+    [-matrix[1][0] / determinant, matrix[0][0] / determinant],
+  ];
+}
+
+function latticeToPixel(matrix, b1, b2) {
+  const basis = [[b1[0], b2[0]], [b1[1], b2[1]]];
+  return multiply2(multiply2(basis, matrix), invert2(basis));
+}
+
+function bodyPath(context, radius) {
+  const segments = COMMA.segments;
+  context.beginPath();
+  context.moveTo(segments[0][0][0] * radius, segments[0][0][1] * radius);
+  for (const [, point1, point2, point3] of segments) {
+    context.bezierCurveTo(
+      point1[0] * radius,
+      point1[1] * radius,
+      point2[0] * radius,
+      point2[1] * radius,
+      point3[0] * radius,
+      point3[1] * radius,
+    );
+  }
+  context.closePath();
+}
+
+function drawMotif(context, theta, radius, layer) {
+  const phase = frac(theta);
+  const rising = phase < 0.5;
+  const sweep = (phase * 2) % 1;
+  const lineY = (COMMA.bottom - sweep * (COMMA.bottom - COMMA.top)) * radius;
+  const top = (COMMA.top - 0.2) * radius;
+  const bottom = (COMMA.bottom + 0.2) * radius;
+
+  if (layer === "body") {
+    bodyPath(context, radius);
+    context.fillStyle = COLORS.body;
+    context.fill();
+    context.lineWidth = Math.max(0.7, 0.045 * radius);
+    context.strokeStyle = COLORS.outline;
+    context.stroke();
+    return;
+  }
+
+  context.save();
+  bodyPath(context, radius);
+  context.clip();
+  context.fillStyle = COLORS.fill;
+  if (rising) {
+    context.fillRect(-1.2 * radius, lineY, 2.4 * radius, bottom - lineY);
+  } else {
+    context.fillRect(-1.2 * radius, top, 2.4 * radius, lineY - top);
+  }
+  context.restore();
+}
+
+function drawPhaseRing(context, theta, radius, order) {
+  if (radius < 6.5) return;
+  const lit = order > 1 ? Math.floor(frac(theta) * order) % order : 0;
+  const ringRadius = 0.76 * radius;
+  const lineWidth = Math.max(1.1, 0.12 * radius);
+  const gap = Math.min(0.125 / order, 0.022) * TWO_PI;
+  context.save();
+  context.lineWidth = lineWidth;
+  context.lineCap = "butt";
+  for (let index = 0; index < order; index += 1) {
+    const start = -Math.PI / 2 + (index / order) * TWO_PI + gap;
+    const end = -Math.PI / 2 + ((index + 1) / order) * TWO_PI - gap;
+    context.globalAlpha = order === 1 ? 0.55 : (index === lit ? 1 : 0.38);
+    context.strokeStyle = index === lit && order > 1 ? COLORS.beatOn : COLORS.beatOff;
+    context.beginPath();
+    context.arc(0, 0, ringRadius, start, end);
+    context.stroke();
+  }
+  context.restore();
+}
+
+function validateRecord(record) {
+  if (!record || !record.render || !Array.isArray(record.render.ops)) {
+    throw new Error("missing render specification");
+  }
+  if (!Array.isArray(record.render.basis) || record.render.basis.length !== 2) {
+    throw new Error("invalid wallpaper basis");
+  }
+  if (record.render.ops.length === 0 || record.render.ops.some((operation) => operation.s !== 1)) {
+    throw new Error("the correspondence renderer accepts forward operations only");
+  }
+  const phases = new Set(record.render.ops.map((operation) => (
+    Math.round(frac(operation.tau) * record.clock_order) % record.clock_order
+  )));
+  if (phases.size !== record.clock_order) {
+    throw new Error("phase image is not the declared cyclic group");
+  }
+}
+
+class ClockworkPlayer {
+  constructor(root, record) {
+    validateRecord(record);
+    this.root = root;
+    this.record = record;
+    this.stage = root.querySelector("[data-film-stage]");
+    this.canvas = root.querySelector("canvas");
+    this.status = root.querySelector("[data-film-status]");
+    this.controls = root.querySelector("[data-film-controls]");
+    this.toggle = root.querySelector("[data-film-toggle]");
+    this.toggleLabel = root.querySelector("[data-film-toggle-label]");
+    this.slider = root.querySelector("[data-film-slider]");
+    this.output = root.querySelector("[data-film-output]");
+    this.phase = 0;
+    this.playingIntent = false;
+    this.nearViewport = false;
+    this.active = false;
+    this.frameRequest = 0;
+    this.lastPaint = 0;
+    this.startedAt = 0;
+    this.geometry = null;
+
+    this.canvas.setAttribute(
+      "aria-label",
+      `Paused clockwork film for ${record.symbol}, group ${record.id}, with ${record.clock_order} phase interval${record.clock_order === 1 ? "" : "s"}.`,
+    );
+    this.toggle.addEventListener("click", () => this.togglePlayback());
+    this.slider.addEventListener("input", () => this.seek(Number(this.slider.value)));
+    this.resizeObserver = new ResizeObserver(() => {
+      if (this.active) this.resizeAndDraw();
+    });
+    this.resizeObserver.observe(this.stage);
+  }
+
+  activate() {
+    this.nearViewport = true;
+    if (!this.active) {
+      this.active = true;
+      this.resizeAndDraw();
+      this.status.hidden = true;
+      this.stage.dataset.state = "ready";
+      this.controls.dataset.state = "ready";
+      this.toggle.disabled = false;
+      this.slider.disabled = false;
+    }
+    if (this.playingIntent && !document.hidden) this.startFrames();
+  }
+
+  deactivate() {
+    this.nearViewport = false;
+    this.suspendFrames();
+    if (!this.active) return;
+    this.active = false;
+    this.geometry = null;
+    this.canvas.width = 1;
+    this.canvas.height = 1;
+  }
+
+  resizeAndDraw() {
+    if (!this.active) return;
+    const bounds = this.stage.getBoundingClientRect();
+    const width = Math.max(260, Math.round(bounds.width));
+    const height = Math.max(152, Math.round(bounds.height));
+    const dpr = Math.min(window.devicePixelRatio || 1, DPR_LIMIT);
+    const targetWidth = Math.max(1, Math.round(width * dpr));
+    const targetHeight = Math.max(1, Math.round(height * dpr));
+    if (this.canvas.width !== targetWidth || this.canvas.height !== targetHeight) {
+      this.canvas.width = targetWidth;
+      this.canvas.height = targetHeight;
+    }
+    this.geometry = this.buildGeometry(width, height, dpr);
+    this.draw(this.phase);
+  }
+
+  buildGeometry(width, height, dpr) {
+    const spec = this.record.render;
+    const basis = spec.basis;
+    const shortSide = Math.min(width, height);
+    const horizontalExtent = Math.max(Math.abs(basis[0][0]), Math.abs(basis[1][0])) || 1;
+    const verticalExtent = Math.max(Math.abs(basis[0][1]), Math.abs(basis[1][1])) || 1;
+    const limitingExtent = shortSide === height ? verticalExtent : horizontalExtent;
+    const cellFor = (count) => Math.max(shortSide / (count * limitingExtent), 24);
+    const uniqueSites = new Set(spec.ops.map((operation) => (
+      `${operation.M.flat().join(",")}|${operation.v.map((value) => Math.round(frac(value) * 1e6)).join(",")}`
+    ))).size;
+    const basisDeterminant = Math.abs(
+      basis[0][0] * basis[1][1] - basis[0][1] * basis[1][0],
+    ) || 1;
+
+    const measure = (cell) => {
+      const b1 = [basis[0][0] * cell, -basis[0][1] * cell];
+      const b2 = [basis[1][0] * cell, -basis[1][1] * cell];
+      const sites = [];
+      const base = spec.base || [0.31, 0.17];
+      for (const operation of spec.ops) {
+        const x = frac(
+          operation.M[0][0] * base[0]
+          + operation.M[0][1] * base[1]
+          + operation.v[0],
+        );
+        const y = frac(
+          operation.M[1][0] * base[0]
+          + operation.M[1][1] * base[1]
+          + operation.v[1],
+        );
+        for (const shiftX of [0, 1]) {
+          for (const shiftY of [0, 1]) sites.push([x + shiftX, y + shiftY]);
+        }
+      }
+      let minimumDistance = Math.min(Math.hypot(...b1), Math.hypot(...b2));
+      for (let left = 0; left < sites.length; left += 1) {
+        for (let right = left + 1; right < sites.length; right += 1) {
+          const deltaX = (sites[left][0] - sites[right][0]) * b1[0]
+            + (sites[left][1] - sites[right][1]) * b2[0];
+          const deltaY = (sites[left][0] - sites[right][0]) * b1[1]
+            + (sites[left][1] - sites[right][1]) * b2[1];
+          const distance = Math.hypot(deltaX, deltaY);
+          if (distance > 1e-6 && distance < minimumDistance) minimumDistance = distance;
+        }
+      }
+      return {
+        b1,
+        b2,
+        motifRadius: Math.min(
+          0.40 * Math.min(Math.hypot(...b1), Math.hypot(...b2)),
+          0.52 * minimumDistance,
+        ),
+      };
+    };
+
+    let cell = cellFor(CELLS);
+    let measured = measure(cell);
+    if (measured.motifRadius > 0 && measured.motifRadius < 13) {
+      cell = Math.max(cell, Math.min(cell * (13 / measured.motifRadius), cellFor(MIN_CELLS)));
+      measured = measure(cell);
+    }
+    const columns = width / Math.sqrt(basisDeterminant * cell * cell / uniqueSites);
+    if (columns > MAX_COLUMNS) {
+      cell *= columns / MAX_COLUMNS;
+      measured = measure(cell);
+    }
+
+    const { b1, b2, motifRadius } = measured;
+    const inverse = invert2([[b1[0], b2[0]], [b1[1], b2[1]]]);
+    const centerX = width / 2;
+    const centerY = height / 2;
+    let min1 = Infinity;
+    let max1 = -Infinity;
+    let min2 = Infinity;
+    let max2 = -Infinity;
+    for (const [pixelX, pixelY] of [[0, 0], [width, 0], [0, height], [width, height]]) {
+      const x = pixelX - centerX;
+      const y = pixelY - centerY;
+      const lattice1 = inverse[0][0] * x + inverse[0][1] * y;
+      const lattice2 = inverse[1][0] * x + inverse[1][1] * y;
+      min1 = Math.min(min1, lattice1);
+      max1 = Math.max(max1, lattice1);
+      min2 = Math.min(min2, lattice2);
+      max2 = Math.max(max2, lattice2);
+    }
+
+    const placements = [];
+    const base = spec.base || [0.31, 0.17];
+    const pad = 1.6;
+    for (const operation of spec.ops) {
+      const baseX = operation.M[0][0] * base[0]
+        + operation.M[0][1] * base[1]
+        + operation.v[0];
+      const baseY = operation.M[1][0] * base[0]
+        + operation.M[1][1] * base[1]
+        + operation.v[1];
+      const transform = latticeToPixel(operation.M, b1, b2);
+      for (let lattice1 = Math.floor(min1 - pad); lattice1 <= Math.ceil(max1 + pad); lattice1 += 1) {
+        for (let lattice2 = Math.floor(min2 - pad); lattice2 <= Math.ceil(max2 + pad); lattice2 += 1) {
+          const position1 = baseX + lattice1;
+          const position2 = baseY + lattice2;
+          const pixelX = position1 * b1[0] + position2 * b2[0];
+          const pixelY = position1 * b1[1] + position2 * b2[1];
+          if (
+            pixelX < -width / 2 - motifRadius * 3
+            || pixelX > width / 2 + motifRadius * 3
+            || pixelY < -height / 2 - motifRadius * 3
+            || pixelY > height / 2 + motifRadius * 3
+          ) continue;
+          placements.push({
+            pixelX,
+            pixelY,
+            transform,
+            tau: operation.tau,
+          });
+        }
+      }
+    }
+    return { width, height, dpr, motifRadius, placements };
+  }
+
+  draw(phase) {
+    if (!this.active || !this.geometry) return;
+    const context = this.canvas.getContext("2d");
+    if (!context) throw new Error("2D canvas is unavailable");
+    const { width, height, dpr, motifRadius, placements } = this.geometry;
+    context.save();
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = COLORS.background;
+    context.fillRect(0, 0, width, height);
+    context.translate(width / 2, height / 2);
+    for (const layer of ["body", "fill"]) {
+      for (const placement of placements) {
+        context.save();
+        context.translate(placement.pixelX, placement.pixelY);
+        const matrix = placement.transform;
+        context.transform(matrix[0][0], matrix[1][0], matrix[0][1], matrix[1][1], 0, 0);
+        drawMotif(context, phase - placement.tau, motifRadius, layer);
+        context.restore();
+      }
+    }
+    for (const placement of placements) {
+      context.save();
+      context.translate(placement.pixelX, placement.pixelY);
+      drawPhaseRing(context, phase - placement.tau, motifRadius, this.record.clock_order);
+      context.restore();
+    }
+    context.restore();
+  }
+
+  updateReadout() {
+    const text = this.phase.toFixed(3);
+    this.slider.value = text;
+    this.slider.setAttribute("aria-valuetext", `phase ${text} of one period`);
+    this.output.value = text;
+    this.output.textContent = text;
+  }
+
+  seek(value) {
+    this.pause();
+    this.phase = frac(Number.isFinite(value) ? value : 0);
+    this.updateReadout();
+    this.draw(this.phase);
+  }
+
+  togglePlayback() {
+    if (this.playingIntent) this.pause();
+    else this.play();
+  }
+
+  play() {
+    this.playingIntent = true;
+    this.toggle.setAttribute("aria-pressed", "true");
+    this.toggleLabel.textContent = "Pause";
+    this.toggle.querySelector(".animation-icon").textContent = "❚❚";
+    if (this.nearViewport && !document.hidden) this.startFrames();
+  }
+
+  pause() {
+    this.playingIntent = false;
+    this.suspendFrames();
+    this.toggle.setAttribute("aria-pressed", "false");
+    this.toggleLabel.textContent = "Play";
+    this.toggle.querySelector(".animation-icon").textContent = "▶";
+  }
+
+  startFrames() {
+    if (this.frameRequest || !this.active || !this.playingIntent) return;
+    this.startedAt = performance.now() - this.phase * PERIOD_MS;
+    this.lastPaint = 0;
+    const tick = (timestamp) => {
+      this.frameRequest = 0;
+      if (!this.playingIntent || !this.nearViewport || document.hidden || !this.active) return;
+      if (!this.lastPaint || timestamp - this.lastPaint >= FRAME_MS) {
+        this.phase = frac((timestamp - this.startedAt) / PERIOD_MS);
+        this.updateReadout();
+        this.draw(this.phase);
+        this.lastPaint = timestamp;
+      }
+      this.frameRequest = requestAnimationFrame(tick);
+    };
+    this.frameRequest = requestAnimationFrame(tick);
+  }
+
+  suspendFrames() {
+    if (this.frameRequest) cancelAnimationFrame(this.frameRequest);
+    this.frameRequest = 0;
+  }
+
+  visibilityChanged() {
+    if (document.hidden) this.suspendFrames();
+    else if (this.playingIntent && this.nearViewport) this.startFrames();
+  }
+
+  fail(message) {
+    this.pause();
+    this.status.hidden = false;
+    this.status.textContent = message;
+    this.stage.dataset.state = "error";
+    this.controls.dataset.state = "error";
+    this.toggle.disabled = true;
+    this.slider.disabled = true;
+  }
+}
+
+async function initialize() {
+  const roots = [...document.querySelectorAll("[data-clockwork-player]")];
+  if (roots.length === 0) return;
+  let payload;
+  try {
+    const response = await fetch(DATA_URL, { credentials: "same-origin" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    payload = await response.json();
+    if (!payload || !Array.isArray(payload.groups) || payload.groups.length !== 68) {
+      throw new Error("expected 68 correspondence records");
+    }
+  } catch (error) {
+    for (const root of roots) {
+      root.querySelector("[data-film-status]").textContent = "Film unavailable; use the static plate.";
+      root.querySelector("[data-film-stage]").dataset.state = "error";
+      root.querySelector("[data-film-controls]").dataset.state = "error";
+    }
+    console.error("Clockwork correspondence data failed to load", error);
+    return;
+  }
+
+  const records = new Map(payload.groups.map((record) => [record.id, record]));
+  const players = [];
+  for (const root of roots) {
+    const record = records.get(root.dataset.groupId);
+    try {
+      if (!record) throw new Error(`missing record ${root.dataset.groupId}`);
+      players.push(new ClockworkPlayer(root, record));
+    } catch (error) {
+      const status = root.querySelector("[data-film-status]");
+      status.textContent = "Film data failed validation; use the static plate.";
+      root.querySelector("[data-film-stage]").dataset.state = "error";
+      root.querySelector("[data-film-controls]").dataset.state = "error";
+      console.error("Clockwork player failed to initialize", root.dataset.groupId, error);
+    }
+  }
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const player = players.find((candidate) => candidate.root === entry.target);
+        if (!player) continue;
+        if (entry.isIntersecting) player.activate();
+        else player.deactivate();
+      }
+    }, { rootMargin: "600px 0px" });
+    for (const player of players) observer.observe(player.root);
+  } else {
+    for (const player of players) player.activate();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    for (const player of players) player.visibilityChanged();
+  });
+}
+
+void initialize();
