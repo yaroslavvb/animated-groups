@@ -257,6 +257,48 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page,
         )
 
+    def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
+        forbidden_terms = (
+            "classified in",
+            "triclinic",
+            "monoclinic",
+            "orthorhombic",
+            "tetragonal",
+            "trigonal",
+            "hexagonal",
+            "bravais",
+            "lattice",
+            "symmorphic",
+            "p31m/3 p3m1",
+        )
+        page_lower = self.page.lower()
+        for term in forbidden_terms:
+            self.assertNotIn(term, page_lower)
+
+        self.assertNotIn('class="family-hm"', self.page)
+        self.assertNotIn('class="chip-hm"', self.page)
+        for conventional_name in correspondence.BASE_ORDER:
+            self.assertNotIn(f"({conventional_name})", self.page)
+
+        self.assertEqual(self.page.count("Orbifold family"), 17)
+        self.assertEqual(self.page.count("Projected group G"), 51)
+        self.assertEqual(self.page.count("Colour-fixing subgroup K"), 51)
+        self.assertEqual(self.page.count("Static perfect-colouring plate"), 51)
+        self.assertIn("Jump to an underlying orbifold signature", self.page)
+
+        for group in self.payload["groups"]:
+            self.assertTrue({"system", "bravais", "symmorphic"} <= group.keys())
+            self.assertNotIn("classified in", group["clockwork_description"].lower())
+            self.assertIn(
+                f"orbifold signature {group['parent']['orbifold']}",
+                group["clockwork_description"],
+            )
+            if group["clock_order"] > 1:
+                self.assertIn(
+                    f"orbifold signature {group['kernel']['orbifold']}",
+                    group["coloring_description"],
+                )
+
     def test_every_row_has_a_book_page_and_honest_coverage_status(self) -> None:
         groups = self.payload["groups"]
         statuses = Counter(group["book_audit"]["status"] for group in groups)

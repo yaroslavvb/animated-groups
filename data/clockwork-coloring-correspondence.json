@@ -71,7 +71,7 @@
         }
       ],
       "phase_profile": [],
-      "clockwork_description": "o is the direct-product forward group over wallpaper orbifold ◦ (p1), classified in the Triclinic system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "o is the direct-product forward lift over a plane symmetry group with orbifold signature ◦. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group ◦, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -100,7 +100,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g1",
       "image": "output/clockwork-colorings/g1.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group o: asymmetric motifs carry phase colours for ◦.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group o: asymmetric motifs carry phase colours for Conway type ◦.",
       "render": {
         "basis": [
           [
@@ -173,7 +173,7 @@
           ]
         }
       ],
-      "clockwork_description": "2222 is the direct-product forward group over wallpaper orbifold 2222 (p2), classified in the T-Monoclinic system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "2222 is the direct-product forward lift over a plane symmetry group with orbifold signature 2222. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 2222, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -202,7 +202,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g5",
       "image": "output/clockwork-colorings/g5.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 2222: asymmetric motifs carry phase colours for 2222.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 2222: asymmetric motifs carry phase colours for Conway type 2222.",
       "render": {
         "basis": [
           [
@@ -298,8 +298,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁2₁2₁ is a non-product forward clockwork group over wallpaper orbifold 2222 (p2), classified in the T-Monoclinic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 2222/◦, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "2₁2₁2₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2222. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 2222/◦, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -319,7 +319,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g6",
       "image": "output/clockwork-colorings/g6.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 2₁2₁2₁2₁: asymmetric motifs carry phase colours for 2222/◦.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 2₁2₁2₁2₁: asymmetric motifs carry phase colours for Conway type 2222/◦.",
       "render": {
         "basis": [
           [
@@ -422,8 +422,8 @@
           ]
         }
       ],
-      "clockwork_description": "c222₁2₁ is a non-product forward clockwork group over wallpaper orbifold 2222 (p2), classified in the T-Monoclinic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 2222/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c222₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2222. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 2222/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -443,7 +443,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g7",
       "image": "output/clockwork-colorings/g7.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c222₁2₁: asymmetric motifs carry phase colours for 2222/2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c222₁2₁: asymmetric motifs carry phase colours for Conway type 2222/2222.",
       "render": {
         "basis": [
           [
@@ -570,7 +570,7 @@
           ]
         }
       ],
-      "clockwork_description": "*× is the direct-product forward group over wallpaper orbifold *× (cm), classified in the R-Monoclinic system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "*× is the direct-product forward lift over a plane symmetry group with orbifold signature *×. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group *×, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -599,7 +599,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g8",
       "image": "output/clockwork-colorings/g8.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group *×: asymmetric motifs carry phase colours for *×.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group *×: asymmetric motifs carry phase colours for Conway type *×.",
       "render": {
         "basis": [
           [
@@ -695,8 +695,8 @@
           ]
         }
       ],
-      "clockwork_description": "~*×½ is a non-product forward clockwork group over wallpaper orbifold *× (cm), classified in the R-Monoclinic system with a P lattice. Its phases form C2; the catalog cosets show reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *×/◦, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "~*×½ is a non-product forward lift over a plane symmetry group with orbifold signature *×. Its phase character has image C2; the phase residues by operation type are reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type *×/◦, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -716,7 +716,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g9",
       "image": "output/clockwork-colorings/g9.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group ~*×½: asymmetric motifs carry phase colours for *×/◦.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group ~*×½: asymmetric motifs carry phase colours for Conway type *×/◦.",
       "render": {
         "basis": [
           [
@@ -813,7 +813,7 @@
           ]
         }
       ],
-      "clockwork_description": "** is the direct-product forward group over wallpaper orbifold ** (pm), classified in the R-Monoclinic system with a C-centred (spatial) lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "** is the direct-product forward lift over a plane symmetry group with orbifold signature **. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group **, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -842,7 +842,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g10",
       "image": "output/clockwork-colorings/g10.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group **: asymmetric motifs carry phase colours for **.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group **: asymmetric motifs carry phase colours for Conway type **.",
       "render": {
         "basis": [
           [
@@ -975,7 +975,7 @@
           ]
         }
       ],
-      "clockwork_description": "×× is the direct-product forward group over wallpaper orbifold ×× (pg), classified in the R-Monoclinic system with a C-centred (spatial) lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "×× is the direct-product forward lift over a plane symmetry group with orbifold signature ××. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group ××, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -1004,7 +1004,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g11",
       "image": "output/clockwork-colorings/g11.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group ××: asymmetric motifs carry phase colours for ××.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group ××: asymmetric motifs carry phase colours for Conway type ××.",
       "render": {
         "basis": [
           [
@@ -1137,7 +1137,7 @@
           ]
         }
       ],
-      "clockwork_description": "*2222 is the direct-product forward group over wallpaper orbifold *2222 (pmm), classified in the Orthorhombic system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "*2222 is the direct-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group *2222, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -1166,7 +1166,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g54",
       "image": "output/clockwork-colorings/g54.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group *2222: asymmetric motifs carry phase colours for *2222.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group *2222: asymmetric motifs carry phase colours for Conway type *2222.",
       "render": {
         "basis": [
           [
@@ -1304,8 +1304,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~2~2~2~2 is a non-product forward clockwork group over wallpaper orbifold *2222 (pmm), classified in the Orthorhombic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *2222/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*~2~2~2~2 is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -1325,7 +1325,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g55",
       "image": "output/clockwork-colorings/g55.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *~2~2~2~2: asymmetric motifs carry phase colours for *2222/2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *~2~2~2~2: asymmetric motifs carry phase colours for Conway type *2222/2222.",
       "render": {
         "basis": [
           [
@@ -1458,7 +1458,7 @@
           ]
         }
       ],
-      "clockwork_description": "22* is the direct-product forward group over wallpaper orbifold 22* (pmg), classified in the Orthorhombic system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "22* is the direct-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 22*, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -1487,7 +1487,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g56",
       "image": "output/clockwork-colorings/g56.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 22*: asymmetric motifs carry phase colours for 22*.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 22*: asymmetric motifs carry phase colours for Conway type 22*.",
       "render": {
         "basis": [
           [
@@ -1625,8 +1625,8 @@
           ]
         }
       ],
-      "clockwork_description": "22~* is a non-product forward clockwork group over wallpaper orbifold 22* (pmg), classified in the Orthorhombic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22*/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "22~* is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -1646,7 +1646,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g57",
       "image": "output/clockwork-colorings/g57.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 22~*: asymmetric motifs carry phase colours for 22*/2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 22~*: asymmetric motifs carry phase colours for Conway type 22*/2222.",
       "render": {
         "basis": [
           [
@@ -1779,7 +1779,7 @@
           ]
         }
       ],
-      "clockwork_description": "22× is the direct-product forward group over wallpaper orbifold 22× (pgg), classified in the Orthorhombic system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "22× is the direct-product forward lift over a plane symmetry group with orbifold signature 22×. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 22×, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -1808,7 +1808,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g58",
       "image": "output/clockwork-colorings/g58.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 22×: asymmetric motifs carry phase colours for 22×.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 22×: asymmetric motifs carry phase colours for Conway type 22×.",
       "render": {
         "basis": [
           [
@@ -1946,8 +1946,8 @@
           ]
         }
       ],
-      "clockwork_description": "22×½ is a non-product forward clockwork group over wallpaper orbifold 22× (pgg), classified in the Orthorhombic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22×/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "22×½ is a non-product forward lift over a plane symmetry group with orbifold signature 22×. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 22×/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -1967,7 +1967,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g59",
       "image": "output/clockwork-colorings/g59.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 22×½: asymmetric motifs carry phase colours for 22×/2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 22×½: asymmetric motifs carry phase colours for Conway type 22×/2222.",
       "render": {
         "basis": [
           [
@@ -2106,8 +2106,8 @@
           ]
         }
       ],
-      "clockwork_description": "*2₁~2₁2₁~2₁ is a non-product forward clockwork group over wallpaper orbifold *2222 (pmm), classified in the Orthorhombic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold ** (pm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *2222/**, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*2₁~2₁2₁~2₁ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ** and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/**, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2127,7 +2127,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g60",
       "image": "output/clockwork-colorings/g60.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *2₁~2₁2₁~2₁: asymmetric motifs carry phase colours for *2222/**.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *2₁~2₁2₁~2₁: asymmetric motifs carry phase colours for Conway type *2222/**.",
       "render": {
         "basis": [
           [
@@ -2266,8 +2266,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁~* is a non-product forward clockwork group over wallpaper orbifold 22* (pmg), classified in the Orthorhombic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold ×× (pg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22*/××, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "2₁2₁~* is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ×× and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/××, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2287,7 +2287,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g61",
       "image": "output/clockwork-colorings/g61.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 2₁2₁~*: asymmetric motifs carry phase colours for 22*/××.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 2₁2₁~*: asymmetric motifs carry phase colours for Conway type 22*/××.",
       "render": {
         "basis": [
           [
@@ -2426,8 +2426,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁* is a non-product forward clockwork group over wallpaper orbifold 22* (pmg), classified in the Orthorhombic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold ** (pm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22*/**, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "2₁2₁* is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ** and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/**, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2447,7 +2447,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g62",
       "image": "output/clockwork-colorings/g62.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 2₁2₁*: asymmetric motifs carry phase colours for 22*/**.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 2₁2₁*: asymmetric motifs carry phase colours for Conway type 22*/**.",
       "render": {
         "basis": [
           [
@@ -2586,8 +2586,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁2₁× is a non-product forward clockwork group over wallpaper orbifold 22× (pgg), classified in the Orthorhombic system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold ×× (pg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22×/××, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "2₁2₁× is a non-product forward lift over a plane symmetry group with orbifold signature 22×. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ×× and preserves every colour. The resulting regular cyclic colouring has Conway type 22×/××, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2607,7 +2607,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g63",
       "image": "output/clockwork-colorings/g63.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 2₁2₁×: asymmetric motifs carry phase colours for 22×/××.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 2₁2₁×: asymmetric motifs carry phase colours for Conway type 22×/××.",
       "render": {
         "basis": [
           [
@@ -2753,8 +2753,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*222₁2₁ᵃ is a non-product forward clockwork group over wallpaper orbifold *2222 (pmm), classified in the Orthorhombic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold *2222 (pmm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *2222/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c*222₁2₁ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -2774,7 +2774,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g64",
       "image": "output/clockwork-colorings/g64.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c*222₁2₁ᵃ: asymmetric motifs carry phase colours for *2222/*2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c*222₁2₁ᵃ: asymmetric motifs carry phase colours for Conway type *2222/*2222.",
       "render": {
         "basis": [
           [
@@ -2992,8 +2992,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*222₁2₁ᵇ is a non-product forward clockwork group over wallpaper orbifold *2222 (pmm), classified in the Orthorhombic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 22* (pmg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *2222/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c*222₁2₁ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22* and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -3013,7 +3013,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g65",
       "image": "output/clockwork-colorings/g65.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c*222₁2₁ᵇ: asymmetric motifs carry phase colours for *2222/22*.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c*222₁2₁ᵇ: asymmetric motifs carry phase colours for Conway type *2222/22*.",
       "render": {
         "basis": [
           [
@@ -3231,8 +3231,8 @@
           ]
         }
       ],
-      "clockwork_description": "c22₁*ᵃ is a non-product forward clockwork group over wallpaper orbifold 22* (pmg), classified in the Orthorhombic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 22* (pmg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22*/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c22₁*ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22* and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -3252,7 +3252,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g66",
       "image": "output/clockwork-colorings/g66.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c22₁*ᵃ: asymmetric motifs carry phase colours for 22*/22*.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c22₁*ᵃ: asymmetric motifs carry phase colours for Conway type 22*/22*.",
       "render": {
         "basis": [
           [
@@ -3470,8 +3470,8 @@
           ]
         }
       ],
-      "clockwork_description": "c22₁*ᵇ is a non-product forward clockwork group over wallpaper orbifold 22* (pmg), classified in the Orthorhombic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 22× (pgg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22*/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c22₁*ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature 22*. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 22*/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -3491,7 +3491,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g67",
       "image": "output/clockwork-colorings/g67.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c22₁*ᵇ: asymmetric motifs carry phase colours for 22*/22×.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c22₁*ᵇ: asymmetric motifs carry phase colours for Conway type 22*/22×.",
       "render": {
         "basis": [
           [
@@ -3702,7 +3702,7 @@
           ]
         }
       ],
-      "clockwork_description": "2*22 is the direct-product forward group over wallpaper orbifold 2*22 (cmm), classified in the Orthorhombic system with a C-centred (spatial) lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "2*22 is the direct-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 2*22, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -3731,7 +3731,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g68",
       "image": "output/clockwork-colorings/g68.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 2*22: asymmetric motifs carry phase colours for 2*22.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 2*22: asymmetric motifs carry phase colours for Conway type 2*22.",
       "render": {
         "basis": [
           [
@@ -3947,8 +3947,8 @@
           ]
         }
       ],
-      "clockwork_description": "2*~2~2 is a non-product forward clockwork group over wallpaper orbifold 2*22 (cmm), classified in the Orthorhombic system with a C-centred (spatial) lattice. Its phases form C2; the catalog cosets show translations: 0; 2-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 2*22/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "2*~2~2 is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 0; 2-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -3968,7 +3968,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g69",
       "image": "output/clockwork-colorings/g69.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 2*~2~2: asymmetric motifs carry phase colours for 2*22/2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 2*~2~2: asymmetric motifs carry phase colours for Conway type 2*22/2222.",
       "render": {
         "basis": [
           [
@@ -4185,8 +4185,8 @@
           ]
         }
       ],
-      "clockwork_description": "2₁*2₁~2₁ is a non-product forward clockwork group over wallpaper orbifold 2*22 (cmm), classified in the Orthorhombic system with a C-centred (spatial) lattice. Its phases form C2; the catalog cosets show translations: 0; 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold *× (cm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 2*22/*×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "2₁*2₁~2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 0; 2-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *× and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/*×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4206,7 +4206,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g70",
       "image": "output/clockwork-colorings/g70.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 2₁*2₁~2₁: asymmetric motifs carry phase colours for 2*22/*×.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 2₁*2₁~2₁: asymmetric motifs carry phase colours for Conway type 2*22/*×.",
       "render": {
         "basis": [
           [
@@ -4424,8 +4424,8 @@
           ]
         }
       ],
-      "clockwork_description": "c2₁*22ᵃ is a non-product forward clockwork group over wallpaper orbifold 2*22 (cmm), classified in the Orthorhombic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold *2222 (pmm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 2*22/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c2₁*22ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4445,7 +4445,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g71",
       "image": "output/clockwork-colorings/g71.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c2₁*22ᵃ: asymmetric motifs carry phase colours for 2*22/*2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c2₁*22ᵃ: asymmetric motifs carry phase colours for Conway type 2*22/*2222.",
       "render": {
         "basis": [
           [
@@ -4663,8 +4663,8 @@
           ]
         }
       ],
-      "clockwork_description": "c2₁*22ᵇ is a non-product forward clockwork group over wallpaper orbifold 2*22 (cmm), classified in the Orthorhombic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 22× (pgg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 2*22/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c2₁*22ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4684,7 +4684,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g72",
       "image": "output/clockwork-colorings/g72.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c2₁*22ᵇ: asymmetric motifs carry phase colours for 2*22/22×.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c2₁*22ᵇ: asymmetric motifs carry phase colours for Conway type 2*22/22×.",
       "render": {
         "basis": [
           [
@@ -4902,8 +4902,8 @@
           ]
         }
       ],
-      "clockwork_description": "c2*2₁2₁ is a non-product forward clockwork group over wallpaper orbifold 2*22 (cmm), classified in the Orthorhombic system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 22* (pmg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 2*22/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c2*2₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 2*22. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22* and preserves every colour. The resulting regular cyclic colouring has Conway type 2*22/22*, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -4923,7 +4923,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g73",
       "image": "output/clockwork-colorings/g73.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c2*2₁2₁: asymmetric motifs carry phase colours for 2*22/22*.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c2*2₁2₁: asymmetric motifs carry phase colours for Conway type 2*22/22*.",
       "render": {
         "basis": [
           [
@@ -5142,8 +5142,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*22₁22₁ is a non-product forward clockwork group over wallpaper orbifold *2222 (pmm), classified in the Orthorhombic system with a F-centred lattice. Its phases form C2; the catalog cosets show translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2*22 (cmm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *2222/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c*22₁22₁ is a non-product forward lift over a plane symmetry group with orbifold signature *2222. Its phase character has image C2; the phase residues by operation type are translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2*22 and preserves every colour. The resulting regular cyclic colouring has Conway type *2222/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -5163,7 +5163,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g74",
       "image": "output/clockwork-colorings/g74.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c*22₁22₁: asymmetric motifs carry phase colours for *2222/2*22.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c*22₁22₁: asymmetric motifs carry phase colours for Conway type *2222/2*22.",
       "render": {
         "basis": [
           [
@@ -5536,8 +5536,8 @@
           ]
         }
       ],
-      "clockwork_description": "c22₁×¼ is a non-product forward clockwork group over wallpaper orbifold 22× (pgg), classified in the Orthorhombic system with a F-centred lattice. Its phases form C4; the catalog cosets show translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 1/4, 3/4.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 22×⁴/2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "c22₁×¼ is a non-product forward lift over a plane symmetry group with orbifold signature 22×. Its phase character has image C4; the phase residues by operation type are translations: 0, 1/2; 2-fold rotations: 0, 1/2; reflections / glides: 1/4, 3/4.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 22×⁴/2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -5583,7 +5583,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g75",
       "image": "output/clockwork-colorings/g75.webp",
-      "image_alt": "Static 4-colour wallpaper plate induced by clockwork group c22₁×¼: asymmetric motifs carry phase colours for 22×⁴/2222.",
+      "image_alt": "Static perfect 4-colouring induced by clockwork group c22₁×¼: asymmetric motifs carry phase colours for Conway type 22×⁴/2222.",
       "render": {
         "basis": [
           [
@@ -5932,7 +5932,7 @@
           ]
         }
       ],
-      "clockwork_description": "442 is the direct-product forward group over wallpaper orbifold 442 (p4), classified in the Tetragonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "442 is the direct-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 442, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -5961,7 +5961,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g94",
       "image": "output/clockwork-colorings/g94.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 442: asymmetric motifs carry phase colours for 442.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 442: asymmetric motifs carry phase colours for Conway type 442.",
       "render": {
         "basis": [
           [
@@ -6099,8 +6099,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₂4₂2 is a non-product forward clockwork group over wallpaper orbifold 442 (p4), classified in the Tetragonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 4-fold rotations: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 442/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "4₂4₂2 is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 442/2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -6120,7 +6120,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g95",
       "image": "output/clockwork-colorings/g95.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 4₂4₂2: asymmetric motifs carry phase colours for 442/2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 4₂4₂2: asymmetric motifs carry phase colours for Conway type 442/2222.",
       "render": {
         "basis": [
           [
@@ -6269,8 +6269,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₁4₁2₁ is a non-product forward clockwork group over wallpaper orbifold 442 (p4), classified in the Tetragonal system with a P lattice. Its phases form C4; the catalog cosets show 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 442⁴/◦, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "4₁4₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C4; the phase residues by operation type are 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 442⁴/◦, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -6316,7 +6316,7 @@
       "inverse_clock_mate": "g97",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g96",
       "image": "output/clockwork-colorings/g96.webp",
-      "image_alt": "Static 4-colour wallpaper plate induced by clockwork group 4₁4₁2₁: asymmetric motifs carry phase colours for 442⁴/◦.",
+      "image_alt": "Static perfect 4-colouring induced by clockwork group 4₁4₁2₁: asymmetric motifs carry phase colours for Conway type 442⁴/◦.",
       "render": {
         "basis": [
           [
@@ -6465,8 +6465,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₃4₃2₁ is a non-product forward clockwork group over wallpaper orbifold 442 (p4), classified in the Tetragonal system with a P lattice. Its phases form C4; the catalog cosets show 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 442⁴/◦, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "4₃4₃2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C4; the phase residues by operation type are 2-fold rotations: 1/2; 4-fold rotations: 1/4, 3/4.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 442⁴/◦, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -6512,7 +6512,7 @@
       "inverse_clock_mate": "g96",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g97",
       "image": "output/clockwork-colorings/g97.webp",
-      "image_alt": "Static 4-colour wallpaper plate induced by clockwork group 4₃4₃2₁: asymmetric motifs carry phase colours for 442⁴/◦.",
+      "image_alt": "Static perfect 4-colouring induced by clockwork group 4₃4₃2₁: asymmetric motifs carry phase colours for Conway type 442⁴/◦.",
       "render": {
         "basis": [
           [
@@ -6658,8 +6658,8 @@
           ]
         }
       ],
-      "clockwork_description": "c44₂2₁ is a non-product forward clockwork group over wallpaper orbifold 442 (p4), classified in the Tetragonal system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 442 (p4); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 442/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c44₂2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 442 and preserves every colour. The resulting regular cyclic colouring has Conway type 442/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -6679,7 +6679,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g98",
       "image": "output/clockwork-colorings/g98.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c44₂2₁: asymmetric motifs carry phase colours for 442/442.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c44₂2₁: asymmetric motifs carry phase colours for Conway type 442/442.",
       "render": {
         "basis": [
           [
@@ -6907,8 +6907,8 @@
           ]
         }
       ],
-      "clockwork_description": "c4₁4₃2 is a non-product forward clockwork group over wallpaper orbifold 442 (p4), classified in the Tetragonal system with a centred (space-time) lattice. Its phases form C4; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 442⁴/2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "c4₁4₃2 is a non-product forward lift over a plane symmetry group with orbifold signature 442. Its phase character has image C4; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 442⁴/2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -6954,7 +6954,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g99",
       "image": "output/clockwork-colorings/g99.webp",
-      "image_alt": "Static 4-colour wallpaper plate induced by clockwork group c4₁4₃2: asymmetric motifs carry phase colours for 442⁴/2222.",
+      "image_alt": "Static perfect 4-colouring induced by clockwork group c4₁4₃2: asymmetric motifs carry phase colours for Conway type 442⁴/2222.",
       "render": {
         "basis": [
           [
@@ -7165,7 +7165,7 @@
           ]
         }
       ],
-      "clockwork_description": "*442 is the direct-product forward group over wallpaper orbifold *442 (p4m), classified in the Tetragonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "*442 is the direct-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group *442, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -7194,7 +7194,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g128",
       "image": "output/clockwork-colorings/g128.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group *442: asymmetric motifs carry phase colours for *442.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group *442: asymmetric motifs carry phase colours for Conway type *442.",
       "render": {
         "basis": [
           [
@@ -7411,8 +7411,8 @@
           ]
         }
       ],
-      "clockwork_description": "*4₂~4₂2 is a non-product forward clockwork group over wallpaper orbifold *442 (p4m), classified in the Tetragonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold *2222 (pmm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *442/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*4₂~4₂2 is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/*2222, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -7432,7 +7432,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g129",
       "image": "output/clockwork-colorings/g129.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *4₂~4₂2: asymmetric motifs carry phase colours for *442/*2222.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *4₂~4₂2: asymmetric motifs carry phase colours for Conway type *442/*2222.",
       "render": {
         "basis": [
           [
@@ -7649,8 +7649,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~4₂4₂~2 is a non-product forward clockwork group over wallpaper orbifold *442 (p4m), classified in the Tetragonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2*22 (cmm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *442/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*~4₂4₂~2 is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2*22 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -7670,7 +7670,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g130",
       "image": "output/clockwork-colorings/g130.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *~4₂4₂~2: asymmetric motifs carry phase colours for *442/2*22.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *~4₂4₂~2: asymmetric motifs carry phase colours for Conway type *442/2*22.",
       "render": {
         "basis": [
           [
@@ -7886,8 +7886,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~4~4~2 is a non-product forward clockwork group over wallpaper orbifold *442 (p4m), classified in the Tetragonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 442 (p4); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *442/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*~4~4~2 is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 442 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -7907,7 +7907,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g131",
       "image": "output/clockwork-colorings/g131.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *~4~4~2: asymmetric motifs carry phase colours for *442/442.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *~4~4~2: asymmetric motifs carry phase colours for Conway type *442/442.",
       "render": {
         "basis": [
           [
@@ -8118,7 +8118,7 @@
           ]
         }
       ],
-      "clockwork_description": "4*2 is the direct-product forward group over wallpaper orbifold 4*2 (p4g), classified in the Tetragonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "4*2 is the direct-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 4*2, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -8147,7 +8147,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g132",
       "image": "output/clockwork-colorings/g132.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 4*2: asymmetric motifs carry phase colours for 4*2.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 4*2: asymmetric motifs carry phase colours for Conway type 4*2.",
       "render": {
         "basis": [
           [
@@ -8364,8 +8364,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₂*~2 is a non-product forward clockwork group over wallpaper orbifold 4*2 (p4g), classified in the Tetragonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 22× (pgg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 4*2/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "4₂*~2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2/22×, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -8385,7 +8385,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g133",
       "image": "output/clockwork-colorings/g133.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 4₂*~2: asymmetric motifs carry phase colours for 4*2/22×.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 4₂*~2: asymmetric motifs carry phase colours for Conway type 4*2/22×.",
       "render": {
         "basis": [
           [
@@ -8602,8 +8602,8 @@
           ]
         }
       ],
-      "clockwork_description": "4₂*2 is a non-product forward clockwork group over wallpaper orbifold 4*2 (p4g), classified in the Tetragonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2*22 (cmm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 4*2/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "4₂*2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2*22 and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2/2*22, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -8623,7 +8623,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g134",
       "image": "output/clockwork-colorings/g134.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 4₂*2: asymmetric motifs carry phase colours for 4*2/2*22.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 4₂*2: asymmetric motifs carry phase colours for Conway type 4*2/2*22.",
       "render": {
         "basis": [
           [
@@ -8839,8 +8839,8 @@
           ]
         }
       ],
-      "clockwork_description": "4*~2 is a non-product forward clockwork group over wallpaper orbifold 4*2 (p4g), classified in the Tetragonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 442 (p4); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 4*2/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "4*~2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 4-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 442 and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2/442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -8860,7 +8860,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g135",
       "image": "output/clockwork-colorings/g135.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 4*~2: asymmetric motifs carry phase colours for 4*2/442.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 4*~2: asymmetric motifs carry phase colours for Conway type 4*2/442.",
       "render": {
         "basis": [
           [
@@ -9085,8 +9085,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*44₂2₁ᵃ is a non-product forward clockwork group over wallpaper orbifold *442 (p4m), classified in the Tetragonal system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold *442 (p4m); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *442/*442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c*44₂2₁ᵃ is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *442 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/*442, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -9106,7 +9106,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g136",
       "image": "output/clockwork-colorings/g136.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c*44₂2₁ᵃ: asymmetric motifs carry phase colours for *442/*442.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c*44₂2₁ᵃ: asymmetric motifs carry phase colours for Conway type *442/*442.",
       "render": {
         "basis": [
           [
@@ -9487,8 +9487,8 @@
           ]
         }
       ],
-      "clockwork_description": "c4₃*2 is a non-product forward clockwork group over wallpaper orbifold 4*2 (p4g), classified in the Tetragonal system with a centred (space-time) lattice. Its phases form C4; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
-      "coloring_description": "The zero-phase kernel K is orbifold *2222 (pmm); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 4*2⁴/*2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "c4₃*2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C4; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2⁴/*2222, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -9534,7 +9534,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g137",
       "image": "output/clockwork-colorings/g137.webp",
-      "image_alt": "Static 4-colour wallpaper plate induced by clockwork group c4₃*2: asymmetric motifs carry phase colours for 4*2⁴/*2222.",
+      "image_alt": "Static perfect 4-colouring induced by clockwork group c4₃*2: asymmetric motifs carry phase colours for Conway type 4*2⁴/*2222.",
       "render": {
         "basis": [
           [
@@ -9903,8 +9903,8 @@
           ]
         }
       ],
-      "clockwork_description": "c*44₂2₁ᵇ is a non-product forward clockwork group over wallpaper orbifold *442 (p4m), classified in the Tetragonal system with a centred (space-time) lattice. Its phases form C2; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 4*2 (p4g); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *442/4*2, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "c*44₂2₁ᵇ is a non-product forward lift over a plane symmetry group with orbifold signature *442. Its phase character has image C2; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 0, 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 4*2 and preserves every colour. The resulting regular cyclic colouring has Conway type *442/4*2, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -9924,7 +9924,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g138",
       "image": "output/clockwork-colorings/g138.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group c*44₂2₁ᵇ: asymmetric motifs carry phase colours for *442/4*2.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group c*44₂2₁ᵇ: asymmetric motifs carry phase colours for Conway type *442/4*2.",
       "render": {
         "basis": [
           [
@@ -10305,8 +10305,8 @@
           ]
         }
       ],
-      "clockwork_description": "c4₁*2 is a non-product forward clockwork group over wallpaper orbifold 4*2 (p4g), classified in the Tetragonal system with a centred (space-time) lattice. Its phases form C4; the catalog cosets show translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
-      "coloring_description": "The zero-phase kernel K is orbifold 22× (pgg); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 4*2⁴/22×, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
+      "clockwork_description": "c4₁*2 is a non-product forward lift over a plane symmetry group with orbifold signature 4*2. Its phase character has image C4; the phase residues by operation type are translations: 1/2; 2-fold rotations: 0, 1/2; 4-fold rotations: 1/4, 3/4; reflections / glides: 0, 1/4, 1/2, 3/4.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 22× and preserves every colour. The resulting regular cyclic colouring has Conway type 4*2⁴/22×, with [G:K] = 4 and G/K isomorphic to C4. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/4 sends colour k to k+j modulo 4.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C4 extension",
@@ -10352,7 +10352,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g139",
       "image": "output/clockwork-colorings/g139.webp",
-      "image_alt": "Static 4-colour wallpaper plate induced by clockwork group c4₁*2: asymmetric motifs carry phase colours for 4*2⁴/22×.",
+      "image_alt": "Static perfect 4-colouring induced by clockwork group c4₁*2: asymmetric motifs carry phase colours for Conway type 4*2⁴/22×.",
       "render": {
         "basis": [
           [
@@ -10695,7 +10695,7 @@
           ]
         }
       ],
-      "clockwork_description": "333 is the direct-product forward group over wallpaper orbifold 333 (p3), classified in the Trigonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "333 is the direct-product forward lift over a plane symmetry group with orbifold signature 333. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 333, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -10724,7 +10724,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g224",
       "image": "output/clockwork-colorings/g224.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 333: asymmetric motifs carry phase colours for 333.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 333: asymmetric motifs carry phase colours for Conway type 333.",
       "render": {
         "basis": [
           [
@@ -10844,8 +10844,8 @@
           ]
         }
       ],
-      "clockwork_description": "3₂3₂3₂ is a non-product forward clockwork group over wallpaper orbifold 333 (p3), classified in the Trigonal system with a P lattice. Its phases form C3; the catalog cosets show 3-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 333³/◦, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "3₂3₂3₂ is a non-product forward lift over a plane symmetry group with orbifold signature 333. Its phase character has image C3; the phase residues by operation type are 3-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 333³/◦, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -10865,7 +10865,7 @@
       "inverse_clock_mate": "g226",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g225",
       "image": "output/clockwork-colorings/g225.webp",
-      "image_alt": "Static 3-colour wallpaper plate induced by clockwork group 3₂3₂3₂: asymmetric motifs carry phase colours for 333³/◦.",
+      "image_alt": "Static perfect 3-colouring induced by clockwork group 3₂3₂3₂: asymmetric motifs carry phase colours for Conway type 333³/◦.",
       "render": {
         "basis": [
           [
@@ -10985,8 +10985,8 @@
           ]
         }
       ],
-      "clockwork_description": "3₁3₁3₁ is a non-product forward clockwork group over wallpaper orbifold 333 (p3), classified in the Trigonal system with a P lattice. Its phases form C3; the catalog cosets show 3-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 333³/◦, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "3₁3₁3₁ is a non-product forward lift over a plane symmetry group with orbifold signature 333. Its phase character has image C3; the phase residues by operation type are 3-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 333³/◦, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -11006,7 +11006,7 @@
       "inverse_clock_mate": "g225",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g226",
       "image": "output/clockwork-colorings/g226.webp",
-      "image_alt": "Static 3-colour wallpaper plate induced by clockwork group 3₁3₁3₁: asymmetric motifs carry phase colours for 333³/◦.",
+      "image_alt": "Static perfect 3-colouring induced by clockwork group 3₁3₁3₁: asymmetric motifs carry phase colours for Conway type 333³/◦.",
       "render": {
         "basis": [
           [
@@ -11134,8 +11134,8 @@
           ]
         }
       ],
-      "clockwork_description": "r33₁3₂ is a non-product forward clockwork group over wallpaper orbifold 333 (p3), classified in the Trigonal system with a R (1/3-stacked) lattice. Its phases form C3; the catalog cosets show translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3.",
-      "coloring_description": "The zero-phase kernel K is orbifold 333 (p3); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 333³/333, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "r33₁3₂ is a non-product forward lift over a plane symmetry group with orbifold signature 333. Its phase character has image C3; the phase residues by operation type are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 333³/333, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -11155,7 +11155,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g227",
       "image": "output/clockwork-colorings/g227.webp",
-      "image_alt": "Static 3-colour wallpaper plate induced by clockwork group r33₁3₂: asymmetric motifs carry phase colours for 333³/333.",
+      "image_alt": "Static perfect 3-colouring induced by clockwork group r33₁3₂: asymmetric motifs carry phase colours for Conway type 333³/333.",
       "render": {
         "basis": [
           [
@@ -11378,7 +11378,7 @@
           ]
         }
       ],
-      "clockwork_description": "*333 is the direct-product forward group over wallpaper orbifold *333 (p3m1), classified in the Trigonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "*333 is the direct-product forward lift over a plane symmetry group with orbifold signature *333. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group *333, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -11407,7 +11407,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g230",
       "image": "output/clockwork-colorings/g230.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group *333: asymmetric motifs carry phase colours for *333.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group *333: asymmetric motifs carry phase colours for Conway type *333.",
       "render": {
         "basis": [
           [
@@ -11581,8 +11581,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~3~3~3 is a non-product forward clockwork group over wallpaper orbifold *333 (p3m1), classified in the Trigonal system with a P lattice. Its phases form C2; the catalog cosets show 3-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 333 (p3); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *333/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*~3~3~3 is a non-product forward lift over a plane symmetry group with orbifold signature *333. Its phase character has image C2; the phase residues by operation type are 3-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type *333/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -11602,7 +11602,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g231",
       "image": "output/clockwork-colorings/g231.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *~3~3~3: asymmetric motifs carry phase colours for *333/333.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *~3~3~3: asymmetric motifs carry phase colours for Conway type *333/333.",
       "render": {
         "basis": [
           [
@@ -11771,7 +11771,7 @@
           ]
         }
       ],
-      "clockwork_description": "3*3 is the direct-product forward group over wallpaper orbifold 3*3 (p31m), classified in the Trigonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "3*3 is the direct-product forward lift over a plane symmetry group with orbifold signature 3*3. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 3*3, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -11800,7 +11800,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g232",
       "image": "output/clockwork-colorings/g232.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 3*3: asymmetric motifs carry phase colours for 3*3.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 3*3: asymmetric motifs carry phase colours for Conway type 3*3.",
       "render": {
         "basis": [
           [
@@ -11974,8 +11974,8 @@
           ]
         }
       ],
-      "clockwork_description": "3*~3 is a non-product forward clockwork group over wallpaper orbifold 3*3 (p31m), classified in the Trigonal system with a P lattice. Its phases form C2; the catalog cosets show 3-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 333 (p3); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 3*3/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "3*~3 is a non-product forward lift over a plane symmetry group with orbifold signature 3*3. Its phase character has image C2; the phase residues by operation type are 3-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 3*3/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -11995,7 +11995,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g233",
       "image": "output/clockwork-colorings/g233.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 3*~3: asymmetric motifs carry phase colours for 3*3/333.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 3*~3: asymmetric motifs carry phase colours for Conway type 3*3/333.",
       "render": {
         "basis": [
           [
@@ -12185,12 +12185,12 @@
           ]
         }
       ],
-      "clockwork_description": "r3₂*3 is a non-product forward clockwork group over wallpaper orbifold 3*3 (p31m), classified in the Trigonal system with a R (1/3-stacked) lattice. Its phases form C3; the catalog cosets show translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 0, 1/3, 2/3.",
-      "coloring_description": "The zero-phase kernel K is orbifold *333 (p3m1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 3*3³/*333, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "r3₂*3 is a non-product forward lift over a plane symmetry group with orbifold signature 3*3. Its phase character has image C3; the phase residues by operation type are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 0, 1/3, 2/3.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *333 and preserves every colour. The resulting regular cyclic colouring has Conway type 3*3³/*333, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "internal-discrepancy",
         "status_label": "book-internal discrepancy",
-        "summary": "The clock operations give the regular type 3*3³/*333. Table 13.1 prints that type, but Table 12.1 instead prints the nonregular S3 type 3*3³//*333 and the derivation on p. 158 gives 3*3³/◦. The page keeps the computed kernel, flags the conflict, and links an independent p31m/3 p3m1 construction by Frank Farris.",
+        "summary": "The clock operations give the regular type 3*3³/*333. Table 13.1 prints that type, but Table 12.1 instead prints the nonregular S3 type 3*3³//*333 and the derivation on p. 158 gives 3*3³/◦. The page keeps the computed kernel, flags the conflict, and links Frank Farris's independent construction of the same 3*3³/*333 type.",
         "references": [
           {
             "label": "Table 13.1 · later primefold summary",
@@ -12226,7 +12226,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g234",
       "image": "output/clockwork-colorings/g234.webp",
-      "image_alt": "Static 3-colour wallpaper plate induced by clockwork group r3₂*3: asymmetric motifs carry phase colours for 3*3³/*333.",
+      "image_alt": "Static perfect 3-colouring induced by clockwork group r3₂*3: asymmetric motifs carry phase colours for Conway type 3*3³/*333.",
       "render": {
         "basis": [
           [
@@ -12647,8 +12647,8 @@
           ]
         }
       ],
-      "clockwork_description": "r3₂*~3 is a non-product forward clockwork group over wallpaper orbifold 3*3 (p31m), classified in the Trigonal system with a R (1/3-stacked) lattice. Its phases form C6; the catalog cosets show translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 1/6, 1/2, 5/6.",
-      "coloring_description": "The zero-phase kernel K is orbifold 333 (p3); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 3*3⁶/333, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
+      "clockwork_description": "r3₂*~3 is a non-product forward lift over a plane symmetry group with orbifold signature 3*3. Its phase character has image C6; the phase residues by operation type are translations: 1/3, 2/3; 3-fold rotations: 0, 1/3, 2/3; reflections / glides: 1/6, 1/2, 5/6.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 3*3⁶/333, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C6 extension",
@@ -12694,7 +12694,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g235",
       "image": "output/clockwork-colorings/g235.webp",
-      "image_alt": "Static 6-colour wallpaper plate induced by clockwork group r3₂*~3: asymmetric motifs carry phase colours for 3*3⁶/333.",
+      "image_alt": "Static perfect 6-colouring induced by clockwork group r3₂*~3: asymmetric motifs carry phase colours for Conway type 3*3⁶/333.",
       "render": {
         "basis": [
           [
@@ -13085,7 +13085,7 @@
           ]
         }
       ],
-      "clockwork_description": "632 is the direct-product forward group over wallpaper orbifold 632 (p6), classified in the Hexagonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "632 is the direct-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group 632, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -13114,7 +13114,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g243",
       "image": "output/clockwork-colorings/g243.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group 632: asymmetric motifs carry phase colours for 632.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group 632: asymmetric motifs carry phase colours for Conway type 632.",
       "render": {
         "basis": [
           [
@@ -13301,8 +13301,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₂3₂2 is a non-product forward clockwork group over wallpaper orbifold 632 (p6), classified in the Hexagonal system with a P lattice. Its phases form C3; the catalog cosets show 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 632³/2222, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "6₂3₂2 is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C3; the phase residues by operation type are 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 632³/2222, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -13322,7 +13322,7 @@
       "inverse_clock_mate": "g245",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g244",
       "image": "output/clockwork-colorings/g244.webp",
-      "image_alt": "Static 3-colour wallpaper plate induced by clockwork group 6₂3₂2: asymmetric motifs carry phase colours for 632³/2222.",
+      "image_alt": "Static perfect 3-colouring induced by clockwork group 6₂3₂2: asymmetric motifs carry phase colours for Conway type 632³/2222.",
       "render": {
         "basis": [
           [
@@ -13509,8 +13509,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₄3₁2 is a non-product forward clockwork group over wallpaper orbifold 632 (p6), classified in the Hexagonal system with a P lattice. Its phases form C3; the catalog cosets show 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
-      "coloring_description": "The zero-phase kernel K is orbifold 2222 (p2); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 632³/2222, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
+      "clockwork_description": "6₄3₁2 is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C3; the phase residues by operation type are 2-fold rotations: 0; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/3, 2/3.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 2222 and preserves every colour. The resulting regular cyclic colouring has Conway type 632³/2222, with [G:K] = 3 and G/K isomorphic to C3. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/3 sends colour k to k+j modulo 3.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 12.1 match",
@@ -13530,7 +13530,7 @@
       "inverse_clock_mate": "g244",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g245",
       "image": "output/clockwork-colorings/g245.webp",
-      "image_alt": "Static 3-colour wallpaper plate induced by clockwork group 6₄3₁2: asymmetric motifs carry phase colours for 632³/2222.",
+      "image_alt": "Static perfect 3-colouring induced by clockwork group 6₄3₁2: asymmetric motifs carry phase colours for Conway type 632³/2222.",
       "render": {
         "basis": [
           [
@@ -13710,8 +13710,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₃32₁ is a non-product forward clockwork group over wallpaper orbifold 632 (p6), classified in the Hexagonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 333 (p3); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 632/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "6₃32₁ is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 333 and preserves every colour. The resulting regular cyclic colouring has Conway type 632/333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -13731,7 +13731,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g246",
       "image": "output/clockwork-colorings/g246.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group 6₃32₁: asymmetric motifs carry phase colours for 632/333.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group 6₃32₁: asymmetric motifs carry phase colours for Conway type 632/333.",
       "render": {
         "basis": [
           [
@@ -13933,8 +13933,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₅3₂2₁ is a non-product forward clockwork group over wallpaper orbifold 632 (p6), classified in the Hexagonal system with a P lattice. Its phases form C6; the catalog cosets show 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 632⁶/◦, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
+      "clockwork_description": "6₅3₂2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C6; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 632⁶/◦, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C6 extension",
@@ -13980,7 +13980,7 @@
       "inverse_clock_mate": "g248",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g247",
       "image": "output/clockwork-colorings/g247.webp",
-      "image_alt": "Static 6-colour wallpaper plate induced by clockwork group 6₅3₂2₁: asymmetric motifs carry phase colours for 632⁶/◦.",
+      "image_alt": "Static perfect 6-colouring induced by clockwork group 6₅3₂2₁: asymmetric motifs carry phase colours for Conway type 632⁶/◦.",
       "render": {
         "basis": [
           [
@@ -14182,8 +14182,8 @@
           ]
         }
       ],
-      "clockwork_description": "6₁3₁2₁ is a non-product forward clockwork group over wallpaper orbifold 632 (p6), classified in the Hexagonal system with a P lattice. Its phases form C6; the catalog cosets show 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
-      "coloring_description": "The zero-phase kernel K is orbifold ◦ (p1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is 632⁶/◦, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
+      "clockwork_description": "6₁3₁2₁ is a non-product forward lift over a plane symmetry group with orbifold signature 632. Its phase character has image C6; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 1/3, 2/3; 6-fold rotations: 1/6, 5/6.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature ◦ and preserves every colour. The resulting regular cyclic colouring has Conway type 632⁶/◦, with [G:K] = 6 and G/K isomorphic to C6. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/6 sends colour k to k+j modulo 6.",
       "book_audit": {
         "status": "composite-extension",
         "status_label": "regular cyclic C6 extension",
@@ -14229,7 +14229,7 @@
       "inverse_clock_mate": "g247",
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g248",
       "image": "output/clockwork-colorings/g248.webp",
-      "image_alt": "Static 6-colour wallpaper plate induced by clockwork group 6₁3₁2₁: asymmetric motifs carry phase colours for 632⁶/◦.",
+      "image_alt": "Static perfect 6-colouring induced by clockwork group 6₁3₁2₁: asymmetric motifs carry phase colours for Conway type 632⁶/◦.",
       "render": {
         "basis": [
           [
@@ -14410,7 +14410,7 @@
           ]
         }
       ],
-      "clockwork_description": "*632 is the direct-product forward group over wallpaper orbifold *632 (p6m), classified in the Hexagonal system with a P lattice. Every displayed spatial operation has phase 0.",
+      "clockwork_description": "*632 is the direct-product forward lift over a plane symmetry group with orbifold signature *632. Its phase character is trivial: every spatial operation maps to phase 0.",
       "coloring_description": "The phase character is trivial, so K = G. In the book's terminology this is the onefold plane group *632, not a G¹/G colour-type label. The static plate is monochrome.",
       "book_audit": {
         "status": "plane-group",
@@ -14439,7 +14439,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g268",
       "image": "output/clockwork-colorings/g268.webp",
-      "image_alt": "Static 1-colour wallpaper plate induced by clockwork group *632: asymmetric motifs carry phase colours for *632.",
+      "image_alt": "Static perfect 1-colouring induced by clockwork group *632: asymmetric motifs carry phase colours for Conway type *632.",
       "render": {
         "basis": [
           [
@@ -14734,8 +14734,8 @@
           ]
         }
       ],
-      "clockwork_description": "*6₃~3~2₁ is a non-product forward clockwork group over wallpaper orbifold *632 (p6m), classified in the Hexagonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 3*3 (p31m); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *632/3*3, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*6₃~3~2₁ is a non-product forward lift over a plane symmetry group with orbifold signature *632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 3*3 and preserves every colour. The resulting regular cyclic colouring has Conway type *632/3*3, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -14755,7 +14755,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g269",
       "image": "output/clockwork-colorings/g269.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *6₃~3~2₁: asymmetric motifs carry phase colours for *632/3*3.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *6₃~3~2₁: asymmetric motifs carry phase colours for Conway type *632/3*3.",
       "render": {
         "basis": [
           [
@@ -15049,8 +15049,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~6~3~2 is a non-product forward clockwork group over wallpaper orbifold *632 (p6m), classified in the Hexagonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 0; 3-fold rotations: 0; 6-fold rotations: 0; reflections / glides: 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold 632 (p6); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *632/632, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*~6~3~2 is a non-product forward lift over a plane symmetry group with orbifold signature *632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 0; 3-fold rotations: 0; 6-fold rotations: 0; reflections / glides: 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature 632 and preserves every colour. The resulting regular cyclic colouring has Conway type *632/632, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -15070,7 +15070,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g270",
       "image": "output/clockwork-colorings/g270.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *~6~3~2: asymmetric motifs carry phase colours for *632/632.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *~6~3~2: asymmetric motifs carry phase colours for Conway type *632/632.",
       "render": {
         "basis": [
           [
@@ -15365,8 +15365,8 @@
           ]
         }
       ],
-      "clockwork_description": "*~6₃32₁ is a non-product forward clockwork group over wallpaper orbifold *632 (p6m), classified in the Hexagonal system with a P lattice. Its phases form C2; the catalog cosets show 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
-      "coloring_description": "The zero-phase kernel K is orbifold *333 (p3m1); it preserves every colour and is the frame-preserving wallpaper subgroup. The traditional perfect cyclic colouring is *632/*333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
+      "clockwork_description": "*~6₃32₁ is a non-product forward lift over a plane symmetry group with orbifold signature *632. Its phase character has image C2; the phase residues by operation type are 2-fold rotations: 1/2; 3-fold rotations: 0; 6-fold rotations: 1/2; reflections / glides: 0, 1/2.",
+      "coloring_description": "The colour-fixing subgroup K has orbifold signature *333 and preserves every colour. The resulting regular cyclic colouring has Conway type *632/*333, with [G:K] = 2 and G/K isomorphic to C2. Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so the notation has one slash. An operation at phase j/2 sends colour k to k+j modulo 2.",
       "book_audit": {
         "status": "direct-table",
         "status_label": "direct Table 11.1 match",
@@ -15386,7 +15386,7 @@
       "inverse_clock_mate": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g271",
       "image": "output/clockwork-colorings/g271.webp",
-      "image_alt": "Static 2-colour wallpaper plate induced by clockwork group *~6₃32₁: asymmetric motifs carry phase colours for *632/*333.",
+      "image_alt": "Static perfect 2-colouring induced by clockwork group *~6₃32₁: asymmetric motifs carry phase colours for Conway type *632/*333.",
       "render": {
         "basis": [
           [

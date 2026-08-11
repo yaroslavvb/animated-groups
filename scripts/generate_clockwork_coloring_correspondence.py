@@ -95,72 +95,72 @@ ORBIFOLD_BY_BASE = {
 
 WALLPAPER_SUMMARIES = {
     "p1": (
-        "Translations only; the quotient orbifold is a torus.",
-        "Its sole forward catalog row is the omitted C1 product, so this family has no nontrivial colour action to display.",
+        "A torus; translations only.",
+        "Its sole forward catalog row is the omitted C1 product, so this signature has no nontrivial colour action to display.",
     ),
     "p2": (
-        "Four families of half-turn centres; the quotient is a pillowcase with four order-2 cone points.",
-        "Both non-product lifts are dichromatic: 2₁2₁2₁2₁ has K = ◦, while c222₁2₁ has an index-two kernel again of type 2222.",
+        "A sphere with four order-2 cone points.",
+        "Both displayed lifts use two colours: 2₁2₁2₁2₁ has K = ◦, while c222₁2₁ has an index-two kernel whose signature is again 2222.",
     ),
     "pm": (
-        "Translations and parallel mirror lines; the quotient has two mirror-boundary components.",
-        "The forward catalog contributes only the omitted C1 product, so this family has no nontrivial colour action to display.",
+        "Two mirror-boundary components.",
+        "The forward catalog contributes only the omitted C1 product, so this signature has no nontrivial colour action to display.",
     ),
     "pg": (
-        "Glide reflections without mirror lines; the quotient has two crosscaps.",
+        "Two crosscaps; glide reflections but no mirror boundary.",
         "Each × is Conway's crosscap or ‘miracle’ symbol, not a mirror boundary; the sole forward row is the omitted C1 product.",
     ),
     "cm": (
-        "A centred rectangular pattern with an interleaved mirror family and glide family.",
+        "One mirror boundary and one crosscap.",
         "Its non-product member ~*×½ exchanges two phases and has translation-only kernel K = ◦.",
     ),
     "pmm": (
-        "The rectangular kaleidoscope: perpendicular mirror families meeting in four classes of order-2 corners.",
-        "Its five non-product lifts are all dichromatic, with phase-zero kernels 2222, **, *2222, 22*, and 2*22.",
+        "A mirror quadrilateral with four order-2 corners.",
+        "Its five nontrivial lifts all use two colours, with phase-zero kernels 2222, **, *2222, 22*, and 2*22.",
     ),
     "pmg": (
-        "Two classes of half-turn centres beside one mirror family, with glides in the perpendicular direction.",
-        "Its five non-product lifts are dichromatic; their kernels range through 2222, ××, **, 22*, and 22×.",
+        "Two order-2 cone points and one mirror-boundary component.",
+        "Its five nontrivial lifts use two colours; their kernels range through 2222, ××, **, 22*, and 22×.",
     ),
     "pgg": (
-        "Two classes of half-turn centres together with glide reflections, but no mirror lines.",
-        "This rectangular family reaches four colours in c22₁×¼, whose quarter-period glide has kernel K = 2222.",
+        "Two order-2 cone points and one crosscap.",
+        "Among its three nontrivial lifts, c22₁×¼ reaches four colours; its quarter-period glide has kernel K = 2222.",
     ),
     "cmm": (
-        "The centred rectangular kaleidoscope, with half-turn centres both on and off its mirrors.",
-        "Its five dichromatic lifts have kernels 2222, *×, *2222, 22×, and 22*.",
+        "One order-2 cone point and a mirror boundary with two order-2 corners.",
+        "Its five two-colour lifts have kernels 2222, *×, *2222, 22×, and 22*.",
     ),
     "p4": (
-        "The orientation-preserving square group: two classes of fourfold centres and one class of half-turn centres, with no mirrors.",
+        "A sphere with cone points of orders 4, 4, and 2.",
         "Three lifts use four colours; 4₁4₁2₁ and 4₃4₃2₁ are the inverse-clock pair.",
     ),
     "p4m": (
-        "The full square kaleidoscope, whose mirror triangle has corner orders 4, 4, and 2.",
-        "All five non-product lifts are dichromatic, despite the fourfold spatial centres; their kernels are *2222, 2*22, 442, *442, and 4*2.",
+        "A mirror triangle with corner orders 4, 4, and 2.",
+        "All five nontrivial lifts use two colours, despite the fourfold centres; their kernels are *2222, 2*22, 442, *442, and 4*2.",
     ),
     "p4g": (
-        "Fourfold centres beside mirrors, with glide lines between the mirrored parts of the pattern.",
-        "Three lifts use two colours and two use four; the four-colour cases are the centred c4₃*2 and c4₁*2 lifts.",
+        "One order-4 cone point and a mirror boundary with one order-2 corner.",
+        "Three lifts use two colours and two use four; the four-colour cases are c4₃*2 and c4₁*2.",
     ),
     "p3": (
-        "Three classes of threefold rotation centres and no mirrors.",
-        "Its three non-product lifts use three colours: the uniform 3₁ and 3₂ screws form an inverse-clock pair, while r33₁3₂ retains a kernel of type 333.",
+        "A sphere with three order-3 cone points.",
+        "Its three nontrivial lifts use three colours: the uniform 3₁ and 3₂ screws form an inverse-clock pair, while r33₁3₂ retains a kernel with signature 333.",
     ),
     "p3m1": (
-        "The equilateral-triangle kaleidoscope, with every threefold centre lying on a mirror.",
-        "There is one non-product lift: the dichromatic *~3~3~3, where the odd-corner relation makes the mirror arcs change phase together.",
+        "A mirror triangle with three order-3 corners.",
+        "There is one nontrivial lift: the two-colour *~3~3~3, where the odd-corner relation makes the mirror arcs change phase together.",
     ),
     "p31m": (
-        "One class of threefold centres lies off the mirrors and another lies on them.",
+        "One order-3 cone point and a mirror boundary with one order-3 corner.",
         "Its displayed lifts have N = 2, 3, and 6; r3₂*~3 combines a third-period screw with a half-period mirror shift, producing N = 6.",
     ),
     "p6": (
-        "The orientation-preserving hexagonal group, with sixfold, threefold, and twofold centres and no mirrors.",
-        "Its non-product lifts comprise one N = 2 group, an inverse-clock pair at N = 3, and another inverse-clock pair at N = 6.",
+        "A sphere with cone points of orders 6, 3, and 2.",
+        "Its nontrivial lifts comprise one N = 2 group, an inverse-clock pair at N = 3, and another inverse-clock pair at N = 6.",
     ),
     "p6m": (
-        "The full hexagonal kaleidoscope, whose mirror triangle has corner orders 6, 3, and 2.",
-        "Its three non-product lifts are all dichromatic, with phase-zero kernels 3*3, 632, and *333.",
+        "A mirror triangle with corner orders 6, 3, and 2.",
+        "Its three nontrivial lifts all use two colours, with phase-zero kernels 3*3, 632, and *333.",
     ),
 }
 
@@ -560,8 +560,8 @@ def book_audit(
                 "The clock operations give the regular type 3*3³/*333. Table 13.1 "
                 "prints that type, but Table 12.1 instead prints the nonregular S3 type "
                 "3*3³//*333 and the derivation on p. 158 gives 3*3³/◦. The page keeps "
-                "the computed kernel, flags the conflict, and links an independent "
-                "p31m/3 p3m1 construction by Frank Farris."
+                "the computed kernel, flags the conflict, and links Frank Farris's "
+                "independent construction of the same 3*3³/*333 type."
             ),
             "references": [
                 book_reference(
@@ -795,21 +795,22 @@ def phase_character_signature(
 def clockwork_description(group: dict[str, Any], order: int) -> str:
     symbol = group["symbol"]
     parent = ORBIFOLD_BY_BASE[group["base"]]
-    class_phrase = f"the {group['system']} system with a {group['bravais']} lattice"
     if order == 1:
         return (
-            f"{symbol} is the direct-product forward group over wallpaper orbifold "
-            f"{parent} ({group['base']}), classified in {class_phrase}. Every displayed "
-            "spatial operation has phase 0."
+            f"{symbol} is the direct-product forward lift over a plane symmetry group "
+            f"with orbifold signature {parent}. Its phase character is trivial: "
+            "every spatial operation maps "
+            "to phase 0."
         )
     profile = phase_profile(group["render"]["ops"])
     assignments = "; ".join(
         f"{row['operation']}: {', '.join(row['phases'])}" for row in profile
     )
     return (
-        f"{symbol} is a non-product forward clockwork group over wallpaper orbifold "
-        f"{parent} ({group['base']}), classified in {class_phrase}. Its phases form "
-        f"C{order}; the catalog cosets show {assignments}."
+        f"{symbol} is a non-product forward lift over a plane symmetry group with "
+        f"orbifold signature {parent}. "
+        f"Its phase character has image C{order}; the phase residues by operation "
+        f"type are {assignments}."
     )
 
 
@@ -824,9 +825,9 @@ def coloring_description(group: dict[str, Any], order: int, kernel_base: str) ->
             "plate is monochrome."
         )
     return (
-        f"The zero-phase kernel K is orbifold {kernel} ({kernel_base}); it preserves every "
-        f"colour and is the frame-preserving wallpaper subgroup. The traditional perfect "
-        f"cyclic colouring is {notation}, with [G:K] = {order} and G/K isomorphic to C{order}. "
+        f"The colour-fixing subgroup K has orbifold signature {kernel} and preserves every "
+        f"colour. The resulting regular cyclic colouring has Conway type {notation}, with "
+        f"[G:K] = {order} and G/K isomorphic to C{order}. "
         "Because this cyclic action is regular, the chosen-colour stabilizer H equals K, so "
         "the notation has one slash. "
         f"An operation at phase j/{order} sends colour k to k+j modulo {order}."
@@ -904,9 +905,9 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "catalog_url": f"{CATALOG_ROOT}#{group_id}",
             "image": f"output/clockwork-colorings/{group_id}.webp",
             "image_alt": (
-                f"Static {order}-colour wallpaper plate induced by clockwork group "
+                f"Static perfect {order}-colouring induced by clockwork group "
                 f"{group['symbol']}: asymmetric motifs carry phase colours for "
-                f"{notation}."
+                f"Conway type {notation}."
             ),
             "render": group["render"],
         }
@@ -1410,7 +1411,7 @@ def _entry_html(
             <div>
               <p class="entry-kicker">Goodman–Strauss short colour signature</p>
               <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Book short colour signature {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
-              <p class="clockwork-identity"><span>clockwork</span> <span class="clockwork-symbol">{catalog_symbol_html}</span> · {escape(record['system'])} · {escape(record['bravais'])}</p>
+              <p class="clockwork-identity"><span>clockwork</span> <span class="clockwork-symbol">{catalog_symbol_html}</span> · base orbifold {escape(parent['orbifold'])} · phase image C<sub>{order}</sub></p>
             </div>
             <div class="entry-badges" aria-label="Correspondence summary">
               <span>C<sub>{order}</sub></span>
@@ -1424,7 +1425,7 @@ def _entry_html(
               <figure class="colour-plate">
                 <img src="{escape(record['image'])}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
                 <figcaption>
-                  <span>Traditional coloured wallpaper plate</span>
+                  <span>Static perfect-colouring plate</span>
                   <ol class="colour-key" aria-label="Colour and phase key">
                     {_phase_legend(record)}
                   </ol>
@@ -1436,10 +1437,9 @@ def _entry_html(
               <p class="pair-label">Conway–Burgiel–Goodman-Strauss colour type</p>
               <p class="orbifold-pair">{type_html}</p>
               <dl class="group-data">
-                <div><dt>Full symmetry G</dt><dd>{escape(parent['orbifold'])} <span>({escape(parent['hm'])})</span></dd></div>
-                <div><dt>All-colours kernel K</dt><dd>{escape(kernel['orbifold'])} <span>({escape(kernel['hm'])})</span></dd></div>
+                <div><dt>Projected group G</dt><dd>{escape(parent['orbifold'])}</dd></div>
+                <div><dt>Colour-fixing subgroup K</dt><dd>{escape(kernel['orbifold'])}</dd></div>
                 <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
-                <div><dt>Catalog type</dt><dd>{'product' if record['product'] else 'non-product'} · {'symmorphic' if record['symmorphic'] else 'non-symmorphic'}</dd></div>
               </dl>
               <p class="clockwork-description">{escape(record['clockwork_description'])}</p>
               <p class="coloring-description">{escape(record['coloring_description'])}</p>
@@ -1515,7 +1515,7 @@ def _family_html(
     if rows:
         contents = f"""
       <div class="clockwork-tabs" data-clockwork-tabs>
-        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Nontrivial clockwork groups over {escape(orbifold)} ({escape(base)})">
+        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Nontrivial clockwork groups over orbifold {escape(orbifold)}">
           {tabs}
         </nav>
         <ol class="correspondence-list">
@@ -1525,13 +1525,13 @@ def _family_html(
     else:
         contents = """
       <div class="family-empty" role="note">
-        <p><strong>No nontrivial forward lift occurs.</strong> After removing the inherited one-colour product, this wallpaper family contributes no entry to the 51-group atlas.</p>
+        <p><strong>No nontrivial forward lift occurs.</strong> After removing the inherited one-colour product, this orbifold signature contributes no entry to the 51-group atlas.</p>
       </div>"""
     return f"""
     <section class="{family_class}" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
       <header class="family-header">
-        <p class="section-number">Wallpaper group {family_index:02d} / 17</p>
-        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{escape(orbifold)}</span> <span class="family-hm">{escape(base)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
+        <p class="section-number">Orbifold family {family_index:02d} / 17</p>
+        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{escape(orbifold)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
         <p class="family-summary">{escape(summary)}</p>
         <p class="family-note"><strong>Forward note.</strong> {escape(note)}</p>
         {_trivial_omission_html(trivial_record)}
@@ -1579,7 +1579,6 @@ def page_html(payload: dict[str, Any]) -> str:
     directory = "\n".join(
         f'<a class="wallpaper-chip{" is-empty" if not grouped[base] else ""}" href="#wallpaper-{escape(base)}">'
         f'<span class="chip-orbifold">{escape(ORBIFOLD_BY_BASE[base])}</span> '
-        f'<span class="chip-hm">{escape(base)}</span> '
         f'<span class="chip-count">{len(grouped[base])}</span></a>'
         for base in BASE_ORDER
     )
@@ -1591,7 +1590,7 @@ def page_html(payload: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An audited atlas of 51 nontrivial forward clockwork groups and their regular cyclic coloured wallpaper groups, with paused films, traditional plates, and book-page checks.">
+  <meta name="description" content="An audited atlas of 51 nontrivial forward clockwork groups and their regular cyclic plane colourings, organized by Euclidean orbifold signature.">
   <meta name="theme-color" content="#ffffff">
   <title>Clockwork/coloring correspondence</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -1620,10 +1619,10 @@ def page_html(payload: dict[str, Any]) -> str:
       <p class="overline">51 nontrivial forward groups · 17 one-colour products omitted · films paused by default</p>
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="lead">
-        Each forward clockwork group assigns a phase to every operation of its projected wallpaper
-        group. Reading those phases as colour shifts turns the film into a traditional perfect
-        cyclic colouring. The 51 nontrivial correspondences are organized beneath the complete
-        17-wallpaper-group index;
+        Each forward clockwork group assigns a phase to every operation of its projected plane
+        symmetry group. Reading those phases as colour shifts turns the film into a regular cyclic
+        colouring. The 51 nontrivial correspondences are organized by the 17 Euclidean orbifold
+        signatures;
         each horizontal tab pairs a paused film with a conventional static colour plate and records
         its audit against <cite>The Symmetries of Things</cite>.
       </p>
@@ -1636,7 +1635,7 @@ def page_html(payload: dict[str, Any]) -> str:
           Four inverse-clock pairs differ only by cyclic colour orientation, leaving 47 nontrivial
           traditional colour classes after global colour relabelling.
         </p>
-        <p class="trivial-scope"><strong>Why 51, not 68.</strong> Every wallpaper group G has one tautological forward lift with trivial phase character: κ = 0, K = G, and no operation changes colour. Those 17 one-colour products remain in the audit data but are deliberately omitted from the atlas.</p>
+        <p class="trivial-scope"><strong>Why 51, not 68.</strong> Each Euclidean orbifold signature has one tautological forward lift with trivial phase character: κ = 0, K = G, and no operation changes colour. Those 17 one-colour products remain in the audit data but are deliberately omitted from the atlas.</p>
       </div>
       <div class="audit-summary" aria-label="Book audit totals">
         <div><strong>{audit_counts['direct-table']}</strong><span>direct colour-table matches</span></div>
@@ -1650,7 +1649,7 @@ def page_html(payload: dict[str, Any]) -> str:
       <h2 id="reading-title">The superscripts, the kernel, and the slash</h2>
       <div class="method-grid">
         <p>
-          G is the wallpaper group obtained by forgetting time. K consists of the phase-zero
+          G is the projected plane symmetry group obtained by forgetting time. K consists of the phase-zero
           operations and fixes every colour. The book calls H the stabilizer of one chosen colour.
           Here C<sub>N</sub> acts regularly, so H = K: the omitted onefold products are simply G,
           displayed twofold rows are G/K, and higher-fold entries are G<sup>N</sup>/K. A double
@@ -1694,9 +1693,9 @@ def page_html(payload: dict[str, Any]) -> str:
     </section>
 
     <nav class="directory" aria-labelledby="directory-title">
-      <p class="section-number">Wallpaper index</p>
-      <h2 id="directory-title">Jump to an underlying wallpaper group</h2>
-      <p class="directory-intro">Each count is the number of nontrivial forward lifts available as tabs. Muted zeroes mark families represented only by their omitted C<sub>1</sub> product.</p>
+      <p class="section-number">Orbifold index</p>
+      <h2 id="directory-title">Jump to an underlying orbifold signature</h2>
+      <p class="directory-intro">Each count is the number of nontrivial forward lifts available as tabs. Muted zeroes mark signatures represented only by their omitted C<sub>1</sub> product.</p>
       <div class="wallpaper-jump-list">
         {directory}
       </div>
