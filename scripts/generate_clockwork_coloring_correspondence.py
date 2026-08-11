@@ -1141,7 +1141,7 @@ def _film_html(record: dict[str, Any]) -> str:
                   <input class="phase-slider" id="{group_id}-phase" data-film-slider type="range" min="0" max="1" step="0.001" value="0" aria-valuetext="phase 0.000 of one period" disabled>
                   <output class="phase-output" data-film-output for="{group_id}-phase">0.000</output>
                 </div>
-                <figcaption id="{group_id}-film-caption">Clockwork film · paused by default</figcaption>
+                <figcaption id="{group_id}-film-caption">Clockwork film · fixed phase ruler, smooth hand · paused by default</figcaption>
               </figure>"""
 
 
@@ -1306,9 +1306,12 @@ def page_html(payload: dict[str, Any]) -> str:
         </p>
         <p>
           The upper canvas repeats one continuously animated asymmetric motif under the exact
-          catalog operations. It never starts itself: use Play or seek with the phase slider. The
-          lower plate freezes the same phase character into N conventional colours, making
-          colour-turning rotations, glides, and translations readable as a wallpaper pattern.
+          catalog operations. Its faint N-arc circle is a fixed phase ruler; the red hand sweeps
+          smoothly once per period instead of flashing one sector at a time. It never starts
+          itself: use Play or seek with the phase slider. Arrow keys work from anywhere in the
+          control bar, and Shift+arrow makes a fine step. The lower plate freezes the same phase
+          character into N conventional colours, making colour-turning rotations, glides, and
+          translations readable as a wallpaper pattern.
         </p>
       </div>
       <aside>
