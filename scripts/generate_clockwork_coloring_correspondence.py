@@ -1676,7 +1676,7 @@ python3 scripts/generate_tos_book_excerpts.py --source-pdf "/path/to/The Symmetr
         <p class="book-excerpt-status" data-book-excerpt-status role="status">Loading annotated excerpt…</p>
       </div>
       <footer class="book-excerpt-footer">
-        <p>This contextual, annotated evidence crop shows at least five times the original focus area—not a complete page. The baked-in outline marks the cited item; the faint copyright notice identifies the excerpt.</p>
+        <p>This annotated evidence crop keeps its horizontal framing and shows five times the previous vertical context where the source page permits, stopping at page edges. The baked-in outline marks the cited item; the faint copyright notice identifies the excerpt.</p>
         <div class="book-excerpt-actions">
           <button class="book-excerpt-zoom" type="button" data-book-zoom-toggle aria-pressed="false">Actual size</button>
           <a class="book-excerpt-source" data-book-excerpt-source href="{BOOK_RECORD_URL}" target="_blank" rel="noopener">Open the cited page at Google Books</a>

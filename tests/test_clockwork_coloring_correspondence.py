@@ -443,6 +443,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertTrue(path.is_file(), key)
             self.assertEqual(excerpt["pdf_page"], excerpt["printed_page"] + 19)
             focus_x, focus_y, focus_width, focus_height = excerpt["crop"]
+            base_x, base_y, base_width, base_height = (
+                book_excerpts.area_context_crop(excerpt["crop"])
+            )
             context_x, context_y, context_width, context_height = (
                 book_excerpts.expanded_crop(excerpt["crop"])
             )
@@ -452,6 +455,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 context_width * context_height,
                 focus_width * focus_height * 5,
                 key,
+            )
+            self.assertAlmostEqual(context_x, base_x, places=6, msg=key)
+            self.assertAlmostEqual(context_width, base_width, places=6, msg=key)
+            self.assertLessEqual(context_y, base_y, key)
+            self.assertGreaterEqual(context_y + context_height, base_y + base_height, key)
+            self.assertAlmostEqual(
+                context_height,
+                min(
+                    book_excerpts.PDF_HEIGHT,
+                    base_height * book_excerpts.VERTICAL_CONTEXT_MULTIPLIER,
+                ),
+                places=6,
+                msg=key,
             )
             self.assertGreaterEqual(context_x, 0, key)
             self.assertGreaterEqual(context_y, 0, key)
@@ -495,8 +511,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
 
         self.assertIn("faint copyright notice", self.page)
-        self.assertIn("not a complete page", self.page)
-        self.assertIn("at least five times the original focus area", self.page)
+        self.assertIn("five times the previous vertical context", self.page)
+        self.assertIn("stopping at page edges", self.page)
         self.assertIn("data-book-zoom-toggle", self.page)
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
         self.assertIn("initializeBookExcerptDialog", script)
