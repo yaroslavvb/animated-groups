@@ -573,6 +573,117 @@ class ClockworkPlayer {
   }
 }
 
+function initializeClockworkTabs() {
+  // Suppress the browser's pre-enhancement anchor jump: before inactive
+  // panels collapse, every later wallpaper section has the wrong offset.
+  const initialHash = location.hash;
+  if (initialHash) history.replaceState(null, "", `${location.pathname}${location.search}`);
+  const controllersByGroup = new Map();
+
+  for (const host of document.querySelectorAll("[data-clockwork-tabs]")) {
+    const tablist = host.querySelector("[data-clockwork-tablist]");
+    const tabs = [...host.querySelectorAll("[data-clockwork-tab]")];
+    if (!tablist || tabs.length === 0) continue;
+
+    const items = tabs.map((tab) => {
+      const panel = document.getElementById(tab.dataset.panelId || "");
+      return panel ? { tab, panel } : null;
+    }).filter(Boolean);
+    if (items.length !== tabs.length) continue;
+
+    tablist.setAttribute("role", "tablist");
+    for (const { tab, panel } of items) {
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-controls", panel.id);
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tab.id);
+    }
+
+    let activeId = "";
+    const activate = (groupId, options = {}) => {
+      const selected = items.find(({ panel }) => panel.id === groupId);
+      if (!selected) return false;
+      const previousId = activeId;
+      activeId = groupId;
+
+      for (const { tab, panel } of items) {
+        const isActive = panel.id === groupId;
+        tab.setAttribute("aria-selected", String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+        panel.hidden = !isActive;
+        if (panel.parentElement?.matches("li")) panel.parentElement.hidden = !isActive;
+      }
+
+      if (options.focus) selected.tab.focus();
+      if (options.history === "push" || options.history === "replace") {
+        const method = options.history === "push" ? "pushState" : "replaceState";
+        history[method](null, "", `#${groupId}`);
+      }
+      if (options.scroll) {
+        requestAnimationFrame(() => selected.panel.scrollIntoView({ block: "start" }));
+      }
+      document.dispatchEvent(new CustomEvent("clockwork:tab-change", {
+        detail: { activeId: groupId, inactiveId: previousId || null },
+      }));
+      return true;
+    };
+
+    items.forEach(({ tab, panel }, index) => {
+      tab.addEventListener("click", (event) => {
+        if (
+          event.button !== 0
+          || event.metaKey
+          || event.ctrlKey
+          || event.shiftKey
+          || event.altKey
+        ) return;
+        event.preventDefault();
+        activate(panel.id, {
+          history: location.hash === `#${panel.id}` ? null : "push",
+        });
+      });
+
+      tab.addEventListener("keydown", (event) => {
+        let nextIndex = null;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          nextIndex = (index + 1) % items.length;
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          nextIndex = (index - 1 + items.length) % items.length;
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = items.length - 1;
+        }
+        if (nextIndex === null) return;
+        event.preventDefault();
+        activate(items[nextIndex].panel.id, { focus: true, history: "replace" });
+      });
+
+      controllersByGroup.set(panel.id, { activate, panel });
+    });
+
+    activate(items[0].panel.id);
+  }
+
+  const openFromHash = (scroll = true) => {
+    const id = decodeURIComponent(location.hash.replace(/^#/, ""));
+    if (!id) return;
+    const controller = controllersByGroup.get(id);
+    if (controller) {
+      controller.activate(id, { scroll });
+      return;
+    }
+    const target = document.getElementById(id);
+    if (target && scroll) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+  };
+
+  if (initialHash) history.replaceState(null, "", initialHash);
+  openFromHash(true);
+  window.addEventListener("load", () => openFromHash(true), { once: true });
+  window.addEventListener("hashchange", () => openFromHash(true));
+  window.addEventListener("popstate", () => openFromHash(true));
+}
+
 function initializeBookExcerptDialog() {
   const dialog = document.querySelector("#book-excerpt-dialog");
   if (!dialog) return;
@@ -723,11 +834,14 @@ async function initialize() {
 
   const records = new Map(payload.groups.map((record) => [record.id, record]));
   const players = [];
+  const playersById = new Map();
   for (const root of roots) {
     const record = records.get(root.dataset.groupId);
     try {
       if (!record) throw new Error(`missing record ${root.dataset.groupId}`);
-      players.push(new ClockworkPlayer(root, record));
+      const player = new ClockworkPlayer(root, record);
+      players.push(player);
+      playersById.set(record.id, player);
     } catch (error) {
       const status = root.querySelector("[data-film-status]");
       status.textContent = "Film data failed validation; use the static plate.";
@@ -736,6 +850,16 @@ async function initialize() {
       console.error("Clockwork player failed to initialize", root.dataset.groupId, error);
     }
   }
+
+  document.addEventListener("clockwork:tab-change", (event) => {
+    const inactive = playersById.get(event.detail?.inactiveId);
+    if (inactive) inactive.deactivate();
+    const active = playersById.get(event.detail?.activeId);
+    if (active) {
+      active.pause();
+      active.seek(0);
+    }
+  });
 
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -756,5 +880,6 @@ async function initialize() {
   });
 }
 
+initializeClockworkTabs();
 initializeBookExcerptDialog();
 void initialize();
