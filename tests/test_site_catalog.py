@@ -342,17 +342,18 @@ class SiteCatalogTests(unittest.TestCase):
             )
             self.assertGreater(len(expression), 4)
 
-    def test_notation_note_is_linked_and_marks_the_extension_as_proposed(self) -> None:
+    def test_notation_guide_is_linked_and_distinguishes_project_notation(self) -> None:
         self.assertTrue(
             any(
-                href.partition("#")[0].endswith("docs/orbifold_notation.md")
+                href.partition("#")[0].endswith("docs/orbifold_notation.html")
                 for href in self.parser.links
             )
         )
-        note = (ROOT / "docs" / "orbifold_notation.md").read_text(encoding="utf-8")
-        note_lower = note.lower()
-        self.assertIn("proposed", note_lower)
-        self.assertIn("not standard", note_lower)
+        guide = (ROOT / "docs" / "orbifold_notation.html").read_text(encoding="utf-8")
+        guide_lower = " ".join(guide.lower().split())
+        self.assertIn("short colour signature", guide_lower)
+        self.assertIn("generator slot", guide_lower)
+        self.assertIn("not a standard extension", guide_lower)
 
 
 if __name__ == "__main__":

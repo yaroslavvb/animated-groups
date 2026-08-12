@@ -296,6 +296,16 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('if (previousId !== groupId)', script)
         self.assertIn('if (inactive && inactive !== active)', script)
 
+    def test_generated_page_has_no_wolfram_or_mathematica_content(self) -> None:
+        self.assertNotIn("Wolfram", self.page)
+        self.assertNotIn("Mathematica", self.page)
+        self.assertNotIn("FiniteGroupData", self.page)
+        self.assertNotIn("wolfram-group", self.page)
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertNotIn("wolfram-group", css)
+
     def test_every_row_has_an_exact_forward_catalog_deep_link(self) -> None:
         expected = [
             f"{correspondence.CATALOG_ROOT}#{group['id']}"
