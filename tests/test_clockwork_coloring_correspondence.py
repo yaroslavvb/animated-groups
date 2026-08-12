@@ -342,7 +342,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
-            self.page.count("<span>Chaim source</span>"),
+            self.page.count("<summary>Chaim source</summary>"),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
 
@@ -395,11 +395,81 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 group_id,
             )
             self.assertIn(f'Hall {escape(space_group["hall"])}', section, group_id)
+            self.assertIn(
+                correspondence.fibrifold_html(
+                    correspondence.FIBRIFOLD_BY_ID[group_id]
+                ),
+                section,
+                group_id,
+            )
+
+        self.assertEqual(
+            set(correspondence.FIBRIFOLD_BY_ID),
+            {group["id"] for group in self.payload["groups"]},
+        )
+        self.assertEqual(
+            self.page.count("<summary>Conway fibrifold notation</summary>"),
+            68,
+        )
+        self.assertEqual(
+            self.page.count('class="fibrifold-name"'),
+            68,
+        )
+        self.assertEqual(
+            self.page.count('class="fibrifold-orientation-note"'),
+            len(correspondence.FIBRIFOLD_ENANTIOMORPHIC_IDS),
+        )
+        for group in self.trivial_groups:
+            start = self.page.index(
+                f'<aside class="trivial-product" id="{group["id"]}"'
+            )
+            end = self.page.index("</aside>", start)
+            self.assertIn(
+                correspondence.fibrifold_html(
+                    correspondence.FIBRIFOLD_BY_ID[group["id"]]
+                ),
+                self.page[start:end],
+                group["id"],
+            )
 
         self.assertNotIn(
             "chaimgoodmanstrauss.com/various-crystallographic-space-groups/",
             self.page,
         )
+
+    def test_category_help_is_hoverable_focusable_and_complete(self) -> None:
+        mate_count = sum(
+            bool(group["inverse_clock_mate"]) for group in self.display_groups
+        )
+        for label, help_text in correspondence.TERM_HELP.items():
+            if label == "Conway fibrifold notation":
+                expected = len(self.payload["groups"])
+            elif label == "Opposite clock orientation":
+                expected = mate_count
+            else:
+                expected = correspondence.DISPLAYED_GROUP_COUNT
+            self.assertEqual(
+                self.page.count(f"<summary>{escape(label)}</summary>"),
+                expected,
+                label,
+            )
+            self.assertEqual(
+                self.page.count(
+                    f'<span class="term-help-copy">{escape(help_text)}</span>'
+                ),
+                expected,
+                label,
+            )
+
+        self.assertNotIn('class="term-help" title=', self.page)
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".term-help:hover .term-help-copy", css)
+        self.assertIn(".term-help:focus-within .term-help-copy", css)
+        self.assertIn(".term-help[open] .term-help-copy", css)
+        self.assertIn("@media (hover: none)", css)
+        self.assertIn(".term-help summary:focus-visible", css)
 
     def test_tos_notation_and_clock_orders_are_complete(self) -> None:
         groups = self.payload["groups"]
@@ -492,8 +562,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn('class="clockwork-description"', self.page)
         self.assertNotIn('class="phase-description"', self.page)
         self.assertNotIn('class="coloring-description"', self.page)
-        for group in self.display_groups:
-            self.assertNotIn(escape(group["symbol"]), self.page, group["id"])
+        # A Conway fibrifold can textually coincide with a catalog clockwork
+        # symbol.  The clockwork notation itself remains absent as a named UI
+        # field; only the independently sourced fibrifold row may show it.
 
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(
             encoding="utf-8"
@@ -611,7 +682,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=compact-other-names", self.page)
+        self.assertIn("?v=fibrifold-tooltips", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -673,7 +744,17 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn('href="#wallpaper-p1"', directory_html)
         self.assertNotIn('href="#wallpaper-pm"', directory_html)
         self.assertNotIn('href="#wallpaper-pg"', directory_html)
-        self.assertIn("14 projected orbifold families", directory_html)
+        self.assertIn("68 forward groups · 17 plane-orbifold families", directory_html)
+        self.assertIn(
+            "68 forward groups</strong> = 17 trivial-time C<sub>1</sub> products + "
+            "51 nontrivial colour actions",
+            directory_html,
+        )
+        self.assertIn(
+            "C<sub>2</sub>: 36 · C<sub>3</sub>: 6 · "
+            "C<sub>4</sub>: 6 · C<sub>6</sub>: 3",
+            directory_html,
+        )
         self.assertIn("Raised numbers in the signature give colour-permutation orders", directory_html)
         for group in self.display_groups:
             card_start = directory_html.index(f'data-directory-group="{group["id"]}"')

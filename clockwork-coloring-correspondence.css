@@ -24,9 +24,31 @@ nav a[aria-current="page"] {
 
 .directory-legend {
   max-width: 760px;
-  margin: 0 0 clamp(1.6rem, 4vw, 2.4rem);
+  margin: 0 0 0.8rem;
   color: var(--muted);
   font-size: 0.78rem;
+}
+
+.directory-census {
+  max-width: 760px;
+  margin: 0 0 clamp(1.6rem, 4vw, 2.4rem);
+  padding: 0.65rem 0.85rem;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.directory-census p {
+  margin: 0;
+}
+
+.directory-census p + p {
+  margin-top: 0.2rem;
+}
+
+.directory-census strong {
+  color: var(--text);
 }
 
 .provenance {
@@ -234,6 +256,15 @@ nav a[aria-current="page"] {
 
 .trivial-product strong {
   color: #666e6a;
+}
+
+.trivial-fibrifold {
+  display: grid;
+  grid-template-columns: minmax(9.5rem, 0.82fr) minmax(0, 1.18fr);
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid #d7dbd9;
 }
 
 .family-census {
@@ -540,10 +571,65 @@ nav a[aria-current="page"] {
   border-bottom: 0;
 }
 
-.other-names li > span:first-child {
+.term-help {
+  position: relative;
+  min-width: 0;
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 550;
+}
+
+.term-help summary {
+  position: relative;
+  width: fit-content;
+  padding-right: 0.72rem;
+  list-style: none;
+  border-bottom: 1px dotted currentColor;
+  cursor: help;
+}
+
+.term-help summary::-webkit-details-marker {
+  display: none;
+}
+
+.term-help summary::after {
+  position: absolute;
+  right: 0.12rem;
+  bottom: 0;
+  content: "?";
+  color: var(--accent);
+  font-size: 0.82em;
+  font-weight: 750;
+}
+
+.term-help summary:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.term-help-copy {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  display: none;
+  width: min(22rem, calc(100vw - 3rem));
+  padding: 0.62rem 0.7rem;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--surface-raised, #fff);
+  box-shadow: 0 0.55rem 1.35rem rgb(26 39 34 / 0.16);
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 450;
+  line-height: 1.42;
+}
+
+.term-help:hover .term-help-copy,
+.term-help:focus-within .term-help-copy,
+.term-help[open] .term-help-copy {
+  display: block;
 }
 
 .other-names a {
@@ -562,6 +648,22 @@ nav a[aria-current="page"] {
 .other-name-value code {
   color: var(--muted);
   font-size: 0.68rem;
+}
+
+.fibrifold-name {
+  color: var(--text);
+  font-family: "STIX Two Math", "Cambria Math", Georgia, "Times New Roman", serif;
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.fibrifold-orientation-note {
+  max-width: 24rem;
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: 1.35;
 }
 
 .book-page-link {
@@ -879,6 +981,19 @@ a[data-book-excerpt]::after {
   color: var(--accent);
 }
 
+@media (hover: none) {
+  .term-help:focus-within:not([open]) .term-help-copy {
+    display: none;
+  }
+
+  .term-help[open] .term-help-copy {
+    position: static;
+    width: auto;
+    margin-top: 0.45rem;
+    box-shadow: none;
+  }
+}
+
 @media (max-width: 900px) {
   .entry-grid {
     grid-template-columns: 1fr;
@@ -951,6 +1066,11 @@ a[data-book-excerpt]::after {
     gap: 0.14rem;
   }
 
+  .trivial-fibrifold {
+    grid-template-columns: 1fr;
+    gap: 0.14rem;
+  }
+
   .group-presentation td:last-child {
     width: 5.6rem;
     white-space: normal;
@@ -969,5 +1089,10 @@ a[data-book-excerpt]::after {
 
   .correspondence-entry {
     break-before: page;
+  }
+
+  .term-help-copy,
+  .term-help summary::after {
+    display: none !important;
   }
 }

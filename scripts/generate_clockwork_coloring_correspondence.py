@@ -51,7 +51,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=compact-other-names"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=fibrifold-tooltips"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -225,6 +225,89 @@ WALLPAPER_SUMMARIES = {
     "p6m": (
         "A mirror triangle with corner orders 6, 3, and 2.",
         "Its three nontrivial lifts all use two colours, with phase-zero kernels 3*3, 632, and *333.",
+    ),
+}
+
+# Conway--Burgiel--Goodman-Strauss fibrifold names, transcribed from
+# The Symmetries of Things, Chapter 25, Tables 25.1--25.17 (pp. 370--374).
+# The chosen alias is always the one whose horizontal plane group is this
+# record's projected wallpaper group.  Parentheses are part of the notation.
+FIBRIFOLD_BY_ID = {
+    "g1": "(◦)",
+    "g5": "(2₀2₀2₀2₀)", "g6": "(2₁2₁2₁2₁)", "g7": "(2₀2₀2₁2₁)",
+    "g8": "(∗·×)", "g9": "(∗:×)", "g10": "(∗·∗·)", "g11": "(××₀)",
+    "g54": "(∗·2·2·2·2)", "g55": "(∗:2:2:2:2)",
+    "g56": "(2₀2₀∗·)", "g57": "(2₀2₀∗:)",
+    "g58": "(2₀2₀×₀)", "g59": "(2₀2₀×₁)",
+    "g60": "(∗·2:2·2:2)", "g61": "(2₁2₁∗:)",
+    "g62": "(2₁2₁∗·)", "g63": "(2₁2₁×)",
+    "g64": "(∗·2·2·2:2)", "g65": "(∗·2:2:2:2)",
+    "g66": "(2₀2₁∗·)", "g67": "(2₀2₁∗:)",
+    "g68": "(2₀∗·2·2)", "g69": "(2₀∗:2:2)",
+    "g70": "(2₁∗·2:2)", "g71": "(2₁∗·2·2)",
+    "g72": "(2₁∗:2:2)", "g73": "(2₀∗·2:2)",
+    "g74": "(∗·2·2:2:2)", "g75": "(2₀2₁×)",
+    "g94": "(4₀4₀2₀)", "g95": "(4₂4₂2₀)",
+    "g96": "(4₁4₁2₁)", "g97": "(4₁4₁2₁)",
+    "g98": "(4₂4₀2₁)", "g99": "(4₃4₁2₀)",
+    "g128": "(∗·4·4·2)", "g129": "(∗·4:4·2)",
+    "g130": "(∗:4·4:2)", "g131": "(∗:4:4:2)",
+    "g132": "(4₀∗·2)", "g133": "(4₂∗:2)",
+    "g134": "(4₂∗·2)", "g135": "(4₀∗:2)",
+    "g136": "(∗·4·4:2)", "g137": "(4₁∗·2)",
+    "g138": "(∗·4:4:2)", "g139": "(4₁∗:2)",
+    "g224": "(3₀3₀3₀)", "g225": "(3₁3₁3₁)",
+    "g226": "(3₁3₁3₁)", "g227": "(3₀3₁3₂)",
+    "g230": "(∗·3·3·3)", "g231": "(∗:3:3:3)",
+    "g232": "(3₀∗·3)", "g233": "(3₀∗:3)",
+    "g234": "(3₁∗·3)", "g235": "(3₁∗:3)",
+    "g243": "(6₀3₀2₀)", "g244": "(6₂3₂2₀)",
+    "g245": "(6₂3₂2₀)", "g246": "(6₃3₀2₁)",
+    "g247": "(6₁3₁2₁)", "g248": "(6₁3₁2₁)",
+    "g268": "(∗·6·3·2)", "g269": "(∗·6:3:2)",
+    "g270": "(∗:6:3:2)", "g271": "(∗:6·3·2)",
+}
+
+# The book classifies these enantiomorphic space-group pairs with one
+# unoriented fibrifold name.  The Hermann--Mauguin row selects the handed
+# member; the Conway symbol should not be embellished with an invented sign.
+FIBRIFOLD_ENANTIOMORPHIC_IDS = frozenset({
+    "g96", "g97", "g225", "g226", "g244", "g245", "g247", "g248",
+})
+
+TERM_HELP = {
+    "Chaim source": (
+        "The book page or table used to identify and audit this colour symmetry."
+    ),
+    "Catalog instance": (
+        "The matching animated example in the forward-time catalog; gN is this "
+        "project's record identifier."
+    ),
+    "Parent plane-group type G": (
+        "The wallpaper group obtained after forgetting the colours; its operations "
+        "may preserve or permute the colour classes."
+    ),
+    "Colour-fixing plane-group type K": (
+        "The normal subgroup K ≤ G whose operations leave every colour class "
+        "unchanged: the kernel of G → C_N."
+    ),
+    "Conway fibrifold notation": (
+        "Conway's decorated orbifold name for this lift. It records the horizontal "
+        "base orbifold and the fractional height translations coupled to its "
+        "generators; this page uses the alias for the chosen height direction."
+    ),
+    "Height-lift space-group type": (
+        "Treat colour phase as a periodic height z. A planar operation with phase "
+        "shift τ lifts to (x, y, z) ↦ (M(x, y) + v, z + τ), producing this "
+        "three-dimensional space-group type."
+    ),
+    "Crystallographic tables": (
+        "The external UCL diagram and tables for that same space-group type in its "
+        "conventional setting."
+    ),
+    "Opposite clock orientation": (
+        "The entry obtained by reversing every phase shift, τ ↦ −τ; it traverses "
+        "the same cyclic colours in the opposite order."
     ),
 }
 
@@ -578,10 +661,29 @@ def signature_evidence(
 def orbifold_html(value: str) -> str:
     """Escape notation while giving mirrors the book's baseline math glyph."""
 
-    return escape(value).replace(
+    return escape(value.replace("∗", "*")).replace(
         "*",
         '<span class="orbifold-star">∗</span>',
     )
+
+
+def fibrifold_html(value: str) -> str:
+    """Render Conway's mirror glyph and fibre-turn subscripts semantically."""
+
+    subscript_digits = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
+    output: list[str] = []
+    run: list[str] = []
+    for character in value:
+        if character in "₀₁₂₃₄₅₆₇₈₉":
+            run.append(character.translate(subscript_digits))
+            continue
+        if run:
+            output.append(f"<sub>{''.join(run)}</sub>")
+            run.clear()
+        output.append(orbifold_html(character))
+    if run:
+        output.append(f"<sub>{''.join(run)}</sub>")
+    return "".join(output)
 
 
 def superscript_html(value: str) -> str:
@@ -2186,6 +2288,18 @@ def _plane_group_name_html(hm: str) -> str:
     return f"No. {number} {escape(full_hm)}{short_alias}"
 
 
+def _term_help_html(label: str) -> str:
+    """Render a hoverable and keyboard/touch-operable category definition."""
+
+    help_text = TERM_HELP[label]
+    return (
+        '<details class="term-help">'
+        f'<summary>{escape(label)}</summary>'
+        f'<span class="term-help-copy">{escape(help_text)}</span>'
+        '</details>'
+    )
+
+
 def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> str:
     """Link exact catalog, plane-group, and height-lift identities."""
 
@@ -2200,6 +2314,13 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
     )
     space_number = space_group["it_number"]
     space_hm = _hm_html(space_group["hm_short"])
+    fibrifold = FIBRIFOLD_BY_ID[record["id"]]
+    fibrifold_orientation_note = ""
+    if record["id"] in FIBRIFOLD_ENANTIOMORPHIC_IDS:
+        fibrifold_orientation_note = (
+            '<small class="fibrifold-orientation-note">Two orientations share this '
+            'fibrifold name; the space-group name below selects this handed form.</small>'
+        )
     primary_book_reference = next(
         reference
         for reference in record["book_audit"]["references"]
@@ -2214,18 +2335,19 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
     if record["inverse_clock_mate"]:
         mate_id = escape(record["inverse_clock_mate"])
         mate_html = (
-            f'<li><span>Opposite clock orientation</span><a href="#{mate_id}">{mate_id}</a></li>'
+            f'<li>{_term_help_html("Opposite clock orientation")}<a href="#{mate_id}">{mate_id}</a></li>'
         )
     return f"""
               <section class="other-names" aria-labelledby="{group_id}-other-names-title">
                 <h4 id="{group_id}-other-names-title">Other names and instances</h4>
                 <ul>
-                  <li><span>Chaim source</span>{book_link}</li>
-                  <li><span>Catalog instance</span><a href="{escape(record['catalog_url'])}">{group_id}</a></li>
-                  <li><span>Parent plane-group type G</span><a href="{escape(parent_url)}">{_plane_group_name_html(parent_hm)}</a></li>
-                  <li><span>Colour-fixing plane-group type K</span><a href="{escape(kernel_url)}">{_plane_group_name_html(kernel_hm)}</a></li>
-                  <li><span>Height-lift space-group type</span><span class="other-name-value"><a href="space-group-correspondence.html#{group_id}">No. {space_number} {space_hm}</a><code>Hall {escape(space_group['hall'])}</code></span></li>
-                  <li><span>Crystallographic tables</span><a href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">UCL diagram and tables</a></li>
+                  <li>{_term_help_html("Chaim source")}{book_link}</li>
+                  <li>{_term_help_html("Catalog instance")}<a href="{escape(record['catalog_url'])}">{group_id}</a></li>
+                  <li>{_term_help_html("Parent plane-group type G")}<a href="{escape(parent_url)}">{_plane_group_name_html(parent_hm)}</a></li>
+                  <li>{_term_help_html("Colour-fixing plane-group type K")}<a href="{escape(kernel_url)}">{_plane_group_name_html(kernel_hm)}</a></li>
+                  <li>{_term_help_html("Conway fibrifold notation")}<span class="other-name-value"><span class="fibrifold-name" aria-label="{escape(fibrifold)}">{fibrifold_html(fibrifold)}</span>{fibrifold_orientation_note}</span></li>
+                  <li>{_term_help_html("Height-lift space-group type")}<span class="other-name-value"><a href="space-group-correspondence.html#{group_id}">No. {space_number} {space_hm}</a><code>Hall {escape(space_group['hall'])}</code></span></li>
+                  <li>{_term_help_html("Crystallographic tables")}<a href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">UCL diagram and tables</a></li>
                   {mate_html}
                 </ul>
               </section>"""
@@ -2299,11 +2421,16 @@ def _order_census_html(rows: list[dict[str, Any]]) -> str:
 def _trivial_product_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     orbifold = orbifold_html(record["parent"]["orbifold"])
+    fibrifold = fibrifold_html(FIBRIFOLD_BY_ID[record["id"]])
     return (
         f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
         'aria-label="Trivial time group">'
         "<p><strong>C<sub>1</sub> product.</strong> "
         f"{orbifold} · {group_id} · κ = 0 · K = G</p>"
+        '<div class="trivial-fibrifold">'
+        f'{_term_help_html("Conway fibrifold notation")}'
+        f'<span class="fibrifold-name" aria-label="{escape(FIBRIFOLD_BY_ID[record["id"]])}">{fibrifold}</span>'
+        "</div>"
         "</aside>"
     )
 
@@ -2392,6 +2519,13 @@ def _family_html(
 
 def page_html(payload: dict[str, Any]) -> str:
     groups = payload["groups"]
+    group_ids = {group["id"] for group in groups}
+    if group_ids != set(FIBRIFOLD_BY_ID):
+        missing = sorted(group_ids - set(FIBRIFOLD_BY_ID))
+        extra = sorted(set(FIBRIFOLD_BY_ID) - group_ids)
+        raise ValueError(
+            f"fibrifold mapping mismatch; missing={missing}, extra={extra}"
+        )
     space_groups_by_id = _space_groups_by_id()
     displayed_groups = [group for group in groups if group["clock_order"] > 1]
     trivial_groups = [group for group in groups if group["clock_order"] == 1]
@@ -2465,9 +2599,13 @@ def page_html(payload: dict[str, Any]) -> str:
 
   <main class="correspondence-page">
     <nav class="directory" aria-labelledby="page-title">
-      <p class="section-number">51 nontrivial forward groups · 14 projected orbifold families</p>
+      <p class="section-number">{len(groups)} forward groups · {len(BASE_ORDER)} plane-orbifold families</p>
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
+      <aside class="directory-census" aria-label="Forward group count overview">
+        <p><strong>{len(groups)} forward groups</strong> = {len(trivial_groups)} trivial-time C<sub>1</sub> products + {len(displayed_groups)} nontrivial colour actions.</p>
+        <p><strong>Nontrivial by colour order</strong> · {_order_census_html(displayed_groups)}</p>
+      </aside>
       <div class="directory-families">
         {directory}
       </div>
