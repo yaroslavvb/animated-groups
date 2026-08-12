@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, defaultdict
 from html import escape
 from html.parser import HTMLParser
 import json
@@ -567,14 +567,127 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn('class="clockwork-description"', self.page)
         self.assertNotIn('class="phase-description"', self.page)
         self.assertNotIn('class="coloring-description"', self.page)
-        # A Conway fibrifold can textually coincide with a catalog clockwork
-        # symbol.  The clockwork notation itself remains absent as a named UI
-        # field; only the independently sourced fibrifold row may show it.
+        # The retired all-groups notation field stays absent.  The deliberately
+        # narrower collision marker is covered below.
 
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(
             encoding="utf-8"
         )
         self.assertNotIn("record.symbol", script)
+
+    def test_chaim_signature_collisions_get_unique_clockwork_symbols(self) -> None:
+        expected_fibres = {
+            "⁴4⁴4²2": {"g96": "4₁4₁2₁", "g97": "4₃4₃2₁"},
+            "³3³3³3": {"g225": "3₂3₂3₂", "g226": "3₁3₁3₁"},
+            "³6³3¹2": {"g244": "6₂3₂2", "g245": "6₄3₁2"},
+            "⁶6³3²2": {"g247": "6₅3₂2₁", "g248": "6₁3₁2₁"},
+        }
+        fibres: dict[str, list[dict[str, object]]] = defaultdict(list)
+        for group in self.display_groups:
+            fibres[group["book_color_signature"]].append(group)
+        actual_fibres = {
+            signature: {
+                str(group["id"]): str(group["symbol"])
+                for group in fibre
+            }
+            for signature, fibre in fibres.items()
+            if len(fibre) > 1
+        }
+        self.assertEqual(actual_fibres, expected_fibres)
+        collision_ids = {
+            group_id
+            for fibre in expected_fibres.values()
+            for group_id in fibre
+        }
+        self.assertEqual(
+            collision_ids,
+            set(correspondence.COLOUR_SIGNATURE_COLLISION_IDS),
+        )
+        self.assertEqual(len(fibres), 47)
+        self.assertEqual(
+            len({group["symbol"] for group in self.display_groups}),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+
+        self.assertEqual(self.page.count('class="notation-caveat"'), 1)
+        self.assertIn("These 51 clockwork groups represent 47", self.page)
+        self.assertIn("Why 4 Chaim signatures occur twice", self.page)
+        self.assertIn(
+            f'href="{correspondence.HIERARCHY_CHIRALITY_URL}"',
+            self.page,
+        )
+        self.assertIn('href="docs/orbifold_notation.html#scope"', self.page)
+        self.assertEqual(
+            self.page.count('class="clockwork-disambiguator '),
+            3 * len(collision_ids),
+        )
+        for context in ("heading", "tab", "directory"):
+            self.assertEqual(
+                self.page.count(f"clockwork-disambiguator--{context}"),
+                len(collision_ids),
+            )
+
+        groups_by_id = {group["id"]: group for group in self.display_groups}
+        for group_id, group in groups_by_id.items():
+            rendered_symbol = correspondence.clockwork_symbol_html(
+                str(group["symbol"])
+            )
+            contexts = {
+                "directory": self.page[
+                    self.page.index(
+                        f'<a class="directory-group" href="#{group_id}"'
+                    ):
+                    self.page.index(
+                        "</a>",
+                        self.page.index(
+                            f'<a class="directory-group" href="#{group_id}"'
+                        ),
+                    )
+                ],
+                "tab": self.page[
+                    self.page.index(
+                        f'<a class="clockwork-tab" id="tab-{group_id}"'
+                    ):
+                    self.page.index(
+                        "</a>",
+                        self.page.index(
+                            f'<a class="clockwork-tab" id="tab-{group_id}"'
+                        ),
+                    )
+                ],
+                "heading": self.page[
+                    self.page.index(
+                        f'<section class="correspondence-entry" id="{group_id}"'
+                    ):
+                    self.page.index(
+                        "</header>",
+                        self.page.index(
+                            f'<section class="correspondence-entry" id="{group_id}"'
+                        ),
+                    )
+                ],
+            }
+            if group_id in collision_ids:
+                for context, fragment in contexts.items():
+                    self.assertIn(
+                        f"clockwork-disambiguator--{context}",
+                        fragment,
+                        group_id,
+                    )
+                    self.assertIn(rendered_symbol, fragment, group_id)
+                    self.assertIn(
+                        f"project-specific clockwork symbol {escape(group['symbol'])}".lower(),
+                        fragment.lower(),
+                        group_id,
+                    )
+            else:
+                for context, fragment in contexts.items():
+                    self.assertNotIn(
+                        f"clockwork-disambiguator--{context}",
+                        fragment,
+                        group_id,
+                    )
+        self.assertNotIn("aria-describedby=", self.page)
 
     def test_visible_mirror_atoms_use_the_books_baseline_math_glyph(self) -> None:
         protected_star = '<span class="orbifold-star">∗</span>'
@@ -687,7 +800,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=hover-tooltips", self.page)
+        self.assertIn("?v=chirality-disambiguation", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (

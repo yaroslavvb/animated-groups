@@ -51,7 +51,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=hover-tooltips"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=chirality-disambiguation"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 
@@ -136,6 +136,9 @@ PLANE_GROUP_FULL_HM = {
 }
 IUCR_PLANE_GROUP_URL = (
     "https://it.iucr.org/Ac/ch2o2v0001/sgtable2o2o{number:03d}/"
+)
+HIERARCHY_CHIRALITY_URL = (
+    "https://yaroslavvb.github.io/animated-groups-fable/hierarchy.html#splits"
 )
 
 ORBIFOLD_BY_BASE = {
@@ -355,6 +358,12 @@ INVERSE_CLOCK_MATE = {
     "g244": "g245", "g245": "g244",
     "g247": "g248", "g248": "g247",
 }
+
+# These are the displayed rows whose Chaim colour signature has a second
+# preimage.  Keep this name separate from the fibrifold map: both unoriented
+# notations happen to have the same four fibres, but they classify different
+# objects.
+COLOUR_SIGNATURE_COLLISION_IDS = frozenset(INVERSE_CLOCK_MATE)
 
 EXPECTED_ORDER_COUNTS = {1: 17, 2: 36, 3: 6, 4: 6, 5: 0, 6: 3}
 DISPLAYED_GROUP_COUNT = 51
@@ -633,6 +642,32 @@ def fibrifold_html(value: str) -> str:
         output.append(orbifold_html(character))
     if run:
         output.append(f"<sub>{''.join(run)}</sub>")
+    return "".join(output)
+
+
+def clockwork_symbol_html(value: str) -> str:
+    """Render the catalog's clockwork orbifold symbol semantically."""
+
+    subscript_digits = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
+    superscript_letters = str.maketrans("ᵃᵇ", "ab")
+    output: list[str] = []
+    subscript_run: list[str] = []
+
+    def flush_subscript() -> None:
+        if subscript_run:
+            output.append(f"<sub>{''.join(subscript_run)}</sub>")
+            subscript_run.clear()
+
+    for character in value:
+        if character in "₀₁₂₃₄₅₆₇₈₉":
+            subscript_run.append(character.translate(subscript_digits))
+            continue
+        flush_subscript()
+        if character in "ᵃᵇ":
+            output.append(f"<sup>{character.translate(superscript_letters)}</sup>")
+        else:
+            output.append(orbifold_html(character))
+    flush_subscript()
     return "".join(output)
 
 
@@ -2249,6 +2284,23 @@ def _term_help_html(label: str) -> str:
     )
 
 
+def _clockwork_disambiguator_html(
+    record: dict[str, Any],
+    *,
+    context: str,
+) -> str:
+    """Show the oriented spacetime name only where the colour name collides."""
+
+    if record["id"] not in COLOUR_SIGNATURE_COLLISION_IDS:
+        return ""
+    symbol = record["symbol"]
+    return (
+        f'<span class="clockwork-disambiguator clockwork-disambiguator--{context}" '
+        f'aria-label="Project-specific clockwork symbol {escape(symbol)}">'
+        f'{clockwork_symbol_html(symbol)}</span>'
+    )
+
+
 def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> str:
     """Link exact catalog, plane-group, and height-lift identities."""
 
@@ -2310,11 +2362,16 @@ def _entry_html(
     order = record["clock_order"]
     short_signature = record["book_color_signature"]
     short_signature_html = superscript_html(short_signature)
+    clockwork_disambiguator = _clockwork_disambiguator_html(
+        record,
+        context="heading",
+    )
     entry = f"""
       <li class="correspondence-item">
         <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clockwork-tabpanel data-clock-order="{order}">
           <header class="entry-header">
             <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Chaim notation {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
+            {clockwork_disambiguator}
           </header>
 
           <div class="entry-grid">
@@ -2343,11 +2400,16 @@ def _entry_html(
 def _tab_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     signature = record["book_color_signature"]
+    disambiguator = _clockwork_disambiguator_html(record, context="tab")
+    aria_label = f"{signature}, colour action {group_id}"
+    if record["id"] in COLOUR_SIGNATURE_COLLISION_IDS:
+        aria_label += f"; project-specific clockwork symbol {record['symbol']}"
     return (
         f'<a class="clockwork-tab" id="tab-{group_id}" href="#{group_id}" '
         f'data-clockwork-tab data-panel-id="{group_id}" '
-        f'aria-label="{escape(signature)}, colour action {group_id}">'
+        f'aria-label="{escape(aria_label)}">'
         f'<span class="tab-signature">{superscript_html(signature)}</span>'
+        f'{disambiguator}'
         f'<span class="tab-meta">{group_id} · C<sub>{record["clock_order"]}</sub></span>'
         "</a>"
     )
@@ -2382,15 +2444,22 @@ def _trivial_product_html(record: dict[str, Any]) -> str:
 def _directory_group_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     signature = superscript_html(record["book_color_signature"])
+    disambiguator = _clockwork_disambiguator_html(record, context="directory")
+    aria_label = (
+        f'{record["book_color_signature"]}; {record["clock_order"]} colours; '
+        f'open {group_id}'
+    )
+    if record["id"] in COLOUR_SIGNATURE_COLLISION_IDS:
+        aria_label += f"; project-specific clockwork symbol {record['symbol']}"
     swatches = "".join(
         f'<span style="--directory-colour: {escape(residue["color"])}"></span>'
         for residue in record["phase_residues"]
     )
     return (
         f'<a class="directory-group" href="#{group_id}" data-directory-group="{group_id}" '
-        f'aria-label="{escape(record["book_color_signature"])}; '
-        f'{record["clock_order"]} colours; open {group_id}">'
+        f'aria-label="{escape(aria_label)}">'
         f'<span class="directory-signature book-color-signature">{signature}</span>'
+        f'{disambiguator}'
         f'<span class="directory-palette" aria-hidden="true">{swatches}</span>'
         f'<span class="directory-group-id">{group_id}</span>'
         '</a>'
@@ -2466,6 +2535,29 @@ def page_html(payload: dict[str, Any]) -> str:
         raise ValueError(f"expected {DISPLAYED_GROUP_COUNT} nontrivial display groups")
     if len(trivial_groups) != OMITTED_TRIVIAL_COUNT:
         raise ValueError(f"expected {OMITTED_TRIVIAL_COUNT} trivial product groups")
+    colour_signature_fibres: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for group in displayed_groups:
+        colour_signature_fibres[group["book_color_signature"]].append(group)
+    repeated_colour_fibres = {
+        signature: fibre
+        for signature, fibre in colour_signature_fibres.items()
+        if len(fibre) > 1
+    }
+    repeated_colour_ids = frozenset(
+        group["id"]
+        for fibre in repeated_colour_fibres.values()
+        for group in fibre
+    )
+    if repeated_colour_ids != COLOUR_SIGNATURE_COLLISION_IDS:
+        raise ValueError(
+            "colour-signature collisions no longer match the inverse-clock pairs"
+        )
+    if any(len(fibre) != 2 for fibre in repeated_colour_fibres.values()):
+        raise ValueError("expected every repeated colour signature to be a pair")
+    if len({group["symbol"] for group in displayed_groups}) != len(displayed_groups):
+        raise ValueError("clockwork symbols must disambiguate every display row")
+    colour_class_count = len(colour_signature_fibres)
+    enantiomorphic_pair_count = len(repeated_colour_fibres)
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for group in displayed_groups:
         grouped[group["parent"]["hm"]].append(group)
@@ -2523,6 +2615,10 @@ def page_html(payload: dict[str, Any]) -> str:
     <nav class="directory" aria-labelledby="page-title">
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
+      <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
+        <h2 id="notation-caveat-title">Why {enantiomorphic_pair_count} Chaim signatures occur twice</h2>
+        <p>These {len(displayed_groups)} clockwork groups represent {colour_class_count} traditional colour classes. Traditional colour equivalence permits a plane reflection together with a global colour relabelling, so reversing every phase can leave the colour class unchanged. Consequently {enantiomorphic_pair_count} enantiomorphic pairs over 333, 442 and 632 share a Chaim signature even though they are different oriented spacetime groups. On those {len(repeated_colour_ids)} entries, the smaller second line is this project’s <a href="docs/orbifold_notation.html#scope">clockwork symbol</a>; its phase subscripts distinguish the two senses of phase advance. <a href="{HIERARCHY_CHIRALITY_URL}">Hierarchy: splits by chirality ↗</a></p>
+      </aside>
       <aside class="directory-census" aria-label="Forward group count overview">
         <p><strong><span class="census-number">{len(trivial_groups)}</span> trivial groups</strong><span>Time is an independent direct-product factor.</span></p>
         <p><strong><span class="census-number">{len(displayed_groups)}</span> nontrivial groups</strong><span>Some spatial symmetries advance time phase.</span></p>
