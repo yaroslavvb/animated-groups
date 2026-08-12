@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": 2,
+    "schema_version": 3,
     "title": "Cyclic colourings and polar space groups",
     "source": "data/clockwork-coloring-correspondence.json",
     "source_sha256": "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330",
@@ -126,6 +126,7 @@
         "hm": "p1"
       },
       "tos_notation": "◦",
+      "book_color_signature": "◦",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -239,6 +240,7 @@
         "hm": "p2"
       },
       "tos_notation": "2222",
+      "book_color_signature": "2222",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -409,6 +411,7 @@
         "hm": "p1"
       },
       "tos_notation": "2222/◦",
+      "book_color_signature": "²2²2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -454,23 +457,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           }
         ],
         "relations": {
@@ -624,6 +623,7 @@
         "hm": "p2"
       },
       "tos_notation": "2222/2222",
+      "book_color_signature": "¹2¹2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -683,28 +683,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) rotation about the lift axis"
+            "operation": "Half-turn (180°) rotation about an axis parallel to the lift direction"
           }
         ],
         "relations": {
@@ -945,6 +940,7 @@
         "hm": "cm"
       },
       "tos_notation": "*×",
+      "book_color_signature": "*×",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -1115,6 +1111,7 @@
         "hm": "p1"
       },
       "tos_notation": "*×/◦",
+      "book_color_signature": "*²×²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -1160,22 +1157,18 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           }
         ],
@@ -1330,6 +1323,7 @@
         "hm": "pm"
       },
       "tos_notation": "**",
+      "book_color_signature": "**",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -1597,6 +1591,7 @@
         "hm": "pg"
       },
       "tos_notation": "××",
+      "book_color_signature": "××",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -1857,6 +1852,7 @@
         "hm": "pmm"
       },
       "tos_notation": "*2222",
+      "book_color_signature": "*2222",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -2124,6 +2120,7 @@
         "hm": "p2"
       },
       "tos_notation": "*2222/2222",
+      "book_color_signature": "*²2²2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2182,27 +2179,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -2444,6 +2436,7 @@
         "hm": "pmg"
       },
       "tos_notation": "22*",
+      "book_color_signature": "22*",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -2711,6 +2704,7 @@
         "hm": "p2"
       },
       "tos_notation": "22*/2222",
+      "book_color_signature": "¹2¹2*²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -2769,28 +2763,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) rotation about the lift axis"
+            "operation": "Half-turn (180°) rotation about an axis parallel to the lift direction"
           }
         ],
         "relations": {
@@ -3031,6 +3020,7 @@
         "hm": "pgg"
       },
       "tos_notation": "22×",
+      "book_color_signature": "22×",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -3298,6 +3288,7 @@
         "hm": "p2"
       },
       "tos_notation": "22×/2222",
+      "book_color_signature": "¹2¹2×²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -3356,27 +3347,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) rotation about the lift axis"
+            "operation": "Half-turn (180°) rotation about an axis parallel to the lift direction"
           },
           {
             "name": "B",
-            "kind": "glide",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           }
         ],
@@ -3618,6 +3604,7 @@
         "hm": "pm"
       },
       "tos_notation": "*2222/**",
+      "book_color_signature": "*¹2²2¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -3677,27 +3664,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -3939,6 +3921,7 @@
         "hm": "pg"
       },
       "tos_notation": "22*/××",
+      "book_color_signature": "²2²2*²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -3998,28 +3981,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           }
         ],
         "relations": {
@@ -4260,6 +4238,7 @@
         "hm": "pm"
       },
       "tos_notation": "22*/**",
+      "book_color_signature": "²2²2*¹",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -4319,28 +4298,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           }
         ],
         "relations": {
@@ -4581,6 +4555,7 @@
         "hm": "pg"
       },
       "tos_notation": "22×/××",
+      "book_color_signature": "²2²2×¹",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -4640,27 +4615,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "glide",
             "operation": "Glide reflection in a vertical plane"
           }
         ],
@@ -4902,6 +4872,7 @@
         "hm": "pmm"
       },
       "tos_notation": "*2222/*2222",
+      "book_color_signature": "*¹2¹2¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -4975,32 +4946,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],
@@ -5414,6 +5379,7 @@
         "hm": "pmg"
       },
       "tos_notation": "*2222/22*",
+      "book_color_signature": "*¹2²2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -5487,32 +5453,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -5926,6 +5886,7 @@
         "hm": "pmg"
       },
       "tos_notation": "22*/22*",
+      "book_color_signature": "¹2²2*¹",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -5999,33 +5960,27 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane"
           },
           {
             "name": "C",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) rotation about the lift axis"
+            "operation": "Half-turn (180°) rotation about an axis parallel to the lift direction"
           }
         ],
         "relations": {
@@ -6438,6 +6393,7 @@
         "hm": "pgg"
       },
       "tos_notation": "22*/22×",
+      "book_color_signature": "¹2²2*²",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -6511,33 +6467,27 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           },
           {
             "name": "C",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) rotation about the lift axis"
+            "operation": "Half-turn (180°) rotation about an axis parallel to the lift direction"
           }
         ],
         "relations": {
@@ -6950,6 +6900,7 @@
         "hm": "cmm"
       },
       "tos_notation": "2*22",
+      "book_color_signature": "2*22",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -7398,6 +7349,7 @@
         "hm": "p2"
       },
       "tos_notation": "2*22/2222",
+      "book_color_signature": "¹2*²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -7469,32 +7421,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -7908,6 +7854,7 @@
         "hm": "cm"
       },
       "tos_notation": "2*22/*×",
+      "book_color_signature": "²2*¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -7980,32 +7927,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -8419,6 +8360,7 @@
         "hm": "pmm"
       },
       "tos_notation": "2*22/*2222",
+      "book_color_signature": "²2*¹2¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -8492,32 +8434,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],
@@ -8931,6 +8867,7 @@
         "hm": "pgg"
       },
       "tos_notation": "2*22/22×",
+      "book_color_signature": "²2*²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -9004,32 +8941,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -9443,6 +9374,7 @@
         "hm": "pmg"
       },
       "tos_notation": "2*22/22*",
+      "book_color_signature": "¹2*¹2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -9516,32 +9448,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],
@@ -9955,6 +9881,7 @@
         "hm": "cmm"
       },
       "tos_notation": "*2222/2*22",
+      "book_color_signature": "*¹2¹2²2²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -10036,37 +9963,30 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 c"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "D",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],
@@ -10821,6 +10741,7 @@
         "hm": "p2"
       },
       "tos_notation": "22×⁴/2222",
+      "book_color_signature": "¹2²2×⁴",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -10898,27 +10819,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "glide",
             "operation": "Glide reflection in a vertical plane; height shift 3/4"
           }
         ],
@@ -11665,6 +11581,7 @@
         "hm": "p4"
       },
       "tos_notation": "442",
+      "book_color_signature": "442",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -11925,6 +11842,7 @@
         "hm": "p2"
       },
       "tos_notation": "442/2222",
+      "book_color_signature": "²4²4¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -11976,23 +11894,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           }
         ],
         "relations": {
@@ -12230,6 +12144,7 @@
         "hm": "p1"
       },
       "tos_notation": "442⁴/◦",
+      "book_color_signature": "⁴4⁴4²2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -12292,23 +12207,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/4"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/4"
           }
         ],
         "relations": {
@@ -12546,6 +12457,7 @@
         "hm": "p1"
       },
       "tos_notation": "442⁴/◦",
+      "book_color_signature": "⁴4⁴4²2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -12608,23 +12520,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 3/4"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 3/4"
           }
         ],
         "relations": {
@@ -12862,6 +12770,7 @@
         "hm": "p4"
       },
       "tos_notation": "442/442",
+      "book_color_signature": "¹4²4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -12928,28 +12837,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) rotation about the lift axis"
+            "operation": "1/4-turn (90°) rotation about an axis parallel to the lift direction"
           }
         ],
         "relations": {
@@ -13358,6 +13262,7 @@
         "hm": "p2"
       },
       "tos_notation": "442⁴/2222",
+      "book_color_signature": "⁴4⁴4¹2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -13434,28 +13339,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 3/4"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 3/4"
           }
         ],
         "relations": {
@@ -13864,6 +13764,7 @@
         "hm": "p4m"
       },
       "tos_notation": "*442",
+      "book_color_signature": "*442",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -14305,6 +14206,7 @@
         "hm": "pmm"
       },
       "tos_notation": "*442/*2222",
+      "book_color_signature": "*¹4²4¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -14370,27 +14272,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -14800,6 +14697,7 @@
         "hm": "cmm"
       },
       "tos_notation": "*442/2*22",
+      "book_color_signature": "*²4¹4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -14865,27 +14763,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],
@@ -15295,6 +15188,7 @@
         "hm": "p4"
       },
       "tos_notation": "*442/442",
+      "book_color_signature": "*²4²4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -15359,27 +15253,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -15789,6 +15678,7 @@
         "hm": "p4g"
       },
       "tos_notation": "4*2",
+      "book_color_signature": "4*2",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -16230,6 +16120,7 @@
         "hm": "pgg"
       },
       "tos_notation": "4*2/22×",
+      "book_color_signature": "²4*²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -16295,28 +16186,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           }
         ],
         "relations": {
@@ -16725,6 +16611,7 @@
         "hm": "cmm"
       },
       "tos_notation": "4*2/2*22",
+      "book_color_signature": "²4*¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -16790,28 +16677,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           }
         ],
         "relations": {
@@ -17220,6 +17102,7 @@
         "hm": "p4"
       },
       "tos_notation": "4*2/442",
+      "book_color_signature": "¹4*²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -17284,28 +17167,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) rotation about the lift axis"
+            "operation": "1/4-turn (90°) rotation about an axis parallel to the lift direction"
           }
         ],
         "relations": {
@@ -17714,6 +17592,7 @@
         "hm": "p4m"
       },
       "tos_notation": "*442/*442",
+      "book_color_signature": "*¹4¹4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -17794,32 +17673,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],
@@ -18569,6 +18442,7 @@
         "hm": "pmm"
       },
       "tos_notation": "4*2⁴/*2222",
+      "book_color_signature": "⁴4*¹2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -18654,28 +18528,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 3/4"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 3/4"
           }
         ],
         "relations": {
@@ -19421,6 +19290,7 @@
         "hm": "p4g"
       },
       "tos_notation": "*442/4*2",
+      "book_color_signature": "*¹4²4²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -19501,32 +19371,26 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "C",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],
@@ -20276,6 +20140,7 @@
         "hm": "pgg"
       },
       "tos_notation": "4*2⁴/22×",
+      "book_color_signature": "⁴4*²2",
       "clock_order": 4,
       "cyclic_group": "C_4",
       "phase_residues": [
@@ -20361,28 +20226,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/4"
+            "operation": "1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/4"
           }
         ],
         "relations": {
@@ -21128,6 +20988,7 @@
         "hm": "p3"
       },
       "tos_notation": "333",
+      "book_color_signature": "333",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -21340,6 +21201,7 @@
         "hm": "p1"
       },
       "tos_notation": "333³/◦",
+      "book_color_signature": "³3³3³3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -21391,23 +21253,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 1/3"
+            "operation": "1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 1/3"
           }
         ],
         "relations": {
@@ -21603,6 +21461,7 @@
         "hm": "p1"
       },
       "tos_notation": "333³/◦",
+      "book_color_signature": "³3³3³3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -21654,23 +21513,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 2/3"
+            "operation": "1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 2/3"
           }
         ],
         "relations": {
@@ -21866,6 +21721,7 @@
         "hm": "p3"
       },
       "tos_notation": "333³/333",
+      "book_color_signature": "³3³3¹3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -21932,28 +21788,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "translation",
             "operation": "Translation by 1/3 a − 1/3 b + 2/3 c"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/3-turn (120°) rotation about the lift axis"
+            "operation": "1/3-turn (120°) rotation about an axis parallel to the lift direction"
           }
         ],
         "relations": {
@@ -22404,6 +22255,7 @@
         "hm": "p3m1"
       },
       "tos_notation": "*333",
+      "book_color_signature": "*333",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -22755,6 +22607,7 @@
         "hm": "p3"
       },
       "tos_notation": "*333/333",
+      "book_color_signature": "*²3²3²3",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -22813,27 +22666,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -23159,6 +23007,7 @@
         "hm": "p31m"
       },
       "tos_notation": "3*3",
+      "book_color_signature": "3*3",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -23510,6 +23359,7 @@
         "hm": "p3"
       },
       "tos_notation": "3*3/333",
+      "book_color_signature": "¹3*²3",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -23568,27 +23418,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -23914,6 +23759,7 @@
         "hm": "p3m1"
       },
       "tos_notation": "3*3³/*333",
+      "book_color_signature": "³3*¹3",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -23988,28 +23834,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 2/3"
+            "operation": "1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 2/3"
           }
         ],
         "relations": {
@@ -24838,6 +24679,7 @@
         "hm": "p3"
       },
       "tos_notation": "3*3⁶/333",
+      "book_color_signature": "³3*²3",
       "clock_order": 6,
       "cyclic_group": "C_6",
       "phase_residues": [
@@ -24927,28 +24769,23 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "rotation",
-            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 2/3"
+            "operation": "1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 2/3"
           }
         ],
         "relations": {
@@ -25777,6 +25614,7 @@
         "hm": "p6"
       },
       "tos_notation": "632",
+      "book_color_signature": "632",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -26127,6 +25965,7 @@
         "hm": "p2"
       },
       "tos_notation": "632³/2222",
+      "book_color_signature": "³6³3¹2",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -26191,23 +26030,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 2/3"
+            "operation": "1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 2/3"
           }
         ],
         "relations": {
@@ -26529,6 +26364,7 @@
         "hm": "p2"
       },
       "tos_notation": "632³/2222",
+      "book_color_signature": "³6³3¹2",
       "clock_order": 3,
       "cyclic_group": "C_3",
       "phase_residues": [
@@ -26593,23 +26429,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 1/3"
+            "operation": "1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 1/3"
           }
         ],
         "relations": {
@@ -26931,6 +26763,7 @@
         "hm": "p3"
       },
       "tos_notation": "632/333",
+      "book_color_signature": "²6¹3²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -26988,23 +26821,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 1/2"
+            "operation": "1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 1/2"
           }
         ],
         "relations": {
@@ -27326,6 +27155,7 @@
         "hm": "p1"
       },
       "tos_notation": "632⁶/◦",
+      "book_color_signature": "⁶6³3²2",
       "clock_order": 6,
       "cyclic_group": "C_6",
       "phase_residues": [
@@ -27405,23 +27235,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 1/6"
+            "operation": "1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 1/6"
           }
         ],
         "relations": {
@@ -27743,6 +27569,7 @@
         "hm": "p1"
       },
       "tos_notation": "632⁶/◦",
+      "book_color_signature": "⁶6³3²2",
       "clock_order": 6,
       "cyclic_group": "C_6",
       "phase_residues": [
@@ -27822,23 +27649,19 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "rotation",
-            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 5/6"
+            "operation": "1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 5/6"
           }
         ],
         "relations": {
@@ -28160,6 +27983,7 @@
         "hm": "p6m"
       },
       "tos_notation": "*632",
+      "book_color_signature": "*632",
       "clock_order": 1,
       "cyclic_group": "C_1",
       "phase_residues": [
@@ -28775,6 +28599,7 @@
         "hm": "p31m"
       },
       "tos_notation": "*632/3*3",
+      "book_color_signature": "*¹6²3²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -28846,27 +28671,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 1"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -29444,6 +29264,7 @@
         "hm": "p6"
       },
       "tos_notation": "*632/632",
+      "book_color_signature": "*²6²3²2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -29514,27 +29335,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
           }
         ],
@@ -30112,6 +29928,7 @@
         "hm": "p3m1"
       },
       "tos_notation": "*632/*333",
+      "book_color_signature": "*²6¹3¹2",
       "clock_order": 2,
       "cyclic_group": "C_2",
       "phase_residues": [
@@ -30183,27 +30000,22 @@
         "generators": [
           {
             "name": "a",
-            "kind": "translation",
             "operation": "Unit translation along a"
           },
           {
             "name": "b",
-            "kind": "translation",
             "operation": "Unit translation along b"
           },
           {
             "name": "c",
-            "kind": "translation",
             "operation": "Unit translation along the lift axis"
           },
           {
             "name": "A",
-            "kind": "mirror",
             "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
           },
           {
             "name": "B",
-            "kind": "mirror",
             "operation": "Mirror reflection in a vertical plane, direction 2"
           }
         ],

@@ -49,7 +49,7 @@ DATA = ROOT / "data" / "space-group-correspondence.json"
 PAGE = ROOT / "space-group-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "space-groups"
 
-STYLE_SRC = "space-group-correspondence.css?v=compact-presentations"
+STYLE_SRC = "space-group-correspondence.css?v=orbifold-navigation"
 SCRIPT_SRC = "space-group-correspondence.js?v=compact-tabs"
 SOURCE_SHA256 = "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330"
 UCL_SPACE_GROUP_BASE = "http://img.chem.ucl.ac.uk/sgp/large"
@@ -308,7 +308,7 @@ def _lifted_generator_description(generator: dict[str, str]) -> str:
     if kind == "rotation":
         turn = operation.replace(" rotation", "")
         motion = "rotation" if phase == "0" else "screw rotation"
-        return f"{turn} {motion} about the lift axis{height}"
+        return f"{turn} {motion} about an axis parallel to the lift direction{height}"
     if kind in {"mirror", "glide"}:
         direction = ""
         match = re.search(r"axis direction ([0-9]+)$", operation)
@@ -540,13 +540,12 @@ def _space_group_presentation(source_record: dict[str, Any]) -> dict[str, Any] |
         for name, operation in zip(names, seed_operations)
     }
     displayed_generators = [
-        {"name": "a", "kind": "translation", "operation": "Unit translation along a"},
-        {"name": "b", "kind": "translation", "operation": "Unit translation along b"},
-        {"name": "c", "kind": "translation", "operation": "Unit translation along the lift axis"},
+        {"name": "a", "operation": "Unit translation along a"},
+        {"name": "b", "operation": "Unit translation along b"},
+        {"name": "c", "operation": "Unit translation along the lift axis"},
         *[
             {
                 "name": generator["name"],
-                "kind": generator["kind"],
                 "operation": _lifted_generator_description(generator),
             }
             for generator in point_generators
@@ -618,6 +617,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
             "parent": source_record["parent"],
             "kernel": source_record["kernel"],
             "tos_notation": source_record["tos_notation"],
+            "book_color_signature": source_record["book_color_signature"],
             "clock_order": source_record["clock_order"],
             "cyclic_group": source_record["cyclic_group"],
             "phase_residues": source_record["phase_residues"],
@@ -667,7 +667,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
 
     return {
         "meta": {
-            "schema_version": 2,
+            "schema_version": 3,
             "title": "Cyclic colourings and polar space groups",
             "source": "data/clockwork-coloring-correspondence.json",
             "source_sha256": digest,
@@ -714,6 +714,14 @@ def validate_payload(payload: dict[str, Any]) -> None:
             raise ValueError(f"unpinned space-group metadata for {group['id']}")
         if group["parent"]["hm"] not in BASE_ORDER:
             raise ValueError(f"unknown wallpaper family for {group['id']}")
+        expected_signature = clockwork.book_color_signature(
+            group["id"],
+            group["parent"]["orbifold"],
+            group["tos_notation"],
+            group["clock_order"],
+        )
+        if group.get("book_color_signature") != expected_signature:
+            raise ValueError(f"incorrect short colour signature for {group['id']}")
         if group["lift_operations"] != _lift_operations(group["render"]):
             raise ValueError(f"incorrect lifted operations for {group['id']}")
         expected_presentation = _space_group_presentation(group)
@@ -960,12 +968,14 @@ def _entry_html(record: dict[str, Any], family_ordinal: int, family_total: int) 
     space_group = record["space_group"]
     reference_url = escape(space_group["ucl_reference_url"])
     catalog_url = escape(record["catalog_url"])
+    signature = record["book_color_signature"]
+    signature_html = clockwork.superscript_html(signature)
     return f"""
           <article class="space-entry" id="{group_id}" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="{escape(record['image'])}" alt="{escape(record['image_alt'])}" width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="{catalog_url}" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="{catalog_url}" target="_blank" rel="noopener" aria-label="{escape(signature)}; open colouring in catalog"><span class="colouring-signature book-color-signature">{signature_html}</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="{group_id}-space-name">
                 <h3 id="{group_id}-space-name" class="space-group-name">{_hm_html(space_group['hm_short'])}</h3>
@@ -979,11 +989,13 @@ def _entry_html(record: dict[str, Any], family_ordinal: int, family_total: int) 
 def _trivial_product_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     space_group = record["space_group"]
+    orbifold = clockwork.orbifold_html(record["parent"]["orbifold"])
     return (
         f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
-        f'aria-label="Trivial one-colour product {group_id} over wallpaper group '
-        f'{escape(record["parent"]["hm"])}">'
-        "<p><strong>Trivial one-colour product.</strong> "
+        f'aria-label="Trivial one-colour product over orbifold '
+        f'{escape(record["parent"]["orbifold"])}">'
+        "<p><strong>C<sub>1</sub> product.</strong> "
+        f'{orbifold} <span aria-hidden="true">↔</span> '
         f'<a href="{escape(space_group["ucl_reference_url"])}" target="_blank" rel="noopener">'
         f'{_hm_html(space_group["hm_short"])}</a></p>'
         "</aside>"
@@ -998,8 +1010,10 @@ def _family_html(
 ) -> str:
     tabs = "\n".join(
         f'<a id="tab-{escape(record["id"])}" href="#{escape(record["id"])}" '
-        f'class="space-tab" data-space-tab data-panel-id="{escape(record["id"])}">'
-        f'<span class="tab-space-name">{_hm_html(record["space_group"]["hm_short"])}</span></a>'
+        f'class="space-tab" data-space-tab data-panel-id="{escape(record["id"])}" '
+        f'aria-label="{escape(record["book_color_signature"])}; colour action {escape(record["id"])}">'
+        f'<span class="tab-signature book-color-signature">{clockwork.superscript_html(record["book_color_signature"])}</span>'
+        f'<span class="tab-meta">{escape(record["id"])} · C<sub>{record["clock_order"]}</sub></span></a>'
         for record in rows
     )
     entries = "\n".join(
@@ -1016,7 +1030,7 @@ def _family_html(
     if rows:
         contents = f"""
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group {escape(base)}">
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold {escape(ORBIFOLD_BY_BASE[base])}">
           {tabs}
         </nav>
         <div class="space-panels">
@@ -1026,13 +1040,13 @@ def _family_html(
     else:
         contents = """
       <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This wallpaper family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
+        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
       </div>"""
     return f"""
     <section class="{family_class}" id="wallpaper-{escape(base)}" data-wallpaper-family aria-labelledby="wallpaper-{escape(base)}-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family {family_index:02d} / 17</p>
-        <h2 id="wallpaper-{escape(base)}-title"><span class="family-hm">{escape(base)}</span> <span class="family-orbifold">{escape(ORBIFOLD_BY_BASE[base])}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
+        <p class="section-number">Orbifold family {family_index:02d} / 17</p>
+        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{clockwork.orbifold_html(ORBIFOLD_BY_BASE[base])}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
         <p class="family-summary">{escape(FAMILY_SUMMARIES[base])}</p>
         <p class="family-census">More-than-one-colour orders · {census}</p>
       </header>
@@ -1043,13 +1057,20 @@ def _family_html(
 
 def _directory_family_html(base: str, rows: list[dict[str, Any]]) -> str:
     group_links = "\n".join(
-        f'<a class="directory-group" href="#{escape(record["id"])}" data-directory-group="{escape(record["id"])}">'
-        f'<span class="directory-space-group">{_hm_html(record["space_group"]["hm_short"])}</span></a>'
+        f'<a class="directory-group" href="#{escape(record["id"])}" data-directory-group="{escape(record["id"])}" '
+        f'aria-label="{escape(record["book_color_signature"])}; {record["clock_order"]} colours; open {escape(record["id"])}">'
+        f'<span class="directory-signature book-color-signature">{clockwork.superscript_html(record["book_color_signature"])}</span>'
+        f'<span class="directory-palette" aria-hidden="true">'
+        + "".join(
+            f'<span style="--directory-colour: {escape(residue["color"])}"></span>'
+            for residue in record["phase_residues"]
+        )
+        + f'</span><span class="directory-group-id">{escape(record["id"])}</span></a>'
         for record in rows
     )
     return f"""
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-{escape(base)}">{escape(base)} <span>{escape(ORBIFOLD_BY_BASE[base])} · {len(rows)} nontrivial {"type" if len(rows) == 1 else "types"}</span></a></h3>
+          <h3><a class="directory-family-link" href="#wallpaper-{escape(base)}">{clockwork.orbifold_html(ORBIFOLD_BY_BASE[base])}<span class="directory-family-count">{len(rows)} nontrivial {"type" if len(rows) == 1 else "types"}</span></a></h3>
           <div class="directory-groups">{group_links}</div>
         </section>"""
 
@@ -1086,7 +1107,7 @@ def page_html(payload: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The 51 nontrivial cyclic wallpaper colourings paired with classical polar space-group names and exact relative-cell presentations.">
+  <meta name="description" content="The 51 nontrivial cyclic colourings organized by Conway orbifold and Goodman–Strauss short colour notation, paired with classical polar space-group names and exact relative-cell presentations.">
   <meta name="theme-color" content="#ffffff">
   <title>Cyclic colourings and polar space groups</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -1104,6 +1125,7 @@ def page_html(payload: dict[str, Any]) -> str:
         <a href="future-directions.html">Colours</a>
         <a href="clockwork-coloring-correspondence.html">Correspondence</a>
         <a href="space-group-correspondence.html" aria-current="page">Space groups</a>
+        <a href="docs/orbifold_notation.html">Notation</a>
         <a href="data/space-group-correspondence.json">Data</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
       </nav>
@@ -1112,9 +1134,9 @@ def page_html(payload: dict[str, Any]) -> str:
 
   <main class="space-page">
     <section class="space-hero" aria-labelledby="page-title">
-      <p class="section-number">51 displayed multi-colour lifts · 14 contributing families · 68-type audit</p>
+      <p class="section-number">51 displayed multi-colour lifts · 14 contributing orbifold families · 68-type audit</p>
       <h1 id="page-title">Cyclic colourings <span aria-hidden="true">↔</span> polar space groups</h1>
-      <p class="lead">Treat the cyclic colour coordinate as height. This atlas pairs 51 multi-colour plates with the classical names and presentations of their lifts; the 17 inherited C1 products appear only as grey audit notes.</p>
+      <p class="lead">Treat the cyclic colour coordinate as height. Organized by Conway orbifold and Goodman–Strauss short colour signature, this atlas pairs 51 multi-colour plates with the classical names and presentations of their lifts; the 17 inherited C1 products appear only as grey audit notes.</p>
       <aside class="answer-card" role="note" aria-label="Scope of the correspondence">
         <p class="answer-title">Is it one-to-one?</p>
         <p class="answer-copy"><strong>For this selected subset, yes.</strong> {caveat}</p>
@@ -1134,9 +1156,9 @@ def page_html(payload: dict[str, Any]) -> str:
     </section>
 
     <nav class="atlas-directory" aria-labelledby="directory-title">
-      <p class="section-number">51 displayed groups · 14 contributing families</p>
+      <p class="section-number">51 displayed groups · 14 contributing orbifold families</p>
       <h2 id="directory-title">More-than-one-colour lifts</h2>
-      <p class="directory-legend">Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a name to open its colouring plate and space-group presentation; all 17 wallpaper-family sections remain below.</p>
+      <p class="directory-legend">Raised numbers are colour-permutation orders. Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a short colour signature to open its colouring plate and space-group presentation; all 17 orbifold-family sections remain below.</p>
       <div class="directory-families">
 {directory}
       </div>

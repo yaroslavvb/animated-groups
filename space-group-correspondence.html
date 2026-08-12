@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The 51 nontrivial cyclic wallpaper colourings paired with classical polar space-group names and exact relative-cell presentations.">
+  <meta name="description" content="The 51 nontrivial cyclic colourings organized by Conway orbifold and Goodman–Strauss short colour notation, paired with classical polar space-group names and exact relative-cell presentations.">
   <meta name="theme-color" content="#ffffff">
   <title>Cyclic colourings and polar space groups</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="space-group-correspondence.css?v=compact-presentations">
+  <link rel="stylesheet" href="space-group-correspondence.css?v=orbifold-navigation">
 </head>
 <body>
   <a class="skip-link" href="#correspondences">Skip to correspondences</a>
@@ -21,6 +21,7 @@
         <a href="future-directions.html">Colours</a>
         <a href="clockwork-coloring-correspondence.html">Correspondence</a>
         <a href="space-group-correspondence.html" aria-current="page">Space groups</a>
+        <a href="docs/orbifold_notation.html">Notation</a>
         <a href="data/space-group-correspondence.json">Data</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
       </nav>
@@ -29,9 +30,9 @@
 
   <main class="space-page">
     <section class="space-hero" aria-labelledby="page-title">
-      <p class="section-number">51 displayed multi-colour lifts · 14 contributing families · 68-type audit</p>
+      <p class="section-number">51 displayed multi-colour lifts · 14 contributing orbifold families · 68-type audit</p>
       <h1 id="page-title">Cyclic colourings <span aria-hidden="true">↔</span> polar space groups</h1>
-      <p class="lead">Treat the cyclic colour coordinate as height. This atlas pairs 51 multi-colour plates with the classical names and presentations of their lifts; the 17 inherited C1 products appear only as grey audit notes.</p>
+      <p class="lead">Treat the cyclic colour coordinate as height. Organized by Conway orbifold and Goodman–Strauss short colour signature, this atlas pairs 51 multi-colour plates with the classical names and presentations of their lifts; the 17 inherited C1 products appear only as grey audit notes.</p>
       <aside class="answer-card" role="note" aria-label="Scope of the correspondence">
         <p class="answer-title">Is it one-to-one?</p>
         <p class="answer-copy"><strong>For this selected subset, yes.</strong> This 68-record forward regular-cyclic subset corresponds exactly to the 68 polar three-dimensional space-group types. General coloured wallpaper groups are broader, and there is no one-to-one correspondence between all coloured wallpaper groups and all 230 space groups.</p>
@@ -51,115 +52,115 @@
     </section>
 
     <nav class="atlas-directory" aria-labelledby="directory-title">
-      <p class="section-number">51 displayed groups · 14 contributing families</p>
+      <p class="section-number">51 displayed groups · 14 contributing orbifold families</p>
       <h2 id="directory-title">More-than-one-colour lifts</h2>
-      <p class="directory-legend">Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a name to open its colouring plate and space-group presentation; all 17 wallpaper-family sections remain below.</p>
+      <p class="directory-legend">Raised numbers are colour-permutation orders. Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a short colour signature to open its colouring plate and space-group presentation; all 17 orbifold-family sections remain below.</p>
       <div class="directory-families">
 <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p2">p2 <span>2222 · 2 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g6" data-directory-group="g6"><span class="directory-space-group">P2<sub>1</sub></span></a>
-<a class="directory-group" href="#g7" data-directory-group="g7"><span class="directory-space-group">C2</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p2">2222<span class="directory-family-count">2 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g6" data-directory-group="g6" aria-label="²2²2²2²2; 2 colours; open g6"><span class="directory-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g6</span></a>
+<a class="directory-group" href="#g7" data-directory-group="g7" aria-label="¹2¹2²2²2; 2 colours; open g7"><span class="directory-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g7</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-cm">cm <span>*× · 1 nontrivial type</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g9" data-directory-group="g9"><span class="directory-space-group">Cc</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-cm"><span class="orbifold-star">∗</span>×<span class="directory-family-count">1 nontrivial type</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g9" data-directory-group="g9" aria-label="*²×²; 2 colours; open g9"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>×<sup>2</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g9</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-pmm">pmm <span>*2222 · 5 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g55" data-directory-group="g55"><span class="directory-space-group">Pcc2</span></a>
-<a class="directory-group" href="#g60" data-directory-group="g60"><span class="directory-space-group">Pmc2<sub>1</sub></span></a>
-<a class="directory-group" href="#g64" data-directory-group="g64"><span class="directory-space-group">Amm2</span></a>
-<a class="directory-group" href="#g65" data-directory-group="g65"><span class="directory-space-group">Aem2</span></a>
-<a class="directory-group" href="#g74" data-directory-group="g74"><span class="directory-space-group">Fmm2</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-pmm"><span class="orbifold-star">∗</span>2222<span class="directory-family-count">5 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g55" data-directory-group="g55" aria-label="*²2²2²2²2; 2 colours; open g55"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g55</span></a>
+<a class="directory-group" href="#g60" data-directory-group="g60" aria-label="*¹2²2¹2²2; 2 colours; open g60"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g60</span></a>
+<a class="directory-group" href="#g64" data-directory-group="g64" aria-label="*¹2¹2¹2²2; 2 colours; open g64"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>1</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g64</span></a>
+<a class="directory-group" href="#g65" data-directory-group="g65" aria-label="*¹2²2²2²2; 2 colours; open g65"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g65</span></a>
+<a class="directory-group" href="#g74" data-directory-group="g74" aria-label="*¹2¹2²2²2; 2 colours; open g74"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g74</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-pmg">pmg <span>22* · 5 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g57" data-directory-group="g57"><span class="directory-space-group">Pnc2</span></a>
-<a class="directory-group" href="#g61" data-directory-group="g61"><span class="directory-space-group">Pca2<sub>1</sub></span></a>
-<a class="directory-group" href="#g62" data-directory-group="g62"><span class="directory-space-group">Pmn2<sub>1</sub></span></a>
-<a class="directory-group" href="#g66" data-directory-group="g66"><span class="directory-space-group">Ama2</span></a>
-<a class="directory-group" href="#g67" data-directory-group="g67"><span class="directory-space-group">Aea2</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-pmg">22<span class="orbifold-star">∗</span><span class="directory-family-count">5 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g57" data-directory-group="g57" aria-label="¹2¹2*²; 2 colours; open g57"><span class="directory-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g57</span></a>
+<a class="directory-group" href="#g61" data-directory-group="g61" aria-label="²2²2*²; 2 colours; open g61"><span class="directory-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g61</span></a>
+<a class="directory-group" href="#g62" data-directory-group="g62" aria-label="²2²2*¹; 2 colours; open g62"><span class="directory-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g62</span></a>
+<a class="directory-group" href="#g66" data-directory-group="g66" aria-label="¹2²2*¹; 2 colours; open g66"><span class="directory-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g66</span></a>
+<a class="directory-group" href="#g67" data-directory-group="g67" aria-label="¹2²2*²; 2 colours; open g67"><span class="directory-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g67</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-pgg">pgg <span>22× · 3 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g59" data-directory-group="g59"><span class="directory-space-group">Pnn2</span></a>
-<a class="directory-group" href="#g63" data-directory-group="g63"><span class="directory-space-group">Pna2<sub>1</sub></span></a>
-<a class="directory-group" href="#g75" data-directory-group="g75"><span class="directory-space-group">Fdd2</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-pgg">22×<span class="directory-family-count">3 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g59" data-directory-group="g59" aria-label="¹2¹2×²; 2 colours; open g59"><span class="directory-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2×<sup>2</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g59</span></a>
+<a class="directory-group" href="#g63" data-directory-group="g63" aria-label="²2²2×¹; 2 colours; open g63"><span class="directory-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2×<sup>1</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g63</span></a>
+<a class="directory-group" href="#g75" data-directory-group="g75" aria-label="¹2²2×⁴; 4 colours; open g75"><span class="directory-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2×<sup>4</sup></span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span></span><span class="directory-group-id">g75</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-cmm">cmm <span>2*22 · 5 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g69" data-directory-group="g69"><span class="directory-space-group">Ccc2</span></a>
-<a class="directory-group" href="#g70" data-directory-group="g70"><span class="directory-space-group">Cmc2<sub>1</sub></span></a>
-<a class="directory-group" href="#g71" data-directory-group="g71"><span class="directory-space-group">Imm2</span></a>
-<a class="directory-group" href="#g72" data-directory-group="g72"><span class="directory-space-group">Iba2</span></a>
-<a class="directory-group" href="#g73" data-directory-group="g73"><span class="directory-space-group">Ima2</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-cmm">2<span class="orbifold-star">∗</span>22<span class="directory-family-count">5 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g69" data-directory-group="g69" aria-label="¹2*²2²2; 2 colours; open g69"><span class="directory-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g69</span></a>
+<a class="directory-group" href="#g70" data-directory-group="g70" aria-label="²2*¹2²2; 2 colours; open g70"><span class="directory-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g70</span></a>
+<a class="directory-group" href="#g71" data-directory-group="g71" aria-label="²2*¹2¹2; 2 colours; open g71"><span class="directory-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g71</span></a>
+<a class="directory-group" href="#g72" data-directory-group="g72" aria-label="²2*²2²2; 2 colours; open g72"><span class="directory-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g72</span></a>
+<a class="directory-group" href="#g73" data-directory-group="g73" aria-label="¹2*¹2²2; 2 colours; open g73"><span class="directory-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g73</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p4">p4 <span>442 · 5 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g95" data-directory-group="g95"><span class="directory-space-group">P4<sub>2</sub></span></a>
-<a class="directory-group" href="#g96" data-directory-group="g96"><span class="directory-space-group">P4<sub>1</sub></span></a>
-<a class="directory-group" href="#g97" data-directory-group="g97"><span class="directory-space-group">P4<sub>3</sub></span></a>
-<a class="directory-group" href="#g98" data-directory-group="g98"><span class="directory-space-group">I4</span></a>
-<a class="directory-group" href="#g99" data-directory-group="g99"><span class="directory-space-group">I4<sub>1</sub></span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p4">442<span class="directory-family-count">5 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g95" data-directory-group="g95" aria-label="²4²4¹2; 2 colours; open g95"><span class="directory-signature book-color-signature"><sup>2</sup>4<sup>2</sup>4<sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g95</span></a>
+<a class="directory-group" href="#g96" data-directory-group="g96" aria-label="⁴4⁴4²2; 4 colours; open g96"><span class="directory-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span></span><span class="directory-group-id">g96</span></a>
+<a class="directory-group" href="#g97" data-directory-group="g97" aria-label="⁴4⁴4²2; 4 colours; open g97"><span class="directory-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span></span><span class="directory-group-id">g97</span></a>
+<a class="directory-group" href="#g98" data-directory-group="g98" aria-label="¹4²4²2; 2 colours; open g98"><span class="directory-signature book-color-signature"><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g98</span></a>
+<a class="directory-group" href="#g99" data-directory-group="g99" aria-label="⁴4⁴4¹2; 4 colours; open g99"><span class="directory-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span></span><span class="directory-group-id">g99</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p4m">p4m <span>*442 · 5 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g129" data-directory-group="g129"><span class="directory-space-group">P4<sub>2</sub>mc</span></a>
-<a class="directory-group" href="#g130" data-directory-group="g130"><span class="directory-space-group">P4<sub>2</sub>cm</span></a>
-<a class="directory-group" href="#g131" data-directory-group="g131"><span class="directory-space-group">P4cc</span></a>
-<a class="directory-group" href="#g136" data-directory-group="g136"><span class="directory-space-group">I4mm</span></a>
-<a class="directory-group" href="#g138" data-directory-group="g138"><span class="directory-space-group">I4cm</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p4m"><span class="orbifold-star">∗</span>442<span class="directory-family-count">5 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g129" data-directory-group="g129" aria-label="*¹4²4¹2; 2 colours; open g129"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g129</span></a>
+<a class="directory-group" href="#g130" data-directory-group="g130" aria-label="*²4¹4²2; 2 colours; open g130"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>1</sup>4<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g130</span></a>
+<a class="directory-group" href="#g131" data-directory-group="g131" aria-label="*²4²4²2; 2 colours; open g131"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>2</sup>4<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g131</span></a>
+<a class="directory-group" href="#g136" data-directory-group="g136" aria-label="*¹4¹4²2; 2 colours; open g136"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>1</sup>4<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g136</span></a>
+<a class="directory-group" href="#g138" data-directory-group="g138" aria-label="*¹4²4²2; 2 colours; open g138"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g138</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p4g">p4g <span>4*2 · 5 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g133" data-directory-group="g133"><span class="directory-space-group">P4<sub>2</sub>bc</span></a>
-<a class="directory-group" href="#g134" data-directory-group="g134"><span class="directory-space-group">P4<sub>2</sub>nm</span></a>
-<a class="directory-group" href="#g135" data-directory-group="g135"><span class="directory-space-group">P4nc</span></a>
-<a class="directory-group" href="#g137" data-directory-group="g137"><span class="directory-space-group">I4<sub>1</sub>md</span></a>
-<a class="directory-group" href="#g139" data-directory-group="g139"><span class="directory-space-group">I4<sub>1</sub>cd</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p4g">4<span class="orbifold-star">∗</span>2<span class="directory-family-count">5 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g133" data-directory-group="g133" aria-label="²4*²2; 2 colours; open g133"><span class="directory-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g133</span></a>
+<a class="directory-group" href="#g134" data-directory-group="g134" aria-label="²4*¹2; 2 colours; open g134"><span class="directory-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g134</span></a>
+<a class="directory-group" href="#g135" data-directory-group="g135" aria-label="¹4*²2; 2 colours; open g135"><span class="directory-signature book-color-signature"><sup>1</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g135</span></a>
+<a class="directory-group" href="#g137" data-directory-group="g137" aria-label="⁴4*¹2; 4 colours; open g137"><span class="directory-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span></span><span class="directory-group-id">g137</span></a>
+<a class="directory-group" href="#g139" data-directory-group="g139" aria-label="⁴4*²2; 4 colours; open g139"><span class="directory-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span></span><span class="directory-group-id">g139</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p3">p3 <span>333 · 3 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g225" data-directory-group="g225"><span class="directory-space-group">P3<sub>2</sub></span></a>
-<a class="directory-group" href="#g226" data-directory-group="g226"><span class="directory-space-group">P3<sub>1</sub></span></a>
-<a class="directory-group" href="#g227" data-directory-group="g227"><span class="directory-space-group">R3</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p3">333<span class="directory-family-count">3 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g225" data-directory-group="g225" aria-label="³3³3³3; 3 colours; open g225"><span class="directory-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span></span><span class="directory-group-id">g225</span></a>
+<a class="directory-group" href="#g226" data-directory-group="g226" aria-label="³3³3³3; 3 colours; open g226"><span class="directory-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span></span><span class="directory-group-id">g226</span></a>
+<a class="directory-group" href="#g227" data-directory-group="g227" aria-label="³3³3¹3; 3 colours; open g227"><span class="directory-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>1</sup>3</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span></span><span class="directory-group-id">g227</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p3m1">p3m1 <span>*333 · 1 nontrivial type</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g231" data-directory-group="g231"><span class="directory-space-group">P3c1</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p3m1"><span class="orbifold-star">∗</span>333<span class="directory-family-count">1 nontrivial type</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g231" data-directory-group="g231" aria-label="*²3²3²3; 2 colours; open g231"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>3<sup>2</sup>3<sup>2</sup>3</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g231</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p31m">p31m <span>3*3 · 3 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g233" data-directory-group="g233"><span class="directory-space-group">P31c</span></a>
-<a class="directory-group" href="#g234" data-directory-group="g234"><span class="directory-space-group">R3m</span></a>
-<a class="directory-group" href="#g235" data-directory-group="g235"><span class="directory-space-group">R3c</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p31m">3<span class="orbifold-star">∗</span>3<span class="directory-family-count">3 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g233" data-directory-group="g233" aria-label="¹3*²3; 2 colours; open g233"><span class="directory-signature book-color-signature"><sup>1</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g233</span></a>
+<a class="directory-group" href="#g234" data-directory-group="g234" aria-label="³3*¹3; 3 colours; open g234"><span class="directory-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>1</sup>3</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span></span><span class="directory-group-id">g234</span></a>
+<a class="directory-group" href="#g235" data-directory-group="g235" aria-label="³3*²3; 6 colours; open g235"><span class="directory-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span><span style="--directory-colour: #D55E00"></span><span style="--directory-colour: #56B4E9"></span></span><span class="directory-group-id">g235</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p6">p6 <span>632 · 5 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g244" data-directory-group="g244"><span class="directory-space-group">P6<sub>2</sub></span></a>
-<a class="directory-group" href="#g245" data-directory-group="g245"><span class="directory-space-group">P6<sub>4</sub></span></a>
-<a class="directory-group" href="#g246" data-directory-group="g246"><span class="directory-space-group">P6<sub>3</sub></span></a>
-<a class="directory-group" href="#g247" data-directory-group="g247"><span class="directory-space-group">P6<sub>5</sub></span></a>
-<a class="directory-group" href="#g248" data-directory-group="g248"><span class="directory-space-group">P6<sub>1</sub></span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p6">632<span class="directory-family-count">5 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g244" data-directory-group="g244" aria-label="³6³3¹2; 3 colours; open g244"><span class="directory-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span></span><span class="directory-group-id">g244</span></a>
+<a class="directory-group" href="#g245" data-directory-group="g245" aria-label="³6³3¹2; 3 colours; open g245"><span class="directory-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span></span><span class="directory-group-id">g245</span></a>
+<a class="directory-group" href="#g246" data-directory-group="g246" aria-label="²6¹3²2; 2 colours; open g246"><span class="directory-signature book-color-signature"><sup>2</sup>6<sup>1</sup>3<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g246</span></a>
+<a class="directory-group" href="#g247" data-directory-group="g247" aria-label="⁶6³3²2; 6 colours; open g247"><span class="directory-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span><span style="--directory-colour: #D55E00"></span><span style="--directory-colour: #56B4E9"></span></span><span class="directory-group-id">g247</span></a>
+<a class="directory-group" href="#g248" data-directory-group="g248" aria-label="⁶6³3²2; 6 colours; open g248"><span class="directory-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span><span style="--directory-colour: #009E73"></span><span style="--directory-colour: #CC79A7"></span><span style="--directory-colour: #D55E00"></span><span style="--directory-colour: #56B4E9"></span></span><span class="directory-group-id">g248</span></a></div>
         </section>
 
         <section class="directory-family">
-          <h3><a class="directory-family-link" href="#wallpaper-p6m">p6m <span>*632 · 3 nontrivial types</span></a></h3>
-          <div class="directory-groups"><a class="directory-group" href="#g269" data-directory-group="g269"><span class="directory-space-group">P6<sub>3</sub>cm</span></a>
-<a class="directory-group" href="#g270" data-directory-group="g270"><span class="directory-space-group">P6cc</span></a>
-<a class="directory-group" href="#g271" data-directory-group="g271"><span class="directory-space-group">P6<sub>3</sub>mc</span></a></div>
+          <h3><a class="directory-family-link" href="#wallpaper-p6m"><span class="orbifold-star">∗</span>632<span class="directory-family-count">3 nontrivial types</span></a></h3>
+          <div class="directory-groups"><a class="directory-group" href="#g269" data-directory-group="g269" aria-label="*¹6²3²2; 2 colours; open g269"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>6<sup>2</sup>3<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g269</span></a>
+<a class="directory-group" href="#g270" data-directory-group="g270" aria-label="*²6²3²2; 2 colours; open g270"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>2</sup>3<sup>2</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g270</span></a>
+<a class="directory-group" href="#g271" data-directory-group="g271" aria-label="*²6¹3¹2; 2 colours; open g271"><span class="directory-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>1</sup>3<sup>1</sup>2</span><span class="directory-palette" aria-hidden="true"><span style="--directory-colour: #0072B2"></span><span style="--directory-colour: #E69F00"></span></span><span class="directory-group-id">g271</span></a></div>
         </section>
       </div>
     </nav>
@@ -168,30 +169,30 @@
 
     <section class="wallpaper-family space-family is-empty" id="wallpaper-p1" data-wallpaper-family aria-labelledby="wallpaper-p1-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 01 / 17</p>
-        <h2 id="wallpaper-p1-title"><span class="family-hm">p1</span> <span class="family-orbifold">◦</span> <span class="family-count">0 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 01 / 17</p>
+        <h2 id="wallpaper-p1-title"><span class="family-orbifold">◦</span> <span class="family-count">0 nontrivial lifts</span></h2>
         <p class="family-summary">Translations lift to the triclinic polar type.</p>
         <p class="family-census">More-than-one-colour orders · none</p>
       </header>
 
       <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This wallpaper family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
+        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
       </div>
-      <aside class="trivial-product" id="g1" data-trivial-product aria-label="Trivial one-colour product g1 over wallpaper group p1"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/001az1.htm" target="_blank" rel="noopener">P1</a></p></aside>
+      <aside class="trivial-product" id="g1" data-trivial-product aria-label="Trivial one-colour product over orbifold ◦"><p><strong>C<sub>1</sub> product.</strong> ◦ <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/001az1.htm" target="_blank" rel="noopener">P1</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p2" data-wallpaper-family aria-labelledby="wallpaper-p2-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 02 / 17</p>
-        <h2 id="wallpaper-p2-title"><span class="family-hm">p2</span> <span class="family-orbifold">2222</span> <span class="family-count">2 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 02 / 17</p>
+        <h2 id="wallpaper-p2-title"><span class="family-orbifold">2222</span> <span class="family-count">2 nontrivial lifts</span></h2>
         <p class="family-summary">Twofold planar rotations become rotations or screws along the height axis.</p>
         <p class="family-census">More-than-one-colour orders · C2: 2</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p2">
-          <a id="tab-g6" href="#g6" class="space-tab" data-space-tab data-panel-id="g6"><span class="tab-space-name">P2<sub>1</sub></span></a>
-<a id="tab-g7" href="#g7" class="space-tab" data-space-tab data-panel-id="g7"><span class="tab-space-name">C2</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 2222">
+          <a id="tab-g6" href="#g6" class="space-tab" data-space-tab data-panel-id="g6" aria-label="²2²2²2²2; colour action g6"><span class="tab-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="tab-meta">g6 · C<sub>2</sub></span></a>
+<a id="tab-g7" href="#g7" class="space-tab" data-space-tab data-panel-id="g7" aria-label="¹2¹2²2²2; colour action g7"><span class="tab-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="tab-meta">g7 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -199,7 +200,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g6.webp" alt="Static perfect 2-colouring for group g6: asymmetric motifs carry phase colours for Conway type 2222/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g6" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g6" target="_blank" rel="noopener" aria-label="²2²2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g6-space-name">
                 <h3 id="g6-space-name" class="space-group-name">P2<sub>1</sub></h3>
@@ -213,7 +214,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -231,7 +232,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g7.webp" alt="Static perfect 2-colouring for group g7: asymmetric motifs carry phase colours for Conway type 2222/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g7" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g7" target="_blank" rel="noopener" aria-label="¹2¹2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g7-space-name">
                 <h3 id="g7-space-name" class="space-group-name">C2</h3>
@@ -246,7 +247,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Translation by 1/2 b + 1/2 c</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) rotation about an axis parallel to the lift direction</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -261,48 +262,48 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g5" data-trivial-product aria-label="Trivial one-colour product g5 over wallpaper group p2"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/003ay1.htm" target="_blank" rel="noopener">P2</a></p></aside>
+      <aside class="trivial-product" id="g5" data-trivial-product aria-label="Trivial one-colour product over orbifold 2222"><p><strong>C<sub>1</sub> product.</strong> 2222 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/003ay1.htm" target="_blank" rel="noopener">P2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family is-empty" id="wallpaper-pm" data-wallpaper-family aria-labelledby="wallpaper-pm-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 03 / 17</p>
-        <h2 id="wallpaper-pm-title"><span class="family-hm">pm</span> <span class="family-orbifold">**</span> <span class="family-count">0 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 03 / 17</p>
+        <h2 id="wallpaper-pm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span><span class="orbifold-star">∗</span></span> <span class="family-count">0 nontrivial lifts</span></h2>
         <p class="family-summary">A planar mirror lifts to a vertical mirror plane.</p>
         <p class="family-census">More-than-one-colour orders · none</p>
       </header>
 
       <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This wallpaper family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
+        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
       </div>
-      <aside class="trivial-product" id="g10" data-trivial-product aria-label="Trivial one-colour product g10 over wallpaper group pm"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/006ay1.htm" target="_blank" rel="noopener">Pm</a></p></aside>
+      <aside class="trivial-product" id="g10" data-trivial-product aria-label="Trivial one-colour product over orbifold **"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span><span class="orbifold-star">∗</span> <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/006ay1.htm" target="_blank" rel="noopener">Pm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family is-empty" id="wallpaper-pg" data-wallpaper-family aria-labelledby="wallpaper-pg-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 04 / 17</p>
-        <h2 id="wallpaper-pg-title"><span class="family-hm">pg</span> <span class="family-orbifold">××</span> <span class="family-count">0 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 04 / 17</p>
+        <h2 id="wallpaper-pg-title"><span class="family-orbifold">××</span> <span class="family-count">0 nontrivial lifts</span></h2>
         <p class="family-summary">A planar glide lifts to a vertical glide plane.</p>
         <p class="family-census">More-than-one-colour orders · none</p>
       </header>
 
       <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This wallpaper family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
+        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
       </div>
-      <aside class="trivial-product" id="g11" data-trivial-product aria-label="Trivial one-colour product g11 over wallpaper group pg"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/007ay1.htm" target="_blank" rel="noopener">Pc</a></p></aside>
+      <aside class="trivial-product" id="g11" data-trivial-product aria-label="Trivial one-colour product over orbifold ××"><p><strong>C<sub>1</sub> product.</strong> ×× <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/007ay1.htm" target="_blank" rel="noopener">Pc</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-cm" data-wallpaper-family aria-labelledby="wallpaper-cm-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 05 / 17</p>
-        <h2 id="wallpaper-cm-title"><span class="family-hm">cm</span> <span class="family-orbifold">*×</span> <span class="family-count">1 nontrivial lift</span></h2>
+        <p class="section-number">Orbifold family 05 / 17</p>
+        <h2 id="wallpaper-cm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>×</span> <span class="family-count">1 nontrivial lift</span></h2>
         <p class="family-summary">The centred mirror family gives centred monoclinic lifts.</p>
         <p class="family-census">More-than-one-colour orders · C2: 1</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group cm">
-          <a id="tab-g9" href="#g9" class="space-tab" data-space-tab data-panel-id="g9"><span class="tab-space-name">Cc</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold *×">
+          <a id="tab-g9" href="#g9" class="space-tab" data-space-tab data-panel-id="g9" aria-label="*²×²; colour action g9"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>×<sup>2</sup></span><span class="tab-meta">g9 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -310,7 +311,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g9.webp" alt="Static perfect 2-colouring for group g9: asymmetric motifs carry phase colours for Conway type *×/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g9" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g9" target="_blank" rel="noopener" aria-label="*²×²; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>×<sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g9-space-name">
                 <h3 id="g9-space-name" class="space-group-name">Cc</h3>
@@ -339,24 +340,24 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g8" data-trivial-product aria-label="Trivial one-colour product g8 over wallpaper group cm"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/008ay1.htm" target="_blank" rel="noopener">Cm</a></p></aside>
+      <aside class="trivial-product" id="g8" data-trivial-product aria-label="Trivial one-colour product over orbifold *×"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>× <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/008ay1.htm" target="_blank" rel="noopener">Cm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-pmm" data-wallpaper-family aria-labelledby="wallpaper-pmm-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 06 / 17</p>
-        <h2 id="wallpaper-pmm-title"><span class="family-hm">pmm</span> <span class="family-orbifold">*2222</span> <span class="family-count">5 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 06 / 17</p>
+        <h2 id="wallpaper-pmm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>2222</span> <span class="family-count">5 nontrivial lifts</span></h2>
         <p class="family-summary">Two mirror directions lift through primitive, base-, body-, and face-centred orthorhombic settings.</p>
         <p class="family-census">More-than-one-colour orders · C2: 5</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group pmm">
-          <a id="tab-g55" href="#g55" class="space-tab" data-space-tab data-panel-id="g55"><span class="tab-space-name">Pcc2</span></a>
-<a id="tab-g60" href="#g60" class="space-tab" data-space-tab data-panel-id="g60"><span class="tab-space-name">Pmc2<sub>1</sub></span></a>
-<a id="tab-g64" href="#g64" class="space-tab" data-space-tab data-panel-id="g64"><span class="tab-space-name">Amm2</span></a>
-<a id="tab-g65" href="#g65" class="space-tab" data-space-tab data-panel-id="g65"><span class="tab-space-name">Aem2</span></a>
-<a id="tab-g74" href="#g74" class="space-tab" data-space-tab data-panel-id="g74"><span class="tab-space-name">Fmm2</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold *2222">
+          <a id="tab-g55" href="#g55" class="space-tab" data-space-tab data-panel-id="g55" aria-label="*²2²2²2²2; colour action g55"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="tab-meta">g55 · C<sub>2</sub></span></a>
+<a id="tab-g60" href="#g60" class="space-tab" data-space-tab data-panel-id="g60" aria-label="*¹2²2¹2²2; colour action g60"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2</span><span class="tab-meta">g60 · C<sub>2</sub></span></a>
+<a id="tab-g64" href="#g64" class="space-tab" data-space-tab data-panel-id="g64" aria-label="*¹2¹2¹2²2; colour action g64"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>1</sup>2<sup>2</sup>2</span><span class="tab-meta">g64 · C<sub>2</sub></span></a>
+<a id="tab-g65" href="#g65" class="space-tab" data-space-tab data-panel-id="g65" aria-label="*¹2²2²2²2; colour action g65"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="tab-meta">g65 · C<sub>2</sub></span></a>
+<a id="tab-g74" href="#g74" class="space-tab" data-space-tab data-panel-id="g74" aria-label="*¹2¹2²2²2; colour action g74"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span class="tab-meta">g74 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -364,7 +365,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g55.webp" alt="Static perfect 2-colouring for group g55: asymmetric motifs carry phase colours for Conway type *2222/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g55" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g55" target="_blank" rel="noopener" aria-label="*²2²2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g55-space-name">
                 <h3 id="g55-space-name" class="space-group-name">Pcc2</h3>
@@ -397,7 +398,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g60.webp" alt="Static perfect 2-colouring for group g60: asymmetric motifs carry phase colours for Conway type *2222/**." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g60" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g60" target="_blank" rel="noopener" aria-label="*¹2²2¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g60-space-name">
                 <h3 id="g60-space-name" class="space-group-name">Pmc2<sub>1</sub></h3>
@@ -430,7 +431,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g64.webp" alt="Static perfect 2-colouring for group g64: asymmetric motifs carry phase colours for Conway type *2222/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g64" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g64" target="_blank" rel="noopener" aria-label="*¹2¹2¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g64-space-name">
                 <h3 id="g64-space-name" class="space-group-name">Amm2</h3>
@@ -464,7 +465,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g65.webp" alt="Static perfect 2-colouring for group g65: asymmetric motifs carry phase colours for Conway type *2222/22*." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g65" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g65" target="_blank" rel="noopener" aria-label="*¹2²2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g65-space-name">
                 <h3 id="g65-space-name" class="space-group-name">Aem2</h3>
@@ -498,7 +499,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g74.webp" alt="Static perfect 2-colouring for group g74: asymmetric motifs carry phase colours for Conway type *2222/2*22." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g74" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g74" target="_blank" rel="noopener" aria-label="*¹2¹2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g74-space-name">
                 <h3 id="g74-space-name" class="space-group-name">Fmm2</h3>
@@ -530,24 +531,24 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g54" data-trivial-product aria-label="Trivial one-colour product g54 over wallpaper group pmm"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></p></aside>
+      <aside class="trivial-product" id="g54" data-trivial-product aria-label="Trivial one-colour product over orbifold *2222"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>2222 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-pmg" data-wallpaper-family aria-labelledby="wallpaper-pmg-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 07 / 17</p>
-        <h2 id="wallpaper-pmg-title"><span class="family-hm">pmg</span> <span class="family-orbifold">22*</span> <span class="family-count">5 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 07 / 17</p>
+        <h2 id="wallpaper-pmg-title"><span class="family-orbifold">22<span class="orbifold-star">∗</span></span> <span class="family-count">5 nontrivial lifts</span></h2>
         <p class="family-summary">Mirror/glide phase choices fill the polar orthorhombic series.</p>
         <p class="family-census">More-than-one-colour orders · C2: 5</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group pmg">
-          <a id="tab-g57" href="#g57" class="space-tab" data-space-tab data-panel-id="g57"><span class="tab-space-name">Pnc2</span></a>
-<a id="tab-g61" href="#g61" class="space-tab" data-space-tab data-panel-id="g61"><span class="tab-space-name">Pca2<sub>1</sub></span></a>
-<a id="tab-g62" href="#g62" class="space-tab" data-space-tab data-panel-id="g62"><span class="tab-space-name">Pmn2<sub>1</sub></span></a>
-<a id="tab-g66" href="#g66" class="space-tab" data-space-tab data-panel-id="g66"><span class="tab-space-name">Ama2</span></a>
-<a id="tab-g67" href="#g67" class="space-tab" data-space-tab data-panel-id="g67"><span class="tab-space-name">Aea2</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 22*">
+          <a id="tab-g57" href="#g57" class="space-tab" data-space-tab data-panel-id="g57" aria-label="¹2¹2*²; colour action g57"><span class="tab-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span class="tab-meta">g57 · C<sub>2</sub></span></a>
+<a id="tab-g61" href="#g61" class="space-tab" data-space-tab data-panel-id="g61" aria-label="²2²2*²; colour action g61"><span class="tab-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span class="tab-meta">g61 · C<sub>2</sub></span></a>
+<a id="tab-g62" href="#g62" class="space-tab" data-space-tab data-panel-id="g62" aria-label="²2²2*¹; colour action g62"><span class="tab-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span class="tab-meta">g62 · C<sub>2</sub></span></a>
+<a id="tab-g66" href="#g66" class="space-tab" data-space-tab data-panel-id="g66" aria-label="¹2²2*¹; colour action g66"><span class="tab-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span class="tab-meta">g66 · C<sub>2</sub></span></a>
+<a id="tab-g67" href="#g67" class="space-tab" data-space-tab data-panel-id="g67" aria-label="¹2²2*²; colour action g67"><span class="tab-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span class="tab-meta">g67 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -555,7 +556,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g57.webp" alt="Static perfect 2-colouring for group g57: asymmetric motifs carry phase colours for Conway type 22*/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g57" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g57" target="_blank" rel="noopener" aria-label="¹2¹2*²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g57-space-name">
                 <h3 id="g57-space-name" class="space-group-name">Pnc2</h3>
@@ -570,7 +571,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) rotation about an axis parallel to the lift direction</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -588,7 +589,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g61.webp" alt="Static perfect 2-colouring for group g61: asymmetric motifs carry phase colours for Conway type 22*/××." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g61" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g61" target="_blank" rel="noopener" aria-label="²2²2*²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g61-space-name">
                 <h3 id="g61-space-name" class="space-group-name">Pca2<sub>1</sub></h3>
@@ -603,7 +604,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -621,7 +622,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g62.webp" alt="Static perfect 2-colouring for group g62: asymmetric motifs carry phase colours for Conway type 22*/**." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g62" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g62" target="_blank" rel="noopener" aria-label="²2²2*¹; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g62-space-name">
                 <h3 id="g62-space-name" class="space-group-name">Pmn2<sub>1</sub></h3>
@@ -636,7 +637,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Mirror reflection in a vertical plane</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -654,7 +655,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g66.webp" alt="Static perfect 2-colouring for group g66: asymmetric motifs carry phase colours for Conway type 22*/22*." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g66" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g66" target="_blank" rel="noopener" aria-label="¹2²2*¹; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g66-space-name">
                 <h3 id="g66-space-name" class="space-group-name">Ama2</h3>
@@ -670,7 +671,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Translation by 1/2 b + 1/2 c</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Mirror reflection in a vertical plane</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">C</span></th><td>Half-turn (180°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">C</span></th><td>Half-turn (180°) rotation about an axis parallel to the lift direction</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -688,7 +689,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g67.webp" alt="Static perfect 2-colouring for group g67: asymmetric motifs carry phase colours for Conway type 22*/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g67" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g67" target="_blank" rel="noopener" aria-label="¹2²2*²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g67-space-name">
                 <h3 id="g67-space-name" class="space-group-name">Aea2</h3>
@@ -704,7 +705,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Translation by 1/2 b + 1/2 c</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">C</span></th><td>Half-turn (180°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">C</span></th><td>Half-turn (180°) rotation about an axis parallel to the lift direction</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -719,22 +720,22 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g56" data-trivial-product aria-label="Trivial one-colour product g56 over wallpaper group pmg"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></p></aside>
+      <aside class="trivial-product" id="g56" data-trivial-product aria-label="Trivial one-colour product over orbifold 22*"><p><strong>C<sub>1</sub> product.</strong> 22<span class="orbifold-star">∗</span> <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-pgg" data-wallpaper-family aria-labelledby="wallpaper-pgg-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 08 / 17</p>
-        <h2 id="wallpaper-pgg-title"><span class="family-hm">pgg</span> <span class="family-orbifold">22×</span> <span class="family-count">3 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 08 / 17</p>
+        <h2 id="wallpaper-pgg-title"><span class="family-orbifold">22×</span> <span class="family-count">3 nontrivial lifts</span></h2>
         <p class="family-summary">Two glide directions include the four-colour Fdd2 lift.</p>
         <p class="family-census">More-than-one-colour orders · C2: 2 · C4: 1</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group pgg">
-          <a id="tab-g59" href="#g59" class="space-tab" data-space-tab data-panel-id="g59"><span class="tab-space-name">Pnn2</span></a>
-<a id="tab-g63" href="#g63" class="space-tab" data-space-tab data-panel-id="g63"><span class="tab-space-name">Pna2<sub>1</sub></span></a>
-<a id="tab-g75" href="#g75" class="space-tab" data-space-tab data-panel-id="g75"><span class="tab-space-name">Fdd2</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 22×">
+          <a id="tab-g59" href="#g59" class="space-tab" data-space-tab data-panel-id="g59" aria-label="¹2¹2×²; colour action g59"><span class="tab-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2×<sup>2</sup></span><span class="tab-meta">g59 · C<sub>2</sub></span></a>
+<a id="tab-g63" href="#g63" class="space-tab" data-space-tab data-panel-id="g63" aria-label="²2²2×¹; colour action g63"><span class="tab-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2×<sup>1</sup></span><span class="tab-meta">g63 · C<sub>2</sub></span></a>
+<a id="tab-g75" href="#g75" class="space-tab" data-space-tab data-panel-id="g75" aria-label="¹2²2×⁴; colour action g75"><span class="tab-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2×<sup>4</sup></span><span class="tab-meta">g75 · C<sub>4</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -742,7 +743,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g59.webp" alt="Static perfect 2-colouring for group g59: asymmetric motifs carry phase colours for Conway type 22×/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g59" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g59" target="_blank" rel="noopener" aria-label="¹2¹2×²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2×<sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g59-space-name">
                 <h3 id="g59-space-name" class="space-group-name">Pnn2</h3>
@@ -756,7 +757,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) rotation about an axis parallel to the lift direction</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
                     </tbody>
                   </table>
@@ -775,7 +776,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g63.webp" alt="Static perfect 2-colouring for group g63: asymmetric motifs carry phase colours for Conway type 22×/××." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g63" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g63" target="_blank" rel="noopener" aria-label="²2²2×¹; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2×<sup>1</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g63-space-name">
                 <h3 id="g63-space-name" class="space-group-name">Pna2<sub>1</sub></h3>
@@ -789,7 +790,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Glide reflection in a vertical plane</td></tr>
                     </tbody>
                   </table>
@@ -808,7 +809,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g75.webp" alt="Static perfect 4-colouring for group g75: asymmetric motifs carry phase colours for Conway type 22×⁴/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g75" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g75" target="_blank" rel="noopener" aria-label="¹2²2×⁴; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2×<sup>4</sup></span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g75-space-name">
                 <h3 id="g75-space-name" class="space-group-name">Fdd2</h3>
@@ -822,7 +823,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Half-turn (180°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>Glide reflection in a vertical plane; height shift 3/4</td></tr>
                     </tbody>
                   </table>
@@ -838,24 +839,24 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g58" data-trivial-product aria-label="Trivial one-colour product g58 over wallpaper group pgg"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/032az1.htm" target="_blank" rel="noopener">Pba2</a></p></aside>
+      <aside class="trivial-product" id="g58" data-trivial-product aria-label="Trivial one-colour product over orbifold 22×"><p><strong>C<sub>1</sub> product.</strong> 22× <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/032az1.htm" target="_blank" rel="noopener">Pba2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-cmm" data-wallpaper-family aria-labelledby="wallpaper-cmm-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 09 / 17</p>
-        <h2 id="wallpaper-cmm-title"><span class="family-hm">cmm</span> <span class="family-orbifold">2*22</span> <span class="family-count">5 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 09 / 17</p>
+        <h2 id="wallpaper-cmm-title"><span class="family-orbifold">2<span class="orbifold-star">∗</span>22</span> <span class="family-count">5 nontrivial lifts</span></h2>
         <p class="family-summary">Centred planar mirrors lift to C- and I-centred orthorhombic groups.</p>
         <p class="family-census">More-than-one-colour orders · C2: 5</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group cmm">
-          <a id="tab-g69" href="#g69" class="space-tab" data-space-tab data-panel-id="g69"><span class="tab-space-name">Ccc2</span></a>
-<a id="tab-g70" href="#g70" class="space-tab" data-space-tab data-panel-id="g70"><span class="tab-space-name">Cmc2<sub>1</sub></span></a>
-<a id="tab-g71" href="#g71" class="space-tab" data-space-tab data-panel-id="g71"><span class="tab-space-name">Imm2</span></a>
-<a id="tab-g72" href="#g72" class="space-tab" data-space-tab data-panel-id="g72"><span class="tab-space-name">Iba2</span></a>
-<a id="tab-g73" href="#g73" class="space-tab" data-space-tab data-panel-id="g73"><span class="tab-space-name">Ima2</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 2*22">
+          <a id="tab-g69" href="#g69" class="space-tab" data-space-tab data-panel-id="g69" aria-label="¹2*²2²2; colour action g69"><span class="tab-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span class="tab-meta">g69 · C<sub>2</sub></span></a>
+<a id="tab-g70" href="#g70" class="space-tab" data-space-tab data-panel-id="g70" aria-label="²2*¹2²2; colour action g70"><span class="tab-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span class="tab-meta">g70 · C<sub>2</sub></span></a>
+<a id="tab-g71" href="#g71" class="space-tab" data-space-tab data-panel-id="g71" aria-label="²2*¹2¹2; colour action g71"><span class="tab-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2</span><span class="tab-meta">g71 · C<sub>2</sub></span></a>
+<a id="tab-g72" href="#g72" class="space-tab" data-space-tab data-panel-id="g72" aria-label="²2*²2²2; colour action g72"><span class="tab-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span class="tab-meta">g72 · C<sub>2</sub></span></a>
+<a id="tab-g73" href="#g73" class="space-tab" data-space-tab data-panel-id="g73" aria-label="¹2*¹2²2; colour action g73"><span class="tab-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span class="tab-meta">g73 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -863,7 +864,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g69.webp" alt="Static perfect 2-colouring for group g69: asymmetric motifs carry phase colours for Conway type 2*22/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g69" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g69" target="_blank" rel="noopener" aria-label="¹2*²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g69-space-name">
                 <h3 id="g69-space-name" class="space-group-name">Ccc2</h3>
@@ -897,7 +898,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g70.webp" alt="Static perfect 2-colouring for group g70: asymmetric motifs carry phase colours for Conway type 2*22/*×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g70" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g70" target="_blank" rel="noopener" aria-label="²2*¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g70-space-name">
                 <h3 id="g70-space-name" class="space-group-name">Cmc2<sub>1</sub></h3>
@@ -931,7 +932,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g71.webp" alt="Static perfect 2-colouring for group g71: asymmetric motifs carry phase colours for Conway type 2*22/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g71" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g71" target="_blank" rel="noopener" aria-label="²2*¹2¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g71-space-name">
                 <h3 id="g71-space-name" class="space-group-name">Imm2</h3>
@@ -965,7 +966,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g72.webp" alt="Static perfect 2-colouring for group g72: asymmetric motifs carry phase colours for Conway type 2*22/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g72" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g72" target="_blank" rel="noopener" aria-label="²2*²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g72-space-name">
                 <h3 id="g72-space-name" class="space-group-name">Iba2</h3>
@@ -999,7 +1000,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g73.webp" alt="Static perfect 2-colouring for group g73: asymmetric motifs carry phase colours for Conway type 2*22/22*." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g73" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g73" target="_blank" rel="noopener" aria-label="¹2*¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g73-space-name">
                 <h3 id="g73-space-name" class="space-group-name">Ima2</h3>
@@ -1030,24 +1031,24 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g68" data-trivial-product aria-label="Trivial one-colour product g68 over wallpaper group cmm"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></p></aside>
+      <aside class="trivial-product" id="g68" data-trivial-product aria-label="Trivial one-colour product over orbifold 2*22"><p><strong>C<sub>1</sub> product.</strong> 2<span class="orbifold-star">∗</span>22 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p4" data-wallpaper-family aria-labelledby="wallpaper-p4-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 10 / 17</p>
-        <h2 id="wallpaper-p4-title"><span class="family-hm">p4</span> <span class="family-orbifold">442</span> <span class="family-count">5 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 10 / 17</p>
+        <h2 id="wallpaper-p4-title"><span class="family-orbifold">442</span> <span class="family-count">5 nontrivial lifts</span></h2>
         <p class="family-summary">Fourfold colour phase becomes the pitch of a 4-fold screw axis.</p>
         <p class="family-census">More-than-one-colour orders · C2: 2 · C4: 3</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p4">
-          <a id="tab-g95" href="#g95" class="space-tab" data-space-tab data-panel-id="g95"><span class="tab-space-name">P4<sub>2</sub></span></a>
-<a id="tab-g96" href="#g96" class="space-tab" data-space-tab data-panel-id="g96"><span class="tab-space-name">P4<sub>1</sub></span></a>
-<a id="tab-g97" href="#g97" class="space-tab" data-space-tab data-panel-id="g97"><span class="tab-space-name">P4<sub>3</sub></span></a>
-<a id="tab-g98" href="#g98" class="space-tab" data-space-tab data-panel-id="g98"><span class="tab-space-name">I4</span></a>
-<a id="tab-g99" href="#g99" class="space-tab" data-space-tab data-panel-id="g99"><span class="tab-space-name">I4<sub>1</sub></span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 442">
+          <a id="tab-g95" href="#g95" class="space-tab" data-space-tab data-panel-id="g95" aria-label="²4²4¹2; colour action g95"><span class="tab-signature book-color-signature"><sup>2</sup>4<sup>2</sup>4<sup>1</sup>2</span><span class="tab-meta">g95 · C<sub>2</sub></span></a>
+<a id="tab-g96" href="#g96" class="space-tab" data-space-tab data-panel-id="g96" aria-label="⁴4⁴4²2; colour action g96"><span class="tab-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span class="tab-meta">g96 · C<sub>4</sub></span></a>
+<a id="tab-g97" href="#g97" class="space-tab" data-space-tab data-panel-id="g97" aria-label="⁴4⁴4²2; colour action g97"><span class="tab-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span class="tab-meta">g97 · C<sub>4</sub></span></a>
+<a id="tab-g98" href="#g98" class="space-tab" data-space-tab data-panel-id="g98" aria-label="¹4²4²2; colour action g98"><span class="tab-signature book-color-signature"><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span class="tab-meta">g98 · C<sub>2</sub></span></a>
+<a id="tab-g99" href="#g99" class="space-tab" data-space-tab data-panel-id="g99" aria-label="⁴4⁴4¹2; colour action g99"><span class="tab-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>1</sup>2</span><span class="tab-meta">g99 · C<sub>4</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -1055,7 +1056,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g95.webp" alt="Static perfect 2-colouring for group g95: asymmetric motifs carry phase colours for Conway type 442/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g95" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g95" target="_blank" rel="noopener" aria-label="²4²4¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>4<sup>2</sup>4<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g95-space-name">
                 <h3 id="g95-space-name" class="space-group-name">P4<sub>2</sub></h3>
@@ -1069,7 +1070,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1087,7 +1088,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g96.webp" alt="Static perfect 4-colouring for group g96: asymmetric motifs carry phase colours for Conway type 442⁴/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g96" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g96" target="_blank" rel="noopener" aria-label="⁴4⁴4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g96-space-name">
                 <h3 id="g96-space-name" class="space-group-name">P4<sub>1</sub></h3>
@@ -1101,7 +1102,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 1/4</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/4</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1119,7 +1120,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g97.webp" alt="Static perfect 4-colouring for group g97: asymmetric motifs carry phase colours for Conway type 442⁴/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g97" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g97" target="_blank" rel="noopener" aria-label="⁴4⁴4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g97-space-name">
                 <h3 id="g97-space-name" class="space-group-name">P4<sub>3</sub></h3>
@@ -1133,7 +1134,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 3/4</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 3/4</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1151,7 +1152,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g98.webp" alt="Static perfect 2-colouring for group g98: asymmetric motifs carry phase colours for Conway type 442/442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g98" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g98" target="_blank" rel="noopener" aria-label="¹4²4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g98-space-name">
                 <h3 id="g98-space-name" class="space-group-name">I4</h3>
@@ -1166,7 +1167,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Translation by 1/2 a + 1/2 b + 1/2 c</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) rotation about an axis parallel to the lift direction</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1184,7 +1185,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g99.webp" alt="Static perfect 4-colouring for group g99: asymmetric motifs carry phase colours for Conway type 442⁴/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g99" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g99" target="_blank" rel="noopener" aria-label="⁴4⁴4¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g99-space-name">
                 <h3 id="g99-space-name" class="space-group-name">I4<sub>1</sub></h3>
@@ -1199,7 +1200,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Translation by 1/2 a + 1/2 b + 1/2 c</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 3/4</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 3/4</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1214,24 +1215,24 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g94" data-trivial-product aria-label="Trivial one-colour product g94 over wallpaper group p4"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></p></aside>
+      <aside class="trivial-product" id="g94" data-trivial-product aria-label="Trivial one-colour product over orbifold 442"><p><strong>C<sub>1</sub> product.</strong> 442 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p4m" data-wallpaper-family aria-labelledby="wallpaper-p4m-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 11 / 17</p>
-        <h2 id="wallpaper-p4m-title"><span class="family-hm">p4m</span> <span class="family-orbifold">*442</span> <span class="family-count">5 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 11 / 17</p>
+        <h2 id="wallpaper-p4m-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>442</span> <span class="family-count">5 nontrivial lifts</span></h2>
         <p class="family-summary">Vertical mirror and glide planes accompany the tetragonal axis.</p>
         <p class="family-census">More-than-one-colour orders · C2: 5</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p4m">
-          <a id="tab-g129" href="#g129" class="space-tab" data-space-tab data-panel-id="g129"><span class="tab-space-name">P4<sub>2</sub>mc</span></a>
-<a id="tab-g130" href="#g130" class="space-tab" data-space-tab data-panel-id="g130"><span class="tab-space-name">P4<sub>2</sub>cm</span></a>
-<a id="tab-g131" href="#g131" class="space-tab" data-space-tab data-panel-id="g131"><span class="tab-space-name">P4cc</span></a>
-<a id="tab-g136" href="#g136" class="space-tab" data-space-tab data-panel-id="g136"><span class="tab-space-name">I4mm</span></a>
-<a id="tab-g138" href="#g138" class="space-tab" data-space-tab data-panel-id="g138"><span class="tab-space-name">I4cm</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold *442">
+          <a id="tab-g129" href="#g129" class="space-tab" data-space-tab data-panel-id="g129" aria-label="*¹4²4¹2; colour action g129"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>1</sup>2</span><span class="tab-meta">g129 · C<sub>2</sub></span></a>
+<a id="tab-g130" href="#g130" class="space-tab" data-space-tab data-panel-id="g130" aria-label="*²4¹4²2; colour action g130"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>1</sup>4<sup>2</sup>2</span><span class="tab-meta">g130 · C<sub>2</sub></span></a>
+<a id="tab-g131" href="#g131" class="space-tab" data-space-tab data-panel-id="g131" aria-label="*²4²4²2; colour action g131"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>2</sup>4<sup>2</sup>2</span><span class="tab-meta">g131 · C<sub>2</sub></span></a>
+<a id="tab-g136" href="#g136" class="space-tab" data-space-tab data-panel-id="g136" aria-label="*¹4¹4²2; colour action g136"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>1</sup>4<sup>2</sup>2</span><span class="tab-meta">g136 · C<sub>2</sub></span></a>
+<a id="tab-g138" href="#g138" class="space-tab" data-space-tab data-panel-id="g138" aria-label="*¹4²4²2; colour action g138"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span class="tab-meta">g138 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -1239,7 +1240,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g129.webp" alt="Static perfect 2-colouring for group g129: asymmetric motifs carry phase colours for Conway type *442/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g129" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g129" target="_blank" rel="noopener" aria-label="*¹4²4¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g129-space-name">
                 <h3 id="g129-space-name" class="space-group-name">P4<sub>2</sub>mc</h3>
@@ -1272,7 +1273,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g130.webp" alt="Static perfect 2-colouring for group g130: asymmetric motifs carry phase colours for Conway type *442/2*22." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g130" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g130" target="_blank" rel="noopener" aria-label="*²4¹4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>1</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g130-space-name">
                 <h3 id="g130-space-name" class="space-group-name">P4<sub>2</sub>cm</h3>
@@ -1305,7 +1306,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g131.webp" alt="Static perfect 2-colouring for group g131: asymmetric motifs carry phase colours for Conway type *442/442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g131" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g131" target="_blank" rel="noopener" aria-label="*²4²4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>2</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g131-space-name">
                 <h3 id="g131-space-name" class="space-group-name">P4cc</h3>
@@ -1338,7 +1339,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g136.webp" alt="Static perfect 2-colouring for group g136: asymmetric motifs carry phase colours for Conway type *442/*442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g136" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g136" target="_blank" rel="noopener" aria-label="*¹4¹4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>1</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g136-space-name">
                 <h3 id="g136-space-name" class="space-group-name">I4mm</h3>
@@ -1372,7 +1373,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g138.webp" alt="Static perfect 2-colouring for group g138: asymmetric motifs carry phase colours for Conway type *442/4*2." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g138" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g138" target="_blank" rel="noopener" aria-label="*¹4²4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g138-space-name">
                 <h3 id="g138-space-name" class="space-group-name">I4cm</h3>
@@ -1403,24 +1404,24 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g128" data-trivial-product aria-label="Trivial one-colour product g128 over wallpaper group p4m"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></p></aside>
+      <aside class="trivial-product" id="g128" data-trivial-product aria-label="Trivial one-colour product over orbifold *442"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>442 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p4g" data-wallpaper-family aria-labelledby="wallpaper-p4g-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 12 / 17</p>
-        <h2 id="wallpaper-p4g-title"><span class="family-hm">p4g</span> <span class="family-orbifold">4*2</span> <span class="family-count">5 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 12 / 17</p>
+        <h2 id="wallpaper-p4g-title"><span class="family-orbifold">4<span class="orbifold-star">∗</span>2</span> <span class="family-count">5 nontrivial lifts</span></h2>
         <p class="family-summary">Glide variants lift to the polar tetragonal 4mm family.</p>
         <p class="family-census">More-than-one-colour orders · C2: 3 · C4: 2</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p4g">
-          <a id="tab-g133" href="#g133" class="space-tab" data-space-tab data-panel-id="g133"><span class="tab-space-name">P4<sub>2</sub>bc</span></a>
-<a id="tab-g134" href="#g134" class="space-tab" data-space-tab data-panel-id="g134"><span class="tab-space-name">P4<sub>2</sub>nm</span></a>
-<a id="tab-g135" href="#g135" class="space-tab" data-space-tab data-panel-id="g135"><span class="tab-space-name">P4nc</span></a>
-<a id="tab-g137" href="#g137" class="space-tab" data-space-tab data-panel-id="g137"><span class="tab-space-name">I4<sub>1</sub>md</span></a>
-<a id="tab-g139" href="#g139" class="space-tab" data-space-tab data-panel-id="g139"><span class="tab-space-name">I4<sub>1</sub>cd</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 4*2">
+          <a id="tab-g133" href="#g133" class="space-tab" data-space-tab data-panel-id="g133" aria-label="²4*²2; colour action g133"><span class="tab-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span class="tab-meta">g133 · C<sub>2</sub></span></a>
+<a id="tab-g134" href="#g134" class="space-tab" data-space-tab data-panel-id="g134" aria-label="²4*¹2; colour action g134"><span class="tab-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span class="tab-meta">g134 · C<sub>2</sub></span></a>
+<a id="tab-g135" href="#g135" class="space-tab" data-space-tab data-panel-id="g135" aria-label="¹4*²2; colour action g135"><span class="tab-signature book-color-signature"><sup>1</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span class="tab-meta">g135 · C<sub>2</sub></span></a>
+<a id="tab-g137" href="#g137" class="space-tab" data-space-tab data-panel-id="g137" aria-label="⁴4*¹2; colour action g137"><span class="tab-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span class="tab-meta">g137 · C<sub>4</sub></span></a>
+<a id="tab-g139" href="#g139" class="space-tab" data-space-tab data-panel-id="g139" aria-label="⁴4*²2; colour action g139"><span class="tab-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span class="tab-meta">g139 · C<sub>4</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -1428,7 +1429,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g133.webp" alt="Static perfect 2-colouring for group g133: asymmetric motifs carry phase colours for Conway type 4*2/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g133" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g133" target="_blank" rel="noopener" aria-label="²4*²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g133-space-name">
                 <h3 id="g133-space-name" class="space-group-name">P4<sub>2</sub>bc</h3>
@@ -1443,7 +1444,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1461,7 +1462,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g134.webp" alt="Static perfect 2-colouring for group g134: asymmetric motifs carry phase colours for Conway type 4*2/2*22." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g134" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g134" target="_blank" rel="noopener" aria-label="²4*¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g134-space-name">
                 <h3 id="g134-space-name" class="space-group-name">P4<sub>2</sub>nm</h3>
@@ -1476,7 +1477,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Mirror reflection in a vertical plane</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1494,7 +1495,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g135.webp" alt="Static perfect 2-colouring for group g135: asymmetric motifs carry phase colours for Conway type 4*2/442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g135" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g135" target="_blank" rel="noopener" aria-label="¹4*²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g135-space-name">
                 <h3 id="g135-space-name" class="space-group-name">P4nc</h3>
@@ -1509,7 +1510,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) rotation about an axis parallel to the lift direction</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1527,7 +1528,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g137.webp" alt="Static perfect 4-colouring for group g137: asymmetric motifs carry phase colours for Conway type 4*2⁴/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g137" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g137" target="_blank" rel="noopener" aria-label="⁴4*¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g137-space-name">
                 <h3 id="g137-space-name" class="space-group-name">I4<sub>1</sub>md</h3>
@@ -1542,7 +1543,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Mirror reflection in a vertical plane</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 3/4</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 3/4</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1560,7 +1561,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g139.webp" alt="Static perfect 4-colouring for group g139: asymmetric motifs carry phase colours for Conway type 4*2⁴/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g139" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g139" target="_blank" rel="noopener" aria-label="⁴4*²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g139-space-name">
                 <h3 id="g139-space-name" class="space-group-name">I4<sub>1</sub>cd</h3>
@@ -1575,7 +1576,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about the lift axis; height shift 1/4</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/4-turn (90°) screw rotation about an axis parallel to the lift direction; height shift 1/4</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1590,22 +1591,22 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g132" data-trivial-product aria-label="Trivial one-colour product g132 over wallpaper group p4g"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></p></aside>
+      <aside class="trivial-product" id="g132" data-trivial-product aria-label="Trivial one-colour product over orbifold 4*2"><p><strong>C<sub>1</sub> product.</strong> 4<span class="orbifold-star">∗</span>2 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p3" data-wallpaper-family aria-labelledby="wallpaper-p3-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 13 / 17</p>
-        <h2 id="wallpaper-p3-title"><span class="family-hm">p3</span> <span class="family-orbifold">333</span> <span class="family-count">3 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 13 / 17</p>
+        <h2 id="wallpaper-p3-title"><span class="family-orbifold">333</span> <span class="family-count">3 nontrivial lifts</span></h2>
         <p class="family-summary">Threefold phases distinguish P3₁, P3₂, and the rhombohedral lift.</p>
         <p class="family-census">More-than-one-colour orders · C3: 3</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p3">
-          <a id="tab-g225" href="#g225" class="space-tab" data-space-tab data-panel-id="g225"><span class="tab-space-name">P3<sub>2</sub></span></a>
-<a id="tab-g226" href="#g226" class="space-tab" data-space-tab data-panel-id="g226"><span class="tab-space-name">P3<sub>1</sub></span></a>
-<a id="tab-g227" href="#g227" class="space-tab" data-space-tab data-panel-id="g227"><span class="tab-space-name">R3</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 333">
+          <a id="tab-g225" href="#g225" class="space-tab" data-space-tab data-panel-id="g225" aria-label="³3³3³3; colour action g225"><span class="tab-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span class="tab-meta">g225 · C<sub>3</sub></span></a>
+<a id="tab-g226" href="#g226" class="space-tab" data-space-tab data-panel-id="g226" aria-label="³3³3³3; colour action g226"><span class="tab-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span class="tab-meta">g226 · C<sub>3</sub></span></a>
+<a id="tab-g227" href="#g227" class="space-tab" data-space-tab data-panel-id="g227" aria-label="³3³3¹3; colour action g227"><span class="tab-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>1</sup>3</span><span class="tab-meta">g227 · C<sub>3</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -1613,7 +1614,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g225.webp" alt="Static perfect 3-colouring for group g225: asymmetric motifs carry phase colours for Conway type 333³/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g225" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g225" target="_blank" rel="noopener" aria-label="³3³3³3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g225-space-name">
                 <h3 id="g225-space-name" class="space-group-name">P3<sub>2</sub></h3>
@@ -1627,7 +1628,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/3-turn (120°) screw rotation about the lift axis; height shift 1/3</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 1/3</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1645,7 +1646,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g226.webp" alt="Static perfect 3-colouring for group g226: asymmetric motifs carry phase colours for Conway type 333³/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g226" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g226" target="_blank" rel="noopener" aria-label="³3³3³3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g226-space-name">
                 <h3 id="g226-space-name" class="space-group-name">P3<sub>1</sub></h3>
@@ -1659,7 +1660,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/3-turn (120°) screw rotation about the lift axis; height shift 2/3</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 2/3</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1677,7 +1678,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g227.webp" alt="Static perfect 3-colouring for group g227: asymmetric motifs carry phase colours for Conway type 333³/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g227" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g227" target="_blank" rel="noopener" aria-label="³3³3¹3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>1</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g227-space-name">
                 <h3 id="g227-space-name" class="space-group-name">R3</h3>
@@ -1692,7 +1693,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Translation by 1/3 a − 1/3 b + 2/3 c</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/3-turn (120°) rotation about the lift axis</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/3-turn (120°) rotation about an axis parallel to the lift direction</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1707,20 +1708,20 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g224" data-trivial-product aria-label="Trivial one-colour product g224 over wallpaper group p3"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/143az1.htm" target="_blank" rel="noopener">P3</a></p></aside>
+      <aside class="trivial-product" id="g224" data-trivial-product aria-label="Trivial one-colour product over orbifold 333"><p><strong>C<sub>1</sub> product.</strong> 333 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/143az1.htm" target="_blank" rel="noopener">P3</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p3m1" data-wallpaper-family aria-labelledby="wallpaper-p3m1-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 14 / 17</p>
-        <h2 id="wallpaper-p3m1-title"><span class="family-hm">p3m1</span> <span class="family-orbifold">*333</span> <span class="family-count">1 nontrivial lift</span></h2>
+        <p class="section-number">Orbifold family 14 / 17</p>
+        <h2 id="wallpaper-p3m1-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>333</span> <span class="family-count">1 nontrivial lift</span></h2>
         <p class="family-summary">The first trigonal mirror orientation lifts to P3m1 and P3c1.</p>
         <p class="family-census">More-than-one-colour orders · C2: 1</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p3m1">
-          <a id="tab-g231" href="#g231" class="space-tab" data-space-tab data-panel-id="g231"><span class="tab-space-name">P3c1</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold *333">
+          <a id="tab-g231" href="#g231" class="space-tab" data-space-tab data-panel-id="g231" aria-label="*²3²3²3; colour action g231"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>3<sup>2</sup>3<sup>2</sup>3</span><span class="tab-meta">g231 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -1728,7 +1729,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g231.webp" alt="Static perfect 2-colouring for group g231: asymmetric motifs carry phase colours for Conway type *333/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g231" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g231" target="_blank" rel="noopener" aria-label="*²3²3²3; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>3<sup>2</sup>3<sup>2</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g231-space-name">
                 <h3 id="g231-space-name" class="space-group-name">P3c1</h3>
@@ -1758,22 +1759,22 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g230" data-trivial-product aria-label="Trivial one-colour product g230 over wallpaper group p3m1"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/156az1.htm" target="_blank" rel="noopener">P3m1</a></p></aside>
+      <aside class="trivial-product" id="g230" data-trivial-product aria-label="Trivial one-colour product over orbifold *333"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>333 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/156az1.htm" target="_blank" rel="noopener">P3m1</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p31m" data-wallpaper-family aria-labelledby="wallpaper-p31m-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 15 / 17</p>
-        <h2 id="wallpaper-p31m-title"><span class="family-hm">p31m</span> <span class="family-orbifold">3*3</span> <span class="family-count">3 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 15 / 17</p>
+        <h2 id="wallpaper-p31m-title"><span class="family-orbifold">3<span class="orbifold-star">∗</span>3</span> <span class="family-count">3 nontrivial lifts</span></h2>
         <p class="family-summary">The second mirror orientation also supplies the rhombohedral R3m/R3c pair.</p>
         <p class="family-census">More-than-one-colour orders · C2: 1 · C3: 1 · C6: 1</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p31m">
-          <a id="tab-g233" href="#g233" class="space-tab" data-space-tab data-panel-id="g233"><span class="tab-space-name">P31c</span></a>
-<a id="tab-g234" href="#g234" class="space-tab" data-space-tab data-panel-id="g234"><span class="tab-space-name">R3m</span></a>
-<a id="tab-g235" href="#g235" class="space-tab" data-space-tab data-panel-id="g235"><span class="tab-space-name">R3c</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 3*3">
+          <a id="tab-g233" href="#g233" class="space-tab" data-space-tab data-panel-id="g233" aria-label="¹3*²3; colour action g233"><span class="tab-signature book-color-signature"><sup>1</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span class="tab-meta">g233 · C<sub>2</sub></span></a>
+<a id="tab-g234" href="#g234" class="space-tab" data-space-tab data-panel-id="g234" aria-label="³3*¹3; colour action g234"><span class="tab-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>1</sup>3</span><span class="tab-meta">g234 · C<sub>3</sub></span></a>
+<a id="tab-g235" href="#g235" class="space-tab" data-space-tab data-panel-id="g235" aria-label="³3*²3; colour action g235"><span class="tab-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span class="tab-meta">g235 · C<sub>6</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -1781,7 +1782,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g233.webp" alt="Static perfect 2-colouring for group g233: asymmetric motifs carry phase colours for Conway type 3*3/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g233" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g233" target="_blank" rel="noopener" aria-label="¹3*²3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g233-space-name">
                 <h3 id="g233-space-name" class="space-group-name">P31c</h3>
@@ -1814,7 +1815,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g234.webp" alt="Static perfect 3-colouring for group g234: asymmetric motifs carry phase colours for Conway type 3*3³/*333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g234" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g234" target="_blank" rel="noopener" aria-label="³3*¹3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>1</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g234-space-name">
                 <h3 id="g234-space-name" class="space-group-name">R3m</h3>
@@ -1829,7 +1830,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Mirror reflection in a vertical plane</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/3-turn (120°) screw rotation about the lift axis; height shift 2/3</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 2/3</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1847,7 +1848,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g235.webp" alt="Static perfect 6-colouring for group g235: asymmetric motifs carry phase colours for Conway type 3*3⁶/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g235" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g235" target="_blank" rel="noopener" aria-label="³3*²3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g235-space-name">
                 <h3 id="g235-space-name" class="space-group-name">R3c</h3>
@@ -1862,7 +1863,7 @@
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>Glide reflection in a vertical plane; height shift 1/2</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/3-turn (120°) screw rotation about the lift axis; height shift 2/3</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">B</span></th><td>1/3-turn (120°) screw rotation about an axis parallel to the lift direction; height shift 2/3</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1877,24 +1878,24 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g232" data-trivial-product aria-label="Trivial one-colour product g232 over wallpaper group p31m"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/157az1.htm" target="_blank" rel="noopener">P31m</a></p></aside>
+      <aside class="trivial-product" id="g232" data-trivial-product aria-label="Trivial one-colour product over orbifold 3*3"><p><strong>C<sub>1</sub> product.</strong> 3<span class="orbifold-star">∗</span>3 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/157az1.htm" target="_blank" rel="noopener">P31m</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p6" data-wallpaper-family aria-labelledby="wallpaper-p6-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 16 / 17</p>
-        <h2 id="wallpaper-p6-title"><span class="family-hm">p6</span> <span class="family-orbifold">632</span> <span class="family-count">5 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 16 / 17</p>
+        <h2 id="wallpaper-p6-title"><span class="family-orbifold">632</span> <span class="family-count">5 nontrivial lifts</span></h2>
         <p class="family-summary">Sixfold cyclic phases become the complete P6 through P6₅ screw series.</p>
         <p class="family-census">More-than-one-colour orders · C2: 1 · C3: 2 · C6: 2</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p6">
-          <a id="tab-g244" href="#g244" class="space-tab" data-space-tab data-panel-id="g244"><span class="tab-space-name">P6<sub>2</sub></span></a>
-<a id="tab-g245" href="#g245" class="space-tab" data-space-tab data-panel-id="g245"><span class="tab-space-name">P6<sub>4</sub></span></a>
-<a id="tab-g246" href="#g246" class="space-tab" data-space-tab data-panel-id="g246"><span class="tab-space-name">P6<sub>3</sub></span></a>
-<a id="tab-g247" href="#g247" class="space-tab" data-space-tab data-panel-id="g247"><span class="tab-space-name">P6<sub>5</sub></span></a>
-<a id="tab-g248" href="#g248" class="space-tab" data-space-tab data-panel-id="g248"><span class="tab-space-name">P6<sub>1</sub></span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold 632">
+          <a id="tab-g244" href="#g244" class="space-tab" data-space-tab data-panel-id="g244" aria-label="³6³3¹2; colour action g244"><span class="tab-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span class="tab-meta">g244 · C<sub>3</sub></span></a>
+<a id="tab-g245" href="#g245" class="space-tab" data-space-tab data-panel-id="g245" aria-label="³6³3¹2; colour action g245"><span class="tab-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span class="tab-meta">g245 · C<sub>3</sub></span></a>
+<a id="tab-g246" href="#g246" class="space-tab" data-space-tab data-panel-id="g246" aria-label="²6¹3²2; colour action g246"><span class="tab-signature book-color-signature"><sup>2</sup>6<sup>1</sup>3<sup>2</sup>2</span><span class="tab-meta">g246 · C<sub>2</sub></span></a>
+<a id="tab-g247" href="#g247" class="space-tab" data-space-tab data-panel-id="g247" aria-label="⁶6³3²2; colour action g247"><span class="tab-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span class="tab-meta">g247 · C<sub>6</sub></span></a>
+<a id="tab-g248" href="#g248" class="space-tab" data-space-tab data-panel-id="g248" aria-label="⁶6³3²2; colour action g248"><span class="tab-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span class="tab-meta">g248 · C<sub>6</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -1902,7 +1903,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g244.webp" alt="Static perfect 3-colouring for group g244: asymmetric motifs carry phase colours for Conway type 632³/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g244" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g244" target="_blank" rel="noopener" aria-label="³6³3¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g244-space-name">
                 <h3 id="g244-space-name" class="space-group-name">P6<sub>2</sub></h3>
@@ -1916,7 +1917,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about the lift axis; height shift 2/3</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 2/3</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1934,7 +1935,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g245.webp" alt="Static perfect 3-colouring for group g245: asymmetric motifs carry phase colours for Conway type 632³/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g245" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g245" target="_blank" rel="noopener" aria-label="³6³3¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g245-space-name">
                 <h3 id="g245-space-name" class="space-group-name">P6<sub>4</sub></h3>
@@ -1948,7 +1949,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about the lift axis; height shift 1/3</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 1/3</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1966,7 +1967,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g246.webp" alt="Static perfect 2-colouring for group g246: asymmetric motifs carry phase colours for Conway type 632/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g246" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g246" target="_blank" rel="noopener" aria-label="²6¹3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>6<sup>1</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g246-space-name">
                 <h3 id="g246-space-name" class="space-group-name">P6<sub>3</sub></h3>
@@ -1980,7 +1981,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about the lift axis; height shift 1/2</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 1/2</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -1998,7 +1999,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g247.webp" alt="Static perfect 6-colouring for group g247: asymmetric motifs carry phase colours for Conway type 632⁶/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g247" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g247" target="_blank" rel="noopener" aria-label="⁶6³3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g247-space-name">
                 <h3 id="g247-space-name" class="space-group-name">P6<sub>5</sub></h3>
@@ -2012,7 +2013,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about the lift axis; height shift 1/6</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 1/6</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -2030,7 +2031,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g248.webp" alt="Static perfect 6-colouring for group g248: asymmetric motifs carry phase colours for Conway type 632⁶/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g248" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g248" target="_blank" rel="noopener" aria-label="⁶6³3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g248-space-name">
                 <h3 id="g248-space-name" class="space-group-name">P6<sub>1</sub></h3>
@@ -2044,7 +2045,7 @@
                       <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">a</span></th><td>Unit translation along a</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">b</span></th><td>Unit translation along b</td></tr>
 <tr class="presentation-generator-row"><th scope="row"><span class="generator-key">c</span></th><td>Unit translation along the lift axis</td></tr>
-<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about the lift axis; height shift 5/6</td></tr>
+<tr class="presentation-generator-row"><th scope="row"><span class="generator-key">A</span></th><td>1/6-turn (60°) screw rotation about an axis parallel to the lift direction; height shift 5/6</td></tr>
                     </tbody>
                   </table>
                   <div class="presentation-relations">
@@ -2059,22 +2060,22 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g243" data-trivial-product aria-label="Trivial one-colour product g243 over wallpaper group p6"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></p></aside>
+      <aside class="trivial-product" id="g243" data-trivial-product aria-label="Trivial one-colour product over orbifold 632"><p><strong>C<sub>1</sub> product.</strong> 632 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p6m" data-wallpaper-family aria-labelledby="wallpaper-p6m-title">
       <header class="family-header">
-        <p class="section-number">Wallpaper family 17 / 17</p>
-        <h2 id="wallpaper-p6m-title"><span class="family-hm">p6m</span> <span class="family-orbifold">*632</span> <span class="family-count">3 nontrivial lifts</span></h2>
+        <p class="section-number">Orbifold family 17 / 17</p>
+        <h2 id="wallpaper-p6m-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>632</span> <span class="family-count">3 nontrivial lifts</span></h2>
         <p class="family-summary">Hexagonal mirrors and glides give the four polar 6mm space groups.</p>
         <p class="family-census">More-than-one-colour orders · C2: 3</p>
       </header>
 
       <div class="space-tabs" data-space-tabs>
-        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over wallpaper group p6m">
-          <a id="tab-g269" href="#g269" class="space-tab" data-space-tab data-panel-id="g269"><span class="tab-space-name">P6<sub>3</sub>cm</span></a>
-<a id="tab-g270" href="#g270" class="space-tab" data-space-tab data-panel-id="g270"><span class="tab-space-name">P6cc</span></a>
-<a id="tab-g271" href="#g271" class="space-tab" data-space-tab data-panel-id="g271"><span class="tab-space-name">P6<sub>3</sub>mc</span></a>
+        <nav class="space-tabbar" data-space-tablist aria-label="Nontrivial cyclic lifts over orbifold *632">
+          <a id="tab-g269" href="#g269" class="space-tab" data-space-tab data-panel-id="g269" aria-label="*¹6²3²2; colour action g269"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>6<sup>2</sup>3<sup>2</sup>2</span><span class="tab-meta">g269 · C<sub>2</sub></span></a>
+<a id="tab-g270" href="#g270" class="space-tab" data-space-tab data-panel-id="g270" aria-label="*²6²3²2; colour action g270"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>2</sup>3<sup>2</sup>2</span><span class="tab-meta">g270 · C<sub>2</sub></span></a>
+<a id="tab-g271" href="#g271" class="space-tab" data-space-tab data-panel-id="g271" aria-label="*²6¹3¹2; colour action g271"><span class="tab-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>1</sup>3<sup>1</sup>2</span><span class="tab-meta">g271 · C<sub>2</sub></span></a>
         </nav>
         <div class="space-panels">
 
@@ -2082,7 +2083,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g269.webp" alt="Static perfect 2-colouring for group g269: asymmetric motifs carry phase colours for Conway type *632/3*3." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g269" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g269" target="_blank" rel="noopener" aria-label="*¹6²3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>6<sup>2</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g269-space-name">
                 <h3 id="g269-space-name" class="space-group-name">P6<sub>3</sub>cm</h3>
@@ -2115,7 +2116,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g270.webp" alt="Static perfect 2-colouring for group g270: asymmetric motifs carry phase colours for Conway type *632/632." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g270" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g270" target="_blank" rel="noopener" aria-label="*²6²3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>2</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g270-space-name">
                 <h3 id="g270-space-name" class="space-group-name">P6cc</h3>
@@ -2148,7 +2149,7 @@
             <div class="entry-pair">
               <figure class="colouring-card">
                 <img src="output/clockwork-colorings/g271.webp" alt="Static perfect 2-colouring for group g271: asymmetric motifs carry phase colours for Conway type *632/*333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g271" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
+                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g271" target="_blank" rel="noopener" aria-label="*²6¹3¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>1</sup>3<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
               </figure>
               <section class="space-group-summary" aria-labelledby="g271-space-name">
                 <h3 id="g271-space-name" class="space-group-name">P6<sub>3</sub>mc</h3>
@@ -2178,7 +2179,7 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g268" data-trivial-product aria-label="Trivial one-colour product g268 over wallpaper group p6m"><p><strong>Trivial one-colour product.</strong> <a href="http://img.chem.ucl.ac.uk/sgp/large/183az1.htm" target="_blank" rel="noopener">P6mm</a></p></aside>
+      <aside class="trivial-product" id="g268" data-trivial-product aria-label="Trivial one-colour product over orbifold *632"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>632 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/183az1.htm" target="_blank" rel="noopener">P6mm</a></p></aside>
     </section>
     </div>
 

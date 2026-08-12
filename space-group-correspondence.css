@@ -149,7 +149,7 @@ nav a[aria-current="page"] {
   color: var(--accent);
 }
 
-.directory-family h3 span {
+.directory-family-count {
   display: block;
   margin-top: 0.25rem;
   color: var(--muted);
@@ -161,15 +161,20 @@ nav a[aria-current="page"] {
 .directory-groups {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 0.42rem;
+  min-width: 0;
 }
 
 .directory-group {
   display: grid;
+  flex: 0 0 auto;
+  gap: 0.28rem;
   min-width: 5.5rem;
-  padding: 0.42rem 0.55rem;
+  padding: 0.34rem 0.4rem 0.42rem;
   border: 1px solid transparent;
   border-radius: 4px;
+  color: var(--text);
   text-align: center;
   text-decoration: none;
 }
@@ -180,11 +185,36 @@ nav a[aria-current="page"] {
   background: var(--background);
 }
 
-.directory-space-group {
-  color: var(--accent);
+.directory-signature {
+  justify-self: center;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 650;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.directory-palette {
+  display: flex;
+  width: 100%;
+  min-width: 4rem;
+  height: 1.15rem;
+  overflow: hidden;
+  border: 1px solid rgb(35 45 41 / 0.42);
+  border-radius: 2px;
+}
+
+.directory-palette span {
+  flex: 1 1 0;
+  background: var(--directory-colour);
+}
+
+.directory-group-id {
+  justify-self: center;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.58rem;
+  line-height: 1;
 }
 
 .space-atlas {
@@ -221,6 +251,10 @@ nav a[aria-current="page"] {
   font-size: clamp(2rem, 4vw, 3.25rem);
   font-weight: 570;
   line-height: 1;
+}
+
+.family-orbifold {
+  letter-spacing: -0.025em;
 }
 
 .family-count {
@@ -279,20 +313,26 @@ nav a[aria-current="page"] {
 }
 
 .space-tabbar {
+  position: relative;
+  z-index: 1;
   display: flex;
-  flex-wrap: wrap;
   align-items: stretch;
   gap: 0.35rem;
+  padding-inline: 0.15rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .space-tab {
-  display: grid;
-  min-width: 6.8rem;
-  padding: 0.65rem 0.75rem;
+  display: inline-flex;
+  min-width: max-content;
+  padding: 0.4rem 0.72rem 0.36rem;
   border: 1px solid var(--line);
-  border-radius: 5px 5px 0 0;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
   background: var(--surface-raised);
   color: var(--muted);
+  flex-direction: column;
   text-align: center;
   text-decoration: none;
 }
@@ -310,10 +350,18 @@ nav a[aria-current="page"] {
   box-shadow: 0 2px 0 var(--background);
 }
 
-.tab-space-name {
+.tab-signature {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-weight: 650;
+  line-height: 1.15;
+}
+
+.tab-meta {
+  margin-top: 0.16rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .space-entry[hidden] {
@@ -359,6 +407,20 @@ nav a[aria-current="page"] {
   font-size: 0.72rem;
 }
 
+.colouring-catalog-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.7rem;
+}
+
+.colouring-signature {
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .colouring-catalog-link,
 .ucl-link {
   color: var(--accent);
@@ -383,6 +445,22 @@ nav a[aria-current="page"] {
 .space-group-name sub {
   font-size: 0.48em;
   vertical-align: -0.16em;
+}
+
+.orbifold-star {
+  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: inherit;
+  letter-spacing: 0;
+  vertical-align: baseline;
+}
+
+.book-color-signature sup,
+.tab-signature sup {
+  font-size: 0.56em;
+  line-height: 0;
+  vertical-align: 0.68em;
 }
 
 .ucl-link {
@@ -528,9 +606,6 @@ nav a[aria-current="page"] {
     gap: 0.7rem;
   }
 
-  .space-tab {
-    flex: 1 1 6.5rem;
-  }
 }
 
 @media (max-width: 430px) {

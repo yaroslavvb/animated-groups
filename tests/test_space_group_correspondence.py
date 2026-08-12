@@ -123,7 +123,7 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
 
     def test_pinned_map_is_bijection_onto_the_68_polar_types(self) -> None:
         groups = self.payload["groups"]
-        self.assertEqual(self.payload["meta"]["schema_version"], 2)
+        self.assertEqual(self.payload["meta"]["schema_version"], 3)
         self.assertEqual(len(groups), 68)
         self.assertEqual({group["id"] for group in groups}, set(correspondence.SPACE_GROUP_BY_ID))
         numbers = [group["space_group"]["it_number"] for group in groups]
@@ -158,6 +158,7 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             self.assertEqual(lifted["image"], original["image"])
             self.assertEqual(lifted["render"], original["render"])
             self.assertEqual(lifted["cell_action_presentation"], original["cell_action_presentation"])
+            self.assertEqual(lifted["book_color_signature"], original["book_color_signature"])
 
     def test_every_planar_operation_has_the_explicit_height_lift(self) -> None:
         for group in self.payload["groups"]:
@@ -236,6 +237,11 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
                 f'class="space-group-name">{correspondence._hm_html(group["space_group"]["hm_short"])}',
                 markup,
             )
+            self.assertIn(
+                '<span class="colouring-signature book-color-signature">'
+                f'{correspondence.clockwork.superscript_html(group["book_color_signature"])}',
+                markup,
+            )
 
         for obsolete in (
             "data-space-viewer",
@@ -253,6 +259,75 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             image for images in self.parser.article_images.values() for image in images
         ))
 
+    def test_navigation_uses_goodman_strauss_orbifold_notation(self) -> None:
+        self.assertEqual(self.page.count("Orbifold family "), len(correspondence.BASE_ORDER))
+        self.assertNotIn('class="family-hm"', self.page)
+        self.assertNotIn('class="directory-space-group"', self.page)
+        self.assertNotIn('class="tab-space-name"', self.page)
+
+        for base in correspondence.BASE_ORDER:
+            orbifold_html = correspondence.clockwork.orbifold_html(
+                correspondence.ORBIFOLD_BY_BASE[base]
+            )
+            self.assertIn(
+                f'id="wallpaper-{base}-title"><span class="family-orbifold">'
+                f'{orbifold_html}</span>',
+                self.page,
+                base,
+            )
+            if base in self.contributing_bases:
+                self.assertIn(
+                    f'class="directory-family-link" href="#wallpaper-{base}">'
+                    f'{orbifold_html}<span class="directory-family-count">',
+                    self.page,
+                    base,
+                )
+
+        expected_palette_swatches = 0
+        for group in self.displayed_groups:
+            group_id = group["id"]
+            signature_html = correspondence.clockwork.superscript_html(
+                group["book_color_signature"]
+            )
+            expected_signature = correspondence.clockwork.book_color_signature(
+                group_id,
+                group["parent"]["orbifold"],
+                group["tos_notation"],
+                group["clock_order"],
+            )
+            self.assertEqual(group["book_color_signature"], expected_signature, group_id)
+            tab = re.search(
+                rf'<a id="tab-{group_id}".*?</a>', self.page, re.DOTALL
+            )
+            directory = re.search(
+                rf'<a class="directory-group"[^>]+data-directory-group="{group_id}".*?</a>',
+                self.page,
+                re.DOTALL,
+            )
+            self.assertIsNotNone(tab, group_id)
+            self.assertIsNotNone(directory, group_id)
+            self.assertIn(signature_html, tab.group(0), group_id)
+            self.assertIn(signature_html, directory.group(0), group_id)
+            self.assertIn(f">{group_id} · C<sub>{group['clock_order']}</sub>", tab.group(0))
+            self.assertIn(f">{group_id}</span>", directory.group(0))
+            expected_palette_swatches += group["clock_order"]
+
+        self.assertEqual(
+            self.page.count("--directory-colour:"), expected_palette_swatches
+        )
+        for left, right in (("g96", "g97"), ("g225", "g226"), ("g244", "g245"), ("g247", "g248")):
+            by_id = {group["id"]: group for group in self.displayed_groups}
+            self.assertEqual(
+                by_id[left]["book_color_signature"], by_id[right]["book_color_signature"]
+            )
+
+        css = (ROOT / "space-group-correspondence.css").read_text(encoding="utf-8")
+        self.assertIn(".orbifold-star", css)
+        self.assertIn(".book-color-signature sup", css)
+        self.assertIn(".directory-palette", css)
+        self.assertIn(".directory-family-count", css)
+        self.assertNotIn(".directory-family h3 span", css)
+
     def test_every_displayed_group_has_a_complete_relative_cell_presentation(self) -> None:
         for group in self.displayed_groups:
             presentation = group["space_group_presentation"]
@@ -260,6 +335,10 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             self.assertEqual(presentation["relative_to"], "displayed unit cell")
             names = [generator["name"] for generator in presentation["generators"]]
             self.assertEqual(names[:3], ["a", "b", "c"], group["id"])
+            self.assertTrue(
+                all(set(generator) == {"name", "operation"} for generator in presentation["generators"]),
+                group["id"],
+            )
             self.assertEqual(
                 names[3:],
                 [chr(ord("A") + index) for index in range(len(names) - 3)],
