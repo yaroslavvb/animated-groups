@@ -51,7 +51,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=fibrifold-tooltips"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=count-summary"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -2529,6 +2529,9 @@ def page_html(payload: dict[str, Any]) -> str:
     space_groups_by_id = _space_groups_by_id()
     displayed_groups = [group for group in groups if group["clock_order"] > 1]
     trivial_groups = [group for group in groups if group["clock_order"] == 1]
+    three_plus_colour_groups = [
+        group for group in displayed_groups if group["clock_order"] >= 3
+    ]
     if len(displayed_groups) != DISPLAYED_GROUP_COUNT:
         raise ValueError(f"expected {DISPLAYED_GROUP_COUNT} nontrivial display groups")
     if len(trivial_groups) != OMITTED_TRIVIAL_COUNT:
@@ -2603,8 +2606,9 @@ def page_html(payload: dict[str, Any]) -> str:
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
       <aside class="directory-census" aria-label="Forward group count overview">
-        <p><strong>{len(groups)} forward groups</strong> = {len(trivial_groups)} trivial-time C<sub>1</sub> products + {len(displayed_groups)} nontrivial colour actions.</p>
-        <p><strong>Nontrivial by colour order</strong> · {_order_census_html(displayed_groups)}</p>
+        <p><strong><span class="census-number">{len(trivial_groups)}</span> trivial groups</strong><span>Time is an independent direct-product factor.</span></p>
+        <p><strong><span class="census-number">{len(displayed_groups)}</span> nontrivial groups</strong><span>Some spatial symmetries advance time phase.</span></p>
+        <p><strong><span class="census-number">{len(three_plus_colour_groups)}</span> groups with 3 or more colours</strong><span>{_order_census_html(three_plus_colour_groups)}</span></p>
       </aside>
       <div class="directory-families">
         {directory}

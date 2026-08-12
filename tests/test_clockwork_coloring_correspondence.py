@@ -682,7 +682,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=fibrifold-tooltips", self.page)
+        self.assertIn("?v=count-summary", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -745,15 +745,44 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn('href="#wallpaper-pm"', directory_html)
         self.assertNotIn('href="#wallpaper-pg"', directory_html)
         self.assertIn("68 forward groups · 17 plane-orbifold families", directory_html)
+        three_plus_groups = [
+            group for group in self.display_groups if group["clock_order"] >= 3
+        ]
         self.assertIn(
-            "68 forward groups</strong> = 17 trivial-time C<sub>1</sub> products + "
-            "51 nontrivial colour actions",
+            f'<span class="census-number">{len(self.trivial_groups)}</span> '
+            "trivial groups",
             directory_html,
         )
         self.assertIn(
-            "C<sub>2</sub>: 36 · C<sub>3</sub>: 6 · "
-            "C<sub>4</sub>: 6 · C<sub>6</sub>: 3",
+            "Time is an independent direct-product factor",
             directory_html,
+        )
+        self.assertIn(
+            f'<span class="census-number">{len(self.display_groups)}</span> '
+            "nontrivial groups",
+            directory_html,
+        )
+        self.assertIn(
+            f'<span class="census-number">{len(three_plus_groups)}</span> '
+            "groups with 3 or more colours",
+            directory_html,
+        )
+        self.assertEqual(len(three_plus_groups), 15)
+        self.assertIn(
+            correspondence._order_census_html(three_plus_groups),
+            directory_html,
+        )
+        census_start = directory_html.index('class="directory-census"')
+        census_end = directory_html.index("</aside>", census_start)
+        self.assertNotIn("C<sub>2</sub>", directory_html[census_start:census_end])
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr))", css)
+        self.assertRegex(
+            css,
+            r"@media \(max-width: 700px\)[\s\S]*?\.directory-census\s*\{"
+            r"[^}]*grid-template-columns: 1fr;",
         )
         self.assertIn("Raised numbers in the signature give colour-permutation orders", directory_html)
         for group in self.display_groups:
