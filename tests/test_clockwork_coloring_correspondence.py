@@ -293,6 +293,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('event.key === "Home"', script)
         self.assertIn('window.addEventListener("hashchange"', script)
         self.assertIn('window.addEventListener("popstate"', script)
+        self.assertIn('if (previousId !== groupId)', script)
+        self.assertIn('if (inactive && inactive !== active)', script)
 
     def test_every_row_has_an_exact_forward_catalog_deep_link(self) -> None:
         expected = [

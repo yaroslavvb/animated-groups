@@ -477,9 +477,15 @@ function initializeClockworkTabs() {
       if (options.scroll) {
         requestAnimationFrame(() => selected.panel.scrollIntoView({ block: "start" }));
       }
-      document.dispatchEvent(new CustomEvent("clockwork:tab-change", {
-        detail: { activeId: groupId, inactiveId: previousId || null },
-      }));
+      // The initial deep link is reopened on `load` so its final scroll
+      // position uses fully laid-out content.  That is a re-scroll, not a tab
+      // transition: emitting a self-transition would make the player clear
+      // its own canvas as both the inactive and active film.
+      if (previousId !== groupId) {
+        document.dispatchEvent(new CustomEvent("clockwork:tab-change", {
+          detail: { activeId: groupId, inactiveId: previousId || null },
+        }));
+      }
       return true;
     };
 
@@ -758,8 +764,11 @@ async function initialize() {
 
   document.addEventListener("clockwork:tab-change", (event) => {
     const inactive = playersById.get(event.detail?.inactiveId);
-    if (inactive) inactive.deactivate();
     const active = playersById.get(event.detail?.activeId);
+    // A repeated hash activation must never deactivate the selected player.
+    // The tab controller suppresses these events, but keep this guard at the
+    // rendering boundary as protection against future callers.
+    if (inactive && inactive !== active) inactive.deactivate();
     if (active) {
       active.pause();
       active.seek(0);
