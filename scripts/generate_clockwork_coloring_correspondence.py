@@ -35,6 +35,7 @@ from itertools import combinations
 import json
 import math
 from pathlib import Path
+import re
 import sys
 from typing import Any, Iterable
 from urllib.parse import urlencode
@@ -49,7 +50,8 @@ MANIFEST = ROOT / "data" / "color-forward-manifest.json"
 DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=cell-action-presentations"
+SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=compact-other-names"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -91,6 +93,48 @@ PALETTE = (
 BASE_ORDER = (
     "p1", "p2", "pm", "pg", "cm", "pmm", "pmg", "pgg", "cmm",
     "p4", "p4m", "p4g", "p3", "p3m1", "p31m", "p6", "p6m",
+)
+
+PLANE_GROUP_NUMBER_BY_HM = {
+    "p1": 1,
+    "p2": 2,
+    "pm": 3,
+    "pg": 4,
+    "cm": 5,
+    "pmm": 6,
+    "pmg": 7,
+    "pgg": 8,
+    "cmm": 9,
+    "p4": 10,
+    "p4m": 11,
+    "p4g": 12,
+    "p3": 13,
+    "p3m1": 14,
+    "p31m": 15,
+    "p6": 16,
+    "p6m": 17,
+}
+PLANE_GROUP_FULL_HM = {
+    "p1": "p1",
+    "p2": "p2",
+    "pm": "p1m1",
+    "pg": "p1g1",
+    "cm": "c1m1",
+    "pmm": "p2mm",
+    "pmg": "p2mg",
+    "pgg": "p2gg",
+    "cmm": "c2mm",
+    "p4": "p4",
+    "p4m": "p4mm",
+    "p4g": "p4gm",
+    "p3": "p3",
+    "p3m1": "p3m1",
+    "p31m": "p31m",
+    "p6": "p6",
+    "p6m": "p6mm",
+}
+IUCR_PLANE_GROUP_URL = (
+    "https://it.iucr.org/Ac/ch2o2v0001/sgtable2o2o{number:03d}/"
 )
 
 ORBIFOLD_BY_BASE = {
@@ -559,6 +603,12 @@ def superscript_html(value: str) -> str:
             output.append(orbifold_html(character))
     flush()
     return "".join(output)
+
+
+def _hm_html(value: str) -> str:
+    """Typeset Hermann--Mauguin screw-axis subscripts."""
+
+    return re.sub(r"_([0-9]+)", r"<sub>\1</sub>", escape(value))
 
 
 def color_type_html(parent: str, kernel: str, order: int) -> str:
@@ -2069,7 +2119,11 @@ def _presentation_html(record: dict[str, Any]) -> str:
               </section>"""
 
 
-def _book_link(reference: dict[str, Any], css_class: str) -> str:
+def _book_link(
+    reference: dict[str, Any],
+    css_class: str,
+    label: str,
+) -> str:
     excerpt = BOOK_EXCERPTS[reference["excerpt_key"]]
     viewer_url = "book-excerpt.html?" + urlencode(
         {
@@ -2091,67 +2145,8 @@ def _book_link(reference: dict[str, Any], css_class: str) -> str:
         f'data-book-alt="{escape(excerpt["alt"])}" '
         f'data-book-source="{escape(reference["url"])}" '
         f'target="{BOOK_EXCERPT_TARGET}">'
-        f'{escape(reference["label"])} · printed p. {reference["printed_page"]} '
-        f'(attached PDF p. {reference["pdf_page"]}) · view annotated excerpt in the excerpt tab</a>'
+        f"{escape(label)}</a>"
     )
-
-
-def _book_audit_html(record: dict[str, Any]) -> str:
-    audit = record["book_audit"]
-    primary = next(
-        reference for reference in audit["references"] if reference["role"] == "primary"
-    )
-    supporting = [
-        reference for reference in audit["references"] if reference["role"] != "primary"
-    ]
-    supporting_html = ""
-    if supporting:
-        links = "\n".join(
-            f"<li>{_book_link(reference, 'book-cross-reference')}</li>"
-            for reference in supporting
-        )
-        supporting_html = f'<ul class="book-reference-list">{links}</ul>'
-
-    chain_html = ""
-    if audit["prime_chain"]:
-        steps = []
-        for step in audit["prime_chain"]:
-            step_reference = {
-                "label": f"Table on p. {step['printed_page']}",
-                "url": step["url"],
-                "printed_page": step["printed_page"],
-                "pdf_page": step["pdf_page"],
-                "excerpt_key": step["excerpt_key"],
-            }
-            steps.append(
-                "<li>"
-                f"<span>{orbifold_html(step['notation'])} · index {step['index']}</span>"
-                f"{_book_link(step_reference, 'book-chain-link')}"
-                "</li>"
-            )
-        chain_html = (
-            '<div class="prime-chain"><h3>Prime-index cross-check</h3><ol>'
-            + "\n".join(steps)
-            + "</ol></div>"
-        )
-
-    independent_html = ""
-    if audit.get("independent_reference"):
-        reference = audit["independent_reference"]
-        independent_html = (
-            '<p class="independent-reference"><strong>Independent check.</strong> '
-            f'<a href="{escape(reference["url"])}">{escape(reference["label"])}</a>.</p>'
-        )
-
-    return f"""
-              <aside class="book-audit book-audit--{escape(audit['status'])}">
-                <p class="book-audit-label">Book audit · {escape(audit['status_label'])}</p>
-                <p>{orbifold_html(audit['summary'])}</p>
-                <p class="book-primary-reference">{_book_link(primary, 'book-page-link')}</p>
-                {supporting_html}
-                {chain_html}
-                {independent_html}
-              </aside>"""
 
 
 def _film_html(record: dict[str, Any]) -> str:
@@ -2175,91 +2170,83 @@ def _film_html(record: dict[str, Any]) -> str:
               </figure>"""
 
 
-def _signature_source_label(record: dict[str, Any]) -> str:
-    """Say exactly how the visible short signature is sourced."""
+def _space_groups_by_id() -> dict[str, dict[str, Any]]:
+    payload = json.loads(SPACE_GROUP_DATA.read_text(encoding="utf-8"))
+    groups = payload.get("groups", [])
+    by_id = {record["id"]: record["space_group"] for record in groups}
+    if len(groups) != 68 or len(by_id) != 68:
+        raise ValueError("expected 68 uniquely identified space-group records")
+    return by_id
 
-    return f"Short colour signature · {record['signature_evidence']['label']}"
+
+def _plane_group_name_html(hm: str) -> str:
+    number = PLANE_GROUP_NUMBER_BY_HM[hm]
+    full_hm = PLANE_GROUP_FULL_HM[hm]
+    short_alias = f" · {escape(hm)}" if full_hm != hm else ""
+    return f"No. {number} {escape(full_hm)}{short_alias}"
 
 
-def _notation_crosswalk_html(record: dict[str, Any]) -> str:
-    """Keep the short-signature and full colour-type numerals distinct."""
+def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> str:
+    """Link exact catalog, plane-group, and height-lift identities."""
 
-    order = record["clock_order"]
-    parent = record["parent"]["orbifold"]
-    kernel = record["kernel"]["orbifold"]
-    short_signature = superscript_html(record["book_color_signature"])
-    colour_type = color_type_html(parent, kernel, order)
-    evidence = record["signature_evidence"]
-    signature_source = evidence["summary"]
-    if order == 2:
-        type_term = "Book colour type"
-        type_explanation = (
-            "Twofold is understood, so the book omits an exponent 2; the group "
-            "after the slash is K, the all-colours kernel."
-        )
-    else:
-        type_term = (
-            "Book-style colour type" if order in (4, 6) else "Book colour type"
-        )
-        type_explanation = (
-            f"The exponent {order} counts colours; the group after the slash is K, "
-            "the all-colours kernel."
-        )
-    lossy_note = (
-        " For three or more colours this order-only summary can lose permutation "
-        "information; the full colour type disambiguates it."
-        if order >= 3
-        else ""
+    group_id = escape(record["id"])
+    parent_hm = record["parent"]["hm"]
+    kernel_hm = record["kernel"]["hm"]
+    parent_url = IUCR_PLANE_GROUP_URL.format(
+        number=PLANE_GROUP_NUMBER_BY_HM[parent_hm]
     )
+    kernel_url = IUCR_PLANE_GROUP_URL.format(
+        number=PLANE_GROUP_NUMBER_BY_HM[kernel_hm]
+    )
+    space_number = space_group["it_number"]
+    space_hm = _hm_html(space_group["hm_short"])
+    primary_book_reference = next(
+        reference
+        for reference in record["book_audit"]["references"]
+        if reference["role"] == "primary"
+    )
+    book_link = _book_link(
+        primary_book_reference,
+        "book-page-link",
+        f"The Symmetries of Things · p. {primary_book_reference['printed_page']}",
+    )
+    mate_html = ""
+    if record["inverse_clock_mate"]:
+        mate_id = escape(record["inverse_clock_mate"])
+        mate_html = (
+            f'<li><span>Opposite clock orientation</span><a href="#{mate_id}">{mate_id}</a></li>'
+        )
     return f"""
-              <dl class="notation-crosswalk" aria-label="Notation crosswalk">
-                <div>
-                  <dt>Short colour signature</dt>
-                  <dd><span class="notation-mark book-color-signature">{short_signature}</span><span class="notation-explanation">Superscripts are permutation orders. A reduced clock phase a/b induces permutation order b.{escape(lossy_note)} {orbifold_html(signature_source)}</span></dd>
-                </div>
-                <div>
-                  <dt>{escape(type_term)}</dt>
-                  <dd><span class="notation-mark color-type">{colour_type}</span><span class="notation-explanation">{escape(type_explanation)}</span></dd>
-                </div>
-              </dl>"""
+              <section class="other-names" aria-labelledby="{group_id}-other-names-title">
+                <h4 id="{group_id}-other-names-title">Other names and instances</h4>
+                <ul>
+                  <li><span>Chaim source</span>{book_link}</li>
+                  <li><span>Catalog instance</span><a href="{escape(record['catalog_url'])}">{group_id}</a></li>
+                  <li><span>Parent plane-group type G</span><a href="{escape(parent_url)}">{_plane_group_name_html(parent_hm)}</a></li>
+                  <li><span>Colour-fixing plane-group type K</span><a href="{escape(kernel_url)}">{_plane_group_name_html(kernel_hm)}</a></li>
+                  <li><span>Height-lift space-group type</span><span class="other-name-value"><a href="space-group-correspondence.html#{group_id}">No. {space_number} {space_hm}</a><code>Hall {escape(space_group['hall'])}</code></span></li>
+                  <li><span>Crystallographic tables</span><a href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">UCL diagram and tables</a></li>
+                  {mate_html}
+                </ul>
+              </section>"""
 
 
 def _entry_html(
     record: dict[str, Any],
-    by_id: dict[str, dict[str, Any]],
     display_ordinal: int,
+    space_group: dict[str, Any],
 ) -> str:
     group_id = escape(record["id"])
     order = record["clock_order"]
-    parent = record["parent"]
-    kernel = record["kernel"]
     short_signature = record["book_color_signature"]
     short_signature_html = superscript_html(short_signature)
-    type_html = color_type_html(parent["orbifold"], kernel["orbifold"], order)
-    signature_source_label = _signature_source_label(record)
-    mate_note = ""
-    if record["inverse_clock_mate"]:
-        mate = by_id[record["inverse_clock_mate"]]
-        mate_note = (
-            "<aside class=\"orientation-note\">"
-            "<strong>Clock orientation.</strong> This has the same traditional colour group as "
-            f"<a href=\"#{escape(mate['id'])}\">{escape(mate['id'])}</a>, "
-            "but traverses the cyclic palette in the opposite "
-            "time order.</aside>"
-        )
     entry = f"""
       <li class="correspondence-item">
         <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clockwork-tabpanel data-clock-order="{order}">
           <header class="entry-header">
             <p class="entry-number">{display_ordinal:02d} / {DISPLAYED_GROUP_COUNT}</p>
             <div>
-              <p class="entry-kicker">{escape(signature_source_label)}</p>
-              <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="{escape(signature_source_label)} {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
-              <p class="entry-identity">Base orbifold {orbifold_html(parent['orbifold'])} · regular colour action C<sub>{order}</sub></p>
-            </div>
-            <div class="entry-badges" aria-label="Correspondence summary">
-              <span>C<sub>{order}</sub></span>
-              <span class="color-type">{type_html}</span>
+              <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Chaim notation {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
             </div>
           </header>
 
@@ -2278,20 +2265,8 @@ def _entry_html(
             </div>
 
             <div class="entry-copy">
-              <p class="pair-label">Conway–Burgiel–Goodman-Strauss colour type</p>
-              <p class="orbifold-pair">{type_html}</p>
-              <dl class="group-data">
-                <div><dt>Projected group G</dt><dd>{orbifold_html(parent['orbifold'])}</dd></div>
-                <div><dt>Colour-fixing subgroup K</dt><dd>{orbifold_html(kernel['orbifold'])}</dd></div>
-                <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
-              </dl>
               {_presentation_html(record)}
-              {_notation_crosswalk_html(record)}
-              <p class="phase-description">{orbifold_html(record['clockwork_description'])}</p>
-              <p class="coloring-description">{orbifold_html(record['coloring_description'])}</p>
-              {_book_audit_html(record)}
-              {mate_note}
-              <p class="catalog-action"><a href="{escape(record['catalog_url'])}" aria-label="Open {group_id} in the forward catalog">forward catalog · {group_id} ↗</a></p>
+              {_other_names_html(record, space_group)}
             </div>
           </div>
         </section>
@@ -2327,9 +2302,8 @@ def _trivial_product_html(record: dict[str, Any]) -> str:
     return (
         f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
         'aria-label="Trivial time group">'
-        "<p><strong>Trivial time group · C<sub>1</sub>.</strong> "
-        f"The inherited one-colour lift {orbifold} ({group_id}) has κ = 0 and K = G; "
-        "it remains in the 68-record audit data but is not included in the tabs above.</p>"
+        "<p><strong>C<sub>1</sub> product.</strong> "
+        f"{orbifold} · {group_id} · κ = 0 · K = G</p>"
         "</aside>"
     )
 
@@ -2366,15 +2340,19 @@ def _family_html(
     rows: list[dict[str, Any]],
     trivial_record: dict[str, Any],
     family_index: int,
-    by_id: dict[str, dict[str, Any]],
     display_ordinals: dict[str, int],
+    space_groups_by_id: dict[str, dict[str, Any]],
 ) -> str:
     orbifold = ORBIFOLD_BY_BASE[base]
     summary, note = WALLPAPER_SUMMARIES[base]
     lift_word = "lift" if len(rows) == 1 else "lifts"
     tabs = "\n".join(_tab_html(row) for row in rows)
     entries = "\n".join(
-        _entry_html(row, by_id, display_ordinals[row["id"]])
+        _entry_html(
+            row,
+            display_ordinals[row["id"]],
+            space_groups_by_id[row["id"]],
+        )
         for row in rows
     )
     family_class = "wallpaper-family" + (" is-empty" if not rows else "")
@@ -2414,7 +2392,7 @@ def _family_html(
 
 def page_html(payload: dict[str, Any]) -> str:
     groups = payload["groups"]
-    by_id = {group["id"]: group for group in groups}
+    space_groups_by_id = _space_groups_by_id()
     displayed_groups = [group for group in groups if group["clock_order"] > 1]
     trivial_groups = [group for group in groups if group["clock_order"] == 1]
     if len(displayed_groups) != DISPLAYED_GROUP_COUNT:
@@ -2442,8 +2420,8 @@ def page_html(payload: dict[str, Any]) -> str:
             grouped[base],
             trivial_by_base[base],
             index,
-            by_id,
             display_ordinals,
+            space_groups_by_id,
         )
         for index, base in enumerate(BASE_ORDER, 1)
     )

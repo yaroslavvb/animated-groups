@@ -81,12 +81,21 @@ class CorrespondenceParser(HTMLParser):
         self.scripts: list[tuple[str, str]] = []
         self.presentation_tables: list[str] = []
         self.presentation_generator_count = 0
+        self.other_names_ids: list[str] = []
+        self.plane_group_links: list[str] = []
+        self.height_lift_links: list[str] = []
+        self.ucl_links: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
         classes = set((attributes.get("class") or "").split())
         if tag == "section" and "correspondence-entry" in classes:
             self.section_ids.append(attributes.get("id", ""))
+        if tag == "section" and "other-names" in classes:
+            labelled_by = attributes.get("aria-labelledby", "")
+            self.other_names_ids.append(
+                labelled_by.removesuffix("-other-names-title")
+            )
         if tag == "section" and "wallpaper-family" in classes:
             self.family_ids.append(attributes.get("id", ""))
             if "is-empty" in classes:
@@ -118,6 +127,18 @@ class CorrespondenceParser(HTMLParser):
             correspondence.CATALOG_ROOT
         ):
             self.catalog_links.append(attributes["href"] or "")
+        if tag == "a" and (attributes.get("href") or "").startswith(
+            "https://it.iucr.org/Ac/ch2o2v0001/sgtable2o2o"
+        ):
+            self.plane_group_links.append(attributes["href"] or "")
+        if tag == "a" and (attributes.get("href") or "").startswith(
+            "space-group-correspondence.html#"
+        ):
+            self.height_lift_links.append(attributes["href"] or "")
+        if tag == "a" and (attributes.get("href") or "").startswith(
+            "http://img.chem.ucl.ac.uk/sgp/large/"
+        ):
+            self.ucl_links.append(attributes["href"] or "")
         if tag == "a" and "book-page-link" in classes:
             self.book_links.append(
                 (
@@ -313,6 +334,73 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ]
         self.assertEqual(self.parser.catalog_links, expected)
 
+    def test_every_row_has_compact_sourced_other_names_and_instances(self) -> None:
+        display_ids = [group["id"] for group in self.display_groups]
+        self.assertEqual(self.parser.other_names_ids, display_ids)
+        self.assertEqual(
+            self.page.count("Other names and instances"),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count("<span>Chaim source</span>"),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+
+        expected_plane_links = []
+        for group in self.display_groups:
+            expected_plane_links.extend(
+                [
+                    correspondence.IUCR_PLANE_GROUP_URL.format(
+                        number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
+                            group["parent"]["hm"]
+                        ]
+                    ),
+                    correspondence.IUCR_PLANE_GROUP_URL.format(
+                        number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
+                            group["kernel"]["hm"]
+                        ]
+                    ),
+                ]
+            )
+        self.assertEqual(self.parser.plane_group_links, expected_plane_links)
+
+        space_payload = json.loads(
+            correspondence.SPACE_GROUP_DATA.read_text(encoding="utf-8")
+        )
+        space_by_id = {
+            record["id"]: record["space_group"]
+            for record in space_payload["groups"]
+        }
+        self.assertEqual(
+            self.parser.height_lift_links,
+            [f"space-group-correspondence.html#{group_id}" for group_id in display_ids],
+        )
+        self.assertEqual(
+            self.parser.ucl_links,
+            [space_by_id[group_id]["ucl_reference_url"] for group_id in display_ids],
+        )
+
+        for group in self.display_groups:
+            group_id = group["id"]
+            section_start = self.page.index(
+                f'<section class="other-names" aria-labelledby="{group_id}-other-names-title">'
+            )
+            section_end = self.page.index("</section>", section_start)
+            section = self.page[section_start:section_end]
+            space_group = space_by_id[group_id]
+            self.assertIn(
+                f'No. {space_group["it_number"]} '
+                f'{correspondence._hm_html(space_group["hm_short"])}',
+                section,
+                group_id,
+            )
+            self.assertIn(f'Hall {escape(space_group["hall"])}', section, group_id)
+
+        self.assertNotIn(
+            "chaimgoodmanstrauss.com/various-crystallographic-space-groups/",
+            self.page,
+        )
+
     def test_tos_notation_and_clock_orders_are_complete(self) -> None:
         groups = self.payload["groups"]
         self.assertEqual(len(correspondence.BOOK_TWO_FOLD_SIGNATURE_BY_TYPE), 36)
@@ -369,30 +457,41 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                         0,
                         group["id"],
                     )
-        for group in self.display_groups:
-            self.assertIn(
-                correspondence.orbifold_html(group["clockwork_description"]),
-                self.page,
-            )
-            self.assertIn(
-                correspondence.orbifold_html(group["coloring_description"]),
-                self.page,
-            )
-
         g60 = next(group for group in groups if group["id"] == "g60")
         self.assertEqual(g60["book_color_signature"], "*¹2²2¹2²2")
         self.assertIn(
             '<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2',
             self.page,
         )
-        self.assertEqual(self.page.count('class="notation-crosswalk"'), 51)
-        self.assertIn("A reduced clock phase a/b induces permutation order b", self.page)
+        self.assertEqual(
+            self.page.count(
+                '<span class="book-color-signature" aria-label="Chaim notation '
+            ),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        for group in self.display_groups:
+            entry_start = self.page.index(
+                f'<section class="correspondence-entry" id="{group["id"]}"'
+            )
+            heading_end = self.page.index("</h3>", entry_start)
+            heading = self.page[entry_start:heading_end]
+            self.assertIn(
+                correspondence.superscript_html(group["book_color_signature"]),
+                heading,
+                group["id"],
+            )
+
+        self.assertNotIn('class="notation-crosswalk"', self.page)
+        self.assertNotIn("A reduced clock phase a/b induces permutation order b", self.page)
+        self.assertNotIn("Short colour signature", self.page)
+        self.assertNotIn("unique Table 11.1 short signature", self.page)
         self.assertNotIn("non-product forward lift", self.page)
         self.assertNotIn("Clockwork symbol", self.page)
         self.assertNotIn("Clockwork notation", self.page)
         self.assertNotIn('class="clockwork-symbol"', self.page)
         self.assertNotIn('class="clockwork-description"', self.page)
-        self.assertEqual(self.page.count('class="phase-description"'), 51)
+        self.assertNotIn('class="phase-description"', self.page)
+        self.assertNotIn('class="coloring-description"', self.page)
         for group in self.display_groups:
             self.assertNotIn(escape(group["symbol"]), self.page, group["id"])
 
@@ -512,7 +611,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=cell-action-presentations", self.page)
+        self.assertIn("?v=compact-other-names", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -538,8 +637,16 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertNotIn(f"({conventional_name})", self.page)
 
         self.assertEqual(self.page.count("Orbifold family"), 17)
-        self.assertEqual(self.page.count("Projected group G"), 51)
-        self.assertEqual(self.page.count("Colour-fixing subgroup K"), 51)
+        self.assertNotIn("Projected group G", self.page)
+        self.assertNotIn("Colour-fixing subgroup K", self.page)
+        self.assertNotIn("Regular quotient", self.page)
+        self.assertNotIn("Base orbifold", self.page)
+        self.assertNotIn('class="entry-identity"', self.page)
+        self.assertNotIn('class="entry-kicker"', self.page)
+        self.assertNotIn('class="group-data"', self.page)
+        self.assertNotIn('class="book-audit', self.page)
+        self.assertNotIn('class="orientation-note"', self.page)
+        self.assertNotIn("The phase character maps", self.page)
         self.assertEqual(self.page.count("Static perfect-colouring plate"), 51)
         self.assertEqual(
             self.parser.wallpaper_links,
@@ -715,24 +822,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 ],
                 [("primary", 164), ("supporting", 157), ("conflict", 156)],
             )
-        self.assertIn("official errata does not list that typo", self.page)
+        self.assertNotIn("official errata does not list that typo", self.page)
 
     def test_all_book_links_open_separate_annotated_excerpt_pages(self) -> None:
         expected_references = []
         for group in self.display_groups:
-            expected_references.extend(group["book_audit"]["references"])
-            for step in group["book_audit"]["prime_chain"]:
-                expected_references.append(
-                    {
-                        "url": step["url"],
-                        "printed_page": step["printed_page"],
-                        "pdf_page": step["pdf_page"],
-                        "excerpt_key": step["excerpt_key"],
-                    }
-                )
+            expected_references.extend(
+                reference
+                for reference in group["book_audit"]["references"]
+                if reference["role"] == "primary"
+            )
 
-        self.assertEqual(len(expected_references), 84)
-        self.assertEqual(len(self.parser.book_excerpt_links), 84)
+        self.assertEqual(len(expected_references), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(
+            len(self.parser.book_excerpt_links),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
         for attributes, reference in zip(self.parser.book_excerpt_links, expected_references):
             excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
             viewer = urlparse(attributes.get("href") or "")
@@ -761,7 +866,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertNotIn("aria-controls", attributes)
 
         expected_excerpt_keys = {reference["excerpt_key"] for reference in expected_references}
-        self.assertEqual(len(expected_excerpt_keys), 46)
+        self.assertEqual(len(expected_excerpt_keys), 41)
         self.assertEqual(
             {attributes["data-book-excerpt"] for attributes in self.parser.book_excerpt_links},
             expected_excerpt_keys,
@@ -879,7 +984,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('event.data?.type === "clockwork:book-excerpt-ready"', script)
         self.assertIn("viewerWindow.focus()", script)
         self.assertNotIn("<dialog", self.page)
-        self.assertIn("view annotated excerpt in the excerpt tab", self.page)
+        self.assertNotIn("view annotated excerpt in the excerpt tab", self.page)
+        self.assertEqual(
+            self.page.count("The Symmetries of Things · p. "),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
         self.assertEqual(
             {attributes.get("target") for attributes in self.parser.book_excerpt_links},
             {correspondence.BOOK_EXCERPT_TARGET},
