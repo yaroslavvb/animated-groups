@@ -53,6 +53,7 @@ IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=hover-tooltips"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
+BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
 CATALOG_ROOT = "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward"
@@ -2176,7 +2177,7 @@ def _book_link(
     label: str,
 ) -> str:
     excerpt = BOOK_EXCERPTS[reference["excerpt_key"]]
-    viewer_url = "book-excerpt.html?" + urlencode(
+    viewer_url = f"book-excerpt.html?v={BOOK_EXCERPT_VIEWER_VERSION}&" + urlencode(
         {
             "image": excerpt["image"],
             "title": excerpt["title"],

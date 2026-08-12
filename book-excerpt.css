@@ -118,7 +118,6 @@ main {
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: calc(100dvh - 12rem);
   object-fit: contain;
 }
 
@@ -164,7 +163,4 @@ footer {
     margin-top: 1rem;
   }
 
-  .viewer-media[data-zoom="fit"] img {
-    max-height: none;
-  }
 }

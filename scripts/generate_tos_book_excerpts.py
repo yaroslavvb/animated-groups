@@ -2,9 +2,10 @@
 """Generate the annotated *Symmetries of Things* excerpt assets.
 
 The source PDF is intentionally not part of the site.  This script renders
-only the 65 contextual evidence crops listed in
+only the 65 evidence images listed in
 ``tos_book_excerpt_specs.py``, bakes in the highlight and copyright notice,
-and writes lossless WebP files for the correspondence-page dialog.
+and writes lossless WebP files for the separate excerpt viewer. Table evidence
+shows the complete table, including every continuation page.
 """
 
 from __future__ import annotations
@@ -152,25 +153,87 @@ def _watermark_layer(size: tuple[int, int]) -> Image.Image:
     return layer
 
 
-def render_excerpt(page: Image.Image, spec: dict[str, Any]) -> bytes:
-    sx = page.width / PDF_WIDTH
-    sy = page.height / PDF_HEIGHT
-    crop_box = _box(expanded_crop(spec["crop"]), sx, sy)
-    excerpt = page.crop(crop_box).convert("RGBA")
+def _render_content(
+    pages: dict[int, Image.Image],
+    spec: dict[str, Any],
+) -> tuple[Image.Image, tuple[int, int, int, int]]:
+    """Render either complete table panels or one contextual prose crop."""
 
-    excerpt.alpha_composite(_watermark_layer(excerpt.size))
+    panels = spec.get("table_panels")
+    if not panels:
+        page = pages[spec["pdf_page"]]
+        sx = page.width / PDF_WIDTH
+        sy = page.height / PDF_HEIGHT
+        crop_box = _box(expanded_crop(spec["crop"]), sx, sy)
+        excerpt = page.crop(crop_box).convert("RGBA")
+        highlight = _box(spec["highlight"], sx, sy)
+        local = (
+            highlight[0] - crop_box[0],
+            highlight[1] - crop_box[1],
+            highlight[2] - crop_box[0],
+            highlight[3] - crop_box[1],
+        )
+        excerpt.alpha_composite(_watermark_layer(excerpt.size))
+        return excerpt, local
 
-    highlight = _box(spec["highlight"], sx, sy)
-    local = (
-        highlight[0] - crop_box[0],
-        highlight[1] - crop_box[1],
-        highlight[2] - crop_box[0],
-        highlight[3] - crop_box[1],
-    )
+    rendered_panels: list[tuple[dict[str, Any], Image.Image, tuple[int, int, int, int]]] = []
+    for panel in panels:
+        page = pages[panel["pdf_page"]]
+        sx = page.width / PDF_WIDTH
+        sy = page.height / PDF_HEIGHT
+        crop_box = _box(panel["crop"], sx, sy)
+        panel_image = page.crop(crop_box).convert("RGBA")
+        panel_image.alpha_composite(_watermark_layer(panel_image.size))
+        rendered_panels.append((panel, panel_image, crop_box))
+
+    gap = 18
+    content_width = max(image.width for _, image, _ in rendered_panels)
+    content_height = sum(image.height for _, image, _ in rendered_panels)
+    content_height += gap * (len(rendered_panels) - 1)
+    excerpt = Image.new("RGBA", (content_width, content_height), (255, 255, 255, 255))
+
+    highlight_local: tuple[int, int, int, int] | None = None
+    highlight_area = math.inf
+    y_offset = 0
+    for panel, panel_image, crop_box in rendered_panels:
+        x_offset = (content_width - panel_image.width) // 2
+        excerpt.alpha_composite(panel_image, (x_offset, y_offset))
+        if panel["pdf_page"] == spec["pdf_page"]:
+            page = pages[panel["pdf_page"]]
+            sx = page.width / PDF_WIDTH
+            sy = page.height / PDF_HEIGHT
+            highlight = _box(spec["highlight"], sx, sy)
+            local = (
+                x_offset + highlight[0] - crop_box[0],
+                y_offset + highlight[1] - crop_box[1],
+                x_offset + highlight[2] - crop_box[0],
+                y_offset + highlight[3] - crop_box[1],
+            )
+            clipped_width = max(
+                0,
+                min(local[2], x_offset + panel_image.width) - max(local[0], x_offset),
+            )
+            clipped_height = max(
+                0,
+                min(local[3], y_offset + panel_image.height) - max(local[1], y_offset),
+            )
+            if clipped_width * clipped_height < highlight_area:
+                highlight_area = clipped_width * clipped_height
+                highlight_local = local
+        y_offset += panel_image.height + gap
+
+    if highlight_local is None:
+        raise ValueError(f"highlight page is absent from table panels: {spec['key']}")
+    return excerpt, highlight_local
+
+
+def render_excerpt(pages: dict[int, Image.Image], spec: dict[str, Any]) -> bytes:
+    excerpt, local = _render_content(pages, spec)
+
     overlay = Image.new("RGBA", excerpt.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
-    radius = max(5, round(3 * min(sx, sy)))
-    outline_width = max(4, round(1.7 * min(sx, sy)))
+    radius = 9
+    outline_width = 5
     draw.rounded_rectangle(
         local,
         radius=radius,
@@ -196,10 +259,22 @@ def render_excerpt(page: Image.Image, spec: dict[str, Any]) -> bytes:
     )
     divider_y = padding * 2 + excerpt.height + 4
     framed_draw.line((padding, divider_y, framed.width - padding, divider_y), fill=(92, 88, 78, 95), width=1)
-    label = (
-        "THE SYMMETRIES OF THINGS  ·  "
-        f"PRINTED P. {spec['printed_page']}  ·  ANNOTATED EXCERPT"
-    )
+    if spec.get("table_panels"):
+        printed_pages = [panel["printed_page"] for panel in spec["table_panels"]]
+        page_label = (
+            f"PRINTED P. {printed_pages[0]}"
+            if len(printed_pages) == 1
+            else f"PRINTED PP. {printed_pages[0]}-{printed_pages[-1]}"
+        )
+        label = (
+            "THE SYMMETRIES OF THINGS  ·  "
+            f"{spec['table_name'].upper()}  ·  {page_label}  ·  ANNOTATED"
+        )
+    else:
+        label = (
+            "THE SYMMETRIES OF THINGS  ·  "
+            f"PRINTED P. {spec['printed_page']}  ·  ANNOTATED EXCERPT"
+        )
     label_size = 18
     label_font = _font(label_size, bold=True)
     while label_size > 11 and label_font.getlength(label) > framed.width - padding * 2:
@@ -222,7 +297,7 @@ def expected_assets(source_pdf: Path) -> dict[Path, bytes]:
     with tempfile.TemporaryDirectory(prefix="tos-excerpts-", dir=TEMP_ROOT) as temporary:
         pages = _render_pages(source_pdf, Path(temporary))
         return {
-            ROOT / spec["image"]: render_excerpt(pages[spec["pdf_page"]], spec)
+            ROOT / spec["image"]: render_excerpt(pages, spec)
             for spec in BOOK_EXCERPTS.values()
         }
 

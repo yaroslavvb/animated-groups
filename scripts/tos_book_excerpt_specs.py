@@ -1,10 +1,9 @@
 """Exact evidence crops from *The Symmetries of Things* used by the site.
 
 Coordinates are PDF points on 612 x 792 media-box pages, measured from the
-top-left corner. Each ``crop`` is the original focus region; the renderer first
-expands it to at least five times that page area, then makes that contextual
-crop five times taller where the page bounds permit. The exact ``highlight``
-rectangle is retained.
+top-left corner. Table evidence carries one or more ``table_panels`` covering
+the complete printed table; other evidence retains the expanded contextual
+crop around its exact ``highlight`` rectangle.
 """
 
 from __future__ import annotations
@@ -50,12 +49,31 @@ def _excerpt(
 BOOK_EXCERPTS: dict[str, dict[str, Any]] = {}
 
 
-def _add(*args: Any) -> None:
+def _add(*args: Any) -> dict[str, Any]:
     excerpt = _excerpt(*args)
     key = excerpt["key"]
     if key in BOOK_EXCERPTS:
         raise ValueError(f"duplicate book excerpt key: {key}")
     BOOK_EXCERPTS[key] = excerpt
+    return excerpt
+
+
+def _complete_table(
+    excerpt: dict[str, Any],
+    table_name: str,
+    panels: tuple[tuple[int, tuple[float, float, float, float]], ...],
+) -> None:
+    """Attach complete-table crops, including every printed continuation."""
+
+    excerpt["table_name"] = table_name
+    excerpt["table_panels"] = [
+        {
+            "printed_page": printed_page,
+            "pdf_page": printed_page + 19,
+            "crop": crop,
+        }
+        for printed_page, crop in panels
+    ]
 
 
 # Printed p. 40 / attached PDF p. 59: Table 3.2, the 17 plane groups.
@@ -79,7 +97,7 @@ _PLANE_GROUP_HIGHLIGHTS = {
     "◦": (426, 256.5, 13.5, 22.5),
 }
 for _signature, _highlight in _PLANE_GROUP_HIGHLIGHTS.items():
-    _add(
+    _spec = _add(
         f"p40::{_signature}",
         40,
         (268, 197, 184, 105),
@@ -88,6 +106,7 @@ for _signature, _highlight in _PLANE_GROUP_HIGHLIGHTS.items():
         f"Table 3.2 on printed p. 40; the outline marks {_signature} among the 17 plane groups.",
         f"Annotated excerpt of Table 3.2 with the plane-group signature {_signature} outlined.",
     )
+    _complete_table(_spec, "Table 3.2", ((40, (268, 195, 184, 108)),))
 
 
 # Printed p. 140 / attached PDF p. 159: Table 11.1, twofold types.
@@ -125,14 +144,22 @@ _TWOFOLD_P140 = {
     "22*/××": ((300, 555.5, 216, 19), (463, 557.5, 36.5, 14.5)),
 }
 for _type, (_crop, _highlight) in _TWOFOLD_P140.items():
-    _add(
+    _spec = _add(
         f"p140::{_type}",
         140,
         _crop,
         _highlight,
         f"Twofold colour type {_type}",
-        f"Table 11.1 on printed p. 140; the outline marks the colour-type cell {_type}.",
-        f"Annotated Table 11.1 row with the twofold colour type {_type} outlined.",
+        f"Complete Table 11.1 on printed pp. 140-141; the outline marks the colour-type cell {_type}.",
+        f"Complete annotated Table 11.1 with the twofold colour type {_type} outlined.",
+    )
+    _complete_table(
+        _spec,
+        "Table 11.1",
+        (
+            (140, (198, 143, 324, 454)),
+            (141, (105, 140, 294, 225)),
+        ),
     )
 
 
@@ -145,14 +172,22 @@ _TWOFOLD_P141 = {
     "*×/◦": ((210, 290, 180, 19), (348.5, 292, 24, 14)),
 }
 for _type, (_crop, _highlight) in _TWOFOLD_P141.items():
-    _add(
+    _spec = _add(
         f"p141::{_type}",
         141,
         _crop,
         _highlight,
         f"Twofold colour type {_type}",
-        f"Table 11.1 on printed p. 141; the outline marks the colour-type cell {_type}.",
-        f"Annotated Table 11.1 row with the twofold colour type {_type} outlined.",
+        f"Complete Table 11.1 on printed pp. 140-141; the outline marks the colour-type cell {_type}.",
+        f"Complete annotated Table 11.1 with the twofold colour type {_type} outlined.",
+    )
+    _complete_table(
+        _spec,
+        "Table 11.1",
+        (
+            (140, (198, 143, 324, 454)),
+            (141, (105, 140, 294, 225)),
+        ),
     )
 
 
@@ -192,25 +227,27 @@ _THREEFOLD_PRINTED_FORM = {
 }
 for _type, (_crop, _highlight) in _THREEFOLD_P156.items():
     _printed = _THREEFOLD_PRINTED_FORM[_type]
-    _add(
+    _spec = _add(
         f"p156::{_type}",
         156,
         _crop,
         _highlight,
         f"Threefold colour type {_type}",
-        f"Table 12.1 on printed p. 156 prints {_printed}, with threefold understood; the site normalizes it as {_type}.",
-        f"Annotated Table 12.1 row with printed type {_printed}, normalized on the site as {_type}, outlined.",
+        f"Complete Table 12.1 on printed p. 156 prints {_printed}, with threefold understood; the site normalizes it as {_type}.",
+        f"Complete annotated Table 12.1 with printed type {_printed}, normalized on the site as {_type}, outlined.",
     )
+    _complete_table(_spec, "Table 12.1", ((156, (228, 140, 262, 340)),))
 
-_add(
+_spec = _add(
     "p156::3*3³/◦-conflict",
     156,
     (325, 232, 160, 24),
     (325, 235, 150, 19),
     "The earlier 3*3 kernel conflict",
-    "Table 12.1 on printed p. 156 pairs the short form ³3*¹3 with printed type 3*3/◦; threefold is understood. The clockwork kernel is instead *333.",
-    "Annotated Table 12.1 row pairing the short color signature 3,1 with type 3*3 over the wonder-ring.",
+    "Complete Table 12.1 on printed p. 156 pairs the short form ³3*¹3 with printed type 3*3/◦; threefold is understood. The clockwork kernel is instead *333.",
+    "Complete annotated Table 12.1 pairing the short color signature 3,1 with type 3*3 over the wonder-ring.",
 )
+_complete_table(_spec, "Table 12.1", ((156, (228, 140, 262, 340)),))
 
 _add(
     "p157::632-regular-derivation",
@@ -233,25 +270,27 @@ _add(
     "Annotated excerpt of the p. 158 threefold derivation relevant to g234.",
 )
 
-_add(
+_spec = _add(
     "p164::g234-single-slash-table",
     164,
     (265, 429, 238, 40),
     (387, 448, 52, 17),
     "The later g234 table entry",
-    "Table 13.1 on printed p. 164; the outline marks the later single-slash 3*3³/*333 entry.",
-    "Annotated Table 13.1 excerpt with 3*3 cubed over *333 outlined.",
+    "Complete Table 13.1 on printed p. 164; the outline marks the later single-slash 3*3³/*333 entry.",
+    "Complete annotated Table 13.1 with 3*3 cubed over *333 outlined.",
 )
+_complete_table(_spec, "Table 13.1", ((164, (196, 303, 326, 361)),))
 
-_add(
+_spec = _add(
     "p164::632³/2222-exact",
     164,
     (300, 350, 145, 28),
     (307, 354, 134, 18),
     "The later exact 632³/2222 row",
-    "Table 13.1 on printed p. 164; the outline joins generator permutations of a 3-cycle, its inverse, and the identity to regular type 632³/2222.",
-    "Annotated Table 13.1 excerpt with the exact permutation signature and 632 cubed over 2222 type outlined.",
+    "Complete Table 13.1 on printed p. 164; the outline joins generator permutations of a 3-cycle, its inverse, and the identity to regular type 632³/2222.",
+    "Complete annotated Table 13.1 with the exact permutation signature and 632 cubed over 2222 type outlined.",
 )
+_complete_table(_spec, "Table 13.1", ((164, (196, 303, 326, 361)),))
 
 _add(
     "p169::primefold-scope",

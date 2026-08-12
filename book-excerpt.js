@@ -44,7 +44,7 @@ if (validSource(sourceUrl)) source.href = sourceUrl;
 else source.hidden = true;
 
 if (validImagePath(imagePath)) {
-  image.src = imagePath;
+  image.src = `${imagePath}?v=whole-tables`;
 } else {
   media.dataset.state = "error";
   status.textContent = "This excerpt link is incomplete. Return to the correspondence page and open it again.";

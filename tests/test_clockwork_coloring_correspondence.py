@@ -957,16 +957,15 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
             viewer = urlparse(attributes.get("href") or "")
             self.assertEqual(viewer.path, "book-excerpt.html")
-            self.assertEqual(
-                parse_qs(viewer.query),
-                {
+            expected_query = {
                     "image": [excerpt["image"]],
                     "title": [excerpt["title"]],
                     "context": [excerpt["context"]],
                     "alt": [excerpt["alt"]],
                     "source": [reference["url"]],
-                },
-            )
+                    "v": [correspondence.BOOK_EXCERPT_VIEWER_VERSION],
+                }
+            self.assertEqual(parse_qs(viewer.query), expected_query)
             self.assertEqual(attributes.get("data-printed-page"), str(reference["printed_page"]))
             self.assertEqual(attributes.get("data-pdf-page"), str(reference["pdf_page"]))
             self.assertEqual(attributes.get("data-book-excerpt"), reference["excerpt_key"])
@@ -987,81 +986,118 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             expected_excerpt_keys,
         )
 
-    def test_the_separate_viewer_loads_65_contextual_watermarked_webps(self) -> None:
+    def test_the_separate_viewer_loads_complete_tables_or_contextual_webps(self) -> None:
         self.assertEqual(self.parser.book_dialog_ids, [])
         self.assertEqual(self.parser.book_excerpt_images, [])
         self.assertEqual(len(correspondence.BOOK_EXCERPTS), 65)
+        table_counts = Counter()
         for key, excerpt in correspondence.BOOK_EXCERPTS.items():
             path = ROOT / excerpt["image"]
             self.assertTrue(path.is_file(), key)
             self.assertEqual(excerpt["pdf_page"], excerpt["printed_page"] + 19)
             focus_x, focus_y, focus_width, focus_height = excerpt["crop"]
-            base_x, base_y, base_width, base_height = (
-                book_excerpts.area_context_crop(excerpt["crop"])
-            )
-            context_x, context_y, context_width, context_height = (
-                book_excerpts.expanded_crop(excerpt["crop"])
-            )
             highlight_x, highlight_y, highlight_width, highlight_height = excerpt["highlight"]
-
-            self.assertGreaterEqual(
-                context_width * context_height,
-                focus_width * focus_height * 5,
-                key,
-            )
-            self.assertAlmostEqual(context_x, base_x, places=6, msg=key)
-            self.assertAlmostEqual(context_width, base_width, places=6, msg=key)
-            self.assertLessEqual(context_y, base_y, key)
-            self.assertGreaterEqual(context_y + context_height, base_y + base_height, key)
-            self.assertAlmostEqual(
-                context_height,
-                min(
-                    book_excerpts.PDF_HEIGHT,
-                    base_height * book_excerpts.VERTICAL_CONTEXT_MULTIPLIER,
-                ),
-                places=6,
-                msg=key,
-            )
-            self.assertGreaterEqual(context_x, 0, key)
-            self.assertGreaterEqual(context_y, 0, key)
-            self.assertLessEqual(context_x + context_width, book_excerpts.PDF_WIDTH, key)
-            self.assertLessEqual(context_y + context_height, book_excerpts.PDF_HEIGHT, key)
-            self.assertLessEqual(context_x, focus_x, key)
-            self.assertLessEqual(context_y, focus_y, key)
-            self.assertGreaterEqual(context_x + context_width, focus_x + focus_width, key)
-            self.assertGreaterEqual(context_y + context_height, focus_y + focus_height, key)
-            self.assertLessEqual(context_x, highlight_x, key)
-            self.assertLessEqual(context_y, highlight_y, key)
-            self.assertGreaterEqual(
-                context_x + context_width,
-                highlight_x + highlight_width,
-                key,
-            )
-            self.assertGreaterEqual(
-                context_y + context_height,
-                highlight_y + highlight_height,
-                key,
-            )
             with Image.open(path) as image:
                 self.assertEqual(image.format, "WEBP")
                 width, height = image.size
             content_width = width - 24
             content_height = height - 78
-            focus_pixel_area = (
-                focus_width * book_excerpts.RENDER_DPI / 72
-                * focus_height * book_excerpts.RENDER_DPI / 72
-            )
-            self.assertGreaterEqual(content_width * content_height, focus_pixel_area * 5, key)
+
+            panels = excerpt.get("table_panels")
+            if panels:
+                table_counts[excerpt["table_name"]] += 1
+                matching_panel_count = 0
+                expected_panel_widths = []
+                expected_panel_heights = []
+                for panel in panels:
+                    panel_x, panel_y, panel_width, panel_height = panel["crop"]
+                    self.assertEqual(panel["pdf_page"], panel["printed_page"] + 19)
+                    self.assertGreaterEqual(panel_x, 0, key)
+                    self.assertGreaterEqual(panel_y, 0, key)
+                    self.assertLessEqual(panel_x + panel_width, book_excerpts.PDF_WIDTH, key)
+                    self.assertLessEqual(panel_y + panel_height, book_excerpts.PDF_HEIGHT, key)
+                    expected_panel_widths.append(round((panel_x + panel_width) * 3) - round(panel_x * 3))
+                    expected_panel_heights.append(round((panel_y + panel_height) * 3) - round(panel_y * 3))
+                    if panel["pdf_page"] == excerpt["pdf_page"]:
+                        matching_panel_count += 1
+                        self.assertLessEqual(panel_x, highlight_x, key)
+                        self.assertLessEqual(panel_y, highlight_y, key)
+                        self.assertGreaterEqual(
+                            panel_x + panel_width,
+                            highlight_x + highlight_width,
+                            key,
+                        )
+                        self.assertGreaterEqual(
+                            panel_y + panel_height,
+                            highlight_y + highlight_height,
+                            key,
+                        )
+                self.assertEqual(matching_panel_count, 1, key)
+                self.assertEqual(content_width, max(expected_panel_widths), key)
+                self.assertEqual(
+                    content_height,
+                    sum(expected_panel_heights) + 18 * (len(panels) - 1),
+                    key,
+                )
+            else:
+                base_x, base_y, base_width, base_height = (
+                    book_excerpts.area_context_crop(excerpt["crop"])
+                )
+                context_x, context_y, context_width, context_height = (
+                    book_excerpts.expanded_crop(excerpt["crop"])
+                )
+                self.assertGreaterEqual(
+                    context_width * context_height,
+                    focus_width * focus_height * 5,
+                    key,
+                )
+                self.assertAlmostEqual(context_x, base_x, places=6, msg=key)
+                self.assertAlmostEqual(context_width, base_width, places=6, msg=key)
+                self.assertLessEqual(context_y, base_y, key)
+                self.assertGreaterEqual(context_y + context_height, base_y + base_height, key)
+                self.assertAlmostEqual(
+                    context_height,
+                    min(
+                        book_excerpts.PDF_HEIGHT,
+                        base_height * book_excerpts.VERTICAL_CONTEXT_MULTIPLIER,
+                    ),
+                    places=6,
+                    msg=key,
+                )
+                self.assertLessEqual(context_x, highlight_x, key)
+                self.assertLessEqual(context_y, highlight_y, key)
+                self.assertGreaterEqual(
+                    context_x + context_width,
+                    highlight_x + highlight_width,
+                    key,
+                )
+                self.assertGreaterEqual(
+                    context_y + context_height,
+                    highlight_y + highlight_height,
+                    key,
+                )
+                focus_pixel_area = (
+                    focus_width * book_excerpts.RENDER_DPI / 72
+                    * focus_height * book_excerpts.RENDER_DPI / 72
+                )
+                self.assertGreaterEqual(content_width * content_height, focus_pixel_area * 5, key)
+
             self.assertLessEqual(
                 width,
                 book_excerpts.PDF_WIDTH * book_excerpts.RENDER_DPI / 72 + 24,
                 key,
             )
-            self.assertLessEqual(
-                height,
-                book_excerpts.PDF_HEIGHT * book_excerpts.RENDER_DPI / 72 + 78,
-                key,
-            )
+
+        self.assertEqual(
+            table_counts,
+            Counter({"Table 11.1": 36, "Table 3.2": 17, "Table 12.1": 5, "Table 13.1": 2}),
+        )
+        for excerpt in correspondence.BOOK_EXCERPTS.values():
+            if excerpt.get("table_name") == "Table 11.1":
+                self.assertEqual(
+                    [panel["printed_page"] for panel in excerpt["table_panels"]],
+                    [140, 141],
+                )
 
         for key in (
             "p156::333³/◦",
@@ -1079,17 +1115,20 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         viewer_page = (ROOT / "book-excerpt.html").read_text(encoding="utf-8")
         viewer_script = (ROOT / "book-excerpt.js").read_text(encoding="utf-8")
         viewer_style = (ROOT / "book-excerpt.css").read_text(encoding="utf-8")
-        self.assertIn("five times the previous vertical context", viewer_page)
-        self.assertIn("stopping at page edges", viewer_page)
+        self.assertIn("The outline marks the cited item.", viewer_page)
+        self.assertNotIn("five times the previous vertical context", viewer_page)
         self.assertIn("data-zoom-toggle", viewer_page)
         self.assertIn("data-excerpt-image", viewer_page)
         self.assertIn("new URLSearchParams", viewer_script)
         self.assertIn("window.opener.postMessage", viewer_script)
         self.assertIn('type: "clockwork:book-excerpt-ready"', viewer_script)
         self.assertIn("output\\/book-excerpts", viewer_script)
+        self.assertIn("?v=whole-tables", viewer_script)
         self.assertIn('media.dataset.zoom = actual ? "actual" : "fit"', viewer_script)
         self.assertIn('[data-zoom="actual"]', viewer_style)
         self.assertIn('[data-zoom="fit"]', viewer_style)
+        self.assertNotIn("max-height: calc(100dvh", viewer_style)
+        self.assertIn("book-excerpt.css?v=whole-tables", viewer_page)
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
         self.assertNotIn("initializeBookExcerptDialog();", script)
         self.assertIn("initializeBookExcerptLinks();", script)
