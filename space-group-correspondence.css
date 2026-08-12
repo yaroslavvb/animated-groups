@@ -474,20 +474,10 @@ nav a[aria-current="page"] {
 }
 
 .space-group-presentation h4 {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem 0.65rem;
-  align-items: baseline;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.22rem;
   color: var(--text);
-  font-size: 0.84rem;
-  font-weight: 750;
-}
-
-.space-group-presentation h4 span {
-  color: var(--muted);
-  font-size: 0.68rem;
-  font-weight: 500;
+  font-size: 0.82rem;
+  font-weight: 700;
 }
 
 .space-group-presentation table {
@@ -521,29 +511,26 @@ nav a[aria-current="page"] {
 }
 
 .presentation-relations {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  display: flex;
   gap: 0.6rem;
-  margin-top: 0.55rem;
+  margin: 0.5rem 0 0;
   color: var(--text);
-  font-size: 0.75rem;
-  line-height: 1.48;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
-.presentation-relations > strong {
+.presentation-relations strong {
+  flex: 0 0 auto;
   color: var(--muted);
-  font-size: 0.68rem;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.7rem;
   letter-spacing: 0.025em;
 }
 
-.presentation-formula {
+.presentation-relations span {
   min-width: 0;
-  font-family: Georgia, "Times New Roman", serif;
   overflow-wrap: anywhere;
-}
-
-.presentation-formula span {
-  display: block;
 }
 
 .sources {
@@ -618,7 +605,7 @@ nav a[aria-current="page"] {
   }
 
   .presentation-relations {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 0.15rem;
   }
 }

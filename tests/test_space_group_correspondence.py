@@ -224,7 +224,7 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
                 ],
                 group_id,
             )
-            presentation = group["space_group_presentation"]
+            presentation = group["cell_action_presentation"]
             self.assertEqual(
                 self.parser.generator_rows[group_id], len(presentation["generators"]), group_id
             )
@@ -328,8 +328,15 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
         self.assertIn(".directory-family-count", css)
         self.assertNotIn(".directory-family h3 span", css)
 
-    def test_every_displayed_group_has_a_complete_relative_cell_presentation(self) -> None:
+    def test_every_displayed_group_stores_a_complete_relative_cell_presentation(self) -> None:
         for group in self.displayed_groups:
+            self.assertEqual(
+                group["cell_action_presentation"],
+                correspondence.clockwork.cell_action_presentation(
+                    group["id"], group["render"], group["parent"]["hm"]
+                ),
+                group["id"],
+            )
             presentation = group["space_group_presentation"]
             self.assertEqual(presentation, correspondence._space_group_presentation(group), group["id"])
             self.assertEqual(presentation["relative_to"], "displayed unit cell")
@@ -366,8 +373,56 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
         for group_id, relations in golden.items():
             self.assertEqual(by_id[group_id]["space_group_presentation"]["relations"]["cell"], relations)
 
-        self.assertEqual(self.page.count(">Presentation <span>"), correspondence.DISPLAYED_GROUP_COUNT)
+    def test_visible_presentations_use_the_compact_cell_quotient(self) -> None:
+        for group in self.displayed_groups:
+            group_id = group["id"]
+            quotient = group["cell_action_presentation"]
+            names = ", ".join(generator["name"] for generator in quotient["generators"])
+            expected = (
+                f"<span>G/Λ = ⟨{names} | {quotient['relations']}⟩</span>"
+            )
+            article = re.search(
+                rf'<article[^>]+id="{group_id}"[^>]*>.*?</article>',
+                self.page,
+                re.DOTALL,
+            )
+            self.assertIsNotNone(article, group_id)
+            markup = article.group(0)
+            self.assertIn(expected, markup, group_id)
+
+            full = group["space_group_presentation"]
+            lifted_names = [
+                generator["name"]
+                for generator in full["generators"]
+                if generator["name"] not in {"a", "b", "c"}
+            ]
+            self.assertEqual(
+                lifted_names,
+                [generator["name"] for generator in quotient["generators"]],
+                group_id,
+            )
+
+        self.assertEqual(
+            self.page.count('>Presentation</h4>'), correspondence.DISPLAYED_GROUP_COUNT
+        )
         self.assertEqual(self.page.count(">Relations</strong>"), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(self.page.count("<span>G/Λ = ⟨"), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertNotIn("G/Λ₃", self.page)
+        self.assertNotIn("<span>G = ⟨", self.page)
+        self.assertNotIn("displayed lift-cell coordinates", self.page)
+        self.assertNotIn('generator-key">a</span>', self.page)
+        self.assertNotIn('generator-key">b</span>', self.page)
+        self.assertNotIn('generator-key">c</span>', self.page)
+        self.assertNotIn("Unit translation along a", self.page)
+        self.assertNotIn("Unit translation along b", self.page)
+        self.assertNotIn("Unit translation along the lift axis", self.page)
+        self.assertNotIn("A(a,b,c)", self.page)
+        self.assertNotIn("(a,b,c)", self.page)
+        self.assertNotIn("ab = ba", self.page)
+        self.assertIn(
+            "G/Λ = ⟨A, B | A² = B² = 1; AB = BA⟩",
+            self.page,
+        )
 
     def test_external_links_are_exact_and_unique(self) -> None:
         ucl_urls = []

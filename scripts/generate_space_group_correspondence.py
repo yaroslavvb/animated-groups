@@ -49,7 +49,7 @@ DATA = ROOT / "data" / "space-group-correspondence.json"
 PAGE = ROOT / "space-group-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "space-groups"
 
-STYLE_SRC = "space-group-correspondence.css?v=orbifold-navigation"
+STYLE_SRC = "space-group-correspondence.css?v=quotient-presentations"
 SCRIPT_SRC = "space-group-correspondence.js?v=compact-tabs"
 SOURCE_SHA256 = "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330"
 UCL_SPACE_GROUP_BASE = "http://img.chem.ucl.ac.uk/sgp/large"
@@ -931,35 +931,41 @@ def _hm_html(symbol: str) -> str:
 
 
 def _presentation_html(record: dict[str, Any]) -> str:
-    presentation = record["space_group_presentation"]
-    if not presentation:
+    full_presentation = record["space_group_presentation"]
+    quotient_presentation = record["cell_action_presentation"]
+    if not full_presentation:
         raise ValueError(f"missing displayed presentation for {record['id']}")
+    if not quotient_presentation or quotient_presentation.get("relations") in {None, "omitted"}:
+        raise ValueError(f"missing displayed quotient presentation for {record['id']}")
+    lifted_generators = {
+        generator["name"]: generator
+        for generator in full_presentation["generators"]
+        if generator["name"] not in {"a", "b", "c"}
+    }
+    quotient_names = [
+        generator["name"] for generator in quotient_presentation["generators"]
+    ]
+    if list(lifted_generators) != quotient_names:
+        raise ValueError(f"lifted/quotient generator mismatch for {record['id']}")
     rows = "\n".join(
         "<tr class=\"presentation-generator-row\">"
         f"<th scope=\"row\"><span class=\"generator-key\">{escape(generator['name'])}</span></th>"
         f"<td>{escape(generator['operation'])}</td>"
         "</tr>"
-        for generator in presentation["generators"]
+        for generator in lifted_generators.values()
     )
-    relation_lines = "\n".join(
-        f"<span>{escape('; '.join(presentation['relations'][category]))}{' ⟩' if category == 'cell' else ''}</span>"
-        for category in ("lattice", "action", "cell")
-    )
-    names = ", ".join(generator["name"] for generator in presentation["generators"])
+    names = ", ".join(quotient_names)
     group_id = escape(record["id"])
     return f"""
                 <section class="space-group-presentation" aria-labelledby="{group_id}-presentation-title">
-                  <h4 id="{group_id}-presentation-title">Presentation <span>displayed lift-cell coordinates</span></h4>
+                  <h4 id="{group_id}-presentation-title">Presentation</h4>
                   <table data-space-presentation="{group_id}">
-                    <caption class="visually-hidden">Generators for space group {_hm_html(record['space_group']['hm_short'])}</caption>
+                    <caption class="visually-hidden">Geometric generators modulo full-cell translations for space group {_hm_html(record['space_group']['hm_short'])}</caption>
                     <tbody>
                       {rows}
                     </tbody>
                   </table>
-                  <div class="presentation-relations">
-                    <strong>Relations</strong>
-                    <div class="presentation-formula"><span>G = ⟨{escape(names)} |</span>{relation_lines}</div>
-                  </div>
+                  <p class="presentation-relations"><strong>Relations</strong> <span>G/Λ = ⟨{escape(names)} | {escape(quotient_presentation['relations'])}⟩</span></p>
                 </section>"""
 
 
@@ -1107,7 +1113,7 @@ def page_html(payload: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The 51 nontrivial cyclic colourings organized by Conway orbifold and Goodman–Strauss short colour notation, paired with classical polar space-group names and exact relative-cell presentations.">
+  <meta name="description" content="The 51 nontrivial cyclic colourings organized by Conway orbifold and Goodman–Strauss short colour notation, paired with classical polar space-group names and compact cell-action presentations.">
   <meta name="theme-color" content="#ffffff">
   <title>Cyclic colourings and polar space groups</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">

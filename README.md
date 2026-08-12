@@ -19,7 +19,8 @@ backed by the complete 68-record audit, with Conway orbifold pairs and static co
 The companion [cyclic-colouring/polar-space-group atlas](https://yaroslavvb.github.io/animated-groups/space-group-correspondence.html)
 organizes the 51 more-than-one-colour plates by Conway orbifold and Goodman–Strauss short
 colour signature, then pairs each with its current Hermann–Mauguin space-group name,
-UCL/Birkbeck reference page, and an exact presentation relative to the displayed lift cell.
+UCL/Birkbeck reference page, and a compact presentation of the cell action `G/Λ`. The JSON
+retains the exact full presentation relative to the displayed lift cell.
 The 17 one-colour products remain as muted audit notes, while the JSON and generated plate set
 retain all 68 records. The copyrighted UCL HTML and GIF files are not redistributed.
 
@@ -257,7 +258,7 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `clockwork-coloring-correspondence.html` / `.css` — the 51-row nontrivial orbifold-pair atlas, backed by 68 audited records, and its responsive styles.
 - `scripts/generate_clockwork_coloring_correspondence.py` — validates the phase characters and regenerates the atlas, JSON, and 68 static plates.
 - `data/clockwork-coloring-correspondence.json` / `output/clockwork-colorings/` — the pinned correspondence records and lossless WebP visualizations.
-- `space-group-correspondence.html` / `.css` / `.js` — the 51-entry orbifold-labelled colouring/space-group atlas with classical 3D names, UCL links, relative-cell presentations, and 17 one-colour audit notes.
+- `space-group-correspondence.html` / `.css` / `.js` — the 51-entry orbifold-labelled colouring/space-group atlas with classical 3D names, UCL links, compact `G/Λ` presentations, and 17 one-colour audit notes.
 - `scripts/generate_space_group_correspondence.py` — validates the 68 International-number mappings and exact lifted relations, then regenerates the atlas, JSON, and data plates.
 - `data/space-group-correspondence.json` / `output/space-groups/` — the pinned polar-space-group records and deterministic unit-cell views.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
