@@ -2,6 +2,20 @@
 
 const DATA_URL = "data/color-forward-census.json";
 
+function renderOrbifoldNotation(element, source) {
+  const notation = String(source);
+  element.setAttribute("aria-label", notation);
+  notation.split("*").forEach((fragment, index) => {
+    if (index > 0) {
+      const star = document.createElement("span");
+      star.className = "orbifold-star";
+      star.textContent = "∗";
+      element.append(star);
+    }
+    element.append(fragment);
+  });
+}
+
 function makeTable(headers, rows, options = {}) {
   const table = document.createElement("table");
   table.className = "census-table";
@@ -32,7 +46,11 @@ function makeTable(headers, rows, options = {}) {
         cell.scope = "row";
         if (options.firstColumnClass) cell.className = options.firstColumnClass;
       }
-      cell.textContent = value;
+      if (index === 0 && options.firstColumnRenderer) {
+        options.firstColumnRenderer(cell, value);
+      } else {
+        cell.textContent = value;
+      }
       tr.append(cell);
     });
     tbody.append(tr);
@@ -109,6 +127,7 @@ function renderOrbifoldTables(data) {
     {
       caption: "Regular cyclic plane colour groups by Conway orbifold",
       firstColumnClass: "orbifold-symbol",
+      firstColumnRenderer: renderOrbifoldNotation,
     },
   ));
   replaceWithTable("film-orbifold-table", makeTable(
@@ -117,6 +136,7 @@ function renderOrbifoldTables(data) {
     {
       caption: "Forward representatives by spatial orbifold projection and canonical clock order",
       firstColumnClass: "orbifold-symbol",
+      firstColumnRenderer: renderOrbifoldNotation,
     },
   ));
 }

@@ -45,7 +45,7 @@ BASE_ORDER = (
 # The report and its per-group CSV lead with the orbifold symbol; the source
 # catalog's HM code remains alongside it for traceability.
 ORBIFOLD_BY_BASE = {
-    "p1": "o",
+    "p1": "◦",
     "p2": "2222",
     "pm": "**",
     "pg": "××",

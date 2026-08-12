@@ -89,6 +89,15 @@ nav a[aria-current="page"] {
   letter-spacing: 0.015em;
 }
 
+.orbifold-star {
+  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: inherit;
+  letter-spacing: 0;
+  vertical-align: baseline;
+}
+
 .display-formula {
   margin: 1.5rem 0 !important;
   color: var(--text);

@@ -48,7 +48,7 @@ MANIFEST = ROOT / "data" / "color-forward-manifest.json"
 DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=no-catalog-notation"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=book-orbifold-stars"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=no-catalog-notation"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -514,6 +514,15 @@ def signature_evidence(
     raise ValueError(f"unsupported signature evidence for {group_id}")
 
 
+def orbifold_html(value: str) -> str:
+    """Escape notation while giving mirrors the book's baseline math glyph."""
+
+    return escape(value).replace(
+        "*",
+        '<span class="orbifold-star">∗</span>',
+    )
+
+
 def superscript_html(value: str) -> str:
     """Render Unicode superscript digits as semantic HTML ``sup`` elements."""
 
@@ -530,7 +539,7 @@ def superscript_html(value: str) -> str:
             run.append(character.translate(SUPERSCRIPT_TO_ASCII))
         else:
             flush()
-            output.append(escape(character))
+            output.append(orbifold_html(character))
     flush()
     return "".join(output)
 
@@ -538,12 +547,12 @@ def superscript_html(value: str) -> str:
 def color_type_html(parent: str, kernel: str, order: int) -> str:
     """Typeset G/K while keeping the higher-fold exponent on the whole G."""
 
-    parent_html = escape(parent)
+    parent_html = orbifold_html(parent)
     if order == 1:
         return parent_html
     if order == 2:
-        return f"{parent_html}/{escape(kernel)}"
-    return f'<span class="color-type-group">{parent_html}</span><sup>{order}</sup>/{escape(kernel)}'
+        return f"{parent_html}/{orbifold_html(kernel)}"
+    return f'<span class="color-type-group">{parent_html}</span><sup>{order}</sup>/{orbifold_html(kernel)}'
 
 
 def book_reference(
@@ -1533,7 +1542,7 @@ def _book_audit_html(record: dict[str, Any]) -> str:
             }
             steps.append(
                 "<li>"
-                f"<span>{escape(step['notation'])} · index {step['index']}</span>"
+                f"<span>{orbifold_html(step['notation'])} · index {step['index']}</span>"
                 f"{_book_link(step_reference, 'book-chain-link')}"
                 "</li>"
             )
@@ -1554,7 +1563,7 @@ def _book_audit_html(record: dict[str, Any]) -> str:
     return f"""
               <aside class="book-audit book-audit--{escape(audit['status'])}">
                 <p class="book-audit-label">Book audit · {escape(audit['status_label'])}</p>
-                <p>{escape(audit['summary'])}</p>
+                <p>{orbifold_html(audit['summary'])}</p>
                 <p class="book-primary-reference">{_book_link(primary, 'book-page-link')}</p>
                 {supporting_html}
                 {chain_html}
@@ -1623,7 +1632,7 @@ def _notation_crosswalk_html(record: dict[str, Any]) -> str:
               <dl class="notation-crosswalk" aria-label="Notation crosswalk">
                 <div>
                   <dt>Short colour signature</dt>
-                  <dd><span class="notation-mark book-color-signature">{short_signature}</span><span class="notation-explanation">Superscripts are permutation orders. A reduced clock phase a/b induces permutation order b.{escape(lossy_note)} {escape(signature_source)}</span></dd>
+                  <dd><span class="notation-mark book-color-signature">{short_signature}</span><span class="notation-explanation">Superscripts are permutation orders. A reduced clock phase a/b induces permutation order b.{escape(lossy_note)} {orbifold_html(signature_source)}</span></dd>
                 </div>
                 <div>
                   <dt>{escape(type_term)}</dt>
@@ -1663,7 +1672,7 @@ def _entry_html(
             <div>
               <p class="entry-kicker">{escape(signature_source_label)}</p>
               <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="{escape(signature_source_label)} {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
-              <p class="entry-identity">Base orbifold {escape(parent['orbifold'])} · regular colour action C<sub>{order}</sub></p>
+              <p class="entry-identity">Base orbifold {orbifold_html(parent['orbifold'])} · regular colour action C<sub>{order}</sub></p>
             </div>
             <div class="entry-badges" aria-label="Correspondence summary">
               <span>C<sub>{order}</sub></span>
@@ -1689,13 +1698,13 @@ def _entry_html(
               <p class="pair-label">Conway–Burgiel–Goodman-Strauss colour type</p>
               <p class="orbifold-pair">{type_html}</p>
               <dl class="group-data">
-                <div><dt>Projected group G</dt><dd>{escape(parent['orbifold'])}</dd></div>
-                <div><dt>Colour-fixing subgroup K</dt><dd>{escape(kernel['orbifold'])}</dd></div>
+                <div><dt>Projected group G</dt><dd>{orbifold_html(parent['orbifold'])}</dd></div>
+                <div><dt>Colour-fixing subgroup K</dt><dd>{orbifold_html(kernel['orbifold'])}</dd></div>
                 <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
               </dl>
               {_notation_crosswalk_html(record)}
-              <p class="phase-description">{escape(record['clockwork_description'])}</p>
-              <p class="coloring-description">{escape(record['coloring_description'])}</p>
+              <p class="phase-description">{orbifold_html(record['clockwork_description'])}</p>
+              <p class="coloring-description">{orbifold_html(record['coloring_description'])}</p>
               {_book_audit_html(record)}
               <div class="phase-assignment">
                 <h3>Phase assignment in the displayed cosets</h3>
@@ -1734,7 +1743,7 @@ def _order_census_html(rows: list[dict[str, Any]]) -> str:
 
 def _trivial_product_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
-    orbifold = escape(record["parent"]["orbifold"])
+    orbifold = orbifold_html(record["parent"]["orbifold"])
     return (
         f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
         'aria-label="Trivial time group">'
@@ -1786,9 +1795,9 @@ def _family_html(
     <section class="{family_class}" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
       <header class="family-header">
         <p class="section-number">Orbifold family {family_index:02d} / 17</p>
-        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{escape(orbifold)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
-        <p class="family-summary">{escape(summary)}</p>
-        <p class="family-note"><strong>Forward note.</strong> {escape(note)}</p>
+        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{orbifold_html(orbifold)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
+        <p class="family-summary">{orbifold_html(summary)}</p>
+        <p class="family-note"><strong>Forward note.</strong> {orbifold_html(note)}</p>
         <p class="family-census">{census}</p>
       </header>
 {contents}
@@ -1833,7 +1842,7 @@ def page_html(payload: dict[str, Any]) -> str:
     )
     directory = "\n".join(
         f'<a class="wallpaper-chip{" is-empty" if not grouped[base] else ""}" href="#wallpaper-{escape(base)}">'
-        f'<span class="chip-orbifold">{escape(ORBIFOLD_BY_BASE[base])}</span> '
+        f'<span class="chip-orbifold">{orbifold_html(ORBIFOLD_BY_BASE[base])}</span> '
         f'<span class="chip-count">{len(grouped[base])}</span></a>'
         for base in BASE_ORDER
     )

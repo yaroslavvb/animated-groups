@@ -163,6 +163,15 @@ class CorrespondenceParser(HTMLParser):
             )
 
 
+class VisibleTextParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.parts: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        self.parts.append(data)
+
+
 class ClockworkColoringCorrespondenceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -250,8 +259,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         for base in correspondence.BASE_ORDER:
             summary, note = correspondence.WALLPAPER_SUMMARIES[base]
-            self.assertIn(escape(summary), self.page)
-            self.assertIn(escape(note), self.page)
+            self.assertIn(correspondence.orbifold_html(summary), self.page)
+            self.assertIn(correspondence.orbifold_html(note), self.page)
 
         self.assertIn("No nontrivial forward lift occurs", self.page)
         self.assertIn("Nontrivial orders · none", self.page)
@@ -330,13 +339,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                         group["id"],
                     )
         for group in self.display_groups:
-            self.assertIn(escape(group["clockwork_description"]), self.page)
-            self.assertIn(escape(group["coloring_description"]), self.page)
+            self.assertIn(
+                correspondence.orbifold_html(group["clockwork_description"]),
+                self.page,
+            )
+            self.assertIn(
+                correspondence.orbifold_html(group["coloring_description"]),
+                self.page,
+            )
 
         g60 = next(group for group in groups if group["id"] == "g60")
         self.assertEqual(g60["book_color_signature"], "*¹2²2¹2²2")
         self.assertIn(
-            '*<sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2',
+            '<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2',
             self.page,
         )
         self.assertEqual(self.page.count('class="notation-crosswalk"'), 51)
@@ -354,6 +369,28 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertNotIn("record.symbol", script)
+
+    def test_visible_mirror_atoms_use_the_books_baseline_math_glyph(self) -> None:
+        protected_star = '<span class="orbifold-star">∗</span>'
+        self.assertGreater(self.page.count(protected_star), 0)
+
+        visible_text = VisibleTextParser()
+        visible_text.feed(self.page.replace(protected_star, ""))
+        unprotected = "".join(visible_text.parts)
+        self.assertNotIn("*", unprotected)
+        self.assertNotIn("∗", unprotected)
+
+        raw_data = correspondence.DATA.read_text(encoding="utf-8")
+        self.assertIn('"book_color_signature": "*', raw_data)
+        self.assertNotIn("∗", raw_data)
+
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".orbifold-star {", css)
+        self.assertIn('font-family: "STIX Two Math", "Cambria Math"', css)
+        self.assertIn("vertical-align: baseline", css)
+        self.assertIn("?v=book-orbifold-stars", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (

@@ -80,7 +80,7 @@
   ],
   "by_wallpaper": [
     {
-      "orbifold": "o",
+      "orbifold": "◦",
       "wallpaper_group": "p1",
       "regular_cyclic": {
         "1": 1,
@@ -443,7 +443,7 @@
         "id": "g1",
         "symbol": "o",
         "base": "p1",
-        "orbifold": "o",
+        "orbifold": "◦",
         "canonical_clock_order": 1
       },
       {

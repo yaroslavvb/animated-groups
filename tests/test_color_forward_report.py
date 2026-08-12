@@ -48,7 +48,7 @@ class ColorForwardReportTests(unittest.TestCase):
             (ROOT / "data" / "color-forward-census.json").read_text(encoding="utf-8")
         )
         expected = [
-            "o", "2222", "**", "××", "*×", "*2222", "22*", "22×",
+            "◦", "2222", "**", "××", "*×", "*2222", "22*", "22×",
             "2*22", "442", "*442", "4*2", "333", "*333", "3*3",
             "632", "*632",
         ]
@@ -62,6 +62,20 @@ class ColorForwardReportTests(unittest.TestCase):
         self.assertIn(".table-scroll", self.styles)
         self.assertIn("overflow-x: auto", self.styles)
         self.assertIn("min-width: 680px", self.styles)
+
+    def test_orbifold_mirrors_render_as_baseline_book_glyphs(self) -> None:
+        self.assertIn("function renderOrbifoldNotation", self.script)
+        self.assertIn('star.textContent = "∗"', self.script)
+        self.assertIn('star.className = "orbifold-star"', self.script)
+        self.assertIn('element.setAttribute("aria-label", notation)', self.script)
+        self.assertEqual(self.script.count(
+            "firstColumnRenderer: renderOrbifoldNotation"
+        ), 2)
+        self.assertIn(".orbifold-star {", self.styles)
+        self.assertIn('font-family: "STIX Two Math", "Cambria Math"', self.styles)
+        self.assertIn("vertical-align: baseline", self.styles)
+        self.assertIn("future-directions.css?v=book-orbifold-stars", self.page)
+        self.assertIn("future-directions.js?v=book-orbifold-stars", self.page)
 
 
 if __name__ == "__main__":
