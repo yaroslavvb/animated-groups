@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A practical guide to Conway orbifolds, clockwork phase decorations, and Conway–Burgiel–Goodman-Strauss colour notation.">
+  <meta name="description" content="Notation note for the cyclic plane-colouring and polar-space-group correspondence, including the four oriented distinctions not separated by the colour notation.">
   <meta name="theme-color" content="#ffffff">
-  <title>Orbifold, clockwork, and colour notation</title>
+  <title>Notation note</title>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../site-controls-v2.css">
-  <link rel="stylesheet" href="orbifold-notation.css?v=generator-slots">
+  <link rel="stylesheet" href="orbifold-notation.css?v=polar-four">
 </head>
 <body>
-  <a class="skip-link" href="#guide">Skip to notation guide</a>
+  <a class="skip-link" href="#notation-note">Skip to notation note</a>
 
   <header class="site-header">
     <div class="header-inner">
@@ -28,502 +28,98 @@
     </div>
   </header>
 
-  <main id="guide" class="notation-page">
-    <header class="guide-hero">
-      <p class="overline">A reading guide · geometry, time, and colour</p>
-      <h1>Three notations share the same symbols</h1>
+  <main id="notation-note" class="notation-note">
+    <header class="note-header">
+      <p class="overline">Notation</p>
+      <h1>Colour notation and four uncovered polar distinctions</h1>
       <p class="lead">
-        A row in the correspondence atlas may show a spatial orbifold, a clockwork symbol,
-        a short colour signature, and a full colour type. They describe related data, but a
-        subscript or superscript means something different in each layer.
+        The correspondence atlas uses Chaim Goodman–Strauss’s coloured-orbifold notation—the
+        Conway–Burgiel–Goodman-Strauss convention in <cite>The Symmetries of Things</cite>—for
+        cyclic colourings of the plane.
       </p>
-      <div class="hero-answer" role="note" aria-label="The superscript rule">
-        <p class="answer-label">The rule that prevents most mistakes</p>
-        <p>
-          In a <strong>short colour signature</strong>, a superscript labels a generator slot—not
-          whichever printed character happens to be nearest. Rotation labels are placed before
-          cone digits; mirror labels occupy the slots after <span class="notation">*</span> or a
-          preceding corner; crosscap and translation labels follow their own symbols.
-        </p>
-      </div>
     </header>
 
-    <div class="guide-layout">
-      <aside class="contents" aria-label="On this page">
-        <p class="contents-title">On this page</p>
-        <ol>
-          <li><a href="#layers">Keep the layers separate</a></li>
-          <li><a href="#orbifolds">Spatial orbifolds</a></li>
-          <li><a href="#clockwork">Clockwork marks</a></li>
-          <li><a href="#short-colour">Short colour signatures</a></li>
-          <li><a href="#full-colour">Full colour types</a></li>
-          <li><a href="#dictionary">Phase-to-colour dictionary</a></li>
-          <li><a href="#examples">Worked examples</a></li>
-          <li><a href="#gotchas">Gotchas</a></li>
-          <li><a href="#scope">Status and sources</a></li>
-        </ol>
-      </aside>
+    <section class="notation-rule" aria-labelledby="rule-title">
+      <h2 id="rule-title">Convention</h2>
+      <p>
+        A full colour type is <span class="notation"><span class="grouped">G</span><sup>N</sup>/K</span>:
+        <span class="notation">G</span> is the uncoloured plane group, <span class="notation">N</span>
+        is the number of colours, and <span class="notation">K</span> fixes every colour. In a short
+        signature, raised numbers are orders of induced colour permutations—not time shifts.
+      </p>
+    </section>
 
-      <article class="guide-copy">
-        <section id="layers" aria-labelledby="layers-title">
-          <p class="section-number">01</p>
-          <h2 id="layers-title">Keep the four displays separate</h2>
-          <p>
-            The atlas puts four compact descriptions next to one another. Read the column or label
-            first, then interpret its decorations.
-          </p>
+    <section id="uncovered-cases" aria-labelledby="uncovered-title">
+      <h2 id="uncovered-title">Four uncovered oriented cases</h2>
+      <p>
+        Forgetting the orientation of the cyclic palette identifies a phase character
+        <span class="notation">χ</span> with <span class="notation">−χ</span>. Thus four colour
+        types each cover two polar groups whose distinguished axes have opposite senses:
+      </p>
 
-          <div class="layer-grid">
-            <article class="layer-card">
-              <p class="card-index">Spatial orbifold</p>
-              <p class="display-notation">3*3</p>
-              <p>Topology and spatial isometries only: rotations, mirrors, glides, and translations.</p>
-            </article>
-            <article class="layer-card">
-              <p class="card-index">Clockwork symbol</p>
-              <p class="display-notation">r3<sub>2</sub>*~3</p>
-              <p>Spatial operations decorated by offsets in one period of forward time.</p>
-            </article>
-            <article class="layer-card">
-              <p class="card-index">Short colour signature</p>
-              <p class="display-notation"><sup>3</sup>3*<sup>2</sup>3</p>
-              <p>Orders of the colour permutations induced by selected spatial generators.</p>
-            </article>
-            <article class="layer-card">
-              <p class="card-index">Full colour type</p>
-              <p class="display-notation"><span class="grouped">3*3</span><sup>6</sup>/333</p>
-              <p>Parent group, number of colours, and the subgroup fixing every colour.</p>
-            </article>
-          </div>
+      <div class="table-scroll">
+        <table aria-label="Four colour types that each cover two polar groups">
+          <thead>
+            <tr>
+              <th>Chaim colour type</th>
+              <th>Two polar members</th>
+              <th>Standard fibrifold entry</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-uncovered-case="442-four">
+              <td class="colour-type"><span class="grouped">442</span><sup>4</sup>/◦</td>
+              <td><a href="../clockwork-coloring-correspondence.html#g96">g96 · P4<sub>1</sub></a><span class="pair-separator">/</span><a href="../clockwork-coloring-correspondence.html#g97">g97 · P4<sub>3</sub></a></td>
+              <td class="fibrifold">(4<sub>1</sub>4<sub>1</sub>2<sub>1</sub>) ‡</td>
+            </tr>
+            <tr data-uncovered-case="333-three">
+              <td class="colour-type"><span class="grouped">333</span><sup>3</sup>/◦</td>
+              <td><a href="../clockwork-coloring-correspondence.html#g226">g226 · P3<sub>1</sub></a><span class="pair-separator">/</span><a href="../clockwork-coloring-correspondence.html#g225">g225 · P3<sub>2</sub></a></td>
+              <td class="fibrifold">(3<sub>1</sub>3<sub>1</sub>3<sub>1</sub>) ‡</td>
+            </tr>
+            <tr data-uncovered-case="632-six">
+              <td class="colour-type"><span class="grouped">632</span><sup>6</sup>/◦</td>
+              <td><a href="../clockwork-coloring-correspondence.html#g248">g248 · P6<sub>1</sub></a><span class="pair-separator">/</span><a href="../clockwork-coloring-correspondence.html#g247">g247 · P6<sub>5</sub></a></td>
+              <td class="fibrifold">(6<sub>1</sub>3<sub>1</sub>2<sub>1</sub>) ‡</td>
+            </tr>
+            <tr data-uncovered-case="632-three">
+              <td class="colour-type"><span class="grouped">632</span><sup>3</sup>/2222</td>
+              <td><a href="../clockwork-coloring-correspondence.html#g244">g244 · P6<sub>2</sub></a><span class="pair-separator">/</span><a href="../clockwork-coloring-correspondence.html#g245">g245 · P6<sub>4</sub></a></td>
+              <td class="fibrifold">(6<sub>2</sub>3<sub>2</sub>2<sub>0</sub>) ‡</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-          <aside class="plain-language">
-            <p><strong>Subscript = time fraction. Local superscript = permutation order. Global exponent = number of colours.</strong></p>
-          </aside>
-        </section>
+      <p class="count-note">
+        These are four uncovered <em>distinctions</em>, not four missing colourings: the 68 polar
+        groups map onto 64 cyclic plane-colouring classes.
+      </p>
+    </section>
 
-        <section id="orbifolds" aria-labelledby="orbifolds-title">
-          <p class="section-number">02</p>
-          <h2 id="orbifolds-title">Conway orbifold symbols describe space</h2>
-          <p>
-            First erase all clockwork decorations and colour superscripts. What remains is Conway’s
-            orbifold symbol for the projected wallpaper group.
-          </p>
+    <section id="scope" aria-labelledby="fibrifold-title">
+      <h2 id="fibrifold-title">Fibrifold comparison</h2>
+      <p>
+        Conway–Delgado Friedrichs–Huson–Thurston fibrifold notation is the closest three-dimensional
+        analogue of orbifold notation. A decoration <span class="notation">n<sub>k</sub></span>
+        couples an order-<span class="notation">n</span> rotation to a fibre translation by
+        <span class="notation">k/n</span>. Its standard equivalence also permits fibre reversal,
+        sending <span class="notation">k</span> to <span class="notation">n−k</span>; it therefore
+        records each pair above as one entry marked <span class="notation">‡</span>. The atlas keeps
+        both polar members and uses the classical space-group name and catalog ID to select one.
+      </p>
+    </section>
 
-          <div class="symbol-list">
-            <div>
-              <p class="symbol">n</p>
-              <div><strong>Cone point.</strong> A free rotation of spatial order <i>n</i>. Thus <span class="notation">3</span> means a 120° gyration point.</div>
-            </div>
-            <div>
-              <p class="symbol">*</p>
-              <div><strong>Mirror boundary begins.</strong> Digits after the star are corner orders on that boundary; they arise from adjacent reflections.</div>
-            </div>
-            <div>
-              <p class="symbol">×</p>
-              <div><strong>Crosscap.</strong> In a plane group it records glide-reflection structure, not a mirror line.</div>
-            </div>
-            <div>
-              <p class="symbol">◦</p>
-              <div><strong>Handle or wonder ring.</strong> For wallpaper groups it is the translation-only torus, Hermann–Mauguin <span class="notation">p1</span>.</div>
-            </div>
-          </div>
-
-          <details class="reference-table">
-            <summary>The 17 wallpaper groups: Hermann–Mauguin ↔ orbifold</summary>
-            <div class="table-scroll">
-              <table>
-                <thead><tr><th>H–M</th><th>Orbifold</th><th>H–M</th><th>Orbifold</th><th>H–M</th><th>Orbifold</th></tr></thead>
-                <tbody>
-                  <tr><td>p1</td><td>◦</td><td>p2</td><td>2222</td><td>pm</td><td>**</td></tr>
-                  <tr><td>pg</td><td>××</td><td>cm</td><td>*×</td><td>pmm</td><td>*2222</td></tr>
-                  <tr><td>pmg</td><td>22*</td><td>pgg</td><td>22×</td><td>cmm</td><td>2*22</td></tr>
-                  <tr><td>p4</td><td>442</td><td>p4m</td><td>*442</td><td>p4g</td><td>4*2</td></tr>
-                  <tr><td>p3</td><td>333</td><td>p3m1</td><td>*333</td><td>p31m</td><td>3*3</td></tr>
-                  <tr><td>p6</td><td>632</td><td>p6m</td><td>*632</td><td></td><td></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-        </section>
-
-        <section id="clockwork" aria-labelledby="clockwork-title">
-          <p class="section-number">03</p>
-          <h2 id="clockwork-title">Clockwork decorations describe time</h2>
-          <p>
-            The forward catalog decorates the spatial symbol by a phase in
-            <span class="notation">ℝ/ℤ</span>, where one unit is one complete film period.
-            These marks are catalog notation rather than standard Conway notation.
-          </p>
-
-          <dl class="notation-definitions">
-            <div>
-              <dt><span class="display-notation">n<sub>k</sub></span></dt>
-              <dd>
-                The spatial <i>n</i>-fold rotation advances the clock by <i>k/n</i> of a period.
-                The omitted subscript means zero. Example: <span class="notation">3<sub>2</sub></span>
-                pairs a 120° rotation with a <span class="notation">2/3</span>-period advance.
-              </dd>
-            </div>
-            <div>
-              <dt><span class="display-notation">~</span></dt>
-              <dd>
-                A tilde marks a mirror arc whose reflection is paired with a half-period advance—a
-                time glide. Its position follows the mirror arc, as in
-                <span class="notation">*~3</span> or <span class="notation">~*×½</span>.
-              </dd>
-            </div>
-            <div>
-              <dt><span class="display-notation">×<sub>q</sub></span></dt>
-              <dd>
-                A spatial glide or crosscap generator with clock offset <i>q</i>. Here the catalog
-                prints the fraction itself, for example <span class="notation">×½</span> or
-                <span class="notation">×¼</span>.
-              </dd>
-            </div>
-            <div>
-              <dt><span class="display-notation">c · r</span></dt>
-              <dd>
-                Spacetime-lattice setting prefixes. In this catalog <span class="notation">c</span>
-                marks a centered half-cell/half-period setting and <span class="notation">r</span>
-                a one-third-stacked setting. They are not extra orbifold features.
-              </dd>
-            </div>
-            <div>
-              <dt><span class="display-notation">/1′ · /m′</span></dt>
-              <dd>
-                A separate primed clause, where present, records the time-reversing coset. Do not
-                confuse time reversal with the forward phase advances represented by subscripts
-                and tildes. The 51-row correspondence atlas uses forward-time groups only.
-              </dd>
-            </div>
-          </dl>
-
-          <aside class="warning">
-            <p class="warning-label">Same numeral, different question</p>
-            <p>
-              In <span class="notation">3<sub>2</sub></span>, the 2 answers “what fraction of a
-              period?” In <span class="notation">*<sup>2</sup></span>, the 2 answers “what is the
-              order of this generator’s colour permutation?”
-            </p>
-          </aside>
-        </section>
-
-        <section id="short-colour" aria-labelledby="short-colour-title">
-          <p class="section-number">04</p>
-          <h2 id="short-colour-title">Short colour signatures label generator slots</h2>
-          <p>
-            In the Conway–Burgiel–Goodman-Strauss convention, replace each displayed generator’s
-            colour permutation by its order. Order <span class="notation">1</span> fixes every
-            colour; order <span class="notation">2</span> is an involution; and so on.
-          </p>
-
-          <div class="grammar" aria-label="Placement grammar for short colour signatures">
-            <div class="grammar-row">
-              <p class="grammar-name">Free rotations</p>
-              <p class="grammar-mark"><span class="slot"><sup>α</sup>A</span> <span class="slot"><sup>β</sup>B</span> …</p>
-              <p>The superscript is placed <strong>before</strong> the cone digit.</p>
-            </div>
-            <div class="grammar-row">
-              <p class="grammar-name">Mirror boundary</p>
-              <p class="grammar-mark">*<sup>P</sup>a<sup>Q</sup>b<sup>R</sup>c …</p>
-              <p>
-                <i>P, Q, R</i> label successive reflection generators. Their slots occur after the
-                star or after the preceding corner digit. They do not label those corner digits.
-              </p>
-            </div>
-            <div class="grammar-row">
-              <p class="grammar-name">Crosscap / glide</p>
-              <p class="grammar-mark">×<sup>Z</sup></p>
-              <p>The superscript follows the crosscap and labels its glide generator.</p>
-            </div>
-            <div class="grammar-row">
-              <p class="grammar-name">Handle / translations</p>
-              <p class="grammar-mark">◦<sup>X,Y</sup></p>
-              <p>The two labels follow the ring and belong to a chosen translation pair.</p>
-            </div>
-          </div>
-
-          <div class="parse-examples">
-            <article>
-              <p class="parse-mark"><span class="parse-token"><sup>3</sup>3</span><span class="parse-token">*<sup>2</sup></span><span class="parse-token muted-token">3</span></p>
-              <h3><span class="notation"><sup>3</sup>3*<sup>2</sup>3</span></h3>
-              <p>
-                The first 3 labels the free 3-fold rotation. The 2 after the star labels a mirror
-                generator. The last 3 is a spatial corner order and carries no colour label.
-              </p>
-            </article>
-            <article>
-              <p class="parse-mark"><span class="parse-token">*<sup>2</sup></span><span class="parse-token">×<sup>2</sup></span></p>
-              <h3><span class="notation">*<sup>2</sup>×<sup>2</sup></span></h3>
-              <p>
-                The mirror generator and the glide generator each swap colours. Both superscripts
-                print after a symbol, but each belongs to a different generator slot.
-              </p>
-            </article>
-            <article>
-              <p class="parse-mark"><span class="parse-token"><sup>6</sup>6</span><span class="parse-token"><sup>3</sup>3</span><span class="parse-token"><sup>2</sup>2</span></p>
-              <h3><span class="notation"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span></h3>
-              <p>
-                Three free rotations act on the colours with orders 6, 3, and 2. Here every
-                superscript is placed before its cone digit.
-              </p>
-            </article>
-          </div>
-
-          <aside class="plain-language">
-            <p>
-              <strong>There is no universal “the superscript belongs to the symbol on its left” or
-              “on its right” rule.</strong> Parse the orbifold presentation into generator slots first.
-            </p>
-          </aside>
-        </section>
-
-        <section id="full-colour" aria-labelledby="full-colour-title">
-          <p class="section-number">05</p>
-          <h2 id="full-colour-title">Full colour types carry the invariant subgroup data</h2>
-          <p class="large-formula"><span class="grouped">G</span><sup>p</sup>/H/K</p>
-          <dl class="formula-key">
-            <div><dt>G</dt><dd>The full uncoloured symmetry group.</dd></div>
-            <div><dt>p</dt><dd>The number of colour classes in the transitive colour action.</dd></div>
-            <div><dt>H</dt><dd>The subgroup that preserves one selected colour.</dd></div>
-            <div><dt>K</dt><dd>The kernel: the normal subgroup that fixes every colour.</dd></div>
-          </dl>
-          <p>
-            When <span class="notation">H = K</span>, the book abbreviates the type to
-            <span class="notation"><span class="grouped">G</span><sup>p</sup>/K</span>. Otherwise it
-            may omit <span class="notation">H</span> with a double slash,
-            <span class="notation"><span class="grouped">G</span><sup>p</sup>//K</span>. The atlas’s
-            regular cyclic actions have <span class="notation">H = K</span>, so they use one slash.
-          </p>
-
-          <div class="comparison-strip">
-            <div>
-              <p class="card-index">Local generator labels</p>
-              <p class="display-notation">*<sup>2</sup>×<sup>2</sup></p>
-              <p>Each 2 is a permutation order.</p>
-            </div>
-            <div aria-hidden="true" class="not-equal">≠</div>
-            <div>
-              <p class="card-index">Global colour type</p>
-              <p class="display-notation"><span class="grouped">*×</span><sup>2</sup>/◦</p>
-              <p>The exponent 2 counts colours.</p>
-            </div>
-          </div>
-
-          <p>
-            The book normally omits the global exponent 2 in a twofold chapter, printing
-            <span class="notation">*×/◦</span>. Parentheses around the full parent group—
-            <span class="notation">(*×)<sup>2</sup>/◦</span>—are an explanatory aid on this page,
-            not an additional operation.
-          </p>
-          <p>
-            A short signature can depend on a generator choice and records only permutation
-            <em>orders</em>. For three or more colours it can lose information. The full
-            <span class="notation">G<sup>p</sup>/H/K</span> type is the safer identifier.
-          </p>
-        </section>
-
-        <section id="dictionary" aria-labelledby="dictionary-title">
-          <p class="section-number">06</p>
-          <h2 id="dictionary-title">The phase-to-colour dictionary</h2>
-          <p>
-            Normalize one film period to <span class="notation">1</span>. If all forward phase
-            offsets have denominators dividing <i>N</i>, label the colours by
-            <span class="notation">ℤ<sub>N</sub></span>. A spatial operation with phase
-            <span class="notation">j/N</span> acts by
-          </p>
-          <p class="large-formula">colour&nbsp;k ↦ k + j &nbsp;(mod&nbsp;N).</p>
-          <p>
-            This produces a phase character <span class="notation">κ: G → C<sub>N</sub></span>.
-            Its kernel <span class="notation">K = ker κ</span> consists of the spatial operations
-            that have zero phase and therefore fix every colour. In the regular cases displayed by
-            the atlas, <span class="notation">G/K ≅ C<sub>N</sub></span> and
-            <span class="notation">[G:K] = N</span>.
-          </p>
-          <p>
-            Reduce the phase fraction before reading the short signature: a phase
-            <span class="notation">a/b</span> in lowest terms induces a colour permutation of order
-            <span class="notation">b</span>. The numerator tells which power of that cycle occurs;
-            the short signature forgets that direction.
-          </p>
-        </section>
-
-        <section id="examples" aria-labelledby="examples-title">
-          <p class="section-number">07</p>
-          <h2 id="examples-title">Worked examples</h2>
-
-          <article class="worked-example" id="example-cm">
-            <header>
-              <div>
-                <p class="card-index">Wallpaper cm · one mirror and one glide</p>
-                <h3><span class="notation">~*×½</span> ↔ <span class="notation">*<sup>2</sup>×<sup>2</sup></span> ↔ <span class="notation">*×/◦</span></h3>
-              </div>
-              <a class="example-link" href="../clockwork-coloring-correspondence.html#g9">Open g9 in the atlas</a>
-            </header>
-            <ol>
-              <li>Erase time marks: <span class="notation">*×</span>, the orbifold for <span class="notation">cm</span>.</li>
-              <li>The tilde gives the mirror reflection phase 1/2; <span class="notation">×½</span> gives the glide phase 1/2.</li>
-              <li>Each acts as a transposition on two colours, yielding <span class="notation">*<sup>2</sup>×<sup>2</sup></span>.</li>
-              <li>The zero-phase kernel is <span class="notation">◦</span>, so the book prints the twofold type <span class="notation">*×/◦</span>.</li>
-            </ol>
-          </article>
-
-          <article class="worked-example featured-example" id="example-g235">
-            <header>
-              <div>
-                <p class="card-index">g235 · the mixed two-by-three case</p>
-                <h3><span class="notation">r3<sub>2</sub>*~3</span></h3>
-              </div>
-              <a class="example-link" href="../clockwork-coloring-correspondence.html#g235">Open g235 in the atlas</a>
-            </header>
-            <div class="example-crosswalk">
-              <div><span>Spatial parent</span><strong>3*3 · p31m</strong></div>
-              <div><span>Clock order</span><strong>C<sub>6</sub></strong></div>
-              <div><span>Short signature</span><strong><sup>3</sup>3*<sup>2</sup>3</strong></div>
-              <div><span>Full colour type</span><strong><span class="grouped">3*3</span><sup>6</sup>/333</strong></div>
-              <div><span>Kernel</span><strong>333 · p3</strong></div>
-            </div>
-            <p>
-              Read the clockwork symbol from left to right. The <span class="notation">r</span>
-              setting supplies one-third stacking. The generator
-              <span class="notation">3<sub>2</sub></span> is a 120° rotation with phase
-              <span class="notation">2/3</span>. The star begins a mirror boundary, the tilde makes
-              its reflection a half-period time glide, and the final
-              <span class="notation">3</span> is the spatial corner order.
-            </p>
-            <p>
-              In colour language, the chosen 3-fold rotation advances six-colour labels by four
-              steps and has permutation order 3; the time-glide reflection advances them by three
-              steps and has order 2. The combined phase image has order
-              <span class="notation">lcm(3,2) = 6</span>. That is why the short form is
-              <span class="notation"><sup>3</sup>3*<sup>2</sup>3</span>, while the full type has a
-              global exponent 6.
-            </p>
-            <aside>
-              <p>
-                <strong>The name g235 is local to the forward catalog.</strong> The spatial groups
-                <span class="notation">p31m</span> and <span class="notation">p3</span> are standard.
-                The composite sixfold type is checked through the index-2 layer
-                <span class="notation">3*3/333</span> and index-3 layer
-                <span class="notation">333<sup>3</sup>/333</span>; it is not a numbered
-                crystallographic group named “g235.”
-              </p>
-            </aside>
-          </article>
-
-          <div class="six-colour-block" aria-labelledby="six-colour-title">
-            <h3 id="six-colour-title">All three six-colour clockwork groups in this atlas</h3>
-            <div class="table-scroll">
-              <table>
-                <thead>
-                  <tr><th>Catalog row</th><th>Clockwork</th><th>Short colour signature</th><th>Full colour type</th><th>Plain colour action</th></tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a href="../clockwork-coloring-correspondence.html#g235">g235</a></td>
-                    <td><span class="notation">r3<sub>2</sub>*~3</span></td>
-                    <td><span class="notation"><sup>3</sup>3*<sup>2</sup>3</span></td>
-                    <td><span class="notation"><span class="grouped">3*3</span><sup>6</sup>/333</span></td>
-                    <td>order-3 rotation action plus an order-2 mirror action</td>
-                  </tr>
-                  <tr>
-                    <td><a href="../clockwork-coloring-correspondence.html#g247">g247</a></td>
-                    <td><span class="notation">6<sub>5</sub>3<sub>2</sub>2<sub>1</sub></span></td>
-                    <td><span class="notation"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span></td>
-                    <td><span class="notation">632<sup>6</sup>/◦</span></td>
-                    <td>add −1, −2, and 3 modulo 6 at the 6-, 3-, and 2-fold rotations</td>
-                  </tr>
-                  <tr>
-                    <td><a href="../clockwork-coloring-correspondence.html#g248">g248</a></td>
-                    <td><span class="notation">6<sub>1</sub>3<sub>1</sub>2<sub>1</sub></span></td>
-                    <td><span class="notation"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span></td>
-                    <td><span class="notation">632<sup>6</sup>/◦</span></td>
-                    <td>add 1, 2, and 3 modulo 6; the inverse-clock mate of g247</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="table-note">
-              g247 and g248 have the same order-only short signature because that notation forgets
-              cycle direction. Their clockwork subscripts retain the distinction.
-            </p>
-          </div>
-        </section>
-
-        <section id="gotchas" aria-labelledby="gotchas-title">
-          <p class="section-number">08</p>
-          <h2 id="gotchas-title">Gotchas worth checking every time</h2>
-          <ol class="gotcha-list">
-            <li>
-              <strong>Do not attach a superscript by proximity.</strong>
-              In <span class="notation">*<sup>2</sup>3</span>, the 2 labels a reflection generator;
-              the 3 is the corner order formed by reflections.
-            </li>
-            <li>
-              <strong>Do not mix local and global superscripts.</strong>
-              The 2s in <span class="notation">*<sup>2</sup>×<sup>2</sup></span> are generator
-              permutation orders. The 6 in <span class="notation"><span class="grouped">3*3</span><sup>6</sup>/333</span>
-              is the number of colours.
-            </li>
-            <li>
-              <strong>A corner digit is not an independent free rotation.</strong>
-              Digits to the right of <span class="notation">*</span> encode products of adjacent
-              reflections; digits before the star are free cone points.
-            </li>
-            <li>
-              <strong>The short signature is not always an invariant identifier.</strong>
-              Equivalent generator choices can produce several signatures, and permutations with
-              the same order can still differ. Prefer the full colour type and kernel.
-            </li>
-            <li>
-              <strong>Parenthesized numbers in the book tables are counts.</strong>
-              A separate <span class="notation">(2)</span> or <span class="notation">(6)</span> in
-              the “Number” column counts equivalent signatures or cases. It is neither a colour
-              count nor a generator’s permutation order.
-            </li>
-            <li>
-              <strong>C<sub>N</sub> is the phase/colour quotient here.</strong>
-              It is not automatically the spatial point group. A group with parent
-              <span class="notation">3*3</span> can have colour quotient
-              <span class="notation">C<sub>6</sub></span>.
-            </li>
-            <li>
-              <strong>Catalog IDs are addresses, not standard names.</strong>
-              Labels such as <span class="notation">g235</span> identify rows in this project’s
-              catalog and should be quoted with their symbol or parent group elsewhere.
-            </li>
-          </ol>
-        </section>
-
-        <section id="scope" aria-labelledby="scope-title">
-          <p class="section-number">09</p>
-          <h2 id="scope-title">Status, gallery notation, and sources</h2>
-          <p>
-            The undecorated orbifold symbols and the colour-group conventions come from
-            J. H. Conway, H. Burgiel, and C. Goodman-Strauss,
-            <cite>The Symmetries of Things</cite>. The clockwork subscripts, tildes, and lattice
-            prefixes are the notation used by this project’s forward catalog; they are not a
-            standard extension of Conway notation.
-          </p>
-          <p>
-            The visualization gallery also uses an explicit construction label such as
-            <span class="notation">Q⟦g ↦ τ<sub>1/2</sub>⟧</span>. Here <span class="notation">Q</span>
-            is the spatial quotient, <span class="notation">g</span> names a chosen spatial
-            generator, and <span class="notation">τ<sub>a</sub></span> is phase translation by
-            <span class="notation">a</span>. A symbol <span class="notation">ι<sub>b</sub></span>
-            means phase reversal followed by a shift by <span class="notation">b</span>. This
-            double-bracket syntax is an explicit, project-specific generator map; it is separate
-            from both the forward-catalog clockwork notation and the book’s colour notation.
-          </p>
-          <div class="source-links">
-            <a href="../clockwork-coloring-correspondence.html">51-row correspondence atlas</a>
-            <a href="Conway%20J.,%20Goodman-Strauss%20C.%20(2008)%20The%20Symmetries%20of%20Things.pdf">Local book source</a>
-            <a href="https://books.google.com/books?id=EtQCk0TNafsC&amp;pg=PA155">Colour-type definition, p. 155</a>
-            <a href="https://arxiv.org/abs/2604.05619">Ke–Wu spacetime-group framework</a>
-          </div>
-        </section>
-      </article>
-    </div>
+    <section class="sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">Sources</h2>
+      <p>
+        <a href="Conway%20J.,%20Goodman-Strauss%20C.%20(2008)%20The%20Symmetries%20of%20Things.pdf"><cite>The Symmetries of Things</cite></a>
+        <span aria-hidden="true">·</span>
+        <a href="https://arxiv.org/abs/math/9911185">Conway et al., <cite>On Three-Dimensional Space Groups</cite></a>
+        <span aria-hidden="true">·</span>
+        <a href="../clockwork-coloring-correspondence.html">Correspondence atlas</a>
+      </p>
+    </section>
 
     <footer>
       <p><a href="../">Visualization gallery</a> · <a href="../future-directions.html">Colour census</a> · <a href="../clockwork-coloring-correspondence.html">Correspondence atlas</a> · <a href="../README.md">README</a></p>

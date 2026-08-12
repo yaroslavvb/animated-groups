@@ -2557,7 +2557,6 @@ def page_html(payload: dict[str, Any]) -> str:
     if len({group["symbol"] for group in displayed_groups}) != len(displayed_groups):
         raise ValueError("clockwork symbols must disambiguate every display row")
     colour_class_count = len(colour_signature_fibres)
-    enantiomorphic_pair_count = len(repeated_colour_fibres)
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for group in displayed_groups:
         grouped[group["parent"]["hm"]].append(group)
@@ -2616,8 +2615,8 @@ def page_html(payload: dict[str, Any]) -> str:
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
-        <h2 id="notation-caveat-title">Why {enantiomorphic_pair_count} Chaim signatures occur twice</h2>
-        <p>These {len(displayed_groups)} clockwork groups represent {colour_class_count} traditional colour classes. Traditional colour equivalence permits a plane reflection together with a global colour relabelling, so reversing every phase can leave the colour class unchanged. Consequently {enantiomorphic_pair_count} enantiomorphic pairs over 333, 442 and 632 share a Chaim signature even though they are different oriented spacetime groups. On those {len(repeated_colour_ids)} entries, the smaller second line is this project’s <a href="docs/orbifold_notation.html#scope">clockwork symbol</a>; its phase subscripts distinguish the two senses of phase advance. <a href="{HIERARCHY_CHIRALITY_URL}">Hierarchy: splits by chirality ↗</a></p>
+        <h2 id="notation-caveat-title">Notation</h2>
+        <p>The displayed names use Chaim Goodman–Strauss’s coloured-orbifold notation. Across all {len(trivial_groups) + len(displayed_groups)} forward groups it gives {len(trivial_groups) + colour_class_count} cyclic plane-colouring classes. Four types leave the two orientations of the polar fibre unresolved: 442<sup>4</sup>/◦, 333<sup>3</sup>/◦, 632<sup>6</sup>/◦, and 632<sup>3</sup>/2222. These are four two-to-one fibres, not missing colourings; standard fibrifold notation also identifies each pair under fibre reversal. <a href="docs/orbifold_notation.html#uncovered-cases">Four uncovered cases ↗</a> · <a href="{HIERARCHY_CHIRALITY_URL}">hierarchy ↗</a></p>
       </aside>
       <aside class="directory-census" aria-label="Forward group count overview">
         <p><strong><span class="census-number">{len(trivial_groups)}</span> trivial groups</strong><span>Time is an independent direct-product factor.</span></p>

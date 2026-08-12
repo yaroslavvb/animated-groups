@@ -342,7 +342,7 @@ class SiteCatalogTests(unittest.TestCase):
             )
             self.assertGreater(len(expression), 4)
 
-    def test_notation_guide_is_linked_and_distinguishes_project_notation(self) -> None:
+    def test_notation_note_is_linked_and_lists_the_four_polar_collisions(self) -> None:
         self.assertTrue(
             any(
                 href.partition("#")[0].endswith("docs/orbifold_notation.html")
@@ -351,9 +351,19 @@ class SiteCatalogTests(unittest.TestCase):
         )
         guide = (ROOT / "docs" / "orbifold_notation.html").read_text(encoding="utf-8")
         guide_lower = " ".join(guide.lower().split())
-        self.assertIn("short colour signature", guide_lower)
-        self.assertIn("generator slot", guide_lower)
-        self.assertIn("not a standard extension", guide_lower)
+        self.assertIn("chaim goodman–strauss’s coloured-orbifold notation", guide_lower)
+        self.assertIn("four uncovered oriented cases", guide_lower)
+        self.assertIn("68 polar", guide_lower)
+        self.assertIn("64 cyclic plane-colouring classes", guide_lower)
+        self.assertIn("standard fibrifold", guide_lower)
+        self.assertEqual(guide.count("data-uncovered-case="), 4)
+        for colour_type in (
+            '<span class="grouped">442</span><sup>4</sup>/◦',
+            '<span class="grouped">333</span><sup>3</sup>/◦',
+            '<span class="grouped">632</span><sup>6</sup>/◦',
+            '<span class="grouped">632</span><sup>3</sup>/2222',
+        ):
+            self.assertIn(colour_type, guide)
 
 
 if __name__ == "__main__":

@@ -610,13 +610,24 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
 
         self.assertEqual(self.page.count('class="notation-caveat"'), 1)
-        self.assertIn("These 51 clockwork groups represent 47", self.page)
-        self.assertIn("Why 4 Chaim signatures occur twice", self.page)
+        self.assertIn("Chaim Goodman–Strauss’s coloured-orbifold notation", self.page)
+        self.assertIn("Across all 68 forward groups it gives 64", self.page)
+        self.assertIn("Four types leave the two orientations", self.page)
+        for colour_type in (
+            "442<sup>4</sup>/◦",
+            "333<sup>3</sup>/◦",
+            "632<sup>6</sup>/◦",
+            "632<sup>3</sup>/2222",
+        ):
+            self.assertIn(colour_type, self.page)
         self.assertIn(
             f'href="{correspondence.HIERARCHY_CHIRALITY_URL}"',
             self.page,
         )
-        self.assertIn('href="docs/orbifold_notation.html#scope"', self.page)
+        self.assertIn(
+            'href="docs/orbifold_notation.html#uncovered-cases"',
+            self.page,
+        )
         self.assertEqual(
             self.page.count('class="clockwork-disambiguator '),
             3 * len(collision_ids),

@@ -65,15 +65,13 @@ visualizations, `iota` denotes reversal of the periodic time coordinate, not
 antiunitary quantum time reversal; the paper makes that distinction in
 [its coordinate-space discussion](https://arxiv.org/html/2604.05619v1#S4.p7).
 
-## Proposed spacetime-orbifold notation
+## Notation
 
-The gallery labels each action as `Q ⟦g ↦ τ_a, h ↦ ι_b⟧`.  The prefix `Q`
-is the standard Conway orbifold or rosette signature of the projected spatial
-action.  The brackets are a proposed extension—not standard orbifold
-notation—that record its action on periodic time: `τ_a` sends `t` to `t+aT`,
-while `ι_b` sends `t` to `-t+bT`. The precise convention, all eleven
-labels, and their limitations are documented in
-[the orbifold, clockwork, and colour notation guide](docs/orbifold_notation.html).
+The correspondence atlas uses Chaim Goodman-Strauss's coloured-orbifold
+notation.  It gives 64 cyclic plane-colouring classes for the 68 polar groups:
+four colour types each cover an oppositely oriented pair.  The concise
+[notation note](docs/orbifold_notation.html) lists those four cases and compares
+the convention with Conway et al.'s fibrifold notation.
 
 ## Generate everything
 
@@ -262,8 +260,8 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `scripts/generate_space_group_correspondence.py` — validates the 68 International-number mappings and exact lifted relations, then regenerates the atlas, JSON, and data plates.
 - `data/space-group-correspondence.json` / `output/space-groups/` — the pinned polar-space-group records and deterministic unit-cell views.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
-- `docs/orbifold_notation.html` — guide to spatial orbifolds, clockwork phase marks, and colour notation.
-- `docs/orbifold-notation.css` — responsive styles for the notation guide.
+- `docs/orbifold_notation.html` — concise note on Chaim's colour notation and its four polar collisions.
+- `docs/orbifold-notation.css` — responsive styles for the notation note.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.
 - `docs/systematic_catalog.md` — bounded scope, equivalence convention, and catalog tiers.
 
