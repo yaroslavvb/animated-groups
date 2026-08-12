@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": 1,
+    "schema_version": 2,
     "title": "Cyclic colourings and polar space groups",
     "source": "data/clockwork-coloring-correspondence.json",
     "source_sha256": "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330",
@@ -136,6 +136,14 @@
         }
       ],
       "phase_profile": [],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 1,
+        "template": "omitted_trivial_time_action",
+        "generators": [],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g1",
       "image": "output/clockwork-colorings/g1.webp",
       "image_alt": "Static perfect 1-colouring for group g1: asymmetric motifs carry phase colours for Conway type ◦.",
@@ -248,6 +256,22 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 2,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g5",
       "image": "output/clockwork-colorings/g5.webp",
       "image_alt": "Static perfect 1-colouring for group g5: asymmetric motifs carry phase colours for Conway type 2222.",
@@ -407,6 +431,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 2,
+        "template": "cyclic_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 2,
+        "template": "cyclic_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g6",
       "image": "output/clockwork-colorings/g6.webp",
       "image_alt": "Static perfect 2-colouring for group g6: asymmetric motifs carry phase colours for Conway type 2222/◦.",
@@ -573,6 +653,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "1/2-cell translation along b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) rotation about the lift axis"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = bc",
+            "B² = 1",
+            "AB = b · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g7",
       "image": "output/clockwork-colorings/g7.webp",
       "image_alt": "Static perfect 2-colouring for group g7: asymmetric motifs carry phase colours for Conway type 2222/2222.",
@@ -811,6 +962,22 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 2,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g8",
       "image": "output/clockwork-colorings/g8.webp",
       "image_alt": "Static perfect 1-colouring for group g8: asymmetric motifs carry phase colours for Conway type *×.",
@@ -970,6 +1137,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 2,
+        "template": "cyclic_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 2,
+        "template": "cyclic_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b,a,c)"
+          ],
+          "cell": [
+            "A² = c"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g9",
       "image": "output/clockwork-colorings/g9.webp",
       "image_alt": "Static perfect 2-colouring for group g9: asymmetric motifs carry phase colours for Conway type *×/◦.",
@@ -1130,6 +1353,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g10",
       "image": "output/clockwork-colorings/g10.webp",
       "image_alt": "Static perfect 1-colouring for group g10: asymmetric motifs carry phase colours for Conway type **.",
@@ -1374,6 +1620,22 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "glide",
+            "operation": "Glide reflection",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g11",
       "image": "output/clockwork-colorings/g11.webp",
       "image_alt": "Static perfect 1-colouring for group g11: asymmetric motifs carry phase colours for Conway type ××.",
@@ -1618,6 +1880,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g54",
       "image": "output/clockwork-colorings/g54.webp",
       "image_alt": "Static perfect 1-colouring for group g54: asymmetric motifs carry phase colours for Conway type *2222.",
@@ -1867,6 +2152,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = c",
+            "AB = BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g55",
       "image": "output/clockwork-colorings/g55.webp",
       "image_alt": "Static perfect 2-colouring for group g55: asymmetric motifs carry phase colours for Conway type *2222/2222.",
@@ -2111,6 +2467,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g56",
       "image": "output/clockwork-colorings/g56.webp",
       "image_alt": "Static perfect 1-colouring for group g56: asymmetric motifs carry phase colours for Conway type 22*.",
@@ -2360,6 +2739,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) rotation about the lift axis"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = 1",
+            "AB = b⁻¹ · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g57",
       "image": "output/clockwork-colorings/g57.webp",
       "image_alt": "Static perfect 2-colouring for group g57: asymmetric motifs carry phase colours for Conway type 22*/2222.",
@@ -2604,6 +3054,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "glide",
+            "operation": "Glide reflection",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g58",
       "image": "output/clockwork-colorings/g58.webp",
       "image_alt": "Static perfect 1-colouring for group g58: asymmetric motifs carry phase colours for Conway type 22×.",
@@ -2853,6 +3326,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "glide",
+            "operation": "Glide reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) rotation about the lift axis"
+          },
+          {
+            "name": "B",
+            "kind": "glide",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B² = bc",
+            "AB = a⁻¹b⁻¹ · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g59",
       "image": "output/clockwork-colorings/g59.webp",
       "image_alt": "Static perfect 2-colouring for group g59: asymmetric motifs carry phase colours for Conway type 22×/2222.",
@@ -3103,6 +3647,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B² = c",
+            "AB = BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g60",
       "image": "output/clockwork-colorings/g60.webp",
       "image_alt": "Static perfect 2-colouring for group g60: asymmetric motifs carry phase colours for Conway type *2222/**.",
@@ -3353,6 +3968,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = c",
+            "AB = b⁻¹ · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g61",
       "image": "output/clockwork-colorings/g61.webp",
       "image_alt": "Static perfect 2-colouring for group g61: asymmetric motifs carry phase colours for Conway type 22*/××.",
@@ -3603,6 +4289,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B² = c",
+            "AB = b⁻¹ · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g62",
       "image": "output/clockwork-colorings/g62.webp",
       "image_alt": "Static perfect 2-colouring for group g62: asymmetric motifs carry phase colours for Conway type 22*/**.",
@@ -3853,6 +4610,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "glide",
+            "operation": "Glide reflection",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "elementary_2_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "glide",
+            "operation": "Glide reflection in a vertical plane"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = b",
+            "AB = a⁻¹b⁻¹ · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g63",
       "image": "output/clockwork-colorings/g63.webp",
       "image_alt": "Static perfect 2-colouring for group g63: asymmetric motifs carry phase colours for Conway type 22×/××.",
@@ -4110,6 +4938,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "1/2-cell translation along b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = bc",
+            "B² = 1",
+            "C² = 1",
+            "AB = BA",
+            "AC = b · CA",
+            "BC = CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g64",
       "image": "output/clockwork-colorings/g64.webp",
       "image_alt": "Static perfect 2-colouring for group g64: asymmetric motifs carry phase colours for Conway type *2222/*2222.",
@@ -4535,6 +5450,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "1/2-cell translation along b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = bc",
+            "B² = c",
+            "C² = c",
+            "AB = BA",
+            "AC = b · CA",
+            "BC = CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g65",
       "image": "output/clockwork-colorings/g65.webp",
       "image_alt": "Static perfect 2-colouring for group g65: asymmetric motifs carry phase colours for Conway type *2222/22*.",
@@ -4960,6 +5962,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "1/2-cell translation along b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "C",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane"
+          },
+          {
+            "name": "C",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) rotation about the lift axis"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a⁻¹,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = bc",
+            "B² = 1",
+            "C² = 1",
+            "AB = BA",
+            "AC = b · CA",
+            "BC = a⁻¹ · CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g66",
       "image": "output/clockwork-colorings/g66.webp",
       "image_alt": "Static perfect 2-colouring for group g66: asymmetric motifs carry phase colours for Conway type 22*/22*.",
@@ -5385,6 +6474,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "1/2-cell translation along b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "C",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          },
+          {
+            "name": "C",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) rotation about the lift axis"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a⁻¹,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = bc",
+            "B² = c",
+            "C² = 1",
+            "AB = BA",
+            "AC = b · CA",
+            "BC = a⁻¹ · CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g67",
       "image": "output/clockwork-colorings/g67.webp",
       "image_alt": "Static perfect 2-colouring for group g67: asymmetric motifs carry phase colours for Conway type 22*/22×.",
@@ -5803,6 +6979,36 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g68",
       "image": "output/clockwork-colorings/g68.webp",
       "image_alt": "Static perfect 1-colouring for group g68: asymmetric motifs carry phase colours for Conway type 2*22.",
@@ -6226,6 +7432,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = ab",
+            "B² = c",
+            "C² = c",
+            "AB = a · BA",
+            "AC = b · CA",
+            "BC = CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g69",
       "image": "output/clockwork-colorings/g69.webp",
       "image_alt": "Static perfect 2-colouring for group g69: asymmetric motifs carry phase colours for Conway type 2*22/2222.",
@@ -6650,6 +7943,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = ab",
+            "B² = 1",
+            "C² = c",
+            "AB = a · BA",
+            "AC = b · CA",
+            "BC = CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g70",
       "image": "output/clockwork-colorings/g70.webp",
       "image_alt": "Static perfect 2-colouring for group g70: asymmetric motifs carry phase colours for Conway type 2*22/*×.",
@@ -7075,6 +8455,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = abc",
+            "B² = 1",
+            "C² = 1",
+            "AB = a · BA",
+            "AC = b · CA",
+            "BC = CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g71",
       "image": "output/clockwork-colorings/g71.webp",
       "image_alt": "Static perfect 2-colouring for group g71: asymmetric motifs carry phase colours for Conway type 2*22/*2222.",
@@ -7500,6 +8967,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = abc",
+            "B² = c",
+            "C² = c",
+            "AB = a · BA",
+            "AC = b · CA",
+            "BC = CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g72",
       "image": "output/clockwork-colorings/g72.webp",
       "image_alt": "Static perfect 2-colouring for group g72: asymmetric motifs carry phase colours for Conway type 2*22/22×.",
@@ -7925,6 +9479,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "elementary_2_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = abc",
+            "B² = c",
+            "C² = 1",
+            "AB = a · BA",
+            "AC = b · CA",
+            "BC = CB"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g73",
       "image": "output/clockwork-colorings/g73.webp",
       "image_alt": "Static perfect 2-colouring for group g73: asymmetric motifs carry phase colours for Conway type 2*22/22*.",
@@ -8351,6 +9992,110 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 16,
+        "template": "elementary_2_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "1/2-cell translation along b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "translation",
+            "operation": "1/2-cell translation along a",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "D",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = D² = 1; AB = BA, AC = CA, AD = DA, BC = CB, BD = DB, CD = DC"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 16,
+        "template": "elementary_2_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 c"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "D",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a,b,c)",
+            "C(a,b,c)C⁻¹ = (a⁻¹,b,c)",
+            "D(a,b,c)D⁻¹ = (a,b⁻¹,c)"
+          ],
+          "cell": [
+            "A² = bc",
+            "B² = ac",
+            "C² = 1",
+            "D² = 1",
+            "AB = BA",
+            "AC = CA",
+            "AD = b · DA",
+            "BC = a · CB",
+            "BD = DB",
+            "CD = DC"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g74",
       "image": "output/clockwork-colorings/g74.webp",
       "image_alt": "Static perfect 2-colouring for group g74: asymmetric motifs carry phase colours for Conway type *2222/2*22.",
@@ -9123,6 +10868,78 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 16,
+        "template": "exceptional_16",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn rotation (180°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "glide",
+            "operation": "Glide reflection",
+            "phase": "3/4",
+            "time_shift": "+3/4 period"
+          }
+        ],
+        "relations": "A² = B⁴ = (AB)⁴ = 1; AB² = B²A"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 16,
+        "template": "exceptional_16",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "Half-turn (180°) screw rotation about the lift axis; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "glide",
+            "operation": "Glide reflection in a vertical plane; height shift 3/4"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B⁴ = bc³",
+            "(AB)⁴ = ac⁵",
+            "AB² = b⁻¹ · B²A"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g75",
       "image": "output/clockwork-colorings/g75.webp",
       "image_alt": "Static perfect 4-colouring for group g75: asymmetric motifs carry phase colours for Conway type 22×⁴/2222.",
@@ -9871,6 +11688,22 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g94",
       "image": "output/clockwork-colorings/g94.webp",
       "image_alt": "Static perfect 1-colouring for group g94: asymmetric motifs carry phase colours for Conway type 442.",
@@ -10120,6 +11953,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "cyclic_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A⁴ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "cyclic_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A⁴ = c²"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g95",
       "image": "output/clockwork-colorings/g95.webp",
       "image_alt": "Static perfect 2-colouring for group g95: asymmetric motifs carry phase colours for Conway type 442/2222.",
@@ -10380,6 +12269,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "cyclic_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "1/4",
+            "time_shift": "+1/4 period"
+          }
+        ],
+        "relations": "A⁴ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "cyclic_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/4"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A⁴ = c"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g96",
       "image": "output/clockwork-colorings/g96.webp",
       "image_alt": "Static perfect 4-colouring for group g96: asymmetric motifs carry phase colours for Conway type 442⁴/◦.",
@@ -10640,6 +12585,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 4,
+        "template": "cyclic_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "3/4",
+            "time_shift": "+3/4 period"
+          }
+        ],
+        "relations": "A⁴ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 4,
+        "template": "cyclic_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 3/4"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A⁴ = c³"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g97",
       "image": "output/clockwork-colorings/g97.webp",
       "image_alt": "Static perfect 4-colouring for group g97: asymmetric motifs carry phase colours for Conway type 442⁴/◦.",
@@ -10897,6 +12898,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "cyclic_2_x_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B⁴ = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "cyclic_2_x_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) rotation about the lift axis"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = abc",
+            "B⁴ = 1",
+            "AB = a · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g98",
       "image": "output/clockwork-colorings/g98.webp",
       "image_alt": "Static perfect 2-colouring for group g98: asymmetric motifs carry phase colours for Conway type 442/442.",
@@ -11332,6 +13404,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "cyclic_2_x_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "3/4",
+            "time_shift": "+3/4 period"
+          }
+        ],
+        "relations": "A² = B⁴ = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "cyclic_2_x_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 3/4"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = abc",
+            "B⁴ = c³",
+            "AB = a · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g99",
       "image": "output/clockwork-colorings/g99.webp",
       "image_alt": "Static perfect 4-colouring for group g99: asymmetric motifs carry phase colours for Conway type 442⁴/2222.",
@@ -11750,6 +13893,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g128",
       "image": "output/clockwork-colorings/g128.webp",
       "image_alt": "Static perfect 1-colouring for group g128: asymmetric motifs carry phase colours for Conway type *442.",
@@ -12174,6 +14340,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "dihedral_4_reflections",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = (AB)⁴ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "dihedral_4_reflections",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (b⁻¹,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B² = c",
+            "(AB)⁴ = c²"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g129",
       "image": "output/clockwork-colorings/g129.webp",
       "image_alt": "Static perfect 2-colouring for group g129: asymmetric motifs carry phase colours for Conway type *442/*2222.",
@@ -12598,6 +14835,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "dihedral_4_reflections",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = (AB)⁴ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "dihedral_4_reflections",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (b⁻¹,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = 1",
+            "(AB)⁴ = c²"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g130",
       "image": "output/clockwork-colorings/g130.webp",
       "image_alt": "Static perfect 2-colouring for group g130: asymmetric motifs carry phase colours for Conway type *442/2*22.",
@@ -13021,6 +15329,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "dihedral_4_reflections",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = (AB)⁴ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "dihedral_4_reflections",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (b⁻¹,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = c",
+            "(AB)⁴ = c⁴"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g131",
       "image": "output/clockwork-colorings/g131.webp",
       "image_alt": "Static perfect 2-colouring for group g131: asymmetric motifs carry phase colours for Conway type *442/442.",
@@ -13439,6 +15818,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g132",
       "image": "output/clockwork-colorings/g132.webp",
       "image_alt": "Static perfect 1-colouring for group g132: asymmetric motifs carry phase colours for Conway type 4*2.",
@@ -13863,6 +16265,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "dihedral_4_rotation",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B⁴ = (AB)² = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "dihedral_4_rotation",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,a⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B⁴ = c²",
+            "(AB)² = b⁻¹c²"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g133",
       "image": "output/clockwork-colorings/g133.webp",
       "image_alt": "Static perfect 2-colouring for group g133: asymmetric motifs carry phase colours for Conway type 4*2/22×.",
@@ -14287,6 +16760,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "dihedral_4_rotation",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B⁴ = (AB)² = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "dihedral_4_rotation",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,a⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B⁴ = c²",
+            "(AB)² = b⁻¹c"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g134",
       "image": "output/clockwork-colorings/g134.webp",
       "image_alt": "Static perfect 2-colouring for group g134: asymmetric motifs carry phase colours for Conway type 4*2/2*22.",
@@ -14710,6 +17254,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 8,
+        "template": "dihedral_4_rotation",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B⁴ = (AB)² = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 8,
+        "template": "dihedral_4_rotation",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) rotation about the lift axis"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,a⁻¹,c)",
+            "B(a,b,c)B⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B⁴ = 1",
+            "(AB)² = b⁻¹c"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g135",
       "image": "output/clockwork-colorings/g135.webp",
       "image_alt": "Static perfect 2-colouring for group g135: asymmetric motifs carry phase colours for Conway type 4*2/442.",
@@ -15142,6 +17757,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 16,
+        "template": "cyclic_2_x_dihedral_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = (BC)⁴ = 1; AB = BA, AC = CA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 16,
+        "template": "cyclic_2_x_dihedral_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (b⁻¹,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = abc",
+            "B² = 1",
+            "C² = 1",
+            "(BC)⁴ = 1",
+            "AB = a · BA",
+            "AC = ab · CA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g136",
       "image": "output/clockwork-colorings/g136.webp",
       "image_alt": "Static perfect 2-colouring for group g136: asymmetric motifs carry phase colours for Conway type *442/*442.",
@@ -15922,6 +18624,78 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 16,
+        "template": "exceptional_16",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "3/4",
+            "time_shift": "+3/4 period"
+          }
+        ],
+        "relations": "A² = B⁴ = (AB)⁴ = 1; AB² = B²A"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 16,
+        "template": "exceptional_16",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 3/4"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B⁴ = c³",
+            "(AB)⁴ = abc³",
+            "AB² = a · B²A"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g137",
       "image": "output/clockwork-colorings/g137.webp",
       "image_alt": "Static perfect 4-colouring for group g137: asymmetric motifs carry phase colours for Conway type 4*2⁴/*2222.",
@@ -16690,6 +19464,93 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 16,
+        "template": "cyclic_2_x_dihedral_4",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = C² = (BC)⁴ = 1; AB = BA, AC = CA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 16,
+        "template": "cyclic_2_x_dihedral_4",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/2 a + 1/2 b + 1/2 c"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "C",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,b,c)",
+            "C(a,b,c)C⁻¹ = (b⁻¹,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = abc",
+            "B² = c",
+            "C² = 1",
+            "(BC)⁴ = c²",
+            "AB = a · BA",
+            "AC = ab · CA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g138",
       "image": "output/clockwork-colorings/g138.webp",
       "image_alt": "Static perfect 2-colouring for group g138: asymmetric motifs carry phase colours for Conway type *442/4*2.",
@@ -17470,6 +20331,78 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 16,
+        "template": "exceptional_16",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn rotation (90°)",
+            "phase": "1/4",
+            "time_shift": "+1/4 period"
+          }
+        ],
+        "relations": "A² = B⁴ = (AB)⁴ = 1; AB² = B²A"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 16,
+        "template": "exceptional_16",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/4-turn (90°) screw rotation about the lift axis; height shift 1/4"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (b,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B⁴ = c",
+            "(AB)⁴ = abc³",
+            "AB² = a · B²A"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g139",
       "image": "output/clockwork-colorings/g139.webp",
       "image_alt": "Static perfect 4-colouring for group g139: asymmetric motifs carry phase colours for Conway type 4*2⁴/22×.",
@@ -18212,6 +21145,22 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 3,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/3-turn rotation (120°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g224",
       "image": "output/clockwork-colorings/g224.webp",
       "image_alt": "Static perfect 1-colouring for group g224: asymmetric motifs carry phase colours for Conway type 333.",
@@ -18419,6 +21368,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 3,
+        "template": "cyclic_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/3-turn rotation (120°)",
+            "phase": "1/3",
+            "time_shift": "+1/3 period"
+          }
+        ],
+        "relations": "A³ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 3,
+        "template": "cyclic_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 1/3"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹b⁻¹,a,c)"
+          ],
+          "cell": [
+            "A³ = c"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g225",
       "image": "output/clockwork-colorings/g225.webp",
       "image_alt": "Static perfect 3-colouring for group g225: asymmetric motifs carry phase colours for Conway type 333³/◦.",
@@ -18626,6 +21631,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 3,
+        "template": "cyclic_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/3-turn rotation (120°)",
+            "phase": "2/3",
+            "time_shift": "+2/3 period"
+          }
+        ],
+        "relations": "A³ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 3,
+        "template": "cyclic_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 2/3"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹b⁻¹,a,c)"
+          ],
+          "cell": [
+            "A³ = c²"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g226",
       "image": "output/clockwork-colorings/g226.webp",
       "image_alt": "Static perfect 3-colouring for group g226: asymmetric motifs carry phase colours for Conway type 333³/◦.",
@@ -18841,6 +21902,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 9,
+        "template": "elementary_3_2",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/3 a − 1/3 b",
+            "phase": "2/3",
+            "time_shift": "+2/3 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/3-turn rotation (120°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A³ = B³ = 1; AB = BA"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 9,
+        "template": "elementary_3_2",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "translation",
+            "operation": "Translation by 1/3 a − 1/3 b + 2/3 c"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/3-turn (120°) rotation about the lift axis"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹b⁻¹,a,c)"
+          ],
+          "cell": [
+            "A³ = ab²c²",
+            "B³ = 1",
+            "AB = b · BA"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g227",
       "image": "output/clockwork-colorings/g227.webp",
       "image_alt": "Static perfect 3-colouring for group g227: asymmetric motifs carry phase colours for Conway type 333³/333.",
@@ -19295,6 +22427,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g230",
       "image": "output/clockwork-colorings/g230.webp",
       "image_alt": "Static perfect 1-colouring for group g230: asymmetric motifs carry phase colours for Conway type *333.",
@@ -19628,6 +22783,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "dihedral_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = (AB)³ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 6,
+        "template": "dihedral_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,ab,c)",
+            "B(a,b,c)B⁻¹ = (b⁻¹,a⁻¹,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = c",
+            "(AB)³ = c³"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g231",
       "image": "output/clockwork-colorings/g231.webp",
       "image_alt": "Static perfect 2-colouring for group g231: asymmetric motifs carry phase colours for Conway type *333/333.",
@@ -19956,6 +23182,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g232",
       "image": "output/clockwork-colorings/g232.webp",
       "image_alt": "Static perfect 1-colouring for group g232: asymmetric motifs carry phase colours for Conway type 3*3.",
@@ -20289,6 +23538,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "dihedral_3",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = (AB)³ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 6,
+        "template": "dihedral_3",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹b⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (b,a,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = c",
+            "(AB)³ = c³"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g233",
       "image": "output/clockwork-colorings/g233.webp",
       "image_alt": "Static perfect 2-colouring for group g233: asymmetric motifs carry phase colours for Conway type 3*3/333.",
@@ -20638,6 +23958,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 18,
+        "template": "exceptional_18",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/3-turn rotation (120°)",
+            "phase": "2/3",
+            "time_shift": "+2/3 period"
+          }
+        ],
+        "relations": "A² = B³ = 1; B(ABA) = (ABA)B"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 18,
+        "template": "exceptional_18",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 2/3"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,ab,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹b⁻¹,a,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B³ = c²",
+            "B(ABA) = a · (ABA)B"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g234",
       "image": "output/clockwork-colorings/g234.webp",
       "image_alt": "Static perfect 3-colouring for group g234: asymmetric motifs carry phase colours for Conway type 3*3³/*333.",
@@ -21506,6 +24897,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 18,
+        "template": "exceptional_18",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/3-turn rotation (120°)",
+            "phase": "2/3",
+            "time_shift": "+2/3 period"
+          }
+        ],
+        "relations": "A² = B³ = 1; B(ABA) = (ABA)B"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 18,
+        "template": "exceptional_18",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "rotation",
+            "operation": "1/3-turn (120°) screw rotation about the lift axis; height shift 2/3"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹,ab,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹b⁻¹,a,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B³ = c²",
+            "B(ABA) = a · (ABA)B"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g235",
       "image": "output/clockwork-colorings/g235.webp",
       "image_alt": "Static perfect 6-colouring for group g235: asymmetric motifs carry phase colours for Conway type 3*3⁶/333.",
@@ -22344,6 +25806,22 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn rotation (60°)",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g243",
       "image": "output/clockwork-colorings/g243.webp",
       "image_alt": "Static perfect 1-colouring for group g243: asymmetric motifs carry phase colours for Conway type 632.",
@@ -22690,6 +26168,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn rotation (60°)",
+            "phase": "2/3",
+            "time_shift": "+2/3 period"
+          }
+        ],
+        "relations": "A⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 2/3"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A⁶ = c⁴"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g244",
       "image": "output/clockwork-colorings/g244.webp",
       "image_alt": "Static perfect 3-colouring for group g244: asymmetric motifs carry phase colours for Conway type 632³/2222.",
@@ -23036,6 +26570,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn rotation (60°)",
+            "phase": "1/3",
+            "time_shift": "+1/3 period"
+          }
+        ],
+        "relations": "A⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 1/3"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A⁶ = c²"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g245",
       "image": "output/clockwork-colorings/g245.webp",
       "image_alt": "Static perfect 3-colouring for group g245: asymmetric motifs carry phase colours for Conway type 632³/2222.",
@@ -23375,6 +26965,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn rotation (60°)",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A⁶ = c³"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g246",
       "image": "output/clockwork-colorings/g246.webp",
       "image_alt": "Static perfect 2-colouring for group g246: asymmetric motifs carry phase colours for Conway type 632/333.",
@@ -23736,6 +27382,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn rotation (60°)",
+            "phase": "1/6",
+            "time_shift": "+1/6 period"
+          }
+        ],
+        "relations": "A⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 1/6"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A⁶ = c"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g247",
       "image": "output/clockwork-colorings/g247.webp",
       "image_alt": "Static perfect 6-colouring for group g247: asymmetric motifs carry phase colours for Conway type 632⁶/◦.",
@@ -24097,6 +27799,62 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn rotation (60°)",
+            "phase": "5/6",
+            "time_shift": "+5/6 period"
+          }
+        ],
+        "relations": "A⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 6,
+        "template": "cyclic_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "rotation",
+            "operation": "1/6-turn (60°) screw rotation about the lift axis; height shift 5/6"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (b⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A⁶ = c⁵"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g248",
       "image": "output/clockwork-colorings/g248.webp",
       "image_alt": "Static perfect 6-colouring for group g248: asymmetric motifs carry phase colours for Conway type 632⁶/◦.",
@@ -24437,6 +28195,29 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 12,
+        "template": "omitted_trivial_time_action",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "omitted"
+      },
+      "space_group_presentation": null,
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g268",
       "image": "output/clockwork-colorings/g268.webp",
       "image_alt": "Static perfect 1-colouring for group g268: asymmetric motifs carry phase colours for Conway type *632.",
@@ -25035,6 +28816,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 12,
+        "template": "dihedral_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "0",
+            "time_shift": "none"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = (AB)⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 12,
+        "template": "dihedral_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 1"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹b⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A² = 1",
+            "B² = c",
+            "(AB)⁶ = c³"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g269",
       "image": "output/clockwork-colorings/g269.webp",
       "image_alt": "Static perfect 2-colouring for group g269: asymmetric motifs carry phase colours for Conway type *632/3*3.",
@@ -25632,6 +29484,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 12,
+        "template": "dihedral_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          }
+        ],
+        "relations": "A² = B² = (AB)⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 12,
+        "template": "dihedral_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 2; height shift 1/2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹b⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = c",
+            "(AB)⁶ = c⁶"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g270",
       "image": "output/clockwork-colorings/g270.webp",
       "image_alt": "Static perfect 2-colouring for group g270: asymmetric motifs carry phase colours for Conway type *632/632.",
@@ -26230,6 +30153,77 @@
           ]
         }
       ],
+      "cell_action_presentation": {
+        "quotient": "G/Λ",
+        "quotient_order": 12,
+        "template": "dihedral_6",
+        "generators": [
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 1",
+            "phase": "1/2",
+            "time_shift": "+1/2 period"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in axis direction 2",
+            "phase": "0",
+            "time_shift": "none"
+          }
+        ],
+        "relations": "A² = B² = (AB)⁶ = 1"
+      },
+      "space_group_presentation": {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": 12,
+        "template": "dihedral_6",
+        "generators": [
+          {
+            "name": "a",
+            "kind": "translation",
+            "operation": "Unit translation along a"
+          },
+          {
+            "name": "b",
+            "kind": "translation",
+            "operation": "Unit translation along b"
+          },
+          {
+            "name": "c",
+            "kind": "translation",
+            "operation": "Unit translation along the lift axis"
+          },
+          {
+            "name": "A",
+            "kind": "mirror",
+            "operation": "Glide reflection in a vertical plane, direction 1; height shift 1/2"
+          },
+          {
+            "name": "B",
+            "kind": "mirror",
+            "operation": "Mirror reflection in a vertical plane, direction 2"
+          }
+        ],
+        "relations": {
+          "lattice": [
+            "ab = ba",
+            "ac = ca",
+            "bc = cb"
+          ],
+          "action": [
+            "A(a,b,c)A⁻¹ = (a⁻¹b⁻¹,b,c)",
+            "B(a,b,c)B⁻¹ = (a⁻¹,ab,c)"
+          ],
+          "cell": [
+            "A² = c",
+            "B² = 1",
+            "(AB)⁶ = c³"
+          ]
+        }
+      },
       "catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g271",
       "image": "output/clockwork-colorings/g271.webp",
       "image_alt": "Static perfect 2-colouring for group g271: asymmetric motifs carry phase colours for Conway type *632/*333.",

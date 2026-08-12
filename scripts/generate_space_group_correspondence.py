@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
+from fractions import Fraction
 import hashlib
 from html import escape
 import io
@@ -39,6 +40,8 @@ from typing import Any, Iterable
 
 from PIL import Image, ImageDraw
 
+import generate_clockwork_coloring_correspondence as clockwork
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
@@ -46,8 +49,8 @@ DATA = ROOT / "data" / "space-group-correspondence.json"
 PAGE = ROOT / "space-group-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "space-groups"
 
-STYLE_SRC = "space-group-correspondence.css?v=nontrivial-atlas"
-SCRIPT_SRC = "space-group-correspondence.js?v=polar-atlas"
+STYLE_SRC = "space-group-correspondence.css?v=compact-presentations"
+SCRIPT_SRC = "space-group-correspondence.js?v=compact-tabs"
 SOURCE_SHA256 = "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330"
 UCL_SPACE_GROUP_BASE = "http://img.chem.ucl.ac.uk/sgp/large"
 UCL_PAGE_BY_NUMBER = {
@@ -276,6 +279,309 @@ def _lift_operations(render: dict[str, Any]) -> list[dict[str, Any]]:
     return lifted
 
 
+def _translation_with_height(operation: str, phase: str) -> str:
+    """Rewrite a planar translation as a translation in the lifted cell."""
+
+    match = re.fullmatch(r"([^ ]+)-cell translation (along|opposite) ([ab])", operation)
+    if match:
+        amount, direction, axis = match.groups()
+        planar = f"{amount} {axis}" if direction == "along" else f"−{amount} {axis}"
+    elif operation.startswith("Translation by "):
+        planar = operation.removeprefix("Translation by ")
+    elif operation == "Pure time step":
+        planar = ""
+    else:
+        raise ValueError(f"unrecognized planar translation description: {operation}")
+    pieces = [piece for piece in (planar, "" if phase == "0" else f"{phase} c") if piece]
+    return "Translation by " + " + ".join(pieces)
+
+
+def _lifted_generator_description(generator: dict[str, str]) -> str:
+    """Describe one finite-cell generator after phase becomes height."""
+
+    kind = generator["kind"]
+    operation = generator["operation"]
+    phase = generator["phase"]
+    height = "" if phase == "0" else f"; height shift {phase}"
+    if kind == "translation":
+        return _translation_with_height(operation, phase)
+    if kind == "rotation":
+        turn = operation.replace(" rotation", "")
+        motion = "rotation" if phase == "0" else "screw rotation"
+        return f"{turn} {motion} about the lift axis{height}"
+    if kind in {"mirror", "glide"}:
+        direction = ""
+        match = re.search(r"axis direction ([0-9]+)$", operation)
+        if match:
+            direction = f", direction {match.group(1)}"
+        motion = "Mirror reflection" if kind == "mirror" and phase == "0" else "Glide reflection"
+        return f"{motion} in a vertical plane{direction}{height}"
+    raise ValueError(f"unsupported lifted generator kind: {kind}")
+
+
+Affine3 = tuple[tuple[tuple[int, int, int], ...], tuple[Fraction, Fraction, Fraction]]
+R3_ID = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
+AFFINE3_ID: Affine3 = (R3_ID, (Fraction(0), Fraction(0), Fraction(0)))
+
+
+def _matrix3_multiply(
+    left: tuple[tuple[int, int, int], ...],
+    right: tuple[tuple[int, int, int], ...],
+) -> tuple[tuple[int, int, int], ...]:
+    return tuple(
+        tuple(sum(left[row][inner] * right[inner][column] for inner in range(3)) for column in range(3))
+        for row in range(3)
+    )
+
+
+def _matrix3_vector(
+    matrix: tuple[tuple[int, int, int], ...],
+    vector: tuple[Fraction, Fraction, Fraction],
+) -> tuple[Fraction, Fraction, Fraction]:
+    return tuple(
+        sum((Fraction(matrix[row][column]) * vector[column] for column in range(3)), Fraction(0))
+        for row in range(3)
+    )  # type: ignore[return-value]
+
+
+def _compose_affine3(left: Affine3, right: Affine3) -> Affine3:
+    left_matrix, left_translation = left
+    right_matrix, right_translation = right
+    moved = _matrix3_vector(left_matrix, right_translation)
+    return (
+        _matrix3_multiply(left_matrix, right_matrix),
+        tuple(moved[index] + left_translation[index] for index in range(3)),
+    )  # type: ignore[return-value]
+
+
+def _inverse_affine3(value: Affine3) -> Affine3:
+    matrix, translation = value
+    a, b = matrix[0][0], matrix[0][1]
+    c, d = matrix[1][0], matrix[1][1]
+    determinant = a * d - b * c
+    if determinant not in {-1, 1} or matrix[2] != (0, 0, 1):
+        raise ValueError(f"unsupported lifted matrix: {matrix!r}")
+    inverse = (
+        (determinant * d, -determinant * b, 0),
+        (-determinant * c, determinant * a, 0),
+        (0, 0, 1),
+    )
+    moved = _matrix3_vector(inverse, translation)
+    return inverse, tuple(-coordinate for coordinate in moved)  # type: ignore[return-value]
+
+
+def _lifted_affine(operation: dict[str, Any]) -> Affine3:
+    matrix = clockwork.matrix(operation)
+    return (
+        (
+            (matrix[0][0], matrix[0][1], 0),
+            (matrix[1][0], matrix[1][1], 0),
+            (0, 0, 1),
+        ),
+        (
+            clockwork.exact_fraction(operation["v"][0]),
+            clockwork.exact_fraction(operation["v"][1]),
+            clockwork.exact_fraction(operation["tau"]),
+        ),
+    )
+
+
+def _presentation_seed_operations(source_record: dict[str, Any]) -> list[dict[str, Any]]:
+    identity = (
+        clockwork.M_ID,
+        (Fraction(0), Fraction(0)),
+        1,
+        Fraction(0),
+    )
+    operations: list[dict[str, Any]] = []
+    source_by_key: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for source_index, operation in enumerate(source_record["render"]["ops"]):
+        key = clockwork.op_key(operation)
+        if key == identity:
+            continue
+        matrix = clockwork.matrix(operation)
+        translation = tuple(clockwork.exact_fraction(x) for x in operation["v"])
+        determinant = clockwork.det2(matrix)
+        if matrix == clockwork.M_ID:
+            kind = "translation"
+        elif determinant == 1:
+            kind = "rotation"
+        else:
+            square_translation = (
+                translation[0] + matrix[0][0] * translation[0] + matrix[0][1] * translation[1],
+                translation[1] + matrix[1][0] * translation[0] + matrix[1][1] * translation[1],
+            )
+            kind = "mirror" if square_translation == (0, 0) else "glide"
+        operations.append(
+            {
+                "source_index": source_index,
+                "key": key,
+                "matrix": matrix,
+                "translation": translation,
+                "phase_fraction": clockwork.exact_fraction(operation["tau"]),
+                "kind": kind,
+            }
+        )
+        source_by_key[key] = operation
+    all_keys = {identity, *(operation["key"] for operation in operations)}
+    seeds = clockwork._minimal_operation_generators(operations, all_keys)
+    return [source_by_key[seed] for seed in seeds]
+
+
+def _word_power(word: tuple[str, ...], exponent: int) -> tuple[str, ...]:
+    return word * exponent
+
+
+def _quotient_relators(template: str) -> list[tuple[str, tuple[str, ...], str, tuple[str, ...]]]:
+    power = lambda name, exponent: (f"{name}{_superscript(exponent)}", (name,) * exponent, "1", ())
+    commute = lambda left, right: (left + right, (left, right), right + left, (right, left))
+    if template == "cyclic_2_x_4":
+        return [power("A", 2), power("B", 4), commute("A", "B")]
+    if template == "cyclic_2_x_dihedral_4":
+        return [
+            power("A", 2), power("B", 2), power("C", 2),
+            ("(BC)⁴", _word_power(("B", "C"), 4), "1", ()),
+            commute("A", "B"), commute("A", "C"),
+        ]
+    if template.startswith("cyclic_"):
+        return [power("A", int(template.removeprefix("cyclic_")))]
+    if template.startswith("elementary_2_"):
+        count = int(template.rsplit("_", 1)[1])
+        names = [chr(ord("A") + index) for index in range(count)]
+        return [power(name, 2) for name in names] + [
+            commute(names[left], names[right])
+            for left in range(count)
+            for right in range(left + 1, count)
+        ]
+    if template == "exceptional_16":
+        return [
+            power("A", 2), power("B", 4),
+            ("(AB)⁴", _word_power(("A", "B"), 4), "1", ()),
+            ("AB²", ("A", "B", "B"), "B²A", ("B", "B", "A")),
+        ]
+    if template in {"dihedral_4_reflections", "dihedral_3", "dihedral_6"}:
+        order = {"dihedral_4_reflections": 4, "dihedral_3": 3, "dihedral_6": 6}[template]
+        return [
+            power("A", 2), power("B", 2),
+            (f"(AB){_superscript(order)}", _word_power(("A", "B"), order), "1", ()),
+        ]
+    if template == "dihedral_4_rotation":
+        return [
+            power("A", 2), power("B", 4),
+            ("(AB)²", _word_power(("A", "B"), 2), "1", ()),
+        ]
+    if template == "elementary_3_2":
+        return [power("A", 3), power("B", 3), commute("A", "B")]
+    if template == "exceptional_18":
+        return [
+            power("A", 2), power("B", 3),
+            ("B(ABA)", ("B", "A", "B", "A"), "(ABA)B", ("A", "B", "A", "B")),
+        ]
+    raise ValueError(f"unsupported quotient presentation template: {template}")
+
+
+def _superscript(value: int) -> str:
+    table = str.maketrans("-0123456789", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹")
+    return str(value).translate(table)
+
+
+def _translation_word(vector: tuple[int, int, int]) -> str:
+    terms = []
+    for name, exponent in zip(("a", "b", "c"), vector):
+        if exponent == 0:
+            continue
+        terms.append(name if exponent == 1 else name + _superscript(exponent))
+    return "".join(terms) or "1"
+
+
+def _word_affine(word: tuple[str, ...], generators: dict[str, Affine3]) -> Affine3:
+    result = AFFINE3_ID
+    for name in word:
+        result = _compose_affine3(result, generators[name])
+    return result
+
+
+def _lifted_relator(
+    left_label: str,
+    left_word: tuple[str, ...],
+    right_label: str,
+    right_word: tuple[str, ...],
+    generators: dict[str, Affine3],
+) -> str:
+    left = _word_affine(left_word, generators)
+    right = _word_affine(right_word, generators)
+    difference = _compose_affine3(left, _inverse_affine3(right))
+    if difference[0] != R3_ID or any(value.denominator != 1 for value in difference[1]):
+        raise ValueError(f"cell relation does not lift to a lattice translation: {left_label}={right_label}")
+    translation = tuple(int(value) for value in difference[1])
+    factor = _translation_word(translation)
+    lifted_right = factor if right_label == "1" else (right_label if factor == "1" else f"{factor} · {right_label}")
+    return f"{left_label} = {lifted_right}"
+
+
+def _space_group_presentation(source_record: dict[str, Any]) -> dict[str, Any] | None:
+    """Compute a complete extension presentation relative to the displayed cell."""
+
+    if source_record["clock_order"] == 1:
+        return None
+    source = source_record.get("cell_action_presentation")
+    if not source or source.get("relations") in {None, "omitted"}:
+        raise ValueError(f"missing source presentation for {source_record['id']}")
+    seed_operations = _presentation_seed_operations(source_record)
+    point_generators = source["generators"]
+    if len(seed_operations) != len(point_generators):
+        raise ValueError(f"presentation seed mismatch in {source_record['id']}")
+    names = [generator["name"] for generator in point_generators]
+    if names != [chr(ord("A") + index) for index in range(len(names))]:
+        raise ValueError(f"nonconsecutive presentation generators in {source_record['id']}")
+
+    affine_generators = {
+        name: _lifted_affine(operation)
+        for name, operation in zip(names, seed_operations)
+    }
+    displayed_generators = [
+        {"name": "a", "kind": "translation", "operation": "Unit translation along a"},
+        {"name": "b", "kind": "translation", "operation": "Unit translation along b"},
+        {"name": "c", "kind": "translation", "operation": "Unit translation along the lift axis"},
+        *[
+            {
+                "name": generator["name"],
+                "kind": generator["kind"],
+                "operation": _lifted_generator_description(generator),
+            }
+            for generator in point_generators
+        ],
+    ]
+
+    lattice_relations = ["ab = ba", "ac = ca", "bc = cb"]
+    action_relations: list[str] = []
+    for name in names:
+        matrix = affine_generators[name][0]
+        images = []
+        for axis_index in range(3):
+            image = tuple(matrix[row][axis_index] for row in range(3))
+            images.append(_translation_word(image))
+        action_relations.append(
+            f"{name}(a,b,c){name}⁻¹ = ({','.join(images)})"
+        )
+    cell_relations = [
+        _lifted_relator(left_label, left_word, right_label, right_word, affine_generators)
+        for left_label, left_word, right_label, right_word in _quotient_relators(source["template"])
+    ]
+    return {
+        "relative_to": "displayed unit cell",
+        "quotient": "G/Λ₃",
+        "quotient_order": source["quotient_order"],
+        "template": source["template"],
+        "generators": displayed_generators,
+        "relations": {
+            "lattice": lattice_relations,
+            "action": action_relations,
+            "cell": cell_relations,
+        },
+    }
+
+
 def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
     raw = source_path.read_bytes()
     digest = hashlib.sha256(raw).hexdigest()
@@ -316,6 +622,8 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
             "cyclic_group": source_record["cyclic_group"],
             "phase_residues": source_record["phase_residues"],
             "phase_profile": source_record["phase_profile"],
+            "cell_action_presentation": source_record["cell_action_presentation"],
+            "space_group_presentation": _space_group_presentation(source_record),
             "catalog_url": source_record["catalog_url"],
             "image": source_record["image"],
             "image_alt": source_record["image_alt"],
@@ -359,7 +667,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
 
     return {
         "meta": {
-            "schema_version": 1,
+            "schema_version": 2,
             "title": "Cyclic colourings and polar space groups",
             "source": "data/clockwork-coloring-correspondence.json",
             "source_sha256": digest,
@@ -408,6 +716,9 @@ def validate_payload(payload: dict[str, Any]) -> None:
             raise ValueError(f"unknown wallpaper family for {group['id']}")
         if group["lift_operations"] != _lift_operations(group["render"]):
             raise ValueError(f"incorrect lifted operations for {group['id']}")
+        expected_presentation = _space_group_presentation(group)
+        if group.get("space_group_presentation") != expected_presentation:
+            raise ValueError(f"incorrect space-group presentation for {group['id']}")
         numbers.append(actual["it_number"])
     if len(set(numbers)) != 68 or set(numbers) != POLAR_IT_NUMBERS:
         raise ValueError("space-group numbers are not the 68 polar types")
@@ -611,84 +922,56 @@ def _hm_html(symbol: str) -> str:
     return re.sub(r"_([0-9]+)", r"<sub>\1</sub>", escaped)
 
 
-def _phase_legend(record: dict[str, Any]) -> str:
-    return "\n".join(
-        "<li>"
-        f"<span class=\"swatch\" style=\"--swatch: {escape(residue['color'])}\"></span>"
-        f"<span>phase {escape(residue['phase'])} · height {escape(residue['phase'])} of one vertical period</span>"
-        "</li>"
-        for residue in record["phase_residues"]
+def _presentation_html(record: dict[str, Any]) -> str:
+    presentation = record["space_group_presentation"]
+    if not presentation:
+        raise ValueError(f"missing displayed presentation for {record['id']}")
+    rows = "\n".join(
+        "<tr class=\"presentation-generator-row\">"
+        f"<th scope=\"row\"><span class=\"generator-key\">{escape(generator['name'])}</span></th>"
+        f"<td>{escape(generator['operation'])}</td>"
+        "</tr>"
+        for generator in presentation["generators"]
     )
+    relation_lines = "\n".join(
+        f"<span>{escape('; '.join(presentation['relations'][category]))}{' ⟩' if category == 'cell' else ''}</span>"
+        for category in ("lattice", "action", "cell")
+    )
+    names = ", ".join(generator["name"] for generator in presentation["generators"])
+    group_id = escape(record["id"])
+    return f"""
+                <section class="space-group-presentation" aria-labelledby="{group_id}-presentation-title">
+                  <h4 id="{group_id}-presentation-title">Presentation <span>displayed lift-cell coordinates</span></h4>
+                  <table data-space-presentation="{group_id}">
+                    <caption class="visually-hidden">Generators for space group {_hm_html(record['space_group']['hm_short'])}</caption>
+                    <tbody>
+                      {rows}
+                    </tbody>
+                  </table>
+                  <div class="presentation-relations">
+                    <strong>Relations</strong>
+                    <div class="presentation-formula"><span>G = ⟨{escape(names)} |</span>{relation_lines}</div>
+                  </div>
+                </section>"""
 
 
 def _entry_html(record: dict[str, Any], family_ordinal: int, family_total: int) -> str:
     group_id = escape(record["id"])
     space_group = record["space_group"]
-    number = space_group["it_number"]
-    setting = space_group["choice"] or "standard"
     reference_url = escape(space_group["ucl_reference_url"])
+    catalog_url = escape(record["catalog_url"])
     return f"""
           <article class="space-entry" id="{group_id}" data-space-tabpanel>
-            <header class="entry-header">
-              <p class="entry-number">{family_ordinal:02d} / {family_total:02d}</p>
-              <div>
-                <h3><span class="color-type">{escape(record['tos_notation'])}</span><span class="entry-arrow" aria-hidden="true">→</span><span class="space-symbol">{_hm_html(space_group['hm_short'])}</span> <span class="space-number">No. {number}</span><span class="group-id">{group_id}</span></h3>
-                <p class="entry-identity">Forward record <a href="{escape(record['catalog_url'])}">{group_id}</a> · catalog symbol {escape(record['symbol'])}</p>
-              </div>
-              <div class="entry-badges" aria-label="Group classification">
-                <span class="it-badge">IT {number}</span>
-                <span>{escape(record['cyclic_group'])}</span>
-                <span>{escape(space_group['point_group'])}</span>
-              </div>
-            </header>
-
-            <div class="visual-sequence" aria-label="Colouring followed by its height lift">
-              <figure class="colour-plate">
-                <span class="visual-label">1 · coloured wallpaper group</span>
+            <div class="entry-pair">
+              <figure class="colouring-card">
                 <img src="{escape(record['image'])}" alt="{escape(record['image_alt'])}" width="720" height="420" loading="lazy" decoding="async">
-                <figcaption>{escape(record['tos_notation'])} over wallpaper group {escape(record['parent']['hm'])}</figcaption>
+                <figcaption><a class="colouring-catalog-link" href="{catalog_url}" target="_blank" rel="noopener">Open colouring in catalog</a></figcaption>
               </figure>
-              <span class="lift-arrow" aria-hidden="true">→</span>
-              <figure class="space-group-viewer" data-space-viewer data-group-id="{group_id}">
-                <span class="visual-label">2 · corresponding space group</span>
-                <div class="space-stage" data-state="static">
-                  <img data-space-static src="{escape(space_group['image'])}" alt="{escape(space_group['image_alt'])}" width="720" height="480" loading="lazy" decoding="async">
-                  <canvas class="space-canvas" data-space-canvas width="720" height="480">Interactive unit-cell view of space group No. {number} {escape(space_group['hm_short'])}.</canvas>
-                </div>
-                <div class="space-controls" data-space-controls>
-                  <button class="space-toggle" type="button" data-space-toggle aria-pressed="false" disabled><span data-space-toggle-label>Rotate</span></button>
-                  <label class="visually-hidden" for="rotation-{group_id}">View angle</label>
-                  <input class="space-slider" id="rotation-{group_id}" data-space-slider type="range" min="0" max="1" step="0.001" value="0.095" disabled>
-                  <output class="space-output" data-space-output for="rotation-{group_id}">34°</output>
-                </div>
-                <figcaption>
-                  <span>No. {number} {_hm_html(space_group['hm_short'])} · colour only traces inherited height</span>
-                  <span class="space-reference">
-                    <a class="space-reference-link" href="{reference_url}" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL diagram and tables</a>
-                    <span class="space-reference-preview" role="tooltip">
-                      <img src="{escape(space_group['reference_preview_image'])}" alt="" width="720" height="480" loading="lazy" decoding="async">
-                      <span>Local project preview · open the UCL reference for its original diagram and tables</span>
-                    </span>
-                  </span>
-                </figcaption>
-              </figure>
-            </div>
-
-            <div class="correspondence-copy">
-              <section class="lift-copy" aria-labelledby="{group_id}-construction">
-                <h4 id="{group_id}-construction">Height lift</h4>
-                <p>Each planar operation is lifted by <code>(x, y, z) ↦ (M(x, y) + v, z + τ)</code>. Thus a colour increment <em>j</em> modulo {record['clock_order']} becomes a translation of <em>j</em>/{record['clock_order']} along the new height direction. This constructed coordinate is shown before normalization to the listed conventional crystallographic setting.</p>
-                <p>The plate repeats the colour palette to make those height levels easy to follow. Colour is not additional structure in the resulting ordinary 3D space group.</p>
+              <section class="space-group-summary" aria-labelledby="{group_id}-space-name">
+                <h3 id="{group_id}-space-name" class="space-group-name">{_hm_html(space_group['hm_short'])}</h3>
+                <a class="ucl-link" href="{reference_url}" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+{_presentation_html(record)}
               </section>
-              <dl class="group-data" aria-label="Crystallographic identification">
-                <div><dt>International Tables</dt><dd>No. {number}</dd></div>
-                <div><dt>HM short</dt><dd>{_hm_html(space_group['hm_short'])}</dd></div>
-                <div><dt>HM full</dt><dd>{_hm_html(space_group['hm_full'])}</dd></div>
-                <div><dt>Hall</dt><dd><code>{escape(space_group['hall'])}</code></dd></div>
-                <div><dt>Choice</dt><dd>{escape(setting)}</dd></div>
-                <div><dt>Crystal class</dt><dd>{escape(space_group['crystal_system'])} · {escape(space_group['point_group'])}</dd></div>
-                <div><dt>External reference</dt><dd><a href="{reference_url}" target="_blank" rel="noopener">UCL space-group page</a></dd></div>
-              </dl>
             </div>
           </article>"""
 
@@ -700,11 +983,9 @@ def _trivial_product_html(record: dict[str, Any]) -> str:
         f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
         f'aria-label="Trivial one-colour product {group_id} over wallpaper group '
         f'{escape(record["parent"]["hm"])}">'
-        "<p><strong>Trivial one-colour product · C<sub>1</sub>.</strong> "
-        f'The inherited lift {escape(record["tos_notation"])} ({group_id}) gives '
-        f'No. {space_group["it_number"]} {_hm_html(space_group["hm_short"])}. '
-        "It remains in the complete 68-record audit data, but is omitted from "
-        "the directory, tabs, and paired visualizations above.</p>"
+        "<p><strong>Trivial one-colour product.</strong> "
+        f'<a href="{escape(space_group["ucl_reference_url"])}" target="_blank" rel="noopener">'
+        f'{_hm_html(space_group["hm_short"])}</a></p>'
         "</aside>"
     )
 
@@ -718,9 +999,7 @@ def _family_html(
     tabs = "\n".join(
         f'<a id="tab-{escape(record["id"])}" href="#{escape(record["id"])}" '
         f'class="space-tab" data-space-tab data-panel-id="{escape(record["id"])}">'
-        f'<span class="tab-signature">{escape(record["tos_notation"])}</span>'
-        f'<span class="tab-meta">No. {record["space_group"]["it_number"]} '
-        f'{_hm_html(record["space_group"]["hm_short"])}</span></a>'
+        f'<span class="tab-space-name">{_hm_html(record["space_group"]["hm_short"])}</span></a>'
         for record in rows
     )
     entries = "\n".join(
@@ -765,9 +1044,7 @@ def _family_html(
 def _directory_family_html(base: str, rows: list[dict[str, Any]]) -> str:
     group_links = "\n".join(
         f'<a class="directory-group" href="#{escape(record["id"])}" data-directory-group="{escape(record["id"])}">'
-        f'<span class="directory-signature">{escape(record["tos_notation"])}</span>'
-        f'<span class="directory-space-group">No. {record["space_group"]["it_number"]} {_hm_html(record["space_group"]["hm_short"])}</span>'
-        f'<span class="directory-group-id">{escape(record["id"])}</span></a>'
+        f'<span class="directory-space-group">{_hm_html(record["space_group"]["hm_short"])}</span></a>'
         for record in rows
     )
     return f"""
@@ -809,7 +1086,7 @@ def page_html(payload: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Paired visualizations of the 51 nontrivial cyclic wallpaper colourings and their polar space groups, with all 68 types retained in the audit data.">
+  <meta name="description" content="The 51 nontrivial cyclic wallpaper colourings paired with classical polar space-group names and exact relative-cell presentations.">
   <meta name="theme-color" content="#ffffff">
   <title>Cyclic colourings and polar space groups</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -837,7 +1114,7 @@ def page_html(payload: dict[str, Any]) -> str:
     <section class="space-hero" aria-labelledby="page-title">
       <p class="section-number">51 displayed multi-colour lifts · 14 contributing families · 68-type audit</p>
       <h1 id="page-title">Cyclic colourings <span aria-hidden="true">↔</span> polar space groups</h1>
-      <p class="lead">Treat the cyclic colour coordinate as height. This atlas gives paired visualizations for the 51 lifts with more than one colour; the 17 inherited C1 products appear only as grey audit notes.</p>
+      <p class="lead">Treat the cyclic colour coordinate as height. This atlas pairs 51 multi-colour plates with the classical names and presentations of their lifts; the 17 inherited C1 products appear only as grey audit notes.</p>
       <aside class="answer-card" role="note" aria-label="Scope of the correspondence">
         <p class="answer-title">Is it one-to-one?</p>
         <p class="answer-copy"><strong>For this selected subset, yes.</strong> {caveat}</p>
@@ -859,7 +1136,7 @@ def page_html(payload: dict[str, Any]) -> str:
     <nav class="atlas-directory" aria-labelledby="directory-title">
       <p class="section-number">51 displayed groups · 14 contributing families</p>
       <h2 id="directory-title">More-than-one-colour lifts</h2>
-      <p class="directory-legend">Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a card to open its paired plane and space visualizations; all 17 wallpaper-family sections remain in the atlas below.</p>
+      <p class="directory-legend">Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a name to open its colouring plate and space-group presentation; all 17 wallpaper-family sections remain below.</p>
       <div class="directory-families">
 {directory}
       </div>
@@ -872,9 +1149,8 @@ def page_html(payload: dict[str, Any]) -> str:
     <section class="sources" aria-labelledby="provenance-title">
       <p class="section-number">Audit trail</p>
       <h2 id="provenance-title">Pinned identifications and reproducible plates</h2>
-      <p>The <a href="data/space-group-correspondence.json">complete 68-record JSON</a> stores every 3×3 lifted operation alongside International Tables numbers, short and full Hermann–Mauguin symbols, Hall symbols, and setting choices. This page gives full paired visualizations to the 51 records with N &gt; 1 and keeps the 17 C1 products as compact grey audit notes. The identifications are pinned from spglib 2.6.0 rather than recomputed in the browser. The source colouring data has SHA-256 <code>{digest}</code>.</p>
-      <p>The 3D hues are a visual bridge back to cyclic phase; after lifting, the ordinary space group itself has no colour label. All static plates remain visible without JavaScript. When available, the local controller replaces them with a rotatable canvas derived from the same checked-in operations.</p>
-      <p id="ucl-credit">Each displayed 3D group links to Jeremy K. Cockcroft’s <a href="{escape(payload['meta']['external_reference_index'])}" target="_blank" rel="noopener"><cite>A Hypertext Book of Crystallographic Space Group Diagrams and Tables</cite></a> at UCL/Birkbeck College. Hover or keyboard-focus shows a locally generated project plate as a quick preview. The original UCL HTML and GIF are not copied into this public repository because the source’s published licence prohibits Internet distribution of copies.</p>
+      <p>The <a href="data/space-group-correspondence.json">complete 68-record JSON</a> stores every lifted operation, pinned Hermann–Mauguin identification, and exact presentation relative to the displayed lift cell. This page displays the 51 records with N &gt; 1 and keeps the 17 C1 products as compact grey audit notes. The identifications are pinned from spglib 2.6.0. The source colouring data has SHA-256 <code>{digest}</code>.</p>
+      <p id="ucl-credit">Each displayed group links to Jeremy K. Cockcroft’s <a href="{escape(payload['meta']['external_reference_index'])}" target="_blank" rel="noopener"><cite>A Hypertext Book of Crystallographic Space Group Diagrams and Tables</cite></a> at UCL/Birkbeck College. The original UCL HTML and GIF are not copied into this repository.</p>
       <ul>
         <li><a href="https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html">IUCr: <cite>Crystallographic shelves: space-group hierarchy explained</cite></a> identifies the ten polar crystal classes and their 68 space-group types.</li>
         <li><a href="https://doi.org/10.1107/S0365110X57001966">A. L. Mackay, <cite>Extensions of space-group theory</cite></a> develops the colour/extra-coordinate relationship.</li>

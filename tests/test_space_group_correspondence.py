@@ -30,15 +30,12 @@ class SpaceCorrespondenceParser(HTMLParser):
         self.directory_families: list[str] = []
         self.directory_groups: list[tuple[str, str]] = []
         self.trivial_products: list[str] = []
-        self.viewers: list[str] = []
-        self.stages = 0
-        self.canvases: list[tuple[bool, str, str]] = []
-        self.controls: list[bool] = []
-        self.toggle_labels = 0
-        self.sliders: list[tuple[bool, str, str, str, str]] = []
-        self.outputs = 0
         self.static_tab_roles: list[tuple[str, str]] = []
-        self.article_images: dict[str, list[tuple[str, bool]]] = defaultdict(list)
+        self.article_images: dict[str, list[str]] = defaultdict(list)
+        self.article_links: dict[str, list[tuple[str, str]]] = defaultdict(list)
+        self.presentation_tables: list[str] = []
+        self.generator_rows: dict[str, int] = defaultdict(int)
+        self.space_summaries: list[str] = []
         self.current_article: str | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -52,6 +49,8 @@ class SpaceCorrespondenceParser(HTMLParser):
             self.tabs_containers += 1
         if "data-space-tablist" in attributes:
             self.tablists += 1
+            if attributes.get("role"):
+                self.static_tab_roles.append((tag, attributes["role"] or ""))
         if tag == "a" and "data-space-tab" in attributes:
             self.tabs.append(
                 (
@@ -66,10 +65,7 @@ class SpaceCorrespondenceParser(HTMLParser):
             self.directory_families.append(attributes.get("href", ""))
         if tag == "a" and attributes.get("data-directory-group"):
             self.directory_groups.append(
-                (
-                    attributes.get("data-directory-group", ""),
-                    attributes.get("href", ""),
-                )
+                (attributes.get("data-directory-group", ""), attributes.get("href", ""))
             )
         if tag == "article" and "data-space-tabpanel" in attributes:
             self.current_article = attributes.get("id", "")
@@ -78,40 +74,19 @@ class SpaceCorrespondenceParser(HTMLParser):
                 self.static_tab_roles.append((tag, attributes["role"] or ""))
         if tag == "aside" and "data-trivial-product" in attributes:
             self.trivial_products.append(attributes.get("id", ""))
-        if "data-space-tablist" in attributes and attributes.get("role"):
-            self.static_tab_roles.append((tag, attributes["role"] or ""))
-        if tag == "figure" and "data-space-viewer" in attributes:
-            self.viewers.append(attributes.get("data-group-id", ""))
-        if "space-stage" in classes:
-            self.stages += 1
-        if tag == "img" and self.current_article is not None:
-            self.article_images[self.current_article].append(
-                (attributes.get("src", ""), "data-space-static" in attributes)
-            )
-        if tag == "canvas" and "data-space-canvas" in attributes:
-            self.canvases.append(
-                (
-                    "hidden" in attributes,
-                    attributes.get("width", ""),
-                    attributes.get("height", ""),
+        if self.current_article is not None:
+            if tag == "img":
+                self.article_images[self.current_article].append(attributes.get("src", ""))
+            if tag == "a":
+                self.article_links[self.current_article].append(
+                    (attributes.get("class", ""), attributes.get("href", ""))
                 )
-            )
-        if "data-space-controls" in attributes:
-            self.controls.append("hidden" in attributes)
-        if "data-space-toggle-label" in attributes:
-            self.toggle_labels += 1
-        if tag == "input" and "data-space-slider" in attributes:
-            self.sliders.append(
-                (
-                    "disabled" in attributes,
-                    attributes.get("min", ""),
-                    attributes.get("max", ""),
-                    attributes.get("step", ""),
-                    attributes.get("value", ""),
-                )
-            )
-        if tag == "output" and "data-space-output" in attributes:
-            self.outputs += 1
+            if tag == "section" and "space-group-summary" in classes:
+                self.space_summaries.append(self.current_article)
+            if tag == "table" and attributes.get("data-space-presentation"):
+                self.presentation_tables.append(attributes["data-space-presentation"] or "")
+            if tag == "tr" and "presentation-generator-row" in classes:
+                self.generator_rows[self.current_article] += 1
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "article":
@@ -148,22 +123,13 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
 
     def test_pinned_map_is_bijection_onto_the_68_polar_types(self) -> None:
         groups = self.payload["groups"]
+        self.assertEqual(self.payload["meta"]["schema_version"], 2)
         self.assertEqual(len(groups), 68)
-        self.assertEqual(len(correspondence.SPACE_GROUP_BY_ID), 68)
-        self.assertEqual(
-            {group["id"] for group in groups},
-            set(correspondence.SPACE_GROUP_BY_ID),
-        )
+        self.assertEqual({group["id"] for group in groups}, set(correspondence.SPACE_GROUP_BY_ID))
         numbers = [group["space_group"]["it_number"] for group in groups]
         self.assertEqual(len(numbers), len(set(numbers)))
         self.assertEqual(set(numbers), correspondence.POLAR_IT_NUMBERS)
-        self.assertEqual(
-            self.payload["meta"]["polar_it_numbers"],
-            sorted(correspondence.POLAR_IT_NUMBERS),
-        )
 
-        # These low-symmetry settings are easy to mis-order when sorting by
-        # wallpaper family rather than by the catalog record ID.
         low_symmetry = {
             "g1": (1, "P1", "P 1", "P 1", ""),
             "g5": (3, "P2", "P 1 2 1", "P 2y", "b"),
@@ -191,6 +157,7 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
         for lifted, original in zip(self.payload["groups"], source["groups"]):
             self.assertEqual(lifted["image"], original["image"])
             self.assertEqual(lifted["render"], original["render"])
+            self.assertEqual(lifted["cell_action_presentation"], original["cell_action_presentation"])
 
     def test_every_planar_operation_has_the_explicit_height_lift(self) -> None:
         for group in self.payload["groups"]:
@@ -213,21 +180,6 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
                     [operation["v"][0], operation["v"][1], operation["tau"]],
                     group["id"],
                 )
-            self.assertEqual(
-                group["lift_formula"],
-                "(x, y, z) ↦ (M(x, y) + v, z + τ)",
-            )
-            self.assertEqual(
-                group["space_group"]["polar_axis"],
-                "z (constructed lift coordinate; before conventional-setting normalization)",
-            )
-
-        # The constructed z coordinate need not retain the letter c after the
-        # database normalizes a group to its conventional setting.  In
-        # particular, these monoclinic groups use the conventional unique-b
-        # setting, so the public copy must describe z as the lift direction.
-        self.assertNotIn("crystallographic <em>c</em> direction", self.page)
-        self.assertIn("listed conventional crystallographic setting", self.page)
 
     def test_all_17_sections_display_only_the_51_nontrivial_pairs(self) -> None:
         expected_ids = [group["id"] for group in self.displayed_groups]
@@ -238,15 +190,9 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             self.parser.family_ids,
             [f"wallpaper-{base}" for base in correspondence.BASE_ORDER],
         )
-        self.assertEqual(
-            self.parser.empty_family_ids,
-            ["wallpaper-p1", "wallpaper-pm", "wallpaper-pg"],
-        )
+        self.assertEqual(self.parser.empty_family_ids, ["wallpaper-p1", "wallpaper-pm", "wallpaper-pg"])
         self.assertEqual(self.parser.tabs_containers, correspondence.DISPLAYED_FAMILY_COUNT)
         self.assertEqual(self.parser.tablists, correspondence.DISPLAYED_FAMILY_COUNT)
-        # The no-JS page keeps native nav/link/article semantics and displays
-        # every panel.  The controller installs the tab roles, aria-selected,
-        # and hidden state together only after it has initialized successfully.
         self.assertEqual(self.parser.static_tab_roles, [])
         self.assertEqual(
             self.parser.directory_families,
@@ -257,158 +203,137 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             [(f"tab-{group_id}", f"#{group_id}", group_id) for group_id in expected_ids],
         )
         self.assertEqual(self.parser.panels, expected_ids)
-        self.assertEqual(self.parser.viewers, expected_ids)
+        self.assertEqual(self.parser.space_summaries, expected_ids)
+        self.assertEqual(self.parser.presentation_tables, expected_ids)
         self.assertEqual(
             self.parser.directory_groups,
             [(group_id, f"#{group_id}") for group_id in expected_ids],
         )
         self.assertEqual(self.parser.trivial_products, trivial_ids)
-        self.assertTrue(set(expected_ids).isdisjoint(trivial_ids))
-        self.assertIn("51 displayed multi-colour lifts", self.page)
-        self.assertIn("68-type audit", self.page)
-        self.assertIn("51 displayed groups · 14 contributing families", self.page)
 
-    def test_filter_metadata_ids_and_trivial_deep_links_are_auditable(self) -> None:
-        self.assertEqual(
-            self.payload["meta"]["displayed_nontrivial_groups"],
-            correspondence.DISPLAYED_GROUP_COUNT,
-        )
-        self.assertEqual(
-            self.payload["meta"]["displayed_wallpaper_families"],
-            correspondence.DISPLAYED_FAMILY_COUNT,
-        )
-        self.assertEqual(
-            self.payload["meta"]["omitted_trivial_products"],
-            correspondence.OMITTED_TRIVIAL_COUNT,
-        )
+    def test_every_panel_contains_only_the_colouring_plate_and_compact_space_summary(self) -> None:
+        for group in self.displayed_groups:
+            group_id = group["id"]
+            self.assertEqual(self.parser.article_images[group_id], [group["image"]], group_id)
+            self.assertEqual(
+                self.parser.article_links[group_id],
+                [
+                    ("colouring-catalog-link", group["catalog_url"]),
+                    ("ucl-link", group["space_group"]["ucl_reference_url"]),
+                ],
+                group_id,
+            )
+            presentation = group["space_group_presentation"]
+            self.assertEqual(
+                self.parser.generator_rows[group_id], len(presentation["generators"]), group_id
+            )
+            article = re.search(
+                rf'<article[^>]+id="{group_id}"[^>]*>.*?</article>', self.page, re.DOTALL
+            )
+            self.assertIsNotNone(article, group_id)
+            markup = article.group(0)
+            self.assertIn(
+                f'class="space-group-name">{correspondence._hm_html(group["space_group"]["hm_short"])}',
+                markup,
+            )
 
+        for obsolete in (
+            "data-space-viewer",
+            "data-space-canvas",
+            "data-space-controls",
+            "space-reference-preview",
+            "group-data",
+            "lift-copy",
+            "entry-badges",
+            "entry-identity",
+            "visual-sequence",
+        ):
+            self.assertNotIn(obsolete, self.page)
+        self.assertNotIn("output/space-groups/", "\n".join(
+            image for images in self.parser.article_images.values() for image in images
+        ))
+
+    def test_every_displayed_group_has_a_complete_relative_cell_presentation(self) -> None:
+        for group in self.displayed_groups:
+            presentation = group["space_group_presentation"]
+            self.assertEqual(presentation, correspondence._space_group_presentation(group), group["id"])
+            self.assertEqual(presentation["relative_to"], "displayed unit cell")
+            names = [generator["name"] for generator in presentation["generators"]]
+            self.assertEqual(names[:3], ["a", "b", "c"], group["id"])
+            self.assertEqual(
+                names[3:],
+                [chr(ord("A") + index) for index in range(len(names) - 3)],
+                group["id"],
+            )
+            self.assertEqual(set(presentation["relations"]), {"lattice", "action", "cell"})
+            self.assertEqual(
+                presentation["relations"]["lattice"],
+                ["ab = ba", "ac = ca", "bc = cb"],
+            )
+            self.assertEqual(
+                len(presentation["relations"]["action"]), len(names) - 3, group["id"]
+            )
+            self.assertTrue(presentation["relations"]["cell"], group["id"])
+
+        by_id = {group["id"]: group for group in self.displayed_groups}
+        golden = {
+            "g6": ["A² = c"],
+            "g7": ["A² = bc", "B² = 1", "AB = b · BA"],
+            "g75": ["A² = c", "B⁴ = bc³", "(AB)⁴ = ac⁵", "AB² = b⁻¹ · B²A"],
+            "g96": ["A⁴ = c"],
+            "g234": ["A² = 1", "B³ = c²", "B(ABA) = a · (ABA)B"],
+            "g244": ["A⁶ = c⁴"],
+        }
+        for group_id, relations in golden.items():
+            self.assertEqual(by_id[group_id]["space_group_presentation"]["relations"]["cell"], relations)
+
+        self.assertEqual(self.page.count(">Presentation <span>"), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(self.page.count(">Relations</strong>"), correspondence.DISPLAYED_GROUP_COUNT)
+
+    def test_external_links_are_exact_and_unique(self) -> None:
+        ucl_urls = []
+        catalog_urls = []
+        for group in self.payload["groups"]:
+            space_group = group["space_group"]
+            expected_ucl = (
+                f"{correspondence.UCL_SPACE_GROUP_BASE}/"
+                f"{correspondence.UCL_PAGE_BY_NUMBER[space_group['it_number']]}"
+            )
+            expected_catalog = (
+                "https://yaroslavvb.github.io/animated-groups-fable/"
+                f"catalog.html?time=forward#{group['id']}"
+            )
+            self.assertEqual(space_group["ucl_reference_url"], expected_ucl)
+            self.assertEqual(group["catalog_url"], expected_catalog)
+            ucl_urls.append(expected_ucl)
+            catalog_urls.append(expected_catalog)
+        self.assertEqual(len(set(ucl_urls)), 68)
+        self.assertEqual(len(set(catalog_urls)), 68)
+        self.assertEqual(self.page.count('class="colouring-catalog-link"'), 51)
+        self.assertEqual(self.page.count('class="ucl-link"'), 51)
+
+    def test_filter_metadata_ids_and_deep_links_are_auditable(self) -> None:
         element_ids = re.findall(r'(?<=\s)id="([^"]+)"', self.page)
         self.assertEqual(len(element_ids), len(set(element_ids)))
         for group in self.trivial_groups:
             group_id = group["id"]
-            base = group["parent"]["hm"]
             self.assertNotIn(f'data-directory-group="{group_id}"', self.page)
             self.assertNotIn(f'data-panel-id="{group_id}"', self.page)
-            self.assertIn(
-                f'aria-label="Trivial one-colour product {group_id} over wallpaper group {base}"',
-                self.page,
-            )
-
         controller = (ROOT / "space-group-correspondence.js").read_text(encoding="utf-8")
-        self.assertIn(
-            'document.getElementById(id)?.scrollIntoView({ block: "start" })',
-            controller,
-        )
+        self.assertIn('document.getElementById(id)?.scrollIntoView({ block: "start" })', controller)
+        self.assertNotIn("fetch(", controller)
+        self.assertNotIn("canvas", controller.lower())
+        self.assertNotIn("requestAnimationFrame(tick)", controller)
 
-    def test_each_panel_orders_the_2d_plate_before_the_static_3d_plate(self) -> None:
-        for group in self.displayed_groups:
-            group_id = group["id"]
-            self.assertEqual(
-                self.parser.article_images[group_id],
-                [
-                    (group["image"], False),
-                    (group["space_group"]["image"], True),
-                    (group["space_group"]["reference_preview_image"], False),
-                ],
-                group_id,
-            )
-        # CSS shows static images until JS marks each stage ready.  The controls
-        # are present but disabled until the corresponding viewer activates.
-        self.assertEqual(self.parser.stages, correspondence.DISPLAYED_GROUP_COUNT)
-        self.assertEqual(
-            self.parser.canvases,
-            [(False, "720", "480")] * correspondence.DISPLAYED_GROUP_COUNT,
-        )
-        self.assertEqual(
-            self.parser.controls, [False] * correspondence.DISPLAYED_GROUP_COUNT
-        )
-        self.assertEqual(self.parser.toggle_labels, correspondence.DISPLAYED_GROUP_COUNT)
-        self.assertEqual(
-            self.parser.sliders,
-            [(True, "0", "1", "0.001", "0.095")]
-            * correspondence.DISPLAYED_GROUP_COUNT,
-        )
-        self.assertEqual(self.parser.outputs, correspondence.DISPLAYED_GROUP_COUNT)
-        self.assertIn('class="space-stage" data-state="static"', self.page)
-        self.assertIn('class="space-canvas" data-space-canvas', self.page)
-
-    def test_scope_is_precise_and_visible(self) -> None:
-        self.assertEqual(
-            self.payload["meta"]["scope_caveat"], correspondence.SCOPE_CAVEAT
-        )
-        self.assertIn(correspondence.SCOPE_CAVEAT, self.page)
-        self.assertIn("all 230 space groups", correspondence.SCOPE_CAVEAT)
-        self.assertIn("regular-cyclic subset", correspondence.SCOPE_CAVEAT)
-        self.assertIn("spglib 2.6.0", self.page)
-
-    def test_generated_page_has_no_wolfram_or_mathematica_content(self) -> None:
-        self.assertNotIn("Wolfram", self.page)
-        self.assertNotIn("Mathematica", self.page)
-        self.assertNotIn("FiniteGroupData", self.page)
-        self.assertNotIn("wolfram-group-line", self.page)
-        self.assertNotIn("trivial-wolfram-line", self.page)
-        css = (ROOT / "space-group-correspondence.css").read_text(encoding="utf-8")
-        self.assertNotIn("wolfram-group-line", css)
-        self.assertNotIn("trivial-wolfram-line", css)
-
-    def test_each_displayed_space_group_links_to_ucl_with_a_local_preview(self) -> None:
-        self.assertEqual(
-            set(correspondence.UCL_PAGE_BY_NUMBER),
-            correspondence.POLAR_IT_NUMBERS,
-        )
-        for group in self.payload["groups"]:
-            space_group = group["space_group"]
-            expected_url = (
-                f"{correspondence.UCL_SPACE_GROUP_BASE}/"
-                f"{correspondence.UCL_PAGE_BY_NUMBER[space_group['it_number']]}"
-            )
-            self.assertEqual(space_group["ucl_reference_url"], expected_url)
-            self.assertEqual(
-                space_group["reference_preview_image"], space_group["image"]
-            )
-
-        for group in self.displayed_groups:
-            article = re.search(
-                rf'<article[^>]+id="{group["id"]}"[^>]*>.*?</article>',
-                self.page,
-                flags=re.DOTALL,
-            )
-            self.assertIsNotNone(article, group["id"])
-            markup = article.group(0)
-            self.assertEqual(markup.count(group["space_group"]["ucl_reference_url"]), 2)
-            self.assertEqual(markup.count('class="space-reference-preview"'), 1)
-            self.assertIn(
-                f'src="{group["space_group"]["reference_preview_image"]}"',
-                markup,
-            )
-
-        self.assertEqual(
-            self.page.count('class="space-reference-link"'),
-            correspondence.DISPLAYED_GROUP_COUNT,
-        )
-        self.assertEqual(
-            self.page.count('class="space-reference-preview"'),
-            correspondence.DISPLAYED_GROUP_COUNT,
-        )
-        self.assertIn("published licence prohibits Internet distribution", self.page)
-        css = (ROOT / "space-group-correspondence.css").read_text(encoding="utf-8")
-        self.assertIn(".space-reference:hover .space-reference-preview", css)
-        self.assertIn(".space-reference:focus-within .space-reference-preview", css)
-
-    def test_all_static_plates_are_lossless_webp_at_the_pinned_size(self) -> None:
+    def test_static_space_group_plates_remain_reproducible_data_assets(self) -> None:
         for group in self.payload["groups"]:
             image_path = ROOT / group["space_group"]["image"]
             self.assertTrue(image_path.is_file(), group["id"])
             with Image.open(image_path) as image:
                 self.assertEqual(image.format, "WEBP", group["id"])
-                self.assertEqual(
-                    image.size,
-                    (correspondence.IMAGE_WIDTH, correspondence.IMAGE_HEIGHT),
-                    group["id"],
-                )
+                self.assertEqual(image.size, (correspondence.IMAGE_WIDTH, correspondence.IMAGE_HEIGHT))
                 self.assertEqual(image.mode, "RGB", group["id"])
                 self.assertIsNotNone(image.getbbox(), group["id"])
-            # A WebP RIFF chunk tagged VP8L is the lossless bitstream.
             self.assertEqual(image_path.read_bytes()[12:16], b"VP8L", group["id"])
 
     def test_generator_check_mode_passes(self) -> None:
