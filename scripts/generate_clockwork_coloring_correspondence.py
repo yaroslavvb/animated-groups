@@ -49,7 +49,7 @@ MANIFEST = ROOT / "data" / "color-forward-manifest.json"
 DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=directory-block-layout"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=cell-action-presentations"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -966,6 +966,12 @@ def _time_shift_description(value: Fraction) -> str:
     return "none" if value == 0 else f"+{fraction_label(value)} period"
 
 
+def _presentation_operation_description(value: str) -> str:
+    """Remove internal centre/axis labels that are not drawn in the atlas."""
+
+    return value.split(" about centre ", 1)[0].split(" (axis direction ", 1)[0]
+
+
 def _operation_closure(seeds: Iterable[tuple[Any, ...]]) -> set[tuple[Any, ...]]:
     identity = (M_ID, (Fraction(0), Fraction(0)), 1, Fraction(0))
     seed_list = list(seeds)
@@ -1008,6 +1014,42 @@ def _minimal_operation_generators(
             if _operation_closure(seeds) == all_keys:
                 return seeds
     raise ValueError("could not find a compact generator set for the cell action")
+
+
+CELL_PRESENTATION_TEMPLATES = (
+    ({"g6", "g9"}, "cyclic_2", "A² = 1", 2),
+    ({"g7", "g55", "g57", "g59", "g60", "g61", "g62", "g63"},
+     "elementary_2_2", "A² = B² = 1; AB = BA", 4),
+    ({"g64", "g65", "g66", "g67", "g69", "g70", "g71", "g72", "g73"},
+     "elementary_2_3", "A² = B² = C² = 1; AB = BA, AC = CA, BC = CB", 8),
+    ({"g74"}, "elementary_2_4",
+     "A² = B² = C² = D² = 1; AB = BA, AC = CA, AD = DA, BC = CB, BD = DB, CD = DC",
+     16),
+    ({"g75", "g137", "g139"}, "exceptional_16",
+     "A² = B⁴ = (AB)⁴ = 1; AB² = B²A", 16),
+    ({"g95", "g96", "g97"}, "cyclic_4", "A⁴ = 1", 4),
+    ({"g98", "g99"}, "cyclic_2_x_4", "A² = B⁴ = 1; AB = BA", 8),
+    ({"g129", "g130", "g131"}, "dihedral_4_reflections",
+     "A² = B² = (AB)⁴ = 1", 8),
+    ({"g133", "g134", "g135"}, "dihedral_4_rotation",
+     "A² = B⁴ = (AB)² = 1", 8),
+    ({"g136", "g138"}, "cyclic_2_x_dihedral_4",
+     "A² = B² = C² = (BC)⁴ = 1; AB = BA, AC = CA", 16),
+    ({"g225", "g226"}, "cyclic_3", "A³ = 1", 3),
+    ({"g227"}, "elementary_3_2", "A³ = B³ = 1; AB = BA", 9),
+    ({"g231", "g233"}, "dihedral_3", "A² = B² = (AB)³ = 1", 6),
+    ({"g234", "g235"}, "exceptional_18",
+     "A² = B³ = 1; B(ABA) = (ABA)B", 18),
+    ({"g244", "g245", "g246", "g247", "g248"}, "cyclic_6", "A⁶ = 1", 6),
+    ({"g269", "g270", "g271"}, "dihedral_6", "A² = B² = (AB)⁶ = 1", 12),
+)
+
+
+def _cell_presentation_template(group_id: str) -> tuple[str, str, int]:
+    for group_ids, template, relations, quotient_order in CELL_PRESENTATION_TEMPLATES:
+        if group_id in group_ids:
+            return template, relations, quotient_order
+    raise ValueError(f"missing cell-action presentation template for {group_id}")
 
 
 def geometric_operations(
@@ -1202,6 +1244,154 @@ def geometric_operations(
     return selected
 
 
+def cell_action_presentation(
+    group_id: str,
+    render: dict[str, Any],
+    base: str,
+) -> dict[str, Any]:
+    """Present the finite action after full-cell translations are collapsed."""
+
+    operations = geometric_operations(render, base)
+    generators = [
+        {
+            "name": row["generator"],
+            "kind": row["kind"],
+            "operation": _presentation_operation_description(row["operation"]),
+            "phase": row["phase"],
+            "time_shift": row["time_shift"],
+        }
+        for row in operations
+        if row["role"] == "generator"
+    ]
+    for kind in ("mirror", "glide"):
+        matching = [generator for generator in generators if generator["kind"] == kind]
+        if len(matching) > 1:
+            noun = "Mirror reflection" if kind == "mirror" else "Glide reflection"
+            for index, generator in enumerate(matching, 1):
+                generator["operation"] = f"{noun} in axis direction {index}"
+    # The 17 direct-product rows are retained in the data but omitted from the
+    # page.  Their cell presentations are not needed for this nontrivial atlas.
+    if group_id not in {
+        group for group_ids, _template, _relations, _order in CELL_PRESENTATION_TEMPLATES
+        for group in group_ids
+    }:
+        return {
+            "quotient": "G/Λ",
+            "quotient_order": len(render["ops"]),
+            "template": "omitted_trivial_time_action",
+            "generators": generators,
+            "relations": "omitted",
+        }
+    template, relations, quotient_order = _cell_presentation_template(group_id)
+    if quotient_order != len(render["ops"]):
+        raise ValueError(f"cell-action presentation order differs in {group_id}")
+    expected_names = [chr(ord("A") + index) for index in range(len(generators))]
+    if [generator["name"] for generator in generators] != expected_names:
+        raise ValueError(f"cell-action generator names are not consecutive in {group_id}")
+    _validate_cell_presentation_relations(group_id, template, render, base)
+    return {
+        "quotient": "G/Λ",
+        "quotient_order": quotient_order,
+        "template": template,
+        "generators": generators,
+        "relations": relations,
+    }
+
+
+def _key_power(value: tuple[Any, ...], exponent: int) -> tuple[Any, ...]:
+    result = (M_ID, (Fraction(0), Fraction(0)), 1, Fraction(0))
+    for _ in range(exponent):
+        result = compose_keys(result, value)
+    return result
+
+
+def _validate_cell_presentation_relations(
+    group_id: str,
+    template: str,
+    render: dict[str, Any],
+    base: str,
+) -> None:
+    identity = (M_ID, (Fraction(0), Fraction(0)), 1, Fraction(0))
+    operations = []
+    for source_index, operation in enumerate(render["ops"]):
+        value = matrix(operation)
+        translation = tuple(exact_fraction(x) for x in operation["v"])
+        phase = exact_fraction(operation["tau"])
+        key = op_key(operation)
+        if key == identity:
+            continue
+        determinant = det2(value)
+        if value == M_ID:
+            kind = "translation"
+        elif determinant == 1:
+            kind = "rotation"
+        else:
+            square_translation = (
+                translation[0] + value[0][0] * translation[0] + value[0][1] * translation[1],
+                translation[1] + value[1][0] * translation[0] + value[1][1] * translation[1],
+            )
+            kind = "mirror" if square_translation == (0, 0) else "glide"
+        operations.append(
+            {
+                "source_index": source_index,
+                "key": key,
+                "matrix": value,
+                "translation": translation,
+                "phase_fraction": phase,
+                "kind": kind,
+            }
+        )
+    all_keys = {identity, *(operation["key"] for operation in operations)}
+    generators = _minimal_operation_generators(operations, all_keys)
+
+    def product(*values: tuple[Any, ...]) -> tuple[Any, ...]:
+        result = identity
+        for value in values:
+            result = compose_keys(result, value)
+        return result
+
+    def closes(value: tuple[Any, ...], exponent: int) -> bool:
+        return _key_power(value, exponent) == identity
+
+    def commute(left: tuple[Any, ...], right: tuple[Any, ...]) -> bool:
+        return compose_keys(left, right) == compose_keys(right, left)
+
+    valid = False
+    cyclic_orders = {"cyclic_2": 2, "cyclic_3": 3, "cyclic_4": 4, "cyclic_6": 6}
+    if template in cyclic_orders:
+        valid = len(generators) == 1 and closes(generators[0], cyclic_orders[template])
+    elif template in {"elementary_2_2", "elementary_2_3", "elementary_2_4"}:
+        count = int(template[-1])
+        valid = (
+            len(generators) == count
+            and all(closes(generator, 2) for generator in generators)
+            and all(commute(left, right) for left, right in combinations(generators, 2))
+        )
+    elif template == "exceptional_16" and len(generators) == 2:
+        a, b = generators
+        valid = closes(a, 2) and closes(b, 4) and closes(product(a, b), 4) and commute(a, _key_power(b, 2))
+    elif template in {"cyclic_2_x_4", "elementary_3_2"} and len(generators) == 2:
+        a, b = generators
+        orders = (2, 4) if template == "cyclic_2_x_4" else (3, 3)
+        valid = closes(a, orders[0]) and closes(b, orders[1]) and commute(a, b)
+    elif template in {"dihedral_4_reflections", "dihedral_3", "dihedral_6"} and len(generators) == 2:
+        a, b = generators
+        order = {"dihedral_4_reflections": 4, "dihedral_3": 3, "dihedral_6": 6}[template]
+        valid = closes(a, 2) and closes(b, 2) and closes(product(a, b), order)
+    elif template == "dihedral_4_rotation" and len(generators) == 2:
+        a, b = generators
+        valid = closes(a, 2) and closes(b, 4) and closes(product(a, b), 2)
+    elif template == "cyclic_2_x_dihedral_4" and len(generators) == 3:
+        a, b, c = generators
+        valid = all(closes(generator, 2) for generator in generators) and closes(product(b, c), 4) and commute(a, b) and commute(a, c)
+    elif template == "exceptional_18" and len(generators) == 2:
+        a, b = generators
+        aba = product(a, b, a)
+        valid = closes(a, 2) and closes(b, 3) and commute(b, aba)
+    if not valid:
+        raise ValueError(f"cell-action relations fail in {group_id}")
+
+
 def op_key(operation: dict[str, Any]) -> tuple[Any, ...]:
     return (
         matrix(operation),
@@ -1387,7 +1577,9 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "cyclic_group": f"C_{order}",
             "phase_residues": residues,
             "phase_profile": phase_profile(group["render"]["ops"]),
-            "geometric_operations": geometric_operations(group["render"], group["base"]),
+            "cell_action_presentation": cell_action_presentation(
+                group_id, group["render"], group["base"]
+            ),
             "clockwork_description": clockwork_description(group, order),
             "coloring_description": coloring_description(group, order, kernel_base),
             "book_audit": book_audit(
@@ -1406,7 +1598,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 5,
+            "schema_version": 6,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -1473,9 +1665,10 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
             group_id, order, notation
         )
         record["phase_profile"] = phase_profile(record["render"]["ops"])
-        record["geometric_operations"] = geometric_operations(
-            record["render"], record["parent"]["hm"]
+        record["cell_action_presentation"] = cell_action_presentation(
+            group_id, record["render"], record["parent"]["hm"]
         )
+        record.pop("geometric_operations", None)
         record["clockwork_description"] = clockwork_description(source_like, order)
         record["coloring_description"] = coloring_description(
             source_like, order, record["kernel"]["hm"]
@@ -1487,7 +1680,7 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
         )
 
     meta = payload["meta"]
-    meta["schema_version"] = 5
+    meta["schema_version"] = 6
     meta["book_audit_counts"] = EXPECTED_BOOK_AUDIT_COUNTS
     meta["signature_evidence_counts"] = EXPECTED_SIGNATURE_EVIDENCE_COUNTS
     meta["book"]["annotated_excerpt_count"] = len(BOOK_EXCERPTS)
@@ -1497,8 +1690,8 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 5:
-        raise ValueError("correspondence data must use schema version 5")
+    if meta.get("schema_version") != 6:
+        raise ValueError("correspondence data must use schema version 6")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -1603,16 +1796,18 @@ def validate_payload(payload: dict[str, Any]) -> None:
             raise ValueError(f"catalog deep link mismatch in {group_id}")
         if [row["index"] for row in group["phase_residues"]] != list(range(order)):
             raise ValueError(f"phase legend mismatch in {group_id}")
-        expected_operations = geometric_operations(group["render"], group["parent"]["hm"])
-        if group.get("geometric_operations") != expected_operations:
-            raise ValueError(f"geometric operations differ from render data in {group_id}")
+        expected_presentation = cell_action_presentation(
+            group_id, group["render"], group["parent"]["hm"]
+        )
+        if group.get("cell_action_presentation") != expected_presentation:
+            raise ValueError(f"cell-action presentation differs from render data in {group_id}")
         represented_phases = {
             exact_fraction(operation["tau"])
             for operation in group["render"]["ops"]
         }
         operation_phases = {
             Fraction(row["phase"])
-            for row in expected_operations
+            for row in expected_presentation["generators"]
         }
         if not operation_phases.issubset(represented_phases):
             raise ValueError(f"geometric operation phase mismatch in {group_id}")
@@ -1850,30 +2045,27 @@ def _phase_profile(record: dict[str, Any]) -> str:
     return "<ul class=\"phase-profile\">" + "\n".join(rows) + "</ul>"
 
 
-def _geometric_operations_html(record: dict[str, Any]) -> str:
+def _presentation_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
+    presentation = record["cell_action_presentation"]
     rows = []
-    for operation in record["geometric_operations"]:
-        power = int(operation["power"])
-        generator = escape(operation["generator"])
-        generator_html = generator if power == 1 else f"{generator}<sup>{power}</sup>"
+    for generator in presentation["generators"]:
         rows.append(
-            "<tr class=\"geometric-operation-row\">"
-            f"<td><span class=\"generator-key\">{generator_html}</span>"
-            f"<span>{escape(operation['operation'])}</span></td>"
-            f"<td>{escape(operation['time_shift'])}</td>"
+            "<tr class=\"presentation-generator-row\">"
+            f"<th scope=\"row\"><span class=\"generator-key\">{escape(generator['name'])}</span>"
+            f"<span>{escape(generator['operation'])}</span></th>"
+            f"<td>{escape(generator['time_shift'])}</td>"
             "</tr>"
         )
     rows_html = "\n".join(rows)
     return f"""
-              <section class="geometric-operations" aria-labelledby="{group_id}-geometric-operations-title">
-                <h4 id="{group_id}-geometric-operations-title">Geometric generators and their powers</h4>
-                <p>A, B, … form a minimal set for one repeating cell; superscripts mark powers. Full-cell translations and products of different generators are omitted.</p>
-                <table data-geometric-operations="{group_id}">
-                  <caption class="visually-hidden">Spatial operations and time shifts for {group_id}</caption>
-                  <thead><tr><th scope="col">Geometric operation</th><th scope="col">Time shift</th></tr></thead>
+              <section class="group-presentation" aria-labelledby="{group_id}-presentation-title">
+                <h4 id="{group_id}-presentation-title">Presentation</h4>
+                <table data-presentation="{group_id}">
+                  <caption class="visually-hidden">Minimal geometric generators for the cell action of {group_id}</caption>
                   <tbody>{rows_html}</tbody>
                 </table>
+                <p class="presentation-relations"><strong>Relations</strong> <span>G/Λ = ⟨{escape(', '.join(generator['name'] for generator in presentation['generators']))} | {escape(presentation['relations'])}⟩</span></p>
               </section>"""
 
 
@@ -2093,7 +2285,7 @@ def _entry_html(
                 <div><dt>Colour-fixing subgroup K</dt><dd>{orbifold_html(kernel['orbifold'])}</dd></div>
                 <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
               </dl>
-              {_geometric_operations_html(record)}
+              {_presentation_html(record)}
               {_notation_crosswalk_html(record)}
               <p class="phase-description">{orbifold_html(record['clockwork_description'])}</p>
               <p class="coloring-description">{orbifold_html(record['coloring_description'])}</p>

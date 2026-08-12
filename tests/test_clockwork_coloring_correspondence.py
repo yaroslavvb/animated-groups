@@ -79,8 +79,8 @@ class CorrespondenceParser(HTMLParser):
         self.buttons: list[tuple[bool, str, str | None]] = []
         self.sliders: list[tuple[bool, str, str, str | None]] = []
         self.scripts: list[tuple[str, str]] = []
-        self.geometric_tables: list[str] = []
-        self.geometric_row_count = 0
+        self.presentation_tables: list[str] = []
+        self.presentation_generator_count = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
@@ -163,12 +163,12 @@ class CorrespondenceParser(HTMLParser):
             self.scripts.append(
                 (attributes.get("src", ""), attributes.get("type", ""))
             )
-        if tag == "table" and attributes.get("data-geometric-operations"):
-            self.geometric_tables.append(
-                attributes.get("data-geometric-operations", "")
+        if tag == "table" and attributes.get("data-presentation"):
+            self.presentation_tables.append(
+                attributes.get("data-presentation", "")
             )
-        if tag == "tr" and "geometric-operation-row" in classes:
-            self.geometric_row_count += 1
+        if tag == "tr" and "presentation-generator-row" in classes:
+            self.presentation_generator_count += 1
         if tag == "img" and (attributes.get("src") or "").startswith(
             "output/clockwork-colorings/"
         ):
@@ -412,83 +412,88 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('font-family: "STIX Two Math", "Cambria Math"', css)
         self.assertIn("vertical-align: baseline", css)
 
-    def test_every_example_has_exact_geometric_operations_and_time_shifts(self) -> None:
+    def test_every_example_has_a_minimal_cell_action_presentation(self) -> None:
         display_ids = [group["id"] for group in self.display_groups]
-        self.assertEqual(self.parser.geometric_tables, display_ids)
+        self.assertEqual(self.parser.presentation_tables, display_ids)
         self.assertEqual(
-            self.parser.geometric_row_count,
-            sum(len(group["geometric_operations"]) for group in self.display_groups),
+            self.parser.presentation_generator_count,
+            sum(
+                len(group["cell_action_presentation"]["generators"])
+                for group in self.display_groups
+            ),
         )
+        self.assertEqual(self.parser.presentation_generator_count, 103)
         self.assertEqual(
-            self.page.count('class="geometric-operations"'),
+            self.page.count('class="group-presentation"'),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
-            self.page.count("Geometric generators and their powers"),
+            self.page.count(">Presentation</h4>"),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
-        self.assertNotIn("Phase assignment in the displayed cosets", self.page)
+        self.assertEqual(
+            self.page.count('<strong>Relations</strong>'),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertNotIn("Geometric generators and their powers", self.page)
+        self.assertNotIn("A, B, … form a minimal set", self.page)
+        self.assertNotIn("superscripts mark powers", self.page)
+        self.assertNotIn("about centre", self.page)
+        self.assertNotIn("axis direction A", self.page)
+        self.assertNotIn("axis direction B", self.page)
 
         for group in self.payload["groups"]:
-            expected = correspondence.geometric_operations(
-                group["render"], group["parent"]["hm"]
+            expected = correspondence.cell_action_presentation(
+                group["id"], group["render"], group["parent"]["hm"]
             )
-            self.assertEqual(group["geometric_operations"], expected, group["id"])
-            for operation in expected:
-                phase = correspondence.Fraction(operation["phase"])
+            self.assertEqual(group["cell_action_presentation"], expected, group["id"])
+            self.assertEqual(expected["quotient"], "G/Λ")
+            self.assertEqual(expected["quotient_order"], len(group["render"]["ops"]))
+            for generator in expected["generators"]:
+                phase = correspondence.Fraction(generator["phase"])
                 self.assertEqual(
                     group["clock_order"] % phase.denominator,
                     0,
                     group["id"],
                 )
-                self.assertTrue(operation["operation"])
-                self.assertTrue(operation["time_shift"])
+                self.assertTrue(generator["operation"])
+                self.assertTrue(generator["time_shift"])
 
         by_id = {group["id"]: group for group in self.display_groups}
         self.assertEqual(
-            by_id["g225"]["geometric_operations"],
+            by_id["g244"]["cell_action_presentation"]["generators"],
             [
                 {
-                    "generator": "A",
-                    "power": "1",
-                    "role": "generator",
+                    "name": "A",
                     "kind": "rotation",
-                    "operation": "1/3-turn rotation (120°)",
-                    "phase": "1/3",
-                    "time_shift": "+1/3 period",
-                },
-                {
-                    "generator": "A",
-                    "power": "2",
-                    "role": "power",
-                    "kind": "rotation",
-                    "operation": "2/3-turn rotation (240°)",
+                    "operation": "1/6-turn rotation (60°)",
                     "phase": "2/3",
                     "time_shift": "+2/3 period",
                 },
             ],
         )
         self.assertEqual(
-            [row["time_shift"] for row in by_id["g226"]["geometric_operations"]],
-            ["+2/3 period", "+1/3 period"],
+            by_id["g244"]["cell_action_presentation"]["relations"],
+            "A⁶ = 1",
         )
         self.assertEqual(
-            [row["role"] for row in by_id["g64"]["geometric_operations"]],
-            ["generator", "generator", "generator"],
+            by_id["g74"]["cell_action_presentation"]["relations"],
+            "A² = B² = C² = D² = 1; AB = BA, AC = CA, AD = DA, BC = CB, BD = DB, CD = DC",
         )
         self.assertEqual(
-            {
-                row["phase"]
-                for row in by_id["g75"]["geometric_operations"]
-                if row["kind"] == "glide"
-            },
-            {"1/4", "3/4"},
+            by_id["g75"]["cell_action_presentation"]["relations"],
+            "A² = B⁴ = (AB)⁴ = 1; AB² = B²A",
+        )
+        self.assertEqual(
+            by_id["g234"]["cell_action_presentation"]["relations"],
+            "A² = B³ = 1; B(ABA) = (ABA)B",
         )
 
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
             encoding="utf-8"
         )
-        self.assertIn(".geometric-operations table", css)
+        self.assertIn(".group-presentation table", css)
+        self.assertIn(".presentation-relations", css)
         self.assertIn("font-variant-numeric: tabular-nums", css)
         self.assertIn("@media (max-width: 430px)", css)
         self.assertIn(".directory-families", css)
@@ -497,7 +502,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=directory-block-layout", self.page)
+        self.assertIn("?v=cell-action-presentations", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (

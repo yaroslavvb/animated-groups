@@ -769,48 +769,38 @@ a[data-book-excerpt]::after {
   font-size: 0.92rem;
 }
 
-.geometric-operations {
+.group-presentation {
   margin: 0 0 1.25rem;
 }
 
-.geometric-operations h4 {
+.group-presentation h4 {
   margin: 0 0 0.22rem;
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 700;
 }
 
-.geometric-operations > p {
-  margin: 0 0 0.5rem;
-  color: var(--muted);
-  font-size: 0.7rem;
-  line-height: 1.4;
-}
-
-.geometric-operations table {
+.group-presentation table {
   width: 100%;
   border-collapse: collapse;
   border-block: 1px solid var(--line);
   font-size: 0.76rem;
 }
 
-.geometric-operations th,
-.geometric-operations td {
+.group-presentation th,
+.group-presentation td {
   padding: 0.34rem 0.42rem;
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
 }
 
-.geometric-operations th {
-  color: var(--muted);
-  font-size: 0.68rem;
-  font-weight: 650;
-  letter-spacing: 0.025em;
+.group-presentation th {
+  color: var(--text);
+  font-weight: 500;
 }
 
-.geometric-operations th:last-child,
-.geometric-operations td:last-child {
+.group-presentation td:last-child {
   width: 7.2rem;
   color: var(--text);
   font-variant-numeric: tabular-nums;
@@ -827,14 +817,32 @@ a[data-book-excerpt]::after {
   line-height: 1;
 }
 
-.generator-key sup {
-  font-size: 0.68em;
-  line-height: 0;
-  vertical-align: 0.42em;
+.group-presentation tbody tr:last-child th,
+.group-presentation tbody tr:last-child td {
+  border-bottom: 0;
 }
 
-.geometric-operations tbody tr:last-child td {
-  border-bottom: 0;
+.presentation-relations {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0.5rem 0 0;
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.presentation-relations strong {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.025em;
+}
+
+.presentation-relations span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .orientation-note {
@@ -1165,8 +1173,7 @@ a[data-book-excerpt]::after {
     padding-top: 0;
   }
 
-  .geometric-operations th:last-child,
-  .geometric-operations td:last-child {
+  .group-presentation td:last-child {
     width: 5.6rem;
     white-space: normal;
   }
