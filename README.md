@@ -16,6 +16,13 @@ independent Play/Pause button and a 60-position phase slider.
 The site also includes the [colour-group census](https://yaroslavvb.github.io/animated-groups/future-directions.html)
 and an exact [51-row nontrivial clockwork/coloring correspondence](https://yaroslavvb.github.io/animated-groups/clockwork-coloring-correspondence.html),
 backed by the complete 68-record audit, with Conway orbifold pairs and static coloured-wallpaper plates.
+The companion [cyclic-colouring/polar-space-group atlas](https://yaroslavvb.github.io/animated-groups/space-group-correspondence.html)
+gives paired 2D-to-3D visualizations for the 51 more-than-one-colour lifts and identifies their
+polar space-group types by current Hermann–Mauguin symbols and International numbers. The 17
+one-colour products remain as muted audit notes, while the JSON and generated plate set retain all
+68 records. Every displayed space group links to Jeremy K. Cockcroft's UCL/Birkbeck diagram and
+tables, with a hover/focus preview drawn from the repository's own locally generated plate; the
+copyrighted UCL HTML and GIF files are not redistributed.
 
 Every displayed action admits the pure temporal period
 `U:(x,t) -> (x,t+T)`, which acts trivially on the represented state. The action
@@ -66,7 +73,7 @@ action.  The brackets are a proposed extension—not standard orbifold
 notation—that record its action on periodic time: `τ_a` sends `t` to `t+aT`,
 while `ι_b` sends `t` to `-t+bT`. The precise convention, all eleven
 labels, and their limitations are documented in
-[the orbifold-notation note](docs/orbifold_notation.md).
+[the orbifold, clockwork, and colour notation guide](docs/orbifold_notation.html).
 
 ## Generate everything
 
@@ -251,8 +258,12 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `clockwork-coloring-correspondence.html` / `.css` — the 51-row nontrivial orbifold-pair atlas, backed by 68 audited records, and its responsive styles.
 - `scripts/generate_clockwork_coloring_correspondence.py` — validates the phase characters and regenerates the atlas, JSON, and 68 static plates.
 - `data/clockwork-coloring-correspondence.json` / `output/clockwork-colorings/` — the pinned correspondence records and lossless WebP visualizations.
+- `space-group-correspondence.html` / `.css` / `.js` — the 51-entry paired 2D-to-3D atlas of nontrivial cyclic colourings and polar space groups, with 17 one-colour audit notes.
+- `scripts/generate_space_group_correspondence.py` — validates the 68 International-number mappings and regenerates the atlas, JSON, and 3D plates.
+- `data/space-group-correspondence.json` / `output/space-groups/` — the pinned polar-space-group records and deterministic unit-cell views.
 - `tests/` — group-law, motif-equivariance, and GIF-loop regression tests.
-- `docs/orbifold_notation.md` — proposed phase decoration of spatial Conway symbols.
+- `docs/orbifold_notation.html` — guide to spatial orbifolds, clockwork phase marks, and colour notation.
+- `docs/orbifold-notation.css` — responsive styles for the notation guide.
 - `docs/non_product_examples.md` — presentations and decomposition arguments.
 - `docs/systematic_catalog.md` — bounded scope, equivalence convention, and catalog tiers.
 
