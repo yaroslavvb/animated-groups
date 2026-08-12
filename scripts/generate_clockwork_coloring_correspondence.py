@@ -51,7 +51,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=concise-catalog"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=hover-tooltips"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -2237,14 +2237,14 @@ def _plane_group_name_html(hm: str) -> str:
 
 
 def _term_help_html(label: str) -> str:
-    """Render a hoverable and keyboard/touch-operable category definition."""
+    """Render a non-latching hover definition."""
 
     help_text = TERM_HELP[label]
     return (
-        '<details class="term-help">'
-        f'<summary>{escape(label)}</summary>'
-        f'<span class="term-help-copy">{escape(help_text)}</span>'
-        '</details>'
+        f'<span class="term-help" aria-label="{escape(label)}: {escape(help_text)}">'
+        f'<span class="term-help-label" aria-hidden="true">{escape(label)}</span>'
+        f'<span class="term-help-copy" aria-hidden="true">{escape(help_text)}</span>'
+        '</span>'
     )
 
 

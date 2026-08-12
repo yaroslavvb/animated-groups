@@ -343,7 +343,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
-            self.page.count("<summary>Chaim source</summary>"),
+            self.page.count('<span class="term-help-label" aria-hidden="true">Chaim source</span>'),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
 
@@ -409,7 +409,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             {group["id"] for group in self.payload["groups"]},
         )
         self.assertEqual(
-            self.page.count("<summary>Conway fibrifold notation</summary>"),
+            self.page.count('<span class="term-help-label" aria-hidden="true">Conway fibrifold notation</span>'),
             68,
         )
         self.assertEqual(
@@ -438,7 +438,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page,
         )
 
-    def test_category_help_is_hoverable_focusable_and_complete(self) -> None:
+    def test_category_help_is_hover_only_non_latching_and_complete(self) -> None:
         mate_count = sum(
             bool(group["inverse_clock_mate"]) for group in self.display_groups
         )
@@ -450,27 +450,31 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             else:
                 expected = correspondence.DISPLAYED_GROUP_COUNT
             self.assertEqual(
-                self.page.count(f"<summary>{escape(label)}</summary>"),
+                self.page.count(
+                    f'<span class="term-help-label" aria-hidden="true">{escape(label)}</span>'
+                ),
                 expected,
                 label,
             )
             self.assertEqual(
                 self.page.count(
-                    f'<span class="term-help-copy">{escape(help_text)}</span>'
+                    f'<span class="term-help-copy" aria-hidden="true">{escape(help_text)}</span>'
                 ),
                 expected,
                 label,
             )
 
-        self.assertNotIn('class="term-help" title=', self.page)
+        self.assertNotIn('<details class="term-help">', self.page)
+        self.assertNotIn("<summary>", self.page)
+        self.assertNotIn(" tabindex=", self.page)
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
             encoding="utf-8"
         )
         self.assertIn(".term-help:hover .term-help-copy", css)
-        self.assertIn(".term-help:focus-within .term-help-copy", css)
-        self.assertIn(".term-help[open] .term-help-copy", css)
-        self.assertIn("@media (hover: none)", css)
-        self.assertIn(".term-help summary:focus-visible", css)
+        self.assertNotIn(".term-help:focus-within", css)
+        self.assertNotIn(".term-help[open]", css)
+        self.assertNotIn("@media (hover: none)", css)
+        self.assertIn("pointer-events: none", css)
 
     def test_tos_notation_and_clock_orders_are_complete(self) -> None:
         groups = self.payload["groups"]
@@ -683,7 +687,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=concise-catalog", self.page)
+        self.assertIn("?v=hover-tooltips", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (

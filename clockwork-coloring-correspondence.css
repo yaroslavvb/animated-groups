@@ -536,20 +536,16 @@ nav a[aria-current="page"] {
   font-weight: 550;
 }
 
-.term-help summary {
+.term-help-label {
   position: relative;
+  display: inline-block;
   width: fit-content;
   padding-right: 0.72rem;
-  list-style: none;
   border-bottom: 1px dotted currentColor;
   cursor: help;
 }
 
-.term-help summary::-webkit-details-marker {
-  display: none;
-}
-
-.term-help summary::after {
+.term-help-label::after {
   position: absolute;
   right: 0.12rem;
   bottom: 0;
@@ -557,12 +553,6 @@ nav a[aria-current="page"] {
   color: var(--accent);
   font-size: 0.82em;
   font-weight: 750;
-}
-
-.term-help summary:focus-visible {
-  border-radius: 2px;
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
 }
 
 .term-help-copy {
@@ -581,11 +571,10 @@ nav a[aria-current="page"] {
   font-size: 0.72rem;
   font-weight: 450;
   line-height: 1.42;
+  pointer-events: none;
 }
 
-.term-help:hover .term-help-copy,
-.term-help:focus-within .term-help-copy,
-.term-help[open] .term-help-copy {
+.term-help:hover .term-help-copy {
   display: block;
 }
 
@@ -928,19 +917,6 @@ a[data-book-excerpt]::after {
   color: var(--accent);
 }
 
-@media (hover: none) {
-  .term-help:focus-within:not([open]) .term-help-copy {
-    display: none;
-  }
-
-  .term-help[open] .term-help-copy {
-    position: static;
-    width: auto;
-    margin-top: 0.45rem;
-    box-shadow: none;
-  }
-}
-
 @media (max-width: 900px) {
   .entry-grid {
     grid-template-columns: 1fr;
@@ -1034,7 +1010,7 @@ a[data-book-excerpt]::after {
   }
 
   .term-help-copy,
-  .term-help summary::after {
+  .term-help-label::after {
     display: none !important;
   }
 }
