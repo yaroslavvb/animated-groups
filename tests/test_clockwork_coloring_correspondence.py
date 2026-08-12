@@ -496,7 +496,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("flex-wrap: wrap", css)
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
-        self.assertIn("?v=geometric-operations-directory", self.page)
+        self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
+        self.assertIn("?v=directory-block-layout", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (

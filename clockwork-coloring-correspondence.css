@@ -15,6 +15,11 @@ nav a[aria-current="page"] {
 }
 
 .directory {
+  /* Reset the shared header-nav flex treatment: this semantic navigation is
+     the page's full-width visual directory, not a row of header links. */
+  display: block;
+  color: var(--text);
+  font-size: 1rem;
   padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(2.4rem, 5vw, 4rem);
 }
 
