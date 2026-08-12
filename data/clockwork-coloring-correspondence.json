@@ -1,6 +1,6 @@
 {
   "meta": {
-    "schema_version": 4,
+    "schema_version": 5,
     "title": "Clockwork/coloring correspondence",
     "source_catalog_url": "https://yaroslavvb.github.io/animated-groups-fable/data/catalog.json",
     "source_catalog_sha256": "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0",
@@ -148,7 +148,8 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": []
     },
     {
       "ordinal": 2,
@@ -273,7 +274,18 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 3,
@@ -395,7 +407,18 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 4,
@@ -561,7 +584,27 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 6 equivalent generator signatures under the same colour type 2222/2222. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 6
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "1/2-cell translation along b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 5,
@@ -686,7 +729,18 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 6,
@@ -808,7 +862,18 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 7,
@@ -975,7 +1040,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 8,
@@ -1142,7 +1227,36 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "glide",
+          "operation": "Glide reflection",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "glide",
+          "operation": "Parallel glide reflection 2",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 9,
@@ -1309,7 +1423,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 10,
@@ -1473,7 +1607,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 11,
@@ -1640,7 +1794,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 12,
@@ -1804,7 +1978,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 13,
@@ -1971,7 +2165,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "glide",
+          "operation": "Glide reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 14,
@@ -2135,7 +2349,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "glide",
+          "operation": "Glide reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 15,
@@ -2301,7 +2535,27 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type *2222/**. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 16,
@@ -2466,7 +2720,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 17,
@@ -2631,7 +2905,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 18,
@@ -2797,7 +3091,27 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 22×/××. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "glide",
+          "operation": "Glide reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 19,
@@ -3042,7 +3356,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 4 equivalent generator signatures under the same colour type *2222/*2222. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 4
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "1/2-cell translation along b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 20,
@@ -3287,7 +3630,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 4 equivalent generator signatures under the same colour type *2222/22*. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 4
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "1/2-cell translation along b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 21,
@@ -3532,7 +3904,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 22*/22*. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "1/2-cell translation along b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 22,
@@ -3777,7 +4178,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 22*/22×. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "1/2-cell translation along b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 23,
@@ -4022,7 +4452,36 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 24,
@@ -4264,7 +4723,36 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 25,
@@ -4508,7 +4996,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 2*22/*×. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 26,
@@ -4752,7 +5269,36 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 27,
@@ -4996,7 +5542,36 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 28,
@@ -5241,7 +5816,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 2*22/22*. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 29,
@@ -5631,7 +6235,45 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 4 equivalent generator signatures under the same colour type *2222/2*22. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 4
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "1/2-cell translation along b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "1/2-cell translation along a",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "D",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 30,
@@ -6056,7 +6698,45 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C4 extension",
         "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "glide",
+          "operation": "Glide reflection (axis direction A)",
+          "phase": "3/4",
+          "time_shift": "+3/4 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "translation",
+          "operation": "1/2-cell translation along b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "glide",
+          "operation": "Parallel glide reflection 2 (axis direction A)",
+          "phase": "1/4",
+          "time_shift": "+1/4 period"
+        }
+      ]
     },
     {
       "ordinal": 31,
@@ -6223,7 +6903,36 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 32,
@@ -6387,7 +7096,36 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 33,
@@ -6588,7 +7326,36 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C4 extension",
         "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°)",
+          "phase": "1/4",
+          "time_shift": "+1/4 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°)",
+          "phase": "3/4",
+          "time_shift": "+3/4 period"
+        }
+      ]
     },
     {
       "ordinal": 34,
@@ -6789,7 +7556,36 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C4 extension",
         "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°)",
+          "phase": "3/4",
+          "time_shift": "+3/4 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°)",
+          "phase": "1/4",
+          "time_shift": "+1/4 period"
+        }
+      ]
     },
     {
       "ordinal": 35,
@@ -7034,7 +7830,45 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type 442/442. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 36,
@@ -7314,7 +8148,45 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C4 extension",
         "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre E",
+          "phase": "3/4",
+          "time_shift": "+3/4 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre B",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre B",
+          "phase": "1/4",
+          "time_shift": "+1/4 period"
+        }
+      ]
     },
     {
       "ordinal": 37,
@@ -7559,7 +8431,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 38,
@@ -7802,7 +8694,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 39,
@@ -8045,7 +8957,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 40,
@@ -8287,7 +9219,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 41,
@@ -8532,7 +9484,45 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre B",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre C",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 42,
@@ -8775,7 +9765,45 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre B",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre C",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 43,
@@ -9018,7 +10046,45 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre B",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre C",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 44,
@@ -9260,7 +10326,45 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre B",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre C",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 45,
@@ -9656,7 +10760,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type *442/*442. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 46,
@@ -10089,7 +11222,45 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C4 extension",
         "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre E",
+          "phase": "3/4",
+          "time_shift": "+3/4 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre B",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre B",
+          "phase": "1/4",
+          "time_shift": "+1/4 period"
+        }
+      ]
     },
     {
       "ordinal": 47,
@@ -10485,7 +11656,36 @@
         "label": "book-normalized representative",
         "summary": "Table 11.1 groups 2 equivalent generator signatures under the same colour type *442/4*2. The page uses the first printed short signature as a stable representative; the G/K type, not this choice of generators, is the invariant correspondence.",
         "variant_count": 2
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/2 a + 1/2 b",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "C",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 48,
@@ -10918,7 +12118,45 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C4 extension",
         "summary": "The book does not enumerate composite C4 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/4-turn rotation (90°) about centre E",
+          "phase": "1/4",
+          "time_shift": "+1/4 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°) about centre B",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "3/4-turn rotation (270°) about centre B",
+          "phase": "3/4",
+          "time_shift": "+3/4 period"
+        }
+      ]
     },
     {
       "ordinal": 49,
@@ -11061,7 +12299,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 50,
@@ -11207,7 +12465,27 @@
         "status": "exact-printed",
         "label": "exact Table 12.1 short signature",
         "summary": "Table 12.1 prints this order-only short signature for the cited type."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        }
+      ]
     },
     {
       "ordinal": 51,
@@ -11353,7 +12631,27 @@
         "status": "exact-printed",
         "label": "exact Table 12.1 short signature",
         "summary": "Table 12.1 prints this order-only short signature for the cited type."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        }
+      ]
     },
     {
       "ordinal": 52,
@@ -11615,7 +12913,45 @@
         "status": "exact-printed",
         "label": "exact Table 12.1 short signature",
         "summary": "Table 12.1 prints this order-only short signature for the cited type."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "translation",
+          "operation": "Translation by 1/3 a − 1/3 b",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "translation",
+          "operation": "Translation by −1/3 a + 1/3 b",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°) about centre A",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 53,
@@ -11818,7 +13154,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 54,
@@ -12018,7 +13374,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 55,
@@ -12221,7 +13597,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 56,
@@ -12421,7 +13817,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 57,
@@ -12873,7 +14289,36 @@
         "status": "book-internal-discrepancy",
         "label": "signature and kernel split across book rows",
         "summary": "No single book row contains both the displayed order-only signature and the computed kernel *333. Page 158 supports the short signature but gives kernel ◦; Table 13.1 supports the 3*3³/*333 type but prints a differently positioned full cycle label. The page therefore states the synthesis explicitly instead of calling it a direct book signature."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°) about centre D",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°) about centre D",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        }
+      ]
     },
     {
       "ordinal": 58,
@@ -13346,7 +14791,36 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C6 extension",
         "summary": "The book does not enumerate composite C6 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°) about centre D",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "B",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°) about centre D",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        }
+      ]
     },
     {
       "ordinal": 59,
@@ -13555,7 +15029,54 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/6-turn rotation (60°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "4",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "5",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "5/6-turn rotation (300°)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 60,
@@ -13784,7 +15305,54 @@
         "status": "book-internal-discrepancy",
         "label": "p. 156 typo corrected by pp. 157 and 164",
         "summary": "The displayed ³6³3¹2 is derived on p. 157 and printed with full permutations in Table 13.1. Table 12.1 instead has the inconsistent ³6²3²2; the official errata does not list that typo."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/6-turn rotation (60°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "4",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "5",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "5/6-turn rotation (300°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        }
+      ]
     },
     {
       "ordinal": 61,
@@ -14013,7 +15581,54 @@
         "status": "book-internal-discrepancy",
         "label": "p. 156 typo corrected by pp. 157 and 164",
         "summary": "The displayed ³6³3¹2 is derived on p. 157 and printed with full permutations in Table 13.1. Table 12.1 instead has the inconsistent ³6²3²2; the official errata does not list that typo."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/6-turn rotation (60°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "4",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "5",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "5/6-turn rotation (300°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        }
+      ]
     },
     {
       "ordinal": 62,
@@ -14219,7 +15834,54 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/6-turn rotation (60°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "A",
+          "power": "4",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "A",
+          "power": "5",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "5/6-turn rotation (300°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 63,
@@ -14473,7 +16135,54 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C6 extension",
         "summary": "The book does not enumerate composite C6 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/6-turn rotation (60°)",
+          "phase": "1/6",
+          "time_shift": "+1/6 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "A",
+          "power": "4",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "5",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "5/6-turn rotation (300°)",
+          "phase": "5/6",
+          "time_shift": "+5/6 period"
+        }
+      ]
     },
     {
       "ordinal": 64,
@@ -14727,7 +16436,54 @@
         "status": "rule-extension",
         "label": "Goodman–Strauss-style C6 extension",
         "summary": "The book does not enumerate composite C6 colourings. This short signature is derived from its rule: replace each generator permutation by its order."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "rotation",
+          "operation": "1/6-turn rotation (60°)",
+          "phase": "5/6",
+          "time_shift": "+5/6 period"
+        },
+        {
+          "generator": "A",
+          "power": "2",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "1/3-turn rotation (120°)",
+          "phase": "2/3",
+          "time_shift": "+2/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "3",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "Half-turn rotation (180°)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "A",
+          "power": "4",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "2/3-turn rotation (240°)",
+          "phase": "1/3",
+          "time_shift": "+1/3 period"
+        },
+        {
+          "generator": "A",
+          "power": "5",
+          "role": "power",
+          "kind": "rotation",
+          "operation": "5/6-turn rotation (300°)",
+          "phase": "1/6",
+          "time_shift": "+1/6 period"
+        }
+      ]
     },
     {
       "ordinal": 65,
@@ -15050,7 +16806,27 @@
         "status": "onefold",
         "label": "ordinary onefold plane group",
         "summary": "No nontrivial short colour signature is needed."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     },
     {
       "ordinal": 66,
@@ -15371,7 +17147,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "0",
+          "time_shift": "none"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 67,
@@ -15691,7 +17487,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        }
+      ]
     },
     {
       "ordinal": 68,
@@ -16012,7 +17828,27 @@
         "status": "exact-printed",
         "label": "unique Table 11.1 short signature",
         "summary": "Table 11.1 prints one short generator signature for this colour type, and the page reproduces it."
-      }
+      },
+      "geometric_operations": [
+        {
+          "generator": "A",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction A)",
+          "phase": "1/2",
+          "time_shift": "+1/2 period"
+        },
+        {
+          "generator": "B",
+          "power": "1",
+          "role": "generator",
+          "kind": "mirror",
+          "operation": "Mirror reflection (axis direction B)",
+          "phase": "0",
+          "time_shift": "none"
+        }
+      ]
     }
   ]
 }

@@ -66,6 +66,8 @@ class CorrespondenceParser(HTMLParser):
         self.tabbar_count = 0
         self.tabs: list[tuple[str, str, str]] = []
         self.wallpaper_links: list[str] = []
+        self.directory_groups: list[tuple[str, str]] = []
+        self.directory_palette_spans = 0
         self.catalog_links: list[str] = []
         self.plate_images: list[tuple[str, str, str, str]] = []
         self.book_links: list[tuple[str, str, str]] = []
@@ -77,6 +79,8 @@ class CorrespondenceParser(HTMLParser):
         self.buttons: list[tuple[bool, str, str | None]] = []
         self.sliders: list[tuple[bool, str, str, str | None]] = []
         self.scripts: list[tuple[str, str]] = []
+        self.geometric_tables: list[str] = []
+        self.geometric_row_count = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
@@ -99,8 +103,17 @@ class CorrespondenceParser(HTMLParser):
                     attributes.get("data-panel-id", ""),
                 )
             )
-        if tag == "a" and "wallpaper-chip" in classes:
+        if tag == "a" and "directory-family-link" in classes:
             self.wallpaper_links.append(attributes.get("href", ""))
+        if tag == "a" and attributes.get("data-directory-group"):
+            self.directory_groups.append(
+                (
+                    attributes.get("data-directory-group", ""),
+                    attributes.get("href", ""),
+                )
+            )
+        if tag == "span" and "--directory-colour:" in (attributes.get("style") or ""):
+            self.directory_palette_spans += 1
         if tag == "a" and (attributes.get("href") or "").startswith(
             correspondence.CATALOG_ROOT
         ):
@@ -150,6 +163,12 @@ class CorrespondenceParser(HTMLParser):
             self.scripts.append(
                 (attributes.get("src", ""), attributes.get("type", ""))
             )
+        if tag == "table" and attributes.get("data-geometric-operations"):
+            self.geometric_tables.append(
+                attributes.get("data-geometric-operations", "")
+            )
+        if tag == "tr" and "geometric-operation-row" in classes:
+            self.geometric_row_count += 1
         if tag == "img" and (attributes.get("src") or "").startswith(
             "output/clockwork-colorings/"
         ):
@@ -390,7 +409,92 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn(".orbifold-star {", css)
         self.assertIn('font-family: "STIX Two Math", "Cambria Math"', css)
         self.assertIn("vertical-align: baseline", css)
-        self.assertIn("?v=book-orbifold-stars", self.page)
+
+    def test_every_example_has_exact_geometric_operations_and_time_shifts(self) -> None:
+        display_ids = [group["id"] for group in self.display_groups]
+        self.assertEqual(self.parser.geometric_tables, display_ids)
+        self.assertEqual(
+            self.parser.geometric_row_count,
+            sum(len(group["geometric_operations"]) for group in self.display_groups),
+        )
+        self.assertEqual(
+            self.page.count('class="geometric-operations"'),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count("Geometric generators and their powers"),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertNotIn("Phase assignment in the displayed cosets", self.page)
+
+        for group in self.payload["groups"]:
+            expected = correspondence.geometric_operations(
+                group["render"], group["parent"]["hm"]
+            )
+            self.assertEqual(group["geometric_operations"], expected, group["id"])
+            for operation in expected:
+                phase = correspondence.Fraction(operation["phase"])
+                self.assertEqual(
+                    group["clock_order"] % phase.denominator,
+                    0,
+                    group["id"],
+                )
+                self.assertTrue(operation["operation"])
+                self.assertTrue(operation["time_shift"])
+
+        by_id = {group["id"]: group for group in self.display_groups}
+        self.assertEqual(
+            by_id["g225"]["geometric_operations"],
+            [
+                {
+                    "generator": "A",
+                    "power": "1",
+                    "role": "generator",
+                    "kind": "rotation",
+                    "operation": "1/3-turn rotation (120°)",
+                    "phase": "1/3",
+                    "time_shift": "+1/3 period",
+                },
+                {
+                    "generator": "A",
+                    "power": "2",
+                    "role": "power",
+                    "kind": "rotation",
+                    "operation": "2/3-turn rotation (240°)",
+                    "phase": "2/3",
+                    "time_shift": "+2/3 period",
+                },
+            ],
+        )
+        self.assertEqual(
+            [row["time_shift"] for row in by_id["g226"]["geometric_operations"]],
+            ["+2/3 period", "+1/3 period"],
+        )
+        self.assertEqual(
+            [row["role"] for row in by_id["g64"]["geometric_operations"]],
+            ["generator", "generator", "generator"],
+        )
+        self.assertEqual(
+            {
+                row["phase"]
+                for row in by_id["g75"]["geometric_operations"]
+                if row["kind"] == "glide"
+            },
+            {"1/4", "3/4"},
+        )
+
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".geometric-operations table", css)
+        self.assertIn("font-variant-numeric: tabular-nums", css)
+        self.assertIn("@media (max-width: 430px)", css)
+        self.assertIn(".directory-families", css)
+        self.assertIn(".directory-groups", css)
+        self.assertIn("flex-wrap: wrap", css)
+        self.assertIn("overflow-x: auto", css)
+        self.assertIn(".directory-palette span", css)
+        self.assertIn("?v=geometric-operations-directory", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -421,9 +525,43 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(self.page.count("Static perfect-colouring plate"), 51)
         self.assertEqual(
             self.parser.wallpaper_links,
-            [f"#wallpaper-{base}" for base in correspondence.BASE_ORDER],
+            [
+                f"#wallpaper-{base}"
+                for base in correspondence.BASE_ORDER
+                if any(group["parent"]["hm"] == base for group in self.display_groups)
+            ],
+        )
+        display_ids = [group["id"] for group in self.display_groups]
+        self.assertEqual(
+            self.parser.directory_groups,
+            [(group_id, f"#{group_id}") for group_id in display_ids],
+        )
+        self.assertEqual(len(self.parser.wallpaper_links), 14)
+        self.assertEqual(len(self.parser.directory_groups), 51)
+        self.assertEqual(
+            self.parser.directory_palette_spans,
+            sum(group["clock_order"] for group in self.display_groups),
         )
         directory_start = self.page.index('<nav class="directory"')
+        directory_end = self.page.index('<div class="correspondence-atlas"')
+        directory_html = self.page[directory_start:directory_end]
+        self.assertNotIn('href="#wallpaper-p1"', directory_html)
+        self.assertNotIn('href="#wallpaper-pm"', directory_html)
+        self.assertNotIn('href="#wallpaper-pg"', directory_html)
+        self.assertIn("14 projected orbifold families", directory_html)
+        self.assertIn("Raised numbers in the signature give colour-permutation orders", directory_html)
+        for group in self.display_groups:
+            card_start = directory_html.index(f'data-directory-group="{group["id"]}"')
+            card_end = directory_html.index("</a>", card_start)
+            card = directory_html[card_start:card_end]
+            self.assertIn(
+                correspondence.superscript_html(group["book_color_signature"]),
+                card,
+                group["id"],
+            )
+            self.assertIn(f'class="directory-group-id">{group["id"]}</span>', card)
+            for residue in group["phase_residues"]:
+                self.assertIn(residue["color"], card)
         atlas_start = self.page.index('<div class="correspondence-atlas"')
         first_family = self.page.index('<section class="wallpaper-family')
         self.assertLess(directory_start, atlas_start)

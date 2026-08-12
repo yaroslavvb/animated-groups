@@ -31,6 +31,7 @@ from fractions import Fraction
 from html import escape
 import hashlib
 import io
+from itertools import combinations
 import json
 import math
 from pathlib import Path
@@ -48,7 +49,7 @@ MANIFEST = ROOT / "data" / "color-forward-manifest.json"
 DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=book-orbifold-stars"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=geometric-operations-directory"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=no-catalog-notation"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -310,6 +311,22 @@ EXPECTED_SIGNATURE_EVIDENCE_COUNTS = {
     "rule-extension": 9,
 }
 M_ID = ((1, 0), (0, 1))
+
+# A positive turn is fixed by the catalog's own named rotation generator,
+# rather than inferred from screen coordinates (whose y-axis points down).
+# Every orientation-preserving point operation in these families is a power
+# of the listed matrix.  The remaining represented families only use a
+# half-turn, -I.
+CANONICAL_TURN_BY_BASE = {
+    "p4": (((0, -1), (1, 0)), 4),
+    "p4m": (((0, -1), (1, 0)), 4),
+    "p4g": (((0, -1), (1, 0)), 4),
+    "p3": (((-1, 1), (-1, 0)), 3),
+    "p3m1": (((-1, 1), (-1, 0)), 3),
+    "p31m": (((-1, 1), (-1, 0)), 3),
+    "p6": (((0, 1), (-1, 1)), 6),
+    "p6m": (((0, 1), (-1, 1)), 6),
+}
 
 SUPERSCRIPT = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
 SUPERSCRIPT_TO_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
@@ -861,6 +878,330 @@ def phase_profile(operations: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
     ]
 
 
+def _matrix_power(
+    value: tuple[tuple[int, int], tuple[int, int]],
+    exponent: int,
+) -> tuple[tuple[int, int], tuple[int, int]]:
+    result = M_ID
+    for _ in range(exponent):
+        result = multiply2(result, value)
+    return result
+
+
+def _rotation_turn(
+    base: str,
+    value: tuple[tuple[int, int], tuple[int, int]],
+) -> Fraction:
+    """Return the catalog-oriented fraction of one positive full turn."""
+
+    canonical = CANONICAL_TURN_BY_BASE.get(base)
+    if canonical:
+        generator, order = canonical
+        for exponent in range(1, order):
+            if _matrix_power(generator, exponent) == value:
+                return Fraction(exponent, order)
+    if value == ((-1, 0), (0, -1)):
+        return Fraction(1, 2)
+    raise ValueError(f"cannot name rotation matrix {value!r} in {base}")
+
+
+def _rotation_center(
+    value: tuple[tuple[int, int], tuple[int, int]],
+    translation: tuple[Fraction, Fraction],
+) -> tuple[Fraction, Fraction]:
+    """Solve (I-M)c=v and reduce the unique rotation centre modulo one cell."""
+
+    a00 = 1 - value[0][0]
+    a01 = -value[0][1]
+    a10 = -value[1][0]
+    a11 = 1 - value[1][1]
+    determinant = a00 * a11 - a01 * a10
+    if determinant == 0:
+        raise ValueError(f"rotation has no unique centre: {value!r}")
+    x = (translation[0] * a11 - a01 * translation[1]) / determinant
+    y = (a00 * translation[1] - translation[0] * a10) / determinant
+    return (x % 1, y % 1)
+
+
+def _centered_fraction(value: Fraction) -> Fraction:
+    value %= 1
+    return value - 1 if value > Fraction(1, 2) else value
+
+
+def _translation_description(translation: tuple[Fraction, Fraction]) -> str:
+    x, y = (_centered_fraction(value) for value in translation)
+    terms: list[tuple[Fraction, str]] = [
+        (coefficient, name)
+        for coefficient, name in ((x, "a"), (y, "b"))
+        if coefficient
+    ]
+    if not terms:
+        return "Pure time step"
+    if len(terms) == 1:
+        coefficient, name = terms[0]
+        amount = fraction_label(abs(coefficient))
+        direction = f"along {name}" if coefficient > 0 else f"opposite {name}"
+        return f"{amount}-cell translation {direction}"
+
+    pieces: list[str] = []
+    for index, (coefficient, name) in enumerate(terms):
+        amount = fraction_label(abs(coefficient))
+        term = f"{amount} {name}"
+        if index == 0:
+            pieces.append(("−" if coefficient < 0 else "") + term)
+        else:
+            pieces.append((" − " if coefficient < 0 else " + ") + term)
+    return "Translation by " + "".join(pieces)
+
+
+def _turn_description(turn: Fraction) -> str:
+    degrees = int(turn * 360)
+    if turn == Fraction(1, 2):
+        return "Half-turn rotation (180°)"
+    return f"{fraction_label(turn)}-turn rotation ({degrees}°)"
+
+
+def _time_shift_description(value: Fraction) -> str:
+    value %= 1
+    return "none" if value == 0 else f"+{fraction_label(value)} period"
+
+
+def _operation_closure(seeds: Iterable[tuple[Any, ...]]) -> set[tuple[Any, ...]]:
+    identity = (M_ID, (Fraction(0), Fraction(0)), 1, Fraction(0))
+    seed_list = list(seeds)
+    result = {identity}
+    changed = True
+    while changed:
+        changed = False
+        for known in tuple(result):
+            for seed in seed_list:
+                for product in (compose_keys(known, seed), compose_keys(seed, known)):
+                    if product not in result:
+                        result.add(product)
+                        changed = True
+    return result
+
+
+def _minimal_operation_generators(
+    operations: list[dict[str, Any]],
+    all_keys: set[tuple[Any, ...]],
+) -> tuple[tuple[Any, ...], ...]:
+    """Choose a small, deterministic generating set for the finite cell action."""
+
+    identity = (M_ID, (Fraction(0), Fraction(0)), 1, Fraction(0))
+    if all_keys == {identity}:
+        return ()
+
+    priority = {"translation": 0, "mirror": 1, "rotation": 2, "glide": 3}
+    candidates = sorted(
+        operations,
+        key=lambda operation: (
+            priority[operation["kind"]],
+            operation["matrix"],
+            operation["translation"],
+            operation["phase_fraction"],
+        ),
+    )
+    candidate_keys = [operation["key"] for operation in candidates]
+    for size in range(1, min(6, len(candidate_keys)) + 1):
+        for seeds in combinations(candidate_keys, size):
+            if _operation_closure(seeds) == all_keys:
+                return seeds
+    raise ValueError("could not find a compact generator set for the cell action")
+
+
+def geometric_operations(
+    render: dict[str, Any],
+    base: str,
+) -> list[dict[str, str]]:
+    """Name a compact generating set and each generator's nonidentity powers.
+
+    The finite action is taken modulo the two full-cell translations.  Unlike
+    ``phase_profile``, this keeps inverse rotations, distinct mirror axes, and
+    the exact numerator of every time shift visible without listing every
+    product of different generators.
+    """
+
+    operations = []
+    for source_index, operation in enumerate(render["ops"]):
+        value = matrix(operation)
+        translation = tuple(exact_fraction(x) for x in operation["v"])
+        phase = exact_fraction(operation["tau"])
+        if value == M_ID and translation == (Fraction(0), Fraction(0)) and phase == 0:
+            continue
+        determinant = det2(value)
+        if value == M_ID:
+            kind = "translation"
+        elif determinant == 1:
+            kind = "rotation"
+        elif determinant == -1:
+            square_translation = (
+                translation[0]
+                + value[0][0] * translation[0]
+                + value[0][1] * translation[1],
+                translation[1]
+                + value[1][0] * translation[0]
+                + value[1][1] * translation[1],
+            )
+            kind = "mirror" if square_translation == (0, 0) else "glide"
+        else:
+            raise ValueError(f"unsupported affine operation in {base}: {operation!r}")
+        operations.append(
+            {
+                "source_index": source_index,
+                "key": op_key(operation),
+                "matrix": value,
+                "translation": translation,
+                "phase_fraction": phase,
+                "kind": kind,
+            }
+        )
+
+    rotation_centres = sorted(
+        {
+            _rotation_center(operation["matrix"], operation["translation"])
+            for operation in operations
+            if operation["kind"] == "rotation"
+        }
+    )
+    centre_names = {
+        centre: chr(ord("A") + index)
+        for index, centre in enumerate(rotation_centres)
+    }
+    axis_matrices = sorted(
+        {
+            operation["matrix"]
+            for operation in operations
+            if operation["kind"] in {"mirror", "glide"}
+        }
+    )
+    axis_names = {
+        value: chr(ord("A") + index)
+        for index, value in enumerate(axis_matrices)
+    }
+
+    rows: list[dict[str, str]] = []
+    translations = sorted(
+        (operation for operation in operations if operation["kind"] == "translation"),
+        key=lambda operation: (operation["translation"], operation["phase_fraction"]),
+    )
+    for operation in translations:
+        rows.append(
+            {
+                "kind": "translation",
+                "source_index": operation["source_index"],
+                "operation": _translation_description(operation["translation"]),
+                "phase": fraction_label(operation["phase_fraction"]),
+                "time_shift": _time_shift_description(operation["phase_fraction"]),
+            }
+        )
+
+    rotations = []
+    for operation in operations:
+        if operation["kind"] != "rotation":
+            continue
+        centre = _rotation_center(operation["matrix"], operation["translation"])
+        rotations.append(
+            (
+                _rotation_turn(base, operation["matrix"]),
+                centre,
+                operation,
+            )
+        )
+    for turn, centre, operation in sorted(
+        rotations,
+        key=lambda item: (item[0], item[1], item[2]["phase_fraction"]),
+    ):
+        description = _turn_description(turn)
+        if len(rotation_centres) > 1:
+            description += f" about centre {centre_names[centre]}"
+        rows.append(
+            {
+                "kind": "rotation",
+                "source_index": operation["source_index"],
+                "operation": description,
+                "phase": fraction_label(operation["phase_fraction"]),
+                "time_shift": _time_shift_description(operation["phase_fraction"]),
+            }
+        )
+
+    axis_operations = sorted(
+        (
+            operation
+            for operation in operations
+            if operation["kind"] in {"mirror", "glide"}
+        ),
+        key=lambda operation: (
+            axis_matrices.index(operation["matrix"]),
+            0 if operation["kind"] == "mirror" else 1,
+            operation["translation"],
+            operation["phase_fraction"],
+        ),
+    )
+    axis_groups: dict[tuple[Any, ...], list[dict[str, Any]]] = defaultdict(list)
+    for operation in axis_operations:
+        axis_groups[(operation["matrix"], operation["kind"])].append(operation)
+
+    seen: dict[tuple[Any, ...], int] = defaultdict(int)
+    for operation in axis_operations:
+        group_key = (operation["matrix"], operation["kind"])
+        seen[group_key] += 1
+        ordinal = seen[group_key]
+        count = len(axis_groups[group_key])
+        noun = "Mirror reflection" if operation["kind"] == "mirror" else "Glide reflection"
+        if count > 1:
+            if ordinal > 1:
+                noun = f"Parallel {noun.lower()} {ordinal}"
+        if len(axis_matrices) > 1:
+            noun += f" (axis direction {axis_names[operation['matrix']]})"
+        rows.append(
+            {
+                "kind": operation["kind"],
+                "source_index": operation["source_index"],
+                "operation": noun,
+                "phase": fraction_label(operation["phase_fraction"]),
+                "time_shift": _time_shift_description(operation["phase_fraction"]),
+            }
+        )
+
+    identity = (M_ID, (Fraction(0), Fraction(0)), 1, Fraction(0))
+    all_keys = {identity, *(operation["key"] for operation in operations)}
+    seeds = _minimal_operation_generators(operations, all_keys)
+    row_by_key = {
+        op_key(render["ops"][row["source_index"]]): row
+        for row in rows
+    }
+    selected: list[dict[str, str]] = []
+    selected_keys: set[tuple[Any, ...]] = set()
+    for generator_index, seed in enumerate(seeds):
+        generator_name = chr(ord("A") + generator_index)
+        power_key = identity
+        returned_to_identity = False
+        for exponent in range(1, len(all_keys) + 1):
+            power_key = compose_keys(power_key, seed)
+            if power_key == identity:
+                returned_to_identity = True
+                break
+            if power_key in selected_keys:
+                continue
+            source = row_by_key[power_key]
+            selected_keys.add(power_key)
+            selected.append(
+                {
+                    "generator": generator_name,
+                    "power": str(exponent),
+                    "role": "generator" if exponent == 1 else "power",
+                    "kind": source["kind"],
+                    "operation": source["operation"],
+                    "phase": source["phase"],
+                    "time_shift": source["time_shift"],
+                }
+            )
+        if not returned_to_identity:
+            raise ValueError(f"generator {generator_name} does not close in {base}")
+    return selected
+
+
 def op_key(operation: dict[str, Any]) -> tuple[Any, ...]:
     return (
         matrix(operation),
@@ -1046,6 +1387,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "cyclic_group": f"C_{order}",
             "phase_residues": residues,
             "phase_profile": phase_profile(group["render"]["ops"]),
+            "geometric_operations": geometric_operations(group["render"], group["base"]),
             "clockwork_description": clockwork_description(group, order),
             "coloring_description": coloring_description(group, order, kernel_base),
             "book_audit": book_audit(
@@ -1064,7 +1406,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 4,
+            "schema_version": 5,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -1131,6 +1473,9 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
             group_id, order, notation
         )
         record["phase_profile"] = phase_profile(record["render"]["ops"])
+        record["geometric_operations"] = geometric_operations(
+            record["render"], record["parent"]["hm"]
+        )
         record["clockwork_description"] = clockwork_description(source_like, order)
         record["coloring_description"] = coloring_description(
             source_like, order, record["kernel"]["hm"]
@@ -1142,7 +1487,7 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
         )
 
     meta = payload["meta"]
-    meta["schema_version"] = 4
+    meta["schema_version"] = 5
     meta["book_audit_counts"] = EXPECTED_BOOK_AUDIT_COUNTS
     meta["signature_evidence_counts"] = EXPECTED_SIGNATURE_EVIDENCE_COUNTS
     meta["book"]["annotated_excerpt_count"] = len(BOOK_EXCERPTS)
@@ -1152,8 +1497,8 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 4:
-        raise ValueError("correspondence data must use schema version 4")
+    if meta.get("schema_version") != 5:
+        raise ValueError("correspondence data must use schema version 5")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -1258,6 +1603,25 @@ def validate_payload(payload: dict[str, Any]) -> None:
             raise ValueError(f"catalog deep link mismatch in {group_id}")
         if [row["index"] for row in group["phase_residues"]] != list(range(order)):
             raise ValueError(f"phase legend mismatch in {group_id}")
+        expected_operations = geometric_operations(group["render"], group["parent"]["hm"])
+        if group.get("geometric_operations") != expected_operations:
+            raise ValueError(f"geometric operations differ from render data in {group_id}")
+        represented_phases = {
+            exact_fraction(operation["tau"])
+            for operation in group["render"]["ops"]
+        }
+        operation_phases = {
+            Fraction(row["phase"])
+            for row in expected_operations
+        }
+        if not operation_phases.issubset(represented_phases):
+            raise ValueError(f"geometric operation phase mismatch in {group_id}")
+        if order > 1:
+            generated_order = 1
+            for phase in operation_phases:
+                generated_order = math.lcm(generated_order, phase.denominator)
+            if generated_order != order:
+                raise ValueError(f"geometric operation phases do not generate C_{order} in {group_id}")
         validate_render(group_id, group["render"], order)
 
     for group_id, mate_id in INVERSE_CLOCK_MATE.items():
@@ -1486,6 +1850,33 @@ def _phase_profile(record: dict[str, Any]) -> str:
     return "<ul class=\"phase-profile\">" + "\n".join(rows) + "</ul>"
 
 
+def _geometric_operations_html(record: dict[str, Any]) -> str:
+    group_id = escape(record["id"])
+    rows = []
+    for operation in record["geometric_operations"]:
+        power = int(operation["power"])
+        generator = escape(operation["generator"])
+        generator_html = generator if power == 1 else f"{generator}<sup>{power}</sup>"
+        rows.append(
+            "<tr class=\"geometric-operation-row\">"
+            f"<td><span class=\"generator-key\">{generator_html}</span>"
+            f"<span>{escape(operation['operation'])}</span></td>"
+            f"<td>{escape(operation['time_shift'])}</td>"
+            "</tr>"
+        )
+    rows_html = "\n".join(rows)
+    return f"""
+              <section class="geometric-operations" aria-labelledby="{group_id}-geometric-operations-title">
+                <h4 id="{group_id}-geometric-operations-title">Geometric generators and their powers</h4>
+                <p>A, B, … form a minimal set for one repeating cell; superscripts mark powers. Full-cell translations and products of different generators are omitted.</p>
+                <table data-geometric-operations="{group_id}">
+                  <caption class="visually-hidden">Spatial operations and time shifts for {group_id}</caption>
+                  <thead><tr><th scope="col">Geometric operation</th><th scope="col">Time shift</th></tr></thead>
+                  <tbody>{rows_html}</tbody>
+                </table>
+              </section>"""
+
+
 def _book_link(reference: dict[str, Any], css_class: str) -> str:
     excerpt = BOOK_EXCERPTS[reference["excerpt_key"]]
     viewer_url = "book-excerpt.html?" + urlencode(
@@ -1702,14 +2093,11 @@ def _entry_html(
                 <div><dt>Colour-fixing subgroup K</dt><dd>{orbifold_html(kernel['orbifold'])}</dd></div>
                 <div><dt>Regular quotient</dt><dd>G/K ≅ C<sub>{order}</sub>; [G:K] = {order}</dd></div>
               </dl>
+              {_geometric_operations_html(record)}
               {_notation_crosswalk_html(record)}
               <p class="phase-description">{orbifold_html(record['clockwork_description'])}</p>
               <p class="coloring-description">{orbifold_html(record['coloring_description'])}</p>
               {_book_audit_html(record)}
-              <div class="phase-assignment">
-                <h3>Phase assignment in the displayed cosets</h3>
-                {_phase_profile(record)}
-              </div>
               {mate_note}
               <p class="catalog-action"><a href="{escape(record['catalog_url'])}" aria-label="Open {group_id} in the forward catalog">forward catalog · {group_id} ↗</a></p>
             </div>
@@ -1752,6 +2140,33 @@ def _trivial_product_html(record: dict[str, Any]) -> str:
         "it remains in the 68-record audit data but is not included in the tabs above.</p>"
         "</aside>"
     )
+
+
+def _directory_group_html(record: dict[str, Any]) -> str:
+    group_id = escape(record["id"])
+    signature = superscript_html(record["book_color_signature"])
+    swatches = "".join(
+        f'<span style="--directory-colour: {escape(residue["color"])}"></span>'
+        for residue in record["phase_residues"]
+    )
+    return (
+        f'<a class="directory-group" href="#{group_id}" data-directory-group="{group_id}" '
+        f'aria-label="{escape(record["book_color_signature"])}; '
+        f'{record["clock_order"]} colours; open {group_id}">'
+        f'<span class="directory-signature book-color-signature">{signature}</span>'
+        f'<span class="directory-palette" aria-hidden="true">{swatches}</span>'
+        f'<span class="directory-group-id">{group_id}</span>'
+        '</a>'
+    )
+
+
+def _directory_family_html(base: str, rows: list[dict[str, Any]]) -> str:
+    orbifold = orbifold_html(ORBIFOLD_BY_BASE[base])
+    cards = "\n".join(_directory_group_html(record) for record in rows)
+    return f"""        <section class="directory-family" aria-labelledby="directory-{escape(base)}-title">
+          <h2 id="directory-{escape(base)}-title"><a class="directory-family-link" href="#wallpaper-{escape(base)}">{orbifold}</a><span>{len(rows)} forward groups</span></h2>
+          <div class="directory-groups">{cards}</div>
+        </section>"""
 
 
 def _family_html(
@@ -1841,11 +2256,12 @@ def page_html(payload: dict[str, Any]) -> str:
         for index, base in enumerate(BASE_ORDER, 1)
     )
     directory = "\n".join(
-        f'<a class="wallpaper-chip{" is-empty" if not grouped[base] else ""}" href="#wallpaper-{escape(base)}">'
-        f'<span class="chip-orbifold">{orbifold_html(ORBIFOLD_BY_BASE[base])}</span> '
-        f'<span class="chip-count">{len(grouped[base])}</span></a>'
+        _directory_family_html(base, grouped[base])
         for base in BASE_ORDER
+        if grouped[base]
     )
+    if sum(bool(grouped[base]) for base in BASE_ORDER) != 14:
+        raise ValueError("expected 14 projected orbifold families with nontrivial actions")
     digest = payload["meta"]["source_catalog_sha256"]
     return f"""<!doctype html>
 <html lang="en">
@@ -1869,7 +2285,7 @@ def page_html(payload: dict[str, Any]) -> str:
         <a href="./">Gallery</a>
         <a href="future-directions.html">Colours</a>
         <a href="clockwork-coloring-correspondence.html" aria-current="page">Correspondence</a>
-        <a href="docs/orbifold_notation.md">Notation</a>
+        <a href="docs/orbifold_notation.html">Notation</a>
         <a href="data/clockwork-coloring-correspondence.json">Data</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
       </nav>
@@ -1878,9 +2294,10 @@ def page_html(payload: dict[str, Any]) -> str:
 
   <main class="correspondence-page">
     <nav class="directory" aria-labelledby="page-title">
-      <p class="section-number">Orbifold index</p>
+      <p class="section-number">51 nontrivial forward groups · 14 projected orbifold families</p>
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
-      <div class="wallpaper-jump-list">
+      <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
+      <div class="directory-families">
         {directory}
       </div>
     </nav>
