@@ -49,7 +49,7 @@ DATA = ROOT / "data" / "space-group-correspondence.json"
 PAGE = ROOT / "space-group-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "space-groups"
 
-STYLE_SRC = "space-group-correspondence.css?v=quotient-presentations"
+STYLE_SRC = "space-group-correspondence.css?v=concise-catalog"
 SCRIPT_SRC = "space-group-correspondence.js?v=compact-tabs"
 SOURCE_SHA256 = "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330"
 UCL_SPACE_GROUP_BASE = "http://img.chem.ucl.ac.uk/sgp/large"
@@ -110,26 +110,6 @@ ORBIFOLD_BY_BASE = {
     "p31m": "3*3",
     "p6": "632",
     "p6m": "*632",
-}
-
-FAMILY_SUMMARIES = {
-    "p1": "Translations lift to the triclinic polar type.",
-    "p2": "Twofold planar rotations become rotations or screws along the height axis.",
-    "pm": "A planar mirror lifts to a vertical mirror plane.",
-    "pg": "A planar glide lifts to a vertical glide plane.",
-    "cm": "The centred mirror family gives centred monoclinic lifts.",
-    "pmm": "Two mirror directions lift through primitive, base-, body-, and face-centred orthorhombic settings.",
-    "pmg": "Mirror/glide phase choices fill the polar orthorhombic series.",
-    "pgg": "Two glide directions include the four-colour Fdd2 lift.",
-    "cmm": "Centred planar mirrors lift to C- and I-centred orthorhombic groups.",
-    "p4": "Fourfold colour phase becomes the pitch of a 4-fold screw axis.",
-    "p4m": "Vertical mirror and glide planes accompany the tetragonal axis.",
-    "p4g": "Glide variants lift to the polar tetragonal 4mm family.",
-    "p3": "Threefold phases distinguish P3₁, P3₂, and the rhombohedral lift.",
-    "p3m1": "The first trigonal mirror orientation lifts to P3m1 and P3c1.",
-    "p31m": "The second mirror orientation also supplies the rhombohedral R3m/R3c pair.",
-    "p6": "Sixfold cyclic phases become the complete P6 through P6₅ screw series.",
-    "p6m": "Hexagonal mirrors and glides give the four polar 6mm space groups.",
 }
 
 # Pinned from spglib 2.6.0's International Tables database after applying the
@@ -969,50 +949,56 @@ def _presentation_html(record: dict[str, Any]) -> str:
                 </section>"""
 
 
-def _entry_html(record: dict[str, Any], family_ordinal: int, family_total: int) -> str:
+def _base_group_html(record: dict[str, Any], *, anchor: bool = False) -> str:
+    group_id = escape(record["id"])
+    space_group = record["space_group"]
+    id_attribute = f' id="{group_id}"' if anchor else ""
+    return f"""
+                <dl class="base-group"{id_attribute}>
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">{clockwork.orbifold_html(record['parent']['orbifold'])}</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">{_hm_html(space_group['hm_short'])}</a></dd>
+                </dl>"""
+
+
+def _entry_html(
+    record: dict[str, Any],
+    trivial_record: dict[str, Any],
+    family_ordinal: int,
+) -> str:
     group_id = escape(record["id"])
     space_group = record["space_group"]
     reference_url = escape(space_group["ucl_reference_url"])
     catalog_url = escape(record["catalog_url"])
     signature = record["book_color_signature"]
-    signature_html = clockwork.superscript_html(signature)
     return f"""
           <article class="space-entry" id="{group_id}" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="{escape(record['image'])}" alt="{escape(record['image_alt'])}" width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="{catalog_url}" target="_blank" rel="noopener" aria-label="{escape(signature)}; open colouring in catalog"><span class="colouring-signature book-color-signature">{signature_html}</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="{catalog_url}" target="_blank" rel="noopener" aria-label="{escape(signature)}; open colouring in catalog"><img src="{escape(record['image'])}" alt="{escape(record['image_alt'])}" width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="{group_id}-space-name">
                 <h3 id="{group_id}-space-name" class="space-group-name">{_hm_html(space_group['hm_short'])}</h3>
                 <a class="ucl-link" href="{reference_url}" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+{_base_group_html(trivial_record, anchor=family_ordinal == 1)}
 {_presentation_html(record)}
               </section>
             </div>
           </article>"""
 
 
-def _trivial_product_html(record: dict[str, Any]) -> str:
-    group_id = escape(record["id"])
-    space_group = record["space_group"]
-    orbifold = clockwork.orbifold_html(record["parent"]["orbifold"])
-    return (
-        f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
-        f'aria-label="Trivial one-colour product over orbifold '
-        f'{escape(record["parent"]["orbifold"])}">'
-        "<p><strong>C<sub>1</sub> product.</strong> "
-        f'{orbifold} <span aria-hidden="true">↔</span> '
-        f'<a href="{escape(space_group["ucl_reference_url"])}" target="_blank" rel="noopener">'
-        f'{_hm_html(space_group["hm_short"])}</a></p>'
-        "</aside>"
-    )
+def _base_only_html(record: dict[str, Any]) -> str:
+    return f"""
+      <div class="base-only-entry">
+        <section class="space-group-summary" aria-label="Base group">
+{_base_group_html(record, anchor=True)}
+        </section>
+      </div>"""
 
 
 def _family_html(
     base: str,
     rows: list[dict[str, Any]],
     trivial_record: dict[str, Any],
-    family_index: int,
 ) -> str:
     tabs = "\n".join(
         f'<a id="tab-{escape(record["id"])}" href="#{escape(record["id"])}" '
@@ -1023,13 +1009,8 @@ def _family_html(
         for record in rows
     )
     entries = "\n".join(
-        _entry_html(record, index, len(rows)) for index, record in enumerate(rows, 1)
-    )
-    order_counts = Counter(record["clock_order"] for record in rows)
-    census = (
-        " · ".join(f"C{order}: {order_counts[order]}" for order in sorted(order_counts))
-        if rows
-        else "none"
+        _entry_html(record, trivial_record, index)
+        for index, record in enumerate(rows, 1)
     )
     lift_word = "lift" if len(rows) == 1 else "lifts"
     family_class = "wallpaper-family space-family" + (" is-empty" if not rows else "")
@@ -1044,20 +1025,13 @@ def _family_html(
         </div>
       </div>"""
     else:
-        contents = """
-      <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
-      </div>"""
+        contents = _base_only_html(trivial_record)
     return f"""
     <section class="{family_class}" id="wallpaper-{escape(base)}" data-wallpaper-family aria-labelledby="wallpaper-{escape(base)}-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family {family_index:02d} / 17</p>
-        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{clockwork.orbifold_html(ORBIFOLD_BY_BASE[base])}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
-        <p class="family-summary">{escape(FAMILY_SUMMARIES[base])}</p>
-        <p class="family-census">More-than-one-colour orders · {census}</p>
+        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{clockwork.orbifold_html(ORBIFOLD_BY_BASE[base])}</span> <span class="family-count">{len(rows)} {lift_word}</span></h2>
       </header>
 {contents}
-      {_trivial_product_html(trivial_record)}
     </section>"""
 
 
@@ -1100,13 +1074,12 @@ def page_html(payload: dict[str, Any]) -> str:
     if len(contributing_bases) != DISPLAYED_FAMILY_COUNT:
         raise ValueError(f"expected {DISPLAYED_FAMILY_COUNT} contributing families")
     families = "\n".join(
-        _family_html(base, grouped[base], trivial_by_base[base], index)
-        for index, base in enumerate(BASE_ORDER, 1)
+        _family_html(base, grouped[base], trivial_by_base[base])
+        for base in BASE_ORDER
     )
     directory = "\n".join(
         _directory_family_html(base, grouped[base]) for base in contributing_bases
     ).strip()
-    caveat = escape(payload["meta"]["scope_caveat"])
     digest = escape(payload["meta"]["source_sha256"])
     return f"""<!doctype html>
 <html lang="en">
@@ -1140,31 +1113,14 @@ def page_html(payload: dict[str, Any]) -> str:
 
   <main class="space-page">
     <section class="space-hero" aria-labelledby="page-title">
-      <p class="section-number">51 displayed multi-colour lifts · 14 contributing orbifold families · 68-type audit</p>
       <h1 id="page-title">Cyclic colourings <span aria-hidden="true">↔</span> polar space groups</h1>
-      <p class="lead">Treat the cyclic colour coordinate as height. Organized by Conway orbifold and Goodman–Strauss short colour signature, this atlas pairs 51 multi-colour plates with the classical names and presentations of their lifts; the 17 inherited C1 products appear only as grey audit notes.</p>
-      <aside class="answer-card" role="note" aria-label="Scope of the correspondence">
-        <p class="answer-title">Is it one-to-one?</p>
-        <p class="answer-copy"><strong>For this selected subset, yes.</strong> {caveat}</p>
-      </aside>
-    </section>
-
-    <section class="construction" aria-labelledby="construction-title">
-      <div class="construction-copy">
-        <p class="section-number">The construction</p>
-        <h2 id="construction-title">Colour becomes a third coordinate</h2>
-        <p>A regular cyclic colouring is encoded by a phase character. Lift the plane to horizontal slices of 3-space and read that phase as fractional height. Rotations become screws when they change colour; mirrors become glide planes when they carry a nonzero phase.</p>
-      </div>
-      <div class="construction-formula" aria-label="Height-lift formula">
-        <p>For every planar operation</p>
-        <code>(M, v, τ): (x, y, z) ↦ (M(x, y) + v, z + τ)</code>
-      </div>
+      <p class="space-scope">51 nontrivial cyclic lifts · 17 base groups</p>
+      <code class="height-lift" aria-label="Height-lift formula">(M, v, τ): (x, y, z) ↦ (M(x, y) + v, z + τ)</code>
     </section>
 
     <nav class="atlas-directory" aria-labelledby="directory-title">
-      <p class="section-number">51 displayed groups · 14 contributing orbifold families</p>
-      <h2 id="directory-title">More-than-one-colour lifts</h2>
-      <p class="directory-legend">Raised numbers are colour-permutation orders. Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a short colour signature to open its colouring plate and space-group presentation; all 17 orbifold-family sections remain below.</p>
+      <h2 id="directory-title">51 nontrivial lifts</h2>
+      <p class="directory-legend">Superscripts are colour-permutation orders.</p>
       <div class="directory-families">
 {directory}
       </div>
@@ -1175,17 +1131,8 @@ def page_html(payload: dict[str, Any]) -> str:
     </div>
 
     <section class="sources" aria-labelledby="provenance-title">
-      <p class="section-number">Audit trail</p>
-      <h2 id="provenance-title">Pinned identifications and reproducible plates</h2>
-      <p>The <a href="data/space-group-correspondence.json">complete 68-record JSON</a> stores every lifted operation, pinned Hermann–Mauguin identification, and exact presentation relative to the displayed lift cell. This page displays the 51 records with N &gt; 1 and keeps the 17 C1 products as compact grey audit notes. The identifications are pinned from spglib 2.6.0. The source colouring data has SHA-256 <code>{digest}</code>.</p>
-      <p id="ucl-credit">Each displayed group links to Jeremy K. Cockcroft’s <a href="{escape(payload['meta']['external_reference_index'])}" target="_blank" rel="noopener"><cite>A Hypertext Book of Crystallographic Space Group Diagrams and Tables</cite></a> at UCL/Birkbeck College. The original UCL HTML and GIF are not copied into this repository.</p>
-      <ul>
-        <li><a href="https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html">IUCr: <cite>Crystallographic shelves: space-group hierarchy explained</cite></a> identifies the ten polar crystal classes and their 68 space-group types.</li>
-        <li><a href="https://doi.org/10.1107/S0365110X57001966">A. L. Mackay, <cite>Extensions of space-group theory</cite></a> develops the colour/extra-coordinate relationship.</li>
-        <li><a href="https://arxiv.org/abs/math/9911185">Conway, Delgado Friedrichs, Huson &amp; Thurston, <cite>On Three-Dimensional Space Groups</cite></a> organizes space groups as fibrations over plane crystallographic groups.</li>
-      </ul>
-      <pre><code>python3 scripts/generate_space_group_correspondence.py
-python3 scripts/generate_space_group_correspondence.py --check</code></pre>
+      <h2 id="provenance-title">Data</h2>
+      <p><a href="data/space-group-correspondence.json">68-record JSON</a> · <a id="ucl-credit" href="{escape(payload['meta']['external_reference_index'])}" target="_blank" rel="noopener">UCL tables</a> · <a href="https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html">IUCr hierarchy</a> · <a href="https://doi.org/10.1107/S0365110X57001966">Mackay</a> · <a href="https://arxiv.org/abs/math/9911185">Conway et al.</a> · SHA-256 <code>{digest}</code></p>
     </section>
 
     <footer>

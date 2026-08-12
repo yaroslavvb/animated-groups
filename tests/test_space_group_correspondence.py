@@ -29,7 +29,8 @@ class SpaceCorrespondenceParser(HTMLParser):
         self.panels: list[str] = []
         self.directory_families: list[str] = []
         self.directory_groups: list[tuple[str, str]] = []
-        self.trivial_products: list[str] = []
+        self.base_group_ids: list[str] = []
+        self.base_group_links: list[tuple[str | None, str]] = []
         self.static_tab_roles: list[tuple[str, str]] = []
         self.article_images: dict[str, list[str]] = defaultdict(list)
         self.article_links: dict[str, list[tuple[str, str]]] = defaultdict(list)
@@ -72,8 +73,8 @@ class SpaceCorrespondenceParser(HTMLParser):
             self.panels.append(self.current_article)
             if attributes.get("role"):
                 self.static_tab_roles.append((tag, attributes["role"] or ""))
-        if tag == "aside" and "data-trivial-product" in attributes:
-            self.trivial_products.append(attributes.get("id", ""))
+        if tag == "dl" and "base-group" in classes and attributes.get("id"):
+            self.base_group_ids.append(attributes["id"] or "")
         if self.current_article is not None:
             if tag == "img":
                 self.article_images[self.current_article].append(attributes.get("src", ""))
@@ -87,6 +88,10 @@ class SpaceCorrespondenceParser(HTMLParser):
                 self.presentation_tables.append(attributes["data-space-presentation"] or "")
             if tag == "tr" and "presentation-generator-row" in classes:
                 self.generator_rows[self.current_article] += 1
+        if tag == "a" and "base-group-link" in classes:
+            self.base_group_links.append(
+                (self.current_article, attributes.get("href", ""))
+            )
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "article":
@@ -210,7 +215,11 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             self.parser.directory_groups,
             [(group_id, f"#{group_id}") for group_id in expected_ids],
         )
-        self.assertEqual(self.parser.trivial_products, trivial_ids)
+        self.assertEqual(self.parser.base_group_ids, trivial_ids)
+        self.assertNotIn("data-trivial-product", self.page)
+        self.assertNotIn("C<sub>1</sub> product", self.page)
+        self.assertNotIn("More-than-one-colour orders", self.page)
+        self.assertNotIn('class="family-census"', self.page)
 
     def test_every_panel_contains_only_the_colouring_plate_and_compact_space_summary(self) -> None:
         for group in self.displayed_groups:
@@ -221,6 +230,14 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
                 [
                     ("colouring-catalog-link", group["catalog_url"]),
                     ("ucl-link", group["space_group"]["ucl_reference_url"]),
+                    (
+                        "base-group-link",
+                        next(
+                            base_group["space_group"]["ucl_reference_url"]
+                            for base_group in self.trivial_groups
+                            if base_group["parent"]["hm"] == group["parent"]["hm"]
+                        ),
+                    ),
                 ],
                 group_id,
             )
@@ -237,11 +254,8 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
                 f'class="space-group-name">{correspondence._hm_html(group["space_group"]["hm_short"])}',
                 markup,
             )
-            self.assertIn(
-                '<span class="colouring-signature book-color-signature">'
-                f'{correspondence.clockwork.superscript_html(group["book_color_signature"])}',
-                markup,
-            )
+            self.assertNotIn('class="colouring-signature', markup)
+            self.assertIn("Colouring ↗", markup)
 
         for obsolete in (
             "data-space-viewer",
@@ -259,8 +273,41 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             image for images in self.parser.article_images.values() for image in images
         ))
 
+    def test_base_groups_are_compact_right_pane_entries(self) -> None:
+        trivial_by_base = {
+            group["parent"]["hm"]: group for group in self.trivial_groups
+        }
+        expected_links = []
+        for base in correspondence.BASE_ORDER:
+            rows = [
+                group for group in self.displayed_groups
+                if group["parent"]["hm"] == base
+            ]
+            base_url = trivial_by_base[base]["space_group"]["ucl_reference_url"]
+            if rows:
+                expected_links.extend((group["id"], base_url) for group in rows)
+            else:
+                expected_links.append((None, base_url))
+        self.assertEqual(self.parser.base_group_links, expected_links)
+        self.assertEqual(
+            self.page.count('class="base-group"'),
+            len(self.displayed_groups) + len(correspondence.BASE_ORDER) - len(self.contributing_bases),
+        )
+
+        for group_id in ("g233", "g234", "g235"):
+            article = re.search(
+                rf'<article[^>]+id="{group_id}"[^>]*>.*?</article>',
+                self.page,
+                re.DOTALL,
+            )
+            self.assertIsNotNone(article, group_id)
+            markup = article.group(0)
+            self.assertIn("<dt>Base group</dt>", markup)
+            self.assertIn(correspondence.clockwork.orbifold_html("3*3"), markup)
+            self.assertIn(">P31m</a>", markup)
+
     def test_navigation_uses_goodman_strauss_orbifold_notation(self) -> None:
-        self.assertEqual(self.page.count("Orbifold family "), len(correspondence.BASE_ORDER))
+        self.assertNotIn("Orbifold family ", self.page)
         self.assertNotIn('class="family-hm"', self.page)
         self.assertNotIn('class="directory-space-group"', self.page)
         self.assertNotIn('class="tab-space-name"', self.page)

@@ -51,7 +51,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=count-summary"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=concise-catalog"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -158,74 +158,23 @@ ORBIFOLD_BY_BASE = {
 }
 
 WALLPAPER_SUMMARIES = {
-    "p1": (
-        "A torus; translations only.",
-        "Its sole forward catalog row is the omitted C1 product, so this signature has no nontrivial colour action to display.",
-    ),
-    "p2": (
-        "A sphere with four order-2 cone points.",
-        "Both displayed lifts use two colours; their colour-fixing kernels are ◦ and 2222.",
-    ),
-    "pm": (
-        "Two mirror-boundary components.",
-        "The forward catalog contributes only the omitted C1 product, so this signature has no nontrivial colour action to display.",
-    ),
-    "pg": (
-        "Two crosscaps; glide reflections but no mirror boundary.",
-        "Each × is Conway's crosscap or ‘miracle’ symbol, not a mirror boundary; the sole forward row is the omitted C1 product.",
-    ),
-    "cm": (
-        "One mirror boundary and one crosscap.",
-        "Its single nontrivial lift exchanges two phases and has translation-only kernel K = ◦.",
-    ),
-    "pmm": (
-        "A mirror quadrilateral with four order-2 corners.",
-        "Its five nontrivial lifts all use two colours, with phase-zero kernels 2222, **, *2222, 22*, and 2*22.",
-    ),
-    "pmg": (
-        "Two order-2 cone points and one mirror-boundary component.",
-        "Its five nontrivial lifts use two colours; their kernels range through 2222, ××, **, 22*, and 22×.",
-    ),
-    "pgg": (
-        "Two order-2 cone points and one crosscap.",
-        "Among its three nontrivial lifts, one reaches four colours; its quarter-period glide has kernel K = 2222.",
-    ),
-    "cmm": (
-        "One order-2 cone point and a mirror boundary with two order-2 corners.",
-        "Its five two-colour lifts have kernels 2222, *×, *2222, 22×, and 22*.",
-    ),
-    "p4": (
-        "A sphere with cone points of orders 4, 4, and 2.",
-        "Three lifts use four colours; two form an inverse-clock pair with the same traditional colour type.",
-    ),
-    "p4m": (
-        "A mirror triangle with corner orders 4, 4, and 2.",
-        "All five nontrivial lifts use two colours, despite the fourfold centres; their kernels are *2222, 2*22, 442, *442, and 4*2.",
-    ),
-    "p4g": (
-        "One order-4 cone point and a mirror boundary with one order-2 corner.",
-        "Three lifts use two colours and two use four; the four-colour cases have different colour-fixing kernels.",
-    ),
-    "p3": (
-        "A sphere with three order-3 cone points.",
-        "Its three nontrivial lifts use three colours: two form an inverse-clock pair, while the third retains a kernel with signature 333.",
-    ),
-    "p3m1": (
-        "A mirror triangle with three order-3 corners.",
-        "There is one nontrivial two-colour lift; the odd-corner relation makes the mirror arcs change phase together.",
-    ),
-    "p31m": (
-        "One order-3 cone point and a mirror boundary with one order-3 corner.",
-        "Its displayed lifts have N = 2, 3, and 6; the six-colour action combines a third-period rotation with a half-period mirror shift.",
-    ),
-    "p6": (
-        "A sphere with cone points of orders 6, 3, and 2.",
-        "Its nontrivial lifts comprise one N = 2 group, an inverse-clock pair at N = 3, and another inverse-clock pair at N = 6.",
-    ),
-    "p6m": (
-        "A mirror triangle with corner orders 6, 3, and 2.",
-        "Its three nontrivial lifts all use two colours, with phase-zero kernels 3*3, 632, and *333.",
-    ),
+    "p1": "A torus; translations only.",
+    "p2": "A sphere with four order-2 cone points.",
+    "pm": "Two mirror-boundary components.",
+    "pg": "Two crosscaps; glide reflections but no mirror boundary.",
+    "cm": "One mirror boundary and one crosscap.",
+    "pmm": "A mirror quadrilateral with four order-2 corners.",
+    "pmg": "Two order-2 cone points and one mirror-boundary component.",
+    "pgg": "Two order-2 cone points and one crosscap.",
+    "cmm": "One order-2 cone point and a mirror boundary with two order-2 corners.",
+    "p4": "A sphere with cone points of orders 4, 4, and 2.",
+    "p4m": "A mirror triangle with corner orders 4, 4, and 2.",
+    "p4g": "One order-4 cone point and a mirror boundary with one order-2 corner.",
+    "p3": "A sphere with three order-3 cone points.",
+    "p3m1": "A mirror triangle with three order-3 corners.",
+    "p31m": "One order-3 cone point and a mirror boundary with one order-3 corner.",
+    "p6": "A sphere with cone points of orders 6, 3, and 2.",
+    "p6m": "A mirror triangle with corner orders 6, 3, and 2.",
 }
 
 # Conway--Burgiel--Goodman-Strauss fibrifold names, transcribed from
@@ -2256,7 +2205,7 @@ def _film_html(record: dict[str, Any]) -> str:
     return f"""
               <figure class="clockwork-film" data-clockwork-player data-group-id="{group_id}">
                 <div class="clockwork-stage" data-film-stage data-state="loading">
-                  <canvas class="clockwork-canvas" id="{group_id}-film" width="1" height="1" role="img" aria-describedby="{group_id}-film-caption">JavaScript is needed for this film; the static coloured plate remains available below.</canvas>
+                  <canvas class="clockwork-canvas" id="{group_id}-film" width="1" height="1" role="img" aria-label="Animated clockwork action for {group_id}">JavaScript is needed for this film; the static coloured plate remains available below.</canvas>
                   <p class="film-status" data-film-status>Loading local film data…</p>
                 </div>
                 <div class="animation-controls" data-film-controls data-state="loading">
@@ -2268,7 +2217,6 @@ def _film_html(record: dict[str, Any]) -> str:
                   <input class="phase-slider" id="{group_id}-phase" data-film-slider type="range" min="0" max="1" step="0.001" value="0" aria-valuetext="phase 0.000 of one period" disabled>
                   <output class="phase-output" data-film-output for="{group_id}-phase">0.000</output>
                 </div>
-                <figcaption id="{group_id}-film-caption">Clockwork film · fixed phase ruler, smooth hand · paused by default</figcaption>
               </figure>"""
 
 
@@ -2339,7 +2287,7 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
         )
     return f"""
               <section class="other-names" aria-labelledby="{group_id}-other-names-title">
-                <h4 id="{group_id}-other-names-title">Other names and instances</h4>
+                <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
                   <li>{_term_help_html("Chaim source")}{book_link}</li>
                   <li>{_term_help_html("Catalog instance")}<a href="{escape(record['catalog_url'])}">{group_id}</a></li>
@@ -2355,7 +2303,6 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
 
 def _entry_html(
     record: dict[str, Any],
-    display_ordinal: int,
     space_group: dict[str, Any],
 ) -> str:
     group_id = escape(record["id"])
@@ -2366,10 +2313,7 @@ def _entry_html(
       <li class="correspondence-item">
         <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clockwork-tabpanel data-clock-order="{order}">
           <header class="entry-header">
-            <p class="entry-number">{display_ordinal:02d} / {DISPLAYED_GROUP_COUNT}</p>
-            <div>
-              <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Chaim notation {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
-            </div>
+            <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Chaim notation {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
           </header>
 
           <div class="entry-grid">
@@ -2378,7 +2322,6 @@ def _entry_html(
               <figure class="colour-plate">
                 <img src="{escape(record['image'])}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
                 <figcaption>
-                  <span>Static perfect-colouring plate</span>
                   <ol class="colour-key" aria-label="Colour and phase key">
                     {_phase_legend(record)}
                   </ol>
@@ -2466,28 +2409,20 @@ def _family_html(
     base: str,
     rows: list[dict[str, Any]],
     trivial_record: dict[str, Any],
-    family_index: int,
-    display_ordinals: dict[str, int],
     space_groups_by_id: dict[str, dict[str, Any]],
 ) -> str:
     orbifold = ORBIFOLD_BY_BASE[base]
-    summary, note = WALLPAPER_SUMMARIES[base]
+    summary = WALLPAPER_SUMMARIES[base]
     lift_word = "lift" if len(rows) == 1 else "lifts"
     tabs = "\n".join(_tab_html(row) for row in rows)
     entries = "\n".join(
         _entry_html(
             row,
-            display_ordinals[row["id"]],
             space_groups_by_id[row["id"]],
         )
         for row in rows
     )
     family_class = "wallpaper-family" + (" is-empty" if not rows else "")
-    census = (
-        f"Nontrivial orders · {_order_census_html(rows)}"
-        if rows
-        else "Nontrivial orders · none"
-    )
     if rows:
         contents = f"""
       <div class="clockwork-tabs" data-clockwork-tabs>
@@ -2499,18 +2434,12 @@ def _family_html(
         </ol>
       </div>"""
     else:
-        contents = """
-      <div class="family-empty" role="note">
-        <p><strong>No nontrivial forward lift occurs.</strong> After removing the inherited one-colour product, this orbifold signature contributes no entry to the 51-group atlas.</p>
-      </div>"""
+        contents = ""
     return f"""
     <section class="{family_class}" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
       <header class="family-header">
-        <p class="section-number">Orbifold family {family_index:02d} / 17</p>
         <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{orbifold_html(orbifold)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
         <p class="family-summary">{orbifold_html(summary)}</p>
-        <p class="family-note"><strong>Forward note.</strong> {orbifold_html(note)}</p>
-        <p class="family-census">{census}</p>
       </header>
 {contents}
       {_trivial_product_html(trivial_record)}
@@ -2542,25 +2471,14 @@ def page_html(payload: dict[str, Any]) -> str:
     trivial_by_base = {group["parent"]["hm"]: group for group in trivial_groups}
     if set(trivial_by_base) != set(BASE_ORDER):
         raise ValueError("expected one trivial product for every wallpaper group")
-    ordered_display_groups = [
-        group
-        for base in BASE_ORDER
-        for group in grouped[base]
-    ]
-    display_ordinals = {
-        group["id"]: ordinal
-        for ordinal, group in enumerate(ordered_display_groups, 1)
-    }
     families = "\n".join(
         _family_html(
             base,
             grouped[base],
             trivial_by_base[base],
-            index,
-            display_ordinals,
             space_groups_by_id,
         )
-        for index, base in enumerate(BASE_ORDER, 1)
+        for base in BASE_ORDER
     )
     directory = "\n".join(
         _directory_family_html(base, grouped[base])
@@ -2602,7 +2520,6 @@ def page_html(payload: dict[str, Any]) -> str:
 
   <main class="correspondence-page">
     <nav class="directory" aria-labelledby="page-title">
-      <p class="section-number">{len(groups)} forward groups · {len(BASE_ORDER)} plane-orbifold families</p>
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
       <aside class="directory-census" aria-label="Forward group count overview">
@@ -2620,25 +2537,8 @@ def page_html(payload: dict[str, Any]) -> str:
     </div>
 
     <section class="provenance" aria-labelledby="provenance-title">
-      <p class="section-number">Audit trail</p>
-      <h2 id="provenance-title">Data and reproduction</h2>
-      <p>
-        The <a href="data/clockwork-coloring-correspondence.json">68-record JSON</a> and all 68
-        lossless WebP plates retain the complete audited source, including the 17 omitted products.
-        This HTML displays its 51 nontrivial rows; {len(BOOK_EXCERPTS)} annotated book excerpts and the local paused-film
-        controller are generated or tracked in this repository. The data and page come from the
-        <a href="scripts/generate_clockwork_coloring_correspondence.py">correspondence generator</a>;
-        the <a href="scripts/tos_book_excerpt_specs.py">excerpt coordinates</a> and
-        <a href="scripts/generate_tos_book_excerpts.py">crop renderer</a> are checked in separately.
-        The audit also checks the <a href="{BOOK_ERRATA_URL}">authors' published errata</a>.
-        The read-only source snapshot has SHA-256 <code>{escape(digest)}</code>. Each tab links to
-        its exact entry in the external forward catalog; no runtime data or code is loaded from
-        that site. Film canvases read only the checked-in correspondence JSON.
-      </p>
-      <pre><code>python3 scripts/generate_clockwork_coloring_correspondence.py
-python3 scripts/generate_clockwork_coloring_correspondence.py --check
-python3 scripts/generate_tos_book_excerpts.py --source-pdf "/path/to/The Symmetries of Things.pdf"
-python3 scripts/generate_tos_book_excerpts.py --source-pdf "/path/to/The Symmetries of Things.pdf" --check</code></pre>
+      <h2 id="provenance-title">Data</h2>
+      <p><a href="data/clockwork-coloring-correspondence.json">68-record JSON</a> · <a href="scripts/generate_clockwork_coloring_correspondence.py">generator</a> · <a href="scripts/tos_book_excerpt_specs.py">book-excerpt map</a> · <a href="{BOOK_ERRATA_URL}">errata</a> · SHA-256 <code>{escape(digest)}</code></p>
     </section>
 
     <footer>

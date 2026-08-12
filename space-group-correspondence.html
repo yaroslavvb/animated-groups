@@ -8,7 +8,7 @@
   <title>Cyclic colourings and polar space groups</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="space-group-correspondence.css?v=quotient-presentations">
+  <link rel="stylesheet" href="space-group-correspondence.css?v=concise-catalog">
 </head>
 <body>
   <a class="skip-link" href="#correspondences">Skip to correspondences</a>
@@ -30,31 +30,14 @@
 
   <main class="space-page">
     <section class="space-hero" aria-labelledby="page-title">
-      <p class="section-number">51 displayed multi-colour lifts · 14 contributing orbifold families · 68-type audit</p>
       <h1 id="page-title">Cyclic colourings <span aria-hidden="true">↔</span> polar space groups</h1>
-      <p class="lead">Treat the cyclic colour coordinate as height. Organized by Conway orbifold and Goodman–Strauss short colour signature, this atlas pairs 51 multi-colour plates with the classical names and presentations of their lifts; the 17 inherited C1 products appear only as grey audit notes.</p>
-      <aside class="answer-card" role="note" aria-label="Scope of the correspondence">
-        <p class="answer-title">Is it one-to-one?</p>
-        <p class="answer-copy"><strong>For this selected subset, yes.</strong> This 68-record forward regular-cyclic subset corresponds exactly to the 68 polar three-dimensional space-group types. General coloured wallpaper groups are broader, and there is no one-to-one correspondence between all coloured wallpaper groups and all 230 space groups.</p>
-      </aside>
-    </section>
-
-    <section class="construction" aria-labelledby="construction-title">
-      <div class="construction-copy">
-        <p class="section-number">The construction</p>
-        <h2 id="construction-title">Colour becomes a third coordinate</h2>
-        <p>A regular cyclic colouring is encoded by a phase character. Lift the plane to horizontal slices of 3-space and read that phase as fractional height. Rotations become screws when they change colour; mirrors become glide planes when they carry a nonzero phase.</p>
-      </div>
-      <div class="construction-formula" aria-label="Height-lift formula">
-        <p>For every planar operation</p>
-        <code>(M, v, τ): (x, y, z) ↦ (M(x, y) + v, z + τ)</code>
-      </div>
+      <p class="space-scope">51 nontrivial cyclic lifts · 17 base groups</p>
+      <code class="height-lift" aria-label="Height-lift formula">(M, v, τ): (x, y, z) ↦ (M(x, y) + v, z + τ)</code>
     </section>
 
     <nav class="atlas-directory" aria-labelledby="directory-title">
-      <p class="section-number">51 displayed groups · 14 contributing orbifold families</p>
-      <h2 id="directory-title">More-than-one-colour lifts</h2>
-      <p class="directory-legend">Raised numbers are colour-permutation orders. Only C<sub>N</sub> lifts with N &gt; 1 appear here. Select a short colour signature to open its colouring plate and space-group presentation; all 17 orbifold-family sections remain below.</p>
+      <h2 id="directory-title">51 nontrivial lifts</h2>
+      <p class="directory-legend">Superscripts are colour-permutation orders.</p>
       <div class="directory-families">
 <section class="directory-family">
           <h3><a class="directory-family-link" href="#wallpaper-p2">2222<span class="directory-family-count">2 nontrivial types</span></a></h3>
@@ -169,24 +152,23 @@
 
     <section class="wallpaper-family space-family is-empty" id="wallpaper-p1" data-wallpaper-family aria-labelledby="wallpaper-p1-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 01 / 17</p>
-        <h2 id="wallpaper-p1-title"><span class="family-orbifold">◦</span> <span class="family-count">0 nontrivial lifts</span></h2>
-        <p class="family-summary">Translations lift to the triclinic polar type.</p>
-        <p class="family-census">More-than-one-colour orders · none</p>
+        <h2 id="wallpaper-p1-title"><span class="family-orbifold">◦</span> <span class="family-count">0 lifts</span></h2>
       </header>
 
-      <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
+      <div class="base-only-entry">
+        <section class="space-group-summary" aria-label="Base group">
+
+                <dl class="base-group" id="g1">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">◦</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/001az1.htm" target="_blank" rel="noopener">P1</a></dd>
+                </dl>
+        </section>
       </div>
-      <aside class="trivial-product" id="g1" data-trivial-product aria-label="Trivial one-colour product over orbifold ◦"><p><strong>C<sub>1</sub> product.</strong> ◦ <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/001az1.htm" target="_blank" rel="noopener">P1</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p2" data-wallpaper-family aria-labelledby="wallpaper-p2-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 02 / 17</p>
-        <h2 id="wallpaper-p2-title"><span class="family-orbifold">2222</span> <span class="family-count">2 nontrivial lifts</span></h2>
-        <p class="family-summary">Twofold planar rotations become rotations or screws along the height axis.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 2</p>
+        <h2 id="wallpaper-p2-title"><span class="family-orbifold">2222</span> <span class="family-count">2 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -199,12 +181,16 @@
           <article class="space-entry" id="g6" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g6.webp" alt="Static perfect 2-colouring for group g6: asymmetric motifs carry phase colours for Conway type 2222/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g6" target="_blank" rel="noopener" aria-label="²2²2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g6" target="_blank" rel="noopener" aria-label="²2²2²2²2; open colouring in catalog"><img src="output/clockwork-colorings/g6.webp" alt="Static perfect 2-colouring for group g6: asymmetric motifs carry phase colours for Conway type 2222/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g6-space-name">
                 <h3 id="g6-space-name" class="space-group-name">P2<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/004ay1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g5">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">2222</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/003ay1.htm" target="_blank" rel="noopener">P2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g6-presentation-title">
                   <h4 id="g6-presentation-title">Presentation</h4>
@@ -223,12 +209,16 @@
           <article class="space-entry" id="g7" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g7.webp" alt="Static perfect 2-colouring for group g7: asymmetric motifs carry phase colours for Conway type 2222/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g7" target="_blank" rel="noopener" aria-label="¹2¹2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g7" target="_blank" rel="noopener" aria-label="¹2¹2²2²2; open colouring in catalog"><img src="output/clockwork-colorings/g7.webp" alt="Static perfect 2-colouring for group g7: asymmetric motifs carry phase colours for Conway type 2222/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g7-space-name">
                 <h3 id="g7-space-name" class="space-group-name">C2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/005ay1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">2222</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/003ay1.htm" target="_blank" rel="noopener">P2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g7-presentation-title">
                   <h4 id="g7-presentation-title">Presentation</h4>
@@ -246,43 +236,43 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g5" data-trivial-product aria-label="Trivial one-colour product over orbifold 2222"><p><strong>C<sub>1</sub> product.</strong> 2222 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/003ay1.htm" target="_blank" rel="noopener">P2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family is-empty" id="wallpaper-pm" data-wallpaper-family aria-labelledby="wallpaper-pm-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 03 / 17</p>
-        <h2 id="wallpaper-pm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span><span class="orbifold-star">∗</span></span> <span class="family-count">0 nontrivial lifts</span></h2>
-        <p class="family-summary">A planar mirror lifts to a vertical mirror plane.</p>
-        <p class="family-census">More-than-one-colour orders · none</p>
+        <h2 id="wallpaper-pm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span><span class="orbifold-star">∗</span></span> <span class="family-count">0 lifts</span></h2>
       </header>
 
-      <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
+      <div class="base-only-entry">
+        <section class="space-group-summary" aria-label="Base group">
+
+                <dl class="base-group" id="g10">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span><span class="orbifold-star">∗</span></span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/006ay1.htm" target="_blank" rel="noopener">Pm</a></dd>
+                </dl>
+        </section>
       </div>
-      <aside class="trivial-product" id="g10" data-trivial-product aria-label="Trivial one-colour product over orbifold **"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span><span class="orbifold-star">∗</span> <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/006ay1.htm" target="_blank" rel="noopener">Pm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family is-empty" id="wallpaper-pg" data-wallpaper-family aria-labelledby="wallpaper-pg-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 04 / 17</p>
-        <h2 id="wallpaper-pg-title"><span class="family-orbifold">××</span> <span class="family-count">0 nontrivial lifts</span></h2>
-        <p class="family-summary">A planar glide lifts to a vertical glide plane.</p>
-        <p class="family-census">More-than-one-colour orders · none</p>
+        <h2 id="wallpaper-pg-title"><span class="family-orbifold">××</span> <span class="family-count">0 lifts</span></h2>
       </header>
 
-      <div class="family-empty" role="note">
-        <p><strong>No more-than-one-colour lift occurs.</strong> This orbifold family contributes no entry to the 51-group visualization atlas; its C1 product is retained below only for audit completeness.</p>
+      <div class="base-only-entry">
+        <section class="space-group-summary" aria-label="Base group">
+
+                <dl class="base-group" id="g11">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">××</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/007ay1.htm" target="_blank" rel="noopener">Pc</a></dd>
+                </dl>
+        </section>
       </div>
-      <aside class="trivial-product" id="g11" data-trivial-product aria-label="Trivial one-colour product over orbifold ××"><p><strong>C<sub>1</sub> product.</strong> ×× <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/007ay1.htm" target="_blank" rel="noopener">Pc</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-cm" data-wallpaper-family aria-labelledby="wallpaper-cm-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 05 / 17</p>
-        <h2 id="wallpaper-cm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>×</span> <span class="family-count">1 nontrivial lift</span></h2>
-        <p class="family-summary">The centred mirror family gives centred monoclinic lifts.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 1</p>
+        <h2 id="wallpaper-cm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>×</span> <span class="family-count">1 lift</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -294,12 +284,16 @@
           <article class="space-entry" id="g9" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g9.webp" alt="Static perfect 2-colouring for group g9: asymmetric motifs carry phase colours for Conway type *×/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g9" target="_blank" rel="noopener" aria-label="*²×²; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>×<sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g9" target="_blank" rel="noopener" aria-label="*²×²; open colouring in catalog"><img src="output/clockwork-colorings/g9.webp" alt="Static perfect 2-colouring for group g9: asymmetric motifs carry phase colours for Conway type *×/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g9-space-name">
                 <h3 id="g9-space-name" class="space-group-name">Cc</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/009ay1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g8">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>×</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/008ay1.htm" target="_blank" rel="noopener">Cm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g9-presentation-title">
                   <h4 id="g9-presentation-title">Presentation</h4>
@@ -316,15 +310,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g8" data-trivial-product aria-label="Trivial one-colour product over orbifold *×"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>× <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/008ay1.htm" target="_blank" rel="noopener">Cm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-pmm" data-wallpaper-family aria-labelledby="wallpaper-pmm-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 06 / 17</p>
-        <h2 id="wallpaper-pmm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>2222</span> <span class="family-count">5 nontrivial lifts</span></h2>
-        <p class="family-summary">Two mirror directions lift through primitive, base-, body-, and face-centred orthorhombic settings.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 5</p>
+        <h2 id="wallpaper-pmm-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>2222</span> <span class="family-count">5 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -340,12 +330,16 @@
           <article class="space-entry" id="g55" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g55.webp" alt="Static perfect 2-colouring for group g55: asymmetric motifs carry phase colours for Conway type *2222/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g55" target="_blank" rel="noopener" aria-label="*²2²2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g55" target="_blank" rel="noopener" aria-label="*²2²2²2²2; open colouring in catalog"><img src="output/clockwork-colorings/g55.webp" alt="Static perfect 2-colouring for group g55: asymmetric motifs carry phase colours for Conway type *2222/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g55-space-name">
                 <h3 id="g55-space-name" class="space-group-name">Pcc2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/027az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g54">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>2222</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g55-presentation-title">
                   <h4 id="g55-presentation-title">Presentation</h4>
@@ -365,12 +359,16 @@
           <article class="space-entry" id="g60" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g60.webp" alt="Static perfect 2-colouring for group g60: asymmetric motifs carry phase colours for Conway type *2222/**." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g60" target="_blank" rel="noopener" aria-label="*¹2²2¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g60" target="_blank" rel="noopener" aria-label="*¹2²2¹2²2; open colouring in catalog"><img src="output/clockwork-colorings/g60.webp" alt="Static perfect 2-colouring for group g60: asymmetric motifs carry phase colours for Conway type *2222/**." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g60-space-name">
                 <h3 id="g60-space-name" class="space-group-name">Pmc2<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/026az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>2222</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g60-presentation-title">
                   <h4 id="g60-presentation-title">Presentation</h4>
@@ -390,12 +388,16 @@
           <article class="space-entry" id="g64" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g64.webp" alt="Static perfect 2-colouring for group g64: asymmetric motifs carry phase colours for Conway type *2222/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g64" target="_blank" rel="noopener" aria-label="*¹2¹2¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g64" target="_blank" rel="noopener" aria-label="*¹2¹2¹2²2; open colouring in catalog"><img src="output/clockwork-colorings/g64.webp" alt="Static perfect 2-colouring for group g64: asymmetric motifs carry phase colours for Conway type *2222/*2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g64-space-name">
                 <h3 id="g64-space-name" class="space-group-name">Amm2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/038az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>2222</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g64-presentation-title">
                   <h4 id="g64-presentation-title">Presentation</h4>
@@ -416,12 +418,16 @@
           <article class="space-entry" id="g65" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g65.webp" alt="Static perfect 2-colouring for group g65: asymmetric motifs carry phase colours for Conway type *2222/22*." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g65" target="_blank" rel="noopener" aria-label="*¹2²2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g65" target="_blank" rel="noopener" aria-label="*¹2²2²2²2; open colouring in catalog"><img src="output/clockwork-colorings/g65.webp" alt="Static perfect 2-colouring for group g65: asymmetric motifs carry phase colours for Conway type *2222/22*." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g65-space-name">
                 <h3 id="g65-space-name" class="space-group-name">Aem2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/039az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>2222</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g65-presentation-title">
                   <h4 id="g65-presentation-title">Presentation</h4>
@@ -442,12 +448,16 @@
           <article class="space-entry" id="g74" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g74.webp" alt="Static perfect 2-colouring for group g74: asymmetric motifs carry phase colours for Conway type *2222/2*22." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g74" target="_blank" rel="noopener" aria-label="*¹2¹2²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2<sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g74" target="_blank" rel="noopener" aria-label="*¹2¹2²2²2; open colouring in catalog"><img src="output/clockwork-colorings/g74.webp" alt="Static perfect 2-colouring for group g74: asymmetric motifs carry phase colours for Conway type *2222/2*22." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g74-space-name">
                 <h3 id="g74-space-name" class="space-group-name">Fmm2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/042az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>2222</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g74-presentation-title">
                   <h4 id="g74-presentation-title">Presentation</h4>
@@ -467,15 +477,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g54" data-trivial-product aria-label="Trivial one-colour product over orbifold *2222"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>2222 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/025az1.htm" target="_blank" rel="noopener">Pmm2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-pmg" data-wallpaper-family aria-labelledby="wallpaper-pmg-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 07 / 17</p>
-        <h2 id="wallpaper-pmg-title"><span class="family-orbifold">22<span class="orbifold-star">∗</span></span> <span class="family-count">5 nontrivial lifts</span></h2>
-        <p class="family-summary">Mirror/glide phase choices fill the polar orthorhombic series.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 5</p>
+        <h2 id="wallpaper-pmg-title"><span class="family-orbifold">22<span class="orbifold-star">∗</span></span> <span class="family-count">5 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -491,12 +497,16 @@
           <article class="space-entry" id="g57" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g57.webp" alt="Static perfect 2-colouring for group g57: asymmetric motifs carry phase colours for Conway type 22*/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g57" target="_blank" rel="noopener" aria-label="¹2¹2*²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g57" target="_blank" rel="noopener" aria-label="¹2¹2*²; open colouring in catalog"><img src="output/clockwork-colorings/g57.webp" alt="Static perfect 2-colouring for group g57: asymmetric motifs carry phase colours for Conway type 22*/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g57-space-name">
                 <h3 id="g57-space-name" class="space-group-name">Pnc2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/030az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g56">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22<span class="orbifold-star">∗</span></span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g57-presentation-title">
                   <h4 id="g57-presentation-title">Presentation</h4>
@@ -516,12 +526,16 @@
           <article class="space-entry" id="g61" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g61.webp" alt="Static perfect 2-colouring for group g61: asymmetric motifs carry phase colours for Conway type 22*/××." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g61" target="_blank" rel="noopener" aria-label="²2²2*²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g61" target="_blank" rel="noopener" aria-label="²2²2*²; open colouring in catalog"><img src="output/clockwork-colorings/g61.webp" alt="Static perfect 2-colouring for group g61: asymmetric motifs carry phase colours for Conway type 22*/××." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g61-space-name">
                 <h3 id="g61-space-name" class="space-group-name">Pca2<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/029az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22<span class="orbifold-star">∗</span></span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g61-presentation-title">
                   <h4 id="g61-presentation-title">Presentation</h4>
@@ -541,12 +555,16 @@
           <article class="space-entry" id="g62" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g62.webp" alt="Static perfect 2-colouring for group g62: asymmetric motifs carry phase colours for Conway type 22*/**." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g62" target="_blank" rel="noopener" aria-label="²2²2*¹; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g62" target="_blank" rel="noopener" aria-label="²2²2*¹; open colouring in catalog"><img src="output/clockwork-colorings/g62.webp" alt="Static perfect 2-colouring for group g62: asymmetric motifs carry phase colours for Conway type 22*/**." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g62-space-name">
                 <h3 id="g62-space-name" class="space-group-name">Pmn2<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/031az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22<span class="orbifold-star">∗</span></span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g62-presentation-title">
                   <h4 id="g62-presentation-title">Presentation</h4>
@@ -566,12 +584,16 @@
           <article class="space-entry" id="g66" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g66.webp" alt="Static perfect 2-colouring for group g66: asymmetric motifs carry phase colours for Conway type 22*/22*." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g66" target="_blank" rel="noopener" aria-label="¹2²2*¹; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g66" target="_blank" rel="noopener" aria-label="¹2²2*¹; open colouring in catalog"><img src="output/clockwork-colorings/g66.webp" alt="Static perfect 2-colouring for group g66: asymmetric motifs carry phase colours for Conway type 22*/22*." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g66-space-name">
                 <h3 id="g66-space-name" class="space-group-name">Ama2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/040az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22<span class="orbifold-star">∗</span></span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g66-presentation-title">
                   <h4 id="g66-presentation-title">Presentation</h4>
@@ -592,12 +614,16 @@
           <article class="space-entry" id="g67" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g67.webp" alt="Static perfect 2-colouring for group g67: asymmetric motifs carry phase colours for Conway type 22*/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g67" target="_blank" rel="noopener" aria-label="¹2²2*²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g67" target="_blank" rel="noopener" aria-label="¹2²2*²; open colouring in catalog"><img src="output/clockwork-colorings/g67.webp" alt="Static perfect 2-colouring for group g67: asymmetric motifs carry phase colours for Conway type 22*/22×." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g67-space-name">
                 <h3 id="g67-space-name" class="space-group-name">Aea2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/041az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22<span class="orbifold-star">∗</span></span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g67-presentation-title">
                   <h4 id="g67-presentation-title">Presentation</h4>
@@ -616,15 +642,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g56" data-trivial-product aria-label="Trivial one-colour product over orbifold 22*"><p><strong>C<sub>1</sub> product.</strong> 22<span class="orbifold-star">∗</span> <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/028az1.htm" target="_blank" rel="noopener">Pma2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-pgg" data-wallpaper-family aria-labelledby="wallpaper-pgg-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 08 / 17</p>
-        <h2 id="wallpaper-pgg-title"><span class="family-orbifold">22×</span> <span class="family-count">3 nontrivial lifts</span></h2>
-        <p class="family-summary">Two glide directions include the four-colour Fdd2 lift.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 2 · C4: 1</p>
+        <h2 id="wallpaper-pgg-title"><span class="family-orbifold">22×</span> <span class="family-count">3 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -638,12 +660,16 @@
           <article class="space-entry" id="g59" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g59.webp" alt="Static perfect 2-colouring for group g59: asymmetric motifs carry phase colours for Conway type 22×/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g59" target="_blank" rel="noopener" aria-label="¹2¹2×²; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>1</sup>2×<sup>2</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g59" target="_blank" rel="noopener" aria-label="¹2¹2×²; open colouring in catalog"><img src="output/clockwork-colorings/g59.webp" alt="Static perfect 2-colouring for group g59: asymmetric motifs carry phase colours for Conway type 22×/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g59-space-name">
                 <h3 id="g59-space-name" class="space-group-name">Pnn2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/034az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g58">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22×</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/032az1.htm" target="_blank" rel="noopener">Pba2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g59-presentation-title">
                   <h4 id="g59-presentation-title">Presentation</h4>
@@ -663,12 +689,16 @@
           <article class="space-entry" id="g63" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g63.webp" alt="Static perfect 2-colouring for group g63: asymmetric motifs carry phase colours for Conway type 22×/××." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g63" target="_blank" rel="noopener" aria-label="²2²2×¹; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<sup>2</sup>2×<sup>1</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g63" target="_blank" rel="noopener" aria-label="²2²2×¹; open colouring in catalog"><img src="output/clockwork-colorings/g63.webp" alt="Static perfect 2-colouring for group g63: asymmetric motifs carry phase colours for Conway type 22×/××." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g63-space-name">
                 <h3 id="g63-space-name" class="space-group-name">Pna2<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/033az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22×</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/032az1.htm" target="_blank" rel="noopener">Pba2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g63-presentation-title">
                   <h4 id="g63-presentation-title">Presentation</h4>
@@ -688,12 +718,16 @@
           <article class="space-entry" id="g75" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g75.webp" alt="Static perfect 4-colouring for group g75: asymmetric motifs carry phase colours for Conway type 22×⁴/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g75" target="_blank" rel="noopener" aria-label="¹2²2×⁴; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<sup>2</sup>2×<sup>4</sup></span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g75" target="_blank" rel="noopener" aria-label="¹2²2×⁴; open colouring in catalog"><img src="output/clockwork-colorings/g75.webp" alt="Static perfect 4-colouring for group g75: asymmetric motifs carry phase colours for Conway type 22×⁴/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g75-space-name">
                 <h3 id="g75-space-name" class="space-group-name">Fdd2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/043az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">22×</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/032az1.htm" target="_blank" rel="noopener">Pba2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g75-presentation-title">
                   <h4 id="g75-presentation-title">Presentation</h4>
@@ -711,15 +745,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g58" data-trivial-product aria-label="Trivial one-colour product over orbifold 22×"><p><strong>C<sub>1</sub> product.</strong> 22× <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/032az1.htm" target="_blank" rel="noopener">Pba2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-cmm" data-wallpaper-family aria-labelledby="wallpaper-cmm-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 09 / 17</p>
-        <h2 id="wallpaper-cmm-title"><span class="family-orbifold">2<span class="orbifold-star">∗</span>22</span> <span class="family-count">5 nontrivial lifts</span></h2>
-        <p class="family-summary">Centred planar mirrors lift to C- and I-centred orthorhombic groups.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 5</p>
+        <h2 id="wallpaper-cmm-title"><span class="family-orbifold">2<span class="orbifold-star">∗</span>22</span> <span class="family-count">5 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -735,12 +765,16 @@
           <article class="space-entry" id="g69" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g69.webp" alt="Static perfect 2-colouring for group g69: asymmetric motifs carry phase colours for Conway type 2*22/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g69" target="_blank" rel="noopener" aria-label="¹2*²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g69" target="_blank" rel="noopener" aria-label="¹2*²2²2; open colouring in catalog"><img src="output/clockwork-colorings/g69.webp" alt="Static perfect 2-colouring for group g69: asymmetric motifs carry phase colours for Conway type 2*22/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g69-space-name">
                 <h3 id="g69-space-name" class="space-group-name">Ccc2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/037az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g68">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">2<span class="orbifold-star">∗</span>22</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g69-presentation-title">
                   <h4 id="g69-presentation-title">Presentation</h4>
@@ -761,12 +795,16 @@
           <article class="space-entry" id="g70" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g70.webp" alt="Static perfect 2-colouring for group g70: asymmetric motifs carry phase colours for Conway type 2*22/*×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g70" target="_blank" rel="noopener" aria-label="²2*¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g70" target="_blank" rel="noopener" aria-label="²2*¹2²2; open colouring in catalog"><img src="output/clockwork-colorings/g70.webp" alt="Static perfect 2-colouring for group g70: asymmetric motifs carry phase colours for Conway type 2*22/*×." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g70-space-name">
                 <h3 id="g70-space-name" class="space-group-name">Cmc2<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/036az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">2<span class="orbifold-star">∗</span>22</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g70-presentation-title">
                   <h4 id="g70-presentation-title">Presentation</h4>
@@ -787,12 +825,16 @@
           <article class="space-entry" id="g71" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g71.webp" alt="Static perfect 2-colouring for group g71: asymmetric motifs carry phase colours for Conway type 2*22/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g71" target="_blank" rel="noopener" aria-label="²2*¹2¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g71" target="_blank" rel="noopener" aria-label="²2*¹2¹2; open colouring in catalog"><img src="output/clockwork-colorings/g71.webp" alt="Static perfect 2-colouring for group g71: asymmetric motifs carry phase colours for Conway type 2*22/*2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g71-space-name">
                 <h3 id="g71-space-name" class="space-group-name">Imm2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/044az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">2<span class="orbifold-star">∗</span>22</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g71-presentation-title">
                   <h4 id="g71-presentation-title">Presentation</h4>
@@ -813,12 +855,16 @@
           <article class="space-entry" id="g72" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g72.webp" alt="Static perfect 2-colouring for group g72: asymmetric motifs carry phase colours for Conway type 2*22/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g72" target="_blank" rel="noopener" aria-label="²2*²2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>2<span class="orbifold-star">∗</span><sup>2</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g72" target="_blank" rel="noopener" aria-label="²2*²2²2; open colouring in catalog"><img src="output/clockwork-colorings/g72.webp" alt="Static perfect 2-colouring for group g72: asymmetric motifs carry phase colours for Conway type 2*22/22×." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g72-space-name">
                 <h3 id="g72-space-name" class="space-group-name">Iba2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/045az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">2<span class="orbifold-star">∗</span>22</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g72-presentation-title">
                   <h4 id="g72-presentation-title">Presentation</h4>
@@ -839,12 +885,16 @@
           <article class="space-entry" id="g73" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g73.webp" alt="Static perfect 2-colouring for group g73: asymmetric motifs carry phase colours for Conway type 2*22/22*." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g73" target="_blank" rel="noopener" aria-label="¹2*¹2²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>2<span class="orbifold-star">∗</span><sup>1</sup>2<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g73" target="_blank" rel="noopener" aria-label="¹2*¹2²2; open colouring in catalog"><img src="output/clockwork-colorings/g73.webp" alt="Static perfect 2-colouring for group g73: asymmetric motifs carry phase colours for Conway type 2*22/22*." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g73-space-name">
                 <h3 id="g73-space-name" class="space-group-name">Ima2</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/046az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">2<span class="orbifold-star">∗</span>22</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g73-presentation-title">
                   <h4 id="g73-presentation-title">Presentation</h4>
@@ -863,15 +913,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g68" data-trivial-product aria-label="Trivial one-colour product over orbifold 2*22"><p><strong>C<sub>1</sub> product.</strong> 2<span class="orbifold-star">∗</span>22 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/035az1.htm" target="_blank" rel="noopener">Cmm2</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p4" data-wallpaper-family aria-labelledby="wallpaper-p4-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 10 / 17</p>
-        <h2 id="wallpaper-p4-title"><span class="family-orbifold">442</span> <span class="family-count">5 nontrivial lifts</span></h2>
-        <p class="family-summary">Fourfold colour phase becomes the pitch of a 4-fold screw axis.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 2 · C4: 3</p>
+        <h2 id="wallpaper-p4-title"><span class="family-orbifold">442</span> <span class="family-count">5 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -887,12 +933,16 @@
           <article class="space-entry" id="g95" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g95.webp" alt="Static perfect 2-colouring for group g95: asymmetric motifs carry phase colours for Conway type 442/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g95" target="_blank" rel="noopener" aria-label="²4²4¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>4<sup>2</sup>4<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g95" target="_blank" rel="noopener" aria-label="²4²4¹2; open colouring in catalog"><img src="output/clockwork-colorings/g95.webp" alt="Static perfect 2-colouring for group g95: asymmetric motifs carry phase colours for Conway type 442/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g95-space-name">
                 <h3 id="g95-space-name" class="space-group-name">P4<sub>2</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/077az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g94">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g95-presentation-title">
                   <h4 id="g95-presentation-title">Presentation</h4>
@@ -911,12 +961,16 @@
           <article class="space-entry" id="g96" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g96.webp" alt="Static perfect 4-colouring for group g96: asymmetric motifs carry phase colours for Conway type 442⁴/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g96" target="_blank" rel="noopener" aria-label="⁴4⁴4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g96" target="_blank" rel="noopener" aria-label="⁴4⁴4²2; open colouring in catalog"><img src="output/clockwork-colorings/g96.webp" alt="Static perfect 4-colouring for group g96: asymmetric motifs carry phase colours for Conway type 442⁴/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g96-space-name">
                 <h3 id="g96-space-name" class="space-group-name">P4<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/076az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g96-presentation-title">
                   <h4 id="g96-presentation-title">Presentation</h4>
@@ -935,12 +989,16 @@
           <article class="space-entry" id="g97" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g97.webp" alt="Static perfect 4-colouring for group g97: asymmetric motifs carry phase colours for Conway type 442⁴/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g97" target="_blank" rel="noopener" aria-label="⁴4⁴4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g97" target="_blank" rel="noopener" aria-label="⁴4⁴4²2; open colouring in catalog"><img src="output/clockwork-colorings/g97.webp" alt="Static perfect 4-colouring for group g97: asymmetric motifs carry phase colours for Conway type 442⁴/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g97-space-name">
                 <h3 id="g97-space-name" class="space-group-name">P4<sub>3</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/078az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g97-presentation-title">
                   <h4 id="g97-presentation-title">Presentation</h4>
@@ -959,12 +1017,16 @@
           <article class="space-entry" id="g98" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g98.webp" alt="Static perfect 2-colouring for group g98: asymmetric motifs carry phase colours for Conway type 442/442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g98" target="_blank" rel="noopener" aria-label="¹4²4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g98" target="_blank" rel="noopener" aria-label="¹4²4²2; open colouring in catalog"><img src="output/clockwork-colorings/g98.webp" alt="Static perfect 2-colouring for group g98: asymmetric motifs carry phase colours for Conway type 442/442." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g98-space-name">
                 <h3 id="g98-space-name" class="space-group-name">I4</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/079az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g98-presentation-title">
                   <h4 id="g98-presentation-title">Presentation</h4>
@@ -984,12 +1046,16 @@
           <article class="space-entry" id="g99" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g99.webp" alt="Static perfect 4-colouring for group g99: asymmetric motifs carry phase colours for Conway type 442⁴/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g99" target="_blank" rel="noopener" aria-label="⁴4⁴4¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<sup>4</sup>4<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g99" target="_blank" rel="noopener" aria-label="⁴4⁴4¹2; open colouring in catalog"><img src="output/clockwork-colorings/g99.webp" alt="Static perfect 4-colouring for group g99: asymmetric motifs carry phase colours for Conway type 442⁴/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g99-space-name">
                 <h3 id="g99-space-name" class="space-group-name">I4<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/080a.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g99-presentation-title">
                   <h4 id="g99-presentation-title">Presentation</h4>
@@ -1007,15 +1073,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g94" data-trivial-product aria-label="Trivial one-colour product over orbifold 442"><p><strong>C<sub>1</sub> product.</strong> 442 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/075az1.htm" target="_blank" rel="noopener">P4</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p4m" data-wallpaper-family aria-labelledby="wallpaper-p4m-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 11 / 17</p>
-        <h2 id="wallpaper-p4m-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>442</span> <span class="family-count">5 nontrivial lifts</span></h2>
-        <p class="family-summary">Vertical mirror and glide planes accompany the tetragonal axis.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 5</p>
+        <h2 id="wallpaper-p4m-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>442</span> <span class="family-count">5 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -1031,12 +1093,16 @@
           <article class="space-entry" id="g129" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g129.webp" alt="Static perfect 2-colouring for group g129: asymmetric motifs carry phase colours for Conway type *442/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g129" target="_blank" rel="noopener" aria-label="*¹4²4¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g129" target="_blank" rel="noopener" aria-label="*¹4²4¹2; open colouring in catalog"><img src="output/clockwork-colorings/g129.webp" alt="Static perfect 2-colouring for group g129: asymmetric motifs carry phase colours for Conway type *442/*2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g129-space-name">
                 <h3 id="g129-space-name" class="space-group-name">P4<sub>2</sub>mc</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/105az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g128">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g129-presentation-title">
                   <h4 id="g129-presentation-title">Presentation</h4>
@@ -1056,12 +1122,16 @@
           <article class="space-entry" id="g130" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g130.webp" alt="Static perfect 2-colouring for group g130: asymmetric motifs carry phase colours for Conway type *442/2*22." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g130" target="_blank" rel="noopener" aria-label="*²4¹4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>1</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g130" target="_blank" rel="noopener" aria-label="*²4¹4²2; open colouring in catalog"><img src="output/clockwork-colorings/g130.webp" alt="Static perfect 2-colouring for group g130: asymmetric motifs carry phase colours for Conway type *442/2*22." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g130-space-name">
                 <h3 id="g130-space-name" class="space-group-name">P4<sub>2</sub>cm</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/101az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g130-presentation-title">
                   <h4 id="g130-presentation-title">Presentation</h4>
@@ -1081,12 +1151,16 @@
           <article class="space-entry" id="g131" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g131.webp" alt="Static perfect 2-colouring for group g131: asymmetric motifs carry phase colours for Conway type *442/442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g131" target="_blank" rel="noopener" aria-label="*²4²4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>4<sup>2</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g131" target="_blank" rel="noopener" aria-label="*²4²4²2; open colouring in catalog"><img src="output/clockwork-colorings/g131.webp" alt="Static perfect 2-colouring for group g131: asymmetric motifs carry phase colours for Conway type *442/442." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g131-space-name">
                 <h3 id="g131-space-name" class="space-group-name">P4cc</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/103az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g131-presentation-title">
                   <h4 id="g131-presentation-title">Presentation</h4>
@@ -1106,12 +1180,16 @@
           <article class="space-entry" id="g136" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g136.webp" alt="Static perfect 2-colouring for group g136: asymmetric motifs carry phase colours for Conway type *442/*442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g136" target="_blank" rel="noopener" aria-label="*¹4¹4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>1</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g136" target="_blank" rel="noopener" aria-label="*¹4¹4²2; open colouring in catalog"><img src="output/clockwork-colorings/g136.webp" alt="Static perfect 2-colouring for group g136: asymmetric motifs carry phase colours for Conway type *442/*442." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g136-space-name">
                 <h3 id="g136-space-name" class="space-group-name">I4mm</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/107az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g136-presentation-title">
                   <h4 id="g136-presentation-title">Presentation</h4>
@@ -1132,12 +1210,16 @@
           <article class="space-entry" id="g138" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g138.webp" alt="Static perfect 2-colouring for group g138: asymmetric motifs carry phase colours for Conway type *442/4*2." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g138" target="_blank" rel="noopener" aria-label="*¹4²4²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>4<sup>2</sup>4<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g138" target="_blank" rel="noopener" aria-label="*¹4²4²2; open colouring in catalog"><img src="output/clockwork-colorings/g138.webp" alt="Static perfect 2-colouring for group g138: asymmetric motifs carry phase colours for Conway type *442/4*2." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g138-space-name">
                 <h3 id="g138-space-name" class="space-group-name">I4cm</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/108az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>442</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g138-presentation-title">
                   <h4 id="g138-presentation-title">Presentation</h4>
@@ -1156,15 +1238,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g128" data-trivial-product aria-label="Trivial one-colour product over orbifold *442"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>442 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/099az1.htm" target="_blank" rel="noopener">P4mm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p4g" data-wallpaper-family aria-labelledby="wallpaper-p4g-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 12 / 17</p>
-        <h2 id="wallpaper-p4g-title"><span class="family-orbifold">4<span class="orbifold-star">∗</span>2</span> <span class="family-count">5 nontrivial lifts</span></h2>
-        <p class="family-summary">Glide variants lift to the polar tetragonal 4mm family.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 3 · C4: 2</p>
+        <h2 id="wallpaper-p4g-title"><span class="family-orbifold">4<span class="orbifold-star">∗</span>2</span> <span class="family-count">5 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -1180,12 +1258,16 @@
           <article class="space-entry" id="g133" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g133.webp" alt="Static perfect 2-colouring for group g133: asymmetric motifs carry phase colours for Conway type 4*2/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g133" target="_blank" rel="noopener" aria-label="²4*²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g133" target="_blank" rel="noopener" aria-label="²4*²2; open colouring in catalog"><img src="output/clockwork-colorings/g133.webp" alt="Static perfect 2-colouring for group g133: asymmetric motifs carry phase colours for Conway type 4*2/22×." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g133-space-name">
                 <h3 id="g133-space-name" class="space-group-name">P4<sub>2</sub>bc</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/106az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g132">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">4<span class="orbifold-star">∗</span>2</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g133-presentation-title">
                   <h4 id="g133-presentation-title">Presentation</h4>
@@ -1205,12 +1287,16 @@
           <article class="space-entry" id="g134" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g134.webp" alt="Static perfect 2-colouring for group g134: asymmetric motifs carry phase colours for Conway type 4*2/2*22." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g134" target="_blank" rel="noopener" aria-label="²4*¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g134" target="_blank" rel="noopener" aria-label="²4*¹2; open colouring in catalog"><img src="output/clockwork-colorings/g134.webp" alt="Static perfect 2-colouring for group g134: asymmetric motifs carry phase colours for Conway type 4*2/2*22." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g134-space-name">
                 <h3 id="g134-space-name" class="space-group-name">P4<sub>2</sub>nm</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/102az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">4<span class="orbifold-star">∗</span>2</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g134-presentation-title">
                   <h4 id="g134-presentation-title">Presentation</h4>
@@ -1230,12 +1316,16 @@
           <article class="space-entry" id="g135" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g135.webp" alt="Static perfect 2-colouring for group g135: asymmetric motifs carry phase colours for Conway type 4*2/442." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g135" target="_blank" rel="noopener" aria-label="¹4*²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g135" target="_blank" rel="noopener" aria-label="¹4*²2; open colouring in catalog"><img src="output/clockwork-colorings/g135.webp" alt="Static perfect 2-colouring for group g135: asymmetric motifs carry phase colours for Conway type 4*2/442." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g135-space-name">
                 <h3 id="g135-space-name" class="space-group-name">P4nc</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/104az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">4<span class="orbifold-star">∗</span>2</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g135-presentation-title">
                   <h4 id="g135-presentation-title">Presentation</h4>
@@ -1255,12 +1345,16 @@
           <article class="space-entry" id="g137" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g137.webp" alt="Static perfect 4-colouring for group g137: asymmetric motifs carry phase colours for Conway type 4*2⁴/*2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g137" target="_blank" rel="noopener" aria-label="⁴4*¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g137" target="_blank" rel="noopener" aria-label="⁴4*¹2; open colouring in catalog"><img src="output/clockwork-colorings/g137.webp" alt="Static perfect 4-colouring for group g137: asymmetric motifs carry phase colours for Conway type 4*2⁴/*2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g137-space-name">
                 <h3 id="g137-space-name" class="space-group-name">I4<sub>1</sub>md</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/109az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">4<span class="orbifold-star">∗</span>2</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g137-presentation-title">
                   <h4 id="g137-presentation-title">Presentation</h4>
@@ -1280,12 +1374,16 @@
           <article class="space-entry" id="g139" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g139.webp" alt="Static perfect 4-colouring for group g139: asymmetric motifs carry phase colours for Conway type 4*2⁴/22×." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g139" target="_blank" rel="noopener" aria-label="⁴4*²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>4</sup>4<span class="orbifold-star">∗</span><sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g139" target="_blank" rel="noopener" aria-label="⁴4*²2; open colouring in catalog"><img src="output/clockwork-colorings/g139.webp" alt="Static perfect 4-colouring for group g139: asymmetric motifs carry phase colours for Conway type 4*2⁴/22×." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g139-space-name">
                 <h3 id="g139-space-name" class="space-group-name">I4<sub>1</sub>cd</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/110az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">4<span class="orbifold-star">∗</span>2</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g139-presentation-title">
                   <h4 id="g139-presentation-title">Presentation</h4>
@@ -1303,15 +1401,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g132" data-trivial-product aria-label="Trivial one-colour product over orbifold 4*2"><p><strong>C<sub>1</sub> product.</strong> 4<span class="orbifold-star">∗</span>2 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/100az1.htm" target="_blank" rel="noopener">P4bm</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p3" data-wallpaper-family aria-labelledby="wallpaper-p3-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 13 / 17</p>
-        <h2 id="wallpaper-p3-title"><span class="family-orbifold">333</span> <span class="family-count">3 nontrivial lifts</span></h2>
-        <p class="family-summary">Threefold phases distinguish P3₁, P3₂, and the rhombohedral lift.</p>
-        <p class="family-census">More-than-one-colour orders · C3: 3</p>
+        <h2 id="wallpaper-p3-title"><span class="family-orbifold">333</span> <span class="family-count">3 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -1325,12 +1419,16 @@
           <article class="space-entry" id="g225" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g225.webp" alt="Static perfect 3-colouring for group g225: asymmetric motifs carry phase colours for Conway type 333³/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g225" target="_blank" rel="noopener" aria-label="³3³3³3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g225" target="_blank" rel="noopener" aria-label="³3³3³3; open colouring in catalog"><img src="output/clockwork-colorings/g225.webp" alt="Static perfect 3-colouring for group g225: asymmetric motifs carry phase colours for Conway type 333³/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g225-space-name">
                 <h3 id="g225-space-name" class="space-group-name">P3<sub>2</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/145az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g224">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">333</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/143az1.htm" target="_blank" rel="noopener">P3</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g225-presentation-title">
                   <h4 id="g225-presentation-title">Presentation</h4>
@@ -1349,12 +1447,16 @@
           <article class="space-entry" id="g226" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g226.webp" alt="Static perfect 3-colouring for group g226: asymmetric motifs carry phase colours for Conway type 333³/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g226" target="_blank" rel="noopener" aria-label="³3³3³3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>3</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g226" target="_blank" rel="noopener" aria-label="³3³3³3; open colouring in catalog"><img src="output/clockwork-colorings/g226.webp" alt="Static perfect 3-colouring for group g226: asymmetric motifs carry phase colours for Conway type 333³/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g226-space-name">
                 <h3 id="g226-space-name" class="space-group-name">P3<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/144az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">333</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/143az1.htm" target="_blank" rel="noopener">P3</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g226-presentation-title">
                   <h4 id="g226-presentation-title">Presentation</h4>
@@ -1373,12 +1475,16 @@
           <article class="space-entry" id="g227" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g227.webp" alt="Static perfect 3-colouring for group g227: asymmetric motifs carry phase colours for Conway type 333³/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g227" target="_blank" rel="noopener" aria-label="³3³3¹3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<sup>3</sup>3<sup>1</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g227" target="_blank" rel="noopener" aria-label="³3³3¹3; open colouring in catalog"><img src="output/clockwork-colorings/g227.webp" alt="Static perfect 3-colouring for group g227: asymmetric motifs carry phase colours for Conway type 333³/333." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g227-space-name">
                 <h3 id="g227-space-name" class="space-group-name">R3</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/146az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">333</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/143az1.htm" target="_blank" rel="noopener">P3</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g227-presentation-title">
                   <h4 id="g227-presentation-title">Presentation</h4>
@@ -1396,15 +1502,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g224" data-trivial-product aria-label="Trivial one-colour product over orbifold 333"><p><strong>C<sub>1</sub> product.</strong> 333 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/143az1.htm" target="_blank" rel="noopener">P3</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p3m1" data-wallpaper-family aria-labelledby="wallpaper-p3m1-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 14 / 17</p>
-        <h2 id="wallpaper-p3m1-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>333</span> <span class="family-count">1 nontrivial lift</span></h2>
-        <p class="family-summary">The first trigonal mirror orientation lifts to P3m1 and P3c1.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 1</p>
+        <h2 id="wallpaper-p3m1-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>333</span> <span class="family-count">1 lift</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -1416,12 +1518,16 @@
           <article class="space-entry" id="g231" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g231.webp" alt="Static perfect 2-colouring for group g231: asymmetric motifs carry phase colours for Conway type *333/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g231" target="_blank" rel="noopener" aria-label="*²3²3²3; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>3<sup>2</sup>3<sup>2</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g231" target="_blank" rel="noopener" aria-label="*²3²3²3; open colouring in catalog"><img src="output/clockwork-colorings/g231.webp" alt="Static perfect 2-colouring for group g231: asymmetric motifs carry phase colours for Conway type *333/333." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g231-space-name">
                 <h3 id="g231-space-name" class="space-group-name">P3c1</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/158az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g230">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>333</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/156az1.htm" target="_blank" rel="noopener">P3m1</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g231-presentation-title">
                   <h4 id="g231-presentation-title">Presentation</h4>
@@ -1439,15 +1545,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g230" data-trivial-product aria-label="Trivial one-colour product over orbifold *333"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>333 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/156az1.htm" target="_blank" rel="noopener">P3m1</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p31m" data-wallpaper-family aria-labelledby="wallpaper-p31m-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 15 / 17</p>
-        <h2 id="wallpaper-p31m-title"><span class="family-orbifold">3<span class="orbifold-star">∗</span>3</span> <span class="family-count">3 nontrivial lifts</span></h2>
-        <p class="family-summary">The second mirror orientation also supplies the rhombohedral R3m/R3c pair.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 1 · C3: 1 · C6: 1</p>
+        <h2 id="wallpaper-p31m-title"><span class="family-orbifold">3<span class="orbifold-star">∗</span>3</span> <span class="family-count">3 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -1461,12 +1563,16 @@
           <article class="space-entry" id="g233" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g233.webp" alt="Static perfect 2-colouring for group g233: asymmetric motifs carry phase colours for Conway type 3*3/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g233" target="_blank" rel="noopener" aria-label="¹3*²3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>1</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g233" target="_blank" rel="noopener" aria-label="¹3*²3; open colouring in catalog"><img src="output/clockwork-colorings/g233.webp" alt="Static perfect 2-colouring for group g233: asymmetric motifs carry phase colours for Conway type 3*3/333." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g233-space-name">
                 <h3 id="g233-space-name" class="space-group-name">P31c</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/159az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g232">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">3<span class="orbifold-star">∗</span>3</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/157az1.htm" target="_blank" rel="noopener">P31m</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g233-presentation-title">
                   <h4 id="g233-presentation-title">Presentation</h4>
@@ -1486,12 +1592,16 @@
           <article class="space-entry" id="g234" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g234.webp" alt="Static perfect 3-colouring for group g234: asymmetric motifs carry phase colours for Conway type 3*3³/*333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g234" target="_blank" rel="noopener" aria-label="³3*¹3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>1</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g234" target="_blank" rel="noopener" aria-label="³3*¹3; open colouring in catalog"><img src="output/clockwork-colorings/g234.webp" alt="Static perfect 3-colouring for group g234: asymmetric motifs carry phase colours for Conway type 3*3³/*333." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g234-space-name">
                 <h3 id="g234-space-name" class="space-group-name">R3m</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/160az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">3<span class="orbifold-star">∗</span>3</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/157az1.htm" target="_blank" rel="noopener">P31m</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g234-presentation-title">
                   <h4 id="g234-presentation-title">Presentation</h4>
@@ -1511,12 +1621,16 @@
           <article class="space-entry" id="g235" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g235.webp" alt="Static perfect 6-colouring for group g235: asymmetric motifs carry phase colours for Conway type 3*3⁶/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g235" target="_blank" rel="noopener" aria-label="³3*²3; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>3<span class="orbifold-star">∗</span><sup>2</sup>3</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g235" target="_blank" rel="noopener" aria-label="³3*²3; open colouring in catalog"><img src="output/clockwork-colorings/g235.webp" alt="Static perfect 6-colouring for group g235: asymmetric motifs carry phase colours for Conway type 3*3⁶/333." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g235-space-name">
                 <h3 id="g235-space-name" class="space-group-name">R3c</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/161az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">3<span class="orbifold-star">∗</span>3</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/157az1.htm" target="_blank" rel="noopener">P31m</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g235-presentation-title">
                   <h4 id="g235-presentation-title">Presentation</h4>
@@ -1534,15 +1648,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g232" data-trivial-product aria-label="Trivial one-colour product over orbifold 3*3"><p><strong>C<sub>1</sub> product.</strong> 3<span class="orbifold-star">∗</span>3 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/157az1.htm" target="_blank" rel="noopener">P31m</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p6" data-wallpaper-family aria-labelledby="wallpaper-p6-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 16 / 17</p>
-        <h2 id="wallpaper-p6-title"><span class="family-orbifold">632</span> <span class="family-count">5 nontrivial lifts</span></h2>
-        <p class="family-summary">Sixfold cyclic phases become the complete P6 through P6₅ screw series.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 1 · C3: 2 · C6: 2</p>
+        <h2 id="wallpaper-p6-title"><span class="family-orbifold">632</span> <span class="family-count">5 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -1558,12 +1668,16 @@
           <article class="space-entry" id="g244" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g244.webp" alt="Static perfect 3-colouring for group g244: asymmetric motifs carry phase colours for Conway type 632³/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g244" target="_blank" rel="noopener" aria-label="³6³3¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g244" target="_blank" rel="noopener" aria-label="³6³3¹2; open colouring in catalog"><img src="output/clockwork-colorings/g244.webp" alt="Static perfect 3-colouring for group g244: asymmetric motifs carry phase colours for Conway type 632³/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g244-space-name">
                 <h3 id="g244-space-name" class="space-group-name">P6<sub>2</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/171az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g243">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g244-presentation-title">
                   <h4 id="g244-presentation-title">Presentation</h4>
@@ -1582,12 +1696,16 @@
           <article class="space-entry" id="g245" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g245.webp" alt="Static perfect 3-colouring for group g245: asymmetric motifs carry phase colours for Conway type 632³/2222." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g245" target="_blank" rel="noopener" aria-label="³6³3¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>3</sup>6<sup>3</sup>3<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g245" target="_blank" rel="noopener" aria-label="³6³3¹2; open colouring in catalog"><img src="output/clockwork-colorings/g245.webp" alt="Static perfect 3-colouring for group g245: asymmetric motifs carry phase colours for Conway type 632³/2222." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g245-space-name">
                 <h3 id="g245-space-name" class="space-group-name">P6<sub>4</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/172az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g245-presentation-title">
                   <h4 id="g245-presentation-title">Presentation</h4>
@@ -1606,12 +1724,16 @@
           <article class="space-entry" id="g246" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g246.webp" alt="Static perfect 2-colouring for group g246: asymmetric motifs carry phase colours for Conway type 632/333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g246" target="_blank" rel="noopener" aria-label="²6¹3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>2</sup>6<sup>1</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g246" target="_blank" rel="noopener" aria-label="²6¹3²2; open colouring in catalog"><img src="output/clockwork-colorings/g246.webp" alt="Static perfect 2-colouring for group g246: asymmetric motifs carry phase colours for Conway type 632/333." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g246-space-name">
                 <h3 id="g246-space-name" class="space-group-name">P6<sub>3</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/173az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g246-presentation-title">
                   <h4 id="g246-presentation-title">Presentation</h4>
@@ -1630,12 +1752,16 @@
           <article class="space-entry" id="g247" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g247.webp" alt="Static perfect 6-colouring for group g247: asymmetric motifs carry phase colours for Conway type 632⁶/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g247" target="_blank" rel="noopener" aria-label="⁶6³3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g247" target="_blank" rel="noopener" aria-label="⁶6³3²2; open colouring in catalog"><img src="output/clockwork-colorings/g247.webp" alt="Static perfect 6-colouring for group g247: asymmetric motifs carry phase colours for Conway type 632⁶/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g247-space-name">
                 <h3 id="g247-space-name" class="space-group-name">P6<sub>5</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/170az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g247-presentation-title">
                   <h4 id="g247-presentation-title">Presentation</h4>
@@ -1654,12 +1780,16 @@
           <article class="space-entry" id="g248" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g248.webp" alt="Static perfect 6-colouring for group g248: asymmetric motifs carry phase colours for Conway type 632⁶/◦." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g248" target="_blank" rel="noopener" aria-label="⁶6³3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><sup>6</sup>6<sup>3</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g248" target="_blank" rel="noopener" aria-label="⁶6³3²2; open colouring in catalog"><img src="output/clockwork-colorings/g248.webp" alt="Static perfect 6-colouring for group g248: asymmetric motifs carry phase colours for Conway type 632⁶/◦." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g248-space-name">
                 <h3 id="g248-space-name" class="space-group-name">P6<sub>1</sub></h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/169az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold">632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g248-presentation-title">
                   <h4 id="g248-presentation-title">Presentation</h4>
@@ -1676,15 +1806,11 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g243" data-trivial-product aria-label="Trivial one-colour product over orbifold 632"><p><strong>C<sub>1</sub> product.</strong> 632 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/168az1.htm" target="_blank" rel="noopener">P6</a></p></aside>
     </section>
 
     <section class="wallpaper-family space-family" id="wallpaper-p6m" data-wallpaper-family aria-labelledby="wallpaper-p6m-title">
       <header class="family-header">
-        <p class="section-number">Orbifold family 17 / 17</p>
-        <h2 id="wallpaper-p6m-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>632</span> <span class="family-count">3 nontrivial lifts</span></h2>
-        <p class="family-summary">Hexagonal mirrors and glides give the four polar 6mm space groups.</p>
-        <p class="family-census">More-than-one-colour orders · C2: 3</p>
+        <h2 id="wallpaper-p6m-title"><span class="family-orbifold"><span class="orbifold-star">∗</span>632</span> <span class="family-count">3 lifts</span></h2>
       </header>
 
       <div class="space-tabs" data-space-tabs>
@@ -1698,12 +1824,16 @@
           <article class="space-entry" id="g269" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g269.webp" alt="Static perfect 2-colouring for group g269: asymmetric motifs carry phase colours for Conway type *632/3*3." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g269" target="_blank" rel="noopener" aria-label="*¹6²3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>1</sup>6<sup>2</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g269" target="_blank" rel="noopener" aria-label="*¹6²3²2; open colouring in catalog"><img src="output/clockwork-colorings/g269.webp" alt="Static perfect 2-colouring for group g269: asymmetric motifs carry phase colours for Conway type *632/3*3." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g269-space-name">
                 <h3 id="g269-space-name" class="space-group-name">P6<sub>3</sub>cm</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/185az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group" id="g268">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/183az1.htm" target="_blank" rel="noopener">P6mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g269-presentation-title">
                   <h4 id="g269-presentation-title">Presentation</h4>
@@ -1723,12 +1853,16 @@
           <article class="space-entry" id="g270" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g270.webp" alt="Static perfect 2-colouring for group g270: asymmetric motifs carry phase colours for Conway type *632/632." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g270" target="_blank" rel="noopener" aria-label="*²6²3²2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>2</sup>3<sup>2</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g270" target="_blank" rel="noopener" aria-label="*²6²3²2; open colouring in catalog"><img src="output/clockwork-colorings/g270.webp" alt="Static perfect 2-colouring for group g270: asymmetric motifs carry phase colours for Conway type *632/632." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g270-space-name">
                 <h3 id="g270-space-name" class="space-group-name">P6cc</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/184az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/183az1.htm" target="_blank" rel="noopener">P6mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g270-presentation-title">
                   <h4 id="g270-presentation-title">Presentation</h4>
@@ -1748,12 +1882,16 @@
           <article class="space-entry" id="g271" data-space-tabpanel>
             <div class="entry-pair">
               <figure class="colouring-card">
-                <img src="output/clockwork-colorings/g271.webp" alt="Static perfect 2-colouring for group g271: asymmetric motifs carry phase colours for Conway type *632/*333." width="720" height="420" loading="lazy" decoding="async">
-                <figcaption><a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g271" target="_blank" rel="noopener" aria-label="*²6¹3¹2; open colouring in catalog"><span class="colouring-signature book-color-signature"><span class="orbifold-star">∗</span><sup>2</sup>6<sup>1</sup>3<sup>1</sup>2</span><span>Open colouring in catalog</span></a></figcaption>
+                <a class="colouring-catalog-link" href="https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward#g271" target="_blank" rel="noopener" aria-label="*²6¹3¹2; open colouring in catalog"><img src="output/clockwork-colorings/g271.webp" alt="Static perfect 2-colouring for group g271: asymmetric motifs carry phase colours for Conway type *632/*333." width="720" height="420" loading="lazy" decoding="async"><span>Colouring ↗</span></a>
               </figure>
               <section class="space-group-summary" aria-labelledby="g271-space-name">
                 <h3 id="g271-space-name" class="space-group-name">P6<sub>3</sub>mc</h3>
                 <a class="ucl-link" href="http://img.chem.ucl.ac.uk/sgp/large/186az1.htm" target="_blank" rel="noopener" aria-describedby="ucl-credit">UCL space-group page</a>
+
+                <dl class="base-group">
+                  <dt>Base group</dt>
+                  <dd><span class="base-orbifold"><span class="orbifold-star">∗</span>632</span> <span aria-hidden="true">·</span> <a class="base-group-link" href="http://img.chem.ucl.ac.uk/sgp/large/183az1.htm" target="_blank" rel="noopener">P6mm</a></dd>
+                </dl>
 
                 <section class="space-group-presentation" aria-labelledby="g271-presentation-title">
                   <h4 id="g271-presentation-title">Presentation</h4>
@@ -1771,22 +1909,12 @@
           </article>
         </div>
       </div>
-      <aside class="trivial-product" id="g268" data-trivial-product aria-label="Trivial one-colour product over orbifold *632"><p><strong>C<sub>1</sub> product.</strong> <span class="orbifold-star">∗</span>632 <span aria-hidden="true">↔</span> <a href="http://img.chem.ucl.ac.uk/sgp/large/183az1.htm" target="_blank" rel="noopener">P6mm</a></p></aside>
     </section>
     </div>
 
     <section class="sources" aria-labelledby="provenance-title">
-      <p class="section-number">Audit trail</p>
-      <h2 id="provenance-title">Pinned identifications and reproducible plates</h2>
-      <p>The <a href="data/space-group-correspondence.json">complete 68-record JSON</a> stores every lifted operation, pinned Hermann–Mauguin identification, and exact presentation relative to the displayed lift cell. This page displays the 51 records with N &gt; 1 and keeps the 17 C1 products as compact grey audit notes. The identifications are pinned from spglib 2.6.0. The source colouring data has SHA-256 <code>242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330</code>.</p>
-      <p id="ucl-credit">Each displayed group links to Jeremy K. Cockcroft’s <a href="http://img.chem.ucl.ac.uk/sgp/large/sgp.htm" target="_blank" rel="noopener"><cite>A Hypertext Book of Crystallographic Space Group Diagrams and Tables</cite></a> at UCL/Birkbeck College. The original UCL HTML and GIF are not copied into this repository.</p>
-      <ul>
-        <li><a href="https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html">IUCr: <cite>Crystallographic shelves: space-group hierarchy explained</cite></a> identifies the ten polar crystal classes and their 68 space-group types.</li>
-        <li><a href="https://doi.org/10.1107/S0365110X57001966">A. L. Mackay, <cite>Extensions of space-group theory</cite></a> develops the colour/extra-coordinate relationship.</li>
-        <li><a href="https://arxiv.org/abs/math/9911185">Conway, Delgado Friedrichs, Huson &amp; Thurston, <cite>On Three-Dimensional Space Groups</cite></a> organizes space groups as fibrations over plane crystallographic groups.</li>
-      </ul>
-      <pre><code>python3 scripts/generate_space_group_correspondence.py
-python3 scripts/generate_space_group_correspondence.py --check</code></pre>
+      <h2 id="provenance-title">Data</h2>
+      <p><a href="data/space-group-correspondence.json">68-record JSON</a> · <a id="ucl-credit" href="http://img.chem.ucl.ac.uk/sgp/large/sgp.htm" target="_blank" rel="noopener">UCL tables</a> · <a href="https://journals.iucr.org/j/issues/2018/05/00/in5013/index.html">IUCr hierarchy</a> · <a href="https://doi.org/10.1107/S0365110X57001966">Mackay</a> · <a href="https://arxiv.org/abs/math/9911185">Conway et al.</a> · SHA-256 <code>242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330</code></p>
     </section>
 
     <footer>

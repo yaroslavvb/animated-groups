@@ -268,7 +268,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             content_marker = (
                 "data-clockwork-tabs"
                 if any(group["parent"]["hm"] == base for group in self.display_groups)
-                else 'class="family-empty"'
+                else "</header>"
             )
             self.assertGreater(trivial_position, family_html.index(content_marker), base)
             self.assertEqual(family_html.count("data-trivial-product"), 1, base)
@@ -298,12 +298,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ["wallpaper-p1", "wallpaper-pm", "wallpaper-pg"],
         )
         for base in correspondence.BASE_ORDER:
-            summary, note = correspondence.WALLPAPER_SUMMARIES[base]
+            summary = correspondence.WALLPAPER_SUMMARIES[base]
             self.assertIn(correspondence.orbifold_html(summary), self.page)
-            self.assertIn(correspondence.orbifold_html(note), self.page)
 
-        self.assertIn("No nontrivial forward lift occurs", self.page)
-        self.assertIn("Nontrivial orders · none", self.page)
+        self.assertNotIn("Forward note", self.page)
+        self.assertNotIn("No nontrivial forward lift occurs", self.page)
+        self.assertNotIn("Nontrivial orders", self.page)
+        self.assertNotIn('class="family-empty"', self.page)
 
         script = (ROOT / "clockwork-coloring-correspondence.js").read_text(encoding="utf-8")
         self.assertIn("initializeClockworkTabs", script)
@@ -338,7 +339,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         display_ids = [group["id"] for group in self.display_groups]
         self.assertEqual(self.parser.other_names_ids, display_ids)
         self.assertEqual(
-            self.page.count("Other names and instances"),
+            self.page.count("Identifications"),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
@@ -682,7 +683,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=count-summary", self.page)
+        self.assertIn("?v=concise-catalog", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -707,7 +708,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         for conventional_name in correspondence.BASE_ORDER:
             self.assertNotIn(f"({conventional_name})", self.page)
 
-        self.assertEqual(self.page.count("Orbifold family"), 17)
+        self.assertNotIn("Orbifold family", self.page)
         self.assertNotIn("Projected group G", self.page)
         self.assertNotIn("Colour-fixing subgroup K", self.page)
         self.assertNotIn("Regular quotient", self.page)
@@ -718,7 +719,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn('class="book-audit', self.page)
         self.assertNotIn('class="orientation-note"', self.page)
         self.assertNotIn("The phase character maps", self.page)
-        self.assertEqual(self.page.count("Static perfect-colouring plate"), 51)
+        self.assertNotIn("Static perfect-colouring plate", self.page)
         self.assertEqual(
             self.parser.wallpaper_links,
             [
@@ -744,7 +745,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn('href="#wallpaper-p1"', directory_html)
         self.assertNotIn('href="#wallpaper-pm"', directory_html)
         self.assertNotIn('href="#wallpaper-pg"', directory_html)
-        self.assertIn("68 forward groups · 17 plane-orbifold families", directory_html)
+        self.assertNotIn("68 forward groups · 17 plane-orbifold families", directory_html)
         three_plus_groups = [
             group for group in self.display_groups if group["clock_order"] >= 3
         ]
@@ -1276,7 +1277,7 @@ process.stdout.write(JSON.stringify({
         self.assertIn('this.controls.addEventListener("keydown"', script)
         self.assertIn('event.key === "ArrowRight"', script)
         self.assertIn('event.key === "Home"', script)
-        self.assertIn("fixed phase ruler, smooth hand", self.page)
+        self.assertNotIn("fixed phase ruler, smooth hand", self.page)
         self.assertNotIn("The upper canvas repeats one continuously animated asymmetric motif", self.page)
         self.assertNotIn("autoplay", self.page.lower())
         self.assertNotIn("autoplay", script.lower())
@@ -1285,8 +1286,8 @@ process.stdout.write(JSON.stringify({
         self.assertNotIn('src="https://yaroslavvb.github.io/animated-groups-fable', self.page)
         self.assertNotIn('href="https://yaroslavvb.github.io/animated-groups-fable/js/', self.page)
         self.assertNotIn("https://yaroslavvb.github.io/animated-groups-fable", script)
-        self.assertIn("no runtime data or code is loaded from", self.page)
-        self.assertIn("paused by default", self.page)
+        self.assertNotIn("no runtime data or code is loaded from", self.page)
+        self.assertNotIn("paused by default", self.page)
 
     def test_navigation_links_the_correspondence_from_both_existing_pages(self) -> None:
         for page in (ROOT / "index.html", ROOT / "future-directions.html"):
