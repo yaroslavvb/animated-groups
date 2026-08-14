@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive visualization of dihedral groups, subgroups, cosets, colourings, and spacetime clockwork lifts.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Dihedral Groups — Interactive Visualizer</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <link rel="stylesheet" href="dihedral-interactive.css?v=1.0">
+</head>
+<body>
+  <a class="skip-link" href="#dihedral-app">Skip to interactive explorer</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="future-directions.html">Colours</a>
+        <a href="clockwork-coloring-correspondence.html">Correspondence</a>
+        <a href="space-group-correspondence.html">Space groups</a>
+        <a href="dihedral-interactive.html" aria-current="page">Dihedral Interactive</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-container" id="dihedral-app">
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-badge">Interactive Group Theory</div>
+      <h1 class="hero-title">Dihedral Groups <span aria-hidden="true">·</span> Symmetries & Colourings</h1>
+      <p class="hero-subtitle">
+        Explore rotations, reflections, subgroups, and coset colourings of dihedral groups. 
+        Every colouring of a regular polygon is computed live from its subgroup lattice, 
+        illustrating how discrete symmetries lift to spacetime clockwork crystals.
+      </p>
+    </section>
+
+    <!-- Master Controls Bar -->
+    <section class="master-controls" aria-label="Group Selection and Display Options">
+      <div class="control-group">
+        <span class="control-label">Group:</span>
+        <div class="btn-pill-group" role="group" aria-label="Select Dihedral Group">
+          <button type="button" class="btn-pill" data-n="2">D₂ (rect)</button>
+          <button type="button" class="btn-pill" data-n="3">D₃ (triangle)</button>
+          <button type="button" class="btn-pill" data-n="4">D₄ (square)</button>
+          <button type="button" class="btn-pill" data-n="5">D₅ (pentagon)</button>
+          <button type="button" class="btn-pill active" data-n="6">D₆ (hexagon)</button>
+          <button type="button" class="btn-pill" data-n="8">D₈ (octagon)</button>
+          <button type="button" class="btn-pill" data-n="12">D₁₂ (dodecagon)</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="motif-style-select">Motif:</label>
+        <select id="motif-style-select" class="select-control">
+          <option value="comma" selected>Chiral Comma</option>
+          <option value="letter">Blocky 'R' Letter</option>
+          <option value="dart">Asymmetric Dart</option>
+        </select>
+
+        <label style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.88rem;cursor:pointer;margin-left:0.5rem;">
+          <input type="checkbox" id="toggle-labels-check" checked>
+          <span>Show labels</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- View Tabs Navigation -->
+    <nav class="view-tabs-nav" aria-label="Explorer views">
+      <button type="button" class="view-tab-btn active" data-tab="tab-studio">
+        <span>Interactive Studio</span>
+      </button>
+      <button type="button" class="view-tab-btn" data-tab="tab-subgroups">
+        <span>All Subgroup Colourings</span>
+        <span class="tab-badge" id="filter-count">10 classes</span>
+      </button>
+      <button type="button" class="view-tab-btn" data-tab="tab-cayley">
+        <span>Cayley Table & Relations</span>
+      </button>
+      <button type="button" class="view-tab-btn" data-tab="tab-theory">
+        <span>Theory & Worked Guide</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: Interactive Studio -->
+    <section id="tab-studio" class="tab-panel active">
+      <div class="studio-grid">
+        <!-- Left Column: Canvas Card & Action Keypad -->
+        <div class="canvas-card">
+          <div class="canvas-header">
+            <div>
+              <h2 class="canvas-title">Symmetry Action</h2>
+              <div class="canvas-subtitle">Click keypad or motifs to apply symmetries</div>
+            </div>
+          </div>
+
+          <div class="main-stage">
+            <canvas id="main-stage-canvas" width="440" height="440"></canvas>
+            <div class="stage-overlay">
+              <div class="stage-hint">Hover a motif or symmetry to inspect</div>
+            </div>
+          </div>
+
+          <!-- Spacetime Playback Scrubber for Clockwork -->
+          <div class="playback-bar">
+            <button type="button" class="play-toggle-btn" id="play-toggle-btn" aria-label="Play animation">▶</button>
+            <input type="range" class="scrubber-slider" id="phase-slider" min="0" max="1" step="0.005" value="0" aria-label="Spacetime phase scrubber">
+            <span class="phase-counter" id="phase-counter">0°</span>
+          </div>
+
+          <!-- Symmetry Operation Keypad -->
+          <div class="action-keypad" id="action-keypad"></div>
+        </div>
+
+        <!-- Right Column: Info Deck & Mathematics -->
+        <div class="info-deck">
+          <!-- Active Permutation Readout -->
+          <div class="cycle-box" id="active-permutation-box">
+            <div><strong>Active Operator:</strong> <span class="mono">1 (Identity)</span></div>
+            <div><strong>Palette Permutation:</strong> <span class="mono">(identity)</span></div>
+          </div>
+
+          <!-- Selected Subgroup & Colouring Breakdown -->
+          <div class="deck-section" id="subgroup-details-card">
+            <h3>
+              <span id="detail-subgroup-name">Subgroup H</span>
+            </h3>
+
+            <div class="math-card">
+              <div class="math-card-title">Colouring Recipe (Left Cosets)</div>
+              <div>Subgroup elements: <span class="mono" id="detail-subgroup-elements">...</span></div>
+              <div style="margin-top:0.25rem;">Kernel core(<i>H</i>): <span class="mono" id="detail-kernel-elements">...</span></div>
+            </div>
+
+            <div class="subgroup-details">
+              <div class="detail-row">
+                <span class="detail-label">Palette Size</span>
+                <span class="detail-value" id="detail-index">...</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Normality & Action</span>
+                <span class="detail-value" id="detail-normality">...</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Colour Group G / core(H)</span>
+                <span class="detail-value" id="detail-color-group">...</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Clockwork / Spacetime Lift</span>
+                <span class="detail-value" id="detail-clockwork">...</span>
+              </div>
+            </div>
+
+            <div style="margin-top:1.25rem;">
+              <div style="font-size:0.82rem;font-weight:600;color:var(--muted);text-transform:uppercase;margin-bottom:0.4rem;">Coset Colour Palette</div>
+              <div class="palette-swatches" id="detail-palette-swatches"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Subgroup Lattice & All Colourings -->
+    <section id="tab-subgroups" class="tab-panel">
+      <div class="filter-bar">
+        <label class="control-label" for="subgroup-filter-select">Filter Subgroups:</label>
+        <select id="subgroup-filter-select" class="select-control">
+          <option value="all">All Conjugacy Classes</option>
+          <option value="normal">Normal Subgroups Only (Regular actions)</option>
+          <option value="non-normal">Non-Normal Subgroups Only</option>
+          <option value="cyclic">Clockwork-Eligible (Cyclic colour groups)</option>
+          <option value="2color">Two-Colourings (Index 2 / Magnetic cases)</option>
+        </select>
+      </div>
+
+      <div class="subgroups-grid" id="subgroups-grid"></div>
+    </section>
+
+    <!-- TAB 3: Cayley Table & Multiplication -->
+    <section id="tab-cayley" class="tab-panel">
+      <div class="deck-section">
+        <h3>Dihedral Multiplication Table</h3>
+        <p style="font-size:0.95rem;color:var(--muted);margin:0 0 1rem;">
+          Row element <i>a</i> multiplied on the right by column element <i>b</i>: 
+          <b>(<i>a</i> · <i>b</i>)</b>. Symmetries satisfy the dihedral reflection-reversal law: 
+          <span class="mono">s · r · s = r⁻¹</span> and <span class="mono">s² = 1</span>.
+        </p>
+        <div class="table-wrap" id="cayley-table-wrap"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Theory & Worked Guide -->
+    <section id="tab-theory" class="tab-panel">
+      <article class="theory-article">
+        <h2>A Worked Example: Colourings from Subgroups</h2>
+        <p>
+          A colouring is not something you invent arbitrarily: <b>it is something you choose a subgroup for</b>.
+          Copies of an asymmetric motif are labelled by group elements, the colours are the left cosets of a chosen 
+          subgroup <i>H</i>, and all properties — the palette size, the stabilisers, and whether the colouring can be 
+          run as a clock — follow directly from group theory.
+        </p>
+
+        <h3>1. Copies are labelled by group elements</h3>
+        <p>
+          Draw one asymmetric motif inside the fundamental domain. The dihedral group <i>D<sub>n</sub></i> produces 
+          2<i>n</i> copies — exactly one per group element. Half read as right-handed and half as left-handed 
+          (the reflections).
+        </p>
+
+        <h3>2. Cosets partition the group</h3>
+        <p>
+          Fix a subgroup <i>H</i> ≤ <i>G</i>. The <b>left coset</b> of an element <i>g</i> is:
+        </p>
+        <p style="text-align:center;" class="mono">gH = { g · h : h ∈ H }</p>
+        <p>
+          Every element lies in exactly one coset, and there are |<i>G</i>| / |<i>H</i>| cosets in total. 
+          Painting copy <i>g</i> with the colour of its coset <i>gH</i> guarantees that the group action 
+          consistently permutes the colour palette.
+        </p>
+
+        <div class="math-card highlight">
+          <div class="math-card-title">Stabiliser vs. Kernel vs. Colour Group</div>
+          <p style="margin:0.25rem 0;">
+            • <b>Stabiliser of colour <i>gH</i>:</b> The conjugate subgroup <i>g H g</i>⁻¹.<br>
+            • <b>Kernel core(<i>H</i>):</b> The intersection ⋂<sub><i>g</i></sub> <i>g H g</i>⁻¹ of all stabilisers.<br>
+            • <b>Colour group:</b> The quotient <i>G</i> / core(<i>H</i>). When <i>H</i> is normal, 
+            stabiliser = kernel and the action is <i>regular</i>.
+          </p>
+        </div>
+
+        <h3>3. Connection to Spacetime Clockwork Crystals</h3>
+        <p>
+          When the colour group <i>G</i> / core(<i>H</i>) is <b>cyclic</b>, the colours can be arranged as 
+          phases <i>j</i>/<i>N</i> on a clock. Advancing the phase continuously in time produces a periodic 
+          animation — and lifts the 2D pattern into a 3D polar space group.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>Spacetime groups: interactive dihedral visualizer</span>
+      <a href="https://github.com/yaroslavvb/animated-groups">GitHub Repository</a>
+    </div>
+  </footer>
+
+  <script type="module" src="dihedral-interactive.js?v=1.0"></script>
+</body>
+</html>

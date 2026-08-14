@@ -1104,6 +1104,7 @@ def page_html(payload: dict[str, Any]) -> str:
         <a href="future-directions.html">Colours</a>
         <a href="clockwork-coloring-correspondence.html">Correspondence</a>
         <a href="space-group-correspondence.html" aria-current="page">Space groups</a>
+        <a href="dihedral-interactive.html">Dihedral</a>
         <a href="docs/orbifold_notation.html">Notation</a>
         <a href="data/space-group-correspondence.json">Data</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
