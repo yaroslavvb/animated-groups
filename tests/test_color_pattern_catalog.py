@@ -13,6 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import generate_color_pattern_catalog as catalog  # noqa: E402
+from chaim_short_signatures import (  # noqa: E402
+    THREE_FOLD_SHORT_SIGNATURE_BY_TYPE,
+    TWO_FOLD_SHORT_SIGNATURE_BY_TYPE,
+)
 
 
 class CatalogParser(HTMLParser):
@@ -99,6 +103,48 @@ class ColorPatternCatalogTests(unittest.TestCase):
             if group["chaim_notation"] == "**/**"
         }
         self.assertEqual(variants, {"1", "2"})
+
+    def test_tabs_use_complete_chaim_short_signatures(self) -> None:
+        self.assertEqual(len(TWO_FOLD_SHORT_SIGNATURE_BY_TYPE), 46)
+        self.assertEqual(len(THREE_FOLD_SHORT_SIGNATURE_BY_TYPE), 23)
+        for group in self.payload["colour_groups"]:
+            colours = group["number_of_colours"]
+            if colours == 1:
+                expected = next(
+                    wallpaper["orbifold"]
+                    for wallpaper in self.payload["wallpaper_groups"]
+                    if wallpaper["id"] == group["wallpaper_id"]
+                )
+            else:
+                notation = group["chaim_notation"]
+                if group["notation_variant"]:
+                    notation += f" ({group['notation_variant']})"
+                mapping = (
+                    TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
+                    if colours == 2
+                    else THREE_FOLD_SHORT_SIGNATURE_BY_TYPE
+                )
+                expected = mapping[notation]
+            self.assertEqual(group["chaim_short_signature"], expected)
+            self.assertIn(
+                f'<span class="tab-name tab-signature" aria-hidden="true">'
+                f'{catalog.short_signature_html(expected)}</span>',
+                self.page,
+            )
+
+        groups = {group["id"]: group for group in self.payload["colour_groups"]}
+        self.assertNotEqual(
+            groups["cg-pm-2-3"]["chaim_short_signature"],
+            groups["cg-pm-2-5"]["chaim_short_signature"],
+        )
+        self.assertNotEqual(
+            groups["cg-p3m1-3-1"]["chaim_short_signature"],
+            groups["cg-p3m1-3-2"]["chaim_short_signature"],
+        )
+        self.assertEqual(groups["cg-p6-3-1"]["chaim_short_signature"], "³6³3¹2")
+        self.assertEqual(groups["cg-p6-3-2"]["chaim_short_signature"], "²6³3²2")
+        self.assertIn("<sup>(AB)</sup>", self.page)
+        self.assertNotIn('<span class="tab-alias">', self.page)
 
     def test_gs_indices_use_the_audited_orbifold_crosswalk(self) -> None:
         expected_two = {
@@ -221,6 +267,8 @@ class ColorPatternCatalogTests(unittest.TestCase):
         for tab in self.parser.group_tabs:
             group_id = tab["data-group-id"]
             self.assertEqual(tab.get("aria-controls"), f"panel-{group_id}")
+            self.assertIn("Chaim short colour signature", tab.get("aria-label") or "")
+            self.assertIn("colour type", tab.get("aria-label") or "")
 
     def test_javascript_is_syntax_valid_and_contains_nested_tab_controls(self) -> None:
         subprocess.run(

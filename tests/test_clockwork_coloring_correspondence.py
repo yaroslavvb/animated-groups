@@ -478,7 +478,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
 
     def test_tos_notation_and_clock_orders_are_complete(self) -> None:
         groups = self.payload["groups"]
-        self.assertEqual(len(correspondence.BOOK_TWO_FOLD_SIGNATURE_BY_TYPE), 36)
+        self.assertEqual(len(correspondence.BOOK_TWO_FOLD_SIGNATURE_BY_TYPE), 46)
         self.assertEqual(len(correspondence.BOOK_HIGHER_SIGNATURE_BY_ID), 15)
         self.assertEqual(
             correspondence.BOOK_REPRESENTATIVE_MULTIPLICITY_BY_ID,

@@ -43,6 +43,7 @@ from urllib.parse import urlencode
 from PIL import Image, ImageDraw
 
 from tos_book_excerpt_specs import BOOK_EXCERPTS
+from chaim_short_signatures import TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -268,44 +269,7 @@ TERM_HELP = {
 # Table 11.1.  The raised number is the order of the induced permutation on
 # colors (p. 136), not a clock-screw numerator.  Several table rows give
 # equivalent alternatives; choosing the first keeps each tab label stable.
-BOOK_TWO_FOLD_SIGNATURE_BY_TYPE = {
-    "*632/3*3": "*¹6²3²2",
-    "*632/*333": "*²6¹3¹2",
-    "*632/632": "*²6²3²2",
-    "632/333": "²6¹3²2",
-    "*442/*442": "*¹4¹4²2",
-    "*442/4*2": "*¹4²4²2",
-    "*442/*2222": "*¹4²4¹2",
-    "*442/2*22": "*²4¹4²2",
-    "*442/442": "*²4²4²2",
-    "4*2/442": "¹4*²2",
-    "4*2/2*22": "²4*¹2",
-    "4*2/22×": "²4*²2",
-    "442/442": "¹4²4²2",
-    "442/2222": "²4²4¹2",
-    "*333/333": "*²3²3²3",
-    "3*3/333": "¹3*²3",
-    "*2222/*2222": "*¹2¹2¹2²2",
-    "*2222/2*22": "*¹2¹2²2²2",
-    "*2222/**": "*¹2²2¹2²2",
-    "*2222/22*": "*¹2²2²2²2",
-    "*2222/2222": "*²2²2²2²2",
-    "2*22/22*": "¹2*¹2²2",
-    "2*22/2222": "¹2*²2²2",
-    "2*22/*2222": "²2*¹2¹2",
-    "2*22/*×": "²2*¹2²2",
-    "2*22/22×": "²2*²2²2",
-    "22*/2222": "¹2¹2*²",
-    "22*/22*": "¹2²2*¹",
-    "22*/22×": "¹2²2*²",
-    "22*/**": "²2²2*¹",
-    "22*/××": "²2²2*²",
-    "22×/2222": "¹2¹2×²",
-    "22×/××": "²2²2×¹",
-    "2222/2222": "¹2¹2²2²2",
-    "2222/◦": "²2²2²2²2",
-    "*×/◦": "*²×²",
-}
+BOOK_TWO_FOLD_SIGNATURE_BY_TYPE = TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
 
 # Primefold signatures are checked against Tables 12.1 and 13.1 plus their
 # intervening derivations.  g234, g244, and g245 retain explicit discrepancy

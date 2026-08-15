@@ -20,6 +20,11 @@ import re
 import sys
 from typing import Any, Iterable
 
+from chaim_short_signatures import (
+    THREE_FOLD_SHORT_SIGNATURE_BY_TYPE,
+    TWO_FOLD_SHORT_SIGNATURE_BY_TYPE,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "color-pattern-catalog.html"
@@ -218,6 +223,7 @@ def build_groups() -> list[dict[str, Any]]:
             "number_of_colours": 1,
             "index_within_parent": 1,
             "chaim_notation": wallpaper["orbifold"],
+            "chaim_short_signature": wallpaper["orbifold"],
             "gs_symbol": wallpaper["hm"],
             "colour_image": "C1",
             "regular": True,
@@ -239,12 +245,24 @@ def build_groups() -> list[dict[str, Any]]:
                 if notation.endswith(" (1)") or notation.endswith(" (2)"):
                     variant = notation[-2]
                     display_notation = notation[:-4]
+                short_signatures = (
+                    TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
+                    if colours == 2
+                    else THREE_FOLD_SHORT_SIGNATURE_BY_TYPE
+                )
+                try:
+                    short_signature = short_signatures[notation]
+                except KeyError as error:
+                    raise ValueError(
+                        f"missing Chaim short signature for {notation}"
+                    ) from error
                 groups.append({
                     "id": group_id,
                     "wallpaper_id": parent,
                     "number_of_colours": colours,
                     "index_within_parent": index,
                     "chaim_notation": display_notation,
+                    "chaim_short_signature": short_signature,
                     "gs_symbol": legacy_group_symbol(wallpaper["hm"], colours, index, len(entries)),
                     "colour_image": "C2" if colours == 2 else ("C3" if regular else "S3"),
                     "regular": regular,
@@ -349,6 +367,8 @@ def validate_payload(payload: dict[str, Any]) -> None:
     group_counts = Counter(g["number_of_colours"] for g in groups)
     if group_counts != Counter({1: 17, 2: 46, 3: 23}):
         raise ValueError(f"bad colour-group census: {group_counts}")
+    if any(not group.get("chaim_short_signature") for group in groups):
+        raise ValueError("every colour group needs a Chaim short signature")
     pattern_counts = Counter(p["number_of_colours"] for p in patterns)
     if pattern_counts != Counter({1: 51, 2: 88, 3: 59}):
         raise ValueError(f"bad pattern-type census: {pattern_counts}")
@@ -446,17 +466,70 @@ def typeset_symbol(symbol: str) -> str:
     return symbol.replace("*", "∗")
 
 
+SUPERSCRIPT_TO_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
+
+
+def short_signature_html(signature: str) -> str:
+    """Render Chaim's raised orders or named permutations semantically."""
+
+    output: list[str] = []
+    digit_run: list[str] = []
+
+    def flush_digits() -> None:
+        if digit_run:
+            output.append(f"<sup>{''.join(digit_run)}</sup>")
+            digit_run.clear()
+
+    index = 0
+    while index < len(signature):
+        character = signature[index]
+        if character in "⁰¹²³⁴⁵⁶⁷⁸⁹":
+            digit_run.append(character.translate(SUPERSCRIPT_TO_ASCII))
+            index += 1
+            continue
+        flush_digits()
+        if character == "^":
+            if index + 1 >= len(signature) or signature[index + 1] != "(":
+                raise ValueError(f"bad named superscript in {signature!r}")
+            end = signature.find(")", index + 2)
+            if end < 0:
+                raise ValueError(f"unterminated named superscript in {signature!r}")
+            output.append(f"<sup>{escape(signature[index + 1:end + 1])}</sup>")
+            index = end + 1
+            continue
+        if character == "*":
+            output.append('<span class="orbifold-star">∗</span>')
+        else:
+            output.append(escape(character))
+        index += 1
+    flush_digits()
+    return "".join(output)
+
+
+def short_signature_text(signature: str) -> str:
+    """Plain-text form for an accessible tab label."""
+
+    return signature.replace("^", "").replace("*", "∗")
+
+
 def group_tab_html(group: dict[str, Any], *, selected: bool) -> str:
-    variant = f" · form {escape(group['notation_variant'])}" if group["notation_variant"] else ""
+    full_type = group["chaim_notation"]
+    if group["notation_variant"]:
+        full_type += f" form {group['notation_variant']}"
+    aria_label = (
+        f"Chaim short colour signature {short_signature_text(group['chaim_short_signature'])}; "
+        f"colour type {full_type}; Grünbaum–Shephard {group['gs_symbol']}"
+    )
     return (
         f'<a class="colour-group-tab{(" is-trivial" if group["number_of_colours"] == 1 else "")}" '
         f'id="tab-{escape(group["id"])}" href="#{escape(group["id"])}" role="tab" '
         f'aria-controls="panel-{escape(group["id"])}" '
+        f'aria-label="{escape(aria_label)}" '
         f'aria-selected="{str(selected).lower()}" tabindex="{0 if selected else -1}" '
         f'data-group-id="{escape(group["id"])}">'
-        f'<span class="tab-name">{escape(typeset_symbol(group["chaim_notation"]))}{variant}</span>'
+        f'<span class="tab-name tab-signature" aria-hidden="true">{short_signature_html(group["chaim_short_signature"])}</span>'
         f'<span class="tab-palette" aria-hidden="true">{palette_html(group["number_of_colours"])}</span>'
-        f'<span class="tab-alias">{escape(typeset_symbol(group["gs_symbol"]))}</span></a>'
+        '</a>'
     )
 
 
@@ -504,8 +577,8 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Periodic colour-pattern catalog</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=gs-pattern-types-final">
-  <script src="color-pattern-catalog.js?v=gs-pattern-types-final" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=chaim-short-tabs">
+  <script src="color-pattern-catalog.js?v=chaim-short-tabs" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>
