@@ -288,6 +288,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "X",
+          "Y"
+        ],
+        "relations": "XY = YX"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -344,6 +351,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "X",
+          "Y"
+        ],
+        "relations": "XY = YX"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -407,6 +421,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "X",
+          "Y"
+        ],
+        "relations": "XY = YX"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -482,6 +503,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ",
+          "δ"
+        ],
+        "relations": "α² = β² = γ² = δ² = αβγδ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -556,6 +586,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ",
+          "δ"
+        ],
+        "relations": "α² = β² = γ² = δ² = αβγδ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -635,6 +674,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ",
+          "δ"
+        ],
+        "relations": "α² = β² = γ² = δ² = αβγδ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -718,6 +766,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ",
+          "δ"
+        ],
+        "relations": "α² = β² = γ² = δ² = αβγδ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -785,6 +842,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -850,6 +915,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -920,6 +993,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -990,6 +1071,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": "1",
       "related_forms": [],
       "sources": [
@@ -1060,6 +1149,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1130,6 +1227,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": "2",
       "related_forms": [],
       "sources": [
@@ -1203,6 +1308,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1276,6 +1389,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1335,6 +1456,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "Y",
+          "Z"
+        ],
+        "relations": "Y²Z² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1391,6 +1519,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "Y",
+          "Z"
+        ],
+        "relations": "Y²Z² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1452,6 +1587,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "Y",
+          "Z"
+        ],
+        "relations": "Y²Z² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1515,6 +1657,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "Y",
+          "Z"
+        ],
+        "relations": "Y²Z² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1578,6 +1727,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "Y",
+          "Z"
+        ],
+        "relations": "Y²Z² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1637,6 +1793,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Z"
+        ],
+        "relations": "P² = PZ²PZ⁻² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1693,6 +1856,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Z"
+        ],
+        "relations": "P² = PZ²PZ⁻² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1754,6 +1924,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Z"
+        ],
+        "relations": "P² = PZ²PZ⁻² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1815,6 +1992,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Z"
+        ],
+        "relations": "P² = PZ²PZ⁻² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1878,6 +2062,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Z"
+        ],
+        "relations": "P² = PZ²PZ⁻² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1941,6 +2132,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Z"
+        ],
+        "relations": "P² = PZ²PZ⁻² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2016,6 +2214,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2090,6 +2297,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2169,6 +2385,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2248,6 +2473,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2327,6 +2561,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2406,6 +2649,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2489,6 +2741,15 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R",
+          "S"
+        ],
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2556,6 +2817,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2621,6 +2890,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2691,6 +2968,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2761,6 +3046,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2831,6 +3124,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2901,6 +3202,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2974,6 +3283,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3047,6 +3364,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "P"
+        ],
+        "relations": "α² = β² = P² = 1; αβP = Pαβ"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3114,6 +3439,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "Z"
+        ],
+        "relations": "α² = β² = αβZ² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3179,6 +3512,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "Z"
+        ],
+        "relations": "α² = β² = αβZ² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3249,6 +3590,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "Z"
+        ],
+        "relations": "α² = β² = αβZ² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3322,6 +3671,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "Z"
+        ],
+        "relations": "α² = β² = αβZ² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3389,6 +3746,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3454,6 +3819,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3524,6 +3897,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3594,6 +3975,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3664,6 +4053,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3734,6 +4131,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3807,6 +4212,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P",
+          "Q"
+        ],
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3874,6 +4287,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α⁴ = β⁴ = γ² = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3939,6 +4360,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α⁴ = β⁴ = γ² = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4009,6 +4438,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α⁴ = β⁴ = γ² = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4076,6 +4513,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁴ = (QR)⁴ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4141,6 +4586,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁴ = (QR)⁴ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4211,6 +4664,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁴ = (QR)⁴ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4281,6 +4742,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁴ = (QR)⁴ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4351,6 +4820,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁴ = (QR)⁴ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4421,6 +4898,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁴ = (QR)⁴ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4480,6 +4965,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α⁴ = P² = (PαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4536,6 +5028,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α⁴ = P² = (PαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4597,6 +5096,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α⁴ = P² = (PαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4658,6 +5164,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α⁴ = P² = (PαPα⁻¹)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4725,6 +5238,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α³ = β³ = γ³ = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4793,6 +5314,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α³ = β³ = γ³ = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [
         "Two opposite cyclic orientations (the P3₁/P3₂ clockwork pair) define one plane colour type after colour relabelling."
@@ -4868,6 +5397,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α³ = β³ = γ³ = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -4935,6 +5472,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)³ = (QR)³ = (RP)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5000,6 +5545,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)³ = (QR)³ = (RP)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5073,6 +5626,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)³ = (QR)³ = (RP)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5146,6 +5707,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)³ = (QR)³ = (RP)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5205,6 +5774,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α³ = P² = (PαPα⁻¹)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5261,6 +5837,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α³ = P² = (PαPα⁻¹)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5324,6 +5907,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α³ = P² = (PαPα⁻¹)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5387,6 +5977,13 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "P"
+        ],
+        "relations": "α³ = P² = (PαPα⁻¹)³ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5454,6 +6051,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α⁶ = β³ = γ² = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5519,6 +6124,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α⁶ = β³ = γ² = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5592,6 +6205,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α⁶ = β³ = γ² = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [
         "Two opposite cyclic orientations (the P6₂/P6₄ clockwork pair) define one plane colour type after colour relabelling."
@@ -5667,6 +6288,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "α",
+          "β",
+          "γ"
+        ],
+        "relations": "α⁶ = β³ = γ² = αβγ = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5734,6 +6363,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁶ = (QR)³ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5799,6 +6436,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁶ = (QR)³ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5869,6 +6514,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁶ = (QR)³ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -5939,6 +6592,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁶ = (QR)³ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -6012,6 +6673,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁶ = (QR)³ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -6085,6 +6754,14 @@
           ]
         }
       ],
+      "presentation": {
+        "generators": [
+          "P",
+          "Q",
+          "R"
+        ],
+        "relations": "P² = Q² = R² = (PQ)⁶ = (QR)³ = (RP)² = 1"
+      },
       "notation_variant": null,
       "related_forms": [],
       "sources": [

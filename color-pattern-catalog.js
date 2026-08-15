@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=generator-actions";
+  const DATA_URL = "data/color-pattern-catalog.json?v=presentations";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -185,10 +185,7 @@
     return `${cycle.map((index) => labels[index]).join("→")}→${labels[cycle[0]]}`;
   }
 
-  function generatorActionsElement(group) {
-    const wrapper = document.createElement("div");
-    wrapper.className = "generator-colour-actions";
-
+  function actionPaletteElement(group) {
     const palette = document.createElement("div");
     palette.className = "action-palette";
     palette.title = "Canonical colour labels; simultaneous relabelling gives the same colour group.";
@@ -198,21 +195,67 @@
       swatch.style.setProperty("--swatch", PALETTES[group.number_of_colours][index]);
       palette.append(swatch);
     });
+    return palette;
+  }
 
-    const list = document.createElement("ul");
-    list.className = "generator-action-list";
+  function presentationElement(group) {
+    const section = document.createElement("section");
+    section.className = "group-presentation";
+    const titleId = `${group.id}-presentation-title`;
+    section.setAttribute("aria-labelledby", titleId);
+
+    const heading = document.createElement("header");
+    heading.className = "presentation-heading";
+    const title = textElement("h4", "", "Presentation");
+    title.id = titleId;
+    heading.append(title, actionPaletteElement(group));
+
+    const table = document.createElement("table");
+    table.dataset.presentation = group.id;
+    const caption = textElement(
+      "caption",
+      "visually-hidden",
+      `Geometric generators and induced colour permutations for ${group.id}`,
+    );
+    const body = document.createElement("tbody");
     group.generator_colour_actions.forEach((action) => {
-      const item = document.createElement("li");
-      item.append(
-        textElement("span", "generator-symbol", action.generator),
+      const row = document.createElement("tr");
+      row.className = "presentation-generator-row";
+      const generatorCell = document.createElement("th");
+      generatorCell.scope = "row";
+      generatorCell.append(
+        textElement("span", "generator-key", action.generator),
         textElement("span", "generator-geometry", action.geometry),
-        textElement("span", "permutation-symbol", permutationNotation(action.colour_permutation)),
-        textElement("span", "permutation-description", permutationDescription(action.colour_permutation)),
       );
-      list.append(item);
+      const permutationCell = document.createElement("td");
+      const notation = permutationNotation(action.colour_permutation);
+      const description = permutationDescription(action.colour_permutation);
+      permutationCell.setAttribute(
+        "aria-label",
+        notation === "id" ? `Identity permutation; ${description}` : description,
+      );
+      if (notation !== "id") {
+        const value = textElement("span", "presentation-permutation", notation);
+        value.title = description;
+        permutationCell.append(value);
+      }
+      row.append(generatorCell, permutationCell);
+      body.append(row);
     });
-    wrapper.append(palette, list);
-    return wrapper;
+    table.append(caption, body);
+
+    const relations = document.createElement("p");
+    relations.className = "presentation-relations";
+    relations.append(
+      textElement("strong", "", "Relations"),
+      textElement(
+        "span",
+        "",
+        `G = ⟨${group.presentation.generators.join(", ")} | ${group.presentation.relations}⟩`,
+      ),
+    );
+    section.append(heading, table, relations);
+    return section;
   }
 
   function hashString(value) {
@@ -404,7 +447,6 @@
       `Open Chaim short colour signature ${group.chaim_short_signature.replaceAll("^", "")} in The Symmetries of Things`,
     ));
     appendTableRow(table, "G / H / K", ghkElement(group));
-    appendTableRow(table, "Generator colour action", generatorActionsElement(group));
     appendTableRow(table, "G&S group symbol", sourceSymbolLink(
       pattern.book_excerpt,
       pattern.id,
@@ -417,7 +459,7 @@
       mathSymbolElement(pattern.gs_pattern_type),
       `Open Grünbaum–Shephard source crop for pattern type ${pattern.gs_pattern_type}`,
     ));
-    details.append(table);
+    details.append(presentationElement(group), table);
     pane.append(figure, details);
     return pane;
   }

@@ -72,6 +72,120 @@ GENERATOR_GEOMETRY: dict[str, tuple[tuple[str, str], ...]] = {
 }
 
 
+def _power_relation(generator: str, exponent: int) -> tuple[tuple[str, int], ...]:
+    return ((generator, exponent),)
+
+
+def _product_power_relation(
+    generators: tuple[str, ...], exponent: int
+) -> tuple[tuple[str, int], ...]:
+    return tuple((generator, 1) for generator in generators) * exponent
+
+
+def _word_power_relation(
+    word: tuple[tuple[str, int], ...], exponent: int
+) -> tuple[tuple[str, int], ...]:
+    return word * exponent
+
+
+# Full wallpaper-group presentations in the reduced annotated generators of
+# Chapter 10.  These are presentations of G itself, not only G/Lambda: that
+# distinction matters whenever a translation or glide permutes the colours.
+GROUP_PRESENTATIONS: dict[str, dict[str, Any]] = {
+    "p1": {
+        "relations": "XY = YX",
+        "relators": ((("X", 1), ("Y", 1), ("X", -1), ("Y", -1)),),
+    },
+    "p2": {
+        "relations": "α² = β² = γ² = δ² = αβγδ = 1",
+        "relators": tuple(_power_relation(generator, 2) for generator in "αβγδ")
+        + (_product_power_relation(tuple("αβγδ"), 1),),
+    },
+    "pm": {
+        "relations": "P² = Q² = 1; αP = Pα; αQ = Qα",
+        "relators": (
+            _power_relation("P", 2), _power_relation("Q", 2),
+            (("α", 1), ("P", 1), ("α", -1), ("P", -1)),
+            (("α", 1), ("Q", 1), ("α", -1), ("Q", -1)),
+        ),
+    },
+    "pg": {
+        "relations": "Y²Z² = 1",
+        "relators": ((("Y", 2), ("Z", 2)),),
+    },
+    "cm": {
+        "relations": "P² = PZ²PZ⁻² = 1",
+        "relators": (_power_relation("P", 2), (("P", 1), ("Z", 2), ("P", 1), ("Z", -2))),
+    },
+    "pmm": {
+        "relations": "P² = Q² = R² = S² = (PQ)² = (QR)² = (RS)² = (SP)² = 1",
+        "relators": tuple(_power_relation(generator, 2) for generator in "PQRS")
+        + tuple(_product_power_relation(pair, 2) for pair in (("P", "Q"), ("Q", "R"), ("R", "S"), ("S", "P"))),
+    },
+    "pmg": {
+        "relations": "α² = β² = P² = 1; αβP = Pαβ",
+        "relators": (
+            _power_relation("α", 2), _power_relation("β", 2), _power_relation("P", 2),
+            (("α", 1), ("β", 1), ("P", 1), ("β", -1), ("α", -1), ("P", -1)),
+        ),
+    },
+    "pgg": {
+        "relations": "α² = β² = αβZ² = 1",
+        "relators": (_power_relation("α", 2), _power_relation("β", 2), (("α", 1), ("β", 1), ("Z", 2))),
+    },
+    "cmm": {
+        "relations": "α² = P² = Q² = (PQ)² = (QαPα⁻¹)² = 1",
+        "relators": (
+            _power_relation("α", 2), _power_relation("P", 2), _power_relation("Q", 2),
+            _product_power_relation(("P", "Q"), 2),
+            _word_power_relation((("Q", 1), ("α", 1), ("P", 1), ("α", -1)), 2),
+        ),
+    },
+    "p4": {
+        "relations": "α⁴ = β⁴ = γ² = αβγ = 1",
+        "relators": (_power_relation("α", 4), _power_relation("β", 4), _power_relation("γ", 2), _product_power_relation(("α", "β", "γ"), 1)),
+    },
+    "p4m": {
+        "relations": "P² = Q² = R² = (PQ)⁴ = (QR)⁴ = (RP)² = 1",
+        "relators": tuple(_power_relation(generator, 2) for generator in "PQR")
+        + tuple(_product_power_relation(pair, exponent) for pair, exponent in ((("P", "Q"), 4), (("Q", "R"), 4), (("R", "P"), 2))),
+    },
+    "p4g": {
+        "relations": "α⁴ = P² = (PαPα⁻¹)² = 1",
+        "relators": (
+            _power_relation("α", 4), _power_relation("P", 2),
+            _word_power_relation((("P", 1), ("α", 1), ("P", 1), ("α", -1)), 2),
+        ),
+    },
+    "p3": {
+        "relations": "α³ = β³ = γ³ = αβγ = 1",
+        "relators": tuple(_power_relation(generator, 3) for generator in "αβγ")
+        + (_product_power_relation(tuple("αβγ"), 1),),
+    },
+    "p3m1": {
+        "relations": "P² = Q² = R² = (PQ)³ = (QR)³ = (RP)³ = 1",
+        "relators": tuple(_power_relation(generator, 2) for generator in "PQR")
+        + tuple(_product_power_relation(pair, 3) for pair in (("P", "Q"), ("Q", "R"), ("R", "P"))),
+    },
+    "p31m": {
+        "relations": "α³ = P² = (PαPα⁻¹)³ = 1",
+        "relators": (
+            _power_relation("α", 3), _power_relation("P", 2),
+            _word_power_relation((("P", 1), ("α", 1), ("P", 1), ("α", -1)), 3),
+        ),
+    },
+    "p6": {
+        "relations": "α⁶ = β³ = γ² = αβγ = 1",
+        "relators": (_power_relation("α", 6), _power_relation("β", 3), _power_relation("γ", 2), _product_power_relation(("α", "β", "γ"), 1)),
+    },
+    "p6m": {
+        "relations": "P² = Q² = R² = (PQ)⁶ = (QR)³ = (RP)² = 1",
+        "relators": tuple(_power_relation(generator, 2) for generator in "PQR")
+        + tuple(_product_power_relation(pair, exponent) for pair, exponent in ((("P", "Q"), 6), (("Q", "R"), 3), (("R", "P"), 2))),
+    },
+}
+
+
 # Exact representatives of the 23 transitive three-colour actions.  Codes
 # denote permutations of A,B,C.  The low-symmetry rows are Table 13.1 with
 # t+1=(ABC), t-1=(ACB), 1-t=(AB), and -t=(BC).  The high-symmetry rows are
@@ -200,3 +314,50 @@ def permutation_group(actions: list[dict[str, Any]]) -> set[tuple[int, ...]]:
         if enlarged == image:
             return image
         image = enlarged
+
+
+def group_presentation(parent: str) -> dict[str, Any]:
+    """Return the serializable full-group presentation for one parent."""
+
+    return {
+        "generators": [generator for generator, _description in GENERATOR_GEOMETRY[parent]],
+        "relations": GROUP_PRESENTATIONS[parent]["relations"],
+    }
+
+
+def presentation_relations_hold(parent: str, actions: list[dict[str, Any]]) -> bool:
+    """Evaluate every Chapter 10 relator in the induced colour action."""
+
+    action_by_generator = {
+        action["generator"]: tuple(action["colour_permutation"])
+        for action in actions
+    }
+    degree = len(next(iter(action_by_generator.values())))
+    identity = tuple(range(degree))
+
+    def compose(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[int, ...]:
+        return tuple(left[right[index]] for index in range(degree))
+
+    def inverse(permutation: tuple[int, ...]) -> tuple[int, ...]:
+        result = [0] * degree
+        for index, image in enumerate(permutation):
+            result[image] = index
+        return tuple(result)
+
+    def power(permutation: tuple[int, ...], exponent: int) -> tuple[int, ...]:
+        if exponent < 0:
+            return power(inverse(permutation), -exponent)
+        result = identity
+        for _ in range(exponent):
+            result = compose(permutation, result)
+        return result
+
+    for relator in GROUP_PRESENTATIONS[parent]["relators"]:
+        value = identity
+        # The book composes motions from left to right: apply the next named
+        # generator after the current word.
+        for generator, exponent in relator:
+            value = compose(power(action_by_generator[generator], exponent), value)
+        if value != identity:
+            return False
+    return True

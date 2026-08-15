@@ -27,7 +27,9 @@ from chaim_short_signatures import (
 from colour_generator_actions import (
     THREE_COLOUR_ACTION_CODES,
     generator_colour_actions,
+    group_presentation,
     permutation_group,
+    presentation_relations_hold,
 )
 from color_pattern_book_excerpt_specs import (
     decorate_payload,
@@ -287,6 +289,7 @@ def build_groups() -> list[dict[str, Any]]:
                 wallpaper["orbifold"],
                 wallpaper["orbifold"],
             ),
+            "presentation": group_presentation(parent),
             "notation_variant": None,
             "related_forms": [],
             "sources": [
@@ -343,6 +346,7 @@ def build_groups() -> list[dict[str, Any]]:
                         display_notation,
                         short_signature,
                     ),
+                    "presentation": group_presentation(parent),
                     "notation_variant": variant,
                     "related_forms": [ORIENTED_FORMS[display_notation]] if display_notation in ORIENTED_FORMS else [],
                     "sources": [
@@ -499,6 +503,13 @@ def validate_payload(payload: dict[str, Any]) -> None:
             )
         if {permutation[0] for permutation in image} != set(range(colours)):
             raise ValueError(f"intransitive colour action for {group['id']}")
+        expected_presentation = group_presentation(group["wallpaper_id"])
+        if group.get("presentation") != expected_presentation:
+            raise ValueError(f"bad group presentation for {group['id']}")
+        if [action["generator"] for action in actions] != expected_presentation["generators"]:
+            raise ValueError(f"presentation/action generator mismatch for {group['id']}")
+        if not presentation_relations_hold(group["wallpaper_id"], actions):
+            raise ValueError(f"colour action violates presentation relations for {group['id']}")
     nonregular = {
         group["chaim_notation"]: group["colour_stabilizer_H"]
         for group in groups
@@ -721,8 +732,8 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Periodic colour-pattern catalog</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=generator-actions">
-  <script src="color-pattern-catalog.js?v=generator-actions" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=presentations">
+  <script src="color-pattern-catalog.js?v=presentations" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

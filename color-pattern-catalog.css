@@ -420,14 +420,10 @@ body {
   font-weight: 400;
 }
 
-.generator-colour-actions {
-  min-width: 0;
-}
-
 .action-palette {
   display: flex;
   gap: 0.3rem;
-  margin: 0 0 0.55rem;
+  margin: 0;
 }
 
 .action-colour {
@@ -446,39 +442,96 @@ body {
   color: #17201d;
 }
 
-.generator-action-list {
-  display: grid;
-  gap: 0.42rem;
+.group-presentation {
+  margin: 0 0 1rem;
+}
+
+.presentation-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.28rem;
+}
+
+.group-presentation h4 {
   margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.generator-action-list li {
-  display: grid;
-  grid-template-columns: 1.35rem minmax(5.8rem, 0.9fr) auto minmax(6.5rem, 1fr);
-  gap: 0.38rem;
-  align-items: baseline;
-  min-width: 0;
-}
-
-.generator-symbol,
-.permutation-symbol {
   color: var(--pattern-ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.82rem;
   font-weight: 700;
+}
+
+.group-presentation table {
+  width: 100%;
+  border-collapse: collapse;
+  border-block: 1px solid var(--pattern-rule);
+  font-size: 0.78rem;
+}
+
+.group-presentation th,
+.group-presentation td {
+  padding: 0.38rem 0.45rem;
+  border-bottom: 1px solid var(--pattern-rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.group-presentation th {
+  color: var(--pattern-ink);
+  font-weight: 500;
+}
+
+.group-presentation td:last-child {
+  width: 5.5rem;
+  color: var(--pattern-ink);
   white-space: nowrap;
 }
 
-.generator-geometry,
-.permutation-description {
+.generator-key {
+  display: inline-block;
+  min-width: 1.45rem;
+  margin-right: 0.36rem;
+  color: var(--pattern-accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.generator-geometry {
   color: var(--pattern-muted);
-  font-size: 0.82rem;
   line-height: 1.25;
 }
 
-.permutation-description {
+.presentation-permutation {
   color: var(--pattern-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.group-presentation tbody tr:last-child th,
+.group-presentation tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.presentation-relations {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0.5rem 0 0;
+  color: var(--pattern-ink);
+  font: 0.82rem/1.45 Georgia, "Times New Roman", serif;
+}
+
+.presentation-relations strong {
+  flex: 0 0 auto;
+  color: var(--pattern-muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.025em;
+}
+
+.presentation-relations span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .source-link-mark {
@@ -541,12 +594,8 @@ body {
     min-height: 5rem;
   }
 
-  .generator-action-list li {
-    grid-template-columns: 1.35rem 1fr auto;
-  }
-
-  .permutation-description {
-    grid-column: 2 / -1;
+  .group-presentation td:last-child {
+    width: 4.6rem;
   }
 }
 

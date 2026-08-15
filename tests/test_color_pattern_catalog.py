@@ -135,9 +135,27 @@ class ColorPatternCatalogTests(unittest.TestCase):
                 {permutation[0] for permutation in image},
                 set(range(group["number_of_colours"])),
             )
+            self.assertEqual(
+                group["presentation"],
+                catalog.group_presentation(group["wallpaper_id"]),
+            )
+            self.assertEqual(
+                group["presentation"]["generators"],
+                [action["generator"] for action in actions],
+            )
+            self.assertTrue(
+                catalog.presentation_relations_hold(group["wallpaper_id"], actions)
+            )
 
         groups = {group["id"]: group for group in self.payload["colour_groups"]}
         self.assertEqual(groups["cg-p4-2-1"]["ghk"], {"G": "442", "H": "442", "K": "442"})
+        self.assertEqual(
+            groups["cg-p4-2-1"]["presentation"],
+            {
+                "generators": ["α", "β", "γ"],
+                "relations": "α⁴ = β⁴ = γ² = αβγ = 1",
+            },
+        )
         self.assertEqual(
             [action["permutation_code"] for action in groups["cg-p4-2-1"]["generator_colour_actions"]],
             ["1", "AB", "AB"],
@@ -365,17 +383,21 @@ class ColorPatternCatalogTests(unittest.TestCase):
         for label in (
             "Chaim short form",
             "G / H / K",
-            "Generator colour action",
             "G&S group symbol",
             "G&S pattern type",
+            "Presentation",
+            "Relations",
         ):
             self.assertIn(f'"{label}"', script)
         for required in (
             "ghkElement",
-            "generatorActionsElement",
+            "presentationElement",
+            "actionPaletteElement",
             "permutationNotation",
             "permutationDescription",
             "group.generator_colour_actions",
+            "group.presentation.relations",
+            'if (notation !== "id")',
         ):
             self.assertIn(required, script)
         for removed in (
@@ -390,6 +412,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
             "Parent wallpaper group",
             "Single-colour stabilizer H",
             "All-colours stabilizer K",
+            "Generator colour action",
             "-colour plane group",
         ):
             self.assertNotIn(removed, script)
