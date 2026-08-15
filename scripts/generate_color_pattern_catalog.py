@@ -24,6 +24,10 @@ from chaim_short_signatures import (
     THREE_FOLD_SHORT_SIGNATURE_BY_TYPE,
     TWO_FOLD_SHORT_SIGNATURE_BY_TYPE,
 )
+from color_pattern_book_excerpt_specs import (
+    decorate_payload,
+    validate_excerpt_metadata,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -184,6 +188,22 @@ NONPRIMITIVE_THREE: tuple[tuple[str, int, str], ...] = (
 )
 
 
+SOURCE_PAGE_BLOCKS = {
+    (2, True): ((408, 3), (409, 9), (410, 9), (411, 9), (412, 9), (413, 7)),
+    (2, False): ((426, 6), (427, 9), (428, 9), (429, 9), (430, 9)),
+    (3, True): ((414, 6), (415, 9), (416, 8)),
+    (3, False): ((431, 6), (432, 9), (433, 9), (434, 9), (435, 3)),
+}
+
+
+def source_pages(colours: int, primitive: bool) -> tuple[int, ...]:
+    return tuple(
+        page
+        for page, count in SOURCE_PAGE_BLOCKS[(colours, primitive)]
+        for _ in range(count)
+    )
+
+
 ORIENTED_FORMS = {
     "333³/◦": (
         "Two opposite cyclic orientations (the P3₁/P3₂ clockwork pair) define one plane colour type after colour relabelling."
@@ -331,7 +351,13 @@ def build_patterns(groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
             (True, primitive_rows, source_primitive),
             (False, nonprimitive_rows, source_nonprimitive),
         ):
-            for parent, group_index, symbol in rows:
+            pages = source_pages(colours, primitive)
+            if len(pages) != len(rows):
+                raise ValueError(
+                    f"source-page census mismatch for {colours} colours, "
+                    f"primitive={primitive}: {len(pages)} != {len(rows)}"
+                )
+            for (parent, group_index, symbol), printed_page in zip(rows, pages):
                 ordinal += 1
                 group = group_lookup[gkey(parent, colours, group_index)]
                 record = {
@@ -347,6 +373,7 @@ def build_patterns(groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
                         "work": "Tilings and Patterns",
                         "chapter": 8,
                         "figure": source,
+                        "printed_page": printed_page,
                     },
                 }
                 if colours == 3 and primitive and parent == "p31m" and group_index == 2:
@@ -449,7 +476,9 @@ def build_payload() -> dict[str, Any]:
         "colour_groups": groups,
         "pattern_types": patterns,
     }
+    decorate_payload(payload)
     validate_payload(payload)
+    validate_excerpt_metadata(payload)
     return payload
 
 
@@ -577,8 +606,8 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Periodic colour-pattern catalog</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=uniform-r-motif">
-  <script src="color-pattern-catalog.js?v=uniform-r-motif" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=book-excerpts">
+  <script src="color-pattern-catalog.js?v=book-excerpts" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

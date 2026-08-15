@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=chaim-short-tabs";
+  const DATA_URL = "data/color-pattern-catalog.json?v=book-excerpts";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -20,6 +20,7 @@
     activeGroupByWallpaper: new Map(),
     activePatternByGroup: new Map(),
     filter: "all",
+    excerptWindow: null,
   };
 
   const byId = (id) => document.getElementById(id);
@@ -79,11 +80,30 @@
     if (source.chapter) parts.push(`Chapter ${source.chapter}`);
     if (source.figure) parts.push(source.figure);
     if (source.table) parts.push(`Table ${source.table}`);
+    if (source.printed_page) parts.push(`printed p. ${source.printed_page}`);
     if (source.printed_pages) {
       const pageLabel = /[–,—]/.test(String(source.printed_pages)) ? "pp." : "p.";
       parts.push(`printed ${pageLabel} ${source.printed_pages}`);
     }
     return parts.filter(Boolean).join(" · ");
+  }
+
+  function excerptLink(excerpt, label, returnId) {
+    const parameters = new URLSearchParams({
+      image: excerpt.image,
+      title: excerpt.title,
+      context: excerpt.context,
+      alt: excerpt.alt,
+      return: `color-pattern-catalog.html#${returnId}`,
+      returnLabel: "Return to pattern catalog",
+    });
+    if (excerpt.source_url) parameters.set("source", excerpt.source_url);
+    const link = document.createElement("a");
+    link.className = "book-evidence-link";
+    link.href = `book-excerpt.html?v=pattern-sources&${parameters.toString()}`;
+    link.target = "color-pattern-book-excerpt";
+    link.textContent = label;
+    return link;
   }
 
   function hashString(value) {
@@ -217,6 +237,11 @@
     details.className = "pattern-details";
     details.append(textElement("p", "pattern-kicker", `Grünbaum–Shephard ${pattern.number_of_colours}-colour pattern type`));
     details.append(textElement("h4", "", typesetSymbol(pattern.gs_pattern_type)));
+    details.append(excerptLink(
+      pattern.book_excerpt,
+      `Tilings and Patterns · ${typesetSymbol(pattern.book_excerpt.source_symbol || pattern.gs_pattern_type)} · p. ${pattern.book_excerpt.printed_page} ↗`,
+      pattern.id,
+    ));
     const chips = document.createElement("div");
     chips.className = "status-chips";
     [
@@ -254,6 +279,11 @@
     identity.append(textElement("p", "group-kicker", `${group.number_of_colours}-colour plane group · ${patterns.length} pattern type${patterns.length === 1 ? "" : "s"}`));
     identity.append(textElement("h3", "group-title", `${typesetSymbol(group.chaim_notation)}${group.notation_variant ? ` · form ${group.notation_variant}` : ""}`));
     identity.append(textElement("p", "group-aliases", `G&S: ${typesetSymbol(group.gs_symbol)}`));
+    identity.append(excerptLink(
+      group.book_excerpt,
+      `The Symmetries of Things · short signature · p. ${group.book_excerpt.printed_page} ↗`,
+      group.id,
+    ));
     group.related_forms.forEach((note) => identity.append(textElement("p", "group-note", note)));
 
     const data = document.createElement("table");
@@ -418,7 +448,32 @@
   }
 
   function bindEvents() {
+    window.addEventListener("message", (event) => {
+      if (
+        event.origin === window.location.origin
+        && event.data?.type === "clockwork:book-excerpt-ready"
+        && event.source
+      ) state.excerptWindow = event.source;
+    });
     document.addEventListener("click", (event) => {
+      const excerpt = event.target.closest(".book-evidence-link");
+      if (excerpt) {
+        if (
+          !event.defaultPrevented
+          && event.button === 0
+          && !event.metaKey
+          && !event.ctrlKey
+          && !event.shiftKey
+          && !event.altKey
+          && state.excerptWindow
+          && !state.excerptWindow.closed
+        ) {
+          event.preventDefault();
+          state.excerptWindow.location.href = excerpt.href;
+          state.excerptWindow.focus();
+        }
+        return;
+      }
       const groupTab = event.target.closest("[data-group-id]");
       if (groupTab) {
         event.preventDefault();

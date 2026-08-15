@@ -1246,7 +1246,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("new URLSearchParams", viewer_script)
         self.assertIn("window.opener.postMessage", viewer_script)
         self.assertIn('type: "clockwork:book-excerpt-ready"', viewer_script)
-        self.assertIn("output\\/book-excerpts", viewer_script)
+        self.assertIn("book-excerpts|color-pattern-excerpts", viewer_script)
         self.assertIn("?v=whole-tables", viewer_script)
         self.assertIn('media.dataset.zoom = actual ? "actual" : "fit"', viewer_script)
         self.assertIn('[data-zoom="actual"]', viewer_style)

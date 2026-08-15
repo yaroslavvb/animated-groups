@@ -319,6 +319,25 @@ body {
   color: var(--pattern-muted);
 }
 
+.book-evidence-link {
+  display: inline-block;
+  margin-top: 0.65rem;
+  color: #315d55;
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-decoration: underline;
+  text-decoration-color: #91aaa1;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.19em;
+}
+
+.book-evidence-link:hover,
+.book-evidence-link:focus-visible {
+  color: var(--pattern-accent);
+  text-decoration-color: currentColor;
+}
+
 .group-note {
   margin: 1rem 0 0;
   padding: 0.8rem 0.9rem;
@@ -421,9 +440,13 @@ body {
 }
 
 .pattern-details h4 {
-  margin: 0 0 1rem;
+  margin: 0;
   font: 700 clamp(2rem, 3.8vw, 4rem)/0.95 Georgia, "Times New Roman", serif;
   letter-spacing: -0.04em;
+}
+
+.pattern-details > .book-evidence-link {
+  margin: 0.65rem 0 1rem;
 }
 
 .status-chips {

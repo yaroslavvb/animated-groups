@@ -17,6 +17,12 @@ from chaim_short_signatures import (  # noqa: E402
     THREE_FOLD_SHORT_SIGNATURE_BY_TYPE,
     TWO_FOLD_SHORT_SIGNATURE_BY_TYPE,
 )
+from color_pattern_book_excerpt_specs import (  # noqa: E402
+    GS_PAGE_SLOTS,
+    SOT_THREE_ROW,
+    SOT_TWO_ROW,
+    build_excerpt_specs,
+)
 
 
 class CatalogParser(HTMLParser):
@@ -290,6 +296,57 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertNotIn("const motifScale", script)
         self.assertNotIn("layoutVariant * 7", script)
         self.assertNotIn("const paths = [", script)
+        self.assertIn('link.target = "color-pattern-book-excerpt"', script)
+        self.assertIn("state.excerptWindow.location.href = excerpt.href", script)
+        self.assertIn("state.excerptWindow.focus()", script)
+
+    def test_every_catalog_record_has_a_reusable_book_excerpt(self) -> None:
+        for group in self.payload["colour_groups"]:
+            excerpt = group["book_excerpt"]
+            self.assertEqual(excerpt["work"], "The Symmetries of Things")
+            self.assertTrue(excerpt["image"].endswith(".webp"))
+            self.assertIn("printed_page", excerpt)
+        for pattern in self.payload["pattern_types"]:
+            excerpt = pattern["book_excerpt"]
+            self.assertEqual(excerpt["work"], "Tilings and Patterns")
+            self.assertTrue(excerpt["image"].endswith(".webp"))
+            self.assertIn("source_symbol", excerpt)
+
+        script = (ROOT / "color-pattern-catalog.js").read_text(encoding="utf-8")
+        self.assertIn("The Symmetries of Things · short signature", script)
+        self.assertIn("Tilings and Patterns ·", script)
+
+    def test_excerpt_specs_cover_69_colour_groups_and_147_coloured_patterns(self) -> None:
+        specs = build_excerpt_specs(self.payload)
+        self.assertEqual(Counter(spec["kind"] for spec in specs.values()), Counter({"gs": 147, "sot": 69}))
+        expected_paths = {ROOT / path for path in specs}
+        actual_paths = set((ROOT / "output" / "color-pattern-excerpts").glob("*.webp"))
+        self.assertEqual(actual_paths, expected_paths)
+        self.assertTrue(all(path.stat().st_size > 1_000 for path in actual_paths))
+
+        groups = self.payload["colour_groups"]
+        self.assertEqual(len(SOT_TWO_ROW), 46)
+        self.assertEqual(len(SOT_THREE_ROW), 23)
+        blank_short = next(group for group in groups if group["chaim_notation"] == "632³//333")
+        self.assertIn("leaves this short-signature cell blank", blank_short["book_excerpt"]["context"])
+
+        page_counts = Counter(
+            pattern["source"]["printed_page"]
+            for pattern in self.payload["pattern_types"]
+            if pattern["number_of_colours"] > 1
+        )
+        self.assertEqual(page_counts, Counter({page: len(slots) for page, slots in GS_PAGE_SLOTS.items()}))
+
+    def test_one_colour_pattern_links_are_honest_chapter_8_cross_references(self) -> None:
+        one_colour = [
+            pattern for pattern in self.payload["pattern_types"]
+            if pattern["number_of_colours"] == 1
+        ]
+        self.assertEqual(len(one_colour), 51)
+        for pattern in one_colour:
+            excerpt = pattern["book_excerpt"]
+            self.assertIn("same PP stem", excerpt["context"])
+            self.assertNotEqual(excerpt["source_symbol"], pattern["gs_pattern_type"])
 
     def test_site_navigation_links_to_patterns(self) -> None:
         static_pages = (

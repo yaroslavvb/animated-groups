@@ -8,6 +8,7 @@ const image = document.querySelector("[data-excerpt-image]");
 const status = document.querySelector("[data-excerpt-status]");
 const source = document.querySelector("[data-excerpt-source]");
 const zoom = document.querySelector("[data-zoom-toggle]");
+const returnLink = document.querySelector("[data-return-link]");
 
 if (window.opener) {
   window.opener.postMessage(
@@ -17,7 +18,11 @@ if (window.opener) {
 }
 
 function validImagePath(value) {
-  return /^output\/book-excerpts\/[a-z0-9-]+\.webp$/i.test(value || "");
+  return /^output\/(?:book-excerpts|color-pattern-excerpts)\/[a-z0-9-]+\.webp$/i.test(value || "");
+}
+
+function validReturnPath(value) {
+  return /^(?:clockwork-coloring-correspondence|color-pattern-catalog)\.html(?:#[a-z0-9-]+)?$/i.test(value || "");
 }
 
 function validSource(value) {
@@ -34,11 +39,16 @@ const excerptTitle = parameters.get("title") || "Annotated book excerpt";
 const excerptContext = parameters.get("context") || "Highlighted evidence from the cited page.";
 const excerptAlt = parameters.get("alt") || "Annotated excerpt from The Symmetries of Things.";
 const sourceUrl = parameters.get("source") || "";
+const returnPath = parameters.get("return") || "";
+const returnLabel = parameters.get("returnLabel") || "";
 
 title.textContent = excerptTitle;
 context.textContent = excerptContext;
 document.title = `${excerptTitle} · annotated excerpt`;
 image.alt = excerptAlt;
+
+if (validReturnPath(returnPath)) returnLink.href = returnPath;
+if (returnLabel) returnLink.textContent = returnLabel;
 
 if (validSource(sourceUrl)) source.href = sourceUrl;
 else source.hidden = true;
