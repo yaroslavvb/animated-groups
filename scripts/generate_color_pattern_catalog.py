@@ -661,6 +661,15 @@ def short_signature_html(signature: str) -> str:
             digit_run.append(character.translate(SUPERSCRIPT_TO_ASCII))
             index += 1
             continue
+        if (
+            character == ","
+            and digit_run
+            and index + 1 < len(signature)
+            and signature[index + 1] in "⁰¹²³⁴⁵⁶⁷⁸⁹"
+        ):
+            digit_run.append(character)
+            index += 1
+            continue
         flush_digits()
         if character == "^":
             if index + 1 >= len(signature) or signature[index + 1] != "(":
@@ -752,7 +761,7 @@ def build_html(payload: dict[str, Any]) -> str:
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <link rel="stylesheet" href="color-pattern-catalog.css?v=pg-short-row-fix">
-  <script src="color-pattern-catalog.js?v=affine-colour-actions-v2" defer></script>
+  <script src="color-pattern-catalog.js?v=short-signature-punctuation" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

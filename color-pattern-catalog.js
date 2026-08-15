@@ -105,9 +105,21 @@
       if (SUPERSCRIPT_DIGITS[character]) {
         const superscript = document.createElement("sup");
         let digits = "";
-        while (index < signature.length && SUPERSCRIPT_DIGITS[signature[index]]) {
-          digits += SUPERSCRIPT_DIGITS[signature[index]];
-          index += 1;
+        while (index < signature.length) {
+          if (SUPERSCRIPT_DIGITS[signature[index]]) {
+            digits += SUPERSCRIPT_DIGITS[signature[index]];
+            index += 1;
+            continue;
+          }
+          if (
+            signature[index] === ","
+            && SUPERSCRIPT_DIGITS[signature[index + 1]]
+          ) {
+            digits += ",";
+            index += 1;
+            continue;
+          }
+          break;
         }
         superscript.textContent = digits;
         wrapper.append(superscript);

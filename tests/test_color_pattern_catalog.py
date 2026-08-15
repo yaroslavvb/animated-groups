@@ -235,6 +235,10 @@ class ColorPatternCatalogTests(unittest.TestCase):
     def test_tabs_use_complete_chaim_short_signatures(self) -> None:
         self.assertEqual(len(TWO_FOLD_SHORT_SIGNATURE_BY_TYPE), 46)
         self.assertEqual(len(THREE_FOLD_SHORT_SIGNATURE_BY_TYPE), 23)
+        self.assertEqual(
+            catalog.short_signature_html("◦¹,³"),
+            "◦<sup>1,3</sup>",
+        )
         for group in self.payload["colour_groups"]:
             colours = group["number_of_colours"]
             if colours == 1:
