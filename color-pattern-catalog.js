@@ -108,26 +108,32 @@
     return 1;
   }
 
-  function addMotif(svg, x, y, angle, colour, seed, mirrored) {
-    const variant = seed % 4;
-    const paths = [
-      "M -12 -8 L 15 -3 L 7 12 L -10 7 Z",
-      "M -13 -5 Q 2 -15 15 -2 L 3 13 Q -6 7 -13 -5 Z",
-      "M -14 -8 L 14 -1 L 4 5 L 9 13 L -11 7 Z",
-      "M -13 -9 L 15 0 L -4 4 L -8 14 Z",
-    ];
+  function addMotif(svg, x, y, angle, colour, mirrored) {
     const group = svgElement("g", {
-      transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -1.35 : 1.35} 1.35)`,
+      transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -1.18 : 1.18} 1.18)`,
     });
-    const motif = svgElement("path", {
-      d: paths[variant],
+    const diamond = svgElement("polygon", {
+      points: "0,-13 13,0 0,13 -13,0",
       fill: colour,
       stroke: "#26322e",
       "stroke-width": 1.25,
       "vector-effect": "non-scaling-stroke",
     });
-    const eye = svgElement("circle", {cx: 5, cy: -1, r: 1.45, fill: "#fff", opacity: 0.9});
-    group.append(motif, eye);
+    const letter = svgElement("text", {
+      x: 0,
+      y: 0.75,
+      fill: "#fffaf1",
+      stroke: "#26322e",
+      "stroke-width": 0.6,
+      "paint-order": "stroke fill",
+      "font-family": "Arial, Helvetica, sans-serif",
+      "font-size": 13,
+      "font-weight": 800,
+      "text-anchor": "middle",
+      "dominant-baseline": "middle",
+    });
+    letter.textContent = "R";
+    group.append(diamond, letter);
     svg.append(group);
   }
 
@@ -171,7 +177,7 @@
             colourIndex = (colours.length - colourIndex) % colours.length;
           }
           const mirrored = wallpaper.orbifold.includes("*") && ((col + row + orbit) & 1) !== 0;
-          addMotif(motifs, px, py, (theta * 180) / Math.PI + (seed % 17), colours[colourIndex], seed + orbit, mirrored);
+          addMotif(motifs, px, py, (theta * 180) / Math.PI + (seed % 17), colours[colourIndex], mirrored);
         }
       }
     }

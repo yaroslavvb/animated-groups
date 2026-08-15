@@ -281,6 +281,9 @@ class ColorPatternCatalogTests(unittest.TestCase):
         script = (ROOT / "color-pattern-catalog.js").read_text(encoding="utf-8")
         for required in ("activateGroup", "activatePattern", "openFromHash", "ArrowLeft", "ArrowRight"):
             self.assertIn(required, script)
+        self.assertIn('points: "0,-13 13,0 0,13 -13,0"', script)
+        self.assertIn('letter.textContent = "R"', script)
+        self.assertNotIn("const paths = [", script)
 
     def test_site_navigation_links_to_patterns(self) -> None:
         static_pages = (
