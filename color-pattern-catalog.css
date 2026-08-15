@@ -411,8 +411,9 @@ body {
 .ghk-expression {
   display: inline-flex;
   align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.22rem;
+  flex-wrap: nowrap;
+  gap: 0;
+  white-space: nowrap;
 }
 
 .ghk-separator {

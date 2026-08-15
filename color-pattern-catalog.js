@@ -446,7 +446,7 @@
       shortSignatureElement(group.chaim_short_signature),
       `Open Chaim short colour signature ${group.chaim_short_signature.replaceAll("^", "")} in The Symmetries of Things`,
     ));
-    appendTableRow(table, "G / H / K", ghkElement(group));
+    appendTableRow(table, "Chaim G/H/K", ghkElement(group));
     appendTableRow(table, "G&S group symbol", sourceSymbolLink(
       pattern.book_excerpt,
       pattern.id,

@@ -382,7 +382,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn("state.excerptWindow.focus()", script)
         for label in (
             "Chaim short form",
-            "G / H / K",
+            "Chaim G/H/K",
             "G&S group symbol",
             "G&S pattern type",
             "Presentation",
@@ -413,6 +413,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
             "Single-colour stabilizer H",
             "All-colours stabilizer K",
             "Generator colour action",
+            '"G / H / K"',
             "-colour plane group",
         ):
             self.assertNotIn(removed, script)
