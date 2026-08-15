@@ -108,9 +108,9 @@
     return 1;
   }
 
-  function addMotif(svg, x, y, angle, colour, mirrored) {
+  function addMotif(svg, x, y, angle, colour, mirrored, scale) {
     const group = svgElement("g", {
-      transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -1.18 : 1.18} 1.18)`,
+      transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -scale : scale} ${scale})`,
     });
     const diamond = svgElement("polygon", {
       points: "0,-13 13,0 0,13 -13,0",
@@ -151,33 +151,47 @@
     const colours = PALETTES[pattern.number_of_colours];
     const order = orbitOrder(pattern.wallpaper_id);
     const hexagonal = ["p3", "p3m1", "p31m", "p6", "p6m"].includes(pattern.wallpaper_id);
-    const cols = order >= 4 ? 7 : 8;
-    const rows = order >= 4 ? 5 : 6;
+    const rigidLattice = hexagonal || ["p4", "p4m", "p4g"].includes(pattern.wallpaper_id);
+    const siblings = state.patternsByGroup.get(group.id) || [];
+    const siblingIndex = Math.max(0, siblings.findIndex((item) => item.id === pattern.id));
+    const layoutVariant = siblingIndex % 6;
+    const cols = [6, 5, 6, 5, 6, 5][layoutVariant];
+    const rows = [4, 4, 5, 5, 4, 5][layoutVariant];
     const dx = 960 / (cols - 0.25);
     const dy = 560 / (rows - 0.15);
     const a = 1 + (seed % Math.max(1, pattern.number_of_colours - 1));
     const b = 1 + ((seed >>> 3) % Math.max(1, pattern.number_of_colours - 1));
+    const orbitRadius = order === 1 ? 0 : [34, 43, 38, 46, 42, 36][layoutVariant];
+    const motifScale = order >= 6 ? 1.4 : order >= 4 ? 1.5 : order === 3 ? 1.6 : order === 2 ? 1.7 : 2;
+    const guideRadius = order === 1 ? 31 : orbitRadius + 13 * motifScale + 3;
     const guide = svgElement("g", {opacity: 0.19, stroke: "#75837d", "stroke-width": 0.8});
     const motifs = svgElement("g");
 
     for (let row = -1; row <= rows; row += 1) {
       for (let col = -1; col <= cols; col += 1) {
-        const x = (col + 0.55 + (hexagonal && row % 2 !== 0 ? 0.5 : 0)) * dx;
-        const y = (row + 0.58) * dy;
+        let x = (col + 0.55 + (hexagonal && row % 2 !== 0 ? 0.5 : 0)) * dx;
+        let y = (row + 0.58) * dy;
+        if (!rigidLattice) {
+          if (layoutVariant === 1) x += (Math.abs(row) % 2) * dx * 0.34;
+          if (layoutVariant === 2) y += (Math.abs(col) % 2) * dy * 0.2;
+          if (layoutVariant === 3) x += ((row % 3) + 3) % 3 * dx * 0.14;
+          if (layoutVariant === 4) x += (Math.abs(col + row) % 2) * dx * 0.18;
+          if (layoutVariant === 5) y += (((col % 3) + 3) % 3) * dy * 0.13;
+        }
         if (x < -50 || x > 1010 || y < -50 || y > 610) continue;
-        guide.append(svgElement("circle", {cx: x, cy: y, r: order === 1 ? 37 : 43, fill: "none"}));
+        guide.append(svgElement("circle", {cx: x, cy: y, r: guideRadius, fill: "none"}));
         const baseColour = pattern.number_of_colours === 1 ? 0 : ((a * col + b * row + colours.length * 10) % colours.length);
-        const radius = order === 1 ? 0 : (order >= 4 ? 29 : 25);
         for (let orbit = 0; orbit < order; orbit += 1) {
           const theta = (Math.PI * 2 * orbit) / order;
-          const px = x + Math.cos(theta) * radius;
-          const py = y + Math.sin(theta) * radius;
+          const px = x + Math.cos(theta) * orbitRadius;
+          const py = y + Math.sin(theta) * orbitRadius;
           let colourIndex = (baseColour + orbit) % colours.length;
           if (group.colour_image === "S3" && row % 2 !== 0) {
             colourIndex = (colours.length - colourIndex) % colours.length;
           }
           const mirrored = wallpaper.orbifold.includes("*") && ((col + row + orbit) & 1) !== 0;
-          addMotif(motifs, px, py, (theta * 180) / Math.PI + (seed % 17), colours[colourIndex], mirrored);
+          const motifAngle = (theta * 180) / Math.PI + (seed % 13) + layoutVariant * 7;
+          addMotif(motifs, px, py, motifAngle, colours[colourIndex], mirrored, motifScale);
         }
       }
     }

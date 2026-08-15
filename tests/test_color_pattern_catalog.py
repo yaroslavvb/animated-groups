@@ -283,6 +283,9 @@ class ColorPatternCatalogTests(unittest.TestCase):
             self.assertIn(required, script)
         self.assertIn('points: "0,-13 13,0 0,13 -13,0"', script)
         self.assertIn('letter.textContent = "R"', script)
+        self.assertIn("const siblingIndex", script)
+        self.assertIn("const layoutVariant", script)
+        self.assertIn("const motifScale", script)
         self.assertNotIn("const paths = [", script)
 
     def test_site_navigation_links_to_patterns(self) -> None:
