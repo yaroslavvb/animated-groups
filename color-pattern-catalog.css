@@ -323,7 +323,7 @@ body {
 }
 
 .pattern-data th {
-  width: 45%;
+  width: 38%;
   color: var(--pattern-muted);
   font-weight: 650;
 }
@@ -408,6 +408,79 @@ body {
   font: 650 1.08rem/1.15 Georgia, "Times New Roman", serif;
 }
 
+.ghk-expression {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.22rem;
+}
+
+.ghk-separator {
+  color: #809089;
+  font-weight: 400;
+}
+
+.generator-colour-actions {
+  min-width: 0;
+}
+
+.action-palette {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0 0 0.55rem;
+}
+
+.action-colour {
+  display: inline-grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  place-items: center;
+  border: 1px solid #53625c;
+  border-radius: 0.2rem;
+  color: #fff;
+  background: var(--swatch);
+  font: 700 0.72rem/1 Arial, Helvetica, sans-serif;
+}
+
+.action-colour:nth-child(2) {
+  color: #17201d;
+}
+
+.generator-action-list {
+  display: grid;
+  gap: 0.42rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.generator-action-list li {
+  display: grid;
+  grid-template-columns: 1.35rem minmax(5.8rem, 0.9fr) auto minmax(6.5rem, 1fr);
+  gap: 0.38rem;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.generator-symbol,
+.permutation-symbol {
+  color: var(--pattern-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.generator-geometry,
+.permutation-description {
+  color: var(--pattern-muted);
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+.permutation-description {
+  color: var(--pattern-ink);
+}
+
 .source-link-mark {
   color: var(--pattern-accent);
   font: 650 0.72rem/1 Arial, Helvetica, sans-serif;
@@ -466,6 +539,14 @@ body {
 
   .census p {
     min-height: 5rem;
+  }
+
+  .generator-action-list li {
+    grid-template-columns: 1.35rem 1fr auto;
+  }
+
+  .permutation-description {
+    grid-column: 2 / -1;
   }
 }
 

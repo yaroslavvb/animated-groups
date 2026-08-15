@@ -108,6 +108,53 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertTrue(all(group["colour_stabilizer_H"] in wallpaper_orbifolds for group in groups))
         self.assertTrue(all(group["all_colours_kernel_K"] in wallpaper_orbifolds for group in groups))
 
+    def test_every_group_has_complete_ghk_and_generator_colour_actions(self) -> None:
+        wallpaper_by_id = {
+            wallpaper["id"]: wallpaper for wallpaper in self.payload["wallpaper_groups"]
+        }
+        expected_image_orders = {"C1": 1, "C2": 2, "C3": 3, "S3": 6}
+        for group in self.payload["colour_groups"]:
+            self.assertEqual(
+                group["ghk"],
+                {
+                    "G": wallpaper_by_id[group["wallpaper_id"]]["orbifold"],
+                    "H": group["colour_stabilizer_H"],
+                    "K": group["all_colours_kernel_K"],
+                },
+            )
+            actions = group["generator_colour_actions"]
+            self.assertTrue(actions)
+            for action in actions:
+                self.assertEqual(
+                    sorted(action["colour_permutation"]),
+                    list(range(group["number_of_colours"])),
+                )
+            image = catalog.permutation_group(actions)
+            self.assertEqual(len(image), expected_image_orders[group["colour_image"]])
+            self.assertEqual(
+                {permutation[0] for permutation in image},
+                set(range(group["number_of_colours"])),
+            )
+
+        groups = {group["id"]: group for group in self.payload["colour_groups"]}
+        self.assertEqual(groups["cg-p4-2-1"]["ghk"], {"G": "442", "H": "442", "K": "442"})
+        self.assertEqual(
+            [action["permutation_code"] for action in groups["cg-p4-2-1"]["generator_colour_actions"]],
+            ["1", "AB", "AB"],
+        )
+        self.assertEqual(
+            [action["permutation_code"] for action in groups["cg-p4-2-2"]["generator_colour_actions"]],
+            ["AB", "AB", "1"],
+        )
+        self.assertEqual(
+            [action["permutation_code"] for action in groups["cg-p3m1-3-1"]["generator_colour_actions"]],
+            ["AB", "BC", "CA"],
+        )
+        self.assertEqual(
+            groups["cg-pmg-3-1"]["ghk"],
+            {"G": "22*", "H": "22*", "K": "××"},
+        )
+
     def test_two_colour_orbifold_exception_is_explicit(self) -> None:
         groups = [
             group for group in self.payload["colour_groups"]
@@ -317,13 +364,20 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn("state.excerptWindow.focus()", script)
         for label in (
             "Chaim short form",
-            "Parent wallpaper group",
-            "Single-colour stabilizer H",
-            "All-colours stabilizer K",
+            "G / H / K",
+            "Generator colour action",
             "G&S group symbol",
             "G&S pattern type",
         ):
             self.assertIn(f'"{label}"', script)
+        for required in (
+            "ghkElement",
+            "generatorActionsElement",
+            "permutationNotation",
+            "permutationDescription",
+            "group.generator_colour_actions",
+        ):
+            self.assertIn(required, script)
         for removed in (
             "group-overview",
             "group-kicker",
@@ -333,6 +387,9 @@ class ColorPatternCatalogTests(unittest.TestCase):
             "Underlying pattern type",
             "Representative",
             "Colour action",
+            "Parent wallpaper group",
+            "Single-colour stabilizer H",
+            "All-colours stabilizer K",
             "-colour plane group",
         ):
             self.assertNotIn(removed, script)

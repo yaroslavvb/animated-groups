@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=p4-characters";
+  const DATA_URL = "data/color-pattern-catalog.json?v=generator-actions";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -143,6 +143,76 @@
 
   function mathSymbolElement(value) {
     return textElement("span", "source-math-symbol", typesetSymbol(value));
+  }
+
+  function ghkElement(group) {
+    const wrapper = document.createElement("span");
+    wrapper.className = "ghk-expression source-math-symbol";
+    ["G", "H", "K"].forEach((key, index) => {
+      if (index > 0) wrapper.append(textElement("span", "ghk-separator", "/"));
+      wrapper.append(textElement("span", "ghk-term", typesetSymbol(group.ghk[key])));
+    });
+    wrapper.setAttribute(
+      "aria-label",
+      `G ${typesetSymbol(group.ghk.G)}; H ${typesetSymbol(group.ghk.H)}; K ${typesetSymbol(group.ghk.K)}`,
+    );
+    return wrapper;
+  }
+
+  function permutationNotation(permutation) {
+    const labels = ["A", "B", "C"].slice(0, permutation.length);
+    if (permutation.every((image, index) => image === index)) return "id";
+    const moved = permutation.map((image, index) => image !== index ? index : -1).filter((index) => index >= 0);
+    if (moved.length === 2) return `(${labels[moved[0]]} ${labels[moved[1]]})`;
+    const cycle = [0];
+    while (cycle.length < permutation.length) cycle.push(permutation[cycle[cycle.length - 1]]);
+    return `(${cycle.map((index) => labels[index]).join(" ")})`;
+  }
+
+  function permutationDescription(permutation) {
+    const labels = ["A", "B", "C"].slice(0, permutation.length);
+    if (permutation.every((image, index) => image === index)) {
+      return labels.map((label) => `${label}→${label}`).join(", ");
+    }
+    const fixed = permutation.map((image, index) => image === index ? index : -1).filter((index) => index >= 0);
+    if (fixed.length === permutation.length - 2) {
+      const moved = permutation.map((image, index) => image !== index ? index : -1).filter((index) => index >= 0);
+      const fixedText = fixed.length ? `; ${labels[fixed[0]]} fixed` : "";
+      return `${labels[moved[0]]}↔${labels[moved[1]]}${fixedText}`;
+    }
+    const cycle = [0];
+    while (cycle.length < permutation.length) cycle.push(permutation[cycle[cycle.length - 1]]);
+    return `${cycle.map((index) => labels[index]).join("→")}→${labels[cycle[0]]}`;
+  }
+
+  function generatorActionsElement(group) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "generator-colour-actions";
+
+    const palette = document.createElement("div");
+    palette.className = "action-palette";
+    palette.title = "Canonical colour labels; simultaneous relabelling gives the same colour group.";
+    palette.setAttribute("aria-label", "Canonical colour labels used in the permutations");
+    ["A", "B", "C"].slice(0, group.number_of_colours).forEach((label, index) => {
+      const swatch = textElement("span", "action-colour", label);
+      swatch.style.setProperty("--swatch", PALETTES[group.number_of_colours][index]);
+      palette.append(swatch);
+    });
+
+    const list = document.createElement("ul");
+    list.className = "generator-action-list";
+    group.generator_colour_actions.forEach((action) => {
+      const item = document.createElement("li");
+      item.append(
+        textElement("span", "generator-symbol", action.generator),
+        textElement("span", "generator-geometry", action.geometry),
+        textElement("span", "permutation-symbol", permutationNotation(action.colour_permutation)),
+        textElement("span", "permutation-description", permutationDescription(action.colour_permutation)),
+      );
+      list.append(item);
+    });
+    wrapper.append(palette, list);
+    return wrapper;
   }
 
   function hashString(value) {
@@ -333,9 +403,8 @@
       shortSignatureElement(group.chaim_short_signature),
       `Open Chaim short colour signature ${group.chaim_short_signature.replaceAll("^", "")} in The Symmetries of Things`,
     ));
-    appendTableRow(table, "Parent wallpaper group", mathSymbolElement(wallpaper.orbifold));
-    appendTableRow(table, "Single-colour stabilizer H", mathSymbolElement(group.colour_stabilizer_H));
-    appendTableRow(table, "All-colours stabilizer K", mathSymbolElement(group.all_colours_kernel_K));
+    appendTableRow(table, "G / H / K", ghkElement(group));
+    appendTableRow(table, "Generator colour action", generatorActionsElement(group));
     appendTableRow(table, "G&S group symbol", sourceSymbolLink(
       pattern.book_excerpt,
       pattern.id,

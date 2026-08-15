@@ -24,6 +24,11 @@ from chaim_short_signatures import (
     THREE_FOLD_SHORT_SIGNATURE_BY_TYPE,
     TWO_FOLD_SHORT_SIGNATURE_BY_TYPE,
 )
+from colour_generator_actions import (
+    THREE_COLOUR_ACTION_CODES,
+    generator_colour_actions,
+    permutation_group,
+)
 from color_pattern_book_excerpt_specs import (
     decorate_payload,
     validate_excerpt_metadata,
@@ -271,6 +276,17 @@ def build_groups() -> list[dict[str, Any]]:
             "regular": True,
             "colour_stabilizer_H": wallpaper["orbifold"],
             "all_colours_kernel_K": wallpaper["orbifold"],
+            "ghk": {
+                "G": wallpaper["orbifold"],
+                "H": wallpaper["orbifold"],
+                "K": wallpaper["orbifold"],
+            },
+            "generator_colour_actions": generator_colour_actions(
+                parent,
+                1,
+                wallpaper["orbifold"],
+                wallpaper["orbifold"],
+            ),
             "notation_variant": None,
             "related_forms": [],
             "sources": [
@@ -298,6 +314,12 @@ def build_groups() -> list[dict[str, Any]]:
                     raise ValueError(
                         f"missing Chaim short signature for {notation}"
                     ) from error
+                stabilizer = (
+                    kernel_from_notation(display_notation)
+                    if regular
+                    else NONREGULAR_THREE_STABILIZER[display_notation]
+                )
+                kernel = kernel_from_notation(display_notation)
                 groups.append({
                     "id": group_id,
                     "wallpaper_id": parent,
@@ -308,12 +330,19 @@ def build_groups() -> list[dict[str, Any]]:
                     "gs_symbol": legacy_group_symbol(wallpaper["hm"], colours, index, len(entries)),
                     "colour_image": "C2" if colours == 2 else ("C3" if regular else "S3"),
                     "regular": regular,
-                    "colour_stabilizer_H": (
-                        kernel_from_notation(display_notation)
-                        if regular
-                        else NONREGULAR_THREE_STABILIZER[display_notation]
+                    "colour_stabilizer_H": stabilizer,
+                    "all_colours_kernel_K": kernel,
+                    "ghk": {
+                        "G": wallpaper["orbifold"],
+                        "H": stabilizer,
+                        "K": kernel,
+                    },
+                    "generator_colour_actions": generator_colour_actions(
+                        parent,
+                        colours,
+                        display_notation,
+                        short_signature,
                     ),
-                    "all_colours_kernel_K": kernel_from_notation(display_notation),
                     "notation_variant": variant,
                     "related_forms": [ORIENTED_FORMS[display_notation]] if display_notation in ORIENTED_FORMS else [],
                     "sources": [
@@ -438,6 +467,38 @@ def validate_payload(payload: dict[str, Any]) -> None:
         raise ValueError("every chosen-colour stabilizer H must be a wallpaper orbifold")
     if any(group["all_colours_kernel_K"] not in wallpaper_orbifolds for group in groups):
         raise ValueError("every all-colours kernel K must be a wallpaper orbifold")
+    expected_image_orders = {"C1": 1, "C2": 2, "C3": 3, "S3": 6}
+    for group in groups:
+        expected_ghk = {
+            "G": next(
+                wallpaper["orbifold"]
+                for wallpaper in wallpapers
+                if wallpaper["id"] == group["wallpaper_id"]
+            ),
+            "H": group["colour_stabilizer_H"],
+            "K": group["all_colours_kernel_K"],
+        }
+        if group.get("ghk") != expected_ghk:
+            raise ValueError(f"bad G/H/K triple for {group['id']}: {group.get('ghk')}")
+        actions = group.get("generator_colour_actions") or []
+        if not actions:
+            raise ValueError(f"missing generator colour action for {group['id']}")
+        colours = group["number_of_colours"]
+        for action in actions:
+            permutation = action["colour_permutation"]
+            if sorted(permutation) != list(range(colours)):
+                raise ValueError(
+                    f"bad colour permutation for {group['id']} {action['generator']}: "
+                    f"{permutation}"
+                )
+        image = permutation_group(actions)
+        if len(image) != expected_image_orders[group["colour_image"]]:
+            raise ValueError(
+                f"bad permutation image for {group['id']}: {len(image)} != "
+                f"{expected_image_orders[group['colour_image']]}"
+            )
+        if {permutation[0] for permutation in image} != set(range(colours)):
+            raise ValueError(f"intransitive colour action for {group['id']}")
     nonregular = {
         group["chaim_notation"]: group["colour_stabilizer_H"]
         for group in groups
@@ -478,6 +539,10 @@ def validate_payload(payload: dict[str, Any]) -> None:
 
 
 def build_payload() -> dict[str, Any]:
+    if set(THREE_COLOUR_ACTION_CODES) != {
+        notation for entries in THREE_COLOUR_TYPES.values() for notation in entries
+    }:
+        raise ValueError("three-colour generator actions do not match the 23-type census")
     groups = build_groups()
     patterns = build_patterns(groups)
     payload = {
@@ -656,8 +721,8 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Periodic colour-pattern catalog</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=p4-characters">
-  <script src="color-pattern-catalog.js?v=p4-characters" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=generator-actions">
+  <script src="color-pattern-catalog.js?v=generator-actions" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

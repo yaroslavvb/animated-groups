@@ -265,6 +265,29 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "◦",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "X",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Y",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -296,6 +319,31 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "◦",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "X",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Y",
+          "geometry": "translation",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -332,6 +380,33 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "◦",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "X",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "Y",
+          "geometry": "translation",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -368,6 +443,45 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "2222",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "δ",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -399,6 +513,49 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "2222",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "δ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -435,6 +592,49 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "2222",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "δ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -471,6 +671,53 @@
       "regular": false,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "2222",
+        "H": "2222",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "δ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -507,6 +754,37 @@
       "regular": true,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "**",
+        "H": "**",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -538,6 +816,40 @@
       "regular": true,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "**",
+        "H": "××",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -574,6 +886,40 @@
       "regular": true,
       "colour_stabilizer_H": "*×",
       "all_colours_kernel_K": "*×",
+      "ghk": {
+        "G": "**",
+        "H": "*×",
+        "K": "*×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -610,6 +956,40 @@
       "regular": true,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "**",
+        "H": "**",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": "1",
       "related_forms": [],
       "sources": [
@@ -646,6 +1026,40 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "**",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -682,6 +1096,40 @@
       "regular": true,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "**",
+        "H": "**",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": "2",
       "related_forms": [],
       "sources": [
@@ -718,6 +1166,43 @@
       "regular": false,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "**",
+        "H": "**",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -754,6 +1239,43 @@
       "regular": true,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "**",
+        "H": "**",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "translation",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "parallel mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -790,6 +1312,29 @@
       "regular": true,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "××",
+        "H": "××",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "Y",
+          "geometry": "glide reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -821,6 +1366,31 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "××",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "Y",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -857,6 +1427,31 @@
       "regular": true,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "××",
+        "H": "××",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "Y",
+          "geometry": "glide reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -893,6 +1488,33 @@
       "regular": true,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "××",
+        "H": "××",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "Y",
+          "geometry": "glide reflection",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "ACB",
+          "colour_permutation": [
+            2,
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -929,6 +1551,33 @@
       "regular": false,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "××",
+        "H": "××",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "Y",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -965,6 +1614,29 @@
       "regular": true,
       "colour_stabilizer_H": "*×",
       "all_colours_kernel_K": "*×",
+      "ghk": {
+        "G": "*×",
+        "H": "*×",
+        "K": "*×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -996,6 +1668,31 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "*×",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1032,6 +1729,31 @@
       "regular": true,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "*×",
+        "H": "××",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1068,6 +1790,31 @@
       "regular": true,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "*×",
+        "H": "**",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1104,6 +1851,33 @@
       "regular": true,
       "colour_stabilizer_H": "*×",
       "all_colours_kernel_K": "*×",
+      "ghk": {
+        "G": "*×",
+        "H": "*×",
+        "K": "*×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1140,6 +1914,33 @@
       "regular": false,
       "colour_stabilizer_H": "*×",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "*×",
+        "H": "*×",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1176,6 +1977,45 @@
       "regular": true,
       "colour_stabilizer_H": "*2222",
       "all_colours_kernel_K": "*2222",
+      "ghk": {
+        "G": "*2222",
+        "H": "*2222",
+        "K": "*2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "S",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1207,6 +2047,49 @@
       "regular": true,
       "colour_stabilizer_H": "*2222",
       "all_colours_kernel_K": "*2222",
+      "ghk": {
+        "G": "*2222",
+        "H": "*2222",
+        "K": "*2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "S",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1243,6 +2126,49 @@
       "regular": true,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "*2222",
+        "H": "**",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "S",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1279,6 +2205,49 @@
       "regular": true,
       "colour_stabilizer_H": "2*22",
       "all_colours_kernel_K": "2*22",
+      "ghk": {
+        "G": "*2222",
+        "H": "2*22",
+        "K": "2*22"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "S",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1315,6 +2284,49 @@
       "regular": true,
       "colour_stabilizer_H": "22*",
       "all_colours_kernel_K": "22*",
+      "ghk": {
+        "G": "*2222",
+        "H": "22*",
+        "K": "22*"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "S",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1351,6 +2363,49 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "*2222",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "S",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1387,6 +2442,53 @@
       "regular": false,
       "colour_stabilizer_H": "*2222",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "*2222",
+        "H": "*2222",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "S",
+          "geometry": "mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1423,6 +2525,37 @@
       "regular": true,
       "colour_stabilizer_H": "22*",
       "all_colours_kernel_K": "22*",
+      "ghk": {
+        "G": "22*",
+        "H": "22*",
+        "K": "22*"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1454,6 +2587,40 @@
       "regular": true,
       "colour_stabilizer_H": "22*",
       "all_colours_kernel_K": "22*",
+      "ghk": {
+        "G": "22*",
+        "H": "22*",
+        "K": "22*"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1490,6 +2657,40 @@
       "regular": true,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "22*",
+        "H": "××",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1526,6 +2727,40 @@
       "regular": true,
       "colour_stabilizer_H": "22×",
       "all_colours_kernel_K": "22×",
+      "ghk": {
+        "G": "22*",
+        "H": "22×",
+        "K": "22×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1562,6 +2797,40 @@
       "regular": true,
       "colour_stabilizer_H": "**",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "22*",
+        "H": "**",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1598,6 +2867,40 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "22*",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1634,6 +2937,43 @@
       "regular": false,
       "colour_stabilizer_H": "22*",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "22*",
+        "H": "22*",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1670,6 +3010,43 @@
       "regular": false,
       "colour_stabilizer_H": "22*",
       "all_colours_kernel_K": "**",
+      "ghk": {
+        "G": "22*",
+        "H": "22*",
+        "K": "**"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1706,6 +3083,37 @@
       "regular": true,
       "colour_stabilizer_H": "22×",
       "all_colours_kernel_K": "22×",
+      "ghk": {
+        "G": "22×",
+        "H": "22×",
+        "K": "22×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1737,6 +3145,40 @@
       "regular": true,
       "colour_stabilizer_H": "××",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "22×",
+        "H": "××",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1773,6 +3215,40 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "22×",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1809,6 +3285,43 @@
       "regular": false,
       "colour_stabilizer_H": "22×",
       "all_colours_kernel_K": "××",
+      "ghk": {
+        "G": "22×",
+        "H": "22×",
+        "K": "××"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "Z",
+          "geometry": "glide reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1845,6 +3358,37 @@
       "regular": true,
       "colour_stabilizer_H": "2*22",
       "all_colours_kernel_K": "2*22",
+      "ghk": {
+        "G": "2*22",
+        "H": "2*22",
+        "K": "2*22"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1876,6 +3420,40 @@
       "regular": true,
       "colour_stabilizer_H": "22×",
       "all_colours_kernel_K": "22×",
+      "ghk": {
+        "G": "2*22",
+        "H": "22×",
+        "K": "22×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1912,6 +3490,40 @@
       "regular": true,
       "colour_stabilizer_H": "*×",
       "all_colours_kernel_K": "*×",
+      "ghk": {
+        "G": "2*22",
+        "H": "*×",
+        "K": "*×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1948,6 +3560,40 @@
       "regular": true,
       "colour_stabilizer_H": "22*",
       "all_colours_kernel_K": "22*",
+      "ghk": {
+        "G": "2*22",
+        "H": "22*",
+        "K": "22*"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -1984,6 +3630,40 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "2*22",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2020,6 +3700,40 @@
       "regular": true,
       "colour_stabilizer_H": "*2222",
       "all_colours_kernel_K": "*2222",
+      "ghk": {
+        "G": "2*22",
+        "H": "*2222",
+        "K": "*2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2056,6 +3770,43 @@
       "regular": false,
       "colour_stabilizer_H": "2*22",
       "all_colours_kernel_K": "*×",
+      "ghk": {
+        "G": "2*22",
+        "H": "2*22",
+        "K": "*×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "half-turn",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2092,6 +3843,37 @@
       "regular": true,
       "colour_stabilizer_H": "442",
       "all_colours_kernel_K": "442",
+      "ghk": {
+        "G": "442",
+        "H": "442",
+        "K": "442"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "quarter-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "quarter-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2123,6 +3905,40 @@
       "regular": true,
       "colour_stabilizer_H": "442",
       "all_colours_kernel_K": "442",
+      "ghk": {
+        "G": "442",
+        "H": "442",
+        "K": "442"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "quarter-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "quarter-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2159,6 +3975,40 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "442",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "quarter-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "quarter-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2195,6 +4045,37 @@
       "regular": true,
       "colour_stabilizer_H": "*442",
       "all_colours_kernel_K": "*442",
+      "ghk": {
+        "G": "*442",
+        "H": "*442",
+        "K": "*442"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2226,6 +4107,40 @@
       "regular": true,
       "colour_stabilizer_H": "4*2",
       "all_colours_kernel_K": "4*2",
+      "ghk": {
+        "G": "*442",
+        "H": "4*2",
+        "K": "4*2"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2262,6 +4177,40 @@
       "regular": true,
       "colour_stabilizer_H": "442",
       "all_colours_kernel_K": "442",
+      "ghk": {
+        "G": "*442",
+        "H": "442",
+        "K": "442"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2298,6 +4247,40 @@
       "regular": true,
       "colour_stabilizer_H": "2*22",
       "all_colours_kernel_K": "2*22",
+      "ghk": {
+        "G": "*442",
+        "H": "2*22",
+        "K": "2*22"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2334,6 +4317,40 @@
       "regular": true,
       "colour_stabilizer_H": "*2222",
       "all_colours_kernel_K": "*2222",
+      "ghk": {
+        "G": "*442",
+        "H": "*2222",
+        "K": "*2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2370,6 +4387,40 @@
       "regular": true,
       "colour_stabilizer_H": "*442",
       "all_colours_kernel_K": "*442",
+      "ghk": {
+        "G": "*442",
+        "H": "*442",
+        "K": "*442"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2406,6 +4457,29 @@
       "regular": true,
       "colour_stabilizer_H": "4*2",
       "all_colours_kernel_K": "4*2",
+      "ghk": {
+        "G": "4*2",
+        "H": "4*2",
+        "K": "4*2"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "quarter-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2437,6 +4511,31 @@
       "regular": true,
       "colour_stabilizer_H": "442",
       "all_colours_kernel_K": "442",
+      "ghk": {
+        "G": "4*2",
+        "H": "442",
+        "K": "442"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "quarter-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2473,6 +4572,31 @@
       "regular": true,
       "colour_stabilizer_H": "2*22",
       "all_colours_kernel_K": "2*22",
+      "ghk": {
+        "G": "4*2",
+        "H": "2*22",
+        "K": "2*22"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "quarter-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2509,6 +4633,31 @@
       "regular": true,
       "colour_stabilizer_H": "22×",
       "all_colours_kernel_K": "22×",
+      "ghk": {
+        "G": "4*2",
+        "H": "22×",
+        "K": "22×"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "quarter-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2545,6 +4694,37 @@
       "regular": true,
       "colour_stabilizer_H": "333",
       "all_colours_kernel_K": "333",
+      "ghk": {
+        "G": "333",
+        "H": "333",
+        "K": "333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2576,6 +4756,43 @@
       "regular": true,
       "colour_stabilizer_H": "◦",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "333",
+        "H": "◦",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-third turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "one-third turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "one-third turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [
         "Two opposite cyclic orientations (the P3₁/P3₂ clockwork pair) define one plane colour type after colour relabelling."
@@ -2614,6 +4831,43 @@
       "regular": true,
       "colour_stabilizer_H": "333",
       "all_colours_kernel_K": "333",
+      "ghk": {
+        "G": "333",
+        "H": "333",
+        "K": "333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-third turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "one-third turn",
+          "permutation_code": "ACB",
+          "colour_permutation": [
+            2,
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2650,6 +4904,37 @@
       "regular": true,
       "colour_stabilizer_H": "*333",
       "all_colours_kernel_K": "*333",
+      "ghk": {
+        "G": "*333",
+        "H": "*333",
+        "K": "*333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2681,6 +4966,40 @@
       "regular": true,
       "colour_stabilizer_H": "333",
       "all_colours_kernel_K": "333",
+      "ghk": {
+        "G": "*333",
+        "H": "333",
+        "K": "333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2717,6 +5036,43 @@
       "regular": false,
       "colour_stabilizer_H": "*×",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "*333",
+        "H": "*×",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "CA",
+          "colour_permutation": [
+            2,
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2753,6 +5109,43 @@
       "regular": false,
       "colour_stabilizer_H": "3*3",
       "all_colours_kernel_K": "333",
+      "ghk": {
+        "G": "*333",
+        "H": "3*3",
+        "K": "333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2789,6 +5182,29 @@
       "regular": true,
       "colour_stabilizer_H": "3*3",
       "all_colours_kernel_K": "3*3",
+      "ghk": {
+        "G": "3*3",
+        "H": "3*3",
+        "K": "3*3"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2820,6 +5236,31 @@
       "regular": true,
       "colour_stabilizer_H": "333",
       "all_colours_kernel_K": "333",
+      "ghk": {
+        "G": "3*3",
+        "H": "333",
+        "K": "333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2856,6 +5297,33 @@
       "regular": false,
       "colour_stabilizer_H": "*×",
       "all_colours_kernel_K": "◦",
+      "ghk": {
+        "G": "3*3",
+        "H": "*×",
+        "K": "◦"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-third turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2892,6 +5360,33 @@
       "regular": true,
       "colour_stabilizer_H": "*333",
       "all_colours_kernel_K": "*333",
+      "ghk": {
+        "G": "3*3",
+        "H": "*333",
+        "K": "*333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-third turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2928,6 +5423,37 @@
       "regular": true,
       "colour_stabilizer_H": "632",
       "all_colours_kernel_K": "632",
+      "ghk": {
+        "G": "632",
+        "H": "632",
+        "K": "632"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-sixth turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2959,6 +5485,40 @@
       "regular": true,
       "colour_stabilizer_H": "333",
       "all_colours_kernel_K": "333",
+      "ghk": {
+        "G": "632",
+        "H": "333",
+        "K": "333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-sixth turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "one-third turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -2995,6 +5555,43 @@
       "regular": true,
       "colour_stabilizer_H": "2222",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "632",
+        "H": "2222",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-sixth turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "one-third turn",
+          "permutation_code": "ACB",
+          "colour_permutation": [
+            2,
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [
         "Two opposite cyclic orientations (the P6₂/P6₄ clockwork pair) define one plane colour type after colour relabelling."
@@ -3033,6 +5630,43 @@
       "regular": false,
       "colour_stabilizer_H": "632",
       "all_colours_kernel_K": "333",
+      "ghk": {
+        "G": "632",
+        "H": "632",
+        "K": "333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "α",
+          "geometry": "one-sixth turn",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "β",
+          "geometry": "one-third turn",
+          "permutation_code": "ABC",
+          "colour_permutation": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "generator": "γ",
+          "geometry": "half-turn",
+          "permutation_code": "CA",
+          "colour_permutation": [
+            2,
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3069,6 +5703,37 @@
       "regular": true,
       "colour_stabilizer_H": "*632",
       "all_colours_kernel_K": "*632",
+      "ghk": {
+        "G": "*632",
+        "H": "*632",
+        "K": "*632"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3100,6 +5765,40 @@
       "regular": true,
       "colour_stabilizer_H": "3*3",
       "all_colours_kernel_K": "3*3",
+      "ghk": {
+        "G": "*632",
+        "H": "3*3",
+        "K": "3*3"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3136,6 +5835,40 @@
       "regular": true,
       "colour_stabilizer_H": "*333",
       "all_colours_kernel_K": "*333",
+      "ghk": {
+        "G": "*632",
+        "H": "*333",
+        "K": "*333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3172,6 +5905,40 @@
       "regular": true,
       "colour_stabilizer_H": "632",
       "all_colours_kernel_K": "632",
+      "ghk": {
+        "G": "*632",
+        "H": "632",
+        "K": "632"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3208,6 +5975,43 @@
       "regular": false,
       "colour_stabilizer_H": "2*22",
       "all_colours_kernel_K": "2222",
+      "ghk": {
+        "G": "*632",
+        "H": "2*22",
+        "K": "2222"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
@@ -3244,6 +6048,43 @@
       "regular": false,
       "colour_stabilizer_H": "*632",
       "all_colours_kernel_K": "*333",
+      "ghk": {
+        "G": "*632",
+        "H": "*632",
+        "K": "*333"
+      },
+      "generator_colour_actions": [
+        {
+          "generator": "P",
+          "geometry": "mirror reflection",
+          "permutation_code": "1",
+          "colour_permutation": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "generator": "Q",
+          "geometry": "mirror reflection",
+          "permutation_code": "AB",
+          "colour_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "generator": "R",
+          "geometry": "mirror reflection",
+          "permutation_code": "BC",
+          "colour_permutation": [
+            0,
+            2,
+            1
+          ]
+        }
+      ],
       "notation_variant": null,
       "related_forms": [],
       "sources": [
