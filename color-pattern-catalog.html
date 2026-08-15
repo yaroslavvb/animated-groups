@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A 17-family catalog of the 46 two-colour and 23 three-colour plane groups, with all 147 nontrivially coloured Grünbaum–Shephard periodic colour-pattern types.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Periodic colour-pattern catalog</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=gs-pattern-types-final">
+  <script src="color-pattern-catalog.js?v=gs-pattern-types-final" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="future-directions.html">Colours</a>
+        <a href="color-pattern-catalog.html" aria-current="page">Patterns</a>
+        <a href="clockwork-coloring-correspondence.html">Clockwork</a>
+        <a href="space-group-correspondence.html">Space groups</a>
+        <a href="docs/orbifold_notation.html">Notation</a>
+        <a href="data/color-pattern-catalog.json">Data</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pattern-catalog-page">
+    <section class="catalog-directory" aria-labelledby="page-title">
+      <p class="overline">17 wallpaper groups · 86 colour groups · 198 periodic pattern types</p>
+      <h1 id="page-title">Periodic colour-pattern catalog</h1>
+      <div class="census" aria-label="Catalog counts">
+        <p><strong>51</strong><span>one-colour PP types</span></p>
+        <p><strong>88</strong><span>two-colour types · 46 groups</span></p>
+        <p><strong>59</strong><span>three-colour types · 23 groups</span></p>
+        <p><strong>147</strong><span>nontrivially coloured types</span></p>
+      </div>
+      <p class="scope-note"><strong>Catalogued object:</strong> a Grünbaum–Shephard colour-pattern type, represented perfectly. Literal motif geometries are infinite; two representatives have the same type precisely when, after colour relabelling, they have the same colour group, coloured-motif stabilizer/induced group, and coloured-motif-transitive subgroups.</p>
+      <div class="filter-bar" role="group" aria-label="Filter by number of colours">
+        <button type="button" class="is-active" data-colour-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-colour-filter="2" aria-pressed="false">2 colours</button>
+        <button type="button" data-colour-filter="3" aria-pressed="false">3 colours</button>
+        <button type="button" data-colour-filter="1" aria-pressed="false">1 colour</button>
+      </div>
+      <nav class="directory-grid" aria-label="Wallpaper group sections">
+        <a class="directory-family" href="#wallpaper-p1" data-directory-wallpaper-id="p1"><strong>◦</strong><span>2 nontrivial groups · 2 coloured types</span></a><a class="directory-family" href="#wallpaper-p2" data-directory-wallpaper-id="p2"><strong>2222</strong><span>3 nontrivial groups · 5 coloured types</span></a><a class="directory-family" href="#wallpaper-pm" data-directory-wallpaper-id="pm"><strong>∗∗</strong><span>7 nontrivial groups · 12 coloured types</span></a><a class="directory-family" href="#wallpaper-pg" data-directory-wallpaper-id="pg"><strong>××</strong><span>4 nontrivial groups · 4 coloured types</span></a><a class="directory-family" href="#wallpaper-cm" data-directory-wallpaper-id="cm"><strong>∗×</strong><span>5 nontrivial groups · 8 coloured types</span></a><a class="directory-family" href="#wallpaper-pmm" data-directory-wallpaper-id="pmm"><strong>∗2222</strong><span>6 nontrivial groups · 16 coloured types</span></a><a class="directory-family" href="#wallpaper-pmg" data-directory-wallpaper-id="pmg"><strong>22∗</strong><span>7 nontrivial groups · 16 coloured types</span></a><a class="directory-family" href="#wallpaper-pgg" data-directory-wallpaper-id="pgg"><strong>22×</strong><span>3 nontrivial groups · 5 coloured types</span></a><a class="directory-family" href="#wallpaper-cmm" data-directory-wallpaper-id="cmm"><strong>2∗22</strong><span>6 nontrivial groups · 16 coloured types</span></a><a class="directory-family" href="#wallpaper-p4" data-directory-wallpaper-id="p4"><strong>442</strong><span>2 nontrivial groups · 4 coloured types</span></a><a class="directory-family" href="#wallpaper-p4m" data-directory-wallpaper-id="p4m"><strong>∗442</strong><span>5 nontrivial groups · 12 coloured types</span></a><a class="directory-family" href="#wallpaper-p4g" data-directory-wallpaper-id="p4g"><strong>4∗2</strong><span>3 nontrivial groups · 6 coloured types</span></a><a class="directory-family" href="#wallpaper-p3" data-directory-wallpaper-id="p3"><strong>333</strong><span>2 nontrivial groups · 3 coloured types</span></a><a class="directory-family" href="#wallpaper-p3m1" data-directory-wallpaper-id="p3m1"><strong>∗333</strong><span>3 nontrivial groups · 6 coloured types</span></a><a class="directory-family" href="#wallpaper-p31m" data-directory-wallpaper-id="p31m"><strong>3∗3</strong><span>3 nontrivial groups · 7 coloured types</span></a><a class="directory-family" href="#wallpaper-p6" data-directory-wallpaper-id="p6"><strong>632</strong><span>3 nontrivial groups · 7 coloured types</span></a><a class="directory-family" href="#wallpaper-p6m" data-directory-wallpaper-id="p6m"><strong>∗632</strong><span>5 nontrivial groups · 18 coloured types</span></a>
+      </nav>
+    </section>
+
+    <div class="pattern-atlas" id="pattern-atlas">
+    <section class="wallpaper-family" id="wallpaper-p1" data-wallpaper-id="p1" aria-labelledby="wallpaper-p1-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p1-title"><span class="family-orbifold">◦</span><span class="family-hm">p1</span></h2>
+        <p>Translations only.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over ◦">
+<a class="colour-group-tab" id="tab-cg-p1-2-1" href="#cg-p1-2-1" role="tab" aria-controls="panel-cg-p1-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p1-2-1"><span class="tab-name">◦/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p1[2]</span></a>
+<a class="colour-group-tab" id="tab-cg-p1-3-1" href="#cg-p1-3-1" role="tab" aria-controls="panel-cg-p1-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-p1-3-1"><span class="tab-name">◦³/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p1[3]</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p1-1-1" href="#cg-p1-1-1" role="tab" aria-controls="panel-cg-p1-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p1-1-1"><span class="tab-name">◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p1</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p2" data-wallpaper-id="p2" aria-labelledby="wallpaper-p2-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p2-title"><span class="family-orbifold">2222</span><span class="family-hm">p2</span></h2>
+        <p>Four order-2 cone points.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 2222">
+<a class="colour-group-tab" id="tab-cg-p2-2-1" href="#cg-p2-2-1" role="tab" aria-controls="panel-cg-p2-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p2-2-1"><span class="tab-name">2222/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p2[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p2-2-2" href="#cg-p2-2-2" role="tab" aria-controls="panel-cg-p2-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-p2-2-2"><span class="tab-name">2222/2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p2[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-p2-3-1" href="#cg-p2-3-1" role="tab" aria-controls="panel-cg-p2-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-p2-3-1"><span class="tab-name">2222³//◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p2[3]</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p2-1-1" href="#cg-p2-1-1" role="tab" aria-controls="panel-cg-p2-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p2-1-1"><span class="tab-name">2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p2</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-pm" data-wallpaper-id="pm" aria-labelledby="wallpaper-pm-title">
+      <header class="family-header">
+        <h2 id="wallpaper-pm-title"><span class="family-orbifold">∗∗</span><span class="family-hm">pm</span></h2>
+        <p>Two mirror boundaries.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over **">
+<a class="colour-group-tab" id="tab-cg-pm-2-1" href="#cg-pm-2-1" role="tab" aria-controls="panel-cg-pm-2-1" aria-selected="true" tabindex="0" data-group-id="cg-pm-2-1"><span class="tab-name">∗∗/××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pm[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pm-2-2" href="#cg-pm-2-2" role="tab" aria-controls="panel-cg-pm-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-pm-2-2"><span class="tab-name">∗∗/∗×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pm[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-pm-2-3" href="#cg-pm-2-3" role="tab" aria-controls="panel-cg-pm-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-pm-2-3"><span class="tab-name">∗∗/∗∗ · form 1</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pm[2]₃</span></a>
+<a class="colour-group-tab" id="tab-cg-pm-2-4" href="#cg-pm-2-4" role="tab" aria-controls="panel-cg-pm-2-4" aria-selected="false" tabindex="-1" data-group-id="cg-pm-2-4"><span class="tab-name">∗∗/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pm[2]₄</span></a>
+<a class="colour-group-tab" id="tab-cg-pm-2-5" href="#cg-pm-2-5" role="tab" aria-controls="panel-cg-pm-2-5" aria-selected="false" tabindex="-1" data-group-id="cg-pm-2-5"><span class="tab-name">∗∗/∗∗ · form 2</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pm[2]₅</span></a>
+<a class="colour-group-tab" id="tab-cg-pm-3-1" href="#cg-pm-3-1" role="tab" aria-controls="panel-cg-pm-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-pm-3-1"><span class="tab-name">∗∗³//◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pm[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pm-3-2" href="#cg-pm-3-2" role="tab" aria-controls="panel-cg-pm-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-pm-3-2"><span class="tab-name">∗∗³/∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pm[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-pm-1-1" href="#cg-pm-1-1" role="tab" aria-controls="panel-cg-pm-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-pm-1-1"><span class="tab-name">∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">pm</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-pg" data-wallpaper-id="pg" aria-labelledby="wallpaper-pg-title">
+      <header class="family-header">
+        <h2 id="wallpaper-pg-title"><span class="family-orbifold">××</span><span class="family-hm">pg</span></h2>
+        <p>Two crosscaps; glide reflections, no mirrors.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over ××">
+<a class="colour-group-tab" id="tab-cg-pg-2-1" href="#cg-pg-2-1" role="tab" aria-controls="panel-cg-pg-2-1" aria-selected="true" tabindex="0" data-group-id="cg-pg-2-1"><span class="tab-name">××/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pg[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pg-2-2" href="#cg-pg-2-2" role="tab" aria-controls="panel-cg-pg-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-pg-2-2"><span class="tab-name">××/××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pg[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-pg-3-1" href="#cg-pg-3-1" role="tab" aria-controls="panel-cg-pg-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-pg-3-1"><span class="tab-name">××³/××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pg[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pg-3-2" href="#cg-pg-3-2" role="tab" aria-controls="panel-cg-pg-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-pg-3-2"><span class="tab-name">××³//◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pg[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-pg-1-1" href="#cg-pg-1-1" role="tab" aria-controls="panel-cg-pg-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-pg-1-1"><span class="tab-name">××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">pg</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-cm" data-wallpaper-id="cm" aria-labelledby="wallpaper-cm-title">
+      <header class="family-header">
+        <h2 id="wallpaper-cm-title"><span class="family-orbifold">∗×</span><span class="family-hm">cm</span></h2>
+        <p>One mirror boundary and one crosscap.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over *×">
+<a class="colour-group-tab" id="tab-cg-cm-2-1" href="#cg-cm-2-1" role="tab" aria-controls="panel-cg-cm-2-1" aria-selected="true" tabindex="0" data-group-id="cg-cm-2-1"><span class="tab-name">∗×/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cm[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-cm-2-2" href="#cg-cm-2-2" role="tab" aria-controls="panel-cg-cm-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-cm-2-2"><span class="tab-name">∗×/××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cm[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-cm-2-3" href="#cg-cm-2-3" role="tab" aria-controls="panel-cg-cm-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-cm-2-3"><span class="tab-name">∗×/∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cm[2]₃</span></a>
+<a class="colour-group-tab" id="tab-cg-cm-3-1" href="#cg-cm-3-1" role="tab" aria-controls="panel-cg-cm-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-cm-3-1"><span class="tab-name">∗×³/∗×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">cm[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-cm-3-2" href="#cg-cm-3-2" role="tab" aria-controls="panel-cg-cm-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-cm-3-2"><span class="tab-name">∗×³//◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">cm[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-cm-1-1" href="#cg-cm-1-1" role="tab" aria-controls="panel-cg-cm-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-cm-1-1"><span class="tab-name">∗×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">cm</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-pmm" data-wallpaper-id="pmm" aria-labelledby="wallpaper-pmm-title">
+      <header class="family-header">
+        <h2 id="wallpaper-pmm-title"><span class="family-orbifold">∗2222</span><span class="family-hm">pmm</span></h2>
+        <p>Four order-2 mirror corners.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over *2222">
+<a class="colour-group-tab" id="tab-cg-pmm-2-1" href="#cg-pmm-2-1" role="tab" aria-controls="panel-cg-pmm-2-1" aria-selected="true" tabindex="0" data-group-id="cg-pmm-2-1"><span class="tab-name">∗2222/∗2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmm[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pmm-2-2" href="#cg-pmm-2-2" role="tab" aria-controls="panel-cg-pmm-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-pmm-2-2"><span class="tab-name">∗2222/∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmm[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-pmm-2-3" href="#cg-pmm-2-3" role="tab" aria-controls="panel-cg-pmm-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-pmm-2-3"><span class="tab-name">∗2222/2∗22</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmm[2]₃</span></a>
+<a class="colour-group-tab" id="tab-cg-pmm-2-4" href="#cg-pmm-2-4" role="tab" aria-controls="panel-cg-pmm-2-4" aria-selected="false" tabindex="-1" data-group-id="cg-pmm-2-4"><span class="tab-name">∗2222/22∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmm[2]₄</span></a>
+<a class="colour-group-tab" id="tab-cg-pmm-2-5" href="#cg-pmm-2-5" role="tab" aria-controls="panel-cg-pmm-2-5" aria-selected="false" tabindex="-1" data-group-id="cg-pmm-2-5"><span class="tab-name">∗2222/2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmm[2]₅</span></a>
+<a class="colour-group-tab" id="tab-cg-pmm-3-1" href="#cg-pmm-3-1" role="tab" aria-controls="panel-cg-pmm-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-pmm-3-1"><span class="tab-name">∗2222³//∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pmm[3]</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-pmm-1-1" href="#cg-pmm-1-1" role="tab" aria-controls="panel-cg-pmm-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-pmm-1-1"><span class="tab-name">∗2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">pmm</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-pmg" data-wallpaper-id="pmg" aria-labelledby="wallpaper-pmg-title">
+      <header class="family-header">
+        <h2 id="wallpaper-pmg-title"><span class="family-orbifold">22∗</span><span class="family-hm">pmg</span></h2>
+        <p>Two order-2 cone points and one mirror boundary.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 22*">
+<a class="colour-group-tab" id="tab-cg-pmg-2-1" href="#cg-pmg-2-1" role="tab" aria-controls="panel-cg-pmg-2-1" aria-selected="true" tabindex="0" data-group-id="cg-pmg-2-1"><span class="tab-name">22∗/22∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmg[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pmg-2-2" href="#cg-pmg-2-2" role="tab" aria-controls="panel-cg-pmg-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-pmg-2-2"><span class="tab-name">22∗/××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmg[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-pmg-2-3" href="#cg-pmg-2-3" role="tab" aria-controls="panel-cg-pmg-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-pmg-2-3"><span class="tab-name">22∗/22×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmg[2]₃</span></a>
+<a class="colour-group-tab" id="tab-cg-pmg-2-4" href="#cg-pmg-2-4" role="tab" aria-controls="panel-cg-pmg-2-4" aria-selected="false" tabindex="-1" data-group-id="cg-pmg-2-4"><span class="tab-name">22∗/∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmg[2]₄</span></a>
+<a class="colour-group-tab" id="tab-cg-pmg-2-5" href="#cg-pmg-2-5" role="tab" aria-controls="panel-cg-pmg-2-5" aria-selected="false" tabindex="-1" data-group-id="cg-pmg-2-5"><span class="tab-name">22∗/2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pmg[2]₅</span></a>
+<a class="colour-group-tab" id="tab-cg-pmg-3-1" href="#cg-pmg-3-1" role="tab" aria-controls="panel-cg-pmg-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-pmg-3-1"><span class="tab-name">22∗³//◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pmg[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pmg-3-2" href="#cg-pmg-3-2" role="tab" aria-controls="panel-cg-pmg-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-pmg-3-2"><span class="tab-name">22∗³//∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pmg[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-pmg-1-1" href="#cg-pmg-1-1" role="tab" aria-controls="panel-cg-pmg-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-pmg-1-1"><span class="tab-name">22∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">pmg</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-pgg" data-wallpaper-id="pgg" aria-labelledby="wallpaper-pgg-title">
+      <header class="family-header">
+        <h2 id="wallpaper-pgg-title"><span class="family-orbifold">22×</span><span class="family-hm">pgg</span></h2>
+        <p>Two order-2 cone points and one crosscap.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 22×">
+<a class="colour-group-tab" id="tab-cg-pgg-2-1" href="#cg-pgg-2-1" role="tab" aria-controls="panel-cg-pgg-2-1" aria-selected="true" tabindex="0" data-group-id="cg-pgg-2-1"><span class="tab-name">22×/××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pgg[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-pgg-2-2" href="#cg-pgg-2-2" role="tab" aria-controls="panel-cg-pgg-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-pgg-2-2"><span class="tab-name">22×/2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">pgg[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-pgg-3-1" href="#cg-pgg-3-1" role="tab" aria-controls="panel-cg-pgg-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-pgg-3-1"><span class="tab-name">22×³//××</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">pgg[3]</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-pgg-1-1" href="#cg-pgg-1-1" role="tab" aria-controls="panel-cg-pgg-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-pgg-1-1"><span class="tab-name">22×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">pgg</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-cmm" data-wallpaper-id="cmm" aria-labelledby="wallpaper-cmm-title">
+      <header class="family-header">
+        <h2 id="wallpaper-cmm-title"><span class="family-orbifold">2∗22</span><span class="family-hm">cmm</span></h2>
+        <p>One order-2 cone point and two order-2 mirror corners.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 2*22">
+<a class="colour-group-tab" id="tab-cg-cmm-2-1" href="#cg-cmm-2-1" role="tab" aria-controls="panel-cg-cmm-2-1" aria-selected="true" tabindex="0" data-group-id="cg-cmm-2-1"><span class="tab-name">2∗22/22×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cmm[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-cmm-2-2" href="#cg-cmm-2-2" role="tab" aria-controls="panel-cg-cmm-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-cmm-2-2"><span class="tab-name">2∗22/∗×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cmm[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-cmm-2-3" href="#cg-cmm-2-3" role="tab" aria-controls="panel-cg-cmm-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-cmm-2-3"><span class="tab-name">2∗22/22∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cmm[2]₃</span></a>
+<a class="colour-group-tab" id="tab-cg-cmm-2-4" href="#cg-cmm-2-4" role="tab" aria-controls="panel-cg-cmm-2-4" aria-selected="false" tabindex="-1" data-group-id="cg-cmm-2-4"><span class="tab-name">2∗22/2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cmm[2]₄</span></a>
+<a class="colour-group-tab" id="tab-cg-cmm-2-5" href="#cg-cmm-2-5" role="tab" aria-controls="panel-cg-cmm-2-5" aria-selected="false" tabindex="-1" data-group-id="cg-cmm-2-5"><span class="tab-name">2∗22/∗2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">cmm[2]₅</span></a>
+<a class="colour-group-tab" id="tab-cg-cmm-3-1" href="#cg-cmm-3-1" role="tab" aria-controls="panel-cg-cmm-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-cmm-3-1"><span class="tab-name">2∗22³//∗∗</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">cmm[3]</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-cmm-1-1" href="#cg-cmm-1-1" role="tab" aria-controls="panel-cg-cmm-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-cmm-1-1"><span class="tab-name">2∗22</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">cmm</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p4" data-wallpaper-id="p4" aria-labelledby="wallpaper-p4-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p4-title"><span class="family-orbifold">442</span><span class="family-hm">p4</span></h2>
+        <p>Order-4, order-4, and order-2 cone points.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 442">
+<a class="colour-group-tab" id="tab-cg-p4-2-1" href="#cg-p4-2-1" role="tab" aria-controls="panel-cg-p4-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p4-2-1"><span class="tab-name">442/442</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p4-2-2" href="#cg-p4-2-2" role="tab" aria-controls="panel-cg-p4-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-p4-2-2"><span class="tab-name">442/2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4[2]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p4-1-1" href="#cg-p4-1-1" role="tab" aria-controls="panel-cg-p4-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p4-1-1"><span class="tab-name">442</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p4</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p4m" data-wallpaper-id="p4m" aria-labelledby="wallpaper-p4m-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p4m-title"><span class="family-orbifold">∗442</span><span class="family-hm">p4m</span></h2>
+        <p>Order-4, order-4, and order-2 mirror corners.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over *442">
+<a class="colour-group-tab" id="tab-cg-p4m-2-1" href="#cg-p4m-2-1" role="tab" aria-controls="panel-cg-p4m-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p4m-2-1"><span class="tab-name">∗442/4∗2</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4m[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p4m-2-2" href="#cg-p4m-2-2" role="tab" aria-controls="panel-cg-p4m-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-p4m-2-2"><span class="tab-name">∗442/442</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4m[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-p4m-2-3" href="#cg-p4m-2-3" role="tab" aria-controls="panel-cg-p4m-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-p4m-2-3"><span class="tab-name">∗442/2∗22</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4m[2]₃</span></a>
+<a class="colour-group-tab" id="tab-cg-p4m-2-4" href="#cg-p4m-2-4" role="tab" aria-controls="panel-cg-p4m-2-4" aria-selected="false" tabindex="-1" data-group-id="cg-p4m-2-4"><span class="tab-name">∗442/∗2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4m[2]₄</span></a>
+<a class="colour-group-tab" id="tab-cg-p4m-2-5" href="#cg-p4m-2-5" role="tab" aria-controls="panel-cg-p4m-2-5" aria-selected="false" tabindex="-1" data-group-id="cg-p4m-2-5"><span class="tab-name">∗442/∗442</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4m[2]₅</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p4m-1-1" href="#cg-p4m-1-1" role="tab" aria-controls="panel-cg-p4m-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p4m-1-1"><span class="tab-name">∗442</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p4m</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p4g" data-wallpaper-id="p4g" aria-labelledby="wallpaper-p4g-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p4g-title"><span class="family-orbifold">4∗2</span><span class="family-hm">p4g</span></h2>
+        <p>One order-4 cone point and one order-2 mirror corner.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 4*2">
+<a class="colour-group-tab" id="tab-cg-p4g-2-1" href="#cg-p4g-2-1" role="tab" aria-controls="panel-cg-p4g-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p4g-2-1"><span class="tab-name">4∗2/442</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4g[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p4g-2-2" href="#cg-p4g-2-2" role="tab" aria-controls="panel-cg-p4g-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-p4g-2-2"><span class="tab-name">4∗2/2∗22</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4g[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-p4g-2-3" href="#cg-p4g-2-3" role="tab" aria-controls="panel-cg-p4g-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-p4g-2-3"><span class="tab-name">4∗2/22×</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p4g[2]₃</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p4g-1-1" href="#cg-p4g-1-1" role="tab" aria-controls="panel-cg-p4g-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p4g-1-1"><span class="tab-name">4∗2</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p4g</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p3" data-wallpaper-id="p3" aria-labelledby="wallpaper-p3-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p3-title"><span class="family-orbifold">333</span><span class="family-hm">p3</span></h2>
+        <p>Three order-3 cone points.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 333">
+<a class="colour-group-tab" id="tab-cg-p3-3-1" href="#cg-p3-3-1" role="tab" aria-controls="panel-cg-p3-3-1" aria-selected="true" tabindex="0" data-group-id="cg-p3-3-1"><span class="tab-name">333³/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p3[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p3-3-2" href="#cg-p3-3-2" role="tab" aria-controls="panel-cg-p3-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-p3-3-2"><span class="tab-name">333³/333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p3[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p3-1-1" href="#cg-p3-1-1" role="tab" aria-controls="panel-cg-p3-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p3-1-1"><span class="tab-name">333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p3</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p3m1" data-wallpaper-id="p3m1" aria-labelledby="wallpaper-p3m1-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p3m1-title"><span class="family-orbifold">∗333</span><span class="family-hm">p3m1</span></h2>
+        <p>Three order-3 mirror corners.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over *333">
+<a class="colour-group-tab" id="tab-cg-p3m1-2-1" href="#cg-p3m1-2-1" role="tab" aria-controls="panel-cg-p3m1-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p3m1-2-1"><span class="tab-name">∗333/333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p3m1[2]</span></a>
+<a class="colour-group-tab" id="tab-cg-p3m1-3-1" href="#cg-p3m1-3-1" role="tab" aria-controls="panel-cg-p3m1-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-p3m1-3-1"><span class="tab-name">∗333³//◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p3m1[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p3m1-3-2" href="#cg-p3m1-3-2" role="tab" aria-controls="panel-cg-p3m1-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-p3m1-3-2"><span class="tab-name">∗333³//333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p3m1[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p3m1-1-1" href="#cg-p3m1-1-1" role="tab" aria-controls="panel-cg-p3m1-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p3m1-1-1"><span class="tab-name">∗333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p3m1</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p31m" data-wallpaper-id="p31m" aria-labelledby="wallpaper-p31m-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p31m-title"><span class="family-orbifold">3∗3</span><span class="family-hm">p31m</span></h2>
+        <p>One order-3 cone point and one order-3 mirror corner.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 3*3">
+<a class="colour-group-tab" id="tab-cg-p31m-2-1" href="#cg-p31m-2-1" role="tab" aria-controls="panel-cg-p31m-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p31m-2-1"><span class="tab-name">3∗3/333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p31m[2]</span></a>
+<a class="colour-group-tab" id="tab-cg-p31m-3-1" href="#cg-p31m-3-1" role="tab" aria-controls="panel-cg-p31m-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-p31m-3-1"><span class="tab-name">3∗3³//∗333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p31m[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p31m-3-2" href="#cg-p31m-3-2" role="tab" aria-controls="panel-cg-p31m-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-p31m-3-2"><span class="tab-name">3∗3³/◦</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p31m[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p31m-1-1" href="#cg-p31m-1-1" role="tab" aria-controls="panel-cg-p31m-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p31m-1-1"><span class="tab-name">3∗3</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p31m</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p6" data-wallpaper-id="p6" aria-labelledby="wallpaper-p6-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p6-title"><span class="family-orbifold">632</span><span class="family-hm">p6</span></h2>
+        <p>Order-6, order-3, and order-2 cone points.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over 632">
+<a class="colour-group-tab" id="tab-cg-p6-2-1" href="#cg-p6-2-1" role="tab" aria-controls="panel-cg-p6-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p6-2-1"><span class="tab-name">632/333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p6[2]</span></a>
+<a class="colour-group-tab" id="tab-cg-p6-3-1" href="#cg-p6-3-1" role="tab" aria-controls="panel-cg-p6-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-p6-3-1"><span class="tab-name">632³/2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p6[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p6-3-2" href="#cg-p6-3-2" role="tab" aria-controls="panel-cg-p6-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-p6-3-2"><span class="tab-name">632³//333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p6[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p6-1-1" href="#cg-p6-1-1" role="tab" aria-controls="panel-cg-p6-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p6-1-1"><span class="tab-name">632</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p6</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    <section class="wallpaper-family" id="wallpaper-p6m" data-wallpaper-id="p6m" aria-labelledby="wallpaper-p6m-title">
+      <header class="family-header">
+        <h2 id="wallpaper-p6m-title"><span class="family-orbifold">∗632</span><span class="family-hm">p6m</span></h2>
+        <p>Order-6, order-3, and order-2 mirror corners.</p>
+      </header>
+      <nav class="colour-group-tabs" role="tablist" aria-label="Colour groups over *632">
+<a class="colour-group-tab" id="tab-cg-p6m-2-1" href="#cg-p6m-2-1" role="tab" aria-controls="panel-cg-p6m-2-1" aria-selected="true" tabindex="0" data-group-id="cg-p6m-2-1"><span class="tab-name">∗632/3∗3</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p6m[2]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p6m-2-2" href="#cg-p6m-2-2" role="tab" aria-controls="panel-cg-p6m-2-2" aria-selected="false" tabindex="-1" data-group-id="cg-p6m-2-2"><span class="tab-name">∗632/∗333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p6m[2]₂</span></a>
+<a class="colour-group-tab" id="tab-cg-p6m-2-3" href="#cg-p6m-2-3" role="tab" aria-controls="panel-cg-p6m-2-3" aria-selected="false" tabindex="-1" data-group-id="cg-p6m-2-3"><span class="tab-name">∗632/632</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span></span><span class="tab-alias">p6m[2]₃</span></a>
+<a class="colour-group-tab" id="tab-cg-p6m-3-1" href="#cg-p6m-3-1" role="tab" aria-controls="panel-cg-p6m-3-1" aria-selected="false" tabindex="-1" data-group-id="cg-p6m-3-1"><span class="tab-name">∗632³//2222</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p6m[3]₁</span></a>
+<a class="colour-group-tab" id="tab-cg-p6m-3-2" href="#cg-p6m-3-2" role="tab" aria-controls="panel-cg-p6m-3-2" aria-selected="false" tabindex="-1" data-group-id="cg-p6m-3-2"><span class="tab-name">∗632³//∗333</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#0072B2"></span><span style="--swatch:#E69F00"></span><span style="--swatch:#009E73"></span></span><span class="tab-alias">p6m[3]₂</span></a>
+<a class="colour-group-tab is-trivial" id="tab-cg-p6m-1-1" href="#cg-p6m-1-1" role="tab" aria-controls="panel-cg-p6m-1-1" aria-selected="false" tabindex="-1" data-group-id="cg-p6m-1-1"><span class="tab-name">∗632</span><span class="tab-palette" aria-hidden="true"><span style="--swatch:#b8b9b7"></span></span><span class="tab-alias">p6m</span></a>
+      </nav>
+      <div class="colour-group-panel" data-group-panel aria-live="polite"></div>
+    </section>
+    </div>
+    <noscript><p class="noscript-note">JavaScript is required for the nested pattern selector. The complete classification is available in <a href="data/color-pattern-catalog.json">JSON</a>.</p></noscript>
+  </main>
+</body>
+</html>

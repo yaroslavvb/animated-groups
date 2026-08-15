@@ -1102,6 +1102,7 @@ def page_html(payload: dict[str, Any]) -> str:
       <nav aria-label="Project links">
         <a href="./">Gallery</a>
         <a href="future-directions.html">Colours</a>
+        <a href="color-pattern-catalog.html">Patterns</a>
         <a href="clockwork-coloring-correspondence.html">Correspondence</a>
         <a href="space-group-correspondence.html" aria-current="page">Space groups</a>
         <a href="dihedral-interactive.html">Dihedral</a>

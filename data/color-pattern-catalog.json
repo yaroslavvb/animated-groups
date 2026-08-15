@@ -1,0 +1,5322 @@
+{
+  "meta": {
+    "title": "Periodic colour-pattern catalog",
+    "scope": "perfect periodic colour-pattern representatives with one, two, or three colours",
+    "warning": "The finite classification is of colour-pattern types; literal motif geometries have infinitely many realizations.",
+    "counts": {
+      "wallpaper_groups": 17,
+      "colour_groups": {
+        "1": 17,
+        "2": 46,
+        "3": 23,
+        "total": 86
+      },
+      "pattern_types": {
+        "1": 51,
+        "2": 88,
+        "3": 59,
+        "total": 198,
+        "nontrivially_coloured": 147
+      },
+      "three_colour_actions": {
+        "C3_regular": 8,
+        "S3_nonregular": 15
+      }
+    },
+    "definitions": {
+      "pattern": "P*=(P,chi): a periodic monomotif pattern P together with a colour assignment chi on motif copies.",
+      "chromatic": "The colour-symmetry group acts transitively on the colours.",
+      "perfect": "Every symmetry of the uncoloured pattern induces a colour permutation.",
+      "colour_pattern_type": "After colour relabelling: the same colour group, coloured-motif stabilizer/induced group, and coloured-motif-transitive subgroups."
+    },
+    "sources": [
+      {
+        "work": "Tilings and Patterns",
+        "authors": "Branko Grünbaum and G. C. Shephard",
+        "chapter": 8,
+        "printed_pages": "401–470"
+      },
+      {
+        "work": "The Symmetries of Things",
+        "authors": "John H. Conway, Heidi Burgiel, and Chaim Goodman-Strauss",
+        "tables": "11.1 and 12.1"
+      },
+      {
+        "work": "Dichromatic Dances",
+        "author": "Karl Schaffer",
+        "year": 2017,
+        "figure": "10",
+        "role": "independent two-colour index/orbifold crosswalk",
+        "url": "https://archive.bridgesmathart.org/2017/bridges2017-291.pdf"
+      }
+    ]
+  },
+  "wallpaper_groups": [
+    {
+      "id": "p1",
+      "hm": "p1",
+      "orbifold": "◦",
+      "summary": "Translations only.",
+      "ordinary": [
+        "PP1"
+      ]
+    },
+    {
+      "id": "p2",
+      "hm": "p2",
+      "orbifold": "2222",
+      "summary": "Four order-2 cone points.",
+      "ordinary": [
+        "PP7",
+        "PP8"
+      ]
+    },
+    {
+      "id": "pm",
+      "hm": "pm",
+      "orbifold": "**",
+      "summary": "Two mirror boundaries.",
+      "ordinary": [
+        "PP3",
+        "PP4"
+      ]
+    },
+    {
+      "id": "pg",
+      "hm": "pg",
+      "orbifold": "××",
+      "summary": "Two crosscaps; glide reflections, no mirrors.",
+      "ordinary": [
+        "PP2"
+      ]
+    },
+    {
+      "id": "cm",
+      "hm": "cm",
+      "orbifold": "*×",
+      "summary": "One mirror boundary and one crosscap.",
+      "ordinary": [
+        "PP5",
+        "PP6"
+      ]
+    },
+    {
+      "id": "pmm",
+      "hm": "pmm",
+      "orbifold": "*2222",
+      "summary": "Four order-2 mirror corners.",
+      "ordinary": [
+        "PP14",
+        "PP15",
+        "PP16"
+      ]
+    },
+    {
+      "id": "pmg",
+      "hm": "pmg",
+      "orbifold": "22*",
+      "summary": "Two order-2 cone points and one mirror boundary.",
+      "ordinary": [
+        "PP11",
+        "PP12",
+        "PP13"
+      ]
+    },
+    {
+      "id": "pgg",
+      "hm": "pgg",
+      "orbifold": "22×",
+      "summary": "Two order-2 cone points and one crosscap.",
+      "ordinary": [
+        "PP9",
+        "PP10"
+      ]
+    },
+    {
+      "id": "cmm",
+      "hm": "cmm",
+      "orbifold": "2*22",
+      "summary": "One order-2 cone point and two order-2 mirror corners.",
+      "ordinary": [
+        "PP17",
+        "PP18",
+        "PP19",
+        "PP20"
+      ]
+    },
+    {
+      "id": "p4",
+      "hm": "p4",
+      "orbifold": "442",
+      "summary": "Order-4, order-4, and order-2 cone points.",
+      "ordinary": [
+        "PP30",
+        "PP31",
+        "PP32"
+      ]
+    },
+    {
+      "id": "p4m",
+      "hm": "p4m",
+      "orbifold": "*442",
+      "summary": "Order-4, order-4, and order-2 mirror corners.",
+      "ordinary": [
+        "PP37",
+        "PP38",
+        "PP39",
+        "PP40",
+        "PP41"
+      ]
+    },
+    {
+      "id": "p4g",
+      "hm": "p4g",
+      "orbifold": "4*2",
+      "summary": "One order-4 cone point and one order-2 mirror corner.",
+      "ordinary": [
+        "PP33",
+        "PP34",
+        "PP35",
+        "PP36"
+      ]
+    },
+    {
+      "id": "p3",
+      "hm": "p3",
+      "orbifold": "333",
+      "summary": "Three order-3 cone points.",
+      "ordinary": [
+        "PP21",
+        "PP22"
+      ]
+    },
+    {
+      "id": "p3m1",
+      "hm": "p3m1",
+      "orbifold": "*333",
+      "summary": "Three order-3 mirror corners.",
+      "ordinary": [
+        "PP27",
+        "PP28",
+        "PP29"
+      ]
+    },
+    {
+      "id": "p31m",
+      "hm": "p31m",
+      "orbifold": "3*3",
+      "summary": "One order-3 cone point and one order-3 mirror corner.",
+      "ordinary": [
+        "PP23",
+        "PP24",
+        "PP25",
+        "PP26"
+      ]
+    },
+    {
+      "id": "p6",
+      "hm": "p6",
+      "orbifold": "632",
+      "summary": "Order-6, order-3, and order-2 cone points.",
+      "ordinary": [
+        "PP42",
+        "PP43",
+        "PP44",
+        "PP45"
+      ]
+    },
+    {
+      "id": "p6m",
+      "hm": "p6m",
+      "orbifold": "*632",
+      "summary": "Order-6, order-3, and order-2 mirror corners.",
+      "ordinary": [
+        "PP46",
+        "PP47",
+        "PP48",
+        "PP49",
+        "PP50",
+        "PP51"
+      ]
+    }
+  ],
+  "colour_groups": [
+    {
+      "id": "cg-p1-1-1",
+      "wallpaper_id": "p1",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "◦",
+      "gs_symbol": "p1",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p1-2-1",
+      "wallpaper_id": "p1",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "◦/◦",
+      "gs_symbol": "p1[2]",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p1-3-1",
+      "wallpaper_id": "p1",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "◦³/◦",
+      "gs_symbol": "p1[3]",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p2-1-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "2222",
+      "gs_symbol": "p2",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p2-2-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "2222/◦",
+      "gs_symbol": "p2[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p2-2-2",
+      "wallpaper_id": "p2",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "2222/2222",
+      "gs_symbol": "p2[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p2-3-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "2222³//◦",
+      "gs_symbol": "p2[3]",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-1-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "**",
+      "gs_symbol": "pm",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "**",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-2-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "**/××",
+      "gs_symbol": "pm[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "××",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-2-2",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "**/*×",
+      "gs_symbol": "pm[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "*×",
+      "all_colours_kernel_K": "*×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-2-3",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "**/**",
+      "gs_symbol": "pm[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "**",
+      "all_colours_kernel_K": "**",
+      "notation_variant": "1",
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-2-4",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "index_within_parent": 4,
+      "chaim_notation": "**/◦",
+      "gs_symbol": "pm[2]_4",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-2-5",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "index_within_parent": 5,
+      "chaim_notation": "**/**",
+      "gs_symbol": "pm[2]_5",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "**",
+      "all_colours_kernel_K": "**",
+      "notation_variant": "2",
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-3-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "**³//◦",
+      "gs_symbol": "pm[3]_1",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pm-3-2",
+      "wallpaper_id": "pm",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "**³/**",
+      "gs_symbol": "pm[3]_2",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "**",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pg-1-1",
+      "wallpaper_id": "pg",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "××",
+      "gs_symbol": "pg",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "××",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-pg-2-1",
+      "wallpaper_id": "pg",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "××/◦",
+      "gs_symbol": "pg[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pg-2-2",
+      "wallpaper_id": "pg",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "××/××",
+      "gs_symbol": "pg[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "××",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pg-3-1",
+      "wallpaper_id": "pg",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "××³/××",
+      "gs_symbol": "pg[3]_1",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "××",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pg-3-2",
+      "wallpaper_id": "pg",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "××³//◦",
+      "gs_symbol": "pg[3]_2",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-cm-1-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "*×",
+      "gs_symbol": "cm",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "*×",
+      "all_colours_kernel_K": "*×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-cm-2-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "*×/◦",
+      "gs_symbol": "cm[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cm-2-2",
+      "wallpaper_id": "cm",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "*×/××",
+      "gs_symbol": "cm[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "××",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cm-2-3",
+      "wallpaper_id": "cm",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "*×/**",
+      "gs_symbol": "cm[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "**",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cm-3-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "*×³/*×",
+      "gs_symbol": "cm[3]_1",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "*×",
+      "all_colours_kernel_K": "*×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-cm-3-2",
+      "wallpaper_id": "cm",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "*×³//◦",
+      "gs_symbol": "cm[3]_2",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmm-1-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "*2222",
+      "gs_symbol": "pmm",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "*2222",
+      "all_colours_kernel_K": "*2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmm-2-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "*2222/*2222",
+      "gs_symbol": "pmm[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "*2222",
+      "all_colours_kernel_K": "*2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmm-2-2",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "*2222/**",
+      "gs_symbol": "pmm[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "**",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmm-2-3",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "*2222/2*22",
+      "gs_symbol": "pmm[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2*22",
+      "all_colours_kernel_K": "2*22",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmm-2-4",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "index_within_parent": 4,
+      "chaim_notation": "*2222/22*",
+      "gs_symbol": "pmm[2]_4",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "22*",
+      "all_colours_kernel_K": "22*",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmm-2-5",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "index_within_parent": 5,
+      "chaim_notation": "*2222/2222",
+      "gs_symbol": "pmm[2]_5",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmm-3-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "*2222³//**",
+      "gs_symbol": "pmm[3]",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-1-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "22*",
+      "gs_symbol": "pmg",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "22*",
+      "all_colours_kernel_K": "22*",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-2-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "22*/22*",
+      "gs_symbol": "pmg[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "22*",
+      "all_colours_kernel_K": "22*",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-2-2",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "22*/××",
+      "gs_symbol": "pmg[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "××",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-2-3",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "22*/22×",
+      "gs_symbol": "pmg[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "22×",
+      "all_colours_kernel_K": "22×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-2-4",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "index_within_parent": 4,
+      "chaim_notation": "22*/**",
+      "gs_symbol": "pmg[2]_4",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "**",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-2-5",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "index_within_parent": 5,
+      "chaim_notation": "22*/2222",
+      "gs_symbol": "pmg[2]_5",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-3-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "22*³//◦",
+      "gs_symbol": "pmg[3]_1",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pmg-3-2",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "22*³//**",
+      "gs_symbol": "pmg[3]_2",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-pgg-1-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "22×",
+      "gs_symbol": "pgg",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "22×",
+      "all_colours_kernel_K": "22×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-pgg-2-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "22×/××",
+      "gs_symbol": "pgg[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "××",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pgg-2-2",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "22×/2222",
+      "gs_symbol": "pgg[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-pgg-3-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "22×³//××",
+      "gs_symbol": "pgg[3]",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "××",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-cmm-1-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "2*22",
+      "gs_symbol": "cmm",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "2*22",
+      "all_colours_kernel_K": "2*22",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-cmm-2-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "2*22/22×",
+      "gs_symbol": "cmm[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "22×",
+      "all_colours_kernel_K": "22×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cmm-2-2",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "2*22/*×",
+      "gs_symbol": "cmm[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "*×",
+      "all_colours_kernel_K": "*×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cmm-2-3",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "2*22/22*",
+      "gs_symbol": "cmm[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "22*",
+      "all_colours_kernel_K": "22*",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cmm-2-4",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "index_within_parent": 4,
+      "chaim_notation": "2*22/2222",
+      "gs_symbol": "cmm[2]_4",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cmm-2-5",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "index_within_parent": 5,
+      "chaim_notation": "2*22/*2222",
+      "gs_symbol": "cmm[2]_5",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "*2222",
+      "all_colours_kernel_K": "*2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-cmm-3-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "2*22³//**",
+      "gs_symbol": "cmm[3]",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "**",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4-1-1",
+      "wallpaper_id": "p4",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "442",
+      "gs_symbol": "p4",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "442",
+      "all_colours_kernel_K": "442",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4-2-1",
+      "wallpaper_id": "p4",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "442/442",
+      "gs_symbol": "p4[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "442",
+      "all_colours_kernel_K": "442",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4-2-2",
+      "wallpaper_id": "p4",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "442/2222",
+      "gs_symbol": "p4[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4m-1-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "*442",
+      "gs_symbol": "p4m",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "*442",
+      "all_colours_kernel_K": "*442",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4m-2-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "*442/4*2",
+      "gs_symbol": "p4m[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "4*2",
+      "all_colours_kernel_K": "4*2",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4m-2-2",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "*442/442",
+      "gs_symbol": "p4m[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "442",
+      "all_colours_kernel_K": "442",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4m-2-3",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "*442/2*22",
+      "gs_symbol": "p4m[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2*22",
+      "all_colours_kernel_K": "2*22",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4m-2-4",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "index_within_parent": 4,
+      "chaim_notation": "*442/*2222",
+      "gs_symbol": "p4m[2]_4",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "*2222",
+      "all_colours_kernel_K": "*2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4m-2-5",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "index_within_parent": 5,
+      "chaim_notation": "*442/*442",
+      "gs_symbol": "p4m[2]_5",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "*442",
+      "all_colours_kernel_K": "*442",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4g-1-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "4*2",
+      "gs_symbol": "p4g",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "4*2",
+      "all_colours_kernel_K": "4*2",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4g-2-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "4*2/442",
+      "gs_symbol": "p4g[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "442",
+      "all_colours_kernel_K": "442",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4g-2-2",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "4*2/2*22",
+      "gs_symbol": "p4g[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "2*22",
+      "all_colours_kernel_K": "2*22",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p4g-2-3",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "4*2/22×",
+      "gs_symbol": "p4g[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "22×",
+      "all_colours_kernel_K": "22×",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p3-1-1",
+      "wallpaper_id": "p3",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "333",
+      "gs_symbol": "p3",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "333",
+      "all_colours_kernel_K": "333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p3-3-1",
+      "wallpaper_id": "p3",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "333³/◦",
+      "gs_symbol": "p3[3]_1",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [
+        "Two opposite cyclic orientations (the P3₁/P3₂ clockwork pair) define one plane colour type after colour relabelling."
+      ],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p3-3-2",
+      "wallpaper_id": "p3",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "333³/333",
+      "gs_symbol": "p3[3]_2",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "333",
+      "all_colours_kernel_K": "333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p3m1-1-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "*333",
+      "gs_symbol": "p3m1",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "*333",
+      "all_colours_kernel_K": "*333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p3m1-2-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "*333/333",
+      "gs_symbol": "p3m1[2]",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "333",
+      "all_colours_kernel_K": "333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p3m1-3-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "*333³//◦",
+      "gs_symbol": "p3m1[3]_1",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p3m1-3-2",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "*333³//333",
+      "gs_symbol": "p3m1[3]_2",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p31m-1-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "3*3",
+      "gs_symbol": "p31m",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "3*3",
+      "all_colours_kernel_K": "3*3",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p31m-2-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "3*3/333",
+      "gs_symbol": "p31m[2]",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "333",
+      "all_colours_kernel_K": "333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p31m-3-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "3*3³//*333",
+      "gs_symbol": "p31m[3]_1",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "*333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p31m-3-2",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "3*3³/◦",
+      "gs_symbol": "p31m[3]_2",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "◦",
+      "all_colours_kernel_K": "◦",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6-1-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "632",
+      "gs_symbol": "p6",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "632",
+      "all_colours_kernel_K": "632",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6-2-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "632/333",
+      "gs_symbol": "p6[2]",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "333",
+      "all_colours_kernel_K": "333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6-3-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "632³/2222",
+      "gs_symbol": "p6[3]_1",
+      "colour_image": "C3",
+      "regular": true,
+      "colour_stabilizer_H": "2222",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [
+        "Two opposite cyclic orientations (the P6₂/P6₄ clockwork pair) define one plane colour type after colour relabelling."
+      ],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6-3-2",
+      "wallpaper_id": "p6",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "632³//333",
+      "gs_symbol": "p6[3]_2",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6m-1-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 1,
+      "index_within_parent": 1,
+      "chaim_notation": "*632",
+      "gs_symbol": "p6m",
+      "colour_image": "C1",
+      "regular": true,
+      "colour_stabilizer_H": "*632",
+      "all_colours_kernel_K": "*632",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "chapter": 5,
+          "note": "ordinary one-colour PP baseline"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6m-2-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "index_within_parent": 1,
+      "chaim_notation": "*632/3*3",
+      "gs_symbol": "p6m[2]_1",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "3*3",
+      "all_colours_kernel_K": "3*3",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6m-2-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "index_within_parent": 2,
+      "chaim_notation": "*632/*333",
+      "gs_symbol": "p6m[2]_2",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "*333",
+      "all_colours_kernel_K": "*333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6m-2-3",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "index_within_parent": 3,
+      "chaim_notation": "*632/632",
+      "gs_symbol": "p6m[2]_3",
+      "colour_image": "C2",
+      "regular": true,
+      "colour_stabilizer_H": "632",
+      "all_colours_kernel_K": "632",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.2",
+          "printed_pages": "417–418"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "11.1",
+          "printed_pages": "140–141"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6m-3-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "index_within_parent": 1,
+      "chaim_notation": "*632³//2222",
+      "gs_symbol": "p6m[3]_1",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "2222",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    },
+    {
+      "id": "cg-p6m-3-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "index_within_parent": 2,
+      "chaim_notation": "*632³//*333",
+      "gs_symbol": "p6m[3]_2",
+      "colour_image": "S3",
+      "regular": false,
+      "colour_stabilizer_H": "index-3 stabilizer (omitted by //)",
+      "all_colours_kernel_K": "*333",
+      "notation_variant": null,
+      "related_forms": [],
+      "sources": [
+        {
+          "work": "Tilings and Patterns",
+          "table": "8.2.3",
+          "printed_pages": "419"
+        },
+        {
+          "work": "The Symmetries of Things",
+          "table": "12.1",
+          "printed_pages": "156"
+        }
+      ]
+    }
+  ],
+  "pattern_types": [
+    {
+      "id": "cp-1-001-pp1",
+      "colour_group_id": "cg-p1-1-1",
+      "wallpaper_id": "p1",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP1",
+      "underlying_pattern_type": "PP1",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-002-pp7",
+      "colour_group_id": "cg-p2-1-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP7",
+      "underlying_pattern_type": "PP7",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-003-pp8",
+      "colour_group_id": "cg-p2-1-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP8",
+      "underlying_pattern_type": "PP8",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-004-pp3",
+      "colour_group_id": "cg-pm-1-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP3",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-005-pp4",
+      "colour_group_id": "cg-pm-1-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP4",
+      "underlying_pattern_type": "PP4",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-006-pp2",
+      "colour_group_id": "cg-pg-1-1",
+      "wallpaper_id": "pg",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP2",
+      "underlying_pattern_type": "PP2",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-007-pp5",
+      "colour_group_id": "cg-cm-1-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP5",
+      "underlying_pattern_type": "PP5",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-008-pp6",
+      "colour_group_id": "cg-cm-1-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP6",
+      "underlying_pattern_type": "PP6",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-009-pp14",
+      "colour_group_id": "cg-pmm-1-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP14",
+      "underlying_pattern_type": "PP14",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-010-pp15",
+      "colour_group_id": "cg-pmm-1-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP15",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-011-pp16",
+      "colour_group_id": "cg-pmm-1-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP16",
+      "underlying_pattern_type": "PP16",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-012-pp11",
+      "colour_group_id": "cg-pmg-1-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP11",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-013-pp12",
+      "colour_group_id": "cg-pmg-1-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP12",
+      "underlying_pattern_type": "PP12",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-014-pp13",
+      "colour_group_id": "cg-pmg-1-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP13",
+      "underlying_pattern_type": "PP13",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-015-pp9",
+      "colour_group_id": "cg-pgg-1-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP9",
+      "underlying_pattern_type": "PP9",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-016-pp10",
+      "colour_group_id": "cg-pgg-1-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP10",
+      "underlying_pattern_type": "PP10",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-017-pp17",
+      "colour_group_id": "cg-cmm-1-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP17",
+      "underlying_pattern_type": "PP17",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-018-pp18",
+      "colour_group_id": "cg-cmm-1-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP18",
+      "underlying_pattern_type": "PP18",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-019-pp19",
+      "colour_group_id": "cg-cmm-1-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP19",
+      "underlying_pattern_type": "PP19",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-020-pp20",
+      "colour_group_id": "cg-cmm-1-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP20",
+      "underlying_pattern_type": "PP20",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-021-pp30",
+      "colour_group_id": "cg-p4-1-1",
+      "wallpaper_id": "p4",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP30",
+      "underlying_pattern_type": "PP30",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-022-pp31",
+      "colour_group_id": "cg-p4-1-1",
+      "wallpaper_id": "p4",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP31",
+      "underlying_pattern_type": "PP31",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-023-pp32",
+      "colour_group_id": "cg-p4-1-1",
+      "wallpaper_id": "p4",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP32",
+      "underlying_pattern_type": "PP32",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-024-pp37",
+      "colour_group_id": "cg-p4m-1-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP37",
+      "underlying_pattern_type": "PP37",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-025-pp38",
+      "colour_group_id": "cg-p4m-1-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP38",
+      "underlying_pattern_type": "PP38",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-026-pp39",
+      "colour_group_id": "cg-p4m-1-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP39",
+      "underlying_pattern_type": "PP39",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-027-pp40",
+      "colour_group_id": "cg-p4m-1-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP40",
+      "underlying_pattern_type": "PP40",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-028-pp41",
+      "colour_group_id": "cg-p4m-1-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP41",
+      "underlying_pattern_type": "PP41",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-029-pp33",
+      "colour_group_id": "cg-p4g-1-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP33",
+      "underlying_pattern_type": "PP33",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-030-pp34",
+      "colour_group_id": "cg-p4g-1-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP34",
+      "underlying_pattern_type": "PP34",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-031-pp35",
+      "colour_group_id": "cg-p4g-1-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP35",
+      "underlying_pattern_type": "PP35",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-032-pp36",
+      "colour_group_id": "cg-p4g-1-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP36",
+      "underlying_pattern_type": "PP36",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-033-pp21",
+      "colour_group_id": "cg-p3-1-1",
+      "wallpaper_id": "p3",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP21",
+      "underlying_pattern_type": "PP21",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-034-pp22",
+      "colour_group_id": "cg-p3-1-1",
+      "wallpaper_id": "p3",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP22",
+      "underlying_pattern_type": "PP22",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-035-pp27",
+      "colour_group_id": "cg-p3m1-1-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP27",
+      "underlying_pattern_type": "PP27",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-036-pp28",
+      "colour_group_id": "cg-p3m1-1-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP28",
+      "underlying_pattern_type": "PP28",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-037-pp29",
+      "colour_group_id": "cg-p3m1-1-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP29",
+      "underlying_pattern_type": "PP29",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-038-pp23",
+      "colour_group_id": "cg-p31m-1-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP23",
+      "underlying_pattern_type": "PP23",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-039-pp24",
+      "colour_group_id": "cg-p31m-1-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP24",
+      "underlying_pattern_type": "PP24",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-040-pp25",
+      "colour_group_id": "cg-p31m-1-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP25",
+      "underlying_pattern_type": "PP25",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-041-pp26",
+      "colour_group_id": "cg-p31m-1-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP26",
+      "underlying_pattern_type": "PP26",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-042-pp42",
+      "colour_group_id": "cg-p6-1-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP42",
+      "underlying_pattern_type": "PP42",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-043-pp43",
+      "colour_group_id": "cg-p6-1-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP43",
+      "underlying_pattern_type": "PP43",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-044-pp44",
+      "colour_group_id": "cg-p6-1-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP44",
+      "underlying_pattern_type": "PP44",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-045-pp45",
+      "colour_group_id": "cg-p6-1-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP45",
+      "underlying_pattern_type": "PP45",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-046-pp46",
+      "colour_group_id": "cg-p6m-1-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP46",
+      "underlying_pattern_type": "PP46",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-047-pp47",
+      "colour_group_id": "cg-p6m-1-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP47",
+      "underlying_pattern_type": "PP47",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-048-pp48",
+      "colour_group_id": "cg-p6m-1-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP48",
+      "underlying_pattern_type": "PP48",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-049-pp49",
+      "colour_group_id": "cg-p6m-1-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP49",
+      "underlying_pattern_type": "PP49",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-050-pp50",
+      "colour_group_id": "cg-p6m-1-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP50",
+      "underlying_pattern_type": "PP50",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-1-051-pp51",
+      "colour_group_id": "cg-p6m-1-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 1,
+      "gs_pattern_type": "PP51",
+      "underlying_pattern_type": "PP51",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 5
+      }
+    },
+    {
+      "id": "cp-2-001-pp12",
+      "colour_group_id": "cg-p1-2-1",
+      "wallpaper_id": "p1",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP1[2]",
+      "underlying_pattern_type": "PP1",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-002-pp22-1",
+      "colour_group_id": "cg-pg-2-1",
+      "wallpaper_id": "pg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP2[2]_1",
+      "underlying_pattern_type": "PP2",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-003-pp22-2",
+      "colour_group_id": "cg-pg-2-2",
+      "wallpaper_id": "pg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP2[2]_2",
+      "underlying_pattern_type": "PP2",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-004-pp32-1",
+      "colour_group_id": "cg-pm-2-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP3[2]_1",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-005-pp32-2",
+      "colour_group_id": "cg-pm-2-2",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP3[2]_2",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-006-pp32-3",
+      "colour_group_id": "cg-pm-2-3",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP3[2]_3",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-007-pp32-4",
+      "colour_group_id": "cg-pm-2-4",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP3[2]_4",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-008-pp32-5",
+      "colour_group_id": "cg-pm-2-5",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP3[2]_5",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-009-pp52-1",
+      "colour_group_id": "cg-cm-2-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP5[2]_1",
+      "underlying_pattern_type": "PP5",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-010-pp52-2",
+      "colour_group_id": "cg-cm-2-2",
+      "wallpaper_id": "cm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP5[2]_2",
+      "underlying_pattern_type": "PP5",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-011-pp52-3",
+      "colour_group_id": "cg-cm-2-3",
+      "wallpaper_id": "cm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP5[2]_3",
+      "underlying_pattern_type": "PP5",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-012-pp72-1",
+      "colour_group_id": "cg-p2-2-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP7[2]_1",
+      "underlying_pattern_type": "PP7",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-013-pp72-2",
+      "colour_group_id": "cg-p2-2-2",
+      "wallpaper_id": "p2",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP7[2]_2",
+      "underlying_pattern_type": "PP7",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-014-pp92-1",
+      "colour_group_id": "cg-pgg-2-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP9[2]_1",
+      "underlying_pattern_type": "PP9",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-015-pp92-2",
+      "colour_group_id": "cg-pgg-2-2",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP9[2]_2",
+      "underlying_pattern_type": "PP9",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-016-pp112-1",
+      "colour_group_id": "cg-pmg-2-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP11[2]_1",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-017-pp112-2",
+      "colour_group_id": "cg-pmg-2-2",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP11[2]_2",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-018-pp112-3",
+      "colour_group_id": "cg-pmg-2-3",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP11[2]_3",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-019-pp112-4",
+      "colour_group_id": "cg-pmg-2-4",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP11[2]_4",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-020-pp112-5",
+      "colour_group_id": "cg-pmg-2-5",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP11[2]_5",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-021-pp142-1",
+      "colour_group_id": "cg-pmm-2-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP14[2]_1",
+      "underlying_pattern_type": "PP14",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-022-pp142-2",
+      "colour_group_id": "cg-pmm-2-2",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP14[2]_2",
+      "underlying_pattern_type": "PP14",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-023-pp142-3",
+      "colour_group_id": "cg-pmm-2-3",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP14[2]_3",
+      "underlying_pattern_type": "PP14",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-024-pp142-4",
+      "colour_group_id": "cg-pmm-2-4",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP14[2]_4",
+      "underlying_pattern_type": "PP14",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-025-pp142-5",
+      "colour_group_id": "cg-pmm-2-5",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP14[2]_5",
+      "underlying_pattern_type": "PP14",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-026-pp172-1",
+      "colour_group_id": "cg-cmm-2-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP17[2]_1",
+      "underlying_pattern_type": "PP17",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-027-pp172-2",
+      "colour_group_id": "cg-cmm-2-2",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP17[2]_2",
+      "underlying_pattern_type": "PP17",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-028-pp172-3",
+      "colour_group_id": "cg-cmm-2-3",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP17[2]_3",
+      "underlying_pattern_type": "PP17",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-029-pp172-4",
+      "colour_group_id": "cg-cmm-2-4",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP17[2]_4",
+      "underlying_pattern_type": "PP17",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-030-pp172-5",
+      "colour_group_id": "cg-cmm-2-5",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP17[2]_5",
+      "underlying_pattern_type": "PP17",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-031-pp232",
+      "colour_group_id": "cg-p31m-2-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP23[2]",
+      "underlying_pattern_type": "PP23",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-032-pp272",
+      "colour_group_id": "cg-p3m1-2-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP27[2]",
+      "underlying_pattern_type": "PP27",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-033-pp302-1",
+      "colour_group_id": "cg-p4-2-1",
+      "wallpaper_id": "p4",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP30[2]_1",
+      "underlying_pattern_type": "PP30",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-034-pp302-2",
+      "colour_group_id": "cg-p4-2-2",
+      "wallpaper_id": "p4",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP30[2]_2",
+      "underlying_pattern_type": "PP30",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-035-pp332-1",
+      "colour_group_id": "cg-p4g-2-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP33[2]_1",
+      "underlying_pattern_type": "PP33",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-036-pp332-2",
+      "colour_group_id": "cg-p4g-2-2",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP33[2]_2",
+      "underlying_pattern_type": "PP33",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-037-pp332-3",
+      "colour_group_id": "cg-p4g-2-3",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP33[2]_3",
+      "underlying_pattern_type": "PP33",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-038-pp372-1",
+      "colour_group_id": "cg-p4m-2-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP37[2]_1",
+      "underlying_pattern_type": "PP37",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-039-pp372-2",
+      "colour_group_id": "cg-p4m-2-2",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP37[2]_2",
+      "underlying_pattern_type": "PP37",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-040-pp372-3",
+      "colour_group_id": "cg-p4m-2-3",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP37[2]_3",
+      "underlying_pattern_type": "PP37",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-041-pp372-4",
+      "colour_group_id": "cg-p4m-2-4",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP37[2]_4",
+      "underlying_pattern_type": "PP37",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-042-pp372-5",
+      "colour_group_id": "cg-p4m-2-5",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP37[2]_5",
+      "underlying_pattern_type": "PP37",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-043-pp422",
+      "colour_group_id": "cg-p6-2-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP42[2]",
+      "underlying_pattern_type": "PP42",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-044-pp462-1",
+      "colour_group_id": "cg-p6m-2-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP46[2]_1",
+      "underlying_pattern_type": "PP46",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-045-pp462-2",
+      "colour_group_id": "cg-p6m-2-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP46[2]_2",
+      "underlying_pattern_type": "PP46",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-046-pp462-3",
+      "colour_group_id": "cg-p6m-2-3",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP46[2]_3",
+      "underlying_pattern_type": "PP46",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.2, pp. 408–413"
+      }
+    },
+    {
+      "id": "cp-2-047-pp42-2",
+      "colour_group_id": "cg-pm-2-2",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP4[2]_2",
+      "underlying_pattern_type": "PP4",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-048-pp42-3",
+      "colour_group_id": "cg-pm-2-3",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP4[2]_3",
+      "underlying_pattern_type": "PP4",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-049-pp42-5",
+      "colour_group_id": "cg-pm-2-5",
+      "wallpaper_id": "pm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP4[2]_5",
+      "underlying_pattern_type": "PP4",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-050-pp62-3",
+      "colour_group_id": "cg-cm-2-3",
+      "wallpaper_id": "cm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP6[2]_3",
+      "underlying_pattern_type": "PP6",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-051-pp82-2",
+      "colour_group_id": "cg-p2-2-2",
+      "wallpaper_id": "p2",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP8[2]_2",
+      "underlying_pattern_type": "PP8",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-052-pp102-2",
+      "colour_group_id": "cg-pgg-2-2",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP10[2]_2",
+      "underlying_pattern_type": "PP10",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-053-pp122-1",
+      "colour_group_id": "cg-pmg-2-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP12[2]_1",
+      "underlying_pattern_type": "PP12",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-054-pp132-1",
+      "colour_group_id": "cg-pmg-2-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP13[2]_1",
+      "underlying_pattern_type": "PP13",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-055-pp122-3",
+      "colour_group_id": "cg-pmg-2-3",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP12[2]_3",
+      "underlying_pattern_type": "PP12",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-056-pp122-5",
+      "colour_group_id": "cg-pmg-2-5",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP12[2]_5",
+      "underlying_pattern_type": "PP12",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-057-pp132-4",
+      "colour_group_id": "cg-pmg-2-4",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP13[2]_4",
+      "underlying_pattern_type": "PP13",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-058-pp152-1",
+      "colour_group_id": "cg-pmm-2-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP15[2]_1",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-059-pp152-1s",
+      "colour_group_id": "cg-pmm-2-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP15[2]_1*",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-060-pp152-2",
+      "colour_group_id": "cg-pmm-2-2",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP15[2]_2",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-061-pp152-3",
+      "colour_group_id": "cg-pmm-2-3",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP15[2]_3",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-062-pp162-3",
+      "colour_group_id": "cg-pmm-2-3",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP16[2]_3",
+      "underlying_pattern_type": "PP16",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-063-pp152-4",
+      "colour_group_id": "cg-pmm-2-4",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP15[2]_4",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-064-pp162-1",
+      "colour_group_id": "cg-pmm-2-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP16[2]_1",
+      "underlying_pattern_type": "PP16",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-065-pp182-3",
+      "colour_group_id": "cg-cmm-2-3",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP18[2]_3",
+      "underlying_pattern_type": "PP18",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-066-pp192-3",
+      "colour_group_id": "cg-cmm-2-3",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP19[2]_3",
+      "underlying_pattern_type": "PP19",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-067-pp182-4",
+      "colour_group_id": "cg-cmm-2-4",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP18[2]_4",
+      "underlying_pattern_type": "PP18",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-068-pp192-2",
+      "colour_group_id": "cg-cmm-2-2",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP19[2]_2",
+      "underlying_pattern_type": "PP19",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-069-pp192-5",
+      "colour_group_id": "cg-cmm-2-5",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP19[2]_5",
+      "underlying_pattern_type": "PP19",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-070-pp202-5",
+      "colour_group_id": "cg-cmm-2-5",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP20[2]_5",
+      "underlying_pattern_type": "PP20",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-071-pp242",
+      "colour_group_id": "cg-p31m-2-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP24[2]",
+      "underlying_pattern_type": "PP24",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-072-pp312-2",
+      "colour_group_id": "cg-p4-2-2",
+      "wallpaper_id": "p4",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP31[2]_2",
+      "underlying_pattern_type": "PP31",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-073-pp322-1",
+      "colour_group_id": "cg-p4-2-1",
+      "wallpaper_id": "p4",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP32[2]_1",
+      "underlying_pattern_type": "PP32",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-074-pp342-1",
+      "colour_group_id": "cg-p4g-2-1",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP34[2]_1",
+      "underlying_pattern_type": "PP34",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-075-pp352-2",
+      "colour_group_id": "cg-p4g-2-2",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP35[2]_2",
+      "underlying_pattern_type": "PP35",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-076-pp362-2",
+      "colour_group_id": "cg-p4g-2-2",
+      "wallpaper_id": "p4g",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP36[2]_2",
+      "underlying_pattern_type": "PP36",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-077-pp382-1",
+      "colour_group_id": "cg-p4m-2-1",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP38[2]_1",
+      "underlying_pattern_type": "PP38",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-078-pp382-4",
+      "colour_group_id": "cg-p4m-2-4",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP38[2]_4",
+      "underlying_pattern_type": "PP38",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-079-pp402-4",
+      "colour_group_id": "cg-p4m-2-4",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP40[2]_4",
+      "underlying_pattern_type": "PP40",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-080-pp382-5",
+      "colour_group_id": "cg-p4m-2-5",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP38[2]_5",
+      "underlying_pattern_type": "PP38",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-081-pp392-5",
+      "colour_group_id": "cg-p4m-2-5",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP39[2]_5",
+      "underlying_pattern_type": "PP39",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-082-pp412-5",
+      "colour_group_id": "cg-p4m-2-5",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP41[2]_5",
+      "underlying_pattern_type": "PP41",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-083-pp392-3",
+      "colour_group_id": "cg-p4m-2-3",
+      "wallpaper_id": "p4m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP39[2]_3",
+      "underlying_pattern_type": "PP39",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-084-pp442",
+      "colour_group_id": "cg-p6-2-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP44[2]",
+      "underlying_pattern_type": "PP44",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-085-pp472-1",
+      "colour_group_id": "cg-p6m-2-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP47[2]_1",
+      "underlying_pattern_type": "PP47",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-086-pp48a2-2",
+      "colour_group_id": "cg-p6m-2-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP48A[2]_2",
+      "underlying_pattern_type": "PP48",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-087-pp48b2-2",
+      "colour_group_id": "cg-p6m-2-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP48B[2]_2",
+      "underlying_pattern_type": "PP48",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-2-088-pp502-2",
+      "colour_group_id": "cg-p6m-2-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 2,
+      "gs_pattern_type": "PP50[2]_2",
+      "underlying_pattern_type": "PP50",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.5, pp. 426–430"
+      }
+    },
+    {
+      "id": "cp-3-001-pp13",
+      "colour_group_id": "cg-p1-3-1",
+      "wallpaper_id": "p1",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP1[3]",
+      "underlying_pattern_type": "PP1",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-002-pp23-1",
+      "colour_group_id": "cg-pg-3-1",
+      "wallpaper_id": "pg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP2[3]_1",
+      "underlying_pattern_type": "PP2",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-003-pp23-2",
+      "colour_group_id": "cg-pg-3-2",
+      "wallpaper_id": "pg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP2[3]_2",
+      "underlying_pattern_type": "PP2",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-004-pp33-1",
+      "colour_group_id": "cg-pm-3-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP3[3]_1",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-005-pp33-2",
+      "colour_group_id": "cg-pm-3-2",
+      "wallpaper_id": "pm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP3[3]_2",
+      "underlying_pattern_type": "PP3",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-006-pp53-1",
+      "colour_group_id": "cg-cm-3-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP5[3]_1",
+      "underlying_pattern_type": "PP5",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-007-pp53-2",
+      "colour_group_id": "cg-cm-3-2",
+      "wallpaper_id": "cm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP5[3]_2",
+      "underlying_pattern_type": "PP5",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-008-pp73",
+      "colour_group_id": "cg-p2-3-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP7[3]",
+      "underlying_pattern_type": "PP7",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-009-pp93",
+      "colour_group_id": "cg-pgg-3-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP9[3]",
+      "underlying_pattern_type": "PP9",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-010-pp113-1",
+      "colour_group_id": "cg-pmg-3-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP11[3]_1",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-011-pp113-2",
+      "colour_group_id": "cg-pmg-3-2",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP11[3]_2",
+      "underlying_pattern_type": "PP11",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-012-pp143",
+      "colour_group_id": "cg-pmm-3-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP14[3]",
+      "underlying_pattern_type": "PP14",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-013-pp173",
+      "colour_group_id": "cg-cmm-3-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP17[3]",
+      "underlying_pattern_type": "PP17",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-014-pp213-1",
+      "colour_group_id": "cg-p3-3-1",
+      "wallpaper_id": "p3",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP21[3]_1",
+      "underlying_pattern_type": "PP21",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-015-pp213-2",
+      "colour_group_id": "cg-p3-3-2",
+      "wallpaper_id": "p3",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP21[3]_2",
+      "underlying_pattern_type": "PP21",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-016-pp233-1",
+      "colour_group_id": "cg-p31m-3-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP23[3]_1",
+      "underlying_pattern_type": "PP23",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-017-pp233-2",
+      "colour_group_id": "cg-p31m-3-2",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP23[3]_2",
+      "underlying_pattern_type": "PP23",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      },
+      "source_note": "Figure 8.2.3 prints the colour-group subscript 3 here; Table 8.2.3's two-group census uses the canonical subscript 2."
+    },
+    {
+      "id": "cp-3-018-pp273-1",
+      "colour_group_id": "cg-p3m1-3-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP27[3]_1",
+      "underlying_pattern_type": "PP27",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-019-pp273-2",
+      "colour_group_id": "cg-p3m1-3-2",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP27[3]_2",
+      "underlying_pattern_type": "PP27",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-020-pp423-1",
+      "colour_group_id": "cg-p6-3-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP42[3]_1",
+      "underlying_pattern_type": "PP42",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-021-pp423-2",
+      "colour_group_id": "cg-p6-3-2",
+      "wallpaper_id": "p6",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP42[3]_2",
+      "underlying_pattern_type": "PP42",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-022-pp463-1",
+      "colour_group_id": "cg-p6m-3-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP46[3]_1",
+      "underlying_pattern_type": "PP46",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-023-pp463-2",
+      "colour_group_id": "cg-p6m-3-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP46[3]_2",
+      "underlying_pattern_type": "PP46",
+      "underlying_pattern_is_primitive": true,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.2.3, pp. 414–416"
+      }
+    },
+    {
+      "id": "cp-3-024-pp43-1",
+      "colour_group_id": "cg-pm-3-1",
+      "wallpaper_id": "pm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP4[3]_1",
+      "underlying_pattern_type": "PP4",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-025-pp43-2",
+      "colour_group_id": "cg-pm-3-2",
+      "wallpaper_id": "pm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP4[3]_2",
+      "underlying_pattern_type": "PP4",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-026-pp63-1",
+      "colour_group_id": "cg-cm-3-1",
+      "wallpaper_id": "cm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP6[3]_1",
+      "underlying_pattern_type": "PP6",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-027-pp63-2",
+      "colour_group_id": "cg-cm-3-2",
+      "wallpaper_id": "cm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP6[3]_2",
+      "underlying_pattern_type": "PP6",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-028-pp83",
+      "colour_group_id": "cg-p2-3-1",
+      "wallpaper_id": "p2",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP8[3]",
+      "underlying_pattern_type": "PP8",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-029-pp103",
+      "colour_group_id": "cg-pgg-3-1",
+      "wallpaper_id": "pgg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP10[3]",
+      "underlying_pattern_type": "PP10",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-030-pp123-1",
+      "colour_group_id": "cg-pmg-3-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP12[3]_1",
+      "underlying_pattern_type": "PP12",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-031-pp133-1",
+      "colour_group_id": "cg-pmg-3-1",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP13[3]_1",
+      "underlying_pattern_type": "PP13",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-032-pp123-2",
+      "colour_group_id": "cg-pmg-3-2",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP12[3]_2",
+      "underlying_pattern_type": "PP12",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-033-pp133-2",
+      "colour_group_id": "cg-pmg-3-2",
+      "wallpaper_id": "pmg",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP13[3]_2",
+      "underlying_pattern_type": "PP13",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-034-pp153",
+      "colour_group_id": "cg-pmm-3-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP15[3]",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-035-pp153s",
+      "colour_group_id": "cg-pmm-3-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP15[3]*",
+      "underlying_pattern_type": "PP15",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-036-pp163",
+      "colour_group_id": "cg-pmm-3-1",
+      "wallpaper_id": "pmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP16[3]",
+      "underlying_pattern_type": "PP16",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-037-pp183",
+      "colour_group_id": "cg-cmm-3-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP18[3]",
+      "underlying_pattern_type": "PP18",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-038-pp193",
+      "colour_group_id": "cg-cmm-3-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP19[3]",
+      "underlying_pattern_type": "PP19",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-039-pp193s",
+      "colour_group_id": "cg-cmm-3-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP19[3]*",
+      "underlying_pattern_type": "PP19",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-040-pp203",
+      "colour_group_id": "cg-cmm-3-1",
+      "wallpaper_id": "cmm",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP20[3]",
+      "underlying_pattern_type": "PP20",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-041-pp223-2",
+      "colour_group_id": "cg-p3-3-2",
+      "wallpaper_id": "p3",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP22[3]_2",
+      "underlying_pattern_type": "PP22",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-042-pp253-1",
+      "colour_group_id": "cg-p31m-3-1",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP25[3]_1",
+      "underlying_pattern_type": "PP25",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-043-pp253-2",
+      "colour_group_id": "cg-p31m-3-2",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP25[3]_2",
+      "underlying_pattern_type": "PP25",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-044-pp263-2",
+      "colour_group_id": "cg-p31m-3-2",
+      "wallpaper_id": "p31m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP26[3]_2",
+      "underlying_pattern_type": "PP26",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-045-pp283-1",
+      "colour_group_id": "cg-p3m1-3-1",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP28[3]_1",
+      "underlying_pattern_type": "PP28",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-046-pp283-2",
+      "colour_group_id": "cg-p3m1-3-2",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP28[3]_2",
+      "underlying_pattern_type": "PP28",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-047-pp293-2",
+      "colour_group_id": "cg-p3m1-3-2",
+      "wallpaper_id": "p3m1",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP29[3]_2",
+      "underlying_pattern_type": "PP29",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-048-pp433-1",
+      "colour_group_id": "cg-p6-3-1",
+      "wallpaper_id": "p6",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP43[3]_1",
+      "underlying_pattern_type": "PP43",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-049-pp433-2",
+      "colour_group_id": "cg-p6-3-2",
+      "wallpaper_id": "p6",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP43[3]_2",
+      "underlying_pattern_type": "PP43",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-050-pp453-2",
+      "colour_group_id": "cg-p6-3-2",
+      "wallpaper_id": "p6",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP45[3]_2",
+      "underlying_pattern_type": "PP45",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-051-pp473-1",
+      "colour_group_id": "cg-p6m-3-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP47[3]_1",
+      "underlying_pattern_type": "PP47",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-052-pp48a3-1",
+      "colour_group_id": "cg-p6m-3-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP48A[3]_1",
+      "underlying_pattern_type": "PP48",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-053-pp48b3-1",
+      "colour_group_id": "cg-p6m-3-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP48B[3]_1",
+      "underlying_pattern_type": "PP48",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-054-pp493-1",
+      "colour_group_id": "cg-p6m-3-1",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP49[3]_1",
+      "underlying_pattern_type": "PP49",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-055-pp473-2",
+      "colour_group_id": "cg-p6m-3-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP47[3]_2",
+      "underlying_pattern_type": "PP47",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-056-pp48a3-2",
+      "colour_group_id": "cg-p6m-3-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP48A[3]_2",
+      "underlying_pattern_type": "PP48",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-057-pp48b3-2",
+      "colour_group_id": "cg-p6m-3-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP48B[3]_2",
+      "underlying_pattern_type": "PP48",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-058-pp493-2",
+      "colour_group_id": "cg-p6m-3-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP49[3]_2",
+      "underlying_pattern_type": "PP49",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    },
+    {
+      "id": "cp-3-059-pp513-2",
+      "colour_group_id": "cg-p6m-3-2",
+      "wallpaper_id": "p6m",
+      "number_of_colours": 3,
+      "gs_pattern_type": "PP51[3]_2",
+      "underlying_pattern_type": "PP51",
+      "underlying_pattern_is_primitive": false,
+      "representative_is_perfect": true,
+      "source": {
+        "work": "Tilings and Patterns",
+        "chapter": 8,
+        "figure": "Figure 8.3.6, pp. 431–435"
+      }
+    }
+  ]
+}

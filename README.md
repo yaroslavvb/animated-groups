@@ -13,7 +13,10 @@ independent Play/Pause button and a 60-position phase slider.
 
 **Live gallery:** [yaroslavvb.github.io/animated-groups](https://yaroslavvb.github.io/animated-groups/)
 
-The site also includes the [colour-group census](https://yaroslavvb.github.io/animated-groups/future-directions.html)
+The site also includes the [colour-group census](https://yaroslavvb.github.io/animated-groups/future-directions.html),
+a [periodic colour-pattern catalog](https://yaroslavvb.github.io/animated-groups/color-pattern-catalog.html)
+covering all 51 ordinary, 88 two-colour, and 59 three-colour Grünbaum--Shephard
+pattern types, nested under 17 wallpaper groups and 86 colour groups,
 and an exact [51-row nontrivial clockwork/coloring correspondence](https://yaroslavvb.github.io/animated-groups/clockwork-coloring-correspondence.html),
 backed by the complete 68-record audit, with Conway orbifold pairs and static coloured-wallpaper plates.
 The companion [cyclic-colouring/polar-space-group atlas](https://yaroslavvb.github.io/animated-groups/space-group-correspondence.html)
@@ -250,6 +253,8 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `site-controls-v2.js` / `site-controls-v2.css` — physically versioned interactive gallery assets.
 - `site.js` — backward-compatible GIF controller for stale pre-video gallery markup.
 - `future-directions.html` — colour-group and forward-time census through six colours.
+- `color-pattern-catalog.html` / `.js` / `.css` — nested wallpaper, colour-group, and periodic colour-pattern type atlas.
+- `scripts/generate_color_pattern_catalog.py` — audited 1–3-colour catalog data and static shell generator.
 - `future-directions.js` / `future-directions.css` — generated census tables and report styles.
 - `scripts/generate_color_forward_census.py` — validates the 68-record manifest and regenerates the census downloads.
 - `data/color-forward-*` — pinned forward manifest, JSON census, and CSV audit tables.
