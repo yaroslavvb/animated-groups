@@ -23,6 +23,11 @@ from color_pattern_book_excerpt_specs import (  # noqa: E402
     SOT_TWO_ROW,
     build_excerpt_specs,
 )
+from wallpaper_affine_generators import (  # noqa: E402
+    affine_relations_hold,
+    enumerate_coloured_actions,
+    scene_fingerprint,
+)
 
 
 class CatalogParser(HTMLParser):
@@ -172,6 +177,46 @@ class ColorPatternCatalogTests(unittest.TestCase):
             groups["cg-pmg-3-1"]["ghk"],
             {"G": "22*", "H": "22*", "K": "××"},
         )
+
+    def test_affine_renderer_realizes_all_198_entries_without_collisions(self) -> None:
+        wallpaper_by_id = {
+            wallpaper["id"]: wallpaper for wallpaper in self.payload["wallpaper_groups"]
+        }
+        group_by_id = {
+            group["id"]: group for group in self.payload["colour_groups"]
+        }
+        for parent, wallpaper in wallpaper_by_id.items():
+            self.assertTrue(affine_relations_hold(parent))
+            self.assertEqual(
+                [item["generator"] for item in wallpaper["render_geometry"]["generators"]],
+                group_by_id[f"cg-{parent}-1-1"]["presentation"]["generators"],
+            )
+
+        actions_by_group = {}
+        fingerprints: defaultdict[tuple, list[str]] = defaultdict(list)
+        colours_seen: dict[str, set[int]] = defaultdict(set)
+        for pattern in self.payload["pattern_types"]:
+            group = group_by_id[pattern["colour_group_id"]]
+            if group["id"] not in actions_by_group:
+                actions_by_group[group["id"]] = enumerate_coloured_actions(
+                    group["wallpaper_id"], group["generator_colour_actions"]
+                )
+            fingerprint = scene_fingerprint(
+                pattern, group, actions_by_group[group["id"]]
+            )
+            self.assertTrue(fingerprint, pattern["id"])
+            fingerprints[fingerprint].append(pattern["id"])
+            colours_seen[group["id"]].update(pose[-1] // 10 for pose in fingerprint)
+
+        collisions = [ids for ids in fingerprints.values() if len(ids) > 1]
+        self.assertEqual(len(fingerprints), 198)
+        self.assertEqual(collisions, [])
+        for group in self.payload["colour_groups"]:
+            self.assertEqual(
+                colours_seen[group["id"]],
+                set(range(group["number_of_colours"])),
+                group["id"],
+            )
 
     def test_two_colour_orbifold_exception_is_explicit(self) -> None:
         groups = [
@@ -367,13 +412,16 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn('points: "0,-13 13,0 0,13 -13,0"', script)
         self.assertIn('letter.textContent = "R"', script)
         self.assertIn("const MOTIF_SCALE = 1.55", script)
-        self.assertIn("const siblingIndex", script)
-        self.assertIn("const layoutVariant", script)
-        self.assertIn("const motifAngle = (theta * 180) / Math.PI", script)
-        self.assertIn("function buildP4TwoColourPattern", script)
-        self.assertIn('group.all_colours_kernel_K === "2222" ? 1 : 0', script)
-        self.assertIn('group.all_colours_kernel_K === "442" ? 1 : 0', script)
-        self.assertIn("translationShift * (col + row) + quarterTurnShift * orbit", script)
+        self.assertIn("function enumerateGroupActions", script)
+        self.assertIn("function composeAffine", script)
+        self.assertIn("function composePermutations", script)
+        self.assertIn("function patternTemplateSeeds", script)
+        self.assertIn("function motifPose", script)
+        self.assertIn("wallpaper.render_geometry.generators", script)
+        self.assertIn("operation.permutation[seed.colour]", script)
+        self.assertIn("pattern.underlying_pattern_type", script)
+        self.assertNotIn("Math.max(1, pattern.number_of_colours - 1)", script)
+        self.assertNotIn("function buildP4TwoColourPattern", script)
         self.assertNotIn("const motifScale", script)
         self.assertNotIn("layoutVariant * 7", script)
         self.assertNotIn("const paths = [", script)

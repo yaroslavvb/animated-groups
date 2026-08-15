@@ -35,6 +35,7 @@ from color_pattern_book_excerpt_specs import (
     decorate_payload,
     validate_excerpt_metadata,
 )
+from wallpaper_affine_generators import affine_generators_for, affine_relations_hold
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -467,6 +468,18 @@ def validate_payload(payload: dict[str, Any]) -> None:
     if image_counts != Counter({"C3": 8, "S3": 15}):
         raise ValueError(f"bad three-colour action census: {image_counts}")
     wallpaper_orbifolds = {wallpaper["orbifold"] for wallpaper in wallpapers}
+    for wallpaper in wallpapers:
+        geometry = wallpaper.get("render_geometry") or {}
+        affine_names = [
+            generator["generator"] for generator in geometry.get("generators", [])
+        ]
+        expected_names = group_presentation(wallpaper["id"])["generators"]
+        if affine_names != expected_names:
+            raise ValueError(
+                f"affine/presentation generator mismatch for {wallpaper['id']}"
+            )
+        if not affine_relations_hold(wallpaper["id"]):
+            raise ValueError(f"affine presentation relations fail for {wallpaper['id']}")
     if any(group["colour_stabilizer_H"] not in wallpaper_orbifolds for group in groups):
         raise ValueError("every chosen-colour stabilizer H must be a wallpaper orbifold")
     if any(group["all_colours_kernel_K"] not in wallpaper_orbifolds for group in groups):
@@ -598,7 +611,13 @@ def build_payload() -> dict[str, Any]:
                 },
             ],
         },
-        "wallpaper_groups": [dict(wallpaper) for wallpaper in WALLPAPERS],
+        "wallpaper_groups": [
+            {
+                **wallpaper,
+                "render_geometry": affine_generators_for(wallpaper["id"]),
+            }
+            for wallpaper in WALLPAPERS
+        ],
         "colour_groups": groups,
         "pattern_types": patterns,
     }
@@ -733,7 +752,7 @@ def build_html(payload: dict[str, Any]) -> str:
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <link rel="stylesheet" href="color-pattern-catalog.css?v=pg-short-row-fix">
-  <script src="color-pattern-catalog.js?v=pg-short-row-fix" defer></script>
+  <script src="color-pattern-catalog.js?v=affine-colour-actions-v2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

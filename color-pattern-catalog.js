@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=presentations";
+  const DATA_URL = "data/color-pattern-catalog.json?v=affine-colour-actions-v2";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -19,6 +19,7 @@
     patternsByGroup: new Map(),
     activeGroupByWallpaper: new Map(),
     activePatternByGroup: new Map(),
+    renderActionsByGroup: new Map(),
     filter: "all",
     excerptWindow: null,
   };
@@ -258,27 +259,10 @@
     return section;
   }
 
-  function hashString(value) {
-    let result = 2166136261;
-    for (let index = 0; index < value.length; index += 1) {
-      result ^= value.charCodeAt(index);
-      result = Math.imul(result, 16777619);
-    }
-    return result >>> 0;
-  }
-
   function svgElement(tag, attributes = {}) {
     const element = document.createElementNS(SVG_NS, tag);
     Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
     return element;
-  }
-
-  function orbitOrder(parent) {
-    if (parent === "p6" || parent === "p6m") return 6;
-    if (parent === "p3" || parent === "p3m1" || parent === "p31m") return 3;
-    if (parent === "p4" || parent === "p4m" || parent === "p4g") return 4;
-    if (["p2", "pmm", "pmg", "pgg", "cmm"].includes(parent)) return 2;
-    return 1;
   }
 
   function addMotif(svg, x, y, angle, colour, mirrored) {
@@ -310,52 +294,163 @@
     svg.append(group);
   }
 
-  function buildP4TwoColourPattern(svg, pattern, group) {
-    // Write p4 as <A, tx, ty>, where A is a quarter-turn about a lattice
-    // point.  If a=chi(A) and u=chi(tx)=chi(ty), then the other 4-centre has
-    // character a+u and the intervening 2-centre has character u.
-    //
-    //   ¹4²4²2 (K=442):  a=0, u=1 — monochrome 4-orbits checkerboard.
-    //   ²4²4¹2 (K=2222): a=1, u=0 — alternating colours in every 4-orbit.
-    const quarterTurnShift = group.all_colours_kernel_K === "2222" ? 1 : 0;
-    const translationShift = group.all_colours_kernel_K === "442" ? 1 : 0;
-    const siblings = state.patternsByGroup.get(group.id) || [];
-    const siblingIndex = Math.max(0, siblings.findIndex((item) => item.id === pattern.id));
-    const lattice = siblingIndex % 2 === 0 ? 138 : 152;
-    const seedVector = siblingIndex % 2 === 0 ? [39, 17] : [48, 14];
-    const guideRadius = Math.hypot(...seedVector) + 13 * MOTIF_SCALE + 3;
-    const guide = svgElement("g", {opacity: 0.19, stroke: "#75837d", "stroke-width": 0.8});
-    const motifs = svgElement("g");
-    const columns = Math.ceil(960 / lattice);
-    const rows = Math.ceil(560 / lattice);
+  function multiplyMatrices(left, right) {
+    return [
+      [
+        left[0][0] * right[0][0] + left[0][1] * right[1][0],
+        left[0][0] * right[0][1] + left[0][1] * right[1][1],
+      ],
+      [
+        left[1][0] * right[0][0] + left[1][1] * right[1][0],
+        left[1][0] * right[0][1] + left[1][1] * right[1][1],
+      ],
+    ];
+  }
 
-    for (let row = 0; row < rows; row += 1) {
-      for (let col = 0; col < columns; col += 1) {
-        const cx = (col + 0.5) * lattice;
-        const cy = (row + 0.5) * lattice;
-        guide.append(svgElement("circle", {cx, cy, r: guideRadius, fill: "none"}));
-        for (let orbit = 0; orbit < 4; orbit += 1) {
-          const [sx, sy] = seedVector;
-          const rotated = (
-            orbit === 0 ? [sx, sy]
-              : orbit === 1 ? [-sy, sx]
-                : orbit === 2 ? [-sx, -sy]
-                  : [sy, -sx]
-          );
-          const rawPhase = translationShift * (col + row) + quarterTurnShift * orbit;
-          const colourIndex = ((rawPhase % 2) + 2) % 2;
-          addMotif(
-            motifs,
-            cx + rotated[0],
-            cy + rotated[1],
-            orbit * 90,
-            PALETTES[2][colourIndex],
-            false,
-          );
+  function applyMatrix(matrix, vector) {
+    return [
+      matrix[0][0] * vector[0] + matrix[0][1] * vector[1],
+      matrix[1][0] * vector[0] + matrix[1][1] * vector[1],
+    ];
+  }
+
+  function composeAffine(left, right) {
+    const shifted = applyMatrix(left.matrix, right.translation);
+    return {
+      matrix: multiplyMatrices(left.matrix, right.matrix),
+      translation: [shifted[0] + left.translation[0], shifted[1] + left.translation[1]],
+    };
+  }
+
+  function inverseAffine(operation) {
+    const matrix = operation.matrix;
+    const determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    const inverseMatrix = [
+      [matrix[1][1] / determinant, -matrix[0][1] / determinant],
+      [-matrix[1][0] / determinant, matrix[0][0] / determinant],
+    ];
+    const shifted = applyMatrix(inverseMatrix, operation.translation);
+    return {matrix: inverseMatrix, translation: [-shifted[0], -shifted[1]]};
+  }
+
+  function composePermutations(left, right) {
+    return right.map((image) => left[image]);
+  }
+
+  function inversePermutation(permutation) {
+    const inverse = new Array(permutation.length);
+    permutation.forEach((image, index) => { inverse[image] = index; });
+    return inverse;
+  }
+
+  function affineKey(operation) {
+    return [...operation.matrix[0], ...operation.matrix[1], ...operation.translation]
+      .map((value) => Math.round(value * 1000000))
+      .join(":");
+  }
+
+  function samePermutation(left, right) {
+    return left.length === right.length && left.every((value, index) => value === right[index]);
+  }
+
+  function enumerateGroupActions(group, wallpaper) {
+    if (state.renderActionsByGroup.has(group.id)) return state.renderActionsByGroup.get(group.id);
+    const actionByName = new Map(
+      group.generator_colour_actions.map((action) => [action.generator, action]),
+    );
+    const steps = [];
+    wallpaper.render_geometry.generators.forEach((geometry) => {
+      const colourAction = actionByName.get(geometry.generator);
+      if (!colourAction) throw new Error(`Missing colour action for ${group.id}:${geometry.generator}`);
+      const forward = {
+        matrix: geometry.matrix,
+        translation: geometry.translation,
+        permutation: colourAction.colour_permutation,
+      };
+      const backwardAffine = inverseAffine(forward);
+      steps.push(forward, {
+        ...backwardAffine,
+        permutation: inversePermutation(forward.permutation),
+      });
+    });
+
+    const identity = {
+      matrix: [[1, 0], [0, 1]],
+      translation: [0, 0],
+      permutation: Array.from({length: group.number_of_colours}, (_value, index) => index),
+    };
+    const byAffine = new Map([[affineKey(identity), identity]]);
+    const queue = [identity];
+    const translationBound = 6.5;
+    for (let cursor = 0; cursor < queue.length; cursor += 1) {
+      const current = queue[cursor];
+      steps.forEach((step) => {
+        const affine = composeAffine(step, current);
+        if (Math.max(...affine.translation.map(Math.abs)) > translationBound) return;
+        const next = {
+          ...affine,
+          permutation: composePermutations(step.permutation, current.permutation),
+        };
+        const key = affineKey(next);
+        const existing = byAffine.get(key);
+        if (existing) {
+          if (!samePermutation(existing.permutation, next.permutation)) {
+            throw new Error(`Inconsistent colour homomorphism for ${group.id}`);
+          }
+          return;
         }
-      }
+        byAffine.set(key, next);
+        queue.push(next);
+        if (queue.length > 16000) throw new Error(`Affine closure exceeded limit for ${group.id}`);
+      });
     }
-    svg.append(guide, motifs);
+    state.renderActionsByGroup.set(group.id, queue);
+    return queue;
+  }
+
+  function fractionalPart(value) {
+    return value - Math.floor(value);
+  }
+
+  function patternTemplateSeeds(pattern, group) {
+    const match = pattern.underlying_pattern_type.match(/PP(\d+)/);
+    const number = match ? Number(match[1]) : 1;
+    const hasStarVariant = /\](?:_\d+)?\*$/.test(pattern.gs_pattern_type);
+    const letterVariant = /^PP\d+[AB]\[/.exec(pattern.gs_pattern_type)?.[0].match(/[AB]/)?.[0];
+    const variant = hasStarVariant ? 3 : (letterVariant === "A" ? 1 : letterVariant === "B" ? 2 : 0);
+    const x = 0.105 + 0.29 * fractionalPart(number * 0.61803398875 + 0.17)
+      + variant * 0.037;
+    const y = 0.085 + 0.27 * fractionalPart(number * 0.41421356237 + 0.31)
+      - variant * 0.029;
+    const angle = (number * 47 + 11 + variant * 23) % 360;
+    // One generic-position orbit keeps every plate monomotif.  The six
+    // star/A/B ambiguities receive distinct generic representatives without
+    // changing the atomic asymmetric R-diamond.
+    return [{
+      point: [x, y],
+      angle,
+      colour: (number + variant) % group.number_of_colours,
+    }];
+  }
+
+  function motifPose(operation, seed, scale) {
+    const worldPoint = applyMatrix(operation.matrix, seed.point);
+    worldPoint[0] += operation.translation[0];
+    worldPoint[1] += operation.translation[1];
+    const radians = seed.angle * Math.PI / 180;
+    const worldDirection = applyMatrix(operation.matrix, [Math.cos(radians), Math.sin(radians)]);
+    const screenDirection = [worldDirection[0], -worldDirection[1]];
+    const determinant = operation.matrix[0][0] * operation.matrix[1][1]
+      - operation.matrix[0][1] * operation.matrix[1][0];
+    const mirrored = determinant < 0;
+    let angle = Math.atan2(screenDirection[1], screenDirection[0]) * 180 / Math.PI;
+    if (mirrored) angle += 180;
+    return {
+      x: 480 + scale * worldPoint[0],
+      y: 280 - scale * worldPoint[1],
+      angle,
+      mirrored,
+    };
   }
 
   function buildPatternSvg(pattern, group, wallpaper) {
@@ -368,59 +463,30 @@
     const background = svgElement("rect", {x: 0, y: 0, width: 960, height: 560, fill: "#f8f6ee"});
     svg.append(background);
 
-    if (wallpaper.id === "p4" && pattern.number_of_colours === 2) {
-      buildP4TwoColourPattern(svg, pattern, group);
-      return svg;
-    }
-
-    const seed = hashString(`${pattern.id}:${group.id}`);
     const colours = PALETTES[pattern.number_of_colours];
-    const order = orbitOrder(pattern.wallpaper_id);
-    const hexagonal = ["p3", "p3m1", "p31m", "p6", "p6m"].includes(pattern.wallpaper_id);
-    const rigidLattice = hexagonal || ["p4", "p4m", "p4g"].includes(pattern.wallpaper_id);
-    const siblings = state.patternsByGroup.get(group.id) || [];
-    const siblingIndex = Math.max(0, siblings.findIndex((item) => item.id === pattern.id));
-    const layoutVariant = siblingIndex % 6;
-    const cols = [6, 5, 6, 5, 6, 5][layoutVariant];
-    const rows = [4, 4, 5, 5, 4, 5][layoutVariant];
-    const dx = 960 / (cols - 0.25);
-    const dy = 560 / (rows - 0.15);
-    const a = 1 + (seed % Math.max(1, pattern.number_of_colours - 1));
-    const b = 1 + ((seed >>> 3) % Math.max(1, pattern.number_of_colours - 1));
-    const orbitRadius = order === 1 ? 0 : [34, 43, 38, 46, 42, 36][layoutVariant];
-    const guideRadius = order === 1 ? 31 : orbitRadius + 13 * MOTIF_SCALE + 3;
-    const guide = svgElement("g", {opacity: 0.19, stroke: "#75837d", "stroke-width": 0.8});
+    const operations = enumerateGroupActions(group, wallpaper);
+    const seeds = patternTemplateSeeds(pattern, group);
+    const scale = wallpaper.render_geometry.scale;
     const motifs = svgElement("g");
-
-    for (let row = -1; row <= rows; row += 1) {
-      for (let col = -1; col <= cols; col += 1) {
-        let x = (col + 0.55 + (hexagonal && row % 2 !== 0 ? 0.5 : 0)) * dx;
-        let y = (row + 0.58) * dy;
-        if (!rigidLattice) {
-          if (layoutVariant === 1) x += (Math.abs(row) % 2) * dx * 0.34;
-          if (layoutVariant === 2) y += (Math.abs(col) % 2) * dy * 0.2;
-          if (layoutVariant === 3) x += ((row % 3) + 3) % 3 * dx * 0.14;
-          if (layoutVariant === 4) x += (Math.abs(col + row) % 2) * dx * 0.18;
-          if (layoutVariant === 5) y += (((col % 3) + 3) % 3) * dy * 0.13;
-        }
-        if (x < -50 || x > 1010 || y < -50 || y > 610) continue;
-        guide.append(svgElement("circle", {cx: x, cy: y, r: guideRadius, fill: "none"}));
-        const baseColour = pattern.number_of_colours === 1 ? 0 : ((a * col + b * row + colours.length * 10) % colours.length);
-        for (let orbit = 0; orbit < order; orbit += 1) {
-          const theta = (Math.PI * 2 * orbit) / order;
-          const px = x + Math.cos(theta) * orbitRadius;
-          const py = y + Math.sin(theta) * orbitRadius;
-          let colourIndex = (baseColour + orbit) % colours.length;
-          if (group.colour_image === "S3" && row % 2 !== 0) {
-            colourIndex = (colours.length - colourIndex) % colours.length;
-          }
-          const mirrored = wallpaper.orbifold.includes("*") && ((col + row + orbit) & 1) !== 0;
-          const motifAngle = (theta * 180) / Math.PI;
-          addMotif(motifs, px, py, motifAngle, colours[colourIndex], mirrored);
-        }
-      }
-    }
-    svg.append(guide, motifs);
+    const rendered = new Map();
+    seeds.forEach((seed, seedIndex) => {
+      operations.forEach((operation) => {
+        const pose = motifPose(operation, seed, scale);
+        if (pose.x < -30 || pose.x > 990 || pose.y < -30 || pose.y > 590) return;
+        const colourIndex = operation.permutation[seed.colour];
+        const key = [pose.x, pose.y, pose.angle, pose.mirrored ? 1 : 0, colourIndex, seedIndex]
+          .map((value) => typeof value === "number" ? Math.round(value * 1000) : value)
+          .join(":");
+        rendered.set(key, {...pose, colourIndex});
+      });
+    });
+    const ordered = [...rendered.values()].sort((left, right) => (
+      left.y - right.y || left.x - right.x || left.angle - right.angle || left.colourIndex - right.colourIndex
+    ));
+    ordered.forEach((pose) => {
+      addMotif(motifs, pose.x, pose.y, pose.angle, colours[pose.colourIndex], pose.mirrored);
+    });
+    svg.append(motifs);
     return svg;
   }
 

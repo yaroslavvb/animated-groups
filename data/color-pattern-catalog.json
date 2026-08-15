@@ -71,7 +71,46 @@
       "summary": "Translations only.",
       "ordinary": [
         "PP1"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 116,
+        "generators": [
+          {
+            "generator": "X",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              1,
+              0.0
+            ]
+          },
+          {
+            "generator": "Y",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              1
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p2",
@@ -81,7 +120,80 @@
       "ordinary": [
         "PP7",
         "PP8"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 116,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "β",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "γ",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "generator": "δ",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "pm",
@@ -91,7 +203,63 @@
       "ordinary": [
         "PP3",
         "PP4"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 112,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              1,
+              0.0
+            ]
+          },
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "Q",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "pg",
@@ -100,7 +268,46 @@
       "summary": "Two crosscaps; glide reflections, no mirrors.",
       "ordinary": [
         "PP2"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 112,
+        "generators": [
+          {
+            "generator": "Y",
+            "matrix": [
+              [
+                1,
+                0.0
+              ],
+              [
+                0.0,
+                -1
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.0
+            ]
+          },
+          {
+            "generator": "Z",
+            "matrix": [
+              [
+                1,
+                0.0
+              ],
+              [
+                0.0,
+                -1
+              ]
+            ],
+            "translation": [
+              -0.5,
+              1
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "cm",
@@ -110,7 +317,46 @@
       "ordinary": [
         "PP5",
         "PP6"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 108,
+        "generators": [
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "Z",
+            "matrix": [
+              [
+                1,
+                0.0
+              ],
+              [
+                0.0,
+                -1
+              ]
+            ],
+            "translation": [
+              0.5,
+              1
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "pmm",
@@ -121,7 +367,80 @@
         "PP14",
         "PP15",
         "PP16"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 158,
+        "generators": [
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "Q",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "R",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "S",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              1.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "pmg",
@@ -132,7 +451,63 @@
         "PP11",
         "PP12",
         "PP13"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 158,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.5
+            ]
+          },
+          {
+            "generator": "β",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.5
+            ]
+          },
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "pgg",
@@ -142,7 +517,63 @@
       "ordinary": [
         "PP9",
         "PP10"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 158,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.5
+            ]
+          },
+          {
+            "generator": "β",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.5
+            ]
+          },
+          {
+            "generator": "Z",
+            "matrix": [
+              [
+                1,
+                0.0
+              ],
+              [
+                0.0,
+                -1
+              ]
+            ],
+            "translation": [
+              -0.5,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "cmm",
@@ -154,7 +585,63 @@
         "PP18",
         "PP19",
         "PP20"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 230,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "Q",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p4",
@@ -165,7 +652,63 @@
         "PP30",
         "PP31",
         "PP32"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 168,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                0.0,
+                -1.0
+              ],
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "β",
+            "matrix": [
+              [
+                0.0,
+                -1.0
+              ],
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "γ",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p4m",
@@ -178,7 +721,63 @@
         "PP39",
         "PP40",
         "PP41"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 235,
+        "generators": [
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "Q",
+            "matrix": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "R",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p4g",
@@ -190,7 +789,46 @@
         "PP34",
         "PP35",
         "PP36"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 182,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                0.0,
+                -1.0
+              ],
+              [
+                1.0,
+                0.0
+              ]
+            ],
+            "translation": [
+              0.5,
+              0.0
+            ]
+          },
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p3",
@@ -200,7 +838,63 @@
       "ordinary": [
         "PP21",
         "PP22"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 154,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                -0.5,
+                -0.866025403784
+              ],
+              [
+                0.866025403784,
+                -0.5
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "β",
+            "matrix": [
+              [
+                -0.5,
+                -0.866025403784
+              ],
+              [
+                0.866025403784,
+                -0.5
+              ]
+            ],
+            "translation": [
+              1,
+              0.0
+            ]
+          },
+          {
+            "generator": "γ",
+            "matrix": [
+              [
+                -0.5,
+                -0.866025403784
+              ],
+              [
+                0.866025403784,
+                -0.5
+              ]
+            ],
+            "translation": [
+              0.5,
+              -0.866025403784
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p3m1",
@@ -211,7 +905,63 @@
         "PP27",
         "PP28",
         "PP29"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 183,
+        "generators": [
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "Q",
+            "matrix": [
+              [
+                -0.5,
+                0.866025403784
+              ],
+              [
+                0.866025403784,
+                0.5
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "R",
+            "matrix": [
+              [
+                -0.5,
+                -0.866025403784
+              ],
+              [
+                -0.866025403784,
+                0.5
+              ]
+            ],
+            "translation": [
+              0.866025403784,
+              0.5
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p31m",
@@ -223,7 +973,46 @@
         "PP24",
         "PP25",
         "PP26"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 203,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                -0.5,
+                -0.866025403784
+              ],
+              [
+                0.866025403784,
+                -0.5
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p6",
@@ -235,7 +1024,63 @@
         "PP43",
         "PP44",
         "PP45"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 183,
+        "generators": [
+          {
+            "generator": "α",
+            "matrix": [
+              [
+                0.5,
+                -0.866025403784
+              ],
+              [
+                0.866025403784,
+                0.5
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "β",
+            "matrix": [
+              [
+                -0.5,
+                -0.866025403784
+              ],
+              [
+                0.866025403784,
+                -0.5
+              ]
+            ],
+            "translation": [
+              1,
+              0.0
+            ]
+          },
+          {
+            "generator": "γ",
+            "matrix": [
+              [
+                -1,
+                0.0
+              ],
+              [
+                0.0,
+                -1
+              ]
+            ],
+            "translation": [
+              1,
+              0.0
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "p6m",
@@ -249,7 +1094,63 @@
         "PP49",
         "PP50",
         "PP51"
-      ]
+      ],
+      "render_geometry": {
+        "scale": 215,
+        "generators": [
+          {
+            "generator": "P",
+            "matrix": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                -1.0
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "Q",
+            "matrix": [
+              [
+                0.5,
+                0.866025403784
+              ],
+              [
+                0.866025403784,
+                -0.5
+              ]
+            ],
+            "translation": [
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "generator": "R",
+            "matrix": [
+              [
+                -1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "translation": [
+              1.0,
+              0.0
+            ]
+          }
+        ]
+      }
     }
   ],
   "colour_groups": [
