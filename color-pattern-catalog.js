@@ -8,6 +8,7 @@
     2: ["#0072B2", "#E69F00"],
     3: ["#0072B2", "#E69F00", "#009E73"],
   };
+  const MOTIF_SCALE = 1.55;
 
   const state = {
     payload: null,
@@ -108,9 +109,9 @@
     return 1;
   }
 
-  function addMotif(svg, x, y, angle, colour, mirrored, scale) {
+  function addMotif(svg, x, y, angle, colour, mirrored) {
     const group = svgElement("g", {
-      transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -scale : scale} ${scale})`,
+      transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -MOTIF_SCALE : MOTIF_SCALE} ${MOTIF_SCALE})`,
     });
     const diamond = svgElement("polygon", {
       points: "0,-13 13,0 0,13 -13,0",
@@ -162,8 +163,7 @@
     const a = 1 + (seed % Math.max(1, pattern.number_of_colours - 1));
     const b = 1 + ((seed >>> 3) % Math.max(1, pattern.number_of_colours - 1));
     const orbitRadius = order === 1 ? 0 : [34, 43, 38, 46, 42, 36][layoutVariant];
-    const motifScale = order >= 6 ? 1.4 : order >= 4 ? 1.5 : order === 3 ? 1.6 : order === 2 ? 1.7 : 2;
-    const guideRadius = order === 1 ? 31 : orbitRadius + 13 * motifScale + 3;
+    const guideRadius = order === 1 ? 31 : orbitRadius + 13 * MOTIF_SCALE + 3;
     const guide = svgElement("g", {opacity: 0.19, stroke: "#75837d", "stroke-width": 0.8});
     const motifs = svgElement("g");
 
@@ -190,8 +190,8 @@
             colourIndex = (colours.length - colourIndex) % colours.length;
           }
           const mirrored = wallpaper.orbifold.includes("*") && ((col + row + orbit) & 1) !== 0;
-          const motifAngle = (theta * 180) / Math.PI + (seed % 13) + layoutVariant * 7;
-          addMotif(motifs, px, py, motifAngle, colours[colourIndex], mirrored, motifScale);
+          const motifAngle = (theta * 180) / Math.PI;
+          addMotif(motifs, px, py, motifAngle, colours[colourIndex], mirrored);
         }
       }
     }
@@ -210,7 +210,7 @@
     figure.className = "pattern-plate";
     figure.append(buildPatternSvg(pattern, group, wallpaper));
     const caption = document.createElement("figcaption");
-    caption.textContent = "Independent schematic orbit plate. The group and PP invariants—not this particular motif geometry—identify the classified type.";
+    caption.textContent = "Shared asymmetric diamond-R motif; copies differ only by colour and group action. The group and PP invariants identify the classified type.";
     figure.append(caption);
 
     const details = document.createElement("div");
