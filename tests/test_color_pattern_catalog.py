@@ -305,6 +305,10 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn("const siblingIndex", script)
         self.assertIn("const layoutVariant", script)
         self.assertIn("const motifAngle = (theta * 180) / Math.PI", script)
+        self.assertIn("function buildP4TwoColourPattern", script)
+        self.assertIn('group.all_colours_kernel_K === "2222" ? 1 : 0', script)
+        self.assertIn('group.all_colours_kernel_K === "442" ? 1 : 0', script)
+        self.assertIn("translationShift * (col + row) + quarterTurnShift * orbit", script)
         self.assertNotIn("const motifScale", script)
         self.assertNotIn("layoutVariant * 7", script)
         self.assertNotIn("const paths = [", script)
@@ -348,6 +352,19 @@ class ColorPatternCatalogTests(unittest.TestCase):
         script = (ROOT / "color-pattern-catalog.js").read_text(encoding="utf-8")
         self.assertIn("group.book_excerpt", script)
         self.assertGreaterEqual(script.count("pattern.book_excerpt"), 2)
+
+    def test_p4_two_colour_representatives_use_distinct_characters(self) -> None:
+        groups = {
+            group["chaim_short_signature"]: group
+            for group in self.payload["colour_groups"]
+            if group["wallpaper_id"] == "p4" and group["number_of_colours"] == 2
+        }
+        self.assertEqual(groups["¹4²4²2"]["all_colours_kernel_K"], "442")
+        self.assertEqual(groups["²4²4¹2"]["all_colours_kernel_K"], "2222")
+        # chi(t_x)=chi(t_y)=u and chi(A)=a for a quarter-turn A.
+        first = tuple((col + row) % 2 for row in range(2) for col in range(2) for _orbit in range(4))
+        second = tuple(orbit % 2 for _row in range(2) for _col in range(2) for orbit in range(4))
+        self.assertNotEqual(first, second)
 
     def test_excerpt_specs_cover_69_colour_groups_and_147_coloured_patterns(self) -> None:
         specs = build_excerpt_specs(self.payload)

@@ -656,8 +656,8 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Periodic colour-pattern catalog</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=merged-entry">
-  <script src="color-pattern-catalog.js?v=merged-entry" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=p4-characters">
+  <script src="color-pattern-catalog.js?v=p4-characters" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=merged-entry";
+  const DATA_URL = "data/color-pattern-catalog.json?v=p4-characters";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -197,6 +197,54 @@
     svg.append(group);
   }
 
+  function buildP4TwoColourPattern(svg, pattern, group) {
+    // Write p4 as <A, tx, ty>, where A is a quarter-turn about a lattice
+    // point.  If a=chi(A) and u=chi(tx)=chi(ty), then the other 4-centre has
+    // character a+u and the intervening 2-centre has character u.
+    //
+    //   ¹4²4²2 (K=442):  a=0, u=1 — monochrome 4-orbits checkerboard.
+    //   ²4²4¹2 (K=2222): a=1, u=0 — alternating colours in every 4-orbit.
+    const quarterTurnShift = group.all_colours_kernel_K === "2222" ? 1 : 0;
+    const translationShift = group.all_colours_kernel_K === "442" ? 1 : 0;
+    const siblings = state.patternsByGroup.get(group.id) || [];
+    const siblingIndex = Math.max(0, siblings.findIndex((item) => item.id === pattern.id));
+    const lattice = siblingIndex % 2 === 0 ? 138 : 152;
+    const seedVector = siblingIndex % 2 === 0 ? [39, 17] : [48, 14];
+    const guideRadius = Math.hypot(...seedVector) + 13 * MOTIF_SCALE + 3;
+    const guide = svgElement("g", {opacity: 0.19, stroke: "#75837d", "stroke-width": 0.8});
+    const motifs = svgElement("g");
+    const columns = Math.ceil(960 / lattice);
+    const rows = Math.ceil(560 / lattice);
+
+    for (let row = 0; row < rows; row += 1) {
+      for (let col = 0; col < columns; col += 1) {
+        const cx = (col + 0.5) * lattice;
+        const cy = (row + 0.5) * lattice;
+        guide.append(svgElement("circle", {cx, cy, r: guideRadius, fill: "none"}));
+        for (let orbit = 0; orbit < 4; orbit += 1) {
+          const [sx, sy] = seedVector;
+          const rotated = (
+            orbit === 0 ? [sx, sy]
+              : orbit === 1 ? [-sy, sx]
+                : orbit === 2 ? [-sx, -sy]
+                  : [sy, -sx]
+          );
+          const rawPhase = translationShift * (col + row) + quarterTurnShift * orbit;
+          const colourIndex = ((rawPhase % 2) + 2) % 2;
+          addMotif(
+            motifs,
+            cx + rotated[0],
+            cy + rotated[1],
+            orbit * 90,
+            PALETTES[2][colourIndex],
+            false,
+          );
+        }
+      }
+    }
+    svg.append(guide, motifs);
+  }
+
   function buildPatternSvg(pattern, group, wallpaper) {
     const svg = svgElement("svg", {
       viewBox: "0 0 960 560",
@@ -206,6 +254,11 @@
     });
     const background = svgElement("rect", {x: 0, y: 0, width: 960, height: 560, fill: "#f8f6ee"});
     svg.append(background);
+
+    if (wallpaper.id === "p4" && pattern.number_of_colours === 2) {
+      buildP4TwoColourPattern(svg, pattern, group);
+      return svg;
+    }
 
     const seed = hashString(`${pattern.id}:${group.id}`);
     const colours = PALETTES[pattern.number_of_colours];
