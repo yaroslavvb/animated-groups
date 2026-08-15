@@ -378,6 +378,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertNotIn("layoutVariant * 7", script)
         self.assertNotIn("const paths = [", script)
         self.assertIn('link.target = "color-pattern-book-excerpt"', script)
+        self.assertIn("book-excerpt.html?v=pg-short-row-fix", script)
         self.assertIn("state.excerptWindow.location.href = excerpt.href", script)
         self.assertIn("state.excerptWindow.focus()", script)
         for label in (
@@ -458,6 +459,11 @@ class ColorPatternCatalogTests(unittest.TestCase):
         groups = self.payload["colour_groups"]
         self.assertEqual(len(SOT_TWO_ROW), 46)
         self.assertEqual(len(SOT_THREE_ROW), 23)
+        self.assertEqual(SOT_TWO_ROW["××/◦"], (141, 309.5, 18))
+        self.assertEqual(
+            specs["output/color-pattern-excerpts/tos-cg-pg-2-1.webp"]["highlight"],
+            (225.0, 309.5, 112.0, 18),
+        )
         blank_short = next(group for group in groups if group["chaim_notation"] == "632³//333")
         self.assertIn("leaves this short-signature cell blank", blank_short["book_excerpt"]["context"])
         corrected_pmg = next(group for group in groups if group["chaim_notation"] == "22*³//××")

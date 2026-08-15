@@ -88,7 +88,7 @@
     if (excerpt.source_url) parameters.set("source", excerpt.source_url);
     const link = document.createElement("a");
     link.className = "book-evidence-link";
-    link.href = `book-excerpt.html?v=pattern-sources&${parameters.toString()}`;
+    link.href = `book-excerpt.html?v=pg-short-row-fix&${parameters.toString()}`;
     link.target = "color-pattern-book-excerpt";
     if (label instanceof Node) link.append(label);
     else link.textContent = label;

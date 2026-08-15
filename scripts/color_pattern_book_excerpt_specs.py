@@ -73,7 +73,9 @@ SOT_TWO_ROW: dict[str, tuple[int, float, float]] = {
     "*×/××": (141, 276.5, 18),
     "*×/◦": (141, 287.5, 18),
     "××/××": (141, 298.5, 27),
-    "××/◦": (141, 320.5, 18),
+    # This is the second line of the pg block.  Its ink spans roughly
+    # y=315–324; the former y=320.5 box slipped onto the following p1 row.
+    "××/◦": (141, 309.5, 18),
     "◦/◦": (141, 331.5, 26),
 }
 
