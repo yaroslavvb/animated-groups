@@ -95,6 +95,18 @@ class ColorPatternCatalogTests(unittest.TestCase):
             self.assertEqual(group["regular"], "//" not in group["chaim_notation"])
             if group["regular"]:
                 self.assertEqual(group["colour_stabilizer_H"], group["all_colours_kernel_K"])
+        self.assertEqual(
+            {
+                group["chaim_notation"]: group["colour_stabilizer_H"]
+                for group in groups if not group["regular"]
+            },
+            catalog.NONREGULAR_THREE_STABILIZER,
+        )
+        wallpaper_orbifolds = {
+            wallpaper["orbifold"] for wallpaper in self.payload["wallpaper_groups"]
+        }
+        self.assertTrue(all(group["colour_stabilizer_H"] in wallpaper_orbifolds for group in groups))
+        self.assertTrue(all(group["all_colours_kernel_K"] in wallpaper_orbifolds for group in groups))
 
     def test_two_colour_orbifold_exception_is_explicit(self) -> None:
         groups = [
@@ -179,15 +191,15 @@ class ColorPatternCatalogTests(unittest.TestCase):
             "pg": ("××³/××", "××³//◦"),
             "cm": ("*×³/*×", "*×³//◦"),
             "pmm": ("*2222³//**",),
-            "pmg": ("22*³//◦", "22*³//**"),
+            "pmg": ("22*³//××", "22*³//**"),
             "pgg": ("22×³//××",),
-            "cmm": ("2*22³//**",),
+            "cmm": ("2*22³//*×",),
             "p4": (),
             "p4m": (),
             "p4g": (),
             "p3": ("333³/◦", "333³/333"),
             "p3m1": ("*333³//◦", "*333³//333"),
-            "p31m": ("3*3³//*333", "3*3³/◦"),
+            "p31m": ("3*3³//◦", "3*3³/*333"),
             "p6": ("632³/2222", "632³//333"),
             "p6m": ("*632³//2222", "*632³//*333"),
         }
@@ -299,6 +311,27 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn('link.target = "color-pattern-book-excerpt"', script)
         self.assertIn("state.excerptWindow.location.href = excerpt.href", script)
         self.assertIn("state.excerptWindow.focus()", script)
+        for label in (
+            "Chaim short form",
+            "Parent wallpaper group",
+            "Single-colour stabilizer H",
+            "All-colours stabilizer K",
+            "G&S group symbol",
+            "G&S pattern type",
+        ):
+            self.assertIn(f'"{label}"', script)
+        for removed in (
+            "group-overview",
+            "group-kicker",
+            "group-title",
+            "group-aliases",
+            "Type invariant",
+            "Underlying pattern type",
+            "Representative",
+            "Colour action",
+            "-colour plane group",
+        ):
+            self.assertNotIn(removed, script)
 
     def test_every_catalog_record_has_a_reusable_book_excerpt(self) -> None:
         for group in self.payload["colour_groups"]:
@@ -313,8 +346,8 @@ class ColorPatternCatalogTests(unittest.TestCase):
             self.assertIn("source_symbol", excerpt)
 
         script = (ROOT / "color-pattern-catalog.js").read_text(encoding="utf-8")
-        self.assertIn("The Symmetries of Things · short signature", script)
-        self.assertIn("Tilings and Patterns ·", script)
+        self.assertIn("group.book_excerpt", script)
+        self.assertGreaterEqual(script.count("pattern.book_excerpt"), 2)
 
     def test_excerpt_specs_cover_69_colour_groups_and_147_coloured_patterns(self) -> None:
         specs = build_excerpt_specs(self.payload)
@@ -329,6 +362,16 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertEqual(len(SOT_THREE_ROW), 23)
         blank_short = next(group for group in groups if group["chaim_notation"] == "632³//333")
         self.assertIn("leaves this short-signature cell blank", blank_short["book_excerpt"]["context"])
+        corrected_pmg = next(group for group in groups if group["chaim_notation"] == "22*³//××")
+        self.assertIn("intransitive", corrected_pmg["book_excerpt"]["context"])
+        corrected_cmm = next(group for group in groups if group["chaim_notation"] == "2*22³//*×")
+        self.assertIn("centred-mirror kernel K=*×", corrected_cmm["book_excerpt"]["context"])
+        corrected_p31m = {
+            group["chaim_notation"]: group["book_excerpt"]["context"]
+            for group in groups if group["wallpaper_id"] == "p31m" and group["number_of_colours"] == 3
+        }
+        self.assertIn("H=*×", corrected_p31m["3*3³//◦"])
+        self.assertIn("H=K=*333", corrected_p31m["3*3³/*333"])
 
         page_counts = Counter(
             pattern["source"]["printed_page"]
@@ -336,6 +379,14 @@ class ColorPatternCatalogTests(unittest.TestCase):
             if pattern["number_of_colours"] > 1
         )
         self.assertEqual(page_counts, Counter({page: len(slots) for page, slots in GS_PAGE_SLOTS.items()}))
+        for page, slots in GS_PAGE_SLOTS.items():
+            for slot in slots:
+                self.assertEqual(len(slot["highlight_probes"]), 2)
+                crop_x, crop_y, crop_width, crop_height = slot["crop"]
+                self.assertGreaterEqual(crop_x, 0)
+                self.assertGreaterEqual(crop_y, 0)
+                self.assertLessEqual(crop_x + crop_width, 545)
+                self.assertLessEqual(crop_y + crop_height, 646)
 
     def test_one_colour_pattern_links_are_honest_chapter_8_cross_references(self) -> None:
         one_colour = [

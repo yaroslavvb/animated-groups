@@ -284,39 +284,9 @@ body {
 }
 
 .colour-group-panel {
-  min-height: 38rem;
   margin-top: -1px;
   border: 1px solid var(--pattern-rule);
   background: #fff;
-}
-
-.group-overview {
-  display: grid;
-  grid-template-columns: minmax(18rem, 0.62fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 4.5rem);
-  padding: clamp(1.35rem, 3vw, 2.7rem);
-  border-bottom: 1px solid var(--pattern-rule);
-}
-
-.group-kicker,
-.pattern-kicker {
-  margin: 0 0 0.55rem;
-  color: var(--pattern-accent);
-  font-size: 0.73rem;
-  font-weight: 760;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.group-title {
-  margin: 0;
-  font: 700 clamp(2.2rem, 4vw, 4.7rem)/0.95 Georgia, "Times New Roman", serif;
-  letter-spacing: -0.045em;
-}
-
-.group-aliases {
-  margin: 0.8rem 0 0;
-  color: var(--pattern-muted);
 }
 
 .book-evidence-link {
@@ -338,51 +308,33 @@ body {
   text-decoration-color: currentColor;
 }
 
-.group-note {
-  margin: 1rem 0 0;
-  padding: 0.8rem 0.9rem;
-  border-left: 3px solid var(--pattern-orange);
-  color: #45514d;
-  background: #fff9e9;
-  font-size: 0.88rem;
-  line-height: 1.45;
-}
-
-.group-data,
 .pattern-data {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: clamp(0.86rem, 1vw, 0.98rem);
 }
 
-.group-data th,
-.group-data td,
 .pattern-data th,
 .pattern-data td {
-  padding: 0.7rem 0.65rem;
+  padding: 0.72rem 0.65rem;
   border-bottom: 1px solid var(--pattern-rule);
   text-align: left;
   vertical-align: top;
 }
 
-.group-data th,
 .pattern-data th {
-  width: 36%;
+  width: 45%;
   color: var(--pattern-muted);
   font-weight: 650;
 }
 
-.pattern-selector {
-  padding: 1.2rem clamp(1.35rem, 3vw, 2.7rem) 0;
+.pattern-data tr:last-child th,
+.pattern-data tr:last-child td {
+  border-bottom: 0;
 }
 
-.pattern-selector-label {
-  margin: 0 0 0.65rem;
-  color: var(--pattern-muted);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+.pattern-selector {
+  padding: 0.85rem clamp(1rem, 2vw, 1.75rem) 0;
 }
 
 .pattern-tab {
@@ -413,9 +365,14 @@ body {
 
 .pattern-pane {
   display: grid;
-  grid-template-columns: minmax(0, 1.22fr) minmax(19rem, 0.78fr);
-  gap: clamp(1.2rem, 2.5vw, 2.5rem);
-  padding: clamp(0.65rem, 1.2vw, 1.1rem) clamp(1.35rem, 3vw, 2.7rem) clamp(1.35rem, 3vw, 2.7rem);
+  grid-template-columns: minmax(0, 1.28fr) minmax(20rem, 0.72fr);
+  gap: clamp(1rem, 2vw, 2rem);
+  padding: 0.75rem clamp(1rem, 2vw, 1.75rem) clamp(1rem, 2vw, 1.75rem);
+}
+
+.pattern-details {
+  min-width: 0;
+  align-self: start;
 }
 
 .pattern-plate {
@@ -432,45 +389,34 @@ body {
   background: #f8f7f1;
 }
 
-.pattern-plate figcaption {
-  margin-top: 0.6rem;
-  color: var(--pattern-muted);
-  font-size: 0.75rem;
-  line-height: 1.4;
-}
-
-.pattern-details h4 {
+.source-value-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.32rem;
   margin: 0;
-  font: 700 clamp(2rem, 3.8vw, 4rem)/0.95 Georgia, "Times New Roman", serif;
-  letter-spacing: -0.04em;
+  color: var(--pattern-ink);
+  font: 650 1.08rem/1.15 Georgia, "Times New Roman", serif;
+  text-decoration-color: #7f9c92;
 }
 
-.pattern-details > .book-evidence-link {
-  margin: 0.65rem 0 1rem;
+.source-value-link:hover,
+.source-value-link:focus-visible {
+  color: var(--pattern-accent);
 }
 
-.status-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0 0 1.2rem;
+.source-math-symbol {
+  font: 650 1.08rem/1.15 Georgia, "Times New Roman", serif;
 }
 
-.status-chip {
-  padding: 0.3rem 0.55rem;
-  border: 1px solid #b5c3bd;
-  border-radius: 999px;
-  color: #44514c;
-  background: #f7faf8;
-  font-size: 0.7rem;
-  font-weight: 650;
+.source-link-mark {
+  color: var(--pattern-accent);
+  font: 650 0.72rem/1 Arial, Helvetica, sans-serif;
 }
 
-.source-note {
-  margin: 1rem 0 0;
-  color: var(--pattern-muted);
-  font-size: 0.78rem;
-  line-height: 1.45;
+.inline-short-signature sup {
+  font-size: 0.58em;
+  line-height: 0;
+  vertical-align: 0.68em;
 }
 
 .noscript-note {
@@ -483,7 +429,6 @@ body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .group-overview,
   .pattern-pane {
     grid-template-columns: 1fr;
   }
@@ -511,9 +456,6 @@ body {
     gap: 0.75rem;
   }
 
-  .colour-group-panel {
-    min-height: 30rem;
-  }
 }
 
 @media (max-width: 430px) {

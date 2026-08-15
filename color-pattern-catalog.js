@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=book-excerpts";
+  const DATA_URL = "data/color-pattern-catalog.json?v=merged-entry";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -25,6 +25,7 @@
 
   const byId = (id) => document.getElementById(id);
   const SUBSCRIPT_DIGITS = {"0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄", "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉"};
+  const SUPERSCRIPT_DIGITS = {"⁰": "0", "¹": "1", "²": "2", "³": "3", "⁴": "4", "⁵": "5", "⁶": "6", "⁷": "7", "⁸": "8", "⁹": "9"};
 
   function typesetSymbol(value) {
     return String(value)
@@ -69,23 +70,10 @@
     heading.scope = "row";
     heading.textContent = label;
     const cell = document.createElement("td");
-    cell.textContent = value;
+    if (value instanceof Node) cell.append(value);
+    else cell.textContent = value;
     row.append(heading, cell);
     table.append(row);
-  }
-
-  function sourceLabel(source) {
-    if (!source) return "—";
-    const parts = [source.work];
-    if (source.chapter) parts.push(`Chapter ${source.chapter}`);
-    if (source.figure) parts.push(source.figure);
-    if (source.table) parts.push(`Table ${source.table}`);
-    if (source.printed_page) parts.push(`printed p. ${source.printed_page}`);
-    if (source.printed_pages) {
-      const pageLabel = /[–,—]/.test(String(source.printed_pages)) ? "pp." : "p.";
-      parts.push(`printed ${pageLabel} ${source.printed_pages}`);
-    }
-    return parts.filter(Boolean).join(" · ");
   }
 
   function excerptLink(excerpt, label, returnId) {
@@ -102,8 +90,59 @@
     link.className = "book-evidence-link";
     link.href = `book-excerpt.html?v=pattern-sources&${parameters.toString()}`;
     link.target = "color-pattern-book-excerpt";
-    link.textContent = label;
+    if (label instanceof Node) link.append(label);
+    else link.textContent = label;
     return link;
+  }
+
+  function shortSignatureElement(signature) {
+    const wrapper = document.createElement("span");
+    wrapper.className = "inline-short-signature";
+    let index = 0;
+    while (index < signature.length) {
+      const character = signature[index];
+      if (SUPERSCRIPT_DIGITS[character]) {
+        const superscript = document.createElement("sup");
+        let digits = "";
+        while (index < signature.length && SUPERSCRIPT_DIGITS[signature[index]]) {
+          digits += SUPERSCRIPT_DIGITS[signature[index]];
+          index += 1;
+        }
+        superscript.textContent = digits;
+        wrapper.append(superscript);
+        continue;
+      }
+      if (character === "^" && signature[index + 1] === "(") {
+        const end = signature.indexOf(")", index + 2);
+        if (end >= 0) {
+          const superscript = document.createElement("sup");
+          superscript.textContent = signature.slice(index + 1, end + 1);
+          wrapper.append(superscript);
+          index = end + 1;
+          continue;
+        }
+      }
+      if (character === "*") {
+        wrapper.append(textElement("span", "orbifold-star", "∗"));
+      } else {
+        wrapper.append(document.createTextNode(character));
+      }
+      index += 1;
+    }
+    return wrapper;
+  }
+
+  function sourceSymbolLink(excerpt, returnId, content, accessibleLabel) {
+    const wrapper = document.createDocumentFragment();
+    wrapper.append(content, textElement("span", "source-link-mark", "↗"));
+    const link = excerptLink(excerpt, wrapper, returnId);
+    link.classList.add("source-value-link");
+    link.setAttribute("aria-label", accessibleLabel);
+    return link;
+  }
+
+  function mathSymbolElement(value) {
+    return textElement("span", "source-math-symbol", typesetSymbol(value));
   }
 
   function hashString(value) {
@@ -229,41 +268,34 @@
     const figure = document.createElement("figure");
     figure.className = "pattern-plate";
     figure.append(buildPatternSvg(pattern, group, wallpaper));
-    const caption = document.createElement("figcaption");
-    caption.textContent = "Shared asymmetric diamond-R motif; copies differ only by colour and group action. The group and PP invariants identify the classified type.";
-    figure.append(caption);
 
     const details = document.createElement("div");
     details.className = "pattern-details";
-    details.append(textElement("p", "pattern-kicker", `Grünbaum–Shephard ${pattern.number_of_colours}-colour pattern type`));
-    details.append(textElement("h4", "", typesetSymbol(pattern.gs_pattern_type)));
-    details.append(excerptLink(
-      pattern.book_excerpt,
-      `Tilings and Patterns · ${typesetSymbol(pattern.book_excerpt.source_symbol || pattern.gs_pattern_type)} · p. ${pattern.book_excerpt.printed_page} ↗`,
-      pattern.id,
-    ));
-    const chips = document.createElement("div");
-    chips.className = "status-chips";
-    [
-      pattern.representative_is_perfect ? "perfect representative" : "nonperfect representative",
-      pattern.underlying_pattern_is_primitive ? "primitive" : "nonprimitive",
-      `${pattern.number_of_colours} colour${pattern.number_of_colours === 1 ? "" : "s"}`,
-    ].forEach((label) => chips.append(textElement("span", "status-chip", label)));
-    details.append(chips);
 
     const table = document.createElement("table");
     table.className = "pattern-data";
-    appendTableRow(table, "Parent wallpaper group", `${typesetSymbol(wallpaper.orbifold)} (${wallpaper.hm})`);
-    appendTableRow(table, "Colour group", `${typesetSymbol(group.chaim_notation)}${group.notation_variant ? `, form ${group.notation_variant}` : ""}`);
-    appendTableRow(table, "G&S group symbol", typesetSymbol(group.gs_symbol));
-    appendTableRow(table, "Underlying pattern type", typesetSymbol(pattern.underlying_pattern_type));
-    appendTableRow(table, "Representative", `perfect · ${pattern.underlying_pattern_is_primitive ? "primitive" : "nonprimitive"}`);
-    appendTableRow(table, "Colour action", `${group.colour_image}${group.regular ? " · regular" : " · nonregular"}`);
-    appendTableRow(table, "Type invariant", "colour group + induced motif group + coloured-motif-transitive subgroups");
+    appendTableRow(table, "Chaim short form", sourceSymbolLink(
+      group.book_excerpt,
+      pattern.id,
+      shortSignatureElement(group.chaim_short_signature),
+      `Open Chaim short colour signature ${group.chaim_short_signature.replaceAll("^", "")} in The Symmetries of Things`,
+    ));
+    appendTableRow(table, "Parent wallpaper group", mathSymbolElement(wallpaper.orbifold));
+    appendTableRow(table, "Single-colour stabilizer H", mathSymbolElement(group.colour_stabilizer_H));
+    appendTableRow(table, "All-colours stabilizer K", mathSymbolElement(group.all_colours_kernel_K));
+    appendTableRow(table, "G&S group symbol", sourceSymbolLink(
+      pattern.book_excerpt,
+      pattern.id,
+      mathSymbolElement(group.gs_symbol),
+      `Open Grünbaum–Shephard source crop for group symbol ${group.gs_symbol}`,
+    ));
+    appendTableRow(table, "G&S pattern type", sourceSymbolLink(
+      pattern.book_excerpt,
+      pattern.id,
+      mathSymbolElement(pattern.gs_pattern_type),
+      `Open Grünbaum–Shephard source crop for pattern type ${pattern.gs_pattern_type}`,
+    ));
     details.append(table);
-    const source = textElement("p", "source-note", `Source: ${sourceLabel(pattern.source)}.`);
-    if (pattern.source_note) source.append(document.createTextNode(` ${pattern.source_note}`));
-    details.append(source);
     pane.append(figure, details);
     return pane;
   }
@@ -273,32 +305,8 @@
     const patterns = state.patternsByGroup.get(group.id) || [];
     const panel = document.createDocumentFragment();
 
-    const overview = document.createElement("div");
-    overview.className = "group-overview";
-    const identity = document.createElement("div");
-    identity.append(textElement("p", "group-kicker", `${group.number_of_colours}-colour plane group · ${patterns.length} pattern type${patterns.length === 1 ? "" : "s"}`));
-    identity.append(textElement("h3", "group-title", `${typesetSymbol(group.chaim_notation)}${group.notation_variant ? ` · form ${group.notation_variant}` : ""}`));
-    identity.append(textElement("p", "group-aliases", `G&S: ${typesetSymbol(group.gs_symbol)}`));
-    identity.append(excerptLink(
-      group.book_excerpt,
-      `The Symmetries of Things · short signature · p. ${group.book_excerpt.printed_page} ↗`,
-      group.id,
-    ));
-    group.related_forms.forEach((note) => identity.append(textElement("p", "group-note", note)));
-
-    const data = document.createElement("table");
-    data.className = "group-data";
-    appendTableRow(data, "Projected group G", typesetSymbol(wallpaper.orbifold));
-    appendTableRow(data, "Chosen-colour stabilizer H", typesetSymbol(group.colour_stabilizer_H));
-    appendTableRow(data, "All-colours kernel K", typesetSymbol(group.all_colours_kernel_K));
-    appendTableRow(data, "Permutation image G/K", group.colour_image);
-    appendTableRow(data, "Action", group.regular ? "regular; H = K" : "nonregular; [G:H] = 3, [H:K] = 2");
-    appendTableRow(data, "Colour-group sources", (group.sources || []).map(sourceLabel).join("; "));
-    overview.append(identity, data);
-
     const selector = document.createElement("div");
     selector.className = "pattern-selector";
-    selector.append(textElement("p", "pattern-selector-label", "Pattern types"));
     const tabs = document.createElement("nav");
     tabs.className = "pattern-tabs";
     tabs.setAttribute("role", "tablist");
@@ -323,7 +331,7 @@
     const selectedPatternId = state.activePatternByGroup.get(group.id);
     const selectedPattern = state.patternById.get(selectedPatternId) || patterns[0];
     if (selectedPattern) body.append(buildPatternPane(selectedPattern, group, wallpaper));
-    panel.append(overview, selector, body);
+    panel.append(selector, body);
     return panel;
   }
 

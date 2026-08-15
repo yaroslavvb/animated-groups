@@ -68,18 +68,27 @@ THREE_FOLD_SHORT_SIGNATURE_BY_TYPE: dict[str, str] = {
     "*×³/*×": "*¹×³",
     "*×³//◦": "*²×²",
     "*2222³//**": "*¹2²2¹2²2",
-    "22*³//◦": "¹2¹2*²",
+    # ToS Table 12.1 and its official erratum print the intransitive
+    # ¹2¹2*² action and kernel ◦.  The transitive S3 class has α and β
+    # equal transpositions and P a distinct transposition, forcing this
+    # signature and kernel ××.
+    "22*³//××": "²2²2*²",
     "22*³//**": "²2²2*¹",
     "22×³//××": "²2²2×²",
-    "2*22³//**": "²2*¹2²2",
+    # Table 12.1 prints K=**, but the displayed S3 presentation fixes the
+    # centred-mirror subgroup *×.  The short action signature itself is sound.
+    "2*22³//*×": "²2*¹2²2",
     "333³/◦": "³3³3³3",
     "333³/333": "³3³3¹3",
     # Orders alone do not distinguish these two S3 actions.  Table 12.1
     # therefore retains the actual transpositions in the short signature.
     "*333³//◦": "*^(AB)3^(BC)3^(CA)3",
     "*333³//333": "*^(AB)3^(BC)3^(BC)3",
-    "3*3³//*333": "³3*²3",
-    "3*3³/◦": "³3*¹3",
+    # The two K labels in ToS Table 12.1 are inconsistent with the displayed
+    # presentation.  The S3 action has torsion-free kernel ◦; the C3 action
+    # has kernel *333.
+    "3*3³//◦": "³3*²3",
+    "3*3³/*333": "³3*¹3",
     # Table 12.1 misprints ³6²3²2; the derivation on p. 157 and Table 13.1
     # give the corrected regular C3 signature used by the clockwork atlas.
     "632³/2222": "³6³3¹2",

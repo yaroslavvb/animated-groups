@@ -5,7 +5,7 @@ The catalog has two independent evidence layers:
 * Conway--Burgiel--Goodman-Strauss Tables 11.1 and 12.1, with the
   *short colour signature* (or its deliberately blank cell) outlined;
 * Gruenbaum--Shephard Figures 8.2.2, 8.2.3, 8.3.5, and 8.3.6, with the
-  printed PP pattern-type label outlined.
+  printed colour-group and PP pattern-type labels outlined.
 
 Coordinates are in source-PDF points.  The source PDFs stay local; only the
 small, watermarked WebP excerpts generated from these specifications ship.
@@ -88,13 +88,18 @@ SOT_THREE_ROW: dict[str, tuple[float, float]] = {
     "632³//333": (197.0, 18),
     "*333³//◦": (210.5, 18),
     "*333³//333": (223.0, 18),
-    "3*3³/◦": (236.0, 18),
-    "3*3³//*333": (248.5, 18),
+    # Canonical keys; the printed table attaches ◦ and *333 to the wrong
+    # p31m actions.
+    "3*3³/*333": (236.0, 18),
+    "3*3³//◦": (248.5, 18),
     "333³/◦": (261.0, 18),
     "333³/333": (274.0, 18),
     "*2222³//**": (287.5, 18),
-    "2*22³//**": (300.5, 18),
-    "22*³//◦": (313.5, 18),
+    # Canonical key; the table prints the incompatible kernel **.
+    "2*22³//*×": (300.5, 18),
+    # Canonical key for the transitive pmg class.  The printed row (and its
+    # official erratum) instead gives an intransitive 22*³//◦ action.
+    "22*³//××": (313.5, 18),
     "22*³//**": (326.0, 18),
     "22×³//××": (339.0, 18),
     "2222³//◦": (352.0, 18),
@@ -107,6 +112,13 @@ SOT_THREE_ROW: dict[str, tuple[float, float]] = {
     "◦³/◦": (438.0, 24),
 }
 
+SOT_PRINTED_TYPE_FOR_CANONICAL = {
+    "22*³//××": "22*³//◦",
+    "2*22³//*×": "2*22³//**",
+    "3*3³/*333": "3*3³/◦",
+    "3*3³//◦": "3*3³//*333",
+}
+
 
 def _grid_row(
     label_xs: tuple[float, ...],
@@ -117,18 +129,33 @@ def _grid_row(
 ) -> list[dict[str, tuple[float, float, float, float]]]:
     count = len(label_xs)
     if crop_xs is None:
-        crop_xs = (35.0, 190.0, 345.0)[:count]
+        crop_xs = (45.0, 205.0, 370.0)[:count]
     if crop_widths is None:
-        crop_widths = (178.0, 178.0, 188.0)[:count]
-    crop_y = max(30.0, label_y - 176.0)
-    crop_height = min(610.0 - crop_y, 202.0)
-    return [
-        {
-            "crop": (crop_x, crop_y, crop_width, crop_height),
-            "highlight": (label_x - 5.0, label_y - 4.0, 76.0, 19.0),
-        }
-        for label_x, crop_x, crop_width in zip(label_xs, crop_xs, crop_widths)
-    ]
+        crop_widths = (150.0, 150.0, 175.0)[:count]
+    crop_y = max(18.0, label_y - 190.0)
+    crop_bottom = min(638.0, label_y + 26.0)
+    slots: list[dict[str, tuple[float, float, float, float]]] = []
+    for index, (label_x, crop_x, crop_width) in enumerate(zip(label_xs, crop_xs, crop_widths)):
+        # The printed group symbol sits about 100 pt left of the PP label.  A
+        # following group's symbol can begin only 40–50 pt after a long PP
+        # label, so bound the second search region at that next symbol.  These
+        # are search regions, not final outlines: the renderer detects the ink.
+        next_group_x = label_xs[index + 1] - 110.0 if index + 1 < count else 545.0
+        pattern_probe_x = label_x - 7.0
+        pattern_probe_right = min(label_x + 90.0, next_group_x - 3.0, 545.0)
+        slots.append({
+            "crop": (crop_x, crop_y, crop_width, crop_bottom - crop_y),
+            "highlight_probes": (
+                (max(2.0, label_x - 110.0), label_y - 5.0, 98.0, 16.0),
+                (
+                    pattern_probe_x,
+                    label_y - 5.0,
+                    max(34.0, pattern_probe_right - pattern_probe_x),
+                    16.0,
+                ),
+            ),
+        })
+    return slots
 
 
 def _rows(*rows: list[dict[str, tuple[float, float, float, float]]]) -> tuple[dict[str, Any], ...]:
@@ -147,7 +174,9 @@ GS_PAGE_SLOTS: dict[int, tuple[dict[str, Any], ...]] = {
         _grid_row((130, 284, 438), 385),
         _grid_row((280,), 580, crop_xs=(145,), crop_widths=(270,)),
     ),
-    414: _rows(*(_grid_row((130, 285, 443), y) for y in (370, 550))),
+    # This plate places its PP labels about 47 pt farther right than the other
+    # three-column pages.
+    414: _rows(*(_grid_row((177, 333, 490), y) for y in (370, 550))),
     415: _rows(*(_grid_row((128, 285, 440), y) for y in (195, 382, 568))),
     416: _rows(
         _grid_row((160, 317, 474), 188),
@@ -157,8 +186,9 @@ GS_PAGE_SLOTS: dict[int, tuple[dict[str, Any], ...]] = {
     426: _rows(*(_grid_row((150, 307, 464), y) for y in (375, 550))),
     427: _rows(*(_grid_row((120, 277, 435), y) for y in (190, 382, 570))),
     428: _rows(*(_grid_row((150, 305, 460), y) for y in (180, 370, 558))),
-    429: _rows(*(_grid_row((130, 285, 438), y) for y in (175, 370, 562))),
-    430: _rows(*(_grid_row((145, 300, 455), y) for y in (180, 360, 548))),
+    # The scan places these baselines lower than the regular three-row grid.
+    429: _rows(*(_grid_row((130, 285, 438), y) for y in (203, 403, 585))),
+    430: _rows(*(_grid_row((145, 300, 455), y) for y in (198, 380, 558))),
     431: _rows(*(_grid_row((127, 285, 442), y) for y in (350, 540))),
     432: _rows(*(_grid_row((155, 312, 470), y) for y in (190, 380, 565))),
     433: _rows(*(_grid_row((120, 278, 435), y) for y in (198, 385, 570))),
@@ -197,18 +227,43 @@ def _group_excerpt(group: dict[str, Any]) -> dict[str, Any]:
         )
     else:
         page = 156
+        printed_type = SOT_PRINTED_TYPE_FOR_CANONICAL.get(raw_type, raw_type)
         context = (
             f"Complete Table 12.1 on printed p. 156; the outline marks the "
-            f"printed short-signature cell for {raw_type}."
+            f"short-signature cell in the row printed as {printed_type}."
         )
         if raw_type == "632³//333":
             context += " The book leaves this short-signature cell blank."
+        if raw_type == "22*³//××":
+            context += (
+                " The table and its official erratum print the intransitive "
+                "¹2¹2*², 22*³//◦; the transitive S3 action is ²2²2*² with "
+                "H=22* and K=××."
+            )
+        if raw_type == "2*22³//*×":
+            context += (
+                " The table prints K=**; the displayed S3 presentation "
+                "instead fixes the centred-mirror kernel K=*×."
+            )
+        if raw_type == "3*3³/*333":
+            context += (
+                " The table prints K=◦ here; its displayed C3 presentation "
+                "instead has H=K=*333."
+            )
+        if raw_type == "3*3³//◦":
+            context += (
+                " The table prints K=*333 here; its displayed S3 presentation "
+                "instead has H=*× and torsion-free K=◦."
+            )
     return {
         "work": "The Symmetries of Things",
         "image": f"output/color-pattern-excerpts/tos-{group['id']}.webp",
         "title": f"Short colour signature for {raw_type}",
         "context": context,
-        "alt": f"Annotated source table with the short colour signature for {raw_type} outlined.",
+        "alt": (
+            f"Annotated source table with the short colour signature in the "
+            f"row corresponding to {raw_type} outlined."
+        ),
         "printed_page": page,
         "source_url": SOT_BOOK_URL.format(page=page),
     }
@@ -220,7 +275,8 @@ def _pattern_excerpt(pattern: dict[str, Any], *, source_symbol: str | None = Non
     page = pattern["source"]["printed_page"]
     context = (
         f"Grünbaum-Shephard Figure {pattern['source']['figure'].split(',')[0].replace('Figure ', '')} "
-        f"on printed p. {page}; the outline marks the printed pattern-type label {source_symbol}."
+        f"on printed p. {page}; the outlines mark the printed colour-group symbol "
+        f"and pattern-type label {source_symbol}."
     )
     if displayed != source_symbol:
         context += f" This Chapter 8 occurrence supplies the same PP stem as the one-colour type {displayed}."
@@ -229,7 +285,10 @@ def _pattern_excerpt(pattern: dict[str, Any], *, source_symbol: str | None = Non
         "image": f"output/color-pattern-excerpts/gs-{pattern['id']}.webp",
         "title": f"Pattern type {displayed}",
         "context": context,
-        "alt": f"Annotated Grünbaum-Shephard figure with pattern-type label {source_symbol} outlined.",
+        "alt": (
+            f"Annotated Grünbaum-Shephard figure with its colour-group symbol "
+            f"and pattern-type label {source_symbol} outlined."
+        ),
         "printed_page": page,
         "source_symbol": source_symbol,
     }
@@ -307,7 +366,7 @@ def build_excerpt_specs(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "printed_page": page,
             "pdf_page": page - 400,
             "crop": slot["crop"],
-            "highlight": slot["highlight"],
+            "highlight_probes": slot["highlight_probes"],
             "footer": "GRÜNBAUM-SHEPHARD · TILINGS AND PATTERNS",
         }
     return deepcopy(specs)

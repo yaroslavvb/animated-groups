@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMP_ROOT = ROOT / "tmp" / "pdfs"
 RENDER_DPI = 216
 WATERMARK = "© COPYRIGHTED EXCERPT"
-SOURCE_SIZE = {"sot": (612.0, 792.0), "gs": (545.0, 646.0)}
+SOURCE_SIZE = {"sot": (612.0, 792.0), "gs": (547.0, 646.0)}
 
 
 def _font(size: int, *, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
@@ -107,25 +107,93 @@ def _watermark(size: tuple[int, int]) -> Image.Image:
 def _single_content(
     page: Image.Image,
     spec: dict[str, Any],
-) -> tuple[Image.Image, tuple[int, int, int, int]]:
+) -> tuple[Image.Image, list[tuple[int, int, int, int]]]:
     source_size = SOURCE_SIZE[spec["kind"]]
     crop_box = _box(spec["crop"], page, source_size)
+    if spec.get("highlight_probes"):
+        highlights = [
+            _detected_ink_box(page, probe, source_size)
+            for probe in spec["highlight_probes"]
+        ]
+    else:
+        highlights = [_box(spec["highlight"], page, source_size)]
+    crop_box = _fit_crop_to_highlights(crop_box, highlights, page)
     content = page.crop(crop_box).convert("RGBA")
-    highlight = _box(spec["highlight"], page, source_size)
-    local = (
-        highlight[0] - crop_box[0],
-        highlight[1] - crop_box[1],
-        highlight[2] - crop_box[0],
-        highlight[3] - crop_box[1],
-    )
+    local = [
+        (
+            highlight[0] - crop_box[0],
+            highlight[1] - crop_box[1],
+            highlight[2] - crop_box[0],
+            highlight[3] - crop_box[1],
+        )
+        for highlight in highlights
+    ]
     content.alpha_composite(_watermark(content.size))
     return content, local
+
+
+def _detected_ink_box(
+    page: Image.Image,
+    probe: tuple[float, float, float, float],
+    source_size: tuple[float, float],
+) -> tuple[int, int, int, int]:
+    """Tighten an approximate label region to its printed dark ink."""
+
+    probe_box = _box(probe, page, source_size)
+
+    def ink_inside(box: tuple[int, int, int, int]) -> tuple[int, int, int, int] | None:
+        sample = page.crop(box).convert("L")
+        return sample.point(lambda value: 255 if value < 118 else 0).getbbox()
+
+    ink = ink_inside(probe_box)
+    if ink is None:
+        # Several Chapter 8 plates shift the PP caption about 45 pt farther
+        # right than the otherwise regular grid.  Expand only an empty probe;
+        # this preserves the tight split on crowded rows such as pp. 429–430.
+        x, y, width, height = probe
+        extra_right = 50.0 if width < 80.0 else 8.0
+        fallback = (
+            max(0.0, x - 4.0),
+            max(0.0, y - 8.0),
+            min(source_size[0] - max(0.0, x - 4.0), width + extra_right),
+            min(source_size[1] - max(0.0, y - 8.0), height + 16.0),
+        )
+        probe_box = _box(fallback, page, source_size)
+        ink = ink_inside(probe_box)
+    if ink is None:
+        raise ValueError(f"no printed label ink found in probe {probe}")
+    sx = page.width / source_size[0]
+    sy = page.height / source_size[1]
+    pad_x = round(4.5 * sx)
+    pad_y = round(4.5 * sy)
+    return (
+        max(0, probe_box[0] + ink[0] - pad_x),
+        max(0, probe_box[1] + ink[1] - pad_y),
+        min(page.width, probe_box[0] + ink[2] + pad_x),
+        min(page.height, probe_box[1] + ink[3] + pad_y),
+    )
+
+
+def _fit_crop_to_highlights(
+    crop: tuple[int, int, int, int],
+    highlights: list[tuple[int, int, int, int]],
+    page: Image.Image,
+) -> tuple[int, int, int, int]:
+    """Keep every outline fully inside the excerpt with visible clearance."""
+
+    margin = round(12 * page.width / SOURCE_SIZE["gs"][0])
+    left, top, right, bottom = crop
+    left = max(0, min(left, min(box[0] for box in highlights) - margin))
+    top = max(0, min(top, min(box[1] for box in highlights) - margin))
+    right = min(page.width, max(right, max(box[2] for box in highlights) + margin))
+    bottom = min(page.height, max(bottom, max(box[3] for box in highlights) + margin))
+    return left, top, right, bottom
 
 
 def _table_content(
     pages: dict[int, Image.Image],
     spec: dict[str, Any],
-) -> tuple[Image.Image, tuple[int, int, int, int]]:
+) -> tuple[Image.Image, list[tuple[int, int, int, int]]]:
     source_size = SOURCE_SIZE[spec["kind"]]
     panels: list[tuple[dict[str, Any], Image.Image, tuple[int, int, int, int]]] = []
     for panel in spec["table_panels"]:
@@ -156,7 +224,7 @@ def _table_content(
         y_offset += image.height + gap
     if local is None:
         raise ValueError(f"highlight page is absent from table panels: {spec}")
-    return content, local
+    return content, [local]
 
 
 def render_excerpt(
@@ -164,19 +232,20 @@ def render_excerpt(
     spec: dict[str, Any],
 ) -> bytes:
     if spec.get("table_panels"):
-        content, highlight = _table_content(pages, spec)
+        content, highlights = _table_content(pages, spec)
     else:
-        content, highlight = _single_content(pages[spec["pdf_page"]], spec)
+        content, highlights = _single_content(pages[spec["pdf_page"]], spec)
 
     overlay = Image.new("RGBA", content.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
-    draw.rounded_rectangle(
-        highlight,
-        radius=8,
-        fill=(245, 176, 42, 36),
-        outline=(181, 56, 36, 238),
-        width=5,
-    )
+    for highlight in highlights:
+        draw.rounded_rectangle(
+            highlight,
+            radius=8,
+            fill=(245, 176, 42, 36),
+            outline=(181, 56, 36, 238),
+            width=5,
+        )
     content = Image.alpha_composite(content, overlay)
 
     padding = 12

@@ -95,17 +95,39 @@ THREE_COLOUR_TYPES: dict[str, tuple[str, ...]] = {
     "pg": ("××³/××", "××³//◦"),
     "cm": ("*×³/*×", "*×³//◦"),
     "pmm": ("*2222³//**",),
-    "pmg": ("22*³//◦", "22*³//**"),
+    "pmg": ("22*³//××", "22*³//**"),
     "pgg": ("22×³//××",),
-    "cmm": ("2*22³//**",),
+    "cmm": ("2*22³//*×",),
     "p4": (),
     "p4m": (),
     "p4g": (),
     "p3": ("333³/◦", "333³/333"),
     "p3m1": ("*333³//◦", "*333³//333"),
-    "p31m": ("3*3³//*333", "3*3³/◦"),
+    "p31m": ("3*3³//◦", "3*3³/*333"),
     "p6": ("632³/2222", "632³//333"),
     "p6m": ("*632³//2222", "*632³//*333"),
+}
+
+
+# For an S3 colour action, H is the index-3 stabilizer of one chosen colour
+# and K is the index-6 all-colours kernel.  ToS abbreviates G³/H/K to G³//K,
+# so H must be restored from the index-3 wallpaper-subgroup classification.
+NONREGULAR_THREE_STABILIZER: dict[str, str] = {
+    "2222³//◦": "2222",
+    "**³//◦": "**",
+    "××³//◦": "××",
+    "*×³//◦": "*×",
+    "*2222³//**": "*2222",
+    "22*³//××": "22*",
+    "22*³//**": "22*",
+    "22×³//××": "22×",
+    "2*22³//*×": "2*22",
+    "*333³//◦": "*×",
+    "*333³//333": "3*3",
+    "3*3³//◦": "*×",
+    "632³//333": "632",
+    "*632³//2222": "2*22",
+    "*632³//*333": "*632",
 }
 
 
@@ -286,7 +308,11 @@ def build_groups() -> list[dict[str, Any]]:
                     "gs_symbol": legacy_group_symbol(wallpaper["hm"], colours, index, len(entries)),
                     "colour_image": "C2" if colours == 2 else ("C3" if regular else "S3"),
                     "regular": regular,
-                    "colour_stabilizer_H": kernel_from_notation(display_notation) if regular else "index-3 stabilizer (omitted by //)",
+                    "colour_stabilizer_H": (
+                        kernel_from_notation(display_notation)
+                        if regular
+                        else NONREGULAR_THREE_STABILIZER[display_notation]
+                    ),
                     "all_colours_kernel_K": kernel_from_notation(display_notation),
                     "notation_variant": variant,
                     "related_forms": [ORIENTED_FORMS[display_notation]] if display_notation in ORIENTED_FORMS else [],
@@ -407,6 +433,18 @@ def validate_payload(payload: dict[str, Any]) -> None:
     image_counts = Counter(g["colour_image"] for g in groups if g["number_of_colours"] == 3)
     if image_counts != Counter({"C3": 8, "S3": 15}):
         raise ValueError(f"bad three-colour action census: {image_counts}")
+    wallpaper_orbifolds = {wallpaper["orbifold"] for wallpaper in wallpapers}
+    if any(group["colour_stabilizer_H"] not in wallpaper_orbifolds for group in groups):
+        raise ValueError("every chosen-colour stabilizer H must be a wallpaper orbifold")
+    if any(group["all_colours_kernel_K"] not in wallpaper_orbifolds for group in groups):
+        raise ValueError("every all-colours kernel K must be a wallpaper orbifold")
+    nonregular = {
+        group["chaim_notation"]: group["colour_stabilizer_H"]
+        for group in groups
+        if group["number_of_colours"] == 3 and not group["regular"]
+    }
+    if nonregular != NONREGULAR_THREE_STABILIZER:
+        raise ValueError(f"bad nonregular three-colour stabilizers: {nonregular}")
     wallpaper_ids = {w["id"] for w in wallpapers}
     group_ids = {g["id"] for g in groups}
     pattern_ids = {p["id"] for p in patterns}
@@ -469,6 +507,18 @@ def build_payload() -> dict[str, Any]:
                     "figure": "10",
                     "role": "independent two-colour index/orbifold crosswalk",
                     "url": "https://archive.bridgesmathart.org/2017/bridges2017-291.pdf",
+                },
+                {
+                    "work": "Coloured Plane Groups",
+                    "authors": "K. Jarratt and R. L. E. Schwarzenberger",
+                    "year": 1980,
+                    "role": "index-3 chosen-colour subgroups and three-colour kernel cross-check",
+                    "url": "https://www.york.ac.uk/depts/maths/histstat/symmetry/coloured.pdf",
+                },
+                {
+                    "work": "The Symmetries of Things: Errors",
+                    "role": "official errata consulted for Table 12.1",
+                    "url": "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html",
                 },
             ],
         },
@@ -606,8 +656,8 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Periodic colour-pattern catalog</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=book-excerpts">
-  <script src="color-pattern-catalog.js?v=book-excerpts" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=merged-entry">
+  <script src="color-pattern-catalog.js?v=merged-entry" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>
