@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Non-regular colourings of the 2x2 torus group: two non-conjugate subgroups give the same symbol but different colourings, which is why Conway's notation must name H.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Non-regular colourings and why H must be named</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <style>
+  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+          --card:#ffffff; --accent:#0072B2; }
+  body { background:var(--paper); color:var(--ink); }
+  .nr { max-width:1120px; margin:0 auto; padding:0 20px 72px; }
+  .nr h1 { font-size:2rem; line-height:1.2; margin:.2em 0 .3em; }
+  .nr h2 { font-size:1.32rem; margin:2.4rem 0 .7rem;
+           border-bottom:1px solid var(--rule); padding-bottom:.35rem; }
+  .nr h3 { font-size:1.05rem; margin:0 0 .2rem; }
+  .overline { text-transform:uppercase; letter-spacing:.12em; font-size:.74rem;
+              color:var(--muted); margin:2rem 0 0; }
+  .lead { font-size:1.05rem; color:var(--muted); max-width:64ch; }
+  .nr p, .nr li { max-width:74ch; }
+  code { background:#eef1f4; padding:.08em .34em; border-radius:4px; font-size:.92em; }
+  .compare { display:grid; gap:18px;
+             grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr)); }
+  .compare figure { background:var(--card); border:1px solid var(--rule);
+                    border-radius:12px; padding:14px 16px; margin:0; }
+  .compare figcaption { font-size:.86rem; color:var(--muted); margin-top:.5rem; }
+  .case { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+          padding:16px 18px; margin-bottom:16px; }
+  .case-note { font-size:.9rem; color:var(--muted); margin:.1rem 0 .8rem; }
+  .case-art { display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; }
+  .side { display:flex; flex-direction:column; gap:10px; min-width:240px; }
+  .cap { font-size:.76rem; color:var(--muted); margin:.4rem 0 0; max-width:34ch; }
+  .triple { margin:.9rem 0 0; font-size:.88rem; padding-top:.7rem;
+            border-top:1px solid var(--rule); }
+  table { border-collapse:collapse; font-size:.88rem; }
+  th, td { text-align:left; padding:.34em .7em; border-bottom:1px solid var(--rule); }
+  th { font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  caption { font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
+            color:var(--muted); text-align:left; padding-bottom:.25em; }
+  .mini { min-width:0; }
+  .action tr.in-h td { background:rgba(0,158,115,.13); }
+  .action tr.in-k td { background:rgba(0,158,115,.28); font-weight:700; }
+  .table-scroll { overflow-x:auto; }
+  .footnote { color:var(--muted); font-size:.86rem; }
+  svg.pat, svg.oct { display:block; max-width:100%; height:auto; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
+            --card:#1e242b; --accent:#56B4E9; }
+    code { background:#2a323a; }
+    .action tr.in-h td { background:rgba(0,158,115,.22); }
+    .action tr.in-k td { background:rgba(0,158,115,.4); }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#nr">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="color-pattern-catalog.html">Patterns</a>
+        <a href="torus-tutorial.html">Torus tutorial</a>
+        <a href="torus-patterns.html">Torus patterns</a>
+        <a href="torus-cayley.html">Cayley graphs</a>
+        <a href="torus-nonregular.html" aria-current="page">Non-regular</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="nr" class="nr">
+    <p class="overline">Where the double slash comes from</p>
+    <h1>Non-regular colourings, and why <code>H</code> must be named</h1>
+    <p class="lead">
+      The 2&times;2 torus group has four non-normal subgroups. Each defines a colouring with
+      four colours but a colour group of order eight — non-regular. Two of them produce the
+      same Conway symbol and yet are different colourings.
+    </p>
+
+    <h2>Regular versus non-regular</h2>
+    <p>
+      A colouring is <em>regular</em> when the number of colours equals the order of the colour
+      group, which happens exactly when <code>H = K</code>. Compare:
+    </p>
+    <div class="compare">
+      <figure><svg class="pat" viewBox="0 0 84 84" width="84" height="84" role="img" aria-label="regular two-colouring"><rect x="0" y="0" width="40" height="40" rx="6" fill="#0072B2"/><text x="20.0" y="25.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><rect x="44" y="0" width="40" height="40" rx="6" fill="#E69F00"/><text x="64.0" y="25.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="0" y="44" width="40" height="40" rx="6" fill="#E69F00"/><text x="20.0" y="69.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="44" y="44" width="40" height="40" rx="6" fill="#0072B2"/><text x="64.0" y="69.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text></svg>
+        <figcaption><strong>Regular.</strong> <code>H = K = {e, XY, s, XYs}</code>, a
+        <em>normal</em> subgroup of index 2. Two colours, colour group <code>C&#8322;</code> of
+        order 2. Colours = group order, so <code>H</code> is recoverable from <code>K</code> and
+        Conway writes a single slash.</figcaption></figure>
+      <figure><svg class="pat" viewBox="0 0 84 84" width="84" height="84" role="img" aria-label="non-regular four-colouring"><rect x="0" y="0" width="40" height="40" rx="6" fill="#0072B2"/><text x="20.0" y="25.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><rect x="44" y="0" width="40" height="40" rx="6" fill="#E69F00"/><text x="64.0" y="25.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="0" y="44" width="40" height="40" rx="6" fill="#009E73"/><text x="20.0" y="69.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="44" y="44" width="40" height="40" rx="6" fill="#CC79A7"/><text x="64.0" y="69.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">D</text></svg>
+        <figcaption><strong>Non-regular.</strong> <code>H</code> has order 2 and
+        <code>K = core(H) = {e}</code>. Four colours, colour group of order <strong>8</strong>.
+        Eight &ne; four, so <code>H</code> is <em>not</em> recoverable — double slash. The picture
+        is trivial; all the structure is in the action.</figcaption></figure>
+    </div>
+
+    <h2>The action is where the content is</h2>
+    <p>
+      For the rainbow pattern every element of &Gamma; permutes the four colours. Rows shaded
+      green lie in <code>H</code> (they fix colour <strong>A</strong>); the darker row is
+      <code>K</code>.
+    </p>
+    <div class="table-scroll">
+      <table class="action">
+        <thead><tr><th>element</th><th class="num">order</th><th>colour permutation</th>
+          <th>fixes A</th><th>in K</th></tr></thead>
+        <tbody><tr class="in-k"><td><code>e</code></td><td class="num">1</td><td>identity</td><td>&check;</td><td>&check;</td></tr><tr class=""><td><code>X</code></td><td class="num">2</td><td>(A&thinsp;C) (B&thinsp;D)</td><td></td><td></td></tr><tr class=""><td><code>XY</code></td><td class="num">2</td><td>(A&thinsp;D) (B&thinsp;C)</td><td></td><td></td></tr><tr class=""><td><code>XYs</code></td><td class="num">2</td><td>(A&thinsp;D)</td><td></td><td></td></tr><tr class=""><td><code>Y</code></td><td class="num">2</td><td>(A&thinsp;B) (C&thinsp;D)</td><td></td><td></td></tr><tr class="in-h"><td><code>s</code></td><td class="num">2</td><td>(B&thinsp;C)</td><td>&check;</td><td></td></tr><tr class=""><td><code>Xs</code></td><td class="num">4</td><td>(A&thinsp;C&thinsp;D&thinsp;B)</td><td></td><td></td></tr><tr class=""><td><code>Ys</code></td><td class="num">4</td><td>(A&thinsp;B&thinsp;D&thinsp;C)</td><td></td><td></td></tr></tbody>
+      </table>
+    </div>
+    <p>
+      Only the identity fixes every colour, so <code>K = {e}</code>. Two elements fix
+      <strong>A</strong>, so <code>H</code> has order 2 and index 4 — the four colours. The map
+      &Gamma; &rarr; S&#8324; is injective but lands in a subgroup of index 3, which is exactly
+      the gap between 8 and 4.
+    </p>
+
+    <h2>The two cases</h2>
+
+    <section class="case" id="case-s">
+      <h3>H = <code>{e, s}</code></h3>
+      <p class="case-note">This one is realized by the grid itself: the four cells <em>are</em> the coset space &Gamma;/&#10216;s&#10217;, and the rainbow pattern is its colouring.</p>
+      <div class="case-art">
+        <div><svg class="oct" viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="octagon with cosets tinted"><line x1="150.0" y1="34.0" x2="232.0" y2="68.0" stroke="#0072B2" stroke-width="7" stroke-linecap="round"/><line x1="232.0" y1="68.0" x2="266.0" y2="150.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><line x1="266.0" y1="150.0" x2="232.0" y2="232.0" stroke="#E69F00" stroke-width="7" stroke-linecap="round"/><line x1="232.0" y1="232.0" x2="150.0" y2="266.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><line x1="150.0" y1="266.0" x2="68.0" y2="232.0" stroke="#CC79A7" stroke-width="7" stroke-linecap="round"/><line x1="68.0" y1="232.0" x2="34.0" y2="150.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><line x1="34.0" y1="150.0" x2="68.0" y2="68.0" stroke="#009E73" stroke-width="7" stroke-linecap="round"/><line x1="68.0" y1="68.0" x2="150.0" y2="34.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><circle cx="150.0" cy="34.0" r="15" fill="#0072B2" stroke="#1b2430" stroke-width="1.4"/><text x="150.0" y="38.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">e</text><circle cx="232.0" cy="68.0" r="15" fill="#0072B2" stroke="#1b2430" stroke-width="1.4"/><text x="232.0" y="72.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">s</text><circle cx="266.0" cy="150.0" r="15" fill="#E69F00" stroke="#1b2430" stroke-width="1.4"/><text x="266.0" y="154.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">Ys</text><circle cx="232.0" cy="232.0" r="15" fill="#E69F00" stroke="#1b2430" stroke-width="1.4"/><text x="232.0" y="236.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">Y</text><circle cx="150.0" cy="266.0" r="15" fill="#CC79A7" stroke="#1b2430" stroke-width="1.4"/><text x="150.0" y="270.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">XY</text><circle cx="68.0" cy="232.0" r="15" fill="#CC79A7" stroke="#1b2430" stroke-width="1.4"/><text x="68.0" y="236.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">XYs</text><circle cx="34.0" cy="150.0" r="15" fill="#009E73" stroke="#1b2430" stroke-width="1.4"/><text x="34.0" y="154.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">Xs</text><circle cx="68.0" cy="68.0" r="15" fill="#009E73" stroke="#1b2430" stroke-width="1.4"/><text x="68.0" y="72.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">X</text></svg>
+          <p class="cap">Each thick coloured edge is one coset of <code>H</code> —
+             one colour. Thin grey edges change the colour.</p></div>
+        <div class="side">
+          <table class="mini"><caption>the four cosets</caption><tbody><tr><td>A</td><td><code>{e, s}</code></td><td>sends <strong>A</strong> &rarr; <strong>A</strong></td></tr><tr><td>B</td><td><code>{Y, Ys}</code></td><td>sends <strong>A</strong> &rarr; <strong>B</strong></td></tr><tr><td>C</td><td><code>{X, Xs}</code></td><td>sends <strong>A</strong> &rarr; <strong>C</strong></td></tr><tr><td>D</td><td><code>{XY, XYs}</code></td><td>sends <strong>A</strong> &rarr; <strong>D</strong></td></tr></tbody></table>
+          <table class="mini"><caption>colour stabilizers</caption><tbody><tr><td><strong>A</strong></td><td><code>{e, s}</code></td></tr><tr><td><strong>B</strong></td><td><code>{XYs, e}</code></td></tr><tr><td><strong>C</strong></td><td><code>{XYs, e}</code></td></tr><tr><td><strong>D</strong></td><td><code>{e, s}</code></td></tr></tbody></table>
+          <p class="cap">2 distinct stabilizers for 4 colours, since
+             |N(H)|/|H| = 4&thinsp;/&thinsp;2.</p>
+        </div>
+      </div>
+      <p class="triple"><code>G</code> = &Gamma; (8) &nbsp;&middot;&nbsp;
+        <code>H</code> = order 2, index 4 &nbsp;&middot;&nbsp;
+        <code>K</code> = core(H) = <code>{e}</code>
+        &nbsp;&middot;&nbsp; 4 colours, colour group of order 8
+        &rarr; <strong>non-regular</strong></p>
+    </section>
+
+    <section class="case" id="case-x">
+      <h3>H = <code>{X, e}</code></h3>
+      <p class="case-note">This one is not realized by the cells: &#10216;X&#10217; has only two orbits on them, so the colouring needs a different four-element &Gamma;-set. Drawn abstractly, as the four cosets.</p>
+      <div class="case-art">
+        <div><svg class="oct" viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="octagon with cosets tinted"><line x1="150.0" y1="34.0" x2="232.0" y2="68.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><line x1="232.0" y1="68.0" x2="266.0" y2="150.0" stroke="#E69F00" stroke-width="7" stroke-linecap="round"/><line x1="266.0" y1="150.0" x2="232.0" y2="232.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><line x1="232.0" y1="232.0" x2="150.0" y2="266.0" stroke="#009E73" stroke-width="7" stroke-linecap="round"/><line x1="150.0" y1="266.0" x2="68.0" y2="232.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><line x1="68.0" y1="232.0" x2="34.0" y2="150.0" stroke="#CC79A7" stroke-width="7" stroke-linecap="round"/><line x1="34.0" y1="150.0" x2="68.0" y2="68.0" stroke="#c3bdae" stroke-width="2.4" stroke-linecap="round"/><line x1="68.0" y1="68.0" x2="150.0" y2="34.0" stroke="#0072B2" stroke-width="7" stroke-linecap="round"/><circle cx="150.0" cy="34.0" r="15" fill="#0072B2" stroke="#1b2430" stroke-width="1.4"/><text x="150.0" y="38.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">e</text><circle cx="232.0" cy="68.0" r="15" fill="#E69F00" stroke="#1b2430" stroke-width="1.4"/><text x="232.0" y="72.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">s</text><circle cx="266.0" cy="150.0" r="15" fill="#E69F00" stroke="#1b2430" stroke-width="1.4"/><text x="266.0" y="154.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">Ys</text><circle cx="232.0" cy="232.0" r="15" fill="#009E73" stroke="#1b2430" stroke-width="1.4"/><text x="232.0" y="236.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">Y</text><circle cx="150.0" cy="266.0" r="15" fill="#009E73" stroke="#1b2430" stroke-width="1.4"/><text x="150.0" y="270.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">XY</text><circle cx="68.0" cy="232.0" r="15" fill="#CC79A7" stroke="#1b2430" stroke-width="1.4"/><text x="68.0" y="236.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">XYs</text><circle cx="34.0" cy="150.0" r="15" fill="#CC79A7" stroke="#1b2430" stroke-width="1.4"/><text x="34.0" y="154.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">Xs</text><circle cx="68.0" cy="68.0" r="15" fill="#0072B2" stroke="#1b2430" stroke-width="1.4"/><text x="68.0" y="72.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fffaf1">X</text></svg>
+          <p class="cap">Each thick coloured edge is one coset of <code>H</code> —
+             one colour. Thin grey edges change the colour.</p></div>
+        <div class="side">
+          <table class="mini"><caption>the four cosets</caption><tbody><tr><td>A</td><td><code>{X, e}</code></td><td>sends <strong>A</strong> &rarr; <strong>C</strong></td></tr><tr><td>B</td><td><code>{Ys, s}</code></td><td>sends <strong>A</strong> &rarr; <strong>B</strong></td></tr><tr><td>C</td><td><code>{XY, Y}</code></td><td>sends <strong>A</strong> &rarr; <strong>D</strong></td></tr><tr><td>D</td><td><code>{XYs, Xs}</code></td><td>sends <strong>A</strong> &rarr; <strong>D</strong></td></tr></tbody></table>
+          <table class="mini"><caption>colour stabilizers</caption><tbody><tr><td><strong>A</strong></td><td><code>{e, s}</code></td></tr><tr><td><strong>B</strong></td><td><code>{XYs, e}</code></td></tr><tr><td><strong>C</strong></td><td><code>{XYs, e}</code></td></tr><tr><td><strong>D</strong></td><td><code>{e, s}</code></td></tr></tbody></table>
+          <p class="cap">2 distinct stabilizers for 4 colours, since
+             |N(H)|/|H| = 4&thinsp;/&thinsp;2.</p>
+        </div>
+      </div>
+      <p class="triple"><code>G</code> = &Gamma; (8) &nbsp;&middot;&nbsp;
+        <code>H</code> = order 2, index 4 &nbsp;&middot;&nbsp;
+        <code>K</code> = core(H) = <code>{e}</code>
+        &nbsp;&middot;&nbsp; 4 colours, colour group of order 8
+        &rarr; <strong>non-regular</strong></p>
+    </section>
+
+    <h2>Why the symbol is not enough</h2>
+    <p>
+      Both cases give identical <code>G</code>, identical <code>K</code>, and the same number of
+      colours — therefore the same Conway symbol <code>&Gamma;&#8308;//{e}</code>:
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th></th><th><code>H = &#10216;s&#10217;</code></th>
+          <th><code>H = &#10216;X&#10217;</code></th></tr></thead>
+        <tbody>
+          <tr><td><code>G</code></td><td>&Gamma;, order 8</td><td>&Gamma;, order 8</td></tr>
+          <tr><td><code>K = core(H)</code></td><td><code>{e}</code></td><td><code>{e}</code></td></tr>
+          <tr><td>colours</td><td>4</td><td>4</td></tr>
+          <tr><td>symbol</td><td><code>&Gamma;&#8308;//{e}</code></td><td><code>&Gamma;&#8308;//{e}</code></td></tr>
+          <tr><td>realized on the cells?</td><td>yes</td><td>no</td></tr>
+          <tr><td>the colourings are</td><td colspan="2"><strong>different</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      They differ because <code>&#10216;s&#10217;</code> and <code>&#10216;X&#10217;</code> are
+      <strong>not conjugate</strong> — they lie in the two separate classes of non-normal
+      subgroups — so the &Gamma;-sets <code>&Gamma;/&#10216;s&#10217;</code> and
+      <code>&Gamma;/&#10216;X&#10217;</code> are not isomorphic. Same symbol, two colourings.
+    </p>
+    <p>
+      That is the whole reason Conway's notation carries three groups rather than two. The double
+      slash in <code>G&#8319;//K</code> is a <em>warning</em> that <code>H</code> has been
+      suppressed and cannot be reconstructed; the full form <code>G&#8319;/H/K</code> names it.
+      On an abelian ambient this never arises — every subgroup is normal, <code>H = K</code>
+      always, and a single slash suffices.
+    </p>
+    <p class="footnote">
+      Generated by <a href="https://github.com/yaroslavvb/animated-groups/blob/main/scripts/generate_torus_nonregular.py">scripts/generate_torus_nonregular.py</a>.
+      Companion to the <a href="torus-cayley.html">Cayley graph page</a> and the
+      <a href="torus-tutorial.html">torus tutorial</a>.
+    </p>
+  </main>
+</body>
+</html>
