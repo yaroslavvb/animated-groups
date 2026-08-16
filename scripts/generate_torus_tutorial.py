@@ -366,6 +366,7 @@ def build_page() -> str:
         <a href="space-group-correspondence.html">Space groups</a>
         <a href="torus-tutorial.html" aria-current="page">Torus tutorial</a>
         <a href="torus-patterns.html">Torus patterns</a>
+        <a href="torus-patterns-c4.html">With rotations</a>
         <a href="docs/orbifold_notation.html">Notation</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
       </nav>

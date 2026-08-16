@@ -267,6 +267,7 @@ NAV = """
         <a href="clockwork-coloring-correspondence.html">Clockwork</a>
         <a href="torus-tutorial.html">Torus tutorial</a>
         <a href="torus-patterns.html" aria-current="page">Torus patterns</a>
+        <a href="torus-patterns-c4.html">With rotations</a>
         <a href="docs/orbifold_notation.html">Notation</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
       </nav>
