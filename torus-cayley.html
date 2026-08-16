@@ -45,6 +45,25 @@
   .sub-card dt { font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
                  color:var(--accent); margin-top:.5rem; }
   .sub-card dd { margin:.15rem 0 0; font-size:.86rem; }
+  .cg-head { font-size:1rem; margin:1.6rem 0 .5rem; color:var(--muted);
+             text-transform:uppercase; letter-spacing:.07em; font-size:.78rem; }
+  .cg-grid { display:grid; gap:16px;
+             grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)); }
+  .cg-card { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+             padding:14px 16px 10px; }
+  .cg-card h3 { font-size:1.05rem; margin:0 0 .2rem; }
+  .cg-meta { margin:.1rem 0 .7rem; font-size:.76rem; color:var(--muted); }
+  .cg-meta span { display:inline-block; background:#eef1f4; border-radius:20px;
+                  padding:.14em .7em; margin:0 .3em .3em 0; }
+  .cg-meta .reg { background:rgba(0,158,115,.18); color:#046a38; font-weight:700; }
+  .cg-meta .nonreg { background:rgba(213,94,0,.18); color:#a03000; font-weight:700; }
+  .cg-pats { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:.7rem; }
+  .cg-pats .more { font-size:.72rem; color:var(--muted); }
+  table.ghk { font-size:.84rem; width:100%; min-width:0; table-layout:fixed; }
+  table.ghk th { width:1.6em; color:var(--accent); font-weight:700; text-transform:none;
+                 letter-spacing:0; font-size:.9rem; }
+  table.ghk td { overflow-wrap:anywhere; }
+  table.ghk td.num { width:5.4em; white-space:nowrap; }
   .table-scroll { overflow-x:auto; }
   table { border-collapse:collapse; font-size:.9rem; min-width:540px; }
   th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }
@@ -321,6 +340,102 @@
         </dl>
       </article>
     </div>
+
+    <h2>Colour groups</h2>
+    <p>
+      The subgroups above are single groups. A <em>colour group</em> records the whole triple
+      that a colouring produces:
+      <code>G</code> the symmetries permuting the colours,
+      <code>H</code> those fixing one chosen colour, and
+      <code>K</code> those fixing every colour. All three are stabilizers —
+      of the unordered partition, of one block, and of the labelled partition respectively —
+      and <code>K &sube; H &sube; G</code>. The colouring is <strong>regular</strong> when
+      <code>|G/K|</code> equals the number of colours, which happens exactly when
+      <code>H = K</code>; Conway then writes a single slash.
+    </p>
+
+    <h3 class="cg-head">Two colours &mdash; every colour group</h3>
+    <div class="cg-grid">
+      <article class="cg-card">
+        <header>
+          <h3><code>G<sup>2</sup>/K</code></h3>
+          <p class="cg-meta"><span>2 colours</span>
+            <span>|G/K| = 2</span>
+            <span class="reg">
+              regular</span>
+            <span>2 colourings</span></p>
+        </header>
+        <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0110"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1001"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg></div>
+        <table class="ghk">
+          <tbody>
+            <tr><th>G</th><td><code>{X, XY, XYs, Xs, Y, Ys, e, s}</code></td><td class="num">order 8</td></tr>
+            <tr><th>H</th><td><code>{XY, XYs, e, s}</code></td><td class="num">index 2</td></tr>
+            <tr><th>K</th><td><code>{XY, XYs, e, s}</code></td><td class="num">order 4</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="cg-card">
+        <header>
+          <h3><code>G<sup>2</sup>/K</code></h3>
+          <p class="cg-meta"><span>2 colours</span>
+            <span>|G/K| = 2</span>
+            <span class="reg">
+              regular</span>
+            <span>4 colourings</span></p>
+        </header>
+        <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0011"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0101"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1010"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1100"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg></div>
+        <table class="ghk">
+          <tbody>
+            <tr><th>G</th><td><code>{X, XY, Y, e}</code></td><td class="num">order 4</td></tr>
+            <tr><th>H</th><td><code>{Y, e}</code></td><td class="num">index 2</td></tr>
+            <tr><th>K</th><td><code>{Y, e}</code></td><td class="num">order 2</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+    <p class="footnote">
+      Both are regular, so <code>H = K</code> and a single slash suffices. The first is the
+      checkerboard, whose symmetry is all of &Gamma;; the second is the striped colouring, where
+      the diagonal flip fails to act and <code>G</code> drops to the translation subgroup. Six
+      chromatic two-colourings in total &mdash; the colour classes must have equal size, so only
+      the three 2+2 partitions qualify, each with two labellings.
+    </p>
+
+    <h3 class="cg-head">Three colours &mdash; none</h3>
+    <p>
+      There are <strong>no</strong> chromatic three-colourings: the colour group permutes the
+      colour classes transitively, so they must all have the same size, and
+      <code>3 &#8740; 4</code>. Only <code>k</code> dividing 4 is possible &mdash; one, two or
+      four colours.
+    </p>
+
+    <h3 class="cg-head">Four colours &mdash; the non-regular one</h3>
+    <div class="cg-grid">
+      <article class="cg-card">
+        <header>
+          <h3><code>G<sup>4</sup>//K</code></h3>
+          <p class="cg-meta"><span>4 colours</span>
+            <span>|G/K| = 8</span>
+            <span class="nonreg">
+              non-regular</span>
+            <span>24 colourings</span></p>
+        </header>
+        <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0123"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0132"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0213"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#009E73"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0231"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#009E73"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0312"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0321"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1023"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1032"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><span class="more">+16 more</span></div>
+        <table class="ghk">
+          <tbody>
+            <tr><th>G</th><td><code>{X, XY, XYs, Xs, Y, Ys, e, s}</code></td><td class="num">order 8</td></tr>
+            <tr><th>H</th><td><code>{e, s}</code></td><td class="num">index 4</td></tr>
+            <tr><th>K</th><td><code>{e}</code></td><td class="num">order 1</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+    <p class="footnote">
+      Here <code>|G/K| = 8</code> but there are only 4 colours, so <code>H &ne; K</code> and the
+      symbol carries a double slash. This is the rainbow colouring; the
+      <a href="torus-nonregular.html">non-regular page</a> works through why <code>H</code> has
+      to be named separately.
+    </p>
 
     <h2>Summary</h2>
     <div class="table-scroll">
