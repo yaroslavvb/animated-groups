@@ -3,6 +3,7 @@
 
   const COLORS = ["blue", "red", "green"];
   const RAY_COLORS = ["var(--blue)", "var(--red)", "var(--green)"];
+  const PAIR_OFFSET_DEGREES = 13;
   function dadLabel(base, coset) {
     if (coset === 0) return base;
     return `${base} ${coset === 1 ? "r₆" : "r₃"}`;
@@ -21,28 +22,28 @@
           power: coset,
           reflected: false,
           label: dadLabel("e", coset),
-          positionAngle: baseAngle + 8,
+          positionAngle: baseAngle + PAIR_OFFSET_DEGREES,
         },
         {
           color: COLORS[coset],
           power: coset,
           reflected: true,
           label: dadLabel("Rₓ", coset),
-          positionAngle: baseAngle - 8,
+          positionAngle: baseAngle - PAIR_OFFSET_DEGREES,
         },
         {
           color: COLORS[coset],
           power: oppositePower,
           reflected: false,
           label: dadLabel("r₂", coset),
-          positionAngle: baseAngle + 180 + 8,
+          positionAngle: baseAngle + 180 + PAIR_OFFSET_DEGREES,
         },
         {
           color: COLORS[coset],
           power: oppositePower,
           reflected: true,
           label: dadLabel("Rᵧ", coset),
-          positionAngle: baseAngle + 180 - 8,
+          positionAngle: baseAngle + 180 - PAIR_OFFSET_DEGREES,
         },
       );
     }

@@ -234,7 +234,7 @@ section > p,
 
 .rosette-stage {
   position: relative;
-  width: min(100%, 350px);
+  width: min(100%, 390px);
   aspect-ratio: 1;
   margin: 0 auto;
   isolation: isolate;
@@ -497,7 +497,7 @@ td:last-child { padding-right: 0; }
 }
 
 .catalogue-rosette .motif-glyph {
-  font-size: clamp(1.45rem, 4vw, 2.35rem);
+  font-size: clamp(1.35rem, 3.6vw, 2.1rem);
 }
 
 .example-details {
