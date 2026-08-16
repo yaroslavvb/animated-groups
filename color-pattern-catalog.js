@@ -2,6 +2,11 @@
   "use strict";
 
   const DATA_URL = "data/color-pattern-catalog.json?v=p2-spacing-v1";
+  window.COLOR_PATTERN_CATALOG_SETTINGS = Object.freeze({
+    enableGsPatternSelection: false,
+    ...(window.COLOR_PATTERN_CATALOG_SETTINGS || {}),
+  });
+  const SETTINGS = window.COLOR_PATTERN_CATALOG_SETTINGS;
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -261,8 +266,13 @@
     const palette = document.createElement("div");
     palette.className = "action-palette";
     palette.title = "Canonical colour labels; simultaneous relabelling gives the same colour group.";
-    palette.setAttribute("aria-label", "Canonical colour labels used in the permutations");
-    ["A", "B", "C"].slice(0, group.number_of_colours).forEach((label, index) => {
+    const labels = ["A", "B", "C"].slice(0, group.number_of_colours);
+    palette.setAttribute(
+      "aria-label",
+      `Permutation cycles over canonical colour labels ${labels.join(", ")}`,
+    );
+    palette.append(document.createTextNode("cycles over"));
+    labels.forEach((label, index) => {
       const swatch = textElement("span", "action-colour", label);
       swatch.style.setProperty("--swatch", PALETTES[group.number_of_colours][index]);
       palette.append(swatch);
@@ -535,19 +545,212 @@
     };
   }
 
+  function worldToScreen(point, scale) {
+    return [480 + scale * point[0], 280 - scale * point[1]];
+  }
+
+  function clippedAxis(axisPoint, axisDirection, scale) {
+    const point = worldToScreen(axisPoint, scale);
+    const direction = [axisDirection[0], -axisDirection[1]];
+    const length = Math.hypot(...direction);
+    const unit = [direction[0] / length, direction[1] / length];
+    const bounds = [[10, 950], [10, 550]];
+    let lower = -Infinity;
+    let upper = Infinity;
+    for (let dimension = 0; dimension < 2; dimension += 1) {
+      if (Math.abs(unit[dimension]) < 1e-9) {
+        if (point[dimension] < bounds[dimension][0] || point[dimension] > bounds[dimension][1]) {
+          return null;
+        }
+        continue;
+      }
+      const first = (bounds[dimension][0] - point[dimension]) / unit[dimension];
+      const second = (bounds[dimension][1] - point[dimension]) / unit[dimension];
+      lower = Math.max(lower, Math.min(first, second));
+      upper = Math.min(upper, Math.max(first, second));
+    }
+    if (lower > upper) return null;
+    return {
+      start: [point[0] + lower * unit[0], point[1] + lower * unit[1]],
+      end: [point[0] + upper * unit[0], point[1] + upper * unit[1]],
+      direction: unit,
+      normal: [-unit[1], unit[0]],
+    };
+  }
+
+  function overlayLine(container, axis, offset, className) {
+    const shift = [axis.normal[0] * offset, axis.normal[1] * offset];
+    container.append(svgElement("line", {
+      x1: axis.start[0] + shift[0],
+      y1: axis.start[1] + shift[1],
+      x2: axis.end[0] + shift[0],
+      y2: axis.end[1] + shift[1],
+      class: className,
+    }));
+  }
+
+  function addOverlayLabel(container, label, x, y, className = "generator-label") {
+    const text = svgElement("text", {
+      x: Math.max(24, Math.min(936, x)),
+      y: Math.max(26, Math.min(538, y)),
+      class: className,
+      "text-anchor": "middle",
+      "dominant-baseline": "middle",
+    });
+    text.textContent = label;
+    container.append(text);
+  }
+
+  function addAxisGenerator(overlay, geometry, action, scale, index) {
+    const visualization = geometry.visualization;
+    const axis = clippedAxis(
+      visualization.axis_point,
+      visualization.axis_direction,
+      scale,
+    );
+    if (!axis) return;
+    const marker = svgElement("g", {
+      class: `generator-marker generator-${visualization.kind}`,
+      "data-generator": geometry.generator,
+      "data-generator-kind": visualization.kind,
+    });
+    const title = svgElement("title");
+    title.textContent = `${geometry.generator} — ${action.geometry}`;
+    marker.append(title);
+
+    if (visualization.kind === "mirror") {
+      overlayLine(marker, axis, 0, "generator-axis-halo generator-mirror-halo");
+      overlayLine(marker, axis, 0, "generator-mirror-line");
+    } else {
+      for (const offset of [-3.4, 3.4]) {
+        overlayLine(marker, axis, offset, "generator-axis-halo");
+        overlayLine(marker, axis, offset, "generator-glide-line");
+      }
+    }
+
+    const fromStart = index % 2 === 0;
+    const fraction = 0.14 + (index % 3) * 0.055;
+    const weight = fromStart ? fraction : 1 - fraction;
+    const labelX = axis.start[0] + (axis.end[0] - axis.start[0]) * weight
+      + axis.normal[0] * 13;
+    const labelY = axis.start[1] + (axis.end[1] - axis.start[1]) * weight
+      + axis.normal[1] * 13;
+    addOverlayLabel(marker, geometry.generator, labelX, labelY);
+    overlay.append(marker);
+  }
+
+  function rotationArcGeometry(cx, cy, radius, angleDegrees) {
+    const startAngle = -72;
+    const delta = -angleDegrees;
+    const endAngle = startAngle + delta;
+    const radians = (value) => value * Math.PI / 180;
+    const start = [
+      cx + radius * Math.cos(radians(startAngle)),
+      cy + radius * Math.sin(radians(startAngle)),
+    ];
+    const tip = [
+      cx + radius * Math.cos(radians(endAngle)),
+      cy + radius * Math.sin(radians(endAngle)),
+    ];
+    const sweep = delta > 0 ? 1 : 0;
+    const path = `M ${start[0].toFixed(2)} ${start[1].toFixed(2)} A ${radius} ${radius} 0 ${Math.abs(delta) > 180 ? 1 : 0} ${sweep} ${tip[0].toFixed(2)} ${tip[1].toFixed(2)}`;
+    const directionSign = Math.sign(delta) || 1;
+    const tangent = [
+      directionSign * -Math.sin(radians(endAngle)),
+      directionSign * Math.cos(radians(endAngle)),
+    ];
+    const base = [tip[0] - tangent[0] * 7.5, tip[1] - tangent[1] * 7.5];
+    const normal = [-tangent[1], tangent[0]];
+    const arrow = [
+      tip,
+      [base[0] + normal[0] * 3.7, base[1] + normal[1] * 3.7],
+      [base[0] - normal[0] * 3.7, base[1] - normal[1] * 3.7],
+    ];
+    return {path, arrow};
+  }
+
+  function addRotationGenerator(overlay, geometry, action, scale) {
+    const visualization = geometry.visualization;
+    const [cx, cy] = worldToScreen(visualization.centre, scale);
+    const radius = 18;
+    const arc = rotationArcGeometry(cx, cy, radius, visualization.angle_degrees);
+    const marker = svgElement("g", {
+      class: "generator-marker generator-rotation",
+      "data-generator": geometry.generator,
+      "data-generator-kind": "rotation",
+    });
+    const title = svgElement("title");
+    title.textContent = `${geometry.generator} — ${action.geometry}; ${visualization.angle_degrees}°`;
+    marker.append(
+      title,
+      svgElement("path", {d: arc.path, class: "generator-rotation-halo"}),
+      svgElement("path", {d: arc.path, class: "generator-rotation-arc"}),
+      svgElement("polygon", {
+        points: arc.arrow.map((point) => point.map((value) => value.toFixed(2)).join(",")).join(" "),
+        class: "generator-rotation-arrow",
+      }),
+      svgElement("circle", {cx, cy, r: 4.7, class: "generator-rotation-centre"}),
+    );
+    addOverlayLabel(marker, geometry.generator, cx + radius + 10, cy - radius - 5);
+    addOverlayLabel(
+      marker,
+      `${visualization.angle_degrees}°`,
+      cx + radius + 12,
+      cy + 8,
+      "generator-degree",
+    );
+    overlay.append(marker);
+  }
+
+  function addGeneratorOverlay(svg, group, wallpaper) {
+    const actionByName = new Map(
+      group.generator_colour_actions.map((action) => [action.generator, action]),
+    );
+    const overlay = svgElement("g", {
+      class: "generator-overlay",
+      "aria-hidden": "true",
+    });
+    wallpaper.render_geometry.generators.forEach((geometry, index) => {
+      const action = actionByName.get(geometry.generator);
+      if (!action) throw new Error(`Missing Presentation row for ${group.id}:${geometry.generator}`);
+      const kind = geometry.visualization.kind;
+      if (kind === "translation") return;
+      if (kind === "rotation") addRotationGenerator(overlay, geometry, action, wallpaper.render_geometry.scale);
+      else addAxisGenerator(overlay, geometry, action, wallpaper.render_geometry.scale, index);
+    });
+    svg.append(overlay);
+  }
+
   function buildPatternSvg(pattern, group, wallpaper) {
+    const visibleGenerators = wallpaper.render_geometry.generators.filter(
+      (geometry) => geometry.visualization.kind !== "translation",
+    );
+    const actionByName = new Map(
+      group.generator_colour_actions.map((action) => [action.generator, action]),
+    );
+    const titleId = `${pattern.id}-graphic-title`;
+    const descriptionId = `${pattern.id}-graphic-description`;
     const svg = svgElement("svg", {
       viewBox: "0 0 960 560",
       role: "img",
-      "aria-label": `Schematic periodic representative for ${pattern.gs_pattern_type}`,
+      "aria-labelledby": `${titleId} ${descriptionId}`,
       preserveAspectRatio: "xMidYMid meet",
     });
+    const title = svgElement("title", {id: titleId});
+    title.textContent = `${pattern.gs_pattern_type} with geometric generators`;
+    const description = svgElement("desc", {id: descriptionId});
+    description.textContent = visibleGenerators.length
+      ? `Generator overlay: ${visibleGenerators.map((geometry) => (
+        `${geometry.generator}: ${actionByName.get(geometry.generator).geometry}`
+      )).join("; ")}. Translation generators are omitted.`
+      : "Translation generators are omitted; no generator markers are shown.";
     const background = svgElement("rect", {x: 0, y: 0, width: 960, height: 560, fill: "#f8f6ee"});
-    svg.append(background);
+    svg.append(title, description, background);
 
     const colours = PALETTES[pattern.number_of_colours];
     if (pattern.render_layout.kind === "fixed_vertical_bands") {
       addFixedVerticalBands(svg, pattern, colours);
+      addGeneratorOverlay(svg, group, wallpaper);
       return svg;
     }
     const operations = enumerateGroupActions(group, wallpaper);
@@ -573,6 +776,7 @@
       addMotif(motifs, pose.x, pose.y, pose.angle, colours[pose.colourIndex], pose.mirrored);
     });
     svg.append(motifs);
+    addGeneratorOverlay(svg, group, wallpaper);
     return svg;
   }
 
@@ -617,7 +821,9 @@
     // pattern, so keying the tab state off the index desynchronizes the
     // highlight, the tab order, and aria-selected from the visible pane.
     const selectedPatternId = state.activePatternByGroup.get(group.id);
-    const selectedPattern = state.patternById.get(selectedPatternId) || patterns[0];
+    const selectedPattern = SETTINGS.enableGsPatternSelection
+      ? state.patternById.get(selectedPatternId) || patterns[0]
+      : patterns[0];
 
     const selector = document.createElement("div");
     selector.className = "pattern-selector";
@@ -625,17 +831,25 @@
     tabs.className = "pattern-tabs";
     tabs.setAttribute("role", "tablist");
     tabs.setAttribute("aria-label", `Pattern types in ${typesetSymbol(group.chaim_notation)}`);
-    patterns.forEach((pattern) => {
+    patterns.forEach((pattern, index) => {
+      const enabled = SETTINGS.enableGsPatternSelection || index === 0;
       const active = selectedPattern ? pattern.id === selectedPattern.id : false;
       const tab = document.createElement("a");
       tab.className = "pattern-tab";
       tab.id = `tab-${pattern.id}`;
-      tab.href = `#${pattern.id}`;
       tab.dataset.patternId = pattern.id;
       tab.setAttribute("role", "tab");
-      tab.setAttribute("aria-controls", `panel-${pattern.id}`);
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
+      tab.setAttribute("aria-selected", String(active && enabled));
+      tab.tabIndex = active && enabled ? 0 : -1;
+      if (enabled) {
+        tab.href = `#${pattern.id}`;
+        tab.setAttribute("aria-controls", `panel-${pattern.id}`);
+      } else {
+        tab.classList.add("is-disabled");
+        tab.setAttribute("aria-disabled", "true");
+        tab.setAttribute("aria-label", `${pattern.gs_pattern_type}; temporarily unavailable while G&S pattern notation is under review`);
+        tab.title = "Temporarily unavailable while G&S pattern notation is under review";
+      }
       tab.textContent = typesetSymbol(pattern.gs_pattern_type);
       tabs.append(tab);
     });
@@ -652,6 +866,8 @@
     const pattern = state.patternById.get(patternId);
     if (!pattern) return false;
     const group = state.groupById.get(pattern.colour_group_id);
+    const patterns = state.patternsByGroup.get(pattern.colour_group_id) || [];
+    if (!SETTINGS.enableGsPatternSelection && patterns[0]?.id !== pattern.id) return false;
     const wallpaper = state.wallpaperById.get(pattern.wallpaper_id);
     const section = document.querySelector(`[data-wallpaper-id="${pattern.wallpaper_id}"]`);
     if (!group || !wallpaper || !section) return false;
@@ -684,7 +900,9 @@
       if (active && focus) tab.focus();
     });
     const patterns = state.patternsByGroup.get(group.id) || [];
-    if (!state.activePatternByGroup.has(group.id) && patterns.length) {
+    if (!SETTINGS.enableGsPatternSelection && patterns.length) {
+      state.activePatternByGroup.set(group.id, patterns[0].id);
+    } else if (!state.activePatternByGroup.has(group.id) && patterns.length) {
       state.activePatternByGroup.set(group.id, patterns[0].id);
     }
     const host = section.querySelector("[data-group-panel]");
@@ -703,7 +921,13 @@
     if (!id) return false;
     const pattern = state.patternById.get(id);
     if (pattern) {
-      activatePattern(id, {updateHash: false});
+      const patterns = state.patternsByGroup.get(pattern.colour_group_id) || [];
+      const availablePattern = SETTINGS.enableGsPatternSelection ? pattern : patterns[0];
+      if (!availablePattern) return false;
+      activatePattern(availablePattern.id, {updateHash: false});
+      if (availablePattern.id !== id) {
+        history.replaceState(null, "", `#${availablePattern.id}`);
+      }
       if (scroll) byId(`wallpaper-${pattern.wallpaper_id}`)?.scrollIntoView({block: "start"});
       return true;
     }
@@ -727,7 +951,9 @@
   function moveTab(current, direction, selector, dataKey, activate) {
     const container = current.closest('[role="tablist"]');
     if (!container) return;
-    const tabs = [...container.querySelectorAll(selector)].filter((tab) => !tab.hidden);
+    const tabs = [...container.querySelectorAll(selector)].filter((tab) => (
+      !tab.hidden && tab.getAttribute("aria-disabled") !== "true"
+    ));
     const index = tabs.indexOf(current);
     if (index < 0 || !tabs.length) return;
     let nextIndex = index;
@@ -776,6 +1002,7 @@
       const patternTab = event.target.closest("[data-pattern-id]");
       if (patternTab) {
         event.preventDefault();
+        if (patternTab.getAttribute("aria-disabled") === "true") return;
         activatePattern(patternTab.dataset.patternId);
         return;
       }

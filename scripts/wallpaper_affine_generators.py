@@ -13,7 +13,7 @@ declared colour homomorphism changes between colour-group tabs.
 
 from __future__ import annotations
 
-from math import acos, cos, hypot, pi, sin, sqrt
+from math import acos, atan2, cos, degrees, hypot, pi, sin, sqrt
 from typing import Any
 
 from colour_generator_actions import GENERATOR_GEOMETRY, GROUP_PRESENTATIONS
@@ -216,6 +216,74 @@ RENDER_SCALE: dict[str, float] = {
 }
 
 
+def generator_visualization(motion: Affine, tolerance: float = 1e-8) -> dict[str, Any]:
+    """Return the canonical geometric marker for one affine generator.
+
+    Rotation centres and reflection/glide axes are derived from the exact
+    affine realization used by the pattern renderer.  The browser therefore
+    does not maintain a second, hand-positioned generator diagram.
+    """
+
+    matrix, translation = motion
+    identity = (
+        abs(matrix[0][0] - 1) <= tolerance
+        and abs(matrix[0][1]) <= tolerance
+        and abs(matrix[1][0]) <= tolerance
+        and abs(matrix[1][1] - 1) <= tolerance
+    )
+    if identity:
+        return {"kind": "translation", "vector": list(translation)}
+
+    determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    if determinant > 0:
+        # A fixed point c satisfies (I-M)c=t.
+        a, b = 1 - matrix[0][0], -matrix[0][1]
+        c, d = -matrix[1][0], 1 - matrix[1][1]
+        denominator = a * d - b * c
+        if abs(denominator) <= tolerance:
+            raise ValueError("nontrivial orientation-preserving generator has no centre")
+        centre = (
+            (translation[0] * d - b * translation[1]) / denominator,
+            (a * translation[1] - translation[0] * c) / denominator,
+        )
+        angle = degrees(atan2(
+            matrix[1][0] - matrix[0][1],
+            matrix[0][0] + matrix[1][1],
+        ))
+        if angle <= 0:
+            angle += 360
+        nearest_degree = round(angle)
+        if abs(angle - nearest_degree) <= tolerance:
+            angle = nearest_degree
+        return {
+            "kind": "rotation",
+            "centre": [_clean(value) for value in centre],
+            "angle_degrees": _clean(angle),
+        }
+
+    # For a reflection matrix, the +1 eigendirection is its axis direction.
+    # If the affine translation has a component along that direction, the
+    # motion is a glide.  Its invariant axis still has normal coordinate
+    # n·x=(n·t)/2.
+    axis_angle = 0.5 * atan2(
+        matrix[0][1] + matrix[1][0],
+        matrix[0][0] - matrix[1][1],
+    )
+    direction = (cos(axis_angle), sin(axis_angle))
+    normal = (-direction[1], direction[0])
+    normal_offset = (
+        normal[0] * translation[0] + normal[1] * translation[1]
+    ) / 2
+    axis_point = (normal[0] * normal_offset, normal[1] * normal_offset)
+    glide = direction[0] * translation[0] + direction[1] * translation[1]
+    return {
+        "kind": "glide" if abs(glide) > tolerance else "mirror",
+        "axis_point": [_clean(value) for value in axis_point],
+        "axis_direction": [_clean(value) for value in direction],
+        "glide_distance": _clean(glide),
+    }
+
+
 def affine_generators_for(parent: str) -> dict[str, Any]:
     """Return a JSON-serializable, ordered affine rendering specification."""
 
@@ -230,6 +298,7 @@ def affine_generators_for(parent: str) -> dict[str, Any]:
                 "generator": name,
                 "matrix": [list(row) for row in generators[name][0]],
                 "translation": list(generators[name][1]),
+                "visualization": generator_visualization(generators[name]),
             }
             for name in expected_names
         ],
