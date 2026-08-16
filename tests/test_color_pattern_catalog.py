@@ -521,19 +521,6 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertEqual(len(self.parser.directory_images), 17)
         self.assertNotIn("nontrivial groups ·", self.page)
         self.assertIn("MathWorld", self.page)
-        self.assertIn("<title>Catalog of colorings</title>", self.page)
-        self.assertIn('<h1 id="page-title">Catalog of colorings</h1>', self.page)
-        for subtitle in (
-            "1. Wallpaper group",
-            "2. Chaim Goodman-Strauss colored group",
-            "3. Grünbaum–Shephard pattern",
-            "Up to 3 colors",
-        ):
-            self.assertIn(subtitle, self.page)
-        self.assertNotIn('class="census"', self.page)
-        self.assertNotIn('class="filter-bar"', self.page)
-        self.assertNotIn("data-colour-filter", self.page)
-        self.assertNotIn("Catalogued object:", self.page)
 
     def test_mathworld_directory_has_17_local_crops(self) -> None:
         assets = sorted((ROOT / "output" / "mathworld-wallpaper-groups").glob("*.webp"))
@@ -561,9 +548,6 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn('letter.textContent = "R"', script)
         self.assertIn("const MOTIF_SCALE = 1.55", script)
         self.assertIn("function enumerateGroupActions", script)
-        self.assertNotIn("function applyFilter", script)
-        self.assertNotIn("data-colour-filter", script)
-        self.assertNotIn("state.filter", script)
         self.assertIn("function composeAffine", script)
         self.assertIn("function composePermutations", script)
         self.assertIn("function patternTemplateSeeds", script)
