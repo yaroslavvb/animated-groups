@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Periodic colour-pattern catalog",
+    "title": "Catalog of colorings",
     "scope": "perfect periodic colour-pattern representatives with one, two, or three colours",
     "warning": "The finite classification is of colour-pattern types; literal motif geometries have infinitely many realizations.",
     "counts": {
