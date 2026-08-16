@@ -456,6 +456,7 @@ def build_patterns(groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
 FIXED_VERTICAL_BAND_COPIES = {
     "PP7": 2,
     "PP8": 1,
+    "PP7[2]_1": 2,
     "PP7[2]_2": 2,
     "PP8[2]_2": 1,
     "PP7[3]": 2,
@@ -504,43 +505,43 @@ def assign_render_layouts(
         # Source-specific PP7/PP8 merge layouts form their own comparison
         # pair.  Generic orbit representatives use the first remaining
         # pattern as their shared parent-family reference.
-        reference_pattern = next(
+        generic_patterns = [
             pattern for pattern in family
             if pattern["gs_pattern_type"] not in FIXED_VERTICAL_BAND_COPIES
-        )
-        reference_group = group_by_id[reference_pattern["colour_group_id"]]
-        reference_probe = {**reference_pattern, "render_layout": candidates[0]}
-        reference_scene = colour_blind_fingerprint(
-            reference_probe,
-            reference_group,
-            operations[reference_group["id"]],
-        )
+        ]
         ranked_candidates: list[tuple[float, int, dict[str, Any]]] = []
-        for candidate_index, candidate in enumerate(candidates):
-            candidate_probe = {
-                **reference_pattern,
-                "render_layout": candidate,
-            }
-            candidate_scene = colour_blind_fingerprint(
-                candidate_probe,
+        reference_pattern = generic_patterns[0] if generic_patterns else None
+        if reference_pattern is not None:
+            reference_group = group_by_id[reference_pattern["colour_group_id"]]
+            reference_probe = {**reference_pattern, "render_layout": candidates[0]}
+            reference_scene = colour_blind_fingerprint(
+                reference_probe,
                 reference_group,
                 operations[reference_group["id"]],
             )
-            ranked_candidates.append((
-                colour_blind_discrepancy(reference_scene, candidate_scene),
-                candidate_index,
-                candidate,
-            ))
-        ranked_candidates.sort(key=lambda item: (item[0], item[1]))
+            for candidate_index, candidate in enumerate(candidates):
+                candidate_probe = {
+                    **reference_pattern,
+                    "render_layout": candidate,
+                }
+                candidate_scene = colour_blind_fingerprint(
+                    candidate_probe,
+                    reference_group,
+                    operations[reference_group["id"]],
+                )
+                ranked_candidates.append((
+                    colour_blind_discrepancy(reference_scene, candidate_scene),
+                    candidate_index,
+                    candidate,
+                ))
+            ranked_candidates.sort(key=lambda item: (item[0], item[1]))
 
         for pattern in family:
             group = group_by_id[pattern["colour_group_id"]]
             if pattern["gs_pattern_type"] in FIXED_VERTICAL_BAND_COPIES:
                 colours = pattern["number_of_colours"]
-                primitive_symbol = (
-                    "PP7"
-                    if colours == 1
-                    else f"PP7[{colours}]" + ("_2" if colours == 2 else "")
+                primitive_symbol = pattern["gs_pattern_type"].replace(
+                    "PP8", "PP7", 1
                 )
                 reference = next(
                     item for item in family
@@ -556,6 +557,11 @@ def assign_render_layouts(
                     "pair_offset": [14, 10],
                     "motifs_per_band": FIXED_VERTICAL_BAND_COPIES[pattern["gs_pattern_type"]],
                     "colours": colours,
+                    "colour_rule": (
+                        "within_pair"
+                        if pattern["gs_pattern_type"] == "PP7[2]_1"
+                        else "by_band"
+                    ),
                     "reference_pattern_id": reference["id"],
                     "source_construction": (
                         "paired asymmetric motifs"
@@ -616,6 +622,7 @@ def assign_render_layouts(
                 break
             if selected is None:
                 raise ValueError(f"no collision-free render layout for {pattern['id']}")
+            assert reference_pattern is not None
             discrepancy, candidate_index, candidate, fingerprint = selected
             pattern["render_layout"] = {
                 **candidate,
@@ -729,6 +736,14 @@ def validate_payload(payload: dict[str, Any]) -> None:
         layout = pattern.get("render_layout") or {}
         if layout.get("kind") not in {"orbit", "fixed_vertical_bands"}:
             raise ValueError(f"missing render layout: {pattern['id']}")
+        if layout.get("kind") == "fixed_vertical_bands":
+            if layout.get("colour_rule") not in {"by_band", "within_pair"}:
+                raise ValueError(f"bad fixed-band colour rule: {pattern['id']}")
+            if (
+                layout.get("colour_rule") == "within_pair"
+                and layout.get("motifs_per_band") != 2
+            ):
+                raise ValueError(f"within-pair rule needs motif pairs: {pattern['id']}")
         discrepancy = layout.get("colour_blind_discrepancy")
         if not isinstance(discrepancy, (int, float)) or not 0 <= discrepancy <= 1:
             raise ValueError(f"bad colour-blind discrepancy: {pattern['id']}")
@@ -964,7 +979,7 @@ def build_html(payload: dict[str, Any]) -> str:
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <link rel="stylesheet" href="color-pattern-catalog.css?v=compact-catalog-v1">
-  <script src="color-pattern-catalog.js?v=p6m-spacing-v1" defer></script>
+  <script src="color-pattern-catalog.js?v=p2-spacing-v1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

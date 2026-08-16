@@ -417,19 +417,26 @@ def _fixed_vertical_band_scene(
     poses = []
     for row in range(rows):
         for column in range(columns):
-            band_colour = column % colours if include_colours else 0
             offsets = (
                 ((-offset_x, -offset_y, 0), (offset_x, offset_y, 180))
                 if motifs_per_band == 2 else ((0, 0, 0),)
             )
             for motif_index, (dx, dy, angle) in enumerate(offsets):
+                if include_colours:
+                    colour = (
+                        motif_index % colours
+                        if layout.get("colour_rule") == "within_pair"
+                        else column % colours
+                    )
+                else:
+                    colour = 0
                 poses.append((
                     round((origin_x + column * spacing_x + dx) * 1_000),
                     round((origin_y + row * spacing_y + dy) * 1_000),
                     round(cos(angle * pi / 180) * 1_000_000),
                     round(-sin(angle * pi / 180) * 1_000_000),
                     0,
-                    band_colour * 10 + motif_index,
+                    colour * 10 + motif_index,
                 ))
     return tuple(poses)
 

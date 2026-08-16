@@ -318,23 +318,31 @@ class ColorPatternCatalogTests(unittest.TestCase):
             for pattern in self.payload["pattern_types"]
             if pattern["wallpaper_id"] == "p2"
         }
+        pp7_exchange = patterns["PP7[2]_1"]
         pp7 = patterns["PP7[2]_2"]
         pp8 = patterns["PP8[2]_2"]
         mono_pp7 = patterns["PP7"]
         mono_pp8 = patterns["PP8"]
-        for pattern in (mono_pp7, mono_pp8, pp7, pp8):
+        for pattern in (mono_pp7, mono_pp8, pp7_exchange, pp7, pp8):
             layout = pattern["render_layout"]
             self.assertEqual(layout["kind"], "fixed_vertical_bands")
             self.assertEqual(layout["band_axis"], "vertical")
             self.assertEqual(layout["origin"], [60, 55])
             self.assertEqual(layout["spacing"], [70, 90])
         self.assertEqual(pp7["render_layout"]["motifs_per_band"], 2)
+        self.assertEqual(pp7_exchange["render_layout"]["motifs_per_band"], 2)
         self.assertEqual(pp8["render_layout"]["motifs_per_band"], 1)
         self.assertEqual(mono_pp7["render_layout"]["motifs_per_band"], 2)
         self.assertEqual(mono_pp8["render_layout"]["motifs_per_band"], 1)
         self.assertEqual(
             pp8["render_layout"]["reference_pattern_id"], pp7["id"]
         )
+        self.assertEqual(
+            pp7_exchange["render_layout"]["reference_pattern_id"],
+            pp7_exchange["id"],
+        )
+        self.assertEqual(pp7_exchange["render_layout"]["colour_rule"], "within_pair")
+        self.assertEqual(pp7["render_layout"]["colour_rule"], "by_band")
         self.assertGreater(pp8["render_layout"]["colour_blind_discrepancy"], 0)
         self.assertIn("half-turn symmetric", pp8["render_layout"]["schematic_constraint"])
 
@@ -356,12 +364,35 @@ class ColorPatternCatalogTests(unittest.TestCase):
             ["BC", "BC", "AB", "AB"],
         )
         pp7_scene = scene_fingerprint(pp7, group_by_id[pp7["colour_group_id"]])
+        pp7_exchange_scene = scene_fingerprint(
+            pp7_exchange,
+            group_by_id[pp7_exchange["colour_group_id"]],
+        )
         pp8_scene = scene_fingerprint(pp8, group_by_id[pp8["colour_group_id"]])
+        self.assertEqual(
+            colour_blind_fingerprint(
+                pp7_exchange,
+                group_by_id[pp7_exchange["colour_group_id"]],
+            ),
+            colour_blind_fingerprint(
+                pp7,
+                group_by_id[pp7["colour_group_id"]],
+            ),
+        )
+        self.assertEqual(len(pp7_exchange_scene), len(pp7_scene))
         self.assertEqual(len(pp7_scene), 2 * len(pp8_scene))
-        # Sorted left-to-right in one row: PP7 has AA|BB paired bands,
-        # whereas PP8 has A|B single bands.
+        # Sorted left-to-right in one row: the first PP7 colouring alternates
+        # inside every pair, the second has AA|BB paired bands, and PP8 has
+        # A|B single bands on the same band centres.
+        pp7_exchange_row = sorted(
+            pose for pose in pp7_exchange_scene if pose[1] < 100_000
+        )
         pp7_row = sorted(pose for pose in pp7_scene if pose[1] < 100_000)
         pp8_row = sorted(pose for pose in pp8_scene if pose[1] < 100_000)
+        self.assertEqual(
+            [pose[-1] // 10 for pose in pp7_exchange_row[:4]],
+            [0, 1, 0, 1],
+        )
         self.assertEqual([pose[-1] // 10 for pose in pp7_row[:4]], [0, 0, 1, 1])
         self.assertEqual([pose[-1] // 10 for pose in pp8_row[:4]], [0, 1, 0, 1])
 

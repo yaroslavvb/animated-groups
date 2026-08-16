@@ -7772,6 +7772,7 @@
         ],
         "motifs_per_band": 2,
         "colours": 1,
+        "colour_rule": "by_band",
         "reference_pattern_id": "cp-1-002-pp7",
         "source_construction": "paired asymmetric motifs",
         "colour_blind_discrepancy": 0.0
@@ -7821,6 +7822,7 @@
         ],
         "motifs_per_band": 1,
         "colours": 1,
+        "colour_rule": "by_band",
         "reference_pattern_id": "cp-1-002-pp7",
         "source_construction": "merged half-turn-symmetric motif",
         "schematic_constraint": "The source motif is half-turn symmetric; one asymmetric R-diamond at the shared centre is the nearest fixed-grid schematic.",
@@ -10366,20 +10368,28 @@
         "printed_page": 409
       },
       "render_layout": {
-        "kind": "orbit",
-        "seeds": [
-          {
-            "point": [
-              0.173,
-              0.137
-            ],
-            "angle": 17.0,
-            "colour": 0
-          }
+        "kind": "fixed_vertical_bands",
+        "band_axis": "vertical",
+        "columns": 13,
+        "rows": 6,
+        "origin": [
+          60,
+          55
         ],
+        "spacing": [
+          70,
+          90
+        ],
+        "pair_offset": [
+          14,
+          10
+        ],
+        "motifs_per_band": 2,
+        "colours": 2,
+        "colour_rule": "within_pair",
         "reference_pattern_id": "cp-2-012-pp72-1",
-        "colour_blind_discrepancy": 0.0,
-        "candidate_index": 0
+        "source_construction": "paired asymmetric motifs",
+        "colour_blind_discrepancy": 0.0
       },
       "book_figure_slot": 8,
       "book_excerpt": {
@@ -10429,6 +10439,7 @@
         ],
         "motifs_per_band": 2,
         "colours": 2,
+        "colour_rule": "by_band",
         "reference_pattern_id": "cp-2-013-pp72-2",
         "source_construction": "paired asymmetric motifs",
         "colour_blind_discrepancy": 0.0
@@ -12146,6 +12157,7 @@
         ],
         "motifs_per_band": 1,
         "colours": 2,
+        "colour_rule": "by_band",
         "reference_pattern_id": "cp-2-013-pp72-2",
         "source_construction": "merged half-turn-symmetric motif",
         "schematic_constraint": "The source motif is half-turn symmetric; one asymmetric R-diamond at the shared centre is the nearest fixed-grid schematic.",
@@ -14179,6 +14191,7 @@
         ],
         "motifs_per_band": 2,
         "colours": 3,
+        "colour_rule": "by_band",
         "reference_pattern_id": "cp-3-008-pp73",
         "source_construction": "paired asymmetric motifs",
         "colour_blind_discrepancy": 0.0
@@ -15087,6 +15100,7 @@
         ],
         "motifs_per_band": 1,
         "colours": 3,
+        "colour_rule": "by_band",
         "reference_pattern_id": "cp-3-008-pp73",
         "source_construction": "merged half-turn-symmetric motif",
         "schematic_constraint": "The source motif is half-turn symmetric; one asymmetric R-diamond at the shared centre is the nearest fixed-grid schematic.",

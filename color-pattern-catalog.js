@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=p6m-spacing-v1";
+  const DATA_URL = "data/color-pattern-catalog.json?v=p2-spacing-v1";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -495,16 +495,19 @@
     const motifs = svgElement("g");
     for (let row = 0; row < layout.rows; row += 1) {
       for (let column = 0; column < layout.columns; column += 1) {
-        const colour = colours[column % colours.length];
         const offsets = layout.motifs_per_band === 2
           ? [[-offsetX, -offsetY, 0], [offsetX, offsetY, 180]]
           : [[0, 0, 0]];
-        offsets.forEach(([dx, dy, angle]) => addMotif(
+        offsets.forEach(([dx, dy, angle], motifIndex) => addMotif(
           motifs,
           originX + column * spacingX + dx,
           originY + row * spacingY + dy,
           angle,
-          colour,
+          colours[
+            layout.colour_rule === "within_pair"
+              ? motifIndex % colours.length
+              : column % colours.length
+          ],
           false,
         ));
       }
