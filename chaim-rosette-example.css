@@ -281,7 +281,7 @@ section > p,
 .motif-glyph {
   display: block;
   font-family: Arial Black, Arial, Helvetica, sans-serif;
-  font-size: clamp(1.6rem, 4.8vw, 2.8rem);
+  font-size: clamp(1.35rem, 3.6vw, 2.2rem);
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: -0.1em;
@@ -395,6 +395,10 @@ td:last-child { padding-right: 0; }
 
 .rosette-figure.small .rosette-stage { width: min(100%, 290px); }
 
+.rosette-figure.small .motif-glyph {
+  font-size: clamp(1.25rem, 3.2vw, 1.85rem);
+}
+
 .kernel-ray,
 .stabilizer-axis {
   position: absolute;
@@ -497,7 +501,7 @@ td:last-child { padding-right: 0; }
 }
 
 .catalogue-rosette .motif-glyph {
-  font-size: clamp(1.35rem, 3.6vw, 2.1rem);
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
 }
 
 .example-details {

@@ -3,7 +3,7 @@
 
   const COLORS = ["blue", "red", "green"];
   const RAY_COLORS = ["var(--blue)", "var(--red)", "var(--green)"];
-  const PAIR_OFFSET_DEGREES = 13;
+  const PAIR_OFFSET_DEGREES = 15;
   function dadLabel(base, coset) {
     if (coset === 0) return base;
     return `${base} ${coset === 1 ? "r₆" : "r₃"}`;
