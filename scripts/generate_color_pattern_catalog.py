@@ -494,13 +494,13 @@ def assign_render_layouts(
         )
         for group in groups
     }
-    candidates = candidate_orbit_layouts()
     used_scenes: set[tuple[tuple[int, ...], ...]] = set()
     by_parent: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for pattern in patterns:
         by_parent[pattern["wallpaper_id"]].append(pattern)
 
     for parent, family in by_parent.items():
+        candidates = candidate_orbit_layouts(parent)
         # Source-specific PP7/PP8 merge layouts form their own comparison
         # pair.  Generic orbit representatives use the first remaining
         # pattern as their shared parent-family reference.
@@ -964,7 +964,7 @@ def build_html(payload: dict[str, Any]) -> str:
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <link rel="stylesheet" href="color-pattern-catalog.css?v=compact-catalog-v1">
-  <script src="color-pattern-catalog.js?v=compact-catalog-v1" defer></script>
+  <script src="color-pattern-catalog.js?v=p6m-spacing-v1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

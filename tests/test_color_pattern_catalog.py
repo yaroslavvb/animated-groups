@@ -243,10 +243,14 @@ class ColorPatternCatalogTests(unittest.TestCase):
             if pattern["render_layout"]["kind"] == "orbit"
             for seed in pattern["render_layout"]["seeds"]
         }
-        # All generic representatives retain the same motif centres.  The
-        # optimizer resolves the remaining collisions by the smallest needed
-        # orientation change, so switching tabs does not move the grid.
-        self.assertEqual(orbit_points, {(0.173, 0.137)})
+        # Generic representatives retain one centre grid per wallpaper
+        # family.  *632 uses the incenter of its mirror triangle to keep the
+        # deliberately large R-diamonds apart; every other family keeps the
+        # common seed.  The optimizer changes orientation, not position.
+        self.assertEqual(
+            orbit_points,
+            {(0.173, 0.137), (0.394338, 0.105662)},
+        )
         zero_discrepancy = 0
         for pattern in self.payload["pattern_types"]:
             layout = pattern["render_layout"]
@@ -261,10 +265,52 @@ class ColorPatternCatalogTests(unittest.TestCase):
             )
             if measured == 0:
                 zero_discrepancy += 1
-        # Candidate zero is shared by the 86 colour groups.  It gives every
-        # group's first representative an identical colour-blind geometry;
+        # Candidate zero is shared within each wallpaper family.  It gives
+        # every group's first representative the family reference geometry;
         # only later same-group pattern types need the closest alternative.
         self.assertEqual(zero_discrepancy, 86)
+
+    def test_p6m_motifs_have_clearance_and_keep_one_grid(self) -> None:
+        group_by_id = {
+            group["id"]: group for group in self.payload["colour_groups"]
+        }
+        patterns = [
+            pattern for pattern in self.payload["pattern_types"]
+            if pattern["wallpaper_id"] == "p6m"
+            and pattern["render_layout"]["kind"] == "orbit"
+        ]
+        self.assertTrue(patterns)
+        self.assertEqual(
+            {
+                tuple(seed["point"])
+                for pattern in patterns
+                for seed in pattern["render_layout"]["seeds"]
+            },
+            {(0.394338, 0.105662)},
+        )
+
+        # The rendered diamond has circumradius 13 * 1.55.  Distinct visible
+        # centres must be farther apart than two circumradii, independent of
+        # motif orientation.
+        required_clearance = 2 * 13 * 1.55
+        for pattern in patterns:
+            group = group_by_id[pattern["colour_group_id"]]
+            scene = colour_blind_fingerprint(
+                pattern,
+                group,
+                enumerate_coloured_actions(
+                    group["wallpaper_id"], group["generator_colour_actions"]
+                ),
+            )
+            centres = sorted({
+                (pose[0] / 1_000, pose[1] / 1_000) for pose in scene
+            })
+            minimum = min(
+                ((ax - bx) ** 2 + (ay - by) ** 2) ** 0.5
+                for index, (ax, ay) in enumerate(centres)
+                for bx, by in centres[index + 1:]
+            )
+            self.assertGreater(minimum, required_clearance, pattern["id"])
 
     def test_p2_pp7_pp8_follow_the_source_merge_layout(self) -> None:
         patterns = {

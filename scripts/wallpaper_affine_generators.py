@@ -317,27 +317,45 @@ def enumerate_coloured_actions(
 
 
 CANONICAL_PATTERN_SEED = ((0.173, 0.137), 17.0, 0)
+# The global seed lies too close to the 30-degree mirror in the *632
+# fundamental triangle: its reflected centres are only 13.8 px apart at the
+# catalog scale, so the deliberately large R-diamonds overlap.  The incenter
+# is generic and maximizes the distance from all three mirrors.
+P6M_PATTERN_SEED = ((0.394338, 0.105662), 17.0, 0)
 
 
-def candidate_orbit_layouts() -> tuple[dict[str, Any], ...]:
+def candidate_orbit_layouts(parent: str | None = None) -> tuple[dict[str, Any], ...]:
     """Nearby generic-orbit candidates for measured layout optimization.
 
-    Every wallpaper family starts with exactly the same normalized seed.  A
-    later candidate is used only when reusing that seed would make two full
-    coloured scenes identical.  The catalog generator measures and ranks the
+    Wallpaper families share the common normalized seed except *632, whose
+    mirror-triangle incenter prevents the large motifs from overlapping.  A
+    later candidate is used only when reusing the family seed would make two
+    full coloured scenes identical.  The catalog generator measures and ranks
     candidates; angle-only alternatives preserve every motif centre and win
     whenever their measured discrepancy is minimal.
     """
 
-    (point, angle, colour) = CANONICAL_PATTERN_SEED
-    angle_offsets = (0, 6, -6, 12, -12, 20, -20, 30, -30)
-    point_offsets = (
-        (0.0, 0.0),
-        (0.018, 0.0), (-0.018, 0.0),
-        (0.0, 0.018), (0.0, -0.018),
-        (0.018, 0.018), (-0.018, 0.018),
-        (0.018, -0.018), (-0.018, -0.018),
-    )
+    if parent == "p6m":
+        (point, angle, colour) = P6M_PATTERN_SEED
+        # Keep every *632 representative on the same maximally separated
+        # centre grid.  Orientation-only alternatives are enough to separate
+        # repeated pattern types without sacrificing the mirror clearance.
+        angle_offsets = (0,) + tuple(
+            signed
+            for step in range(6, 180, 6)
+            for signed in (step, -step)
+        )
+        point_offsets = ((0.0, 0.0),)
+    else:
+        (point, angle, colour) = CANONICAL_PATTERN_SEED
+        angle_offsets = (0, 6, -6, 12, -12, 20, -20, 30, -30)
+        point_offsets = (
+            (0.0, 0.0),
+            (0.018, 0.0), (-0.018, 0.0),
+            (0.0, 0.018), (0.0, -0.018),
+            (0.018, 0.018), (-0.018, 0.018),
+            (0.018, -0.018), (-0.018, -0.018),
+        )
     result: list[dict[str, Any]] = []
     for dx, dy in point_offsets:
         for offset in angle_offsets:

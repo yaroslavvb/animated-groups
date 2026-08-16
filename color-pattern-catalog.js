@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=compact-catalog-v1";
+  const DATA_URL = "data/color-pattern-catalog.json?v=p6m-spacing-v1";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
