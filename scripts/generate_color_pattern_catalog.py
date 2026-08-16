@@ -454,11 +454,20 @@ def build_patterns(groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 FIXED_VERTICAL_BAND_COPIES = {
+    "PP7": 2,
+    "PP8": 1,
     "PP7[2]_2": 2,
     "PP8[2]_2": 1,
     "PP7[3]": 2,
     "PP8[3]": 1,
 }
+
+MATHWORLD_DIRECTORY_ORDER = (
+    "p1", "pg", "pgg", "pm", "cm",
+    "cmm", "pmg", "pmm", "p2", "p4",
+    "p4m", "p4g", "p3", "p3m1", "p31m",
+    "p6", "p6m",
+)
 
 
 def assign_render_layouts(
@@ -492,7 +501,13 @@ def assign_render_layouts(
         by_parent[pattern["wallpaper_id"]].append(pattern)
 
     for parent, family in by_parent.items():
-        reference_pattern = family[0]
+        # Source-specific PP7/PP8 merge layouts form their own comparison
+        # pair.  Generic orbit representatives use the first remaining
+        # pattern as their shared parent-family reference.
+        reference_pattern = next(
+            pattern for pattern in family
+            if pattern["gs_pattern_type"] not in FIXED_VERTICAL_BAND_COPIES
+        )
         reference_group = group_by_id[reference_pattern["colour_group_id"]]
         reference_probe = {**reference_pattern, "render_layout": candidates[0]}
         reference_scene = colour_blind_fingerprint(
@@ -522,7 +537,11 @@ def assign_render_layouts(
             group = group_by_id[pattern["colour_group_id"]]
             if pattern["gs_pattern_type"] in FIXED_VERTICAL_BAND_COPIES:
                 colours = pattern["number_of_colours"]
-                primitive_symbol = f"PP7[{colours}]" + ("_2" if colours == 2 else "")
+                primitive_symbol = (
+                    "PP7"
+                    if colours == 1
+                    else f"PP7[{colours}]" + ("_2" if colours == 2 else "")
+                )
                 reference = next(
                     item for item in family
                     if item["gs_pattern_type"] == primitive_symbol
@@ -779,6 +798,14 @@ def build_payload() -> dict[str, Any]:
                     "role": "official errata consulted for Table 12.1",
                     "url": "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html",
                 },
+                {
+                    "work": "Wallpaper Groups",
+                    "author": "Eric W. Weisstein",
+                    "publisher": "Wolfram MathWorld",
+                    "role": "wallpaper-family directory thumbnails",
+                    "image_credit": "Patterns created with Artlandia SymmetryWorks",
+                    "url": "https://mathworld.wolfram.com/WallpaperGroups.html",
+                },
             ],
         },
         "wallpaper_groups": [
@@ -888,23 +915,29 @@ def group_tab_html(group: dict[str, Any], *, selected: bool) -> str:
 
 def build_html(payload: dict[str, Any]) -> str:
     groups_by_parent: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    pattern_counts_by_group = Counter(p["colour_group_id"] for p in payload["pattern_types"])
     for group in payload["colour_groups"]:
         groups_by_parent[group["wallpaper_id"]].append(group)
     for entries in groups_by_parent.values():
         entries.sort(key=lambda g: (g["number_of_colours"] == 1, g["number_of_colours"], g["index_within_parent"]))
 
-    directory_rows: list[str] = []
+    wallpaper_by_id = {
+        wallpaper["id"]: wallpaper for wallpaper in payload["wallpaper_groups"]
+    }
+    directory_rows = []
+    for wallpaper_id in MATHWORLD_DIRECTORY_ORDER:
+        wallpaper = wallpaper_by_id[wallpaper_id]
+        directory_rows.append(
+            f'<a class="directory-family" href="#wallpaper-{escape(wallpaper["id"])}" '
+            f'data-directory-wallpaper-id="{escape(wallpaper["id"])}" '
+            f'aria-label="Jump to wallpaper group {escape(typeset_symbol(wallpaper["orbifold"]))}">'
+            f'<strong>{escape(typeset_symbol(wallpaper["orbifold"]))}</strong>'
+            f'<img src="output/mathworld-wallpaper-groups/{escape(wallpaper["hm"])}.webp" '
+            f'width="320" height="240" alt="" decoding="async"></a>'
+        )
+
     family_sections: list[str] = []
     for wallpaper in payload["wallpaper_groups"]:
         entries = groups_by_parent[wallpaper["id"]]
-        nontrivial_groups = [g for g in entries if g["number_of_colours"] > 1]
-        patterns_here = sum(pattern_counts_by_group[g["id"]] for g in entries if g["number_of_colours"] > 1)
-        directory_rows.append(
-            f'<a class="directory-family" href="#wallpaper-{escape(wallpaper["id"])}" data-directory-wallpaper-id="{escape(wallpaper["id"])}">'
-            f'<strong>{escape(typeset_symbol(wallpaper["orbifold"]))}</strong>'
-            f'<span>{len(nontrivial_groups)} nontrivial groups · {patterns_here} coloured types</span></a>'
-        )
         tabs = "\n".join(
             group_tab_html(group, selected=index == 0)
             for index, group in enumerate(entries)
@@ -930,8 +963,8 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Periodic colour-pattern catalog</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=pg-short-row-fix">
-  <script src="color-pattern-catalog.js?v=layout-discrepancy-v3" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=mathworld-directory-v1">
+  <script src="color-pattern-catalog.js?v=one-colour-source-v1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>
@@ -971,6 +1004,7 @@ def build_html(payload: dict[str, Any]) -> str:
       <nav class="directory-grid" aria-label="Wallpaper group sections">
         {''.join(directory_rows)}
       </nav>
+      <p class="directory-credit">Pattern thumbnails: Eric W. Weisstein, <a href="https://mathworld.wolfram.com/WallpaperGroups.html">“Wallpaper Groups,” MathWorld</a>; created with Artlandia SymmetryWorks. © Wolfram Research. Labels use Conway orbifold notation.</p>
     </section>
 
     <div class="pattern-atlas" id="pattern-atlas">

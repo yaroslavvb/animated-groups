@@ -61,6 +61,14 @@
         "work": "The Symmetries of Things: Errors",
         "role": "official errata consulted for Table 12.1",
         "url": "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html"
+      },
+      {
+        "work": "Wallpaper Groups",
+        "author": "Eric W. Weisstein",
+        "publisher": "Wolfram MathWorld",
+        "role": "wallpaper-family directory thumbnails",
+        "image_credit": "Patterns created with Artlandia SymmetryWorks",
+        "url": "https://mathworld.wolfram.com/WallpaperGroups.html"
       }
     ]
   },
@@ -7722,11 +7730,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-001-pp12.webp",
-        "title": "Pattern type PP1",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 408; the outlines mark the printed colour-group symbol and pattern-type label PP1[2]. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP1[2] is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP1[2] outlined.",
+        "title": "Coloured occurrence PP1[2] (underlying PP1)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 408; the outlines mark the printed colour-group symbol and pattern-type label PP1[2]. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP1[2] has underlying pattern type PP1.",
+        "alt": "Annotated Chapter 8 occurrence PP1[2], whose underlying one-colour pattern type is PP1.",
         "printed_page": 408,
-        "source_symbol": "PP1[2]"
+        "catalog_symbol": "PP1",
+        "source_symbol": "PP1[2]",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -7743,29 +7754,39 @@
         "chapter": 5
       },
       "render_layout": {
-        "kind": "orbit",
-        "seeds": [
-          {
-            "point": [
-              0.173,
-              0.137
-            ],
-            "angle": 17.0,
-            "colour": 0
-          }
+        "kind": "fixed_vertical_bands",
+        "band_axis": "vertical",
+        "columns": 13,
+        "rows": 6,
+        "origin": [
+          60,
+          55
         ],
+        "spacing": [
+          70,
+          90
+        ],
+        "pair_offset": [
+          14,
+          10
+        ],
+        "motifs_per_band": 2,
+        "colours": 1,
         "reference_pattern_id": "cp-1-002-pp7",
-        "colour_blind_discrepancy": 0.0,
-        "candidate_index": 0
+        "source_construction": "paired asymmetric motifs",
+        "colour_blind_discrepancy": 0.0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-012-pp72-1.webp",
-        "title": "Pattern type PP7",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP7[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP7[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP7[2]_1 outlined.",
+        "title": "Coloured occurrence PP7[2]_1 (underlying PP7)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP7[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP7[2]_1 has underlying pattern type PP7.",
+        "alt": "Annotated Chapter 8 occurrence PP7[2]_1, whose underlying one-colour pattern type is PP7.",
         "printed_page": 409,
-        "source_symbol": "PP7[2]_1"
+        "catalog_symbol": "PP7",
+        "source_symbol": "PP7[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -7782,29 +7803,40 @@
         "chapter": 5
       },
       "render_layout": {
-        "kind": "orbit",
-        "seeds": [
-          {
-            "point": [
-              0.173,
-              0.137
-            ],
-            "angle": 23.0,
-            "colour": 0
-          }
+        "kind": "fixed_vertical_bands",
+        "band_axis": "vertical",
+        "columns": 13,
+        "rows": 6,
+        "origin": [
+          60,
+          55
         ],
+        "spacing": [
+          70,
+          90
+        ],
+        "pair_offset": [
+          14,
+          10
+        ],
+        "motifs_per_band": 1,
+        "colours": 1,
         "reference_pattern_id": "cp-1-002-pp7",
-        "colour_blind_discrepancy": 0.008653,
-        "candidate_index": 1
+        "source_construction": "merged half-turn-symmetric motif",
+        "schematic_constraint": "The source motif is half-turn symmetric; one asymmetric R-diamond at the shared centre is the nearest fixed-grid schematic.",
+        "colour_blind_discrepancy": 0.400891
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-051-pp82-2.webp",
-        "title": "Pattern type PP8",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP8[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP8[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP8[2]_2 outlined.",
+        "title": "Coloured occurrence PP8[2]_2 (underlying PP8)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP8[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP8[2]_2 has underlying pattern type PP8.",
+        "alt": "Annotated Chapter 8 occurrence PP8[2]_2, whose underlying one-colour pattern type is PP8.",
         "printed_page": 426,
-        "source_symbol": "PP8[2]_2"
+        "catalog_symbol": "PP8",
+        "source_symbol": "PP8[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -7839,11 +7871,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-004-pp32-1.webp",
-        "title": "Pattern type PP3",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP3[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP3[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[2]_1 outlined.",
+        "title": "Coloured occurrence PP3[2]_1 (underlying PP3)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP3[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP3[2]_1 has underlying pattern type PP3.",
+        "alt": "Annotated Chapter 8 occurrence PP3[2]_1, whose underlying one-colour pattern type is PP3.",
         "printed_page": 409,
-        "source_symbol": "PP3[2]_1"
+        "catalog_symbol": "PP3",
+        "source_symbol": "PP3[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -7878,11 +7913,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-047-pp42-2.webp",
-        "title": "Pattern type PP4",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP4[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP4[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP4[2]_2 outlined.",
+        "title": "Coloured occurrence PP4[2]_2 (underlying PP4)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP4[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP4[2]_2 has underlying pattern type PP4.",
+        "alt": "Annotated Chapter 8 occurrence PP4[2]_2, whose underlying one-colour pattern type is PP4.",
         "printed_page": 426,
-        "source_symbol": "PP4[2]_2"
+        "catalog_symbol": "PP4",
+        "source_symbol": "PP4[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -7917,11 +7955,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-002-pp22-1.webp",
-        "title": "Pattern type PP2",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 408; the outlines mark the printed colour-group symbol and pattern-type label PP2[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP2[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP2[2]_1 outlined.",
+        "title": "Coloured occurrence PP2[2]_1 (underlying PP2)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 408; the outlines mark the printed colour-group symbol and pattern-type label PP2[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP2[2]_1 has underlying pattern type PP2.",
+        "alt": "Annotated Chapter 8 occurrence PP2[2]_1, whose underlying one-colour pattern type is PP2.",
         "printed_page": 408,
-        "source_symbol": "PP2[2]_1"
+        "catalog_symbol": "PP2",
+        "source_symbol": "PP2[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -7956,11 +7997,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-009-pp52-1.webp",
-        "title": "Pattern type PP5",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP5[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP5[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP5[2]_1 outlined.",
+        "title": "Coloured occurrence PP5[2]_1 (underlying PP5)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP5[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP5[2]_1 has underlying pattern type PP5.",
+        "alt": "Annotated Chapter 8 occurrence PP5[2]_1, whose underlying one-colour pattern type is PP5.",
         "printed_page": 409,
-        "source_symbol": "PP5[2]_1"
+        "catalog_symbol": "PP5",
+        "source_symbol": "PP5[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -7995,11 +8039,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-050-pp62-3.webp",
-        "title": "Pattern type PP6",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP6[2]_3. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP6[2]_3 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP6[2]_3 outlined.",
+        "title": "Coloured occurrence PP6[2]_3 (underlying PP6)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP6[2]_3. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP6[2]_3 has underlying pattern type PP6.",
+        "alt": "Annotated Chapter 8 occurrence PP6[2]_3, whose underlying one-colour pattern type is PP6.",
         "printed_page": 426,
-        "source_symbol": "PP6[2]_3"
+        "catalog_symbol": "PP6",
+        "source_symbol": "PP6[2]_3",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8034,11 +8081,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-021-pp142-1.webp",
-        "title": "Pattern type PP14",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP14[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP14[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP14[2]_1 outlined.",
+        "title": "Coloured occurrence PP14[2]_1 (underlying PP14)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP14[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP14[2]_1 has underlying pattern type PP14.",
+        "alt": "Annotated Chapter 8 occurrence PP14[2]_1, whose underlying one-colour pattern type is PP14.",
         "printed_page": 410,
-        "source_symbol": "PP14[2]_1"
+        "catalog_symbol": "PP14",
+        "source_symbol": "PP14[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8073,11 +8123,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-058-pp152-1.webp",
-        "title": "Pattern type PP15",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP15[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP15[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[2]_1 outlined.",
+        "title": "Coloured occurrence PP15[2]_1 (underlying PP15)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP15[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP15[2]_1 has underlying pattern type PP15.",
+        "alt": "Annotated Chapter 8 occurrence PP15[2]_1, whose underlying one-colour pattern type is PP15.",
         "printed_page": 427,
-        "source_symbol": "PP15[2]_1"
+        "catalog_symbol": "PP15",
+        "source_symbol": "PP15[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8112,11 +8165,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-062-pp162-3.webp",
-        "title": "Pattern type PP16",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP16[2]_3. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP16[2]_3 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP16[2]_3 outlined.",
+        "title": "Coloured occurrence PP16[2]_3 (underlying PP16)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP16[2]_3. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP16[2]_3 has underlying pattern type PP16.",
+        "alt": "Annotated Chapter 8 occurrence PP16[2]_3, whose underlying one-colour pattern type is PP16.",
         "printed_page": 428,
-        "source_symbol": "PP16[2]_3"
+        "catalog_symbol": "PP16",
+        "source_symbol": "PP16[2]_3",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8151,11 +8207,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-016-pp112-1.webp",
-        "title": "Pattern type PP11",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP11[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP11[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[2]_1 outlined.",
+        "title": "Coloured occurrence PP11[2]_1 (underlying PP11)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP11[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP11[2]_1 has underlying pattern type PP11.",
+        "alt": "Annotated Chapter 8 occurrence PP11[2]_1, whose underlying one-colour pattern type is PP11.",
         "printed_page": 410,
-        "source_symbol": "PP11[2]_1"
+        "catalog_symbol": "PP11",
+        "source_symbol": "PP11[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8190,11 +8249,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-053-pp122-1.webp",
-        "title": "Pattern type PP12",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP12[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP12[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP12[2]_1 outlined.",
+        "title": "Coloured occurrence PP12[2]_1 (underlying PP12)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP12[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP12[2]_1 has underlying pattern type PP12.",
+        "alt": "Annotated Chapter 8 occurrence PP12[2]_1, whose underlying one-colour pattern type is PP12.",
         "printed_page": 427,
-        "source_symbol": "PP12[2]_1"
+        "catalog_symbol": "PP12",
+        "source_symbol": "PP12[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8229,11 +8291,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-054-pp132-1.webp",
-        "title": "Pattern type PP13",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP13[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP13[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP13[2]_1 outlined.",
+        "title": "Coloured occurrence PP13[2]_1 (underlying PP13)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP13[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP13[2]_1 has underlying pattern type PP13.",
+        "alt": "Annotated Chapter 8 occurrence PP13[2]_1, whose underlying one-colour pattern type is PP13.",
         "printed_page": 427,
-        "source_symbol": "PP13[2]_1"
+        "catalog_symbol": "PP13",
+        "source_symbol": "PP13[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8268,11 +8333,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-014-pp92-1.webp",
-        "title": "Pattern type PP9",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP9[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP9[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP9[2]_1 outlined.",
+        "title": "Coloured occurrence PP9[2]_1 (underlying PP9)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP9[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP9[2]_1 has underlying pattern type PP9.",
+        "alt": "Annotated Chapter 8 occurrence PP9[2]_1, whose underlying one-colour pattern type is PP9.",
         "printed_page": 410,
-        "source_symbol": "PP9[2]_1"
+        "catalog_symbol": "PP9",
+        "source_symbol": "PP9[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8307,11 +8375,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-052-pp102-2.webp",
-        "title": "Pattern type PP10",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP10[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP10[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP10[2]_2 outlined.",
+        "title": "Coloured occurrence PP10[2]_2 (underlying PP10)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP10[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP10[2]_2 has underlying pattern type PP10.",
+        "alt": "Annotated Chapter 8 occurrence PP10[2]_2, whose underlying one-colour pattern type is PP10.",
         "printed_page": 426,
-        "source_symbol": "PP10[2]_2"
+        "catalog_symbol": "PP10",
+        "source_symbol": "PP10[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8346,11 +8417,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-026-pp172-1.webp",
-        "title": "Pattern type PP17",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP17[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP17[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP17[2]_1 outlined.",
+        "title": "Coloured occurrence PP17[2]_1 (underlying PP17)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP17[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP17[2]_1 has underlying pattern type PP17.",
+        "alt": "Annotated Chapter 8 occurrence PP17[2]_1, whose underlying one-colour pattern type is PP17.",
         "printed_page": 411,
-        "source_symbol": "PP17[2]_1"
+        "catalog_symbol": "PP17",
+        "source_symbol": "PP17[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8385,11 +8459,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-065-pp182-3.webp",
-        "title": "Pattern type PP18",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP18[2]_3. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP18[2]_3 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP18[2]_3 outlined.",
+        "title": "Coloured occurrence PP18[2]_3 (underlying PP18)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP18[2]_3. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP18[2]_3 has underlying pattern type PP18.",
+        "alt": "Annotated Chapter 8 occurrence PP18[2]_3, whose underlying one-colour pattern type is PP18.",
         "printed_page": 428,
-        "source_symbol": "PP18[2]_3"
+        "catalog_symbol": "PP18",
+        "source_symbol": "PP18[2]_3",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8424,11 +8501,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-066-pp192-3.webp",
-        "title": "Pattern type PP19",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP19[2]_3. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP19[2]_3 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP19[2]_3 outlined.",
+        "title": "Coloured occurrence PP19[2]_3 (underlying PP19)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP19[2]_3. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP19[2]_3 has underlying pattern type PP19.",
+        "alt": "Annotated Chapter 8 occurrence PP19[2]_3, whose underlying one-colour pattern type is PP19.",
         "printed_page": 428,
-        "source_symbol": "PP19[2]_3"
+        "catalog_symbol": "PP19",
+        "source_symbol": "PP19[2]_3",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8463,11 +8543,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-070-pp202-5.webp",
-        "title": "Pattern type PP20",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP20[2]_5. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP20[2]_5 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP20[2]_5 outlined.",
+        "title": "Coloured occurrence PP20[2]_5 (underlying PP20)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP20[2]_5. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP20[2]_5 has underlying pattern type PP20.",
+        "alt": "Annotated Chapter 8 occurrence PP20[2]_5, whose underlying one-colour pattern type is PP20.",
         "printed_page": 428,
-        "source_symbol": "PP20[2]_5"
+        "catalog_symbol": "PP20",
+        "source_symbol": "PP20[2]_5",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8502,11 +8585,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-033-pp302-1.webp",
-        "title": "Pattern type PP30",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP30[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP30[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP30[2]_1 outlined.",
+        "title": "Coloured occurrence PP30[2]_1 (underlying PP30)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP30[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP30[2]_1 has underlying pattern type PP30.",
+        "alt": "Annotated Chapter 8 occurrence PP30[2]_1, whose underlying one-colour pattern type is PP30.",
         "printed_page": 412,
-        "source_symbol": "PP30[2]_1"
+        "catalog_symbol": "PP30",
+        "source_symbol": "PP30[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8541,11 +8627,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-072-pp312-2.webp",
-        "title": "Pattern type PP31",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP31[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP31[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP31[2]_2 outlined.",
+        "title": "Coloured occurrence PP31[2]_2 (underlying PP31)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP31[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP31[2]_2 has underlying pattern type PP31.",
+        "alt": "Annotated Chapter 8 occurrence PP31[2]_2, whose underlying one-colour pattern type is PP31.",
         "printed_page": 429,
-        "source_symbol": "PP31[2]_2"
+        "catalog_symbol": "PP31",
+        "source_symbol": "PP31[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8580,11 +8669,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-073-pp322-1.webp",
-        "title": "Pattern type PP32",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP32[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP32[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP32[2]_1 outlined.",
+        "title": "Coloured occurrence PP32[2]_1 (underlying PP32)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP32[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP32[2]_1 has underlying pattern type PP32.",
+        "alt": "Annotated Chapter 8 occurrence PP32[2]_1, whose underlying one-colour pattern type is PP32.",
         "printed_page": 429,
-        "source_symbol": "PP32[2]_1"
+        "catalog_symbol": "PP32",
+        "source_symbol": "PP32[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8619,11 +8711,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-038-pp372-1.webp",
-        "title": "Pattern type PP37",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP37[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP37[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP37[2]_1 outlined.",
+        "title": "Coloured occurrence PP37[2]_1 (underlying PP37)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP37[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP37[2]_1 has underlying pattern type PP37.",
+        "alt": "Annotated Chapter 8 occurrence PP37[2]_1, whose underlying one-colour pattern type is PP37.",
         "printed_page": 412,
-        "source_symbol": "PP37[2]_1"
+        "catalog_symbol": "PP37",
+        "source_symbol": "PP37[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8658,11 +8753,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-077-pp382-1.webp",
-        "title": "Pattern type PP38",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP38[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP38[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP38[2]_1 outlined.",
+        "title": "Coloured occurrence PP38[2]_1 (underlying PP38)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP38[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP38[2]_1 has underlying pattern type PP38.",
+        "alt": "Annotated Chapter 8 occurrence PP38[2]_1, whose underlying one-colour pattern type is PP38.",
         "printed_page": 429,
-        "source_symbol": "PP38[2]_1"
+        "catalog_symbol": "PP38",
+        "source_symbol": "PP38[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8697,11 +8795,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-081-pp392-5.webp",
-        "title": "Pattern type PP39",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP39[2]_5. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP39[2]_5 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP39[2]_5 outlined.",
+        "title": "Coloured occurrence PP39[2]_5 (underlying PP39)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP39[2]_5. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP39[2]_5 has underlying pattern type PP39.",
+        "alt": "Annotated Chapter 8 occurrence PP39[2]_5, whose underlying one-colour pattern type is PP39.",
         "printed_page": 430,
-        "source_symbol": "PP39[2]_5"
+        "catalog_symbol": "PP39",
+        "source_symbol": "PP39[2]_5",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8736,11 +8837,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-079-pp402-4.webp",
-        "title": "Pattern type PP40",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP40[2]_4. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP40[2]_4 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP40[2]_4 outlined.",
+        "title": "Coloured occurrence PP40[2]_4 (underlying PP40)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP40[2]_4. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP40[2]_4 has underlying pattern type PP40.",
+        "alt": "Annotated Chapter 8 occurrence PP40[2]_4, whose underlying one-colour pattern type is PP40.",
         "printed_page": 429,
-        "source_symbol": "PP40[2]_4"
+        "catalog_symbol": "PP40",
+        "source_symbol": "PP40[2]_4",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8775,11 +8879,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-082-pp412-5.webp",
-        "title": "Pattern type PP41",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP41[2]_5. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP41[2]_5 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP41[2]_5 outlined.",
+        "title": "Coloured occurrence PP41[2]_5 (underlying PP41)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP41[2]_5. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP41[2]_5 has underlying pattern type PP41.",
+        "alt": "Annotated Chapter 8 occurrence PP41[2]_5, whose underlying one-colour pattern type is PP41.",
         "printed_page": 430,
-        "source_symbol": "PP41[2]_5"
+        "catalog_symbol": "PP41",
+        "source_symbol": "PP41[2]_5",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8814,11 +8921,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-035-pp332-1.webp",
-        "title": "Pattern type PP33",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP33[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP33[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP33[2]_1 outlined.",
+        "title": "Coloured occurrence PP33[2]_1 (underlying PP33)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP33[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP33[2]_1 has underlying pattern type PP33.",
+        "alt": "Annotated Chapter 8 occurrence PP33[2]_1, whose underlying one-colour pattern type is PP33.",
         "printed_page": 412,
-        "source_symbol": "PP33[2]_1"
+        "catalog_symbol": "PP33",
+        "source_symbol": "PP33[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8853,11 +8963,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-074-pp342-1.webp",
-        "title": "Pattern type PP34",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP34[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP34[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP34[2]_1 outlined.",
+        "title": "Coloured occurrence PP34[2]_1 (underlying PP34)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP34[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP34[2]_1 has underlying pattern type PP34.",
+        "alt": "Annotated Chapter 8 occurrence PP34[2]_1, whose underlying one-colour pattern type is PP34.",
         "printed_page": 429,
-        "source_symbol": "PP34[2]_1"
+        "catalog_symbol": "PP34",
+        "source_symbol": "PP34[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8892,11 +9005,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-075-pp352-2.webp",
-        "title": "Pattern type PP35",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP35[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP35[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP35[2]_2 outlined.",
+        "title": "Coloured occurrence PP35[2]_2 (underlying PP35)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP35[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP35[2]_2 has underlying pattern type PP35.",
+        "alt": "Annotated Chapter 8 occurrence PP35[2]_2, whose underlying one-colour pattern type is PP35.",
         "printed_page": 429,
-        "source_symbol": "PP35[2]_2"
+        "catalog_symbol": "PP35",
+        "source_symbol": "PP35[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8931,11 +9047,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-076-pp362-2.webp",
-        "title": "Pattern type PP36",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP36[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP36[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP36[2]_2 outlined.",
+        "title": "Coloured occurrence PP36[2]_2 (underlying PP36)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP36[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP36[2]_2 has underlying pattern type PP36.",
+        "alt": "Annotated Chapter 8 occurrence PP36[2]_2, whose underlying one-colour pattern type is PP36.",
         "printed_page": 429,
-        "source_symbol": "PP36[2]_2"
+        "catalog_symbol": "PP36",
+        "source_symbol": "PP36[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -8970,11 +9089,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-014-pp213-1.webp",
-        "title": "Pattern type PP21",
-        "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP21[3]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP21[3]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP21[3]_1 outlined.",
+        "title": "Coloured occurrence PP21[3]_1 (underlying PP21)",
+        "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP21[3]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP21[3]_1 has underlying pattern type PP21.",
+        "alt": "Annotated Chapter 8 occurrence PP21[3]_1, whose underlying one-colour pattern type is PP21.",
         "printed_page": 415,
-        "source_symbol": "PP21[3]_1"
+        "catalog_symbol": "PP21",
+        "source_symbol": "PP21[3]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9009,11 +9131,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-041-pp223-2.webp",
-        "title": "Pattern type PP22",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP22[3]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP22[3]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP22[3]_2 outlined.",
+        "title": "Coloured occurrence PP22[3]_2 (underlying PP22)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP22[3]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP22[3]_2 has underlying pattern type PP22.",
+        "alt": "Annotated Chapter 8 occurrence PP22[3]_2, whose underlying one-colour pattern type is PP22.",
         "printed_page": 433,
-        "source_symbol": "PP22[3]_2"
+        "catalog_symbol": "PP22",
+        "source_symbol": "PP22[3]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9048,11 +9173,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-032-pp272.webp",
-        "title": "Pattern type PP27",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP27[2]. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP27[2] is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP27[2] outlined.",
+        "title": "Coloured occurrence PP27[2] (underlying PP27)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP27[2]. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP27[2] has underlying pattern type PP27.",
+        "alt": "Annotated Chapter 8 occurrence PP27[2], whose underlying one-colour pattern type is PP27.",
         "printed_page": 412,
-        "source_symbol": "PP27[2]"
+        "catalog_symbol": "PP27",
+        "source_symbol": "PP27[2]",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9087,11 +9215,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-045-pp283-1.webp",
-        "title": "Pattern type PP28",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP28[3]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP28[3]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP28[3]_1 outlined.",
+        "title": "Coloured occurrence PP28[3]_1 (underlying PP28)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP28[3]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP28[3]_1 has underlying pattern type PP28.",
+        "alt": "Annotated Chapter 8 occurrence PP28[3]_1, whose underlying one-colour pattern type is PP28.",
         "printed_page": 433,
-        "source_symbol": "PP28[3]_1"
+        "catalog_symbol": "PP28",
+        "source_symbol": "PP28[3]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9126,11 +9257,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-047-pp293-2.webp",
-        "title": "Pattern type PP29",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP29[3]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP29[3]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP29[3]_2 outlined.",
+        "title": "Coloured occurrence PP29[3]_2 (underlying PP29)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP29[3]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP29[3]_2 has underlying pattern type PP29.",
+        "alt": "Annotated Chapter 8 occurrence PP29[3]_2, whose underlying one-colour pattern type is PP29.",
         "printed_page": 433,
-        "source_symbol": "PP29[3]_2"
+        "catalog_symbol": "PP29",
+        "source_symbol": "PP29[3]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9165,11 +9299,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-031-pp232.webp",
-        "title": "Pattern type PP23",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP23[2]. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP23[2] is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP23[2] outlined.",
+        "title": "Coloured occurrence PP23[2] (underlying PP23)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP23[2]. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP23[2] has underlying pattern type PP23.",
+        "alt": "Annotated Chapter 8 occurrence PP23[2], whose underlying one-colour pattern type is PP23.",
         "printed_page": 412,
-        "source_symbol": "PP23[2]"
+        "catalog_symbol": "PP23",
+        "source_symbol": "PP23[2]",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9204,11 +9341,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-071-pp242.webp",
-        "title": "Pattern type PP24",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP24[2]. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP24[2] is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP24[2] outlined.",
+        "title": "Coloured occurrence PP24[2] (underlying PP24)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP24[2]. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP24[2] has underlying pattern type PP24.",
+        "alt": "Annotated Chapter 8 occurrence PP24[2], whose underlying one-colour pattern type is PP24.",
         "printed_page": 429,
-        "source_symbol": "PP24[2]"
+        "catalog_symbol": "PP24",
+        "source_symbol": "PP24[2]",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9243,11 +9383,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-042-pp253-1.webp",
-        "title": "Pattern type PP25",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP25[3]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP25[3]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP25[3]_1 outlined.",
+        "title": "Coloured occurrence PP25[3]_1 (underlying PP25)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP25[3]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP25[3]_1 has underlying pattern type PP25.",
+        "alt": "Annotated Chapter 8 occurrence PP25[3]_1, whose underlying one-colour pattern type is PP25.",
         "printed_page": 433,
-        "source_symbol": "PP25[3]_1"
+        "catalog_symbol": "PP25",
+        "source_symbol": "PP25[3]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9282,11 +9425,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-044-pp263-2.webp",
-        "title": "Pattern type PP26",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP26[3]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP26[3]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP26[3]_2 outlined.",
+        "title": "Coloured occurrence PP26[3]_2 (underlying PP26)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP26[3]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP26[3]_2 has underlying pattern type PP26.",
+        "alt": "Annotated Chapter 8 occurrence PP26[3]_2, whose underlying one-colour pattern type is PP26.",
         "printed_page": 433,
-        "source_symbol": "PP26[3]_2"
+        "catalog_symbol": "PP26",
+        "source_symbol": "PP26[3]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9321,11 +9467,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-043-pp422.webp",
-        "title": "Pattern type PP42",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP42[2]. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP42[2] is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP42[2] outlined.",
+        "title": "Coloured occurrence PP42[2] (underlying PP42)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP42[2]. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP42[2] has underlying pattern type PP42.",
+        "alt": "Annotated Chapter 8 occurrence PP42[2], whose underlying one-colour pattern type is PP42.",
         "printed_page": 413,
-        "source_symbol": "PP42[2]"
+        "catalog_symbol": "PP42",
+        "source_symbol": "PP42[2]",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9360,11 +9509,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-048-pp433-1.webp",
-        "title": "Pattern type PP43",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP43[3]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP43[3]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP43[3]_1 outlined.",
+        "title": "Coloured occurrence PP43[3]_1 (underlying PP43)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP43[3]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP43[3]_1 has underlying pattern type PP43.",
+        "alt": "Annotated Chapter 8 occurrence PP43[3]_1, whose underlying one-colour pattern type is PP43.",
         "printed_page": 434,
-        "source_symbol": "PP43[3]_1"
+        "catalog_symbol": "PP43",
+        "source_symbol": "PP43[3]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9399,11 +9551,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-084-pp442.webp",
-        "title": "Pattern type PP44",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP44[2]. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP44[2] is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP44[2] outlined.",
+        "title": "Coloured occurrence PP44[2] (underlying PP44)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP44[2]. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP44[2] has underlying pattern type PP44.",
+        "alt": "Annotated Chapter 8 occurrence PP44[2], whose underlying one-colour pattern type is PP44.",
         "printed_page": 430,
-        "source_symbol": "PP44[2]"
+        "catalog_symbol": "PP44",
+        "source_symbol": "PP44[2]",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9438,11 +9593,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-050-pp453-2.webp",
-        "title": "Pattern type PP45",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP45[3]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP45[3]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP45[3]_2 outlined.",
+        "title": "Coloured occurrence PP45[3]_2 (underlying PP45)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP45[3]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP45[3]_2 has underlying pattern type PP45.",
+        "alt": "Annotated Chapter 8 occurrence PP45[3]_2, whose underlying one-colour pattern type is PP45.",
         "printed_page": 434,
-        "source_symbol": "PP45[3]_2"
+        "catalog_symbol": "PP45",
+        "source_symbol": "PP45[3]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9477,11 +9635,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-044-pp462-1.webp",
-        "title": "Pattern type PP46",
-        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP46[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP46[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP46[2]_1 outlined.",
+        "title": "Coloured occurrence PP46[2]_1 (underlying PP46)",
+        "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP46[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP46[2]_1 has underlying pattern type PP46.",
+        "alt": "Annotated Chapter 8 occurrence PP46[2]_1, whose underlying one-colour pattern type is PP46.",
         "printed_page": 413,
-        "source_symbol": "PP46[2]_1"
+        "catalog_symbol": "PP46",
+        "source_symbol": "PP46[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9516,11 +9677,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-085-pp472-1.webp",
-        "title": "Pattern type PP47",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP47[2]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP47[2]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP47[2]_1 outlined.",
+        "title": "Coloured occurrence PP47[2]_1 (underlying PP47)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP47[2]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP47[2]_1 has underlying pattern type PP47.",
+        "alt": "Annotated Chapter 8 occurrence PP47[2]_1, whose underlying one-colour pattern type is PP47.",
         "printed_page": 430,
-        "source_symbol": "PP47[2]_1"
+        "catalog_symbol": "PP47",
+        "source_symbol": "PP47[2]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9555,11 +9719,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-086-pp48a2-2.webp",
-        "title": "Pattern type PP48",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP48A[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP48A[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48A[2]_2 outlined.",
+        "title": "Coloured occurrence PP48A[2]_2 (underlying PP48)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP48A[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP48A[2]_2 has underlying pattern type PP48.",
+        "alt": "Annotated Chapter 8 occurrence PP48A[2]_2, whose underlying one-colour pattern type is PP48.",
         "printed_page": 430,
-        "source_symbol": "PP48A[2]_2"
+        "catalog_symbol": "PP48",
+        "source_symbol": "PP48A[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9594,11 +9761,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-054-pp493-1.webp",
-        "title": "Pattern type PP49",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_1. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP49[3]_1 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP49[3]_1 outlined.",
+        "title": "Coloured occurrence PP49[3]_1 (underlying PP49)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP49[3]_1 has underlying pattern type PP49.",
+        "alt": "Annotated Chapter 8 occurrence PP49[3]_1, whose underlying one-colour pattern type is PP49.",
         "printed_page": 434,
-        "source_symbol": "PP49[3]_1"
+        "catalog_symbol": "PP49",
+        "source_symbol": "PP49[3]_1",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9633,11 +9803,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-088-pp502-2.webp",
-        "title": "Pattern type PP50",
-        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP50[2]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP50[2]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP50[2]_2 outlined.",
+        "title": "Coloured occurrence PP50[2]_2 (underlying PP50)",
+        "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP50[2]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP50[2]_2 has underlying pattern type PP50.",
+        "alt": "Annotated Chapter 8 occurrence PP50[2]_2, whose underlying one-colour pattern type is PP50.",
         "printed_page": 430,
-        "source_symbol": "PP50[2]_2"
+        "catalog_symbol": "PP50",
+        "source_symbol": "PP50[2]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9672,11 +9845,14 @@
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-059-pp513-2.webp",
-        "title": "Pattern type PP51",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP51[3]_2. The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; PP51[3]_2 is the printed occurrence of the same PP stem.",
-        "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP51[3]_2 outlined.",
+        "title": "Coloured occurrence PP51[3]_2 (underlying PP51)",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP51[3]_2. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP51[3]_2 has underlying pattern type PP51.",
+        "alt": "Annotated Chapter 8 occurrence PP51[3]_2, whose underlying one-colour pattern type is PP51.",
         "printed_page": 435,
-        "source_symbol": "PP51[3]_2"
+        "catalog_symbol": "PP51",
+        "source_symbol": "PP51[3]_2",
+        "direct_source": false,
+        "relationship": "underlying-pattern-type"
       }
     },
     {
@@ -9718,7 +9894,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 408; the outlines mark the printed colour-group symbol and pattern-type label PP1[2].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP1[2] outlined.",
         "printed_page": 408,
-        "source_symbol": "PP1[2]"
+        "catalog_symbol": "PP1[2]",
+        "source_symbol": "PP1[2]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -9760,7 +9939,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 408; the outlines mark the printed colour-group symbol and pattern-type label PP2[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP2[2]_1 outlined.",
         "printed_page": 408,
-        "source_symbol": "PP2[2]_1"
+        "catalog_symbol": "PP2[2]_1",
+        "source_symbol": "PP2[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -9802,7 +9984,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 408; the outlines mark the printed colour-group symbol and pattern-type label PP2[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP2[2]_2 outlined.",
         "printed_page": 408,
-        "source_symbol": "PP2[2]_2"
+        "catalog_symbol": "PP2[2]_2",
+        "source_symbol": "PP2[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -9844,7 +10029,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP3[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[2]_1 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP3[2]_1"
+        "catalog_symbol": "PP3[2]_1",
+        "source_symbol": "PP3[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -9886,7 +10074,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP3[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[2]_2 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP3[2]_2"
+        "catalog_symbol": "PP3[2]_2",
+        "source_symbol": "PP3[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -9928,7 +10119,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP3[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[2]_3 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP3[2]_3"
+        "catalog_symbol": "PP3[2]_3",
+        "source_symbol": "PP3[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -9970,7 +10164,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP3[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[2]_4 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP3[2]_4"
+        "catalog_symbol": "PP3[2]_4",
+        "source_symbol": "PP3[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10012,7 +10209,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP3[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[2]_5 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP3[2]_5"
+        "catalog_symbol": "PP3[2]_5",
+        "source_symbol": "PP3[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10054,7 +10254,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP5[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP5[2]_1 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP5[2]_1"
+        "catalog_symbol": "PP5[2]_1",
+        "source_symbol": "PP5[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10096,7 +10299,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP5[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP5[2]_2 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP5[2]_2"
+        "catalog_symbol": "PP5[2]_2",
+        "source_symbol": "PP5[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10138,7 +10344,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP5[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP5[2]_3 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP5[2]_3"
+        "catalog_symbol": "PP5[2]_3",
+        "source_symbol": "PP5[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10168,7 +10377,7 @@
             "colour": 0
           }
         ],
-        "reference_pattern_id": "cp-1-002-pp7",
+        "reference_pattern_id": "cp-2-012-pp72-1",
         "colour_blind_discrepancy": 0.0,
         "candidate_index": 0
       },
@@ -10180,7 +10389,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 409; the outlines mark the printed colour-group symbol and pattern-type label PP7[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP7[2]_1 outlined.",
         "printed_page": 409,
-        "source_symbol": "PP7[2]_1"
+        "catalog_symbol": "PP7[2]_1",
+        "source_symbol": "PP7[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10229,7 +10441,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP7[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP7[2]_2 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP7[2]_2"
+        "catalog_symbol": "PP7[2]_2",
+        "source_symbol": "PP7[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10271,7 +10486,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP9[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP9[2]_1 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP9[2]_1"
+        "catalog_symbol": "PP9[2]_1",
+        "source_symbol": "PP9[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10313,7 +10531,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP9[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP9[2]_2 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP9[2]_2"
+        "catalog_symbol": "PP9[2]_2",
+        "source_symbol": "PP9[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10355,7 +10576,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP11[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[2]_1 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP11[2]_1"
+        "catalog_symbol": "PP11[2]_1",
+        "source_symbol": "PP11[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10397,7 +10621,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP11[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[2]_2 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP11[2]_2"
+        "catalog_symbol": "PP11[2]_2",
+        "source_symbol": "PP11[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10439,7 +10666,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP11[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[2]_3 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP11[2]_3"
+        "catalog_symbol": "PP11[2]_3",
+        "source_symbol": "PP11[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10481,7 +10711,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP11[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[2]_4 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP11[2]_4"
+        "catalog_symbol": "PP11[2]_4",
+        "source_symbol": "PP11[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10523,7 +10756,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP11[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[2]_5 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP11[2]_5"
+        "catalog_symbol": "PP11[2]_5",
+        "source_symbol": "PP11[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10565,7 +10801,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 410; the outlines mark the printed colour-group symbol and pattern-type label PP14[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP14[2]_1 outlined.",
         "printed_page": 410,
-        "source_symbol": "PP14[2]_1"
+        "catalog_symbol": "PP14[2]_1",
+        "source_symbol": "PP14[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10607,7 +10846,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP14[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP14[2]_2 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP14[2]_2"
+        "catalog_symbol": "PP14[2]_2",
+        "source_symbol": "PP14[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10649,7 +10891,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP14[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP14[2]_3 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP14[2]_3"
+        "catalog_symbol": "PP14[2]_3",
+        "source_symbol": "PP14[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10691,7 +10936,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP14[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP14[2]_4 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP14[2]_4"
+        "catalog_symbol": "PP14[2]_4",
+        "source_symbol": "PP14[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10733,7 +10981,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP14[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP14[2]_5 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP14[2]_5"
+        "catalog_symbol": "PP14[2]_5",
+        "source_symbol": "PP14[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10775,7 +11026,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP17[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP17[2]_1 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP17[2]_1"
+        "catalog_symbol": "PP17[2]_1",
+        "source_symbol": "PP17[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10817,7 +11071,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP17[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP17[2]_2 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP17[2]_2"
+        "catalog_symbol": "PP17[2]_2",
+        "source_symbol": "PP17[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10859,7 +11116,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP17[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP17[2]_3 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP17[2]_3"
+        "catalog_symbol": "PP17[2]_3",
+        "source_symbol": "PP17[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10901,7 +11161,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP17[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP17[2]_4 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP17[2]_4"
+        "catalog_symbol": "PP17[2]_4",
+        "source_symbol": "PP17[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10943,7 +11206,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 411; the outlines mark the printed colour-group symbol and pattern-type label PP17[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP17[2]_5 outlined.",
         "printed_page": 411,
-        "source_symbol": "PP17[2]_5"
+        "catalog_symbol": "PP17[2]_5",
+        "source_symbol": "PP17[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -10985,7 +11251,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP23[2].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP23[2] outlined.",
         "printed_page": 412,
-        "source_symbol": "PP23[2]"
+        "catalog_symbol": "PP23[2]",
+        "source_symbol": "PP23[2]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11027,7 +11296,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP27[2].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP27[2] outlined.",
         "printed_page": 412,
-        "source_symbol": "PP27[2]"
+        "catalog_symbol": "PP27[2]",
+        "source_symbol": "PP27[2]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11069,7 +11341,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP30[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP30[2]_1 outlined.",
         "printed_page": 412,
-        "source_symbol": "PP30[2]_1"
+        "catalog_symbol": "PP30[2]_1",
+        "source_symbol": "PP30[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11111,7 +11386,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP30[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP30[2]_2 outlined.",
         "printed_page": 412,
-        "source_symbol": "PP30[2]_2"
+        "catalog_symbol": "PP30[2]_2",
+        "source_symbol": "PP30[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11153,7 +11431,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP33[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP33[2]_1 outlined.",
         "printed_page": 412,
-        "source_symbol": "PP33[2]_1"
+        "catalog_symbol": "PP33[2]_1",
+        "source_symbol": "PP33[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11195,7 +11476,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP33[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP33[2]_2 outlined.",
         "printed_page": 412,
-        "source_symbol": "PP33[2]_2"
+        "catalog_symbol": "PP33[2]_2",
+        "source_symbol": "PP33[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11237,7 +11521,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP33[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP33[2]_3 outlined.",
         "printed_page": 412,
-        "source_symbol": "PP33[2]_3"
+        "catalog_symbol": "PP33[2]_3",
+        "source_symbol": "PP33[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11279,7 +11566,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP37[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP37[2]_1 outlined.",
         "printed_page": 412,
-        "source_symbol": "PP37[2]_1"
+        "catalog_symbol": "PP37[2]_1",
+        "source_symbol": "PP37[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11321,7 +11611,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 412; the outlines mark the printed colour-group symbol and pattern-type label PP37[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP37[2]_2 outlined.",
         "printed_page": 412,
-        "source_symbol": "PP37[2]_2"
+        "catalog_symbol": "PP37[2]_2",
+        "source_symbol": "PP37[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11363,7 +11656,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP37[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP37[2]_3 outlined.",
         "printed_page": 413,
-        "source_symbol": "PP37[2]_3"
+        "catalog_symbol": "PP37[2]_3",
+        "source_symbol": "PP37[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11405,7 +11701,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP37[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP37[2]_4 outlined.",
         "printed_page": 413,
-        "source_symbol": "PP37[2]_4"
+        "catalog_symbol": "PP37[2]_4",
+        "source_symbol": "PP37[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11447,7 +11746,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP37[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP37[2]_5 outlined.",
         "printed_page": 413,
-        "source_symbol": "PP37[2]_5"
+        "catalog_symbol": "PP37[2]_5",
+        "source_symbol": "PP37[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11489,7 +11791,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP42[2].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP42[2] outlined.",
         "printed_page": 413,
-        "source_symbol": "PP42[2]"
+        "catalog_symbol": "PP42[2]",
+        "source_symbol": "PP42[2]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11531,7 +11836,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP46[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP46[2]_1 outlined.",
         "printed_page": 413,
-        "source_symbol": "PP46[2]_1"
+        "catalog_symbol": "PP46[2]_1",
+        "source_symbol": "PP46[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11573,7 +11881,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP46[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP46[2]_2 outlined.",
         "printed_page": 413,
-        "source_symbol": "PP46[2]_2"
+        "catalog_symbol": "PP46[2]_2",
+        "source_symbol": "PP46[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11615,7 +11926,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.2 on printed p. 413; the outlines mark the printed colour-group symbol and pattern-type label PP46[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP46[2]_3 outlined.",
         "printed_page": 413,
-        "source_symbol": "PP46[2]_3"
+        "catalog_symbol": "PP46[2]_3",
+        "source_symbol": "PP46[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11657,7 +11971,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP4[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP4[2]_2 outlined.",
         "printed_page": 426,
-        "source_symbol": "PP4[2]_2"
+        "catalog_symbol": "PP4[2]_2",
+        "source_symbol": "PP4[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11699,7 +12016,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP4[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP4[2]_3 outlined.",
         "printed_page": 426,
-        "source_symbol": "PP4[2]_3"
+        "catalog_symbol": "PP4[2]_3",
+        "source_symbol": "PP4[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11741,7 +12061,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP4[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP4[2]_5 outlined.",
         "printed_page": 426,
-        "source_symbol": "PP4[2]_5"
+        "catalog_symbol": "PP4[2]_5",
+        "source_symbol": "PP4[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11783,7 +12106,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP6[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP6[2]_3 outlined.",
         "printed_page": 426,
-        "source_symbol": "PP6[2]_3"
+        "catalog_symbol": "PP6[2]_3",
+        "source_symbol": "PP6[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11833,7 +12159,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP8[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP8[2]_2 outlined.",
         "printed_page": 426,
-        "source_symbol": "PP8[2]_2"
+        "catalog_symbol": "PP8[2]_2",
+        "source_symbol": "PP8[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11875,7 +12204,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 426; the outlines mark the printed colour-group symbol and pattern-type label PP10[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP10[2]_2 outlined.",
         "printed_page": 426,
-        "source_symbol": "PP10[2]_2"
+        "catalog_symbol": "PP10[2]_2",
+        "source_symbol": "PP10[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11917,7 +12249,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP12[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP12[2]_1 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP12[2]_1"
+        "catalog_symbol": "PP12[2]_1",
+        "source_symbol": "PP12[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -11959,7 +12294,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP13[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP13[2]_1 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP13[2]_1"
+        "catalog_symbol": "PP13[2]_1",
+        "source_symbol": "PP13[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12001,7 +12339,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP12[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP12[2]_3 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP12[2]_3"
+        "catalog_symbol": "PP12[2]_3",
+        "source_symbol": "PP12[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12043,7 +12384,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP12[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP12[2]_5 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP12[2]_5"
+        "catalog_symbol": "PP12[2]_5",
+        "source_symbol": "PP12[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12085,7 +12429,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP13[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP13[2]_4 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP13[2]_4"
+        "catalog_symbol": "PP13[2]_4",
+        "source_symbol": "PP13[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12127,7 +12474,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP15[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[2]_1 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP15[2]_1"
+        "catalog_symbol": "PP15[2]_1",
+        "source_symbol": "PP15[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12169,7 +12519,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP15[2]_1*.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[2]_1* outlined.",
         "printed_page": 427,
-        "source_symbol": "PP15[2]_1*"
+        "catalog_symbol": "PP15[2]_1*",
+        "source_symbol": "PP15[2]_1*",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12211,7 +12564,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP15[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[2]_2 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP15[2]_2"
+        "catalog_symbol": "PP15[2]_2",
+        "source_symbol": "PP15[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12253,7 +12609,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 427; the outlines mark the printed colour-group symbol and pattern-type label PP15[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[2]_3 outlined.",
         "printed_page": 427,
-        "source_symbol": "PP15[2]_3"
+        "catalog_symbol": "PP15[2]_3",
+        "source_symbol": "PP15[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12295,7 +12654,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP16[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP16[2]_3 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP16[2]_3"
+        "catalog_symbol": "PP16[2]_3",
+        "source_symbol": "PP16[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12337,7 +12699,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP15[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[2]_4 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP15[2]_4"
+        "catalog_symbol": "PP15[2]_4",
+        "source_symbol": "PP15[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12379,7 +12744,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP16[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP16[2]_1 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP16[2]_1"
+        "catalog_symbol": "PP16[2]_1",
+        "source_symbol": "PP16[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12421,7 +12789,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP18[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP18[2]_3 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP18[2]_3"
+        "catalog_symbol": "PP18[2]_3",
+        "source_symbol": "PP18[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12463,7 +12834,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP19[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP19[2]_3 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP19[2]_3"
+        "catalog_symbol": "PP19[2]_3",
+        "source_symbol": "PP19[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12505,7 +12879,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP18[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP18[2]_4 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP18[2]_4"
+        "catalog_symbol": "PP18[2]_4",
+        "source_symbol": "PP18[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12547,7 +12924,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP19[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP19[2]_2 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP19[2]_2"
+        "catalog_symbol": "PP19[2]_2",
+        "source_symbol": "PP19[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12589,7 +12969,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP19[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP19[2]_5 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP19[2]_5"
+        "catalog_symbol": "PP19[2]_5",
+        "source_symbol": "PP19[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12631,7 +13014,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 428; the outlines mark the printed colour-group symbol and pattern-type label PP20[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP20[2]_5 outlined.",
         "printed_page": 428,
-        "source_symbol": "PP20[2]_5"
+        "catalog_symbol": "PP20[2]_5",
+        "source_symbol": "PP20[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12673,7 +13059,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP24[2].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP24[2] outlined.",
         "printed_page": 429,
-        "source_symbol": "PP24[2]"
+        "catalog_symbol": "PP24[2]",
+        "source_symbol": "PP24[2]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12715,7 +13104,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP31[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP31[2]_2 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP31[2]_2"
+        "catalog_symbol": "PP31[2]_2",
+        "source_symbol": "PP31[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12757,7 +13149,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP32[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP32[2]_1 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP32[2]_1"
+        "catalog_symbol": "PP32[2]_1",
+        "source_symbol": "PP32[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12799,7 +13194,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP34[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP34[2]_1 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP34[2]_1"
+        "catalog_symbol": "PP34[2]_1",
+        "source_symbol": "PP34[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12841,7 +13239,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP35[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP35[2]_2 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP35[2]_2"
+        "catalog_symbol": "PP35[2]_2",
+        "source_symbol": "PP35[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12883,7 +13284,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP36[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP36[2]_2 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP36[2]_2"
+        "catalog_symbol": "PP36[2]_2",
+        "source_symbol": "PP36[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12925,7 +13329,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP38[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP38[2]_1 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP38[2]_1"
+        "catalog_symbol": "PP38[2]_1",
+        "source_symbol": "PP38[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -12967,7 +13374,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP38[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP38[2]_4 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP38[2]_4"
+        "catalog_symbol": "PP38[2]_4",
+        "source_symbol": "PP38[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13009,7 +13419,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 429; the outlines mark the printed colour-group symbol and pattern-type label PP40[2]_4.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP40[2]_4 outlined.",
         "printed_page": 429,
-        "source_symbol": "PP40[2]_4"
+        "catalog_symbol": "PP40[2]_4",
+        "source_symbol": "PP40[2]_4",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13051,7 +13464,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP38[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP38[2]_5 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP38[2]_5"
+        "catalog_symbol": "PP38[2]_5",
+        "source_symbol": "PP38[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13093,7 +13509,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP39[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP39[2]_5 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP39[2]_5"
+        "catalog_symbol": "PP39[2]_5",
+        "source_symbol": "PP39[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13135,7 +13554,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP41[2]_5.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP41[2]_5 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP41[2]_5"
+        "catalog_symbol": "PP41[2]_5",
+        "source_symbol": "PP41[2]_5",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13177,7 +13599,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP39[2]_3.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP39[2]_3 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP39[2]_3"
+        "catalog_symbol": "PP39[2]_3",
+        "source_symbol": "PP39[2]_3",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13219,7 +13644,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP44[2].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP44[2] outlined.",
         "printed_page": 430,
-        "source_symbol": "PP44[2]"
+        "catalog_symbol": "PP44[2]",
+        "source_symbol": "PP44[2]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13261,7 +13689,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP47[2]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP47[2]_1 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP47[2]_1"
+        "catalog_symbol": "PP47[2]_1",
+        "source_symbol": "PP47[2]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13303,7 +13734,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP48A[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48A[2]_2 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP48A[2]_2"
+        "catalog_symbol": "PP48A[2]_2",
+        "source_symbol": "PP48A[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13345,7 +13779,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP48B[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48B[2]_2 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP48B[2]_2"
+        "catalog_symbol": "PP48B[2]_2",
+        "source_symbol": "PP48B[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13387,7 +13824,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.5 on printed p. 430; the outlines mark the printed colour-group symbol and pattern-type label PP50[2]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP50[2]_2 outlined.",
         "printed_page": 430,
-        "source_symbol": "PP50[2]_2"
+        "catalog_symbol": "PP50[2]_2",
+        "source_symbol": "PP50[2]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13429,7 +13869,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 414; the outlines mark the printed colour-group symbol and pattern-type label PP1[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP1[3] outlined.",
         "printed_page": 414,
-        "source_symbol": "PP1[3]"
+        "catalog_symbol": "PP1[3]",
+        "source_symbol": "PP1[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13471,7 +13914,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 414; the outlines mark the printed colour-group symbol and pattern-type label PP2[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP2[3]_1 outlined.",
         "printed_page": 414,
-        "source_symbol": "PP2[3]_1"
+        "catalog_symbol": "PP2[3]_1",
+        "source_symbol": "PP2[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13513,7 +13959,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 414; the outlines mark the printed colour-group symbol and pattern-type label PP2[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP2[3]_2 outlined.",
         "printed_page": 414,
-        "source_symbol": "PP2[3]_2"
+        "catalog_symbol": "PP2[3]_2",
+        "source_symbol": "PP2[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13555,7 +14004,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 414; the outlines mark the printed colour-group symbol and pattern-type label PP3[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[3]_1 outlined.",
         "printed_page": 414,
-        "source_symbol": "PP3[3]_1"
+        "catalog_symbol": "PP3[3]_1",
+        "source_symbol": "PP3[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13597,7 +14049,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 414; the outlines mark the printed colour-group symbol and pattern-type label PP3[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP3[3]_2 outlined.",
         "printed_page": 414,
-        "source_symbol": "PP3[3]_2"
+        "catalog_symbol": "PP3[3]_2",
+        "source_symbol": "PP3[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13639,7 +14094,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 414; the outlines mark the printed colour-group symbol and pattern-type label PP5[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP5[3]_1 outlined.",
         "printed_page": 414,
-        "source_symbol": "PP5[3]_1"
+        "catalog_symbol": "PP5[3]_1",
+        "source_symbol": "PP5[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13681,7 +14139,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP5[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP5[3]_2 outlined.",
         "printed_page": 415,
-        "source_symbol": "PP5[3]_2"
+        "catalog_symbol": "PP5[3]_2",
+        "source_symbol": "PP5[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13730,7 +14191,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP7[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP7[3] outlined.",
         "printed_page": 415,
-        "source_symbol": "PP7[3]"
+        "catalog_symbol": "PP7[3]",
+        "source_symbol": "PP7[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13772,7 +14236,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP9[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP9[3] outlined.",
         "printed_page": 415,
-        "source_symbol": "PP9[3]"
+        "catalog_symbol": "PP9[3]",
+        "source_symbol": "PP9[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13814,7 +14281,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP11[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[3]_1 outlined.",
         "printed_page": 415,
-        "source_symbol": "PP11[3]_1"
+        "catalog_symbol": "PP11[3]_1",
+        "source_symbol": "PP11[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13856,7 +14326,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP11[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP11[3]_2 outlined.",
         "printed_page": 415,
-        "source_symbol": "PP11[3]_2"
+        "catalog_symbol": "PP11[3]_2",
+        "source_symbol": "PP11[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13898,7 +14371,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP14[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP14[3] outlined.",
         "printed_page": 415,
-        "source_symbol": "PP14[3]"
+        "catalog_symbol": "PP14[3]",
+        "source_symbol": "PP14[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13940,7 +14416,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP17[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP17[3] outlined.",
         "printed_page": 415,
-        "source_symbol": "PP17[3]"
+        "catalog_symbol": "PP17[3]",
+        "source_symbol": "PP17[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -13982,7 +14461,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP21[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP21[3]_1 outlined.",
         "printed_page": 415,
-        "source_symbol": "PP21[3]_1"
+        "catalog_symbol": "PP21[3]_1",
+        "source_symbol": "PP21[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14024,7 +14506,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 415; the outlines mark the printed colour-group symbol and pattern-type label PP21[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP21[3]_2 outlined.",
         "printed_page": 415,
-        "source_symbol": "PP21[3]_2"
+        "catalog_symbol": "PP21[3]_2",
+        "source_symbol": "PP21[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14066,7 +14551,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP23[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP23[3]_1 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP23[3]_1"
+        "catalog_symbol": "PP23[3]_1",
+        "source_symbol": "PP23[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14109,7 +14597,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP23[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP23[3]_2 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP23[3]_2"
+        "catalog_symbol": "PP23[3]_2",
+        "source_symbol": "PP23[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14151,7 +14642,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP27[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP27[3]_1 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP27[3]_1"
+        "catalog_symbol": "PP27[3]_1",
+        "source_symbol": "PP27[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14193,7 +14687,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP27[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP27[3]_2 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP27[3]_2"
+        "catalog_symbol": "PP27[3]_2",
+        "source_symbol": "PP27[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14235,7 +14732,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP42[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP42[3]_1 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP42[3]_1"
+        "catalog_symbol": "PP42[3]_1",
+        "source_symbol": "PP42[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14277,7 +14777,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP42[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP42[3]_2 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP42[3]_2"
+        "catalog_symbol": "PP42[3]_2",
+        "source_symbol": "PP42[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14319,7 +14822,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP46[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP46[3]_1 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP46[3]_1"
+        "catalog_symbol": "PP46[3]_1",
+        "source_symbol": "PP46[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14361,7 +14867,10 @@
         "context": "Grünbaum-Shephard Figure 8.2.3 on printed p. 416; the outlines mark the printed colour-group symbol and pattern-type label PP46[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP46[3]_2 outlined.",
         "printed_page": 416,
-        "source_symbol": "PP46[3]_2"
+        "catalog_symbol": "PP46[3]_2",
+        "source_symbol": "PP46[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14403,7 +14912,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 431; the outlines mark the printed colour-group symbol and pattern-type label PP4[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP4[3]_1 outlined.",
         "printed_page": 431,
-        "source_symbol": "PP4[3]_1"
+        "catalog_symbol": "PP4[3]_1",
+        "source_symbol": "PP4[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14445,7 +14957,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 431; the outlines mark the printed colour-group symbol and pattern-type label PP4[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP4[3]_2 outlined.",
         "printed_page": 431,
-        "source_symbol": "PP4[3]_2"
+        "catalog_symbol": "PP4[3]_2",
+        "source_symbol": "PP4[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14487,7 +15002,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 431; the outlines mark the printed colour-group symbol and pattern-type label PP6[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP6[3]_1 outlined.",
         "printed_page": 431,
-        "source_symbol": "PP6[3]_1"
+        "catalog_symbol": "PP6[3]_1",
+        "source_symbol": "PP6[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14529,7 +15047,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 431; the outlines mark the printed colour-group symbol and pattern-type label PP6[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP6[3]_2 outlined.",
         "printed_page": 431,
-        "source_symbol": "PP6[3]_2"
+        "catalog_symbol": "PP6[3]_2",
+        "source_symbol": "PP6[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14579,7 +15100,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 431; the outlines mark the printed colour-group symbol and pattern-type label PP8[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP8[3] outlined.",
         "printed_page": 431,
-        "source_symbol": "PP8[3]"
+        "catalog_symbol": "PP8[3]",
+        "source_symbol": "PP8[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14621,7 +15145,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 431; the outlines mark the printed colour-group symbol and pattern-type label PP10[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP10[3] outlined.",
         "printed_page": 431,
-        "source_symbol": "PP10[3]"
+        "catalog_symbol": "PP10[3]",
+        "source_symbol": "PP10[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14663,7 +15190,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP12[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP12[3]_1 outlined.",
         "printed_page": 432,
-        "source_symbol": "PP12[3]_1"
+        "catalog_symbol": "PP12[3]_1",
+        "source_symbol": "PP12[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14705,7 +15235,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP13[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP13[3]_1 outlined.",
         "printed_page": 432,
-        "source_symbol": "PP13[3]_1"
+        "catalog_symbol": "PP13[3]_1",
+        "source_symbol": "PP13[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14747,7 +15280,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP12[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP12[3]_2 outlined.",
         "printed_page": 432,
-        "source_symbol": "PP12[3]_2"
+        "catalog_symbol": "PP12[3]_2",
+        "source_symbol": "PP12[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14789,7 +15325,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP13[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP13[3]_2 outlined.",
         "printed_page": 432,
-        "source_symbol": "PP13[3]_2"
+        "catalog_symbol": "PP13[3]_2",
+        "source_symbol": "PP13[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14831,7 +15370,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP15[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[3] outlined.",
         "printed_page": 432,
-        "source_symbol": "PP15[3]"
+        "catalog_symbol": "PP15[3]",
+        "source_symbol": "PP15[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14873,7 +15415,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP15[3]*.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP15[3]* outlined.",
         "printed_page": 432,
-        "source_symbol": "PP15[3]*"
+        "catalog_symbol": "PP15[3]*",
+        "source_symbol": "PP15[3]*",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14915,7 +15460,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP16[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP16[3] outlined.",
         "printed_page": 432,
-        "source_symbol": "PP16[3]"
+        "catalog_symbol": "PP16[3]",
+        "source_symbol": "PP16[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14957,7 +15505,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP18[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP18[3] outlined.",
         "printed_page": 432,
-        "source_symbol": "PP18[3]"
+        "catalog_symbol": "PP18[3]",
+        "source_symbol": "PP18[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -14999,7 +15550,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 432; the outlines mark the printed colour-group symbol and pattern-type label PP19[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP19[3] outlined.",
         "printed_page": 432,
-        "source_symbol": "PP19[3]"
+        "catalog_symbol": "PP19[3]",
+        "source_symbol": "PP19[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15041,7 +15595,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP19[3]*.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP19[3]* outlined.",
         "printed_page": 433,
-        "source_symbol": "PP19[3]*"
+        "catalog_symbol": "PP19[3]*",
+        "source_symbol": "PP19[3]*",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15083,7 +15640,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP20[3].",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP20[3] outlined.",
         "printed_page": 433,
-        "source_symbol": "PP20[3]"
+        "catalog_symbol": "PP20[3]",
+        "source_symbol": "PP20[3]",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15125,7 +15685,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP22[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP22[3]_2 outlined.",
         "printed_page": 433,
-        "source_symbol": "PP22[3]_2"
+        "catalog_symbol": "PP22[3]_2",
+        "source_symbol": "PP22[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15167,7 +15730,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP25[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP25[3]_1 outlined.",
         "printed_page": 433,
-        "source_symbol": "PP25[3]_1"
+        "catalog_symbol": "PP25[3]_1",
+        "source_symbol": "PP25[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15209,7 +15775,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP25[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP25[3]_2 outlined.",
         "printed_page": 433,
-        "source_symbol": "PP25[3]_2"
+        "catalog_symbol": "PP25[3]_2",
+        "source_symbol": "PP25[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15251,7 +15820,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP26[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP26[3]_2 outlined.",
         "printed_page": 433,
-        "source_symbol": "PP26[3]_2"
+        "catalog_symbol": "PP26[3]_2",
+        "source_symbol": "PP26[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15293,7 +15865,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP28[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP28[3]_1 outlined.",
         "printed_page": 433,
-        "source_symbol": "PP28[3]_1"
+        "catalog_symbol": "PP28[3]_1",
+        "source_symbol": "PP28[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15335,7 +15910,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP28[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP28[3]_2 outlined.",
         "printed_page": 433,
-        "source_symbol": "PP28[3]_2"
+        "catalog_symbol": "PP28[3]_2",
+        "source_symbol": "PP28[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15377,7 +15955,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 433; the outlines mark the printed colour-group symbol and pattern-type label PP29[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP29[3]_2 outlined.",
         "printed_page": 433,
-        "source_symbol": "PP29[3]_2"
+        "catalog_symbol": "PP29[3]_2",
+        "source_symbol": "PP29[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15419,7 +16000,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP43[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP43[3]_1 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP43[3]_1"
+        "catalog_symbol": "PP43[3]_1",
+        "source_symbol": "PP43[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15461,7 +16045,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP43[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP43[3]_2 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP43[3]_2"
+        "catalog_symbol": "PP43[3]_2",
+        "source_symbol": "PP43[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15503,7 +16090,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP45[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP45[3]_2 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP45[3]_2"
+        "catalog_symbol": "PP45[3]_2",
+        "source_symbol": "PP45[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15545,7 +16135,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP47[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP47[3]_1 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP47[3]_1"
+        "catalog_symbol": "PP47[3]_1",
+        "source_symbol": "PP47[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15587,7 +16180,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP48A[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48A[3]_1 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP48A[3]_1"
+        "catalog_symbol": "PP48A[3]_1",
+        "source_symbol": "PP48A[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15629,7 +16225,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP48B[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48B[3]_1 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP48B[3]_1"
+        "catalog_symbol": "PP48B[3]_1",
+        "source_symbol": "PP48B[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15671,7 +16270,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP49[3]_1 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP49[3]_1"
+        "catalog_symbol": "PP49[3]_1",
+        "source_symbol": "PP49[3]_1",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15713,7 +16315,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP47[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP47[3]_2 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP47[3]_2"
+        "catalog_symbol": "PP47[3]_2",
+        "source_symbol": "PP47[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15755,7 +16360,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP48A[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48A[3]_2 outlined.",
         "printed_page": 434,
-        "source_symbol": "PP48A[3]_2"
+        "catalog_symbol": "PP48A[3]_2",
+        "source_symbol": "PP48A[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15797,7 +16405,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP48B[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48B[3]_2 outlined.",
         "printed_page": 435,
-        "source_symbol": "PP48B[3]_2"
+        "catalog_symbol": "PP48B[3]_2",
+        "source_symbol": "PP48B[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15839,7 +16450,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP49[3]_2 outlined.",
         "printed_page": 435,
-        "source_symbol": "PP49[3]_2"
+        "catalog_symbol": "PP49[3]_2",
+        "source_symbol": "PP49[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     },
     {
@@ -15881,7 +16495,10 @@
         "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP51[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP51[3]_2 outlined.",
         "printed_page": 435,
-        "source_symbol": "PP51[3]_2"
+        "catalog_symbol": "PP51[3]_2",
+        "source_symbol": "PP51[3]_2",
+        "direct_source": true,
+        "relationship": "direct"
       }
     }
   ]

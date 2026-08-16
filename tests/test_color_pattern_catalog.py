@@ -8,6 +8,8 @@ import subprocess
 import sys
 import unittest
 
+from PIL import Image
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -40,6 +42,8 @@ class CatalogParser(HTMLParser):
         self.panel_hosts = 0
         self.pattern_tabs = 0
         self.nav_links: list[str] = []
+        self.directory_cards: list[dict[str, str | None]] = []
+        self.directory_images: list[dict[str, str | None]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
@@ -54,6 +58,12 @@ class CatalogParser(HTMLParser):
             self.pattern_tabs += 1
         if tag == "a" and attributes.get("href"):
             self.nav_links.append(attributes["href"] or "")
+        if tag == "a" and attributes.get("data-directory-wallpaper-id"):
+            self.directory_cards.append(attributes)
+        if tag == "img" and (attributes.get("src") or "").startswith(
+            "output/mathworld-wallpaper-groups/"
+        ):
+            self.directory_images.append(attributes)
 
 
 class ColorPatternCatalogTests(unittest.TestCase):
@@ -264,7 +274,9 @@ class ColorPatternCatalogTests(unittest.TestCase):
         }
         pp7 = patterns["PP7[2]_2"]
         pp8 = patterns["PP8[2]_2"]
-        for pattern in (pp7, pp8):
+        mono_pp7 = patterns["PP7"]
+        mono_pp8 = patterns["PP8"]
+        for pattern in (mono_pp7, mono_pp8, pp7, pp8):
             layout = pattern["render_layout"]
             self.assertEqual(layout["kind"], "fixed_vertical_bands")
             self.assertEqual(layout["band_axis"], "vertical")
@@ -272,6 +284,8 @@ class ColorPatternCatalogTests(unittest.TestCase):
             self.assertEqual(layout["spacing"], [70, 90])
         self.assertEqual(pp7["render_layout"]["motifs_per_band"], 2)
         self.assertEqual(pp8["render_layout"]["motifs_per_band"], 1)
+        self.assertEqual(mono_pp7["render_layout"]["motifs_per_band"], 2)
+        self.assertEqual(mono_pp8["render_layout"]["motifs_per_band"], 1)
         self.assertEqual(
             pp8["render_layout"]["reference_pattern_id"], pp7["id"]
         )
@@ -500,6 +514,25 @@ class ColorPatternCatalogTests(unittest.TestCase):
             self.assertIn("Chaim short colour signature", tab.get("aria-label") or "")
             self.assertIn("colour type", tab.get("aria-label") or "")
 
+        self.assertEqual(
+            [card["data-directory-wallpaper-id"] for card in self.parser.directory_cards],
+            list(catalog.MATHWORLD_DIRECTORY_ORDER),
+        )
+        self.assertEqual(len(self.parser.directory_images), 17)
+        self.assertNotIn("nontrivial groups ·", self.page)
+        self.assertIn("MathWorld", self.page)
+
+    def test_mathworld_directory_has_17_local_crops(self) -> None:
+        assets = sorted((ROOT / "output" / "mathworld-wallpaper-groups").glob("*.webp"))
+        self.assertEqual(
+            {asset.stem for asset in assets},
+            {wallpaper["hm"] for wallpaper in self.payload["wallpaper_groups"]},
+        )
+        for asset in assets:
+            self.assertGreater(asset.stat().st_size, 2_000)
+            with Image.open(asset) as image:
+                self.assertEqual(image.size, (320, 240))
+
     def test_javascript_is_syntax_valid_and_contains_nested_tab_controls(self) -> None:
         subprocess.run(
             ["node", "--check", str(ROOT / "color-pattern-catalog.js")],
@@ -531,7 +564,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertNotIn("layoutVariant * 7", script)
         self.assertNotIn("const paths = [", script)
         self.assertIn('link.target = "color-pattern-book-excerpt"', script)
-        self.assertIn("book-excerpt.html?v=pg-short-row-fix", script)
+        self.assertIn("book-excerpt.html?v=one-colour-source-v1", script)
         self.assertIn("state.excerptWindow.location.href = excerpt.href", script)
         self.assertIn("state.excerptWindow.focus()", script)
         for label in (
@@ -653,8 +686,34 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertEqual(len(one_colour), 51)
         for pattern in one_colour:
             excerpt = pattern["book_excerpt"]
-            self.assertIn("same PP stem", excerpt["context"])
+            self.assertFalse(excerpt["direct_source"])
+            self.assertEqual(excerpt["relationship"], "underlying-pattern-type")
+            self.assertEqual(excerpt["catalog_symbol"], pattern["gs_pattern_type"])
+            self.assertIn("indirect cross-reference", excerpt["context"])
             self.assertNotEqual(excerpt["source_symbol"], pattern["gs_pattern_type"])
+
+        coloured = [
+            pattern for pattern in self.payload["pattern_types"]
+            if pattern["number_of_colours"] > 1
+        ]
+        self.assertEqual(len(coloured), 147)
+        self.assertTrue(all(pattern["book_excerpt"]["direct_source"] for pattern in coloured))
+
+        p2 = {
+            pattern["gs_pattern_type"]: pattern
+            for pattern in one_colour if pattern["wallpaper_id"] == "p2"
+        }
+        self.assertEqual(set(p2), {"PP7", "PP8"})
+        self.assertTrue(p2["PP7"]["underlying_pattern_is_primitive"])
+        self.assertFalse(p2["PP8"]["underlying_pattern_is_primitive"])
+        self.assertEqual(p2["PP7"]["book_excerpt"]["source_symbol"], "PP7[2]_1")
+        self.assertEqual(p2["PP8"]["book_excerpt"]["source_symbol"], "PP8[2]_2")
+
+        script = (ROOT / "color-pattern-catalog.js").read_text(encoding="utf-8")
+        self.assertIn("function gsGroupSymbolElement", script)
+        self.assertIn("function gsPatternTypeElement", script)
+        self.assertIn("if (group.number_of_colours === 1)", script)
+        self.assertIn("if (pattern.book_excerpt.direct_source)", script)
 
     def test_site_navigation_links_to_patterns(self) -> None:
         static_pages = (

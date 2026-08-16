@@ -292,7 +292,10 @@ def _pattern_excerpt(pattern: dict[str, Any], *, source_symbol: str | None = Non
             f"and pattern-type label {source_symbol} outlined."
         ),
         "printed_page": page,
+        "catalog_symbol": displayed,
         "source_symbol": source_symbol,
+        "direct_source": displayed == source_symbol,
+        "relationship": "direct" if displayed == source_symbol else "underlying-pattern-type",
     }
 
 
@@ -319,10 +322,25 @@ def decorate_payload(payload: dict[str, Any]) -> None:
             continue
         source = first_by_stem[pattern["underlying_pattern_type"]]
         excerpt = _pattern_excerpt(source, source_symbol=source["gs_pattern_type"])
-        excerpt["title"] = f"Pattern type {pattern['gs_pattern_type']}"
+        excerpt.update({
+            "title": (
+                f"Coloured occurrence {source['gs_pattern_type']} "
+                f"(underlying {pattern['gs_pattern_type']})"
+            ),
+            "catalog_symbol": pattern["gs_pattern_type"],
+            "source_symbol": source["gs_pattern_type"],
+            "direct_source": False,
+            "relationship": "underlying-pattern-type",
+        })
         excerpt["context"] += (
-            f" The attached excerpt contains Chapter 8, not the Chapter 5 one-colour plates; "
-            f"{source['gs_pattern_type']} is the printed occurrence of the same PP stem."
+            " The supplied excerpt contains Chapter 8, not the Chapter 5 "
+            f"one-colour plates. This is an indirect cross-reference: "
+            f"{source['gs_pattern_type']} has underlying pattern type "
+            f"{pattern['gs_pattern_type']}."
+        )
+        excerpt["alt"] = (
+            f"Annotated Chapter 8 occurrence {source['gs_pattern_type']}, whose "
+            f"underlying one-colour pattern type is {pattern['gs_pattern_type']}."
         )
         pattern["book_excerpt"] = excerpt
 

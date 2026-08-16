@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=layout-discrepancy-v3";
+  const DATA_URL = "data/color-pattern-catalog.json?v=one-colour-source-v1";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -89,7 +89,7 @@
     if (excerpt.source_url) parameters.set("source", excerpt.source_url);
     const link = document.createElement("a");
     link.className = "book-evidence-link";
-    link.href = `book-excerpt.html?v=pg-short-row-fix&${parameters.toString()}`;
+    link.href = `book-excerpt.html?v=one-colour-source-v1&${parameters.toString()}`;
     link.target = "color-pattern-book-excerpt";
     if (label instanceof Node) link.append(label);
     else link.textContent = label;
@@ -156,6 +156,45 @@
 
   function mathSymbolElement(value) {
     return textElement("span", "source-math-symbol", typesetSymbol(value));
+  }
+
+  function gsGroupSymbolElement(pattern, group) {
+    if (group.number_of_colours === 1) {
+      return mathSymbolElement(group.gs_symbol);
+    }
+    return sourceSymbolLink(
+      pattern.book_excerpt,
+      pattern.id,
+      mathSymbolElement(group.gs_symbol),
+      `Open Grünbaum–Shephard source crop for group symbol ${group.gs_symbol}`,
+    );
+  }
+
+  function gsPatternTypeElement(pattern) {
+    if (pattern.book_excerpt.direct_source) {
+      return sourceSymbolLink(
+        pattern.book_excerpt,
+        pattern.id,
+        mathSymbolElement(pattern.gs_pattern_type),
+        `Open Grünbaum–Shephard source crop for pattern type ${pattern.gs_pattern_type}`,
+      );
+    }
+    const wrapper = document.createElement("span");
+    wrapper.className = "indirect-source-value";
+    wrapper.append(
+      mathSymbolElement(pattern.gs_pattern_type),
+      document.createTextNode(
+        ` · ${pattern.underlying_pattern_is_primitive ? "primitive" : "nonprimitive"}`,
+      ),
+    );
+    wrapper.title = (
+      `${pattern.underlying_pattern_is_primitive
+        ? "Primitive: the wallpaper group is the only motif-transitive subgroup."
+        : "Nonprimitive: symmetry-related motif copies have merged into a motif with its own stabilizer."} `
+      + `The supplied excerpt has no Chapter 5 plate for ${pattern.gs_pattern_type}; `
+      + `its Chapter 8 cross-reference is ${pattern.book_excerpt.source_symbol}.`
+    );
+    return wrapper;
   }
 
   function ghkElement(group) {
@@ -558,18 +597,8 @@
       `Open Chaim short colour signature ${group.chaim_short_signature.replaceAll("^", "")} in The Symmetries of Things`,
     ));
     appendTableRow(table, "Chaim G/H/K", ghkElement(group));
-    appendTableRow(table, "G&S group symbol", sourceSymbolLink(
-      pattern.book_excerpt,
-      pattern.id,
-      mathSymbolElement(group.gs_symbol),
-      `Open Grünbaum–Shephard source crop for group symbol ${group.gs_symbol}`,
-    ));
-    appendTableRow(table, "G&S pattern type", sourceSymbolLink(
-      pattern.book_excerpt,
-      pattern.id,
-      mathSymbolElement(pattern.gs_pattern_type),
-      `Open Grünbaum–Shephard source crop for pattern type ${pattern.gs_pattern_type}`,
-    ));
+    appendTableRow(table, "G&S group symbol", gsGroupSymbolElement(pattern, group));
+    appendTableRow(table, "G&S pattern type", gsPatternTypeElement(pattern));
     appendTableRow(table, "Colour-blind Δ", layoutDiscrepancyElement(pattern));
     details.append(presentationElement(group), table);
     pane.append(figure, details);
