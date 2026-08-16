@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=affine-colour-actions-v2";
+  const DATA_URL = "data/color-pattern-catalog.json?v=layout-discrepancy-v3";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -169,6 +169,27 @@
       "aria-label",
       `G ${typesetSymbol(group.ghk.G)}; H ${typesetSymbol(group.ghk.H)}; K ${typesetSymbol(group.ghk.K)}`,
     );
+    return wrapper;
+  }
+
+  function layoutDiscrepancyElement(pattern) {
+    const layout = pattern.render_layout;
+    const reference = state.patternById.get(layout.reference_pattern_id);
+    const wrapper = document.createElement("span");
+    wrapper.className = "layout-discrepancy";
+    wrapper.append(document.createTextNode(layout.colour_blind_discrepancy.toFixed(3)));
+    if (reference && reference.id !== pattern.id) {
+      wrapper.append(
+        document.createTextNode(" from "),
+        mathSymbolElement(reference.gs_pattern_type),
+      );
+    }
+    if (layout.schematic_constraint) {
+      wrapper.append(document.createTextNode(" · approx."));
+      wrapper.title = `${state.payload.meta.definitions.layout_discrepancy} ${layout.schematic_constraint}`;
+    } else {
+      wrapper.title = state.payload.meta.definitions.layout_discrepancy;
+    }
     return wrapper;
   }
 
@@ -420,29 +441,37 @@
     return queue;
   }
 
-  function fractionalPart(value) {
-    return value - Math.floor(value);
+  function patternTemplateSeeds(pattern, group) {
+    return pattern.render_layout.seeds.map((seed) => ({
+      point: seed.point,
+      angle: seed.angle,
+      colour: seed.colour % group.number_of_colours,
+    }));
   }
 
-  function patternTemplateSeeds(pattern, group) {
-    const match = pattern.underlying_pattern_type.match(/PP(\d+)/);
-    const number = match ? Number(match[1]) : 1;
-    const hasStarVariant = /\](?:_\d+)?\*$/.test(pattern.gs_pattern_type);
-    const letterVariant = /^PP\d+[AB]\[/.exec(pattern.gs_pattern_type)?.[0].match(/[AB]/)?.[0];
-    const variant = hasStarVariant ? 3 : (letterVariant === "A" ? 1 : letterVariant === "B" ? 2 : 0);
-    const x = 0.105 + 0.29 * fractionalPart(number * 0.61803398875 + 0.17)
-      + variant * 0.037;
-    const y = 0.085 + 0.27 * fractionalPart(number * 0.41421356237 + 0.31)
-      - variant * 0.029;
-    const angle = (number * 47 + 11 + variant * 23) % 360;
-    // One generic-position orbit keeps every plate monomotif.  The six
-    // star/A/B ambiguities receive distinct generic representatives without
-    // changing the atomic asymmetric R-diamond.
-    return [{
-      point: [x, y],
-      angle,
-      colour: (number + variant) % group.number_of_colours,
-    }];
+  function addFixedVerticalBands(svg, pattern, colours) {
+    const layout = pattern.render_layout;
+    const [originX, originY] = layout.origin;
+    const [spacingX, spacingY] = layout.spacing;
+    const [offsetX, offsetY] = layout.pair_offset;
+    const motifs = svgElement("g");
+    for (let row = 0; row < layout.rows; row += 1) {
+      for (let column = 0; column < layout.columns; column += 1) {
+        const colour = colours[column % colours.length];
+        const offsets = layout.motifs_per_band === 2
+          ? [[-offsetX, -offsetY, 0], [offsetX, offsetY, 180]]
+          : [[0, 0, 0]];
+        offsets.forEach(([dx, dy, angle]) => addMotif(
+          motifs,
+          originX + column * spacingX + dx,
+          originY + row * spacingY + dy,
+          angle,
+          colour,
+          false,
+        ));
+      }
+    }
+    svg.append(motifs);
   }
 
   function motifPose(operation, seed, scale) {
@@ -476,6 +505,10 @@
     svg.append(background);
 
     const colours = PALETTES[pattern.number_of_colours];
+    if (pattern.render_layout.kind === "fixed_vertical_bands") {
+      addFixedVerticalBands(svg, pattern, colours);
+      return svg;
+    }
     const operations = enumerateGroupActions(group, wallpaper);
     const seeds = patternTemplateSeeds(pattern, group);
     const scale = wallpaper.render_geometry.scale;
@@ -537,6 +570,7 @@
       mathSymbolElement(pattern.gs_pattern_type),
       `Open Grünbaum–Shephard source crop for pattern type ${pattern.gs_pattern_type}`,
     ));
+    appendTableRow(table, "Colour-blind Δ", layoutDiscrepancyElement(pattern));
     details.append(presentationElement(group), table);
     pane.append(figure, details);
     return pane;

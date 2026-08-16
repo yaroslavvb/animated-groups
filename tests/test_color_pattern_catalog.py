@@ -25,6 +25,8 @@ from color_pattern_book_excerpt_specs import (  # noqa: E402
 )
 from wallpaper_affine_generators import (  # noqa: E402
     affine_relations_hold,
+    colour_blind_discrepancy,
+    colour_blind_fingerprint,
     enumerate_coloured_actions,
     scene_fingerprint,
 )
@@ -195,6 +197,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
         actions_by_group = {}
         fingerprints: defaultdict[tuple, list[str]] = defaultdict(list)
         colours_seen: dict[str, set[int]] = defaultdict(set)
+        blind_by_pattern: dict[str, tuple] = {}
         for pattern in self.payload["pattern_types"]:
             group = group_by_id[pattern["colour_group_id"]]
             if group["id"] not in actions_by_group:
@@ -207,6 +210,9 @@ class ColorPatternCatalogTests(unittest.TestCase):
             self.assertTrue(fingerprint, pattern["id"])
             fingerprints[fingerprint].append(pattern["id"])
             colours_seen[group["id"]].update(pose[-1] // 10 for pose in fingerprint)
+            blind_by_pattern[pattern["id"]] = colour_blind_fingerprint(
+                pattern, group, actions_by_group[group["id"]]
+            )
 
         collisions = [ids for ids in fingerprints.values() if len(ids) > 1]
         self.assertEqual(len(fingerprints), 198)
@@ -217,6 +223,98 @@ class ColorPatternCatalogTests(unittest.TestCase):
                 set(range(group["number_of_colours"])),
                 group["id"],
             )
+
+        pattern_by_id = {
+            pattern["id"]: pattern for pattern in self.payload["pattern_types"]
+        }
+        orbit_points = {
+            tuple(seed["point"])
+            for pattern in self.payload["pattern_types"]
+            if pattern["render_layout"]["kind"] == "orbit"
+            for seed in pattern["render_layout"]["seeds"]
+        }
+        # All generic representatives retain the same motif centres.  The
+        # optimizer resolves the remaining collisions by the smallest needed
+        # orientation change, so switching tabs does not move the grid.
+        self.assertEqual(orbit_points, {(0.173, 0.137)})
+        zero_discrepancy = 0
+        for pattern in self.payload["pattern_types"]:
+            layout = pattern["render_layout"]
+            reference_id = layout["reference_pattern_id"]
+            self.assertIn(reference_id, pattern_by_id)
+            measured = colour_blind_discrepancy(
+                blind_by_pattern[reference_id], blind_by_pattern[pattern["id"]]
+            )
+            self.assertAlmostEqual(
+                layout["colour_blind_discrepancy"], measured, places=6,
+                msg=pattern["id"],
+            )
+            if measured == 0:
+                zero_discrepancy += 1
+        # Candidate zero is shared by the 86 colour groups.  It gives every
+        # group's first representative an identical colour-blind geometry;
+        # only later same-group pattern types need the closest alternative.
+        self.assertEqual(zero_discrepancy, 86)
+
+    def test_p2_pp7_pp8_follow_the_source_merge_layout(self) -> None:
+        patterns = {
+            pattern["gs_pattern_type"]: pattern
+            for pattern in self.payload["pattern_types"]
+            if pattern["wallpaper_id"] == "p2"
+        }
+        pp7 = patterns["PP7[2]_2"]
+        pp8 = patterns["PP8[2]_2"]
+        for pattern in (pp7, pp8):
+            layout = pattern["render_layout"]
+            self.assertEqual(layout["kind"], "fixed_vertical_bands")
+            self.assertEqual(layout["band_axis"], "vertical")
+            self.assertEqual(layout["origin"], [60, 55])
+            self.assertEqual(layout["spacing"], [70, 90])
+        self.assertEqual(pp7["render_layout"]["motifs_per_band"], 2)
+        self.assertEqual(pp8["render_layout"]["motifs_per_band"], 1)
+        self.assertEqual(
+            pp8["render_layout"]["reference_pattern_id"], pp7["id"]
+        )
+        self.assertGreater(pp8["render_layout"]["colour_blind_discrepancy"], 0)
+        self.assertIn("half-turn symmetric", pp8["render_layout"]["schematic_constraint"])
+
+        group_by_id = {
+            group["id"]: group for group in self.payload["colour_groups"]
+        }
+        self.assertEqual(
+            [
+                action["permutation_code"]
+                for action in group_by_id["cg-p2-2-2"]["generator_colour_actions"]
+            ],
+            ["1", "1", "AB", "AB"],
+        )
+        self.assertEqual(
+            [
+                action["permutation_code"]
+                for action in group_by_id["cg-p2-3-1"]["generator_colour_actions"]
+            ],
+            ["BC", "BC", "AB", "AB"],
+        )
+        pp7_scene = scene_fingerprint(pp7, group_by_id[pp7["colour_group_id"]])
+        pp8_scene = scene_fingerprint(pp8, group_by_id[pp8["colour_group_id"]])
+        self.assertEqual(len(pp7_scene), 2 * len(pp8_scene))
+        # Sorted left-to-right in one row: PP7 has AA|BB paired bands,
+        # whereas PP8 has A|B single bands.
+        pp7_row = sorted(pose for pose in pp7_scene if pose[1] < 100_000)
+        pp8_row = sorted(pose for pose in pp8_scene if pose[1] < 100_000)
+        self.assertEqual([pose[-1] // 10 for pose in pp7_row[:4]], [0, 0, 1, 1])
+        self.assertEqual([pose[-1] // 10 for pose in pp8_row[:4]], [0, 1, 0, 1])
+
+        p2_geometry = next(
+            wallpaper["render_geometry"]
+            for wallpaper in self.payload["wallpaper_groups"]
+            if wallpaper["id"] == "p2"
+        )
+        beta = next(
+            generator for generator in p2_geometry["generators"]
+            if generator["generator"] == "β"
+        )
+        self.assertEqual(beta["translation"], [0.0, 1.0])
 
     def test_two_colour_orbifold_exception_is_explicit(self) -> None:
         groups = [
@@ -423,7 +521,10 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn("function motifPose", script)
         self.assertIn("wallpaper.render_geometry.generators", script)
         self.assertIn("operation.permutation[seed.colour]", script)
-        self.assertIn("pattern.underlying_pattern_type", script)
+        self.assertIn("pattern.render_layout", script)
+        self.assertIn("function addFixedVerticalBands", script)
+        self.assertIn("function layoutDiscrepancyElement", script)
+        self.assertIn('appendTableRow(table, "Colour-blind Δ"', script)
         self.assertNotIn("Math.max(1, pattern.number_of_colours - 1)", script)
         self.assertNotIn("function buildP4TwoColourPattern", script)
         self.assertNotIn("const motifScale", script)

@@ -13,7 +13,7 @@ declared colour homomorphism changes between colour-group tabs.
 
 from __future__ import annotations
 
-from math import cos, floor, pi, sin, sqrt
+from math import acos, cos, hypot, pi, sin, sqrt
 from typing import Any
 
 from colour_generator_actions import GENERATOR_GEOMETRY, GROUP_PRESENTATIONS
@@ -162,9 +162,12 @@ def _build_generators() -> dict[str, dict[str, Affine]]:
         },
     }
 
+    # Conjugate the usual p2 realization by reflection in y=x.  This places
+    # the index-two colour translation horizontally, so its colour classes
+    # read as the vertical strips used in the Gruenbaum--Shephard plates.
     p2 = {
         "α": _rotation(180, (0, 0)),
-        "β": _rotation(180, (0.5, 0)),
+        "β": _rotation(180, (0, 0.5)),
         "γ": _rotation(180, (0.5, 0.5)),
     }
     p2["δ"] = _close_product(p2, ("α", "β", "γ"))
@@ -313,47 +316,113 @@ def enumerate_coloured_actions(
     return tuple(queue)
 
 
-def _fractional_part(value: float) -> float:
-    return value - floor(value)
+CANONICAL_PATTERN_SEED = ((0.173, 0.137), 17.0, 0)
+
+
+def candidate_orbit_layouts() -> tuple[dict[str, Any], ...]:
+    """Nearby generic-orbit candidates for measured layout optimization.
+
+    Every wallpaper family starts with exactly the same normalized seed.  A
+    later candidate is used only when reusing that seed would make two full
+    coloured scenes identical.  The catalog generator measures and ranks the
+    candidates; angle-only alternatives preserve every motif centre and win
+    whenever their measured discrepancy is minimal.
+    """
+
+    (point, angle, colour) = CANONICAL_PATTERN_SEED
+    angle_offsets = (0, 6, -6, 12, -12, 20, -20, 30, -30)
+    point_offsets = (
+        (0.0, 0.0),
+        (0.018, 0.0), (-0.018, 0.0),
+        (0.0, 0.018), (0.0, -0.018),
+        (0.018, 0.018), (-0.018, 0.018),
+        (0.018, -0.018), (-0.018, -0.018),
+    )
+    result: list[dict[str, Any]] = []
+    for dx, dy in point_offsets:
+        for offset in angle_offsets:
+            result.append({
+                "kind": "orbit",
+                "seeds": [{
+                    "point": [round(point[0] + dx, 6), round(point[1] + dy, 6)],
+                    "angle": angle + offset,
+                    "colour": colour,
+                }],
+            })
+    return tuple(result)
+
+
+def _layout_seeds(
+    pattern: dict[str, Any], colours: int
+) -> tuple[tuple[tuple[float, float], float, int], ...]:
+    layout = pattern.get("render_layout") or {}
+    if layout.get("kind") == "orbit":
+        seeds = layout.get("seeds") or []
+        return tuple(
+            (
+                (float(seed["point"][0]), float(seed["point"][1])),
+                float(seed["angle"]),
+                int(seed.get("colour", 0)) % colours,
+            )
+            for seed in seeds
+        )
+    point, angle, colour = CANONICAL_PATTERN_SEED
+    return ((point, angle, colour % colours),)
 
 
 def pattern_template_seeds(
     pattern: dict[str, Any], colours: int
 ) -> tuple[tuple[tuple[float, float], float, int], ...]:
-    """Return the PP-stem template and the six explicit variant overlays."""
+    """Return the assigned generic-orbit seeds for a catalog pattern."""
 
-    import re
-
-    match = re.search(r"PP(\d+)", pattern["underlying_pattern_type"])
-    number = int(match.group(1)) if match else 1
-    symbol = pattern["gs_pattern_type"]
-    star = re.search(r"\](?:_\d+)?\*$", symbol) is not None
-    letter_match = re.match(r"^PP\d+([AB])\[", symbol)
-    letter = letter_match.group(1) if letter_match else None
-    variant = 3 if star else (1 if letter == "A" else 2 if letter == "B" else 0)
-    x = (
-        0.105 + 0.29 * _fractional_part(number * 0.61803398875 + 0.17)
-        + variant * 0.037
-    )
-    y = (
-        0.085 + 0.27 * _fractional_part(number * 0.41421356237 + 0.31)
-        - variant * 0.029
-    )
-    angle = (number * 47 + 11 + variant * 23) % 360
-    return (((x, y), angle, (number + variant) % colours),)
+    return _layout_seeds(pattern, colours)
 
 
-def scene_fingerprint(
+def _fixed_vertical_band_scene(
+    layout: dict[str, Any], *, include_colours: bool
+) -> tuple[tuple[int, int, int, int, int, int], ...]:
+    """Return a PP7/PP8 band layout on one shared lattice.
+
+    In the source, primitive PP7 has two asymmetric copies around every band
+    centre.  Nonprimitive PP8 moves each same-colour pair together until it
+    becomes one half-turn-symmetric motif.  Our mandated R is asymmetric, so
+    PP8 uses the closest schematic substitute: one R at the shared centre.
+    """
+
+    columns = int(layout.get("columns", 13))
+    rows = int(layout.get("rows", 6))
+    origin_x, origin_y = layout.get("origin", [60, 55])
+    spacing_x, spacing_y = layout.get("spacing", [70, 90])
+    motifs_per_band = int(layout.get("motifs_per_band", 1))
+    offset_x, offset_y = layout.get("pair_offset", [14, 10])
+    colours = int(layout.get("colours", 2))
+    poses = []
+    for row in range(rows):
+        for column in range(columns):
+            band_colour = column % colours if include_colours else 0
+            offsets = (
+                ((-offset_x, -offset_y, 0), (offset_x, offset_y, 180))
+                if motifs_per_band == 2 else ((0, 0, 0),)
+            )
+            for motif_index, (dx, dy, angle) in enumerate(offsets):
+                poses.append((
+                    round((origin_x + column * spacing_x + dx) * 1_000),
+                    round((origin_y + row * spacing_y + dy) * 1_000),
+                    round(cos(angle * pi / 180) * 1_000_000),
+                    round(-sin(angle * pi / 180) * 1_000_000),
+                    0,
+                    band_colour * 10 + motif_index,
+                ))
+    return tuple(poses)
+
+
+def _orbit_scene_fingerprint(
     pattern: dict[str, Any],
     group: dict[str, Any],
-    operations: tuple[tuple[Affine, tuple[int, ...]], ...] | None = None,
+    operations: tuple[tuple[Affine, tuple[int, ...]], ...],
+    *,
+    include_colours: bool,
 ) -> tuple[tuple[int, int, int, int, int, int], ...]:
-    """Canonical visible-pose fingerprint mirroring ``buildPatternSvg``."""
-
-    if operations is None:
-        operations = enumerate_coloured_actions(
-            group["wallpaper_id"], group["generator_colour_actions"]
-        )
     scale = RENDER_SCALE[group["wallpaper_id"]]
     poses: set[tuple[int, int, int, int, int, int]] = set()
     for seed_index, (point, angle, seed_colour) in enumerate(
@@ -373,19 +442,90 @@ def scene_fingerprint(
                 matrix[0][0] * direction[0] + matrix[0][1] * direction[1],
                 matrix[1][0] * direction[0] + matrix[1][1] * direction[1],
             )
-            # The SVG key uses the pose angle; its cosine/sine vector is an
-            # equivalent, wrap-free fingerprint and remains exact enough at
-            # the renderer's 1e-3 quantization.
             determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+            colour = permutation[seed_colour] if include_colours else 0
             poses.add((
                 round(x * 1_000),
                 round(y * 1_000),
                 round(transformed_direction[0] * 1_000_000),
                 round(-transformed_direction[1] * 1_000_000),
                 1 if determinant < 0 else 0,
-                permutation[seed_colour] * 10 + seed_index,
+                colour * 10 + seed_index,
             ))
     return tuple(sorted(poses))
+
+
+def scene_fingerprint(
+    pattern: dict[str, Any],
+    group: dict[str, Any],
+    operations: tuple[tuple[Affine, tuple[int, ...]], ...] | None = None,
+) -> tuple[tuple[int, int, int, int, int, int], ...]:
+    """Canonical visible-pose fingerprint mirroring ``buildPatternSvg``."""
+
+    if operations is None:
+        operations = enumerate_coloured_actions(
+            group["wallpaper_id"], group["generator_colour_actions"]
+        )
+    layout = pattern.get("render_layout") or {}
+    if layout.get("kind") == "fixed_vertical_bands":
+        return _fixed_vertical_band_scene(layout, include_colours=True)
+    return _orbit_scene_fingerprint(
+        pattern, group, operations, include_colours=True
+    )
+
+
+def colour_blind_fingerprint(
+    pattern: dict[str, Any],
+    group: dict[str, Any],
+    operations: tuple[tuple[Affine, tuple[int, ...]], ...] | None = None,
+) -> tuple[tuple[int, int, int, int, int, int], ...]:
+    """Visible motif poses with palette labels erased."""
+
+    if operations is None:
+        operations = enumerate_coloured_actions(
+            group["wallpaper_id"], group["generator_colour_actions"]
+        )
+    layout = pattern.get("render_layout") or {}
+    if layout.get("kind") == "fixed_vertical_bands":
+        return _fixed_vertical_band_scene(layout, include_colours=False)
+    return _orbit_scene_fingerprint(
+        pattern, group, operations, include_colours=False
+    )
+
+
+def colour_blind_discrepancy(
+    left: tuple[tuple[int, int, int, int, int, int], ...],
+    right: tuple[tuple[int, int, int, int, int, int], ...],
+) -> float:
+    """Symmetric normalized Chamfer distance between uncoloured motif poses.
+
+    Zero means the motif centres, orientations, and handedness agree exactly.
+    The value approaches one as the layouts diverge by roughly two motif
+    diameters.  Colours are deliberately absent from both inputs.
+    """
+
+    if left == right:
+        return 0.0
+    if not left or not right:
+        return 1.0
+
+    def pose_cost(a: tuple[int, ...], b: tuple[int, ...]) -> float:
+        dx = (a[0] - b[0]) / 1_000
+        dy = (a[1] - b[1]) / 1_000
+        dot = max(-1.0, min(1.0, (a[2] * b[2] + a[3] * b[3]) / 1e12))
+        angular = 18.0 * acos(dot) / pi
+        handed = 18.0 if a[4] != b[4] else 0.0
+        return min(1.0, hypot(hypot(dx, dy), hypot(angular, handed)) / 52.0)
+
+    def directed(source: tuple[tuple[int, ...], ...], target: tuple[tuple[int, ...], ...]) -> float:
+        return sum(min(pose_cost(a, b) for b in target) for a in source) / len(source)
+
+    pose_distance = (directed(left, right) + directed(right, left)) / 2
+    count_distance = abs(len(left) - len(right)) / max(len(left), len(right))
+    # The explicit count term matters for the PP7 -> PP8 merge: every PP8
+    # centre is near a PP7 pair, but half of the asymmetric motif copies have
+    # genuinely disappeared into the book's symmetric compound motif.
+    return round(min(1.0, 0.75 * pose_distance + 0.25 * count_distance), 6)
 
 
 if set(AFFINE_GENERATORS) != set(GENERATOR_GEOMETRY):
@@ -400,6 +540,9 @@ __all__ = [
     "RENDER_SCALE",
     "affine_generators_for",
     "affine_relations_hold",
+    "candidate_orbit_layouts",
+    "colour_blind_discrepancy",
+    "colour_blind_fingerprint",
     "enumerate_coloured_actions",
     "pattern_template_seeds",
     "scene_fingerprint",

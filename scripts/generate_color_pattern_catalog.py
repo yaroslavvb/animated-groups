@@ -35,7 +35,15 @@ from color_pattern_book_excerpt_specs import (
     decorate_payload,
     validate_excerpt_metadata,
 )
-from wallpaper_affine_generators import affine_generators_for, affine_relations_hold
+from wallpaper_affine_generators import (
+    affine_generators_for,
+    affine_relations_hold,
+    candidate_orbit_layouts,
+    colour_blind_discrepancy,
+    colour_blind_fingerprint,
+    enumerate_coloured_actions,
+    scene_fingerprint,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -445,6 +453,160 @@ def build_patterns(groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return patterns
 
 
+FIXED_VERTICAL_BAND_COPIES = {
+    "PP7[2]_2": 2,
+    "PP8[2]_2": 1,
+    "PP7[3]": 2,
+    "PP8[3]": 1,
+}
+
+
+def assign_render_layouts(
+    patterns: list[dict[str, Any]], groups: list[dict[str, Any]]
+) -> None:
+    """Choose the closest noncolliding layout to one family reference.
+
+    Candidate zero is shared across every pattern and colour group over a
+    wallpaper parent.  It is reused whenever the colour action itself makes
+    the scene distinct.  Only otherwise do we take the nearest alternate,
+    preferring an angle change that leaves every motif centre fixed.
+
+    PP7 and PP8 use the same band-centre lattice as their source plates.  PP7
+    places two opposite asymmetric R copies around each centre; PP8 uses one
+    R at the centre as the closest possible substitute for the book's merged,
+    half-turn-symmetric motif.  Their positive discrepancy records that
+    unavoidable compromise rather than pretending the layouts are identical.
+    """
+
+    group_by_id = {group["id"]: group for group in groups}
+    operations = {
+        group["id"]: enumerate_coloured_actions(
+            group["wallpaper_id"], group["generator_colour_actions"]
+        )
+        for group in groups
+    }
+    candidates = candidate_orbit_layouts()
+    used_scenes: set[tuple[tuple[int, ...], ...]] = set()
+    by_parent: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for pattern in patterns:
+        by_parent[pattern["wallpaper_id"]].append(pattern)
+
+    for parent, family in by_parent.items():
+        reference_pattern = family[0]
+        reference_group = group_by_id[reference_pattern["colour_group_id"]]
+        reference_probe = {**reference_pattern, "render_layout": candidates[0]}
+        reference_scene = colour_blind_fingerprint(
+            reference_probe,
+            reference_group,
+            operations[reference_group["id"]],
+        )
+        ranked_candidates: list[tuple[float, int, dict[str, Any]]] = []
+        for candidate_index, candidate in enumerate(candidates):
+            candidate_probe = {
+                **reference_pattern,
+                "render_layout": candidate,
+            }
+            candidate_scene = colour_blind_fingerprint(
+                candidate_probe,
+                reference_group,
+                operations[reference_group["id"]],
+            )
+            ranked_candidates.append((
+                colour_blind_discrepancy(reference_scene, candidate_scene),
+                candidate_index,
+                candidate,
+            ))
+        ranked_candidates.sort(key=lambda item: (item[0], item[1]))
+
+        for pattern in family:
+            group = group_by_id[pattern["colour_group_id"]]
+            if pattern["gs_pattern_type"] in FIXED_VERTICAL_BAND_COPIES:
+                colours = pattern["number_of_colours"]
+                primitive_symbol = f"PP7[{colours}]" + ("_2" if colours == 2 else "")
+                reference = next(
+                    item for item in family
+                    if item["gs_pattern_type"] == primitive_symbol
+                )
+                layout = {
+                    "kind": "fixed_vertical_bands",
+                    "band_axis": "vertical",
+                    "columns": 13,
+                    "rows": 6,
+                    "origin": [60, 55],
+                    "spacing": [70, 90],
+                    "pair_offset": [14, 10],
+                    "motifs_per_band": FIXED_VERTICAL_BAND_COPIES[pattern["gs_pattern_type"]],
+                    "colours": colours,
+                    "reference_pattern_id": reference["id"],
+                    "source_construction": (
+                        "paired asymmetric motifs"
+                        if FIXED_VERTICAL_BAND_COPIES[pattern["gs_pattern_type"]] == 2
+                        else "merged half-turn-symmetric motif"
+                    ),
+                }
+                if layout["motifs_per_band"] == 1:
+                    layout["schematic_constraint"] = (
+                        "The source motif is half-turn symmetric; one asymmetric "
+                        "R-diamond at the shared centre is the nearest fixed-grid "
+                        "schematic."
+                    )
+                pattern["render_layout"] = layout
+                reference_layout = {
+                    **layout,
+                    "motifs_per_band": 2,
+                }
+                reference_probe = {**reference, "render_layout": reference_layout}
+                reference_group_for_band = group_by_id[reference["colour_group_id"]]
+                layout["colour_blind_discrepancy"] = colour_blind_discrepancy(
+                    colour_blind_fingerprint(
+                        reference_probe,
+                        reference_group_for_band,
+                        operations[reference_group_for_band["id"]],
+                    ),
+                    colour_blind_fingerprint(
+                        pattern, group, operations[group["id"]]
+                    ),
+                )
+                fingerprint = scene_fingerprint(
+                    pattern, group, operations[group["id"]]
+                )
+                if fingerprint in used_scenes:
+                    raise ValueError(f"fixed band scene collision: {pattern['id']}")
+                used_scenes.add(fingerprint)
+                continue
+
+            selected: tuple[
+                float,
+                int,
+                dict[str, Any],
+                tuple[tuple[int, ...], ...],
+            ] | None = None
+            for discrepancy, candidate_index, candidate in ranked_candidates:
+                probe = {**pattern, "render_layout": candidate}
+                fingerprint = scene_fingerprint(
+                    probe, group, operations[group["id"]]
+                )
+                if fingerprint in used_scenes:
+                    continue
+                selected = (
+                    discrepancy,
+                    candidate_index,
+                    candidate,
+                    fingerprint,
+                )
+                break
+            if selected is None:
+                raise ValueError(f"no collision-free render layout for {pattern['id']}")
+            discrepancy, candidate_index, candidate, fingerprint = selected
+            pattern["render_layout"] = {
+                **candidate,
+                "reference_pattern_id": reference_pattern["id"],
+                "colour_blind_discrepancy": discrepancy,
+                "candidate_index": candidate_index,
+            }
+            used_scenes.add(fingerprint)
+
+
 def validate_payload(payload: dict[str, Any]) -> None:
     wallpapers = payload["wallpaper_groups"]
     groups = payload["colour_groups"]
@@ -545,6 +707,12 @@ def validate_payload(payload: dict[str, Any]) -> None:
             raise ValueError(f"orphan or cross-family pattern: {pattern['id']}")
         if group["number_of_colours"] != pattern["number_of_colours"]:
             raise ValueError(f"colour mismatch: {pattern['id']}")
+        layout = pattern.get("render_layout") or {}
+        if layout.get("kind") not in {"orbit", "fixed_vertical_bands"}:
+            raise ValueError(f"missing render layout: {pattern['id']}")
+        discrepancy = layout.get("colour_blind_discrepancy")
+        if not isinstance(discrepancy, (int, float)) or not 0 <= discrepancy <= 1:
+            raise ValueError(f"bad colour-blind discrepancy: {pattern['id']}")
 
     expected_by_parent = {
         "p1": (1, 1), "p2": (2, 1), "pm": (5, 2), "pg": (2, 2),
@@ -569,6 +737,7 @@ def build_payload() -> dict[str, Any]:
         raise ValueError("three-colour generator actions do not match the 23-type census")
     groups = build_groups()
     patterns = build_patterns(groups)
+    assign_render_layouts(patterns, groups)
     payload = {
         "meta": {
             "title": "Periodic colour-pattern catalog",
@@ -585,6 +754,7 @@ def build_payload() -> dict[str, Any]:
                 "chromatic": "The colour-symmetry group acts transitively on the colours.",
                 "perfect": "Every symmetry of the uncoloured pattern induces a colour permutation.",
                 "colour_pattern_type": "After colour relabelling: the same colour group, coloured-motif stabilizer/induced group, and coloured-motif-transitive subgroups.",
+                "layout_discrepancy": "Weighted normalized symmetric nearest-pose and motif-count distance after colours are erased; 0 means identical motif centres, orientations, handedness, and count.",
             },
             "sources": [
                 {"work": "Tilings and Patterns", "authors": "Branko Grünbaum and G. C. Shephard", "chapter": 8, "printed_pages": "401–470"},
@@ -761,7 +931,7 @@ def build_html(payload: dict[str, Any]) -> str:
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <link rel="stylesheet" href="color-pattern-catalog.css?v=pg-short-row-fix">
-  <script src="color-pattern-catalog.js?v=short-signature-punctuation" defer></script>
+  <script src="color-pattern-catalog.js?v=layout-discrepancy-v3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

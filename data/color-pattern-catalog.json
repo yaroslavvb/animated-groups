@@ -27,7 +27,8 @@
       "pattern": "P*=(P,chi): a periodic monomotif pattern P together with a colour assignment chi on motif copies.",
       "chromatic": "The colour-symmetry group acts transitively on the colours.",
       "perfect": "Every symmetry of the uncoloured pattern induces a colour permutation.",
-      "colour_pattern_type": "After colour relabelling: the same colour group, coloured-motif stabilizer/induced group, and coloured-motif-transitive subgroups."
+      "colour_pattern_type": "After colour relabelling: the same colour group, coloured-motif stabilizer/induced group, and coloured-motif-transitive subgroups.",
+      "layout_discrepancy": "Weighted normalized symmetric nearest-pose and motif-count distance after colours are erased; 0 means identical motif centres, orientations, handedness, and count."
     },
     "sources": [
       {
@@ -154,8 +155,8 @@
               ]
             ],
             "translation": [
-              1.0,
-              0.0
+              0.0,
+              1.0
             ]
           },
           {
@@ -188,8 +189,8 @@
               ]
             ],
             "translation": [
-              0.0,
-              1.0
+              1.0,
+              0.0
             ]
           }
         ]
@@ -7702,6 +7703,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-001-pp1",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-001-pp12.webp",
@@ -7724,6 +7741,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-002-pp7",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -7748,6 +7781,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-002-pp7",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-051-pp82-2.webp",
@@ -7770,6 +7819,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -7794,6 +7859,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-047-pp42-2.webp",
@@ -7816,6 +7897,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-006-pp2",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -7840,6 +7937,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-009-pp52-1.webp",
@@ -7862,6 +7975,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -7886,6 +8015,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-021-pp142-1.webp",
@@ -7908,6 +8053,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -7932,6 +8093,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-062-pp162-3.webp",
@@ -7954,6 +8131,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -7978,6 +8171,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-053-pp122-1.webp",
@@ -8000,6 +8209,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8024,6 +8249,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-015-pp9",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-014-pp92-1.webp",
@@ -8046,6 +8287,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-015-pp9",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8070,6 +8327,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-026-pp172-1.webp",
@@ -8092,6 +8365,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8116,6 +8405,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-066-pp192-3.webp",
@@ -8138,6 +8443,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 3
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8162,6 +8483,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-021-pp30",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-033-pp302-1.webp",
@@ -8184,6 +8521,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-021-pp30",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8208,6 +8561,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-021-pp30",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-073-pp322-1.webp",
@@ -8230,6 +8599,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8254,6 +8639,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-077-pp382-1.webp",
@@ -8276,6 +8677,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8300,6 +8717,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 3
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-079-pp402-4.webp",
@@ -8322,6 +8755,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 5.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 4
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8346,6 +8795,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-035-pp332-1.webp",
@@ -8368,6 +8833,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8392,6 +8873,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-075-pp352-2.webp",
@@ -8414,6 +8911,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 3
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8438,6 +8951,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-033-pp21",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-014-pp213-1.webp",
@@ -8460,6 +8989,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-033-pp21",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8484,6 +9029,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-032-pp272.webp",
@@ -8506,6 +9067,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8530,6 +9107,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-047-pp293-2.webp",
@@ -8552,6 +9145,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8576,6 +9185,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-071-pp242.webp",
@@ -8598,6 +9223,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8622,6 +9263,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 3
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-044-pp263-2.webp",
@@ -8644,6 +9301,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8668,6 +9341,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-048-pp433-1.webp",
@@ -8690,6 +9379,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8714,6 +9419,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 3
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-050-pp453-2.webp",
@@ -8736,6 +9457,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8760,6 +9497,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-085-pp472-1.webp",
@@ -8782,6 +9535,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8806,6 +9575,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 3
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-054-pp493-1.webp",
@@ -8829,6 +9614,22 @@
         "work": "Tilings and Patterns",
         "chapter": 5
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 5.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 4
+      },
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-2-088-pp502-2.webp",
@@ -8851,6 +9652,22 @@
       "source": {
         "work": "Tilings and Patterns",
         "chapter": 5
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 37.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.028846,
+        "candidate_index": 5
       },
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8876,6 +9693,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 408
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-001-pp1",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -8903,6 +9736,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 408
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-006-pp2",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8928,6 +9777,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 408
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-006-pp2",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -8955,6 +9820,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -8980,6 +9861,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 1,
       "book_excerpt": {
@@ -9007,6 +9904,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 2,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9032,6 +9945,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 3,
       "book_excerpt": {
@@ -9059,6 +9988,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 4,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9084,6 +10029,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 5,
       "book_excerpt": {
@@ -9111,6 +10072,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 6,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9136,6 +10113,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 7,
       "book_excerpt": {
@@ -9163,6 +10156,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 409
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-002-pp7",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 8,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9188,6 +10197,29 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
+      },
+      "render_layout": {
+        "kind": "fixed_vertical_bands",
+        "band_axis": "vertical",
+        "columns": 13,
+        "rows": 6,
+        "origin": [
+          60,
+          55
+        ],
+        "spacing": [
+          70,
+          90
+        ],
+        "pair_offset": [
+          14,
+          10
+        ],
+        "motifs_per_band": 2,
+        "colours": 2,
+        "reference_pattern_id": "cp-2-013-pp72-2",
+        "source_construction": "paired asymmetric motifs",
+        "colour_blind_discrepancy": 0.0
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -9215,6 +10247,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-015-pp9",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9240,6 +10288,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-015-pp9",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -9267,6 +10331,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9292,6 +10372,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -9319,6 +10415,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9344,6 +10456,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -9371,6 +10499,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9396,6 +10540,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 410
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 8,
       "book_excerpt": {
@@ -9423,6 +10583,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9448,6 +10624,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 1,
       "book_excerpt": {
@@ -9475,6 +10667,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 2,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9500,6 +10708,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 3,
       "book_excerpt": {
@@ -9527,6 +10751,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 4,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9552,6 +10792,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 5,
       "book_excerpt": {
@@ -9579,6 +10835,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 6,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9604,6 +10876,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 7,
       "book_excerpt": {
@@ -9631,6 +10919,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 411
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 8,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9656,6 +10960,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -9683,6 +11003,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9708,6 +11044,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-021-pp30",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -9735,6 +11087,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-021-pp30",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9760,6 +11128,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -9787,6 +11171,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9812,6 +11212,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -9839,6 +11255,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9864,6 +11296,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 412
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 8,
       "book_excerpt": {
@@ -9891,6 +11339,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 413
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9916,6 +11380,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 413
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 1,
       "book_excerpt": {
@@ -9943,6 +11423,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 413
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 2,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -9968,6 +11464,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 413
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 3,
       "book_excerpt": {
@@ -9995,6 +11507,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 413
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 4,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10020,6 +11548,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 413
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 5,
       "book_excerpt": {
@@ -10047,6 +11591,22 @@
         "figure": "Figure 8.2.2, pp. 408–413",
         "printed_page": 413
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 6,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10072,6 +11632,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 426
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -10099,6 +11675,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 426
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10124,6 +11716,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 426
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -10151,6 +11759,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 426
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10176,6 +11800,30 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 426
+      },
+      "render_layout": {
+        "kind": "fixed_vertical_bands",
+        "band_axis": "vertical",
+        "columns": 13,
+        "rows": 6,
+        "origin": [
+          60,
+          55
+        ],
+        "spacing": [
+          70,
+          90
+        ],
+        "pair_offset": [
+          14,
+          10
+        ],
+        "motifs_per_band": 1,
+        "colours": 2,
+        "reference_pattern_id": "cp-2-013-pp72-2",
+        "source_construction": "merged half-turn-symmetric motif",
+        "schematic_constraint": "The source motif is half-turn symmetric; one asymmetric R-diamond at the shared centre is the nearest fixed-grid schematic.",
+        "colour_blind_discrepancy": 0.400891
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -10203,6 +11851,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 426
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-015-pp9",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10228,6 +11892,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -10255,6 +11935,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10280,6 +11976,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -10307,6 +12019,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10332,6 +12060,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -10359,6 +12103,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10384,6 +12144,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -10411,6 +12187,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10436,6 +12228,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 427
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 8,
       "book_excerpt": {
@@ -10463,6 +12271,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10488,6 +12312,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 1,
       "book_excerpt": {
@@ -10515,6 +12355,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 3
+      },
       "book_figure_slot": 2,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10540,6 +12396,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 3,
       "book_excerpt": {
@@ -10567,6 +12439,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 4,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10592,6 +12480,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 5,
       "book_excerpt": {
@@ -10619,6 +12523,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 6,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10644,6 +12564,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 7,
       "book_excerpt": {
@@ -10671,6 +12607,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 428
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 8,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10696,6 +12648,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -10723,6 +12691,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-021-pp30",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10748,6 +12732,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-021-pp30",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -10775,6 +12775,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10800,6 +12816,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -10827,6 +12859,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-029-pp33",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10852,6 +12900,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -10879,6 +12943,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10904,6 +12984,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 429
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 8,
       "book_excerpt": {
@@ -10931,6 +13027,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -10956,6 +13068,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 1,
       "book_excerpt": {
@@ -10983,6 +13111,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 3
+      },
       "book_figure_slot": 2,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11008,6 +13152,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-024-pp37",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 3,
       "book_excerpt": {
@@ -11035,6 +13195,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 4,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11060,6 +13236,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
       },
       "book_figure_slot": 5,
       "book_excerpt": {
@@ -11087,6 +13279,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 6,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11112,6 +13320,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 7,
       "book_excerpt": {
@@ -11139,6 +13363,22 @@
         "figure": "Figure 8.3.5, pp. 426–430",
         "printed_page": 430
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 3
+      },
       "book_figure_slot": 8,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11164,6 +13404,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 414
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-001-pp1",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -11191,6 +13447,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 414
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-006-pp2",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11216,6 +13488,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 414
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-006-pp2",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -11243,6 +13531,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 414
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11268,6 +13572,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 414
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -11295,6 +13615,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 414
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11320,6 +13656,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -11347,6 +13699,29 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
       },
+      "render_layout": {
+        "kind": "fixed_vertical_bands",
+        "band_axis": "vertical",
+        "columns": 13,
+        "rows": 6,
+        "origin": [
+          60,
+          55
+        ],
+        "spacing": [
+          70,
+          90
+        ],
+        "pair_offset": [
+          14,
+          10
+        ],
+        "motifs_per_band": 2,
+        "colours": 3,
+        "reference_pattern_id": "cp-3-008-pp73",
+        "source_construction": "paired asymmetric motifs",
+        "colour_blind_discrepancy": 0.0
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11372,6 +13747,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-015-pp9",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -11399,6 +13790,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11424,6 +13831,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -11451,6 +13874,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11476,6 +13915,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -11503,6 +13958,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-033-pp21",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11529,6 +14000,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 415
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-033-pp21",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 8,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11554,6 +14041,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 416
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -11582,6 +14085,22 @@
         "printed_page": 416
       },
       "source_note": "Figure 8.2.3 prints the colour-group subscript 3 here; Table 8.2.3's two-group census uses the canonical subscript 2.",
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11607,6 +14126,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 416
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -11634,6 +14169,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 416
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11659,6 +14210,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 416
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -11686,6 +14253,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 416
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11711,6 +14294,22 @@
         "chapter": 8,
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 416
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -11738,6 +14337,22 @@
         "figure": "Figure 8.2.3, pp. 414–416",
         "printed_page": 416
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 17.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.0,
+        "candidate_index": 0
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11763,6 +14378,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 431
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -11790,6 +14421,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 431
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-004-pp3",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11815,6 +14462,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 431
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -11842,6 +14505,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 431
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-007-pp5",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11867,6 +14546,30 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 431
+      },
+      "render_layout": {
+        "kind": "fixed_vertical_bands",
+        "band_axis": "vertical",
+        "columns": 13,
+        "rows": 6,
+        "origin": [
+          60,
+          55
+        ],
+        "spacing": [
+          70,
+          90
+        ],
+        "pair_offset": [
+          14,
+          10
+        ],
+        "motifs_per_band": 1,
+        "colours": 3,
+        "reference_pattern_id": "cp-3-008-pp73",
+        "source_construction": "merged half-turn-symmetric motif",
+        "schematic_constraint": "The source motif is half-turn symmetric; one asymmetric R-diamond at the shared centre is the nearest fixed-grid schematic.",
+        "colour_blind_discrepancy": 0.400891
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -11894,6 +14597,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 431
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-015-pp9",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11919,6 +14638,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -11946,6 +14681,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -11971,6 +14722,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -11998,6 +14765,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-012-pp11",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12023,6 +14806,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -12050,6 +14849,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12075,6 +14890,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-009-pp14",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 3
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -12102,6 +14933,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008653,
+        "candidate_index": 1
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12127,6 +14974,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 432
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 8,
       "book_excerpt": {
@@ -12154,6 +15017,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 3
+      },
       "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12179,6 +15058,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 5.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-017-pp17",
+        "colour_blind_discrepancy": 0.017307,
+        "candidate_index": 4
       },
       "book_figure_slot": 1,
       "book_excerpt": {
@@ -12206,6 +15101,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-033-pp21",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 2,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12231,6 +15142,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
       },
       "book_figure_slot": 3,
       "book_excerpt": {
@@ -12258,6 +15185,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 4,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12283,6 +15226,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-038-pp23",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 5,
       "book_excerpt": {
@@ -12310,6 +15269,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 6,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12335,6 +15310,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
       },
       "book_figure_slot": 7,
       "book_excerpt": {
@@ -12362,6 +15353,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 433
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-035-pp27",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
+      },
       "book_figure_slot": 8,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12387,6 +15394,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
       },
       "book_figure_slot": 0,
       "book_excerpt": {
@@ -12414,6 +15437,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12439,6 +15478,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-042-pp42",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 2,
       "book_excerpt": {
@@ -12466,6 +15521,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 3,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12491,6 +15562,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 4,
       "book_excerpt": {
@@ -12518,6 +15605,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 3
+      },
       "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12543,6 +15646,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 5.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 4
       },
       "book_figure_slot": 6,
       "book_excerpt": {
@@ -12570,6 +15689,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 23.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 1
+      },
       "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12595,6 +15730,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 434
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 11.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.008654,
+        "candidate_index": 2
       },
       "book_figure_slot": 8,
       "book_excerpt": {
@@ -12622,6 +15773,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 435
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 29.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 3
+      },
       "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12648,6 +15815,22 @@
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 435
       },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 5.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.017308,
+        "candidate_index": 4
+      },
       "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
@@ -12673,6 +15856,22 @@
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
         "printed_page": 435
+      },
+      "render_layout": {
+        "kind": "orbit",
+        "seeds": [
+          {
+            "point": [
+              0.173,
+              0.137
+            ],
+            "angle": 37.0,
+            "colour": 0
+          }
+        ],
+        "reference_pattern_id": "cp-1-046-pp46",
+        "colour_blind_discrepancy": 0.028846,
+        "candidate_index": 5
       },
       "book_figure_slot": 2,
       "book_excerpt": {
