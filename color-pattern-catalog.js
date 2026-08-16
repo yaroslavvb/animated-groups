@@ -612,13 +612,21 @@
     const patterns = state.patternsByGroup.get(group.id) || [];
     const panel = document.createDocumentFragment();
 
+    // Mark the pattern this group is actually showing, not always the first:
+    // a group revisited after its pattern was changed still renders that
+    // pattern, so keying the tab state off the index desynchronizes the
+    // highlight, the tab order, and aria-selected from the visible pane.
+    const selectedPatternId = state.activePatternByGroup.get(group.id);
+    const selectedPattern = state.patternById.get(selectedPatternId) || patterns[0];
+
     const selector = document.createElement("div");
     selector.className = "pattern-selector";
     const tabs = document.createElement("nav");
     tabs.className = "pattern-tabs";
     tabs.setAttribute("role", "tablist");
     tabs.setAttribute("aria-label", `Pattern types in ${typesetSymbol(group.chaim_notation)}`);
-    patterns.forEach((pattern, index) => {
+    patterns.forEach((pattern) => {
+      const active = selectedPattern ? pattern.id === selectedPattern.id : false;
       const tab = document.createElement("a");
       tab.className = "pattern-tab";
       tab.id = `tab-${pattern.id}`;
@@ -626,8 +634,8 @@
       tab.dataset.patternId = pattern.id;
       tab.setAttribute("role", "tab");
       tab.setAttribute("aria-controls", `panel-${pattern.id}`);
-      tab.setAttribute("aria-selected", index === 0 ? "true" : "false");
-      tab.tabIndex = index === 0 ? 0 : -1;
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
       tab.textContent = typesetSymbol(pattern.gs_pattern_type);
       tabs.append(tab);
     });
@@ -635,8 +643,6 @@
 
     const body = document.createElement("div");
     body.dataset.patternPanelHost = "";
-    const selectedPatternId = state.activePatternByGroup.get(group.id);
-    const selectedPattern = state.patternById.get(selectedPatternId) || patterns[0];
     if (selectedPattern) body.append(buildPatternPane(selectedPattern, group, wallpaper));
     panel.append(selector, body);
     return panel;
@@ -740,25 +746,27 @@
         && event.source
       ) state.excerptWindow = event.source;
     });
+    // Tabs are real anchors, so a modified click must keep its native
+    // meaning (open in a new tab or window) instead of being swallowed.
+    const isPlainClick = (event) => (
+      !event.defaultPrevented
+      && event.button === 0
+      && !event.metaKey
+      && !event.ctrlKey
+      && !event.shiftKey
+      && !event.altKey
+    );
     document.addEventListener("click", (event) => {
       const excerpt = event.target.closest(".book-evidence-link");
       if (excerpt) {
-        if (
-          !event.defaultPrevented
-          && event.button === 0
-          && !event.metaKey
-          && !event.ctrlKey
-          && !event.shiftKey
-          && !event.altKey
-          && state.excerptWindow
-          && !state.excerptWindow.closed
-        ) {
+        if (isPlainClick(event) && state.excerptWindow && !state.excerptWindow.closed) {
           event.preventDefault();
           state.excerptWindow.location.href = excerpt.href;
           state.excerptWindow.focus();
         }
         return;
       }
+      if (!isPlainClick(event)) return;
       const groupTab = event.target.closest("[data-group-id]");
       if (groupTab) {
         event.preventDefault();

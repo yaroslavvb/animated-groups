@@ -244,12 +244,13 @@ class ColorPatternCatalogTests(unittest.TestCase):
             for seed in pattern["render_layout"]["seeds"]
         }
         # Generic representatives retain one centre grid per wallpaper
-        # family.  *632 uses the incenter of its mirror triangle to keep the
-        # deliberately large R-diamonds apart; every other family keeps the
-        # common seed.  The optimizer changes orientation, not position.
+        # family.  *632 and *442 use the incenter of their mirror triangles
+        # to keep the deliberately large R-diamonds apart; every other family
+        # keeps the common seed.  The optimizer changes orientation, not
+        # position.
         self.assertEqual(
             orbit_points,
-            {(0.173, 0.137), (0.394338, 0.105662)},
+            {(0.173, 0.137), (0.394338, 0.105662), (0.353553, 0.146447)},
         )
         zero_discrepancy = 0
         for pattern in self.payload["pattern_types"]:
