@@ -3,27 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A worked finite-rosette introduction to Chaim Goodman-Strauss's G/H/K colour-group notation.">
-  <meta name="theme-color" content="#fbfaf6">
+  <meta name="description" content="A finite D6 rosette example for Chaim Goodman-Strauss's G/H/K colour-group notation.">
+  <meta name="theme-color" content="#ffffff">
   <meta property="og:title" content="Color group notation on a rosette">
-  <meta property="og:description" content="Build G, H, and K from one three-coloured D6 rosette, then read Chaim's double-slash notation.">
-  <meta property="og:type" content="website">
+  <meta property="og:description" content="A finite D6 example of G, a single-colour stabilizer H, and the colour-fixing subgroup K.">
+  <meta property="og:type" content="article">
   <meta property="og:url" content="https://yaroslavvb.github.io/animated-groups/chaim-rosette-example.html">
   <meta property="og:image" content="https://yaroslavvb.github.io/animated-groups/chaim-rosette-example-og.png">
   <meta property="og:image:width" content="1536">
   <meta property="og:image:height" content="1024">
-  <meta property="og:image:alt" content="Color group notation on a rosette, with a blue, red, and green ring of asymmetric R motifs">
+  <meta property="og:image:alt" content="A blue, red, and green rosette of asymmetric R motifs">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Color group notation on a rosette">
-  <meta name="twitter:description" content="Build G, H, and K from one three-coloured D6 rosette, then read Chaim's double-slash notation.">
+  <meta name="twitter:description" content="A finite D6 example of Chaim's G/H/K notation.">
   <meta name="twitter:image" content="https://yaroslavvb.github.io/animated-groups/chaim-rosette-example-og.png">
   <title>Color group notation on a rosette</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="chaim-rosette-example.css?v=1.0">
-  <script src="mathjax-config.js"></script>
+  <link rel="stylesheet" href="chaim-rosette-example.css?v=2.0">
   <script src="site-controls-v2.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js" defer></script>
   <script src="chaim-rosette-example.js?v=1.0" defer></script>
 </head>
 <body>
@@ -34,302 +32,235 @@
       <a class="site-name" href="./">Spacetime-group visualizations</a>
       <nav aria-label="Project links">
         <a href="./">Gallery</a>
-        <a href="future-directions.html">Colours</a>
-        <a href="color-pattern-catalog.html">Patterns</a>
-        <a href="dihedral-interactive.html">Dihedral</a>
-        <a href="chaim-rosette-example.html" aria-current="page">Rosette tutorial</a>
+        <a href="color-pattern-catalog.html">Colour patterns</a>
+        <a href="dihedral-interactive.html">Dihedral explorer</a>
+        <a href="chaim-rosette-example.html" aria-current="page">Rosette example</a>
         <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
       </nav>
     </div>
   </header>
 
   <main id="tutorial">
-    <section class="hero" aria-labelledby="page-title">
-      <div class="hero-copy">
-        <p class="overline">Worked example · finite colour symmetry</p>
-        <h1 id="page-title">Color group notation on a rosette</h1>
-        <p class="lead">
-          Start with one asymmetric letter <i>R</i>, make all twelve copies allowed by the
-          symmetries of a regular hexagon, and add three colours. From that single picture we
-          will identify \(G\), the single-colour stabilizer \(H\), and the subgroup \(K\) that
-          leaves every colour unchanged.
+    <article class="mathematical-note">
+      <header class="article-header">
+        <p class="kicker">Worked example</p>
+        <h1>Color group notation on a rosette</h1>
+        <p class="abstract">
+          We analyze a three-colouring of a finite <i>D</i><sub>6</sub>-rosette and identify the three
+          groups entering Chaim Goodman-Strauss’s notation: the uncoloured symmetry group
+          <i>G</i>, the stabilizer <i>H</i> of one chosen colour, and the subgroup <i>K</i> that fixes
+          every colour class.
         </p>
-        <p class="scope-note">
-          This first lesson stays with the operations visible in the rosette. How individual
-          generators permute the colour names comes later.
-        </p>
-      </div>
+      </header>
 
-      <aside class="notation-preview" aria-label="Notation reached in this tutorial">
-        <p class="preview-label">Destination</p>
-        <p class="preview-formula">\[(*6\mathord\bullet)^3//(2\mathord\bullet)\]</p>
-        <p>Three colours, a finite sixfold kaleidoscopic rosette, and a twofold subgroup that fixes every colour.</p>
-      </aside>
-    </section>
+      <nav class="contents" aria-label="On this page">
+        <a href="#uncoloured-group">The group <i>G</i></a>
+        <a href="#cosets">Coset colouring</a>
+        <a href="#stabilizers">The groups <i>H</i> and <i>K</i></a>
+        <a href="#notation">Notation</a>
+      </nav>
 
-    <ol class="lesson-list">
-      <li>
-        <article class="lesson" aria-labelledby="step-g-title">
-          <header class="lesson-heading">
-            <p class="step-number" aria-hidden="true">01</p>
-            <div>
-              <p class="eyebrow">Begin without colour</p>
-              <h2 id="step-g-title">Twelve operations make the rosette</h2>
-            </div>
-          </header>
-
-          <div class="lesson-grid">
-            <div class="lesson-copy">
-              <p>
-                Place an asymmetric motif \(P\) away from the centre. Let \(r\) be a
-                counterclockwise turn through \(60^\circ\), and let \(s\) be reflection in the
-                horizontal axis. Rotations and reflections generate twelve distinct copies of
-                \(P\).
-              </p>
-              <div class="relation-block" aria-label="Presentation of the dihedral group">
-                \[
-                  G=\langle r,s\mid r^6=e,\ s^2=e,\ srs=r^{-1}\rangle
-                  \cong D_6,\qquad |G|=12.
-                \]
-              </div>
-              <p>
-                We use the convention that \(D_6\) has twelve elements: six rotations
-                \(e,r,\ldots,r^5\) and six reflections \(s,sr,\ldots,sr^5\).
-              </p>
-              <p class="convention-note">
-                <b>Reading the labels.</b> To match the right-coset drawing, operations act on
-                the motif from the right: \(P\mathbin{\cdot}(sr)=(P\mathbin{\cdot}s)\mathbin{\cdot}r\).
-                Thus the label \(sr\) says “reflect, then rotate.”
-              </p>
-              <div class="signature-note">
-                <span class="signature-symbol">\(*6\mathord\bullet\)</span>
-                <span><b>Rosette signature for \(G\).</b> The star records mirrors, \(6\) records the sixfold centre, and the bullet says every operation fixes that centre.</span>
-              </div>
-            </div>
-
-            <figure class="rosette-figure">
-              <div class="rosette-stage" data-rosette="plain" role="img" aria-label="Twelve uncoloured asymmetric R motifs arranged as a D6 rosette"></div>
-              <figcaption>One generic motif produces one copy for each element of \(G\).</figcaption>
-            </figure>
-          </div>
-        </article>
-      </li>
-
-      <li>
-        <article class="lesson" aria-labelledby="step-colour-title">
-          <header class="lesson-heading">
-            <p class="step-number" aria-hidden="true">02</p>
-            <div>
-              <p class="eyebrow">Partition the operations</p>
-              <h2 id="step-colour-title">Three right cosets supply three colours</h2>
-            </div>
-          </header>
-
-          <div class="lesson-grid lesson-grid-wide-figure">
-            <div class="lesson-copy">
-              <p>
-                Choose the four operations shown in blue as the reference subgroup
-              </p>
-              <div class="relation-block compact">
-                \[H=\{e,r^3,s,sr^3\}.\]
-              </div>
-              <p>
-                The right cosets of \(H\) partition the twelve operations into three disjoint
-                blocks of four. We use one colour for each block.
-              </p>
-
-              <div class="coset-ledger" aria-label="The three right cosets and their colours">
-                <div class="coset-row coset-blue">
-                  <span class="swatch" aria-hidden="true"></span>
-                  <b>Blue</b>
-                  <span>\(H=\{e,r^3,s,sr^3\}\)</span>
-                </div>
-                <div class="coset-row coset-red">
-                  <span class="swatch" aria-hidden="true"></span>
-                  <b>Red</b>
-                  <span>\(Hr=\{r,r^4,sr,sr^4\}\)</span>
-                </div>
-                <div class="coset-row coset-green">
-                  <span class="swatch" aria-hidden="true"></span>
-                  <b>Green</b>
-                  <span>\(Hr^2=\{r^2,r^5,sr^2,sr^5\}\)</span>
-                </div>
-              </div>
-
-              <p class="quiet-result">
-                Since \([G:H]=12/4=3\), there are exactly three cosets and therefore three colours.
-              </p>
-            </div>
-
-            <figure class="rosette-figure featured-rosette">
-              <div class="rosette-stage" data-rosette="colored" role="img" aria-label="The R rosette divided into blue, red, and green right cosets, with each motif labelled by its group element"></div>
-              <figcaption>Dad’s R-rosette example, redrawn with one standard \(r,s\) notation.</figcaption>
-            </figure>
-          </div>
-
-          <aside class="clarification">
-            <p class="clarification-title">Coset is not stabilizer</p>
+      <section id="uncoloured-group" aria-labelledby="uncoloured-title">
+        <h2 id="uncoloured-title">1. The uncoloured rosette</h2>
+        <div class="section-grid">
+          <div>
             <p>
-              The blue block \(H\) is also the blue stabilizer because blue was chosen as the
-              reference colour. But \(Hr\) is not the red stabilizer: it is a coset, does not
-              contain \(e\), and is not a subgroup. The red and green stabilizers are conjugate
-              copies of \(H\).
+              Let <i>P</i> be an asymmetric motif in generic position. Let <i>r</i> denote
+              counterclockwise rotation through 60°, and let <i>s</i> denote reflection
+              in the horizontal axis. The orbit of <i>P</i> has twelve elements and realizes
             </p>
-          </aside>
-        </article>
-      </li>
-
-      <li>
-        <article class="lesson" aria-labelledby="step-k-title">
-          <header class="lesson-heading">
-            <p class="step-number" aria-hidden="true">03</p>
-            <div>
-              <p class="eyebrow">Fix all three colour classes</p>
-              <h2 id="step-k-title">Only two operations leave every colour unchanged</h2>
+            <div class="equation" role="math" aria-label="G is generated by r and s, with r to the sixth equal to e, s squared equal to e, and s r s equal to r inverse. G is isomorphic to D six and has order twelve.">
+              <i>G</i> = ⟨<i>r</i>, <i>s</i> |
+              <i>r</i><sup>6</sup> = <i>e</i>,
+              <i>s</i><sup>2</sup> = <i>e</i>,
+              <i>srs</i> = <i>r</i><sup>−1</sup>⟩
+              ≅ <i>D</i><sub>6</sub>,&emsp;|<i>G</i>| = 12.
             </div>
-          </header>
-
-          <div class="lesson-grid">
-            <div class="lesson-copy">
-              <p>
-                “Leave colours unchanged” means preserve each colour class as a set. An operation
-                may move individual letters, but every blue letter must land on a blue letter,
-                every red letter on red, and every green letter on green.
-              </p>
-              <p>For this rosette the complete list is</p>
-              <div class="relation-block kernel-formula">
-                \[K=\{e,r^3\}=\langle r^3\rangle\cong C_2.\]
-              </div>
-              <p>
-                The identity changes nothing. The half-turn \(r^3\) exchanges opposite copies,
-                which have the same colour. No reflection and no \(60^\circ\) or \(120^\circ\)
-                turn preserves all three colour classes.
-              </p>
-              <div class="signature-note">
-                <span class="signature-symbol">\(2\mathord\bullet\)</span>
-                <span><b>Rosette signature for \(K\).</b> It contains one twofold rotation about the fixed centre and no mirrors.</span>
-              </div>
-            </div>
-
-            <figure class="rosette-figure kernel-figure">
-              <div class="rosette-stage" data-rosette="kernel" role="img" aria-label="Colored R rosette with same-colored opposite pairs highlighted to show the color-preserving half-turn"></div>
-              <div class="half-turn-label" aria-hidden="true"><span>↻</span> \(180^\circ\)</div>
-              <figcaption>The half-turn moves every motif to an opposite motif of the same colour.</figcaption>
-            </figure>
+            <p>
+              Thus <i>G</i> = {<i>r</i><sup><i>k</i></sup>, <i>sr</i><sup><i>k</i></sup> :
+              0 ≤ <i>k</i> &lt; 6}. We write operations on the right of
+              <i>P</i>; consequently <i>P</i> · (<i>sr</i>) means “reflect, then rotate.”
+              This convention agrees with the right-coset labels below.
+            </p>
+            <p>
+              As a finite rosette, the uncoloured pattern has orbifold signature
+              <span class="boxed-math">∗6•</span>. The terminal bullet records the common fixed
+              centre.
+            </p>
           </div>
-        </article>
-      </li>
+          <figure class="rosette-figure">
+            <div class="rosette-stage" data-rosette="plain" role="img" aria-label="Twelve uncoloured asymmetric R motifs arranged as a D6 rosette"></div>
+            <figcaption>The <i>G</i>-orbit of an asymmetric motif <i>P</i>.</figcaption>
+          </figure>
+        </div>
+      </section>
 
-      <li>
-        <article class="lesson" aria-labelledby="step-h-title">
-          <header class="lesson-heading">
-            <p class="step-number" aria-hidden="true">04</p>
-            <div>
-              <p class="eyebrow">Keep one chosen colour</p>
-              <h2 id="step-h-title">The single-colour stabilizer is larger than \(K\)</h2>
-            </div>
-          </header>
+      <section id="cosets" aria-labelledby="cosets-title">
+        <h2 id="cosets-title">2. A three-colouring by right cosets</h2>
+        <p>
+          Choose the blue subgroup
+          <span class="inline-equation" role="math"><i>H</i> = ⟨<i>r</i><sup>3</sup>, <i>s</i>⟩
+          = {<i>e</i>, <i>r</i><sup>3</sup>, <i>s</i>, <i>sr</i><sup>3</sup>}.</span>
+          Its three right cosets partition <i>G</i>. Assigning one colour to each coset gives
+          the displayed colouring.
+        </p>
 
-          <div class="lesson-grid">
-            <div class="lesson-copy">
-              <p>
-                The subgroup \(H\) preserves the blue class, but it does not have to preserve red
-                and green separately:
-              </p>
-              <div class="relation-block compact">
-                \[H=\operatorname{Stab}(\text{blue})=\{e,r^3,s,sr^3\}.\]
-              </div>
-              <p>
-                Besides \(e\) and the half-turn, \(H\) contains reflections in two perpendicular
-                axes. Those reflections keep the blue set blue even when they exchange the other
-                two colour classes. Hence \(K\subsetneq H\).
-              </p>
-              <p>
-                Red and green have their own stabilizers. They are rotated, conjugate copies of
-                \(H\), so Chaim’s notation records the type of one chosen colour stabilizer rather
-                than listing all three.
-              </p>
-              <div class="signature-note">
-                <span class="signature-symbol">\(*2\mathord\bullet\)</span>
-                <span><b>Rosette signature for \(H\).</b> Two perpendicular mirrors meet at a twofold fixed centre.</span>
-              </div>
-            </div>
-
-            <figure class="rosette-figure stabilizer-figure">
-              <div class="rosette-stage" data-rosette="stabilizer" role="img" aria-label="R rosette with blue motifs emphasized and the two perpendicular reflection axes of the blue stabilizer shown"></div>
-              <figcaption>The blue set survives both perpendicular reflections; red and green need not.</figcaption>
-            </figure>
+        <div class="coset-layout">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Colour</th>
+                  <th>Right coset</th>
+                  <th>Elements</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="swatch blue" aria-hidden="true"></span>Blue</td>
+                  <td><i>H</i></td>
+                  <td><i>e</i>, <i>r</i><sup>3</sup>, <i>s</i>, <i>sr</i><sup>3</sup></td>
+                </tr>
+                <tr>
+                  <td><span class="swatch red" aria-hidden="true"></span>Red</td>
+                  <td><i>Hr</i></td>
+                  <td><i>r</i>, <i>r</i><sup>4</sup>, <i>sr</i>, <i>sr</i><sup>4</sup></td>
+                </tr>
+                <tr>
+                  <td><span class="swatch green" aria-hidden="true"></span>Green</td>
+                  <td><i>Hr</i><sup>2</sup></td>
+                  <td><i>r</i><sup>2</sup>, <i>r</i><sup>5</sup>, <i>sr</i><sup>2</sup>, <i>sr</i><sup>5</sup></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="compact-note">
+              Since [<i>G</i> : <i>H</i>] = 3, there are three colours. Only the reference coset <i>H</i>
+              is itself a subgroup. In particular, <i>Hr</i> is the red colour class, not the
+              stabilizer of red.
+            </p>
           </div>
-        </article>
-      </li>
+          <figure class="rosette-figure labelled">
+            <div class="rosette-stage" data-rosette="colored" role="img" aria-label="The R rosette divided into blue, red, and green right cosets, with each motif labelled by its group element"></div>
+            <figcaption>The right-coset partition <i>H</i> ∖ <i>G</i>.</figcaption>
+          </figure>
+        </div>
+      </section>
 
-      <li>
-        <article class="lesson notation-lesson" aria-labelledby="step-notation-title">
-          <header class="lesson-heading">
-            <p class="step-number" aria-hidden="true">05</p>
-            <div>
-              <p class="eyebrow">Assemble the notation</p>
-              <h2 id="step-notation-title">Read the rosette as \(G^3/H/K\)</h2>
-            </div>
-          </header>
+      <section id="stabilizers" aria-labelledby="stabilizers-title">
+        <h2 id="stabilizers-title">3. The single-colour stabilizer <i>H</i> and the colour-fixing subgroup <i>K</i></h2>
+        <p>
+          The subgroup <i>H</i> stabilizes the blue class setwise. Its two reflections preserve
+          blue while interchanging the other two colour classes. Hence <i>H</i> is larger than
+          the subgroup that preserves all three colours separately.
+        </p>
 
-          <div class="ghk-grid" aria-label="G H K summary">
-            <section>
-              <p class="ghk-letter">G</p>
-              <p class="ghk-signature">\(*6\mathord\bullet\)</p>
-              <p>All twelve geometric symmetries of the uncoloured rosette.</p>
-            </section>
-            <section>
-              <p class="ghk-letter">H</p>
-              <p class="ghk-signature">\(*2\mathord\bullet\)</p>
-              <p>The four operations preserving one chosen colour.</p>
-            </section>
-            <section>
-              <p class="ghk-letter">K</p>
-              <p class="ghk-signature">\(2\mathord\bullet\)</p>
-              <p>The two operations preserving every colour separately.</p>
-            </section>
-          </div>
-
-          <div class="notation-conclusion">
-            <div>
-              <p class="formula-kicker">Full form</p>
-              <p class="final-formula">\[(*6\mathord\bullet)^3/(*2\mathord\bullet)/(2\mathord\bullet)\]</p>
-            </div>
-            <div class="notation-arrow" aria-hidden="true">→</div>
-            <div>
-              <p class="formula-kicker">Chaim’s abbreviated form</p>
-              <p class="final-formula emphasized">\[(*6\mathord\bullet)^3//(2\mathord\bullet)\]</p>
+        <div class="formula-pair">
+          <div>
+            <p class="formula-label">One chosen colour</p>
+            <div class="equation compact" role="math">
+              <i>H</i> = Stab(blue)
+              = {<i>e</i>, <i>r</i><sup>3</sup>, <i>s</i>, <i>sr</i><sup>3</sup>},
+              &emsp;<i>H</i> ≅ <i>D</i><sub>2</sub>.
             </div>
           </div>
+          <div>
+            <p class="formula-label">Every colour</p>
+            <div class="equation compact" role="math">
+              <i>K</i> = {<i>e</i>, <i>r</i><sup>3</sup>} = ⟨<i>r</i><sup>3</sup>⟩,
+              &emsp;<i>K</i> ≅ <i>C</i><sub>2</sub>.
+            </div>
+          </div>
+        </div>
 
-          <p class="double-slash-explanation">
-            The superscript \(3\) counts the colours. The double slash says \(H\ne K\): preserving
-            one colour is less restrictive than preserving all three. Chaim suppresses \(H\) in
-            this case, but the missing single-colour stabilizer is still part of the construction.
-          </p>
-        </article>
-      </li>
-    </ol>
+        <div class="figure-pair">
+          <figure class="rosette-figure small">
+            <div class="rosette-stage" data-rosette="stabilizer" role="img" aria-label="The blue motifs emphasized together with the two reflection axes in their stabilizer"></div>
+            <figcaption><i>H</i>: the blue set is preserved by two perpendicular reflections.</figcaption>
+          </figure>
+          <figure class="rosette-figure small">
+            <div class="rosette-stage" data-rosette="kernel" role="img" aria-label="Same-coloured antipodal pairs showing the colour-preserving half-turn"></div>
+            <figcaption><i>K</i>: the half-turn exchanges antipodal motifs of the same colour.</figcaption>
+          </figure>
+        </div>
 
-    <section class="next-step" aria-labelledby="next-step-title">
-      <p class="overline">Next idea</p>
-      <h2 id="next-step-title">From preserved colours to generator behaviour</h2>
-      <p>
-        This page identified the operations in \(G\), \(H\), and \(K\) directly from the pattern.
-        The next step is to describe what the generators \(r\) and \(s\) do to the three colour
-        names—information encoded by raised orders in Chaim’s short colour signatures.
-      </p>
-      <a class="text-link" href="dihedral-interactive.html">Open the dihedral explorer <span aria-hidden="true">→</span></a>
-    </section>
+        <p>
+          The red and green stabilizers are the conjugates
+          <span class="inline-equation" role="math">
+            <i>H</i><sub>red</sub> = <i>r</i><sup>−1</sup><i>Hr</i> and
+            <i>H</i><sub>green</sub> = <i>r</i><sup>−2</sup><i>Hr</i><sup>2</sup>.
+          </span>
+          Their common intersection is
+          <span class="inline-equation" role="math">
+            <i>K</i> = <i>H</i> ∩ <i>r</i><sup>−1</sup><i>Hr</i> ∩
+            <i>r</i><sup>−2</sup><i>Hr</i><sup>2</sup>.
+          </span>
+          In orbifold notation, <i>H</i> has signature <span class="boxed-math">∗2•</span>
+          and <i>K</i> has signature <span class="boxed-math">2•</span>.
+        </p>
+      </section>
+
+      <section id="notation" aria-labelledby="notation-title">
+        <h2 id="notation-title">4. Chaim’s <i>G</i><sup>3</sup>/<i>H</i>/<i>K</i> notation</h2>
+        <div class="table-wrap">
+          <table class="ghk-table">
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>Order</th>
+                <th>Role</th>
+                <th>Rosette signature</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i>G</i></td>
+                <td>12</td>
+                <td>All uncoloured symmetries</td>
+                <td>∗6•</td>
+              </tr>
+              <tr>
+                <td><i>H</i></td>
+                <td>4</td>
+                <td>Stabilizer of one colour</td>
+                <td>∗2•</td>
+              </tr>
+              <tr>
+                <td><i>K</i></td>
+                <td>2</td>
+                <td>Fixes every colour class</td>
+                <td>2•</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="conclusion">
+          <p>The full description is</p>
+          <div class="notation-equation" role="math">(∗6•)<sup>3</sup>/(∗2•)/(2•)</div>
+          <p>Since <i>H</i> ≠ <i>K</i>, Chaim suppresses <i>H</i> and uses a double slash:</p>
+          <div class="notation-equation" role="math">(∗6•)<sup>3</sup>//(2•)</div>
+        </div>
+
+        <p class="compact-note">
+          The superscript 3 is the number of colours, equivalently [<i>G</i> : <i>H</i>].
+          It is not [<i>G</i> : <i>K</i>], which equals 6 in this example. The induced behaviour
+          of the generators on the colour names is deliberately deferred.
+        </p>
+      </section>
+
+      <footer class="article-footer">
+        <p>
+          <b>Example.</b> The R-rosette is adapted from Dad’s original diagram, with a uniform
+          <i>r</i>, <i>s</i> convention and finite-rosette signatures.
+        </p>
+        <p>
+          <b>Reference.</b> J. H. Conway, H. Burgiel, and C. Goodman-Strauss,
+          <cite>The Symmetries of Things</cite>, p. 155 for the
+          <i>G</i><sup><i>p</i></sup>/<i>H</i>/<i>K</i> convention.
+        </p>
+        <p><a href="dihedral-interactive.html">Continue to the dihedral explorer →</a></p>
+      </footer>
+    </article>
   </main>
-
-  <footer class="site-footer">
-    <div>
-      <p><b>Example.</b> Dad’s R-rosette, redrawn with corrected finite-rosette and group notation.</p>
-      <p><b>Notation.</b> Conway, Burgiel, and Goodman-Strauss, <cite>The Symmetries of Things</cite>, especially the \(G^p/H/K\) convention on p. 155.</p>
-    </div>
-    <a href="./">Back to the visualization gallery</a>
-  </footer>
 </body>
 </html>
