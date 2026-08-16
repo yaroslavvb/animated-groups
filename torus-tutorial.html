@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A mini-tutorial: the six subgroups of the 3x3 discrete torus, each named three ways — as a stabilizer, by generators, and in Chaim Goodman-Strauss's colour notation.">
+  <meta name="theme-color" content="#ffffff">
+  <title>The 3×3 torus: three ways to name a group</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <style>
+  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+          --card:#ffffff; --accent:#0072B2; }
+  body { background:var(--paper); color:var(--ink); }
+  .tutorial { max-width:1120px; margin:0 auto; padding:0 20px 72px; }
+  .tutorial h1 { font-size:2rem; line-height:1.2; margin:.2em 0 .3em; }
+  .tutorial h2 { font-size:1.32rem; margin:2.4rem 0 .7rem;
+                 border-bottom:1px solid var(--rule); padding-bottom:.35rem; }
+  .tutorial h3 { font-size:1.05rem; margin:0 0 .15rem; }
+  .overline { text-transform:uppercase; letter-spacing:.12em; font-size:.74rem;
+              color:var(--muted); margin:2rem 0 0; }
+  .lead { font-size:1.05rem; color:var(--muted); max-width:62ch; }
+  .tutorial p, .tutorial li { max-width:74ch; }
+  code { background:#eef1f4; padding:.08em .34em; border-radius:4px;
+         font-size:.92em; }
+  .ways { display:grid; gap:14px;
+          grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));
+          margin:1rem 0 0; padding:0; list-style:none; }
+  .ways li { background:var(--card); border:1px solid var(--rule); border-radius:10px;
+             padding:14px 16px; }
+  .ways strong { display:block; margin-bottom:.25rem; }
+  .subgroup-grid { display:grid; gap:18px;
+                   grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr)); }
+  .subgroup-card { background:var(--card); border:1px solid var(--rule);
+                   border-radius:12px; padding:16px 18px 6px; }
+  .card-head h3 { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .card-shape { margin:.1rem 0 .3rem; color:var(--muted); font-size:.92rem; }
+  .card-meta { margin:0 0 .8rem; font-size:.78rem; color:var(--muted); }
+  .card-meta span { display:inline-block; background:#eef1f4; border-radius:20px;
+                    padding:.14em .7em; margin-right:.3em; }
+  .card-art { display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;
+              margin-bottom:.6rem; }
+  .torus-grid, .torus-tile { max-width:100%; height:auto; }
+  .tile-wrap { display:flex; flex-direction:column; gap:5px; }
+  .tile-caption { font-size:.68rem; color:var(--muted); }
+  .card-data { margin:0; }
+  .card-data dt { font-size:.76rem; text-transform:uppercase; letter-spacing:.08em;
+                  color:var(--accent); margin-top:.7rem; }
+  .card-data dd { margin:.2rem 0 0; font-size:.9rem; }
+  .table-scroll { overflow-x:auto; }
+  table { border-collapse:collapse; font-size:.9rem; min-width:520px; }
+  th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }
+  th { font-size:.76rem; text-transform:uppercase; letter-spacing:.07em;
+       color:var(--muted); }
+  .footnote { color:var(--muted); font-size:.86rem; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
+            --card:#1e242b; --accent:#56B4E9; }
+    code { background:#2a323a; }
+    .card-meta span { background:#2a323a; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#tutorial">Skip to tutorial</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="future-directions.html">Colours</a>
+        <a href="color-pattern-catalog.html">Patterns</a>
+        <a href="clockwork-coloring-correspondence.html">Clockwork</a>
+        <a href="space-group-correspondence.html">Space groups</a>
+        <a href="torus-tutorial.html" aria-current="page">Torus tutorial</a>
+        <a href="docs/orbifold_notation.html">Notation</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="tutorial" class="tutorial">
+    <p class="overline">Mini-tutorial · finite ambient group</p>
+    <h1>The 3&times;3 torus: three ways to name a group</h1>
+    <p class="lead">
+      The smallest setting where colour symmetry is completely computable. The ambient group
+      has nine elements, it has exactly six subgroups, and every subgroup can be named three
+      independent ways — as the stabilizer of a pattern, by a presentation, and in the
+      colour notation of <cite>The Symmetries of Things</cite>. All three agree.
+    </p>
+
+    <h2>The ambient group</h2>
+    <p>
+      Take a 3&times;3 grid that wraps in both directions and let it act on itself by translation.
+      Writing <code>X</code> for &ldquo;shift one row&rdquo; and <code>Y</code> for
+      &ldquo;shift one column&rdquo;:
+    </p>
+    <p><code>A = &#10216; X, Y | X&sup3; = Y&sup3; = 1, XY = YX &#10217; = (&#8484;/3)&sup2;</code>, of order&nbsp;9.</p>
+    <p>
+      This is the finite version of the handle symbol <code>&#9702;</code> from Chapter&nbsp;10 of
+      <cite>The Symmetries of Things</cite>, whose reduced annotation is
+      <code>&#9702;<sub>X,Y</sub></code> with the single relation <code>XY = YX</code>. The torus
+      adds <code>X&sup3; = Y&sup3; = 1</code>. Because <code>A</code> is abelian, every subgroup is
+      normal, so every quotient is a group and every colour group is <em>regular</em>: the number
+      of colours is exactly the index.
+    </p>
+
+    <h2>Three ways to name the same group</h2>
+    <ul class="ways">
+      <li><strong>1 &middot; As a stabilizer</strong>
+        Choose a coloured pattern and keep the translations that leave it unchanged. Equivalently,
+        an equivalence relation on cells that is invariant under translation. The two are the same
+        data: the subgroup is the class of the identity, and the classes are its cosets.</li>
+      <li><strong>2 &middot; By generators</strong>
+        Give generators and relations. Imposing the extra relations that kill <code>K</code> turns
+        the ambient presentation into a presentation of the <em>colour group</em>
+        <code>A/K</code> — relations describe the quotient, never the subgroup.</li>
+      <li><strong>3 &middot; Chaim notation</strong>
+        Replace each generator in the signature by the colour permutation it induces. The short
+        form keeps only the <em>order</em> of that permutation; the type <code>G/K</code> records
+        the full group and the kernel.</li>
+    </ul>
+
+    <h2>The six subgroups</h2>
+    <p>
+      Cells are filled by their coset of <code>K</code>, which is exactly the colour class. Ringed
+      cells are <code>K</code> itself. The number of distinct letters is the index, which is the
+      number of colours.
+    </p>
+    <div class="subgroup-grid">
+    <article class="subgroup-card" id="k-full">
+      <header class="card-head">
+        <h3>K = A</h3>
+        <p class="card-shape">the whole torus</p>
+        <p class="card-meta"><span>|K| = 9</span>
+          <span>index 1</span>
+          <span>1 colour</span></p>
+      </header>
+      <div class="card-art">
+        <svg class="torus-grid" viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="1 colour classes on the three by three torus"><rect x="0" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="70.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="70.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="96" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="118.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="118.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="0" y="48" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="70.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="48" width="44" height="44" rx="5" fill="#0072B2"/><text x="70.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="70.0" cy="70.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="96" y="48" width="44" height="44" rx="5" fill="#0072B2"/><text x="118.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="118.0" cy="70.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="0" y="96" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="118.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="96" width="44" height="44" rx="5" fill="#0072B2"/><text x="70.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="70.0" cy="118.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="96" y="96" width="44" height="44" rx="5" fill="#0072B2"/><text x="118.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="118.0" cy="118.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/></svg>
+        <div class="tile-wrap"><svg class="torus-tile" viewBox="0 0 112 112" width="112" height="112" role="img" aria-label="the same colouring tiled two by two"><rect x="0" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="95" width="17" height="17" rx="2" fill="#0072B2"/></svg>
+          <span class="tile-caption">tiled 2&times;2</span></div>
+      </div>
+      <dl class="card-data">
+        <dt>1 &middot; As a stabilizer</dt>
+        <dd>The translations fixing <em>the constant pattern: one colour everywhere</em>.
+            As an equivalence relation on cells: same class when
+            <code>none — every cell is equivalent to every other</code> agrees.</dd>
+
+        <dt>2 &middot; By generators</dt>
+        <dd><code>K = &#10216;X, Y&#10217;</code>.
+            Imposing <code>X = 1, Y = 1</code> on the ambient
+            presentation gives the colour group
+            <code>A/K = trivial group</code>.</dd>
+
+        <dt>3 &middot; Chaim notation</dt>
+        <dd>Short signature ◦<sup>1,1</sup>, long form
+            ◦<sup>1,1</sup>, colour type
+            <strong>◦</strong>.</dd>
+      </dl>
+    </article>
+    <article class="subgroup-card" id="k-rows">
+      <header class="card-head">
+        <h3>K = ⟨Y⟩</h3>
+        <p class="card-shape">rows</p>
+        <p class="card-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>3 colours</span></p>
+      </header>
+      <div class="card-art">
+        <svg class="torus-grid" viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="3 colour classes on the three by three torus"><rect x="0" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="70.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="70.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="96" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="118.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="118.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="0" y="48" width="44" height="44" rx="5" fill="#E69F00"/><text x="22.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="48" y="48" width="44" height="44" rx="5" fill="#E69F00"/><text x="70.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="96" y="48" width="44" height="44" rx="5" fill="#E69F00"/><text x="118.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="0" y="96" width="44" height="44" rx="5" fill="#009E73"/><text x="22.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="48" y="96" width="44" height="44" rx="5" fill="#009E73"/><text x="70.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="96" y="96" width="44" height="44" rx="5" fill="#009E73"/><text x="118.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text></svg>
+        <div class="tile-wrap"><svg class="torus-tile" viewBox="0 0 112 112" width="112" height="112" role="img" aria-label="the same colouring tiled two by two"><rect x="0" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="19" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="57" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="76" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="0" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="19" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="38" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="76" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="95" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="19" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="57" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="76" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="0" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="19" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="38" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="76" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="95" y="95" width="17" height="17" rx="2" fill="#009E73"/></svg>
+          <span class="tile-caption">tiled 2&times;2</span></div>
+      </div>
+      <dl class="card-data">
+        <dt>1 &middot; As a stabilizer</dt>
+        <dd>The translations fixing <em>three horizontal stripes</em>.
+            As an equivalence relation on cells: same class when
+            <code>a mod 3 — the row index</code> agrees.</dd>
+
+        <dt>2 &middot; By generators</dt>
+        <dd><code>K = &#10216;Y&#10217;</code>.
+            Imposing <code>Y = 1</code> on the ambient
+            presentation gives the colour group
+            <code>A/K = C₃, generated by the image of X</code>.</dd>
+
+        <dt>3 &middot; Chaim notation</dt>
+        <dd>Short signature ◦<sup>3,1</sup>, long form
+            ◦<sup>(ABC), 1</sup>, colour type
+            <strong>◦³/◦</strong>.</dd>
+      </dl>
+    </article>
+    <article class="subgroup-card" id="k-columns">
+      <header class="card-head">
+        <h3>K = ⟨X⟩</h3>
+        <p class="card-shape">columns</p>
+        <p class="card-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>3 colours</span></p>
+      </header>
+      <div class="card-art">
+        <svg class="torus-grid" viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="3 colour classes on the three by three torus"><rect x="0" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="0" width="44" height="44" rx="5" fill="#E69F00"/><text x="70.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="96" y="0" width="44" height="44" rx="5" fill="#009E73"/><text x="118.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="0" y="48" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="70.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="48" width="44" height="44" rx="5" fill="#E69F00"/><text x="70.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="96" y="48" width="44" height="44" rx="5" fill="#009E73"/><text x="118.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="0" y="96" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="118.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="96" width="44" height="44" rx="5" fill="#E69F00"/><text x="70.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="96" y="96" width="44" height="44" rx="5" fill="#009E73"/><text x="118.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text></svg>
+        <div class="tile-wrap"><svg class="torus-tile" viewBox="0 0 112 112" width="112" height="112" role="img" aria-label="the same colouring tiled two by two"><rect x="0" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="19" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="19" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="38" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="76" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="76" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="95" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="95" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="95" width="17" height="17" rx="2" fill="#009E73"/></svg>
+          <span class="tile-caption">tiled 2&times;2</span></div>
+      </div>
+      <dl class="card-data">
+        <dt>1 &middot; As a stabilizer</dt>
+        <dd>The translations fixing <em>three vertical stripes</em>.
+            As an equivalence relation on cells: same class when
+            <code>b mod 3 — the column index</code> agrees.</dd>
+
+        <dt>2 &middot; By generators</dt>
+        <dd><code>K = &#10216;X&#10217;</code>.
+            Imposing <code>X = 1</code> on the ambient
+            presentation gives the colour group
+            <code>A/K = C₃, generated by the image of Y</code>.</dd>
+
+        <dt>3 &middot; Chaim notation</dt>
+        <dd>Short signature ◦<sup>1,3</sup>, long form
+            ◦<sup>1, (ABC)</sup>, colour type
+            <strong>◦³/◦</strong>.</dd>
+      </dl>
+    </article>
+    <article class="subgroup-card" id="k-diagonal">
+      <header class="card-head">
+        <h3>K = ⟨XY⟩</h3>
+        <p class="card-shape">the diagonal</p>
+        <p class="card-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>3 colours</span></p>
+      </header>
+      <div class="card-art">
+        <svg class="torus-grid" viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="3 colour classes on the three by three torus"><rect x="0" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="0" width="44" height="44" rx="5" fill="#E69F00"/><text x="70.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="96" y="0" width="44" height="44" rx="5" fill="#009E73"/><text x="118.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="0" y="48" width="44" height="44" rx="5" fill="#009E73"/><text x="22.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="48" y="48" width="44" height="44" rx="5" fill="#0072B2"/><text x="70.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="70.0" cy="70.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="96" y="48" width="44" height="44" rx="5" fill="#E69F00"/><text x="118.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="0" y="96" width="44" height="44" rx="5" fill="#E69F00"/><text x="22.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="48" y="96" width="44" height="44" rx="5" fill="#009E73"/><text x="70.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="96" y="96" width="44" height="44" rx="5" fill="#0072B2"/><text x="118.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="118.0" cy="118.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/></svg>
+        <div class="tile-wrap"><svg class="torus-tile" viewBox="0 0 112 112" width="112" height="112" role="img" aria-label="the same colouring tiled two by two"><rect x="0" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="19" width="17" height="17" rx="2" fill="#009E73"/><rect x="19" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="57" y="19" width="17" height="17" rx="2" fill="#009E73"/><rect x="76" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="0" y="38" width="17" height="17" rx="2" fill="#E69F00"/><rect x="19" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="38" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="38" width="17" height="17" rx="2" fill="#E69F00"/><rect x="76" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="95" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="76" width="17" height="17" rx="2" fill="#009E73"/><rect x="19" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="57" y="76" width="17" height="17" rx="2" fill="#009E73"/><rect x="76" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="0" y="95" width="17" height="17" rx="2" fill="#E69F00"/><rect x="19" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="38" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="95" width="17" height="17" rx="2" fill="#E69F00"/><rect x="76" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="95" y="95" width="17" height="17" rx="2" fill="#0072B2"/></svg>
+          <span class="tile-caption">tiled 2&times;2</span></div>
+      </div>
+      <dl class="card-data">
+        <dt>1 &middot; As a stabilizer</dt>
+        <dd>The translations fixing <em>three diagonal stripes, leaning one way</em>.
+            As an equivalence relation on cells: same class when
+            <code>(b − a) mod 3</code> agrees.</dd>
+
+        <dt>2 &middot; By generators</dt>
+        <dd><code>K = &#10216;XY&#10217;</code>.
+            Imposing <code>XY = 1, so Y = X⁻¹</code> on the ambient
+            presentation gives the colour group
+            <code>A/K = C₃, generated by the image of X</code>.</dd>
+
+        <dt>3 &middot; Chaim notation</dt>
+        <dd>Short signature ◦<sup>3,3</sup>, long form
+            ◦<sup>(ACB), (ABC)</sup>, colour type
+            <strong>◦³/◦</strong>.</dd>
+      </dl>
+    </article>
+    <article class="subgroup-card" id="k-antidiagonal">
+      <header class="card-head">
+        <h3>K = ⟨XY²⟩</h3>
+        <p class="card-shape">the anti-diagonal</p>
+        <p class="card-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>3 colours</span></p>
+      </header>
+      <div class="card-art">
+        <svg class="torus-grid" viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="3 colour classes on the three by three torus"><rect x="0" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="0" width="44" height="44" rx="5" fill="#E69F00"/><text x="70.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="96" y="0" width="44" height="44" rx="5" fill="#009E73"/><text x="118.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="0" y="48" width="44" height="44" rx="5" fill="#E69F00"/><text x="22.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="48" y="48" width="44" height="44" rx="5" fill="#009E73"/><text x="70.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="96" y="48" width="44" height="44" rx="5" fill="#0072B2"/><text x="118.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="118.0" cy="70.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="0" y="96" width="44" height="44" rx="5" fill="#009E73"/><text x="22.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="48" y="96" width="44" height="44" rx="5" fill="#0072B2"/><text x="70.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="70.0" cy="118.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="96" y="96" width="44" height="44" rx="5" fill="#E69F00"/><text x="118.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text></svg>
+        <div class="tile-wrap"><svg class="torus-tile" viewBox="0 0 112 112" width="112" height="112" role="img" aria-label="the same colouring tiled two by two"><rect x="0" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="19" y="19" width="17" height="17" rx="2" fill="#009E73"/><rect x="38" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="19" width="17" height="17" rx="2" fill="#E69F00"/><rect x="76" y="19" width="17" height="17" rx="2" fill="#009E73"/><rect x="95" y="19" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="19" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="2" fill="#E69F00"/><rect x="57" y="38" width="17" height="17" rx="2" fill="#009E73"/><rect x="76" y="38" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="38" width="17" height="17" rx="2" fill="#E69F00"/><rect x="0" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="19" y="76" width="17" height="17" rx="2" fill="#009E73"/><rect x="38" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="57" y="76" width="17" height="17" rx="2" fill="#E69F00"/><rect x="76" y="76" width="17" height="17" rx="2" fill="#009E73"/><rect x="95" y="76" width="17" height="17" rx="2" fill="#0072B2"/><rect x="0" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="19" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="38" y="95" width="17" height="17" rx="2" fill="#E69F00"/><rect x="57" y="95" width="17" height="17" rx="2" fill="#009E73"/><rect x="76" y="95" width="17" height="17" rx="2" fill="#0072B2"/><rect x="95" y="95" width="17" height="17" rx="2" fill="#E69F00"/></svg>
+          <span class="tile-caption">tiled 2&times;2</span></div>
+      </div>
+      <dl class="card-data">
+        <dt>1 &middot; As a stabilizer</dt>
+        <dd>The translations fixing <em>three diagonal stripes, leaning the other way</em>.
+            As an equivalence relation on cells: same class when
+            <code>(a + b) mod 3</code> agrees.</dd>
+
+        <dt>2 &middot; By generators</dt>
+        <dd><code>K = &#10216;XY²&#10217;</code>.
+            Imposing <code>XY² = 1, so X = Y</code> on the ambient
+            presentation gives the colour group
+            <code>A/K = C₃, generated by the common image of X and Y</code>.</dd>
+
+        <dt>3 &middot; Chaim notation</dt>
+        <dd>Short signature ◦<sup>3,3</sup>, long form
+            ◦<sup>(ABC), (ABC)</sup>, colour type
+            <strong>◦³/◦</strong>.</dd>
+      </dl>
+    </article>
+    <article class="subgroup-card" id="k-trivial">
+      <header class="card-head">
+        <h3>K = {0}</h3>
+        <p class="card-shape">a single cell</p>
+        <p class="card-meta"><span>|K| = 1</span>
+          <span>index 9</span>
+          <span>9 colours</span></p>
+      </header>
+      <div class="card-art">
+        <svg class="torus-grid" viewBox="0 0 140 140" width="140" height="140" role="img" aria-label="9 colour classes on the three by three torus"><rect x="0" y="0" width="44" height="44" rx="5" fill="#0072B2"/><text x="22.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">A</text><circle cx="22.0" cy="22.0" r="18.0" fill="none" stroke="#fffaf1" stroke-width="2.4" opacity="0.9"/><rect x="48" y="0" width="44" height="44" rx="5" fill="#E69F00"/><text x="70.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">B</text><rect x="96" y="0" width="44" height="44" rx="5" fill="#009E73"/><text x="118.0" y="27.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">C</text><rect x="0" y="48" width="44" height="44" rx="5" fill="#CC79A7"/><text x="22.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">D</text><rect x="48" y="48" width="44" height="44" rx="5" fill="#56B4E9"/><text x="70.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">E</text><rect x="96" y="48" width="44" height="44" rx="5" fill="#D55E00"/><text x="118.0" y="75.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">F</text><rect x="0" y="96" width="44" height="44" rx="5" fill="#8C7BB0"/><text x="22.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">G</text><rect x="48" y="96" width="44" height="44" rx="5" fill="#B4A16B"/><text x="70.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">H</text><rect x="96" y="96" width="44" height="44" rx="5" fill="#6C7A89"/><text x="118.0" y="123.0" text-anchor="middle" font-size="15" font-weight="700" fill="#fffaf1">I</text></svg>
+        <div class="tile-wrap"><svg class="torus-tile" viewBox="0 0 112 112" width="112" height="112" role="img" aria-label="the same colouring tiled two by two"><rect x="0" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="0" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="0" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="0" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="19" width="17" height="17" rx="2" fill="#CC79A7"/><rect x="19" y="19" width="17" height="17" rx="2" fill="#56B4E9"/><rect x="38" y="19" width="17" height="17" rx="2" fill="#D55E00"/><rect x="57" y="19" width="17" height="17" rx="2" fill="#CC79A7"/><rect x="76" y="19" width="17" height="17" rx="2" fill="#56B4E9"/><rect x="95" y="19" width="17" height="17" rx="2" fill="#D55E00"/><rect x="0" y="38" width="17" height="17" rx="2" fill="#8C7BB0"/><rect x="19" y="38" width="17" height="17" rx="2" fill="#B4A16B"/><rect x="38" y="38" width="17" height="17" rx="2" fill="#6C7A89"/><rect x="57" y="38" width="17" height="17" rx="2" fill="#8C7BB0"/><rect x="76" y="38" width="17" height="17" rx="2" fill="#B4A16B"/><rect x="95" y="38" width="17" height="17" rx="2" fill="#6C7A89"/><rect x="0" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="19" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="38" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="57" y="57" width="17" height="17" rx="2" fill="#0072B2"/><rect x="76" y="57" width="17" height="17" rx="2" fill="#E69F00"/><rect x="95" y="57" width="17" height="17" rx="2" fill="#009E73"/><rect x="0" y="76" width="17" height="17" rx="2" fill="#CC79A7"/><rect x="19" y="76" width="17" height="17" rx="2" fill="#56B4E9"/><rect x="38" y="76" width="17" height="17" rx="2" fill="#D55E00"/><rect x="57" y="76" width="17" height="17" rx="2" fill="#CC79A7"/><rect x="76" y="76" width="17" height="17" rx="2" fill="#56B4E9"/><rect x="95" y="76" width="17" height="17" rx="2" fill="#D55E00"/><rect x="0" y="95" width="17" height="17" rx="2" fill="#8C7BB0"/><rect x="19" y="95" width="17" height="17" rx="2" fill="#B4A16B"/><rect x="38" y="95" width="17" height="17" rx="2" fill="#6C7A89"/><rect x="57" y="95" width="17" height="17" rx="2" fill="#8C7BB0"/><rect x="76" y="95" width="17" height="17" rx="2" fill="#B4A16B"/><rect x="95" y="95" width="17" height="17" rx="2" fill="#6C7A89"/></svg>
+          <span class="tile-caption">tiled 2&times;2</span></div>
+      </div>
+      <dl class="card-data">
+        <dt>1 &middot; As a stabilizer</dt>
+        <dd>The translations fixing <em>nine distinct colours, no repetition</em>.
+            As an equivalence relation on cells: same class when
+            <code>the cell itself — nothing is identified</code> agrees.</dd>
+
+        <dt>2 &middot; By generators</dt>
+        <dd><code>K = &#10216;— (empty)&#10217;</code>.
+            Imposing <code>nothing</code> on the ambient
+            presentation gives the colour group
+            <code>A/K = C₃ × C₃, the whole torus</code>.</dd>
+
+        <dt>3 &middot; Chaim notation</dt>
+        <dd>Short signature ◦<sup>3,3</sup>, long form
+            ◦<sup>(ABC…), (ADG…)</sup>, colour type
+            <strong>◦⁹/◦</strong>.</dd>
+      </dl>
+    </article>
+    </div>
+
+    <h2>Summary</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>subgroup</th><th>shape</th><th>index</th><th>colours</th>
+          <th>short signature</th><th>colour type</th></tr></thead>
+        <tbody><tr><td><code>K = A</code></td><td>the whole torus</td><td>1</td><td>1</td><td>◦<sup>1,1</sup></td><td>◦</td></tr><tr><td><code>K = ⟨Y⟩</code></td><td>rows</td><td>3</td><td>3</td><td>◦<sup>3,1</sup></td><td>◦³/◦</td></tr><tr><td><code>K = ⟨X⟩</code></td><td>columns</td><td>3</td><td>3</td><td>◦<sup>1,3</sup></td><td>◦³/◦</td></tr><tr><td><code>K = ⟨XY⟩</code></td><td>the diagonal</td><td>3</td><td>3</td><td>◦<sup>3,3</sup></td><td>◦³/◦</td></tr><tr><td><code>K = ⟨XY²⟩</code></td><td>the anti-diagonal</td><td>3</td><td>3</td><td>◦<sup>3,3</sup></td><td>◦³/◦</td></tr><tr><td><code>K = {0}</code></td><td>a single cell</td><td>9</td><td>9</td><td>◦<sup>3,3</sup></td><td>◦⁹/◦</td></tr></tbody>
+      </table>
+    </div>
+    <p class="footnote">
+      Three subgroups share the short signature <code>&#9702;<sup>3,3</sup></code>. The short form
+      records only permutation <em>orders</em>, so it cannot separate them — the long form and
+      the colour group can. This is the same lossiness that forces Conway to print
+      <code>&#8727;<sup>(AB)</sup>3<sup>(BC)</sup>3<sup>(CA)</sup>3</code> in full for
+      <code>&#8727;333&sup3;//&#9702;</code>.
+    </p>
+
+    <h2>Six subgroups, three types</h2>
+    <p>
+      <code>Aut(A) = GL(2,&#120125;&#8323;)</code> has order 48 and acts on the six subgroups with
+      three orbits: the trivial subgroup, the four lines, and the whole torus. The four lines are
+      one orbit — one line for each slope <code>0, 1, 2, &infin;</code> — which is
+      Conway&rsquo;s count of <code>p&nbsp;+&nbsp;1</code> subgroups of index <code>p</code>.
+      You can see the group acting: transposing swaps rows and columns, and shearing carries
+      columns to each diagonal in turn.
+    </p>
+    <p>
+      There is no two-colour entry anywhere on this page, and the reason is arithmetic: a colour
+      group must have order dividing 9, and <code>2 &#8740; 9</code>. Equivalently, no pattern on
+      this torus has a colour-swapping symmetry, since the two classes would have to be the same
+      size.
+    </p>
+
+    <h2>Where this sits</h2>
+    <p>
+      Lifting to the plane, every one of these six kernels is a lattice, so every colour type here
+      is <code>&#9702;</code> with some number of colours — the family at the top of the
+      <a href="color-pattern-catalog.html">periodic colour-pattern catalog</a>. The torus
+      classification is <em>finer</em> than the wallpaper one: fixing a finite ambient removes the
+      ability to rescale, so index matters where affine equivalence would forget it.
+    </p>
+    <p class="footnote">
+      Generated by <a href="https://github.com/yaroslavvb/animated-groups/blob/main/scripts/generate_torus_tutorial.py">scripts/generate_torus_tutorial.py</a>.
+      Notation follows Conway, Burgiel and Goodman-Strauss, <cite>The Symmetries of Things</cite>,
+      Chapters 10&ndash;13.
+    </p>
+  </main>
+</body>
+</html>
