@@ -99,7 +99,14 @@
             "translation": [
               1,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "translation",
+              "vector": [
+                1,
+                0.0
+              ]
+            }
           },
           {
             "generator": "Y",
@@ -116,7 +123,14 @@
             "translation": [
               0.0,
               1
-            ]
+            ],
+            "visualization": {
+              "kind": "translation",
+              "vector": [
+                0.0,
+                1
+              ]
+            }
           }
         ]
       }
@@ -148,7 +162,15 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.0,
+                0.0
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "β",
@@ -165,7 +187,15 @@
             "translation": [
               0.0,
               1.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.0,
+                0.5
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "γ",
@@ -182,7 +212,15 @@
             "translation": [
               1.0,
               1.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.5
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "δ",
@@ -199,7 +237,15 @@
             "translation": [
               1.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.0
+              ],
+              "angle_degrees": 180
+            }
           }
         ]
       }
@@ -231,7 +277,14 @@
             "translation": [
               1,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "translation",
+              "vector": [
+                1,
+                0.0
+              ]
+            }
           },
           {
             "generator": "P",
@@ -248,7 +301,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "Q",
@@ -265,7 +330,19 @@
             "translation": [
               0.0,
               1.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.5
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -296,7 +373,19 @@
             "translation": [
               0.5,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "glide",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.5
+            }
           },
           {
             "generator": "Z",
@@ -313,7 +402,19 @@
             "translation": [
               -0.5,
               1
-            ]
+            ],
+            "visualization": {
+              "kind": "glide",
+              "axis_point": [
+                0.0,
+                0.5
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": -0.5
+            }
           }
         ]
       }
@@ -345,7 +446,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "Z",
@@ -362,7 +475,19 @@
             "translation": [
               0.5,
               1
-            ]
+            ],
+            "visualization": {
+              "kind": "glide",
+              "axis_point": [
+                0.0,
+                0.5
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.5
+            }
           }
         ]
       }
@@ -395,7 +520,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                0.0,
+                1.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "Q",
@@ -412,7 +549,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "R",
@@ -429,7 +578,19 @@
             "translation": [
               1.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.5,
+                0.0
+              ],
+              "axis_direction": [
+                0.0,
+                1.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "S",
@@ -446,7 +607,19 @@
             "translation": [
               0.0,
               1.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.5
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -479,7 +652,15 @@
             "translation": [
               0.0,
               0.5
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.0,
+                0.25
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "β",
@@ -496,7 +677,15 @@
             "translation": [
               1.0,
               0.5
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.25
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "P",
@@ -513,7 +702,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -545,7 +746,15 @@
             "translation": [
               0.0,
               0.5
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.0,
+                0.25
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "β",
@@ -562,7 +771,15 @@
             "translation": [
               1.0,
               0.5
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.25
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "Z",
@@ -579,7 +796,19 @@
             "translation": [
               -0.5,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "glide",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": -0.5
+            }
           }
         ]
       }
@@ -613,7 +842,15 @@
             "translation": [
               0.5,
               0.5
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.25,
+                0.25
+              ],
+              "angle_degrees": 180
+            }
           },
           {
             "generator": "P",
@@ -630,7 +867,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                0.0,
+                1.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "Q",
@@ -647,7 +896,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -680,7 +941,15 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.0,
+                0.0
+              ],
+              "angle_degrees": 90
+            }
           },
           {
             "generator": "β",
@@ -697,7 +966,15 @@
             "translation": [
               1.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.5
+              ],
+              "angle_degrees": 90
+            }
           },
           {
             "generator": "γ",
@@ -714,7 +991,15 @@
             "translation": [
               1.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.0
+              ],
+              "angle_degrees": 180
+            }
           }
         ]
       }
@@ -749,7 +1034,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "Q",
@@ -766,7 +1063,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                0.707106781187,
+                0.707106781187
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "R",
@@ -783,7 +1092,19 @@
             "translation": [
               1.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.5,
+                0.0
+              ],
+              "axis_direction": [
+                0.0,
+                1.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -817,7 +1138,15 @@
             "translation": [
               0.5,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.25,
+                0.25
+              ],
+              "angle_degrees": 90
+            }
           },
           {
             "generator": "P",
@@ -834,7 +1163,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -866,7 +1207,15 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.0,
+                0.0
+              ],
+              "angle_degrees": 120
+            }
           },
           {
             "generator": "β",
@@ -883,7 +1232,15 @@
             "translation": [
               1,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.288675134595
+              ],
+              "angle_degrees": 120
+            }
           },
           {
             "generator": "γ",
@@ -900,7 +1257,15 @@
             "translation": [
               0.5,
               -0.866025403784
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                -0.288675134595
+              ],
+              "angle_degrees": 120
+            }
           }
         ]
       }
@@ -933,7 +1298,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "Q",
@@ -950,7 +1327,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                0.5,
+                0.866025403784
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "R",
@@ -967,7 +1356,19 @@
             "translation": [
               0.866025403784,
               0.5
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.433012701892,
+                0.25
+              ],
+              "axis_direction": [
+                0.5,
+                -0.866025403784
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -1001,7 +1402,15 @@
             "translation": [
               1.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.288675134595
+              ],
+              "angle_degrees": 120
+            }
           },
           {
             "generator": "P",
@@ -1018,7 +1427,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -1052,7 +1473,15 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.0,
+                0.0
+              ],
+              "angle_degrees": 60
+            }
           },
           {
             "generator": "β",
@@ -1069,7 +1498,15 @@
             "translation": [
               1,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.288675134595
+              ],
+              "angle_degrees": 120
+            }
           },
           {
             "generator": "γ",
@@ -1086,7 +1523,15 @@
             "translation": [
               1,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "rotation",
+              "centre": [
+                0.5,
+                0.0
+              ],
+              "angle_degrees": 180
+            }
           }
         ]
       }
@@ -1122,7 +1567,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                1.0,
+                0.0
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "Q",
@@ -1139,7 +1596,19 @@
             "translation": [
               0.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.0,
+                0.0
+              ],
+              "axis_direction": [
+                0.866025403784,
+                0.5
+              ],
+              "glide_distance": 0.0
+            }
           },
           {
             "generator": "R",
@@ -1156,7 +1625,19 @@
             "translation": [
               1.0,
               0.0
-            ]
+            ],
+            "visualization": {
+              "kind": "mirror",
+              "axis_point": [
+                0.5,
+                0.0
+              ],
+              "axis_direction": [
+                0.0,
+                1.0
+              ],
+              "glide_distance": 0.0
+            }
           }
         ]
       }
@@ -8699,8 +9180,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 17.0,
             "colour": 0
@@ -8741,8 +9222,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 23.0,
             "colour": 0
@@ -8783,8 +9264,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 11.0,
             "colour": 0
@@ -8825,8 +9306,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 29.0,
             "colour": 0
@@ -8867,8 +9348,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 5.0,
             "colour": 0
@@ -11558,8 +12039,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 17.0,
             "colour": 0
@@ -11603,8 +12084,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 17.0,
             "colour": 0
@@ -11648,8 +12129,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 17.0,
             "colour": 0
@@ -11693,8 +12174,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 17.0,
             "colour": 0
@@ -11738,8 +12219,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 17.0,
             "colour": 0
@@ -13322,8 +13803,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 23.0,
             "colour": 0
@@ -13367,8 +13848,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 23.0,
             "colour": 0
@@ -13412,8 +13893,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 11.0,
             "colour": 0
@@ -13457,8 +13938,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 23.0,
             "colour": 0
@@ -13502,8 +13983,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 11.0,
             "colour": 0
@@ -13547,8 +14028,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 29.0,
             "colour": 0
@@ -13592,8 +14073,8 @@
         "seeds": [
           {
             "point": [
-              0.173,
-              0.137
+              0.353553,
+              0.146447
             ],
             "angle": 23.0,
             "colour": 0

@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from html.parser import HTMLParser
 import json
+from math import hypot, isfinite
 from pathlib import Path
 import subprocess
 import sys
@@ -102,6 +103,21 @@ class ColorPatternCatalogTests(unittest.TestCase):
             Counter({1: 17, 2: 46, 3: 23}),
         )
 
+    def test_temporary_pattern_lock_keeps_one_primitive_tab_per_group(self) -> None:
+        patterns_by_group: dict[str, list[dict[str, object]]] = defaultdict(list)
+        for pattern in self.payload["pattern_types"]:
+            patterns_by_group[pattern["colour_group_id"]].append(pattern)
+
+        self.assertEqual(len(patterns_by_group), 86)
+        self.assertEqual(
+            sum(len(patterns) - 1 for patterns in patterns_by_group.values()),
+            112,
+        )
+        self.assertTrue(all(
+            patterns[0]["underlying_pattern_is_primitive"]
+            for patterns in patterns_by_group.values()
+        ))
+
     def test_three_colour_regular_nonregular_split(self) -> None:
         groups = [
             group for group in self.payload["colour_groups"]
@@ -190,6 +206,35 @@ class ColorPatternCatalogTests(unittest.TestCase):
             {"G": "22*", "H": "22*", "K": "××"},
         )
 
+    def test_affine_generator_visualizations_match_presentations(self) -> None:
+        counts: Counter[str] = Counter()
+        for wallpaper in self.payload["wallpaper_groups"]:
+            descriptions = dict(catalog.GENERATOR_GEOMETRY[wallpaper["id"]])
+            for generator in wallpaper["render_geometry"]["generators"]:
+                visualization = generator["visualization"]
+                kind = visualization["kind"]
+                description = descriptions[generator["generator"]]
+                expected = (
+                    "translation" if description == "translation"
+                    else "glide" if "glide reflection" in description
+                    else "mirror" if "mirror reflection" in description
+                    else "rotation"
+                )
+                self.assertEqual(kind, expected, (wallpaper["id"], generator["generator"]))
+                counts[kind] += 1
+                if kind == "rotation":
+                    self.assertIn(visualization["angle_degrees"], {60, 90, 120, 180})
+                    self.assertTrue(all(isfinite(value) for value in visualization["centre"]))
+                elif kind in {"mirror", "glide"}:
+                    self.assertTrue(all(isfinite(value) for value in visualization["axis_point"]))
+                    self.assertAlmostEqual(
+                        hypot(*visualization["axis_direction"]), 1, places=8,
+                    )
+        self.assertEqual(
+            counts,
+            Counter({"mirror": 21, "rotation": 20, "glide": 4, "translation": 3}),
+        )
+
     def test_affine_renderer_realizes_all_198_entries_without_collisions(self) -> None:
         wallpaper_by_id = {
             wallpaper["id"]: wallpaper for wallpaper in self.payload["wallpaper_groups"]
@@ -244,12 +289,13 @@ class ColorPatternCatalogTests(unittest.TestCase):
             for seed in pattern["render_layout"]["seeds"]
         }
         # Generic representatives retain one centre grid per wallpaper
-        # family.  *632 uses the incenter of its mirror triangle to keep the
-        # deliberately large R-diamonds apart; every other family keeps the
-        # common seed.  The optimizer changes orientation, not position.
+        # family.  *632 and *442 use the incenter of their mirror triangles
+        # to keep the deliberately large R-diamonds apart; every other family
+        # keeps the common seed.  The optimizer changes orientation, not
+        # position.
         self.assertEqual(
             orbit_points,
-            {(0.173, 0.137), (0.394338, 0.105662)},
+            {(0.173, 0.137), (0.394338, 0.105662), (0.353553, 0.146447)},
         )
         zero_discrepancy = 0
         for pattern in self.payload["pattern_types"]:
@@ -611,6 +657,10 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertNotIn('class="filter-bar"', self.page)
         self.assertNotIn("data-colour-filter", self.page)
         self.assertNotIn("Catalogued object:", self.page)
+        self.assertIn("window.COLOR_PATTERN_CATALOG_SETTINGS", self.page)
+        self.assertIn("enableGsPatternSelection: false", self.page)
+        self.assertIn("color-pattern-catalog.js?v=generator-overlays-v1", self.page)
+        self.assertIn("color-pattern-catalog.css?v=generator-overlays-v1", self.page)
 
     def test_mathworld_directory_has_17_local_crops(self) -> None:
         assets = sorted((ROOT / "output" / "mathworld-wallpaper-groups").glob("*.webp"))
@@ -645,12 +695,26 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertIn("function composePermutations", script)
         self.assertIn("function patternTemplateSeeds", script)
         self.assertIn("function motifPose", script)
+        self.assertIn("function addGeneratorOverlay", script)
+        self.assertIn("function addAxisGenerator", script)
+        self.assertIn("function addRotationGenerator", script)
+        self.assertIn('if (kind === "translation") return', script)
+        self.assertIn('class: "generator-rotation-centre"', script)
+        self.assertIn("Translation generators are omitted", script)
+        self.assertEqual(script.count("addGeneratorOverlay(svg, group, wallpaper);"), 2)
         self.assertIn("wallpaper.render_geometry.generators", script)
         self.assertIn("operation.permutation[seed.colour]", script)
         self.assertIn("pattern.render_layout", script)
         self.assertIn("function addFixedVerticalBands", script)
         self.assertIn("function layoutDiscrepancyElement", script)
         self.assertIn('appendTableRow(table, "Colour-blind Δ"', script)
+        self.assertIn('document.createTextNode("cycles over")', script)
+        self.assertIn("Permutation cycles over canonical colour labels", script)
+        self.assertIn("enableGsPatternSelection", script)
+        self.assertIn('tab.setAttribute("aria-disabled", "true")', script)
+        self.assertIn("temporarily unavailable while G&S pattern notation is under review", script)
+        self.assertIn('tab.getAttribute("aria-disabled") !== "true"', script)
+        self.assertIn("history.replaceState", script)
         self.assertNotIn("Math.max(1, pattern.number_of_colours - 1)", script)
         self.assertNotIn("function buildP4TwoColourPattern", script)
         self.assertNotIn("const motifScale", script)
