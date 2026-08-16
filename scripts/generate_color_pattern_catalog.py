@@ -1001,13 +1001,13 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Catalog of colorings</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=generator-overlays-v1">
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=generator-overlays-v2">
   <script>
     window.COLOR_PATTERN_CATALOG_SETTINGS = Object.freeze({{
       enableGsPatternSelection: false,
     }});
   </script>
-  <script src="color-pattern-catalog.js?v=generator-overlays-v1" defer></script>
+  <script src="color-pattern-catalog.js?v=generator-overlays-v2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>
