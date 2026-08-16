@@ -25,6 +25,7 @@ from chaim_short_signatures import (
     TWO_FOLD_SHORT_SIGNATURE_BY_TYPE,
 )
 from colour_generator_actions import (
+    GENERATOR_GEOMETRY,
     THREE_COLOUR_ACTION_CODES,
     generator_colour_actions,
     group_presentation,
@@ -656,6 +657,7 @@ def validate_payload(payload: dict[str, Any]) -> None:
     if image_counts != Counter({"C3": 8, "S3": 15}):
         raise ValueError(f"bad three-colour action census: {image_counts}")
     wallpaper_orbifolds = {wallpaper["orbifold"] for wallpaper in wallpapers}
+    visualization_counts: Counter[str] = Counter()
     for wallpaper in wallpapers:
         geometry = wallpaper.get("render_geometry") or {}
         affine_names = [
@@ -668,6 +670,27 @@ def validate_payload(payload: dict[str, Any]) -> None:
             )
         if not affine_relations_hold(wallpaper["id"]):
             raise ValueError(f"affine presentation relations fail for {wallpaper['id']}")
+        descriptions = dict(GENERATOR_GEOMETRY[wallpaper["id"]])
+        for generator in geometry.get("generators", []):
+            visualization = generator.get("visualization") or {}
+            kind = visualization.get("kind")
+            description = descriptions[generator["generator"]]
+            expected_kind = (
+                "translation" if description == "translation"
+                else "glide" if "glide reflection" in description
+                else "mirror" if "mirror reflection" in description
+                else "rotation"
+            )
+            if kind != expected_kind:
+                raise ValueError(
+                    f"generator marker mismatch for {wallpaper['id']} "
+                    f"{generator['generator']}: {kind} != {expected_kind}"
+                )
+            visualization_counts[kind] += 1
+    if visualization_counts != Counter({
+        "mirror": 21, "rotation": 20, "glide": 4, "translation": 3,
+    }):
+        raise ValueError(f"bad generator visualization census: {visualization_counts}")
     if any(group["colour_stabilizer_H"] not in wallpaper_orbifolds for group in groups):
         raise ValueError("every chosen-colour stabilizer H must be a wallpaper orbifold")
     if any(group["all_colours_kernel_K"] not in wallpaper_orbifolds for group in groups):
@@ -978,8 +1001,13 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Catalog of colorings</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=compact-catalog-v1">
-  <script src="color-pattern-catalog.js?v=p2-spacing-v1" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=generator-overlays-v1">
+  <script>
+    window.COLOR_PATTERN_CATALOG_SETTINGS = Object.freeze({{
+      enableGsPatternSelection: false,
+    }});
+  </script>
+  <script src="color-pattern-catalog.js?v=generator-overlays-v1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

@@ -13,7 +13,7 @@ declared colour homomorphism changes between colour-group tabs.
 
 from __future__ import annotations
 
-from math import acos, cos, hypot, pi, sin, sqrt
+from math import acos, atan2, cos, degrees, hypot, pi, sin, sqrt
 from typing import Any
 
 from colour_generator_actions import GENERATOR_GEOMETRY, GROUP_PRESENTATIONS
@@ -216,6 +216,74 @@ RENDER_SCALE: dict[str, float] = {
 }
 
 
+def generator_visualization(motion: Affine, tolerance: float = 1e-8) -> dict[str, Any]:
+    """Return the canonical geometric marker for one affine generator.
+
+    Rotation centres and reflection/glide axes are derived from the exact
+    affine realization used by the pattern renderer.  The browser therefore
+    does not maintain a second, hand-positioned generator diagram.
+    """
+
+    matrix, translation = motion
+    identity = (
+        abs(matrix[0][0] - 1) <= tolerance
+        and abs(matrix[0][1]) <= tolerance
+        and abs(matrix[1][0]) <= tolerance
+        and abs(matrix[1][1] - 1) <= tolerance
+    )
+    if identity:
+        return {"kind": "translation", "vector": list(translation)}
+
+    determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    if determinant > 0:
+        # A fixed point c satisfies (I-M)c=t.
+        a, b = 1 - matrix[0][0], -matrix[0][1]
+        c, d = -matrix[1][0], 1 - matrix[1][1]
+        denominator = a * d - b * c
+        if abs(denominator) <= tolerance:
+            raise ValueError("nontrivial orientation-preserving generator has no centre")
+        centre = (
+            (translation[0] * d - b * translation[1]) / denominator,
+            (a * translation[1] - translation[0] * c) / denominator,
+        )
+        angle = degrees(atan2(
+            matrix[1][0] - matrix[0][1],
+            matrix[0][0] + matrix[1][1],
+        ))
+        if angle <= 0:
+            angle += 360
+        nearest_degree = round(angle)
+        if abs(angle - nearest_degree) <= tolerance:
+            angle = nearest_degree
+        return {
+            "kind": "rotation",
+            "centre": [_clean(value) for value in centre],
+            "angle_degrees": _clean(angle),
+        }
+
+    # For a reflection matrix, the +1 eigendirection is its axis direction.
+    # If the affine translation has a component along that direction, the
+    # motion is a glide.  Its invariant axis still has normal coordinate
+    # n·x=(n·t)/2.
+    axis_angle = 0.5 * atan2(
+        matrix[0][1] + matrix[1][0],
+        matrix[0][0] - matrix[1][1],
+    )
+    direction = (cos(axis_angle), sin(axis_angle))
+    normal = (-direction[1], direction[0])
+    normal_offset = (
+        normal[0] * translation[0] + normal[1] * translation[1]
+    ) / 2
+    axis_point = (normal[0] * normal_offset, normal[1] * normal_offset)
+    glide = direction[0] * translation[0] + direction[1] * translation[1]
+    return {
+        "kind": "glide" if abs(glide) > tolerance else "mirror",
+        "axis_point": [_clean(value) for value in axis_point],
+        "axis_direction": [_clean(value) for value in direction],
+        "glide_distance": _clean(glide),
+    }
+
+
 def affine_generators_for(parent: str) -> dict[str, Any]:
     """Return a JSON-serializable, ordered affine rendering specification."""
 
@@ -230,6 +298,7 @@ def affine_generators_for(parent: str) -> dict[str, Any]:
                 "generator": name,
                 "matrix": [list(row) for row in generators[name][0]],
                 "translation": list(generators[name][1]),
+                "visualization": generator_visualization(generators[name]),
             }
             for name in expected_names
         ],
@@ -317,29 +386,40 @@ def enumerate_coloured_actions(
 
 
 CANONICAL_PATTERN_SEED = ((0.173, 0.137), 17.0, 0)
-# The global seed lies too close to the 30-degree mirror in the *632
-# fundamental triangle: its reflected centres are only 13.8 px apart at the
-# catalog scale, so the deliberately large R-diamonds overlap.  The incenter
-# is generic and maximizes the distance from all three mirrors.
-P6M_PATTERN_SEED = ((0.394338, 0.105662), 17.0, 0)
+# The global seed lies too close to one mirror of the *632 and *442
+# fundamental triangles: its reflected centres are only 13.8 px and 12.0 px
+# apart at the catalog scale, so the deliberately large R-diamonds overlap.
+# Each triangle's incenter is generic and maximizes the distance from all
+# three mirrors, lifting the closest pair to 74.4 px and 68.8 px.
+MIRROR_CLEARANCE_SEEDS: dict[str, tuple[tuple[float, float], float, int]] = {
+    "p6m": ((0.394338, 0.105662), 17.0, 0),
+    "p4m": ((0.353553, 0.146447), 17.0, 0),
+}
+
+
+def pattern_seed(parent: str | None = None) -> tuple[tuple[float, float], float, int]:
+    """Return the normalized generic-orbit seed for one wallpaper parent."""
+
+    return MIRROR_CLEARANCE_SEEDS.get(parent, CANONICAL_PATTERN_SEED)
 
 
 def candidate_orbit_layouts(parent: str | None = None) -> tuple[dict[str, Any], ...]:
     """Nearby generic-orbit candidates for measured layout optimization.
 
-    Wallpaper families share the common normalized seed except *632, whose
-    mirror-triangle incenter prevents the large motifs from overlapping.  A
-    later candidate is used only when reusing the family seed would make two
-    full coloured scenes identical.  The catalog generator measures and ranks
-    candidates; angle-only alternatives preserve every motif centre and win
-    whenever their measured discrepancy is minimal.
+    Wallpaper families share the common normalized seed except the dense
+    kaleidoscopes in :data:`MIRROR_CLEARANCE_SEEDS`, whose mirror-triangle
+    incenters prevent the large motifs from overlapping.  A later candidate is
+    used only when reusing the family seed would make two full coloured scenes
+    identical.  The catalog generator measures and ranks candidates;
+    angle-only alternatives preserve every motif centre and win whenever their
+    measured discrepancy is minimal.
     """
 
-    if parent == "p6m":
-        (point, angle, colour) = P6M_PATTERN_SEED
-        # Keep every *632 representative on the same maximally separated
-        # centre grid.  Orientation-only alternatives are enough to separate
-        # repeated pattern types without sacrificing the mirror clearance.
+    (point, angle, colour) = pattern_seed(parent)
+    if parent in MIRROR_CLEARANCE_SEEDS:
+        # Keep every representative on the same maximally separated centre
+        # grid.  Orientation-only alternatives are enough to separate repeated
+        # pattern types without sacrificing the mirror clearance.
         angle_offsets = (0,) + tuple(
             signed
             for step in range(6, 180, 6)
@@ -347,7 +427,6 @@ def candidate_orbit_layouts(parent: str | None = None) -> tuple[dict[str, Any], 
         )
         point_offsets = ((0.0, 0.0),)
     else:
-        (point, angle, colour) = CANONICAL_PATTERN_SEED
         angle_offsets = (0, 6, -6, 12, -12, 20, -20, 30, -30)
         point_offsets = (
             (0.0, 0.0),
@@ -371,7 +450,7 @@ def candidate_orbit_layouts(parent: str | None = None) -> tuple[dict[str, Any], 
 
 
 def _layout_seeds(
-    pattern: dict[str, Any], colours: int
+    pattern: dict[str, Any], colours: int, parent: str | None = None
 ) -> tuple[tuple[tuple[float, float], float, int], ...]:
     layout = pattern.get("render_layout") or {}
     if layout.get("kind") == "orbit":
@@ -384,16 +463,19 @@ def _layout_seeds(
             )
             for seed in seeds
         )
-    point, angle, colour = CANONICAL_PATTERN_SEED
+    # Reached only by a pattern with no assigned orbit layout.  The seed must
+    # stay parent-aware; the shared canonical point overlaps its own mirror
+    # images in the families listed in MIRROR_CLEARANCE_SEEDS.
+    point, angle, colour = pattern_seed(parent)
     return ((point, angle, colour % colours),)
 
 
 def pattern_template_seeds(
-    pattern: dict[str, Any], colours: int
+    pattern: dict[str, Any], colours: int, parent: str | None = None
 ) -> tuple[tuple[tuple[float, float], float, int], ...]:
     """Return the assigned generic-orbit seeds for a catalog pattern."""
 
-    return _layout_seeds(pattern, colours)
+    return _layout_seeds(pattern, colours, parent)
 
 
 def _fixed_vertical_band_scene(
@@ -451,7 +533,9 @@ def _orbit_scene_fingerprint(
     scale = RENDER_SCALE[group["wallpaper_id"]]
     poses: set[tuple[int, int, int, int, int, int]] = set()
     for seed_index, (point, angle, seed_colour) in enumerate(
-        pattern_template_seeds(pattern, group["number_of_colours"])
+        pattern_template_seeds(
+            pattern, group["number_of_colours"], group["wallpaper_id"]
+        )
     ):
         radians = angle * pi / 180
         direction = (cos(radians), sin(radians))
@@ -562,7 +646,9 @@ for _parent in AFFINE_GENERATORS:
 
 __all__ = [
     "AFFINE_GENERATORS",
+    "MIRROR_CLEARANCE_SEEDS",
     "RENDER_SCALE",
+    "pattern_seed",
     "affine_generators_for",
     "affine_relations_hold",
     "candidate_orbit_layouts",
