@@ -209,6 +209,7 @@ section > p,
 
 .equation.compact {
   margin: 0;
+  overflow: visible;
   font-size: 0.98rem;
 }
 
@@ -216,6 +217,83 @@ section > p,
   color: var(--text);
   font-family: var(--serif);
   white-space: normal;
+}
+
+.group-presentation {
+  position: relative;
+  display: inline-block;
+}
+
+.group-presentation-trigger {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px dotted currentColor;
+  padding: 0 0.04em;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  cursor: help;
+}
+
+.group-presentation-trigger i {
+  font: inherit;
+}
+
+.presentation-tooltip {
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  bottom: calc(100% + 0.65rem);
+  width: min(20rem, calc(100vw - 2rem));
+  border: 1px solid var(--line-strong);
+  border-radius: 0.35rem;
+  padding: 0.8rem 0.9rem;
+  background: var(--background);
+  box-shadow: 0 0.65rem 1.8rem rgba(24, 26, 24, 0.13);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-align: left;
+  white-space: normal;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.25rem);
+  transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease;
+}
+
+.presentation-tooltip strong,
+.presentation-math,
+.presentation-description {
+  display: block;
+}
+
+.presentation-tooltip strong {
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.presentation-math {
+  font-family: var(--serif);
+  font-size: 0.94rem;
+}
+
+.presentation-description {
+  margin-top: 0.4rem;
+  color: var(--text-soft);
+}
+
+.group-presentation:hover .presentation-tooltip,
+.group-presentation:focus-within .presentation-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .boxed-math {
@@ -732,6 +810,15 @@ td:last-child { padding-right: 0; }
   table { font-size: 0.78rem; }
   th,
   td { padding: 0.55rem 0.5rem; }
+  .presentation-tooltip {
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, 0.25rem);
+  }
+  .group-presentation:hover .presentation-tooltip,
+  .group-presentation:focus-within .presentation-tooltip {
+    transform: translate(-50%, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
