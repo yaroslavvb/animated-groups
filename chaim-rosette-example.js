@@ -3,18 +3,9 @@
 
   const COLORS = ["blue", "red", "green"];
   const RAY_COLORS = ["var(--blue)", "var(--red)", "var(--green)"];
-  const SUPERSCRIPTS = ["⁰", "¹", "²", "³", "⁴", "⁵"];
-
-  function rotationLabel(power) {
-    if (power === 0) return "e";
-    if (power === 1) return "r";
-    return `r${SUPERSCRIPTS[power]}`;
-  }
-
-  function reflectionLabel(power) {
-    if (power === 0) return "s";
-    if (power === 1) return "sr";
-    return `sr${SUPERSCRIPTS[power]}`;
+  function dadLabel(base, coset) {
+    if (coset === 0) return base;
+    return `${base} ${coset === 1 ? "r₆" : "r₃"}`;
   }
 
   function operationData() {
@@ -29,29 +20,29 @@
           color: COLORS[coset],
           power: coset,
           reflected: false,
-          label: rotationLabel(coset),
-          positionAngle: baseAngle - 8,
+          label: dadLabel("e", coset),
+          positionAngle: baseAngle + 8,
         },
         {
           color: COLORS[coset],
           power: coset,
           reflected: true,
-          label: reflectionLabel(coset),
-          positionAngle: baseAngle + 8,
+          label: dadLabel("Rₓ", coset),
+          positionAngle: baseAngle - 8,
         },
         {
           color: COLORS[coset],
           power: oppositePower,
           reflected: false,
-          label: rotationLabel(oppositePower),
-          positionAngle: baseAngle + 180 - 8,
+          label: dadLabel("r₂", coset),
+          positionAngle: baseAngle + 180 + 8,
         },
         {
           color: COLORS[coset],
           power: oppositePower,
           reflected: true,
-          label: reflectionLabel(oppositePower),
-          positionAngle: baseAngle + 180 + 8,
+          label: dadLabel("Rᵧ", coset),
+          positionAngle: baseAngle + 180 - 8,
         },
       );
     }
@@ -92,6 +83,13 @@
     stage.append(center);
   }
 
+  function motifColour(operation, mode) {
+    if (mode === "catalogue-one") return "mono";
+    if (mode === "catalogue-two-rotation") return operation.reflected ? "red" : "blue";
+    if (mode === "catalogue-two-dihedral") return operation.power % 2 === 0 ? "blue" : "red";
+    return operation.color;
+  }
+
   function addMotif(stage, operation, mode) {
     const radians = (operation.positionAngle * Math.PI) / 180;
     const radius = 35;
@@ -99,7 +97,7 @@
     const y = 50 - radius * Math.sin(radians);
 
     const motif = document.createElement("span");
-    motif.className = `motif is-${operation.color}`;
+    motif.className = `motif is-${motifColour(operation, mode)}`;
     motif.style.left = `${x}%`;
     motif.style.top = `${y}%`;
     motif.setAttribute("aria-hidden", "true");
@@ -111,7 +109,7 @@
     glyph.textContent = "R";
     motif.append(glyph);
 
-    if (mode !== "plain" && mode !== "kernel" && mode !== "stabilizer") {
+    if (mode === "colored") {
       const label = document.createElement("span");
       label.className = "motif-label";
       label.textContent = operation.label;
