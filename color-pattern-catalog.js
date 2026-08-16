@@ -215,27 +215,6 @@
     return wrapper;
   }
 
-  function layoutDiscrepancyElement(pattern) {
-    const layout = pattern.render_layout;
-    const reference = state.patternById.get(layout.reference_pattern_id);
-    const wrapper = document.createElement("span");
-    wrapper.className = "layout-discrepancy";
-    wrapper.append(document.createTextNode(layout.colour_blind_discrepancy.toFixed(3)));
-    if (reference && reference.id !== pattern.id) {
-      wrapper.append(
-        document.createTextNode(" from "),
-        mathSymbolElement(reference.gs_pattern_type),
-      );
-    }
-    if (layout.schematic_constraint) {
-      wrapper.append(document.createTextNode(" · approx."));
-      wrapper.title = `${state.payload.meta.definitions.layout_discrepancy} ${layout.schematic_constraint}`;
-    } else {
-      wrapper.title = state.payload.meta.definitions.layout_discrepancy;
-    }
-    return wrapper;
-  }
-
   function permutationNotation(permutation) {
     const labels = ["A", "B", "C"].slice(0, permutation.length);
     if (permutation.every((image, index) => image === index)) return "id";
@@ -348,6 +327,9 @@
 
   function addMotif(svg, x, y, angle, colour, mirrored) {
     const group = svgElement("g", {
+      class: "pattern-motif",
+      "data-motif-x": x.toFixed(2),
+      "data-motif-y": y.toFixed(2),
       transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -MOTIF_SCALE : MOTIF_SCALE} ${MOTIF_SCALE})`,
     });
     const diamond = svgElement("polygon", {
@@ -589,11 +571,85 @@
     }));
   }
 
-  function addOverlayLabel(container, label, x, y, className = "generator-label") {
+  function labelPlacementContext(svg) {
+    return {
+      motifs: [...svg.querySelectorAll(".pattern-motif")].map((motif) => ({
+        x: Number(motif.getAttribute("data-motif-x")),
+        y: Number(motif.getAttribute("data-motif-y")),
+      })),
+      labels: [],
+    };
+  }
+
+  function labelBox(candidate) {
+    return {
+      left: candidate[0] - 12,
+      right: candidate[0] + 12,
+      top: candidate[1] - 12,
+      bottom: candidate[1] + 12,
+    };
+  }
+
+  function boxesIntersect(first, second) {
+    return first.left < second.right && first.right > second.left
+      && first.top < second.bottom && first.bottom > second.top;
+  }
+
+  function motifIntersectsLabel(motif, box) {
+    const closestX = Math.max(box.left, Math.min(box.right, motif.x));
+    const closestY = Math.max(box.top, Math.min(box.bottom, motif.y));
+    return Math.hypot(motif.x - closestX, motif.y - closestY) < 22;
+  }
+
+  function chooseLabelPosition(candidates, context) {
+    const unique = new Map();
+    candidates.forEach(([x, y], index) => {
+      const candidate = [Math.max(14, Math.min(946, x)), Math.max(14, Math.min(546, y))];
+      const key = candidate.map((value) => value.toFixed(2)).join(":");
+      if (!unique.has(key)) unique.set(key, {candidate, index});
+    });
+    let best = null;
+    unique.forEach(({candidate, index}) => {
+      const box = labelBox(candidate);
+      const motifHits = context.motifs.filter((motif) => motifIntersectsLabel(motif, box)).length;
+      const labelHits = context.labels.filter((placed) => boxesIntersect(box, placed)).length;
+      const score = motifHits * 1_000_000 + labelHits * 2_000_000 + index;
+      if (!best || score < best.score) best = {candidate, box, score};
+    });
+    context.labels.push(best.box);
+    return best;
+  }
+
+  function addOverlayLabel(container, label, candidates, context, anchor) {
+    const expandedCandidates = [...candidates];
+    for (let x = 20; x <= 940; x += 20) expandedCandidates.push([x, 20], [x, 540]);
+    for (let y = 40; y <= 520; y += 20) expandedCandidates.push([20, y], [940, y]);
+    for (let y = 19; y <= 539; y += 10) {
+      for (let x = 24; x <= 934; x += 10) expandedCandidates.push([x, y]);
+    }
+    const placement = chooseLabelPosition(expandedCandidates, context);
+    const [clampedX, clampedY] = placement.candidate;
+    if (anchor && Math.hypot(clampedX - anchor[0], clampedY - anchor[1]) > 74) {
+      container.append(svgElement("line", {
+        x1: anchor[0],
+        y1: anchor[1],
+        x2: clampedX,
+        y2: clampedY,
+        class: "generator-label-leader",
+      }));
+    }
+    container.append(svgElement("rect", {
+      x: clampedX - 12,
+      y: clampedY - 12,
+      width: 24,
+      height: 24,
+      rx: 5,
+      class: "generator-label-backing",
+    }));
     const text = svgElement("text", {
-      x: Math.max(24, Math.min(936, x)),
-      y: Math.max(26, Math.min(538, y)),
-      class: className,
+      x: clampedX,
+      y: clampedY,
+      class: "generator-label",
       "text-anchor": "middle",
       "dominant-baseline": "middle",
     });
@@ -601,7 +657,7 @@
     container.append(text);
   }
 
-  function addAxisGenerator(overlay, geometry, action, scale, index) {
+  function addAxisGenerator(overlay, geometry, action, scale, index, labelContext) {
     const visualization = geometry.visualization;
     const axis = clippedAxis(
       visualization.axis_point,
@@ -628,14 +684,25 @@
       }
     }
 
-    const fromStart = index % 2 === 0;
-    const fraction = 0.14 + (index % 3) * 0.055;
-    const weight = fromStart ? fraction : 1 - fraction;
-    const labelX = axis.start[0] + (axis.end[0] - axis.start[0]) * weight
-      + axis.normal[0] * 13;
-    const labelY = axis.start[1] + (axis.end[1] - axis.start[1]) * weight
-      + axis.normal[1] * 13;
-    addOverlayLabel(marker, geometry.generator, labelX, labelY);
+    const preferredFraction = index % 2 === 0
+      ? 0.14 + (index % 3) * 0.055
+      : 0.86 - (index % 3) * 0.055;
+    const fractions = [preferredFraction];
+    for (let fraction = 0.025; fraction < 1; fraction += 0.025) fractions.push(fraction);
+    const candidates = [];
+    const offsets = [13, -13, 0];
+    for (let offset = 21; offset <= 133; offset += 8) offsets.push(offset, -offset);
+    offsets.forEach((normalOffset) => {
+      fractions.forEach((fraction) => candidates.push([
+        axis.start[0] + (axis.end[0] - axis.start[0]) * fraction + axis.normal[0] * normalOffset,
+        axis.start[1] + (axis.end[1] - axis.start[1]) * fraction + axis.normal[1] * normalOffset,
+      ]));
+    });
+    const anchor = [
+      axis.start[0] + (axis.end[0] - axis.start[0]) * preferredFraction,
+      axis.start[1] + (axis.end[1] - axis.start[1]) * preferredFraction,
+    ];
+    addOverlayLabel(marker, geometry.generator, candidates, labelContext, anchor);
     overlay.append(marker);
   }
 
@@ -669,7 +736,7 @@
     return {path, arrow};
   }
 
-  function addRotationGenerator(overlay, geometry, action, scale) {
+  function addRotationGenerator(overlay, geometry, action, scale, labelContext) {
     const visualization = geometry.visualization;
     const [cx, cy] = worldToScreen(visualization.centre, scale);
     const radius = 18;
@@ -680,7 +747,7 @@
       "data-generator-kind": "rotation",
     });
     const title = svgElement("title");
-    title.textContent = `${geometry.generator} — ${action.geometry}; ${visualization.angle_degrees}°`;
+    title.textContent = `${geometry.generator} — ${action.geometry}`;
     marker.append(
       title,
       svgElement("path", {d: arc.path, class: "generator-rotation-halo"}),
@@ -691,14 +758,17 @@
       }),
       svgElement("circle", {cx, cy, r: 4.7, class: "generator-rotation-centre"}),
     );
-    addOverlayLabel(marker, geometry.generator, cx + radius + 10, cy - radius - 5);
-    addOverlayLabel(
-      marker,
-      `${visualization.angle_degrees}°`,
-      cx + radius + 12,
-      cy + 8,
-      "generator-degree",
-    );
+    const candidates = [[cx + radius + 10, cy - radius - 5]];
+    for (let labelRadius = 30; labelRadius <= 150; labelRadius += 8) {
+      for (let step = 0; step < 32; step += 1) {
+        const angle = (step * Math.PI) / 16;
+        candidates.push([
+          cx + Math.cos(angle) * labelRadius,
+          cy + Math.sin(angle) * labelRadius,
+        ]);
+      }
+    }
+    addOverlayLabel(marker, geometry.generator, candidates, labelContext, [cx, cy]);
     overlay.append(marker);
   }
 
@@ -710,13 +780,17 @@
       class: "generator-overlay",
       "aria-hidden": "true",
     });
+    const labelContext = labelPlacementContext(svg);
     wallpaper.render_geometry.generators.forEach((geometry, index) => {
       const action = actionByName.get(geometry.generator);
       if (!action) throw new Error(`Missing Presentation row for ${group.id}:${geometry.generator}`);
       const kind = geometry.visualization.kind;
       if (kind === "translation") return;
-      if (kind === "rotation") addRotationGenerator(overlay, geometry, action, wallpaper.render_geometry.scale);
-      else addAxisGenerator(overlay, geometry, action, wallpaper.render_geometry.scale, index);
+      if (kind === "rotation") {
+        addRotationGenerator(overlay, geometry, action, wallpaper.render_geometry.scale, labelContext);
+      } else {
+        addAxisGenerator(overlay, geometry, action, wallpaper.render_geometry.scale, index, labelContext);
+      }
     });
     svg.append(overlay);
   }
@@ -744,7 +818,7 @@
         `${geometry.generator}: ${actionByName.get(geometry.generator).geometry}`
       )).join("; ")}. Translation generators are omitted.`
       : "Translation generators are omitted; no generator markers are shown.";
-    const background = svgElement("rect", {x: 0, y: 0, width: 960, height: 560, fill: "#f8f6ee"});
+    const background = svgElement("rect", {x: 0, y: 0, width: 960, height: 560, fill: "#fffefa"});
     svg.append(title, description, background);
 
     const colours = PALETTES[pattern.number_of_colours];
@@ -805,7 +879,6 @@
     appendTableRow(table, "Chaim G/H/K", ghkElement(group));
     appendTableRow(table, "G&S group symbol", gsGroupSymbolElement(pattern, group));
     appendTableRow(table, "G&S pattern type", gsPatternTypeElement(pattern));
-    appendTableRow(table, "Colour-blind Δ", layoutDiscrepancyElement(pattern));
     details.append(presentationElement(group), table);
     pane.append(figure, details);
     return pane;
