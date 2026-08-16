@@ -368,7 +368,7 @@ body {
   height: auto;
   aspect-ratio: 12 / 7;
   border: 1px solid #cdd8d3;
-  background: #f8f7f1;
+  background: #fffefa;
 }
 
 .generator-overlay {
@@ -423,21 +423,27 @@ body {
   vector-effect: non-scaling-stroke;
 }
 
-.generator-label,
-.generator-degree {
-  fill: #5f1731;
-  stroke: rgba(255, 253, 247, 0.96);
-  stroke-width: 5px;
-  paint-order: stroke fill;
-  font-family: "STIX Two Math", "Cambria Math", Georgia, serif;
-  font-size: 21px;
-  font-weight: 800;
+.generator-label-backing {
+  fill: #fffefa;
+  stroke: var(--pattern-rule);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
 }
 
-.generator-degree {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 13px;
-  font-weight: 750;
+.generator-label-leader {
+  stroke: var(--pattern-accent);
+  stroke-width: 1.3px;
+  stroke-dasharray: 3 3;
+  opacity: 0.72;
+  vector-effect: non-scaling-stroke;
+}
+
+.generator-label {
+  fill: var(--pattern-accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .source-value-link {
