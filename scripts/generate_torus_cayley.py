@@ -301,13 +301,122 @@ def colour_groups(q: int) -> list[dict]:
         H = frozenset(g for g in acting if rho[g][0] == 0)
         key = min((tuple(sorted(phi[y] for y in G)), tuple(sorted(phi[y] for y in H)),
                    tuple(sorted(phi[y] for y in K))) for phi in AUTS)
-        entry = found.setdefault(key, {"G": G, "H": H, "K": K, "colourings": []})
+        entry = found.setdefault(key, {"G": G, "H": H, "K": K, "rho": rho,
+                                      "colourings": []})
         entry["colourings"].append(colouring)
     return sorted(found.values(), key=lambda e: (-len(e["G"]), -len(e["K"])))
 
 
 def set_html(H) -> str:
     return "{" + ", ".join(sorted(LABEL[p] for p in H)) + "}"
+
+
+BY_NAME = {"e": IDENT, "X": X, "Y": Y, "XY": XY, "s": S, "Xs": XS, "Ys": YS, "XYs": XYS}
+PREFERENCE = ("X", "s", "Y", "XY", "Xs", "Ys", "XYs")
+
+# Presentations for the subgroups that actually occur as a colour group's G.
+# A relator (word, exponent) means (word)^exponent = 1.
+PRESENTATIONS: dict[tuple[str, ...], tuple[tuple[tuple[str, ...], int], ...]] = {
+    ("X", "s"): ((("X",), 2), (("s",), 2), (("X", "s"), 4)),      # D4
+    ("X", "Y"): ((("X",), 2), (("Y",), 2), (("X", "Y"), 2)),      # V4
+}
+
+
+def preferred_generators(H) -> tuple[str, ...]:
+    """Smallest generating set drawn from PREFERENCE, in that order."""
+    inside = [name for name in PREFERENCE if BY_NAME[name] in H]
+    for size in range(0, 3):
+        for combo in product(inside, repeat=size):
+            if close(tuple(BY_NAME[c] for c in combo)) == set(H):
+                return combo
+    raise ValueError("no small generating set found")
+
+
+def evaluate(word: tuple[str, ...], exponent: int, value, compose, identity):
+    """Evaluate (word)^exponent under an arbitrary composition law."""
+    result = identity
+    for _ in range(exponent):
+        for name in word:
+            result = compose(result, value(name))
+    return result
+
+
+def relator_html(gens: tuple[str, ...]) -> str:
+    def show(word, exponent):
+        body = "".join(word)
+        if len(word) > 1:
+            body = f"({body})"
+        return f"{body}<sup>{exponent}</sup>"
+    rels = PRESENTATIONS[gens]
+    return " = ".join(show(w, e) for w, e in rels) + " = 1"
+
+
+def permutation_name(p: tuple[int, ...], k: int) -> str:
+    labels = "ABCD"[:k]
+    if all(p[i] == i for i in range(k)):
+        return "1"
+    parts, seen = [], set()
+    for i in range(k):
+        if i in seen:
+            continue
+        cycle, x = [i], p[i]
+        while x != i:
+            cycle.append(x)
+            seen.add(x)
+            x = p[x]
+        seen.add(i)
+        if len(cycle) > 1:
+            parts.append("(" + "".join(labels[j] for j in cycle) + ")")
+    return "".join(parts)
+
+
+def permutation_order(p: tuple[int, ...], k: int) -> int:
+    identity = tuple(range(k))
+    current, steps = p, 1
+    while current != identity:
+        current = tuple(p[i] for i in current)
+        steps += 1
+    return steps
+
+
+def presentation_block(entry: dict, q: int) -> str:
+    """Generators, their colour permutations, the signature, and the relator check."""
+    G = entry["G"]
+    gens = preferred_generators(G)
+    rho = entry["rho"]
+    identity = tuple(range(q))
+
+    def pcompose(a, b):
+        return tuple(a[b[i]] for i in range(q))
+
+    rows = "".join(
+        f"<tr><td><code>{g}</code></td><td>&#8614;</td>"
+        f"<td><code>{permutation_name(rho[BY_NAME[g]], q)}</code></td>"
+        f"<td class='num'>order {permutation_order(rho[BY_NAME[g]], q)}</td></tr>"
+        for g in gens
+    )
+    checks = []
+    for word, exponent in PRESENTATIONS[gens]:
+        in_group = evaluate(word, exponent, lambda nm: BY_NAME[nm], mul, IDENT)
+        in_colours = evaluate(word, exponent, lambda nm: rho[BY_NAME[nm]], pcompose, identity)
+        if in_group != IDENT or in_colours != identity:
+            raise ValueError(f"relator {word}^{exponent} fails")
+        checks.append(f"&rho;({''.join(word)})<sup>{exponent}</sup> = 1 &check;")
+    long_sig = " ".join(
+        f"{g}<sup>{permutation_name(rho[BY_NAME[g]], q)}</sup>" for g in gens
+    )
+    short_sig = " ".join(
+        f"{g}<sup>{permutation_order(rho[BY_NAME[g]], q)}</sup>" for g in gens
+    )
+    return f"""
+        <div class="pres">
+          <p class="pres-line"><code>G = &#10216; {', '.join(gens)} |
+            {relator_html(gens)} &#10217;</code></p>
+          <table class="rho"><tbody>{rows}</tbody></table>
+          <p class="sig"><span>signature</span> <code>{long_sig}</code></p>
+          <p class="sig"><span>short form</span> <code>{short_sig}</code></p>
+          <p class="checks">{' &nbsp; '.join(checks)}</p>
+        </div>"""
 
 
 def colour_group_card(entry: dict, q: int) -> str:
@@ -328,6 +437,7 @@ def colour_group_card(entry: dict, q: int) -> str:
             <span>{len(entry['colourings'])} colourings</span></p>
         </header>
         <div class="cg-pats">{pats}{more}</div>
+        {presentation_block(entry, q)}
         <table class="ghk">
           <tbody>
             <tr><th>G</th><td><code>{set_html(G)}</code></td><td class="num">order {len(G)}</td></tr>
@@ -456,6 +566,16 @@ STYLE = """
                  letter-spacing:0; font-size:.9rem; }
   table.ghk td { overflow-wrap:anywhere; }
   table.ghk td.num { width:5.4em; white-space:nowrap; }
+  .pres { border-top:1px solid var(--rule); margin-top:.7rem; padding-top:.6rem; }
+  .pres-line { margin:0 0 .5rem; font-size:.86rem; }
+  table.rho { font-size:.86rem; width:auto; min-width:0; margin:0 0 .5rem; }
+  table.rho td { border-bottom:none; padding:.12em .5em .12em 0; }
+  table.rho td.num { color:var(--muted); font-size:.78rem; }
+  .sig { margin:.15rem 0; font-size:.84rem; }
+  .sig span { display:inline-block; min-width:6.4em; color:var(--muted);
+              font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; }
+  .checks { margin:.5rem 0 0; font-size:.76rem; color:#046a38; }
+  @media (prefers-color-scheme: dark) { .checks { color:#5fd39b; } }
   .table-scroll { overflow-x:auto; }
   table { border-collapse:collapse; font-size:.9rem; min-width:540px; }
   th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }

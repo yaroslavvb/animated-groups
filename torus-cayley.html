@@ -64,6 +64,16 @@
                  letter-spacing:0; font-size:.9rem; }
   table.ghk td { overflow-wrap:anywhere; }
   table.ghk td.num { width:5.4em; white-space:nowrap; }
+  .pres { border-top:1px solid var(--rule); margin-top:.7rem; padding-top:.6rem; }
+  .pres-line { margin:0 0 .5rem; font-size:.86rem; }
+  table.rho { font-size:.86rem; width:auto; min-width:0; margin:0 0 .5rem; }
+  table.rho td { border-bottom:none; padding:.12em .5em .12em 0; }
+  table.rho td.num { color:var(--muted); font-size:.78rem; }
+  .sig { margin:.15rem 0; font-size:.84rem; }
+  .sig span { display:inline-block; min-width:6.4em; color:var(--muted);
+              font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; }
+  .checks { margin:.5rem 0 0; font-size:.76rem; color:#046a38; }
+  @media (prefers-color-scheme: dark) { .checks { color:#5fd39b; } }
   .table-scroll { overflow-x:auto; }
   table { border-collapse:collapse; font-size:.9rem; min-width:540px; }
   th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }
@@ -366,6 +376,15 @@
             <span>2 colourings</span></p>
         </header>
         <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0110"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1001"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg></div>
+        
+        <div class="pres">
+          <p class="pres-line"><code>G = &#10216; X, s |
+            X<sup>2</sup> = s<sup>2</sup> = (Xs)<sup>4</sup> = 1 &#10217;</code></p>
+          <table class="rho"><tbody><tr><td><code>X</code></td><td>&#8614;</td><td><code>(AB)</code></td><td class='num'>order 2</td></tr><tr><td><code>s</code></td><td>&#8614;</td><td><code>1</code></td><td class='num'>order 1</td></tr></tbody></table>
+          <p class="sig"><span>signature</span> <code>X<sup>(AB)</sup> s<sup>1</sup></code></p>
+          <p class="sig"><span>short form</span> <code>X<sup>2</sup> s<sup>1</sup></code></p>
+          <p class="checks">&rho;(X)<sup>2</sup> = 1 &check; &nbsp; &rho;(s)<sup>2</sup> = 1 &check; &nbsp; &rho;(Xs)<sup>4</sup> = 1 &check;</p>
+        </div>
         <table class="ghk">
           <tbody>
             <tr><th>G</th><td><code>{X, XY, XYs, Xs, Y, Ys, e, s}</code></td><td class="num">order 8</td></tr>
@@ -384,6 +403,15 @@
             <span>4 colourings</span></p>
         </header>
         <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0011"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0101"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1010"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1100"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg></div>
+        
+        <div class="pres">
+          <p class="pres-line"><code>G = &#10216; X, Y |
+            X<sup>2</sup> = Y<sup>2</sup> = (XY)<sup>2</sup> = 1 &#10217;</code></p>
+          <table class="rho"><tbody><tr><td><code>X</code></td><td>&#8614;</td><td><code>(AB)</code></td><td class='num'>order 2</td></tr><tr><td><code>Y</code></td><td>&#8614;</td><td><code>1</code></td><td class='num'>order 1</td></tr></tbody></table>
+          <p class="sig"><span>signature</span> <code>X<sup>(AB)</sup> Y<sup>1</sup></code></p>
+          <p class="sig"><span>short form</span> <code>X<sup>2</sup> Y<sup>1</sup></code></p>
+          <p class="checks">&rho;(X)<sup>2</sup> = 1 &check; &nbsp; &rho;(Y)<sup>2</sup> = 1 &check; &nbsp; &rho;(XY)<sup>2</sup> = 1 &check;</p>
+        </div>
         <table class="ghk">
           <tbody>
             <tr><th>G</th><td><code>{X, XY, Y, e}</code></td><td class="num">order 4</td></tr>
@@ -421,6 +449,15 @@
             <span>24 colourings</span></p>
         </header>
         <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0123"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0132"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0213"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#009E73"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0231"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#009E73"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0312"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0321"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1023"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1032"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><span class="more">+16 more</span></div>
+        
+        <div class="pres">
+          <p class="pres-line"><code>G = &#10216; X, s |
+            X<sup>2</sup> = s<sup>2</sup> = (Xs)<sup>4</sup> = 1 &#10217;</code></p>
+          <table class="rho"><tbody><tr><td><code>X</code></td><td>&#8614;</td><td><code>(AC)(BD)</code></td><td class='num'>order 2</td></tr><tr><td><code>s</code></td><td>&#8614;</td><td><code>(BC)</code></td><td class='num'>order 2</td></tr></tbody></table>
+          <p class="sig"><span>signature</span> <code>X<sup>(AC)(BD)</sup> s<sup>(BC)</sup></code></p>
+          <p class="sig"><span>short form</span> <code>X<sup>2</sup> s<sup>2</sup></code></p>
+          <p class="checks">&rho;(X)<sup>2</sup> = 1 &check; &nbsp; &rho;(s)<sup>2</sup> = 1 &check; &nbsp; &rho;(Xs)<sup>4</sup> = 1 &check;</p>
+        </div>
         <table class="ghk">
           <tbody>
             <tr><th>G</th><td><code>{X, XY, XYs, Xs, Y, Ys, e, s}</code></td><td class="num">order 8</td></tr>
