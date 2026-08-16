@@ -580,17 +580,28 @@ td:last-child { padding-right: 0; }
   letter-spacing: 0;
 }
 
-.example-representation th i {
+.example-representation .generator-key {
   display: inline-block;
-  min-width: 1.35rem;
+  min-width: 2.15rem;
+  margin-right: 0.45rem;
   color: var(--accent);
   font-family: var(--serif);
   font-size: 1rem;
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
 }
 
-.example-representation th span {
-  color: var(--muted);
+.example-representation .generator-key i {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.example-representation .generator-geometry {
+  color: var(--text);
+  line-height: 1.3;
 }
 
 .example-representation td {
@@ -611,12 +622,17 @@ td:last-child { padding-right: 0; }
   line-height: 1.45;
 }
 
-.representation-relations b {
+.representation-relations strong {
   flex: 0 0 auto;
   color: var(--muted);
   font-family: var(--sans);
   font-size: 0.68rem;
   letter-spacing: 0.035em;
+}
+
+.representation-relations span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .example-invariants {
@@ -708,7 +724,7 @@ td:last-child { padding-right: 0; }
   .colour-count-group + .colour-count-group { margin-top: 3.5rem; }
   .example-type { white-space: normal; }
   .representation-relations { display: block; }
-  .representation-relations b { display: block; margin-bottom: 0.2rem; }
+  .representation-relations strong { display: block; margin-bottom: 0.2rem; }
   table { font-size: 0.78rem; }
   th,
   td { padding: 0.55rem 0.5rem; }
