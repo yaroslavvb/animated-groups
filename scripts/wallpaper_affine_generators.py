@@ -317,29 +317,40 @@ def enumerate_coloured_actions(
 
 
 CANONICAL_PATTERN_SEED = ((0.173, 0.137), 17.0, 0)
-# The global seed lies too close to the 30-degree mirror in the *632
-# fundamental triangle: its reflected centres are only 13.8 px apart at the
-# catalog scale, so the deliberately large R-diamonds overlap.  The incenter
-# is generic and maximizes the distance from all three mirrors.
-P6M_PATTERN_SEED = ((0.394338, 0.105662), 17.0, 0)
+# The global seed lies too close to one mirror of the *632 and *442
+# fundamental triangles: its reflected centres are only 13.8 px and 12.0 px
+# apart at the catalog scale, so the deliberately large R-diamonds overlap.
+# Each triangle's incenter is generic and maximizes the distance from all
+# three mirrors, lifting the closest pair to 74.4 px and 68.8 px.
+MIRROR_CLEARANCE_SEEDS: dict[str, tuple[tuple[float, float], float, int]] = {
+    "p6m": ((0.394338, 0.105662), 17.0, 0),
+    "p4m": ((0.353553, 0.146447), 17.0, 0),
+}
+
+
+def pattern_seed(parent: str | None = None) -> tuple[tuple[float, float], float, int]:
+    """Return the normalized generic-orbit seed for one wallpaper parent."""
+
+    return MIRROR_CLEARANCE_SEEDS.get(parent, CANONICAL_PATTERN_SEED)
 
 
 def candidate_orbit_layouts(parent: str | None = None) -> tuple[dict[str, Any], ...]:
     """Nearby generic-orbit candidates for measured layout optimization.
 
-    Wallpaper families share the common normalized seed except *632, whose
-    mirror-triangle incenter prevents the large motifs from overlapping.  A
-    later candidate is used only when reusing the family seed would make two
-    full coloured scenes identical.  The catalog generator measures and ranks
-    candidates; angle-only alternatives preserve every motif centre and win
-    whenever their measured discrepancy is minimal.
+    Wallpaper families share the common normalized seed except the dense
+    kaleidoscopes in :data:`MIRROR_CLEARANCE_SEEDS`, whose mirror-triangle
+    incenters prevent the large motifs from overlapping.  A later candidate is
+    used only when reusing the family seed would make two full coloured scenes
+    identical.  The catalog generator measures and ranks candidates;
+    angle-only alternatives preserve every motif centre and win whenever their
+    measured discrepancy is minimal.
     """
 
-    if parent == "p6m":
-        (point, angle, colour) = P6M_PATTERN_SEED
-        # Keep every *632 representative on the same maximally separated
-        # centre grid.  Orientation-only alternatives are enough to separate
-        # repeated pattern types without sacrificing the mirror clearance.
+    (point, angle, colour) = pattern_seed(parent)
+    if parent in MIRROR_CLEARANCE_SEEDS:
+        # Keep every representative on the same maximally separated centre
+        # grid.  Orientation-only alternatives are enough to separate repeated
+        # pattern types without sacrificing the mirror clearance.
         angle_offsets = (0,) + tuple(
             signed
             for step in range(6, 180, 6)
@@ -347,7 +358,6 @@ def candidate_orbit_layouts(parent: str | None = None) -> tuple[dict[str, Any], 
         )
         point_offsets = ((0.0, 0.0),)
     else:
-        (point, angle, colour) = CANONICAL_PATTERN_SEED
         angle_offsets = (0, 6, -6, 12, -12, 20, -20, 30, -30)
         point_offsets = (
             (0.0, 0.0),
@@ -371,7 +381,7 @@ def candidate_orbit_layouts(parent: str | None = None) -> tuple[dict[str, Any], 
 
 
 def _layout_seeds(
-    pattern: dict[str, Any], colours: int
+    pattern: dict[str, Any], colours: int, parent: str | None = None
 ) -> tuple[tuple[tuple[float, float], float, int], ...]:
     layout = pattern.get("render_layout") or {}
     if layout.get("kind") == "orbit":
@@ -384,16 +394,19 @@ def _layout_seeds(
             )
             for seed in seeds
         )
-    point, angle, colour = CANONICAL_PATTERN_SEED
+    # Reached only by a pattern with no assigned orbit layout.  The seed must
+    # stay parent-aware; the shared canonical point overlaps its own mirror
+    # images in the families listed in MIRROR_CLEARANCE_SEEDS.
+    point, angle, colour = pattern_seed(parent)
     return ((point, angle, colour % colours),)
 
 
 def pattern_template_seeds(
-    pattern: dict[str, Any], colours: int
+    pattern: dict[str, Any], colours: int, parent: str | None = None
 ) -> tuple[tuple[tuple[float, float], float, int], ...]:
     """Return the assigned generic-orbit seeds for a catalog pattern."""
 
-    return _layout_seeds(pattern, colours)
+    return _layout_seeds(pattern, colours, parent)
 
 
 def _fixed_vertical_band_scene(
@@ -451,7 +464,9 @@ def _orbit_scene_fingerprint(
     scale = RENDER_SCALE[group["wallpaper_id"]]
     poses: set[tuple[int, int, int, int, int, int]] = set()
     for seed_index, (point, angle, seed_colour) in enumerate(
-        pattern_template_seeds(pattern, group["number_of_colours"])
+        pattern_template_seeds(
+            pattern, group["number_of_colours"], group["wallpaper_id"]
+        )
     ):
         radians = angle * pi / 180
         direction = (cos(radians), sin(radians))
@@ -562,7 +577,9 @@ for _parent in AFFINE_GENERATORS:
 
 __all__ = [
     "AFFINE_GENERATORS",
+    "MIRROR_CLEARANCE_SEEDS",
     "RENDER_SCALE",
+    "pattern_seed",
     "affine_generators_for",
     "affine_relations_hold",
     "candidate_orbit_layouts",
