@@ -228,6 +228,116 @@ def pattern_svg(blocks: list[list[int]], cell: int = 26, gap: int = 3) -> str:
     return "".join(parts)
 
 
+def colouring_svg(colouring: tuple[int, ...], cell: int = 24, gap: int = 3) -> str:
+    size = N * cell + gap
+    parts = [f'<svg class="pat" viewBox="0 0 {size} {size}" width="{size}" '
+             f'height="{size}" role="img" aria-label="colouring '
+             f'{"".join(str(v) for v in colouring)}">']
+    for i, (a, b) in enumerate(CELLS):
+        parts.append(
+            f'<rect x="{b * (cell + gap)}" y="{a * (cell + gap)}" width="{cell}" '
+            f'height="{cell}" rx="4" fill="{CELL_COLOURS[colouring[i]]}"/>'
+        )
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def automorphisms() -> list[dict]:
+    """All automorphisms of Gamma, by extending images of two generators."""
+    from collections import deque
+    gens = next([a, b] for a, b in product(GAMMA, repeat=2) if close((a, b)) == set(GAMMA))
+    out = []
+    for images in product(GAMMA, repeat=2):
+        phi, queue, ok = {IDENT: IDENT}, deque([IDENT]), True
+        while queue and ok:
+            x = queue.popleft()
+            for s, t in zip(gens, images):
+                y, z = mul(x, s), mul(phi[x], t)
+                if y in phi:
+                    if phi[y] != z:
+                        ok = False
+                        break
+                else:
+                    phi[y] = z
+                    queue.append(y)
+        if ok and len(set(phi.values())) == len(GAMMA):
+            if all(phi[mul(a, b)] == mul(phi[a], phi[b]) for a in GAMMA for b in GAMMA):
+                out.append(phi)
+    return out
+
+
+AUTS = automorphisms()
+
+
+def colour_groups(q: int) -> list[dict]:
+    """All (G, H, K) colour groups for chromatic q-colourings, up to Aut(Gamma)."""
+    found: dict[tuple, dict] = {}
+    for colouring in product(range(q), repeat=len(CELLS)):
+        if len(set(colouring)) != q:
+            continue
+        acting, rho = [], {}
+        for g in GAMMA:
+            image, ok = {}, True
+            for i in range(len(CELLS)):
+                src, dst = colouring[i], colouring[g[i]]
+                if image.setdefault(src, dst) != dst:
+                    ok = False
+                    break
+            if ok and len(set(image.values())) == len(image):
+                acting.append(g)
+                rho[g] = tuple(image[c] for c in range(q))
+        reach, frontier = {0}, [0]
+        while frontier:
+            c = frontier.pop()
+            for g in acting:
+                d = rho[g][c]
+                if d not in reach:
+                    reach.add(d)
+                    frontier.append(d)
+        if len(reach) != q:                      # not chromatic
+            continue
+        G = frozenset(acting)
+        K = frozenset(g for g in acting if rho[g] == tuple(range(q)))
+        H = frozenset(g for g in acting if rho[g][0] == 0)
+        key = min((tuple(sorted(phi[y] for y in G)), tuple(sorted(phi[y] for y in H)),
+                   tuple(sorted(phi[y] for y in K))) for phi in AUTS)
+        entry = found.setdefault(key, {"G": G, "H": H, "K": K, "colourings": []})
+        entry["colourings"].append(colouring)
+    return sorted(found.values(), key=lambda e: (-len(e["G"]), -len(e["K"])))
+
+
+def set_html(H) -> str:
+    return "{" + ", ".join(sorted(LABEL[p] for p in H)) + "}"
+
+
+def colour_group_card(entry: dict, q: int) -> str:
+    G, H, K = entry["G"], entry["H"], entry["K"]
+    regular = len(G) // len(K) == q
+    slash = "/" if regular else "//"
+    pats = "".join(colouring_svg(c) for c in entry["colourings"][:8])
+    more = ("" if len(entry["colourings"]) <= 8
+            else f'<span class="more">+{len(entry["colourings"]) - 8} more</span>')
+    return f"""
+      <article class="cg-card">
+        <header>
+          <h3><code>G<sup>{q}</sup>{slash}K</code></h3>
+          <p class="cg-meta"><span>{q} colours</span>
+            <span>|G/K| = {len(G) // len(K)}</span>
+            <span class="{'reg' if regular else 'nonreg'}">
+              {'regular' if regular else 'non-regular'}</span>
+            <span>{len(entry['colourings'])} colourings</span></p>
+        </header>
+        <div class="cg-pats">{pats}{more}</div>
+        <table class="ghk">
+          <tbody>
+            <tr><th>G</th><td><code>{set_html(G)}</code></td><td class="num">order {len(G)}</td></tr>
+            <tr><th>H</th><td><code>{set_html(H)}</code></td><td class="num">index {len(G) // len(H)}</td></tr>
+            <tr><th>K</th><td><code>{set_html(K)}</code></td><td class="num">order {len(K)}</td></tr>
+          </tbody>
+        </table>
+      </article>"""
+
+
 def legend(gens: tuple[str, ...]) -> str:
     return '<p class="legend">' + "".join(
         f'<span><i style="background:{GEN_COLOUR[g]}"></i>{g}'
@@ -327,6 +437,25 @@ STYLE = """
   .sub-card dt { font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
                  color:var(--accent); margin-top:.5rem; }
   .sub-card dd { margin:.15rem 0 0; font-size:.86rem; }
+  .cg-head { font-size:1rem; margin:1.6rem 0 .5rem; color:var(--muted);
+             text-transform:uppercase; letter-spacing:.07em; font-size:.78rem; }
+  .cg-grid { display:grid; gap:16px;
+             grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)); }
+  .cg-card { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+             padding:14px 16px 10px; }
+  .cg-card h3 { font-size:1.05rem; margin:0 0 .2rem; }
+  .cg-meta { margin:.1rem 0 .7rem; font-size:.76rem; color:var(--muted); }
+  .cg-meta span { display:inline-block; background:#eef1f4; border-radius:20px;
+                  padding:.14em .7em; margin:0 .3em .3em 0; }
+  .cg-meta .reg { background:rgba(0,158,115,.18); color:#046a38; font-weight:700; }
+  .cg-meta .nonreg { background:rgba(213,94,0,.18); color:#a03000; font-weight:700; }
+  .cg-pats { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:.7rem; }
+  .cg-pats .more { font-size:.72rem; color:var(--muted); }
+  table.ghk { font-size:.84rem; width:100%; min-width:0; table-layout:fixed; }
+  table.ghk th { width:1.6em; color:var(--accent); font-weight:700; text-transform:none;
+                 letter-spacing:0; font-size:.9rem; }
+  table.ghk td { overflow-wrap:anywhere; }
+  table.ghk td.num { width:5.4em; white-space:nowrap; }
   .table-scroll { overflow-x:auto; }
   table { border-collapse:collapse; font-size:.9rem; min-width:540px; }
   th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }
@@ -379,6 +508,13 @@ def build_page() -> str:
     )
     octagon = cayley_svg(sorted(GAMMA, key=lambda g: LABEL[g]), ("X", "s"), size=280)
     layered = cayley_svg(sorted(GAMMA, key=lambda g: LABEL[g]), ("X", "Y", "s"), size=280)
+    two = colour_groups(2)
+    three = colour_groups(3)
+    four = colour_groups(4)
+    if len(two) != 2 or len(three) != 0 or len(four) != 1:
+        raise ValueError(f"unexpected colour-group census: {len(two)}, {len(three)}, {len(four)}")
+    cg_two = "".join(colour_group_card(e, 2) for e in two)
+    cg_four = "".join(colour_group_card(e, 4) for e in four)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -447,6 +583,48 @@ def build_page() -> str:
     </p>
     <div class="sub-grid">{cards}
     </div>
+
+    <h2>Colour groups</h2>
+    <p>
+      The subgroups above are single groups. A <em>colour group</em> records the whole triple
+      that a colouring produces:
+      <code>G</code> the symmetries permuting the colours,
+      <code>H</code> those fixing one chosen colour, and
+      <code>K</code> those fixing every colour. All three are stabilizers —
+      of the unordered partition, of one block, and of the labelled partition respectively —
+      and <code>K &sube; H &sube; G</code>. The colouring is <strong>regular</strong> when
+      <code>|G/K|</code> equals the number of colours, which happens exactly when
+      <code>H = K</code>; Conway then writes a single slash.
+    </p>
+
+    <h3 class="cg-head">Two colours &mdash; every colour group</h3>
+    <div class="cg-grid">{cg_two}
+    </div>
+    <p class="footnote">
+      Both are regular, so <code>H = K</code> and a single slash suffices. The first is the
+      checkerboard, whose symmetry is all of &Gamma;; the second is the striped colouring, where
+      the diagonal flip fails to act and <code>G</code> drops to the translation subgroup. Six
+      chromatic two-colourings in total &mdash; the colour classes must have equal size, so only
+      the three 2+2 partitions qualify, each with two labellings.
+    </p>
+
+    <h3 class="cg-head">Three colours &mdash; none</h3>
+    <p>
+      There are <strong>no</strong> chromatic three-colourings: the colour group permutes the
+      colour classes transitively, so they must all have the same size, and
+      <code>3 &#8740; 4</code>. Only <code>k</code> dividing 4 is possible &mdash; one, two or
+      four colours.
+    </p>
+
+    <h3 class="cg-head">Four colours &mdash; the non-regular one</h3>
+    <div class="cg-grid">{cg_four}
+    </div>
+    <p class="footnote">
+      Here <code>|G/K| = 8</code> but there are only 4 colours, so <code>H &ne; K</code> and the
+      symbol carries a double slash. This is the rainbow colouring; the
+      <a href="torus-nonregular.html">non-regular page</a> works through why <code>H</code> has
+      to be named separately.
+    </p>
 
     <h2>Summary</h2>
     <div class="table-scroll">
