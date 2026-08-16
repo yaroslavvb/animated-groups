@@ -759,7 +759,7 @@ def build_payload() -> dict[str, Any]:
     assign_render_layouts(patterns, groups)
     payload = {
         "meta": {
-            "title": "Periodic colour-pattern catalog",
+            "title": "Catalog of colorings",
             "scope": "perfect periodic colour-pattern representatives with one, two, or three colours",
             "warning": "The finite classification is of colour-pattern types; literal motif geometries have infinitely many realizations.",
             "counts": {
@@ -958,13 +958,13 @@ def build_html(payload: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A 17-family catalog of the 46 two-colour and 23 three-colour plane groups, with all 147 nontrivially coloured Grünbaum–Shephard periodic colour-pattern types.">
+  <meta name="description" content="Wallpaper groups, Chaim Goodman-Strauss colored groups, and Grünbaum–Shephard patterns with up to three colors.">
   <meta name="theme-color" content="#ffffff">
-  <title>Periodic colour-pattern catalog</title>
+  <title>Catalog of colorings</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=mathworld-directory-v1">
-  <script src="color-pattern-catalog.js?v=one-colour-source-v1" defer></script>
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=compact-catalog-v1">
+  <script src="color-pattern-catalog.js?v=compact-catalog-v1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>
@@ -986,21 +986,8 @@ def build_html(payload: dict[str, Any]) -> str:
 
   <main class="pattern-catalog-page">
     <section class="catalog-directory" aria-labelledby="page-title">
-      <p class="overline">17 wallpaper groups · 86 colour groups · 198 periodic pattern types</p>
-      <h1 id="page-title">Periodic colour-pattern catalog</h1>
-      <div class="census" aria-label="Catalog counts">
-        <p><strong>51</strong><span>one-colour PP types</span></p>
-        <p><strong>88</strong><span>two-colour types · 46 groups</span></p>
-        <p><strong>59</strong><span>three-colour types · 23 groups</span></p>
-        <p><strong>147</strong><span>nontrivially coloured types</span></p>
-      </div>
-      <p class="scope-note"><strong>Catalogued object:</strong> a Grünbaum–Shephard colour-pattern type, represented perfectly. Literal motif geometries are infinite; two representatives have the same type precisely when, after colour relabelling, they have the same colour group, coloured-motif stabilizer/induced group, and coloured-motif-transitive subgroups.</p>
-      <div class="filter-bar" role="group" aria-label="Filter by number of colours">
-        <button type="button" class="is-active" data-colour-filter="all" aria-pressed="true">All</button>
-        <button type="button" data-colour-filter="2" aria-pressed="false">2 colours</button>
-        <button type="button" data-colour-filter="3" aria-pressed="false">3 colours</button>
-        <button type="button" data-colour-filter="1" aria-pressed="false">1 colour</button>
-      </div>
+      <h1 id="page-title">Catalog of colorings</h1>
+      <p class="catalog-subtitle" aria-label="1. Wallpaper group; 2. Chaim Goodman-Strauss colored group; 3. Grünbaum–Shephard pattern. Up to 3 colors."><span>1. Wallpaper group</span><span>2. Chaim Goodman-Strauss colored group</span><span>3. Grünbaum–Shephard pattern</span><strong>Up to 3 colors</strong></p>
       <nav class="directory-grid" aria-label="Wallpaper group sections">
         {''.join(directory_rows)}
       </nav>

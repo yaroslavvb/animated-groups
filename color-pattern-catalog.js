@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=one-colour-source-v1";
+  const DATA_URL = "data/color-pattern-catalog.json?v=compact-catalog-v1";
   const SVG_NS = "http://www.w3.org/2000/svg";
   const PALETTES = {
     1: ["#9aa19e"],
@@ -20,7 +20,6 @@
     activeGroupByWallpaper: new Map(),
     activePatternByGroup: new Map(),
     renderActionsByGroup: new Map(),
-    filter: "all",
     excerptWindow: null,
   };
 
@@ -640,10 +639,6 @@
     return panel;
   }
 
-  function groupIsVisible(group) {
-    return state.filter === "all" || String(group.number_of_colours) === state.filter;
-  }
-
   function activatePattern(patternId, {updateHash = true, focus = false} = {}) {
     const pattern = state.patternById.get(patternId);
     if (!pattern) return false;
@@ -715,34 +710,8 @@
   function initializeFamilies() {
     state.payload.wallpaper_groups.forEach((wallpaper) => {
       const groups = state.groupsByWallpaper.get(wallpaper.id) || [];
-      const first = groups.find(groupIsVisible) || groups[0];
+      const first = groups[0];
       if (first) activateGroup(first.id, {updateHash: false});
-    });
-  }
-
-  function applyFilter(value) {
-    state.filter = value;
-    document.querySelectorAll("[data-colour-filter]").forEach((button) => {
-      const active = button.dataset.colourFilter === value;
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-pressed", String(active));
-    });
-    state.payload.wallpaper_groups.forEach((wallpaper) => {
-      const section = document.querySelector(`[data-wallpaper-id="${wallpaper.id}"]`);
-      const groups = state.groupsByWallpaper.get(wallpaper.id) || [];
-      const hasMatch = groups.some(groupIsVisible);
-      if (section) section.hidden = !hasMatch;
-      const directoryLink = document.querySelector(`[data-directory-wallpaper-id="${wallpaper.id}"]`);
-      if (directoryLink) directoryLink.hidden = !hasMatch;
-      groups.forEach((group) => {
-        const tab = section?.querySelector(`[data-group-id="${group.id}"]`);
-        if (tab) tab.hidden = !groupIsVisible(group);
-      });
-      const active = state.groupById.get(state.activeGroupByWallpaper.get(wallpaper.id));
-      if (hasMatch && (!active || !groupIsVisible(active))) {
-        const replacement = groups.find(groupIsVisible);
-        if (replacement) activateGroup(replacement.id, {updateHash: false});
-      }
     });
   }
 
@@ -799,8 +768,6 @@
         activatePattern(patternTab.dataset.patternId);
         return;
       }
-      const filter = event.target.closest("[data-colour-filter]");
-      if (filter) applyFilter(filter.dataset.colourFilter);
     });
     document.addEventListener("keydown", (event) => {
       const tab = event.target.closest('[role="tab"]');

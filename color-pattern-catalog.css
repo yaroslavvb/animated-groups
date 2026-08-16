@@ -21,112 +21,53 @@ body {
 .pattern-catalog-page {
   width: min(100% - 2rem, 1560px);
   margin: 0 auto;
-  padding: clamp(2.2rem, 5vw, 5.5rem) 0 8rem;
+  padding: clamp(1.8rem, 3.5vw, 3.8rem) 0 8rem;
 }
 
 .catalog-directory {
-  margin-bottom: 5rem;
-}
-
-.overline {
-  margin: 0 0 1rem;
-  color: var(--pattern-accent);
-  font-size: 0.79rem;
-  font-weight: 760;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  margin-bottom: 3.5rem;
 }
 
 .catalog-directory h1 {
   max-width: 1050px;
   margin: 0;
-  font-size: clamp(3.2rem, 8vw, 8.2rem);
+  font-size: clamp(2.75rem, 6vw, 5.4rem);
   font-weight: 670;
   letter-spacing: -0.075em;
-  line-height: 0.88;
+  line-height: 0.92;
 }
 
-.census {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  margin: clamp(2rem, 5vw, 4.5rem) 0 1.4rem;
-  background: var(--pattern-rule);
-  border: 1px solid var(--pattern-rule);
-}
-
-.census p {
-  min-height: 7.5rem;
-  margin: 0;
-  padding: 1.2rem 1.35rem;
-  background: #fff;
-}
-
-.census strong,
-.census span {
-  display: block;
-}
-
-.census strong {
-  color: var(--pattern-accent);
-  font: 700 clamp(2.2rem, 4vw, 4rem)/1 Georgia, "Times New Roman", serif;
-}
-
-.census span {
-  margin-top: 0.65rem;
-  color: var(--pattern-muted);
-  font-size: 0.9rem;
-  line-height: 1.25;
-}
-
-.scope-note {
-  max-width: 1120px;
-  margin: 1.3rem 0;
-  color: #44504c;
-  font-size: clamp(1rem, 1.5vw, 1.22rem);
-  line-height: 1.58;
-}
-
-.filter-bar {
+.catalog-subtitle {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
-  margin: 2rem 0;
+  gap: 0.35rem 1rem;
+  margin: 0.9rem 0 1.6rem;
+  color: #44504c;
+  font-size: clamp(0.92rem, 1.3vw, 1.08rem);
+  line-height: 1.4;
 }
 
-.filter-bar button {
-  min-height: 2.7rem;
-  padding: 0.55rem 1rem;
-  border: 1px solid #9ba9a3;
-  border-radius: 999px;
-  color: #35413d;
-  background: #fff;
-  font: inherit;
-  font-weight: 650;
-  cursor: pointer;
-}
-
-.filter-bar button:hover,
-.filter-bar button:focus-visible,
-.filter-bar button.is-active {
-  border-color: var(--pattern-accent);
-  color: #fff;
-  background: var(--pattern-accent);
+.catalog-subtitle strong {
+  color: var(--pattern-accent);
+  font-weight: 720;
 }
 
 .directory-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.65rem;
+  gap: 0.35rem 0.6rem;
+  width: min(100%, 43.75rem);
+  margin: 1.25rem auto 0;
 }
 
 .directory-family {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-width: 0;
-  padding: 0.65rem;
-  border: 1px solid var(--pattern-rule);
-  border-radius: 0.45rem;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border-radius: 0.25rem;
   color: inherit;
   background: #fff;
   text-decoration: none;
@@ -135,19 +76,24 @@ body {
 .directory-family:hover,
 .directory-family:focus-visible {
   background: #eef7f3;
-  border-color: #7f9b91;
-  outline: 2px solid transparent;
+}
+
+.directory-family:focus-visible {
+  outline: 2px solid var(--pattern-accent);
+  outline-offset: 2px;
 }
 
 .directory-family strong {
   display: block;
-  padding: 0.05rem 0.15rem 0.4rem;
-  font: 700 clamp(1.2rem, 2vw, 1.65rem)/1 Georgia, "Times New Roman", serif;
+  padding: 0 0.1rem 0.2rem;
+  text-align: center;
+  font: 700 clamp(0.95rem, 1.35vw, 1.2rem)/1 Georgia, "Times New Roman", serif;
 }
 
 .directory-family img {
   display: block;
   width: 100%;
+  max-width: 7.875rem;
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: contain;
@@ -155,8 +101,8 @@ body {
 }
 
 .directory-credit {
-  max-width: 78rem;
-  margin: 0.65rem 0 0;
+  max-width: 43.75rem;
+  margin: 0.4rem auto 0;
   color: var(--pattern-muted);
   font-size: 0.72rem;
   line-height: 1.4;
@@ -567,10 +513,6 @@ body {
 }
 
 @media (max-width: 1050px) {
-  .directory-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .pattern-pane {
     grid-template-columns: 1fr;
   }
@@ -581,16 +523,8 @@ body {
     width: min(100% - 1rem, 1560px);
   }
 
-  .catalog-directory h1 {
-    font-size: clamp(3rem, 15vw, 5.6rem);
-  }
-
-  .census {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .directory-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .family-header {
@@ -600,13 +534,9 @@ body {
 
 }
 
-@media (max-width: 430px) {
-  .census {
-    grid-template-columns: 1fr;
-  }
-
-  .census p {
-    min-height: 5rem;
+@media (max-width: 330px) {
+  .directory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .group-presentation td:last-child {
