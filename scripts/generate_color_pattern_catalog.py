@@ -126,6 +126,75 @@ THREE_COLOUR_TYPES: dict[str, tuple[str, ...]] = {
 }
 
 
+# The two mirror-boundary family is the first place where the abstract
+# orbifold signatures alone hide an embedding distinction: **/** has two
+# inequivalent index-two realizations.  Keep the subgroup generators explicit
+# so the catalog explains H and K, rather than merely repeating their types.
+# Here alpha translates parallel to the mirrors, P and Q are adjacent parallel
+# mirrors, and v = QP is the perpendicular translation.
+PM_GROUP_EXPLANATIONS: dict[str, dict[str, str]] = {
+    "cg-pm-1-1": {
+        "subgroups": "G/K ≅ C₁; H = K = G = ⟨α, P, Q⟩; [G:H] = [G:K] = 1.",
+        "explanation": (
+            "The colour action is trivial: every translation and both mirror "
+            "families fix the sole colour."
+        ),
+    },
+    "cg-pm-2-1": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨αP, α⁻¹Q⟩ ≅ ××; [G:H] = [G:K] = 2.",
+        "explanation": (
+            "α, P, and Q all exchange A and B. The colour-fixing subgroup "
+            "has glides but no mirrors, so its orbifold is ××."
+        ),
+    },
+    "cg-pm-2-2": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨P, αQ⟩ ≅ *×; [G:H] = [G:K] = 2.",
+        "explanation": (
+            "P remains a colour-fixing mirror and αQ is a colour-fixing "
+            "glide. Together they form the centred mirror group *×."
+        ),
+    },
+    "cg-pm-2-3": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨α², P, Q⟩ ≅ **; [G:H] = [G:K] = 2.",
+        "explanation": (
+            "Only α exchanges the colours. The repeat parallel to the "
+            "mirrors doubles while both mirror families remain; this is **/** form (1)."
+        ),
+    },
+    "cg-pm-2-4": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨α, QP⟩ ≅ ◦; [G:H] = [G:K] = 2.",
+        "explanation": (
+            "Both reflections exchange A and B, but their product QP fixes "
+            "the colours. The kernel contains translations only, hence ◦."
+        ),
+    },
+    "cg-pm-2-5": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨α, P, (QP)²⟩ ≅ **; [G:H] = [G:K] = 2.",
+        "explanation": (
+            "Q exchanges the colours while α and P fix them. The perpendicular "
+            "repeat doubles and only alternate mirror families remain; this is **/** form (2)."
+        ),
+    },
+    "cg-pm-3-1": {
+        "subgroups": (
+            "G/K ≅ S₃; H = ⟨α, (QP)³, Q⟩ ≅ **; "
+            "K = ⟨α, (QP)³⟩ ≅ ◦; [G:H] = 3, [H:K] = 2, [G:K] = 6."
+        ),
+        "explanation": (
+            "P and Q induce distinct transpositions. H fixes the chosen colour A "
+            "but may exchange the other two; K fixes all three colours."
+        ),
+    },
+    "cg-pm-3-2": {
+        "subgroups": "G/K ≅ C₃; H = K = ⟨α³, P, Q⟩ ≅ **; [G:H] = [G:K] = 3.",
+        "explanation": (
+            "Only α cycles A, B, and C. The repeat parallel to the mirrors "
+            "triples, while both mirror families fix every colour."
+        ),
+    },
+}
+
+
 # For an S3 colour action, H is the index-3 stabilizer of one chosen colour
 # and K is the index-6 all-colours kernel.  ToS abbreviates G³/H/K to G³//K,
 # so H must be restored from the index-3 wallpaper-subgroup classification.
@@ -372,6 +441,10 @@ def build_groups() -> list[dict[str, Any]]:
                         },
                     ],
                 })
+    for group in groups:
+        explanation = PM_GROUP_EXPLANATIONS.get(group["id"])
+        if explanation is not None:
+            group["group_explanation"] = explanation
     return groups
 
 
@@ -645,6 +718,22 @@ def validate_payload(payload: dict[str, Any]) -> None:
         raise ValueError(f"bad colour-group census: {group_counts}")
     if any(not group.get("chaim_short_signature") for group in groups):
         raise ValueError("every colour group needs a Chaim short signature")
+    pm_group_ids = {
+        group["id"] for group in groups if group["wallpaper_id"] == "pm"
+    }
+    explanation_ids = {
+        group["id"] for group in groups if group.get("group_explanation")
+    }
+    if pm_group_ids != set(PM_GROUP_EXPLANATIONS) or explanation_ids != pm_group_ids:
+        raise ValueError(
+            "the subgroup explanations must cover exactly the eight pm colour groups"
+        )
+    if any(
+        set(explanation) != {"subgroups", "explanation"}
+        or not all(explanation.values())
+        for explanation in PM_GROUP_EXPLANATIONS.values()
+    ):
+        raise ValueError("every pm subgroup explanation needs both concise fields")
     pattern_counts = Counter(p["number_of_colours"] for p in patterns)
     if pattern_counts != Counter({1: 51, 2: 88, 3: 59}):
         raise ValueError(f"bad pattern-type census: {pattern_counts}")
@@ -1001,13 +1090,13 @@ def build_html(payload: dict[str, Any]) -> str:
   <title>Catalog of colorings</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
-  <link rel="stylesheet" href="color-pattern-catalog.css?v=generator-overlays-v2">
+  <link rel="stylesheet" href="color-pattern-catalog.css?v=pm-subgroups-v1">
   <script>
     window.COLOR_PATTERN_CATALOG_SETTINGS = Object.freeze({{
       enableGsPatternSelection: false,
     }});
   </script>
-  <script src="color-pattern-catalog.js?v=generator-overlays-v2" defer></script>
+  <script src="color-pattern-catalog.js?v=pm-subgroups-v1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#pattern-atlas">Skip to pattern catalog</a>

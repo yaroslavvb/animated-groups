@@ -596,6 +596,40 @@ body {
   overflow-wrap: anywhere;
 }
 
+.group-explanation {
+  margin: 0 0 1rem;
+  padding: 0.72rem 0.8rem 0.76rem;
+  border-left: 3px solid var(--pattern-accent);
+  background: #f5faf7;
+  color: var(--pattern-ink);
+}
+
+.group-explanation h4 {
+  margin: 0 0 0.35rem;
+  color: var(--pattern-ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.group-explanation p {
+  margin: 0.28rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.group-explanation .subgroup-decoder {
+  color: var(--pattern-muted);
+}
+
+.group-explanation .subgroup-formula {
+  color: var(--pattern-ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.group-explanation .subgroup-prose {
+  color: var(--pattern-muted);
+}
+
 .source-link-mark {
   color: var(--pattern-accent);
   font: 650 0.72rem/1 Arial, Helvetica, sans-serif;

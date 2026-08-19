@@ -2250,6 +2250,10 @@
           "note": "ordinary one-colour PP baseline"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ C₁; H = K = G = ⟨α, P, Q⟩; [G:H] = [G:K] = 1.",
+        "explanation": "The colour action is trivial: every translation and both mirror families fix the sole colour."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/book-excerpts/p40-starstar.webp",
@@ -2328,6 +2332,10 @@
           "printed_pages": "140–141"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨αP, α⁻¹Q⟩ ≅ ××; [G:H] = [G:K] = 2.",
+        "explanation": "α, P, and Q all exchange A and B. The colour-fixing subgroup has glides but no mirrors, so its orbifold is ××."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/color-pattern-excerpts/tos-cg-pm-2-1.webp",
@@ -2406,6 +2414,10 @@
           "printed_pages": "140–141"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨P, αQ⟩ ≅ *×; [G:H] = [G:K] = 2.",
+        "explanation": "P remains a colour-fixing mirror and αQ is a colour-fixing glide. Together they form the centred mirror group *×."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/color-pattern-excerpts/tos-cg-pm-2-2.webp",
@@ -2484,6 +2496,10 @@
           "printed_pages": "140–141"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨α², P, Q⟩ ≅ **; [G:H] = [G:K] = 2.",
+        "explanation": "Only α exchanges the colours. The repeat parallel to the mirrors doubles while both mirror families remain; this is **/** form (1)."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/color-pattern-excerpts/tos-cg-pm-2-3.webp",
@@ -2562,6 +2578,10 @@
           "printed_pages": "140–141"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨α, QP⟩ ≅ ◦; [G:H] = [G:K] = 2.",
+        "explanation": "Both reflections exchange A and B, but their product QP fixes the colours. The kernel contains translations only, hence ◦."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/color-pattern-excerpts/tos-cg-pm-2-4.webp",
@@ -2640,6 +2660,10 @@
           "printed_pages": "140–141"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ C₂; H = K = ⟨α, P, (QP)²⟩ ≅ **; [G:H] = [G:K] = 2.",
+        "explanation": "Q exchanges the colours while α and P fix them. The perpendicular repeat doubles and only alternate mirror families remain; this is **/** form (2)."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/color-pattern-excerpts/tos-cg-pm-2-5.webp",
@@ -2721,6 +2745,10 @@
           "printed_pages": "156"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ S₃; H = ⟨α, (QP)³, Q⟩ ≅ **; K = ⟨α, (QP)³⟩ ≅ ◦; [G:H] = 3, [H:K] = 2, [G:K] = 6.",
+        "explanation": "P and Q induce distinct transpositions. H fixes the chosen colour A but may exchange the other two; K fixes all three colours."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/color-pattern-excerpts/tos-cg-pm-3-1.webp",
@@ -2802,6 +2830,10 @@
           "printed_pages": "156"
         }
       ],
+      "group_explanation": {
+        "subgroups": "G/K ≅ C₃; H = K = ⟨α³, P, Q⟩ ≅ **; [G:H] = [G:K] = 3.",
+        "explanation": "Only α cycles A, B, and C. The repeat parallel to the mirrors triples, while both mirror families fix every colour."
+      },
       "book_excerpt": {
         "work": "The Symmetries of Things",
         "image": "output/color-pattern-excerpts/tos-cg-pm-3-2.webp",
