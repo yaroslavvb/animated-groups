@@ -206,6 +206,48 @@ class ColorPatternCatalogTests(unittest.TestCase):
             {"G": "22*", "H": "22*", "K": "××"},
         )
 
+    def test_pm_family_has_complete_subgroup_explanations(self) -> None:
+        groups = {
+            group["id"]: group
+            for group in self.payload["colour_groups"]
+            if group["wallpaper_id"] == "pm"
+        }
+        expected = {
+            "cg-pm-1-1": ("**", None, ("**", "**", "**"), ["1", "1", "1"]),
+            "cg-pm-2-1": ("**/××", None, ("**", "××", "××"), ["AB", "AB", "AB"]),
+            "cg-pm-2-2": ("**/*×", None, ("**", "*×", "*×"), ["AB", "1", "AB"]),
+            "cg-pm-2-3": ("**/**", "1", ("**", "**", "**"), ["AB", "1", "1"]),
+            "cg-pm-2-4": ("**/◦", None, ("**", "◦", "◦"), ["1", "AB", "AB"]),
+            "cg-pm-2-5": ("**/**", "2", ("**", "**", "**"), ["1", "1", "AB"]),
+            "cg-pm-3-1": ("**³//◦", None, ("**", "**", "◦"), ["1", "AB", "BC"]),
+            "cg-pm-3-2": ("**³/**", None, ("**", "**", "**"), ["ABC", "1", "1"]),
+        }
+        self.assertEqual(set(groups), set(expected))
+        self.assertEqual(set(catalog.PM_GROUP_EXPLANATIONS), set(expected))
+        for group_id, (notation, variant, ghk, actions) in expected.items():
+            group = groups[group_id]
+            self.assertEqual(group["chaim_notation"], notation)
+            self.assertEqual(group["notation_variant"], variant)
+            self.assertEqual(tuple(group["ghk"][key] for key in ("G", "H", "K")), ghk)
+            self.assertEqual(
+                [action["permutation_code"] for action in group["generator_colour_actions"]],
+                actions,
+            )
+            self.assertEqual(group["group_explanation"], catalog.PM_GROUP_EXPLANATIONS[group_id])
+            self.assertEqual(set(group["group_explanation"]), {"subgroups", "explanation"})
+
+        other_groups = [
+            group for group in self.payload["colour_groups"]
+            if group["wallpaper_id"] != "pm"
+        ]
+        self.assertTrue(all("group_explanation" not in group for group in other_groups))
+        self.assertIn("parallel", groups["cg-pm-2-3"]["group_explanation"]["explanation"])
+        self.assertIn("perpendicular", groups["cg-pm-2-5"]["group_explanation"]["explanation"])
+        self.assertNotEqual(
+            groups["cg-pm-2-3"]["group_explanation"],
+            groups["cg-pm-2-5"]["group_explanation"],
+        )
+
     def test_affine_generator_visualizations_match_presentations(self) -> None:
         counts: Counter[str] = Counter()
         for wallpaper in self.payload["wallpaper_groups"]:
@@ -659,8 +701,8 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertNotIn("Catalogued object:", self.page)
         self.assertIn("window.COLOR_PATTERN_CATALOG_SETTINGS", self.page)
         self.assertIn("enableGsPatternSelection: false", self.page)
-        self.assertIn("color-pattern-catalog.js?v=generator-overlays-v2", self.page)
-        self.assertIn("color-pattern-catalog.css?v=generator-overlays-v2", self.page)
+        self.assertIn("color-pattern-catalog.js?v=pm-subgroups-v1", self.page)
+        self.assertIn("color-pattern-catalog.css?v=pm-subgroups-v1", self.page)
 
     def test_mathworld_directory_has_17_local_crops(self) -> None:
         assets = sorted((ROOT / "output" / "mathworld-wallpaper-groups").glob("*.webp"))
@@ -740,14 +782,18 @@ class ColorPatternCatalogTests(unittest.TestCase):
         for required in (
             "ghkElement",
             "presentationElement",
+            "groupExplanationElement",
             "actionPaletteElement",
             "permutationNotation",
             "permutationDescription",
             "group.generator_colour_actions",
             "group.presentation.relations",
+            "group.group_explanation",
             'if (notation !== "id")',
         ):
             self.assertIn(required, script)
+        self.assertIn('"Subgroups of ∗∗"', script)
+        self.assertIn('className = "group-explanation"', script)
         for removed in (
             "group-overview",
             "group-kicker",

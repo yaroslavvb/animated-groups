@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const DATA_URL = "data/color-pattern-catalog.json?v=p2-spacing-v1";
+  const DATA_URL = "data/color-pattern-catalog.json?v=pm-subgroups-v1";
   window.COLOR_PATTERN_CATALOG_SETTINGS = Object.freeze({
     enableGsPatternSelection: false,
     ...(window.COLOR_PATTERN_CATALOG_SETTINGS || {}),
@@ -316,6 +316,32 @@
       ),
     );
     section.append(heading, table, relations);
+    return section;
+  }
+
+  function groupExplanationElement(group) {
+    const explanation = group.group_explanation;
+    if (!explanation) return null;
+
+    const section = document.createElement("section");
+    section.className = "group-explanation";
+    const titleId = `${group.id}-subgroups-title`;
+    section.setAttribute("aria-labelledby", titleId);
+
+    const title = textElement("h4", "", "Subgroups of ∗∗");
+    title.id = titleId;
+    const decoder = textElement(
+      "p",
+      "subgroup-decoder",
+      "α translates along the mirrors; P and Q are adjacent parallel mirrors; QP translates across them. H fixes A; K fixes every colour.",
+    );
+    const subgroups = textElement(
+      "p",
+      "subgroup-formula",
+      typesetSymbol(explanation.subgroups),
+    );
+    const prose = textElement("p", "subgroup-prose", typesetSymbol(explanation.explanation));
+    section.append(title, decoder, subgroups, prose);
     return section;
   }
 
@@ -879,7 +905,10 @@
     appendTableRow(table, "Chaim G/H/K", ghkElement(group));
     appendTableRow(table, "G&S group symbol", gsGroupSymbolElement(pattern, group));
     appendTableRow(table, "G&S pattern type", gsPatternTypeElement(pattern));
-    details.append(presentationElement(group), table);
+    details.append(presentationElement(group));
+    const explanation = groupExplanationElement(group);
+    if (explanation) details.append(explanation);
+    details.append(table);
     pane.append(figure, details);
     return pane;
   }
