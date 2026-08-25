@@ -10245,9 +10245,9 @@
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-054-pp493-1.webp",
         "title": "Coloured occurrence PP49[3]_1 (underlying PP49)",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP49[3]_1 has underlying pattern type PP49.",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_1. The supplied excerpt contains Chapter 8, not the Chapter 5 one-colour plates. This is an indirect cross-reference: PP49[3]_1 has underlying pattern type PP49.",
         "alt": "Annotated Chapter 8 occurrence PP49[3]_1, whose underlying one-colour pattern type is PP49.",
-        "printed_page": 434,
+        "printed_page": 435,
         "catalog_symbol": "PP49",
         "source_symbol": "PP49[3]_1",
         "direct_source": false,
@@ -15722,7 +15722,7 @@
         "colour_blind_discrepancy": 0.008654,
         "candidate_index": 2
       },
-      "book_figure_slot": 1,
+      "book_figure_slot": 2,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-031-pp133-1.webp",
@@ -15767,7 +15767,7 @@
         "colour_blind_discrepancy": 0.008653,
         "candidate_index": 1
       },
-      "book_figure_slot": 2,
+      "book_figure_slot": 1,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-032-pp123-2.webp",
@@ -15902,7 +15902,7 @@
         "colour_blind_discrepancy": 0.008654,
         "candidate_index": 2
       },
-      "book_figure_slot": 5,
+      "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-035-pp153s.webp",
@@ -15992,7 +15992,7 @@
         "colour_blind_discrepancy": 0.008653,
         "candidate_index": 1
       },
-      "book_figure_slot": 7,
+      "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-037-pp183.webp",
@@ -16667,7 +16667,7 @@
         "colour_blind_discrepancy": 0.008654,
         "candidate_index": 2
       },
-      "book_figure_slot": 4,
+      "book_figure_slot": 5,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-052-pp48a3-1.webp",
@@ -16712,7 +16712,7 @@
         "colour_blind_discrepancy": 0.017308,
         "candidate_index": 3
       },
-      "book_figure_slot": 5,
+      "book_figure_slot": 7,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-053-pp48b3-1.webp",
@@ -16739,7 +16739,7 @@
         "work": "Tilings and Patterns",
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
-        "printed_page": 434
+        "printed_page": 435
       },
       "render_layout": {
         "kind": "orbit",
@@ -16757,14 +16757,14 @@
         "colour_blind_discrepancy": 0.017308,
         "candidate_index": 4
       },
-      "book_figure_slot": 6,
+      "book_figure_slot": 0,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-054-pp493-1.webp",
         "title": "Pattern type PP49[3]_1",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_1.",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP49[3]_1.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP49[3]_1 outlined.",
-        "printed_page": 434,
+        "printed_page": 435,
         "catalog_symbol": "PP49[3]_1",
         "source_symbol": "PP49[3]_1",
         "direct_source": true,
@@ -16802,7 +16802,7 @@
         "colour_blind_discrepancy": 0.008654,
         "candidate_index": 1
       },
-      "book_figure_slot": 7,
+      "book_figure_slot": 4,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-055-pp473-2.webp",
@@ -16847,7 +16847,7 @@
         "colour_blind_discrepancy": 0.008654,
         "candidate_index": 2
       },
-      "book_figure_slot": 8,
+      "book_figure_slot": 6,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-056-pp48a3-2.webp",
@@ -16874,7 +16874,7 @@
         "work": "Tilings and Patterns",
         "chapter": 8,
         "figure": "Figure 8.3.6, pp. 431–435",
-        "printed_page": 435
+        "printed_page": 434
       },
       "render_layout": {
         "kind": "orbit",
@@ -16892,14 +16892,14 @@
         "colour_blind_discrepancy": 0.017308,
         "candidate_index": 3
       },
-      "book_figure_slot": 0,
+      "book_figure_slot": 8,
       "book_excerpt": {
         "work": "Tilings and Patterns",
         "image": "output/color-pattern-excerpts/gs-cp-3-057-pp48b3-2.webp",
         "title": "Pattern type PP48B[3]_2",
-        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 435; the outlines mark the printed colour-group symbol and pattern-type label PP48B[3]_2.",
+        "context": "Grünbaum-Shephard Figure 8.3.6 on printed p. 434; the outlines mark the printed colour-group symbol and pattern-type label PP48B[3]_2.",
         "alt": "Annotated Grünbaum-Shephard figure with its colour-group symbol and pattern-type label PP48B[3]_2 outlined.",
-        "printed_page": 435,
+        "printed_page": 434,
         "catalog_symbol": "PP48B[3]_2",
         "source_symbol": "PP48B[3]_2",
         "direct_source": true,

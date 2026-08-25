@@ -234,6 +234,14 @@ SOURCE_PAGE_BLOCKS = {
     (3, False): ((431, 6), (432, 9), (433, 9), (434, 9), (435, 3)),
 }
 
+# Figure 8.3.6 prints its p6m panels ordered by PP stem, not by colour group,
+# so the count-based blocks above land these two panels on the wrong side of
+# the 434/435 page break.
+SOURCE_PAGE_EXCEPTIONS = {
+    "PP49[3]_1": 435,
+    "PP48B[3]_2": 434,
+}
+
 
 def source_pages(colours: int, primitive: bool) -> tuple[int, ...]:
     return tuple(
@@ -442,7 +450,7 @@ def build_patterns(groups: list[dict[str, Any]]) -> list[dict[str, Any]]:
                         "work": "Tilings and Patterns",
                         "chapter": 8,
                         "figure": source,
-                        "printed_page": printed_page,
+                        "printed_page": SOURCE_PAGE_EXCEPTIONS.get(symbol, printed_page),
                     },
                 }
                 if colours == 3 and primitive and parent == "p31m" and group_index == 2:
