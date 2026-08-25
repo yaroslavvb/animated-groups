@@ -199,6 +199,28 @@ GS_PAGE_SLOTS: dict[int, tuple[dict[str, Any], ...]] = {
 }
 
 
+# The catalog census lists pattern types grouped by colour group, but two
+# Figure 8.3.6 plates print their panels in a different reading order, so the
+# default sequential slot assignment misses.  Keys are (printed page, printed
+# pattern-type label); values are the slot, in reading order, whose printed
+# label matches.
+GS_SLOT_OVERRIDES: dict[tuple[int, str], int] = {
+    # p. 432 groups its pmg panels by PP stem (12_1, 12_2, 13_1, 13_2) and
+    # prints PP18[3] in the middle row, PP15[3]* in the bottom row.
+    (432, "PP12[3]_2"): 1,
+    (432, "PP13[3]_1"): 2,
+    (432, "PP18[3]"): 5,
+    (432, "PP15[3]*"): 7,
+    # p. 434 orders the p6m panels by PP stem (47_1, 47_2, 48A_1, 48A_2,
+    # 48B_1, 48B_2); PP49[3]_1 opens p. 435 instead (its printed page is
+    # corrected by SOURCE_PAGE_EXCEPTIONS in the catalog builder).
+    (434, "PP47[3]_2"): 4,
+    (434, "PP48A[3]_1"): 5,
+    (434, "PP48A[3]_2"): 6,
+    (434, "PP48B[3]_1"): 7,
+}
+
+
 def _raw_colour_type(group: dict[str, Any]) -> str:
     notation = group["chaim_notation"]
     if group.get("notation_variant"):
@@ -311,7 +333,9 @@ def decorate_payload(payload: dict[str, Any]) -> None:
         page = pattern["source"]["printed_page"]
         slot = page_offsets[page]
         page_offsets[page] += 1
-        pattern["book_figure_slot"] = slot
+        pattern["book_figure_slot"] = GS_SLOT_OVERRIDES.get(
+            (page, pattern["gs_pattern_type"]), slot
+        )
         pattern["book_excerpt"] = _pattern_excerpt(pattern)
 
     first_by_stem: dict[str, dict[str, Any]] = {}
@@ -405,13 +429,20 @@ def validate_excerpt_metadata(payload: dict[str, Any]) -> None:
         _raw_colour_type(group) for group in groups if group["number_of_colours"] == 3
     }:
         raise ValueError("Table 12.1 excerpt map does not match the three-colour census")
-    expected_page_counts: defaultdict[int, int] = defaultdict(int)
+    slots_by_page: defaultdict[int, list[int]] = defaultdict(list)
+    coloured_keys: set[tuple[int, str]] = set()
     for pattern in patterns:
         if pattern["number_of_colours"] > 1:
-            expected_page_counts[pattern["source"]["printed_page"]] += 1
+            page = pattern["source"]["printed_page"]
+            slots_by_page[page].append(pattern["book_figure_slot"])
+            coloured_keys.add((page, pattern["gs_pattern_type"]))
     for page, slots in GS_PAGE_SLOTS.items():
-        if expected_page_counts[page] != len(slots):
+        assigned = sorted(slots_by_page[page])
+        if assigned != list(range(len(slots))):
             raise ValueError(
-                f"G&S p. {page} has {len(slots)} excerpt slots for "
-                f"{expected_page_counts[page]} pattern types"
+                f"G&S p. {page} slot assignment {assigned} does not fill its "
+                f"{len(slots)} excerpt slots exactly once"
             )
+    if not set(GS_SLOT_OVERRIDES).issubset(coloured_keys):
+        stale = sorted(set(GS_SLOT_OVERRIDES) - coloured_keys)
+        raise ValueError(f"stale G&S slot overrides: {stale}")
