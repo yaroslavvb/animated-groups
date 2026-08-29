@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Every binary pattern on the 3x3 torus with a nontrivial stabilizer, grouped by stabilizer and by translation orbit.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Symmetric patterns on the 3×3 torus</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <style>
+  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+          --card:#ffffff; --accent:#0072B2; }
+  body { background:var(--paper); color:var(--ink); }
+  .patterns { max-width:1120px; margin:0 auto; padding:0 20px 72px; }
+  .patterns h1 { font-size:2rem; line-height:1.2; margin:.2em 0 .3em; }
+  .patterns h2 { font-size:1.32rem; margin:2.4rem 0 .7rem;
+                 border-bottom:1px solid var(--rule); padding-bottom:.35rem; }
+  .patterns h3 { font-size:1.05rem; margin:0 0 .2rem;
+                 font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .overline { text-transform:uppercase; letter-spacing:.12em; font-size:.74rem;
+              color:var(--muted); margin:2rem 0 0; }
+  .lead { font-size:1.05rem; color:var(--muted); max-width:64ch; }
+  .patterns p, .patterns li { max-width:74ch; }
+  code { background:#eef1f4; padding:.08em .34em; border-radius:4px; font-size:.92em; }
+  .funnel { display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0;
+            margin:1rem 0 0; }
+  .funnel li { background:var(--card); border:1px solid var(--rule); border-radius:9px;
+               padding:9px 14px; font-size:.9rem; }
+  .funnel strong { font-size:1.15rem; display:block; }
+  .stab-row { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+              padding:16px 18px; margin-bottom:16px; }
+  .row-meta { margin:.1rem 0 .9rem; font-size:.78rem; color:var(--muted); }
+  .row-meta span { display:inline-block; background:#eef1f4; border-radius:20px;
+                   padding:.14em .7em; margin:0 .3em .3em 0; }
+  .row-body { display:grid; gap:18px;
+              grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr)); }
+  .row-data { margin:0; }
+  .row-data dt { font-size:.74rem; text-transform:uppercase; letter-spacing:.08em;
+                 color:var(--accent); margin-top:.65rem; }
+  .row-data dd { margin:.2rem 0 0; font-size:.9rem; }
+  .orbits { display:flex; flex-wrap:wrap; gap:12px; align-content:flex-start; }
+  .orbit { border:1px dashed var(--rule); border-radius:9px; padding:8px 10px 6px; }
+  .orbit-label { margin:0 0 6px; font-size:.7rem; color:var(--muted);
+                 text-transform:uppercase; letter-spacing:.06em; }
+  .orbit-pats { display:flex; gap:8px; flex-wrap:wrap; }
+  .pat { display:block; }
+  .table-scroll { overflow-x:auto; }
+  table { border-collapse:collapse; font-size:.9rem; min-width:520px; }
+  th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }
+  th { font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .footnote { color:var(--muted); font-size:.86rem; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
+            --card:#1e242b; --accent:#56B4E9; }
+    code, .row-meta span { background:#2a323a; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#patterns">Skip to patterns</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="torus-tutorial.html">Torus guide</a>
+        <a href="torus-colorings.html">Binary catalog</a>
+        <a href="torus-patterns.html" aria-current="page">Translation symmetries</a>
+        <a href="torus-patterns-c4.html">With rotations</a>
+        <a href="torus-cayley.html">Cayley graphs</a>
+        <a href="torus-nonregular.html">Non-regular</a>
+        <a href="color-pattern-catalog.html">Patterns</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="patterns" class="patterns">
+    <p class="overline">Companion to the torus tutorial</p>
+    <h1>Symmetric patterns on the 3&times;3 torus</h1>
+    <p class="lead">
+      Colour each of the nine cells 0 or 1. There are 512 patterns, and only 26 of them have
+      any translational symmetry at all. Here is every one, sorted by its stabilizer and then
+      by orbit.
+    </p>
+
+    <h2>The funnel</h2>
+    <ul class="funnel">
+      <li><strong>512</strong>binary patterns</li>
+      <li><strong>26</strong>with nontrivial stabilizer</li>
+      <li><strong>10</strong>orbits among those</li>
+      <li><strong>5</strong>nontrivial stabilizers</li>
+      <li><strong>2</strong>types up to GL(2,&#120125;&#8323;)</li>
+    </ul>
+    <p>
+      The other 486 patterns have trivial stabilizer &mdash; 95% of them &mdash; falling into
+      54 orbits of size 9. Generic patterns have no symmetry, which is why searching over
+      patterns is a poor way to find groups.
+    </p>
+
+    <h2>The five rows</h2>
+    <p>
+      Filled cells are 1, outlined cells are 0. Because the ambient group is abelian, every
+      pattern in an orbit has <em>exactly the same</em> stabilizer, not merely a conjugate one,
+      so each row below is a union of whole orbits.
+    </p>
+
+    <section class="stab-row" id="row-1-nothin">
+      <header class="row-head">
+        <h3>K = A</h3>
+        <p class="row-meta"><span>|K| = 9</span>
+          <span>index 1</span>
+          <span>2 patterns</span>
+          <span>2 orbits of size 1</span></p>
+      </header>
+      <div class="row-body">
+        <dl class="row-data">
+          <dt>Stabilizer</dt>
+          <dd>Generated by <code>X, Y</code>.
+              Every translation fixes the pattern, so the pattern is constant.</dd>
+          <dt>As an equivalence relation</dt>
+          <dd>Two cells are equivalent when <code>nothing is distinguished</code>
+              agrees — one coset — the whole torus.</dd>
+          <dt>Orbits</dt>
+          <dd>The ambient group has order 9 and the stabilizer has order
+              9, so every orbit has size
+              9 / 9 = 1. The
+              2 patterns fall into 2
+              orbits; patterns in one orbit are
+              translates of each other and share this stabilizer exactly.</dd>
+        </dl>
+        <div class="orbits"><div class="orbit"><p class="orbit-label">orbit 1 &middot; size 1</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 000000000"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg></div></div><div class="orbit"><p class="orbit-label">orbit 2 &middot; size 1</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 111111111"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg></div></div></div>
+      </div>
+    </section>
+    <section class="stab-row" id="row-3-amod3—">
+      <header class="row-head">
+        <h3>K = ⟨Y⟩ — rows</h3>
+        <p class="row-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>6 patterns</span>
+          <span>2 orbits of size 3</span></p>
+      </header>
+      <div class="row-body">
+        <dl class="row-data">
+          <dt>Stabilizer</dt>
+          <dd>Generated by <code>Y = (0,1), the column shift</code>.
+              Sliding along a row changes nothing, so each row is uniform.</dd>
+          <dt>As an equivalence relation</dt>
+          <dd>Two cells are equivalent when <code>a mod 3 — the row index</code>
+              agrees — three cosets — the three rows.</dd>
+          <dt>Orbits</dt>
+          <dd>The ambient group has order 9 and the stabilizer has order
+              3, so every orbit has size
+              9 / 3 = 3. The
+              6 patterns fall into 2
+              orbits; patterns in one orbit are
+              translates of each other and share this stabilizer exactly.</dd>
+        </dl>
+        <div class="orbits"><div class="orbit"><p class="orbit-label">orbit 1 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 000000111"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 000111000"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 111000000"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg></div></div><div class="orbit"><p class="orbit-label">orbit 2 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 000111111"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 111000111"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 111111000"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg></div></div></div>
+      </div>
+    </section>
+    <section class="stab-row" id="row-3-bmod3—">
+      <header class="row-head">
+        <h3>K = ⟨X⟩ — columns</h3>
+        <p class="row-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>6 patterns</span>
+          <span>2 orbits of size 3</span></p>
+      </header>
+      <div class="row-body">
+        <dl class="row-data">
+          <dt>Stabilizer</dt>
+          <dd>Generated by <code>X = (1,0), the row shift</code>.
+              Sliding down a column changes nothing, so each column is uniform.</dd>
+          <dt>As an equivalence relation</dt>
+          <dd>Two cells are equivalent when <code>b mod 3 — the column index</code>
+              agrees — three cosets — the three columns.</dd>
+          <dt>Orbits</dt>
+          <dd>The ambient group has order 9 and the stabilizer has order
+              3, so every orbit has size
+              9 / 3 = 3. The
+              6 patterns fall into 2
+              orbits; patterns in one orbit are
+              translates of each other and share this stabilizer exactly.</dd>
+        </dl>
+        <div class="orbits"><div class="orbit"><p class="orbit-label">orbit 1 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 001001001"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 010010010"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 100100100"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg></div></div><div class="orbit"><p class="orbit-label">orbit 2 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 011011011"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 101101101"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 110110110"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg></div></div></div>
+      </div>
+    </section>
+    <section class="stab-row" id="row-3-(b−a)m">
+      <header class="row-head">
+        <h3>K = ⟨XY⟩ — diagonal</h3>
+        <p class="row-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>6 patterns</span>
+          <span>2 orbits of size 3</span></p>
+      </header>
+      <div class="row-body">
+        <dl class="row-data">
+          <dt>Stabilizer</dt>
+          <dd>Generated by <code>XY = (1,1)</code>.
+              Stepping down-and-right changes nothing; the stripes run diagonally.</dd>
+          <dt>As an equivalence relation</dt>
+          <dd>Two cells are equivalent when <code>(b − a) mod 3</code>
+              agrees — three cosets — three diagonal stripes.</dd>
+          <dt>Orbits</dt>
+          <dd>The ambient group has order 9 and the stabilizer has order
+              3, so every orbit has size
+              9 / 3 = 3. The
+              6 patterns fall into 2
+              orbits; patterns in one orbit are
+              translates of each other and share this stabilizer exactly.</dd>
+        </dl>
+        <div class="orbits"><div class="orbit"><p class="orbit-label">orbit 1 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 001100010"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 010001100"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 100010001"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg></div></div><div class="orbit"><p class="orbit-label">orbit 2 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 011101110"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 101110011"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 110011101"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg></div></div></div>
+      </div>
+    </section>
+    <section class="stab-row" id="row-3-(a+b)m">
+      <header class="row-head">
+        <h3>K = ⟨XY²⟩ — anti-diagonal</h3>
+        <p class="row-meta"><span>|K| = 3</span>
+          <span>index 3</span>
+          <span>6 patterns</span>
+          <span>2 orbits of size 3</span></p>
+      </header>
+      <div class="row-body">
+        <dl class="row-data">
+          <dt>Stabilizer</dt>
+          <dd>Generated by <code>XY² = (1,2)</code>.
+              Stepping down-and-left changes nothing; the stripes lean the other way.</dd>
+          <dt>As an equivalence relation</dt>
+          <dd>Two cells are equivalent when <code>(a + b) mod 3</code>
+              agrees — three cosets — three anti-diagonal stripes.</dd>
+          <dt>Orbits</dt>
+          <dd>The ambient group has order 9 and the stabilizer has order
+              3, so every orbit has size
+              9 / 3 = 3. The
+              6 patterns fall into 2
+              orbits; patterns in one orbit are
+              translates of each other and share this stabilizer exactly.</dd>
+        </dl>
+        <div class="orbits"><div class="orbit"><p class="orbit-label">orbit 1 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 001010100"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 010100001"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 100001010"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg></div></div><div class="orbit"><p class="orbit-label">orbit 2 &middot; size 3</p><div class="orbit-pats"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 011110101"><rect x="0" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 101011110"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/></svg><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="pattern 110101011"><rect x="0" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="0" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="0" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="0" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="19" y="19" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="38" y="19" width="17" height="17" rx="3" fill="#0072B2"/><rect x="0" y="38" width="17" height="17" rx="3" fill="#e9e4d7" stroke="#c8c1b0" stroke-width="1"/><rect x="19" y="38" width="17" height="17" rx="3" fill="#0072B2"/><rect x="38" y="38" width="17" height="17" rx="3" fill="#0072B2"/></svg></div></div></div>
+      </div>
+    </section>
+
+    <h2>Summary</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>stabilizer</th><th class="num">|K|</th><th class="num">index</th>
+          <th class="num">patterns</th><th class="num">orbits</th>
+          <th class="num">orbit size</th></tr></thead>
+        <tbody><tr><td><code>K = A</code></td><td class='num'>9</td><td class='num'>1</td><td class='num'>2</td><td class='num'>2</td><td class='num'>1</td></tr><tr><td><code>K = ⟨Y⟩ — rows</code></td><td class='num'>3</td><td class='num'>3</td><td class='num'>6</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td><code>K = ⟨X⟩ — columns</code></td><td class='num'>3</td><td class='num'>3</td><td class='num'>6</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td><code>K = ⟨XY⟩ — diagonal</code></td><td class='num'>3</td><td class='num'>3</td><td class='num'>6</td><td class='num'>2</td><td class='num'>3</td></tr><tr><td><code>K = ⟨XY²⟩ — anti-diagonal</code></td><td class='num'>3</td><td class='num'>3</td><td class='num'>6</td><td class='num'>2</td><td class='num'>3</td></tr>
+          <tr><td><code>K = {0}</code> (not shown)</td><td class="num">1</td>
+            <td class="num">9</td><td class="num">486</td><td class="num">54</td>
+            <td class="num">9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="footnote">
+      Orbit sizes obey orbit&ndash;stabilizer exactly: <code>|orbit| = 9 / |K|</code>. Summing
+      <code>2&times;1 + 8&times;3 + 54&times;9 = 512</code> recovers every pattern, and
+      <code>2 + 8 + 54 = 64</code> recovers the Burnside count of patterns up to translation.
+    </p>
+
+    <h2>Counts for larger alphabets</h2>
+    <p>
+      Nothing above is special to two values. Writing <code>q</code> for the alphabet size,
+      M&ouml;bius inversion over the subgroup lattice
+      <code>{0} &lt; four lines &lt; A</code> gives closed forms, since a pattern with
+      stabilizer containing <code>K</code> is a function on the <code>[A:K]</code> cosets.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="num">q</th><th class="num">K = A<br>(q)</th>
+          <th class="num">each line<br>(q&sup3; &minus; q)</th><th class="num">all four lines</th>
+          <th class="num">trivial<br>(q&#8313; &minus; 4q&sup3; + 3q)</th>
+          <th class="num">total (q&#8313;)</th></tr></thead>
+        <tbody><tr><td class='num'>2</td><td class='num'>2</td><td class='num'>6</td><td class='num'>24</td><td class='num'>486</td><td class='num'>512</td></tr><tr><td class='num'>3</td><td class='num'>3</td><td class='num'>24</td><td class='num'>96</td><td class='num'>19584</td><td class='num'>19683</td></tr><tr><td class='num'>4</td><td class='num'>4</td><td class='num'>60</td><td class='num'>240</td><td class='num'>261900</td><td class='num'>262144</td></tr></tbody>
+      </table>
+    </div>
+    <p class="footnote">
+      The <code>q&sup3; &minus; q</code> reads directly: a line-stabilized pattern is a function
+      on three cosets, so <code>q&sup3;</code> choices, minus the <code>q</code> constant ones
+      whose stabilizer is really all of <code>A</code>.
+    </p>
+
+    <h2>Six subgroups, three types</h2>
+    <p>
+      The four line rows above are one <code>GL(2,&#120125;&#8323;)</code> orbit &mdash; one line
+      per slope <code>0, 1, 2, &infin;</code> &mdash; so as <em>types</em> there are only two
+      nontrivial cases, the constant pattern and the striped one. The four rows look different
+      because a shear relates them, and a shear is an automorphism of the torus but not a
+      symmetry of the square grid. The
+      <a href="torus-tutorial.html">torus tutorial</a> names all six subgroups three ways:
+      as stabilizers, by generators, and in Chaim Goodman-Strauss&rsquo;s colour notation.
+    </p>
+    <p class="footnote">
+      Generated by <a href="https://github.com/yaroslavvb/animated-groups/blob/main/scripts/generate_torus_patterns.py">scripts/generate_torus_patterns.py</a>.
+    </p>
+  </main>
+</body>
+</html>

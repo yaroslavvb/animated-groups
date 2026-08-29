@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The 32 binary colorings of the 3 by 3 discrete torus, classified up to translation and global permutation of the two colors.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Binary colorings of the 3 × 3 torus">
+  <meta property="og:description" content="All 32 canonical binary patterns modulo translation and global color swap.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yaroslavvb.github.io/animated-groups/torus-colorings.html">
+  <title>Binary colorings of the 3 × 3 torus</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <link rel="stylesheet" href="torus-colorings.css?v=2">
+  <script src="site-controls-v2.js" defer></script>
+  <script src="torus-colorings.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#patterns">Skip to patterns</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="torus-tutorial.html">Torus guide</a>
+        <a href="torus-colorings.html" aria-current="page">Binary catalog</a>
+        <a href="torus-patterns.html">Translation symmetries</a>
+        <a href="torus-patterns-c4.html">With rotations</a>
+        <a href="torus-cayley.html">Cayley graphs</a>
+        <a href="torus-nonregular.html">Non-regular</a>
+        <a href="color-pattern-catalog.html">Patterns</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="torus-introduction" aria-labelledby="page-title">
+      <p class="overline">Finite translation orbits</p>
+      <h1 id="page-title">Binary colorings of the <span class="no-break">3 × 3 torus</span></h1>
+      <p class="lead">
+        All <strong data-class-count>32</strong> patterns in
+        {A, B}<sup>(ℤ/3ℤ)²</sup>, modulo the nine translations and
+        the global swap A ↔ B.
+      </p>
+
+      <p class="count-equation" aria-label="The quantity two to the ninth plus eight times two cubed, divided by nine times two, equals thirty-two">
+        <span class="fraction" aria-hidden="true">
+          <span>2<sup>9</sup> + 8 · 2<sup>3</sup></span>
+          <span>9 · 2</span>
+        </span>
+        <span aria-hidden="true">= 32</span>
+      </p>
+
+      <div class="catalog-key">
+        <div>
+          <h2>Canonical representative</h2>
+          <p>First make <i>B</i> the minority color, then take the lexicographically least row-major word among all translations.</p>
+        </div>
+        <div>
+          <h2>Drawing</h2>
+          <p>Each 3 × 3 representative is repeated three times in each direction. Heavy lines mark fundamental domains; the central one is outlined.</p>
+        </div>
+        <div>
+          <h2>Invariants</h2>
+          <p>“Orbit” is the number of labeled patterns in the class. “Stabilizer” is its stabilizer order inside the 18-element group.</p>
+        </div>
+      </div>
+
+      <div class="palette" aria-label="Displayed palette">
+        <span><i class="palette-a" aria-hidden="true"></i>Color A</span>
+        <span><i class="palette-b" aria-hidden="true"></i>Color B</span>
+        <small>Color names are interchangeable.</small>
+      </div>
+    </section>
+
+    <div id="patterns" class="torus-catalog" data-torus-catalog></div>
+    <noscript><p class="noscript">JavaScript is required to generate the 32 verified representatives.</p></noscript>
+  </main>
+
+  <footer class="page-footer">
+    <p>
+      Equivalence is by translation and one global color permutation only; rotations and reflections are not identified.
+    </p>
+  </footer>
+</body>
+</html>
