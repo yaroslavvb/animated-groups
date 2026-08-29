@@ -47,6 +47,7 @@ from PIL import Image, ImageDraw
 from chaim_short_signatures import TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
 from colour_generator_actions import (
     GENERATOR_GEOMETRY,
+    GROUP_PRESENTATIONS,
     THREE_COLOUR_ACTION_CODES,
     generator_colour_actions,
     group_presentation,
@@ -54,7 +55,7 @@ from colour_generator_actions import (
     presentation_relations_hold,
 )
 from tos_book_excerpt_specs import BOOK_EXCERPTS
-from wallpaper_affine_generators import affine_generators_for
+from wallpaper_affine_generators import affine_generators_for, generator_visualization
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,7 +64,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=presentation-color-time"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=plate-generator-overlays"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -2401,6 +2402,357 @@ def _site_geometry(
     return b1, b2, radius, ranges
 
 
+OverlayMotion = tuple[
+    tuple[tuple[int, int], tuple[int, int]],
+    tuple[Fraction, Fraction],
+]
+OVERLAY_IDENTITY: OverlayMotion = (M_ID, (Fraction(0), Fraction(0)))
+OVERLAY_CANDIDATE_LIMIT = 24
+OVERLAY_SOLUTION_LIMIT = 128
+
+
+def _overlay_compose(left: OverlayMotion, right: OverlayMotion) -> OverlayMotion:
+    """Return ``left`` after ``right`` without reducing translations mod 1."""
+
+    left_matrix, left_vector = left
+    right_matrix, right_vector = right
+    matrix_value = multiply2(left_matrix, right_matrix)
+    vector_value = (
+        left_matrix[0][0] * right_vector[0]
+        + left_matrix[0][1] * right_vector[1]
+        + left_vector[0],
+        left_matrix[1][0] * right_vector[0]
+        + left_matrix[1][1] * right_vector[1]
+        + left_vector[1],
+    )
+    return matrix_value, vector_value
+
+
+def _overlay_inverse(value: OverlayMotion) -> OverlayMotion:
+    matrix_value, vector_value = value
+    determinant = det2(matrix_value)
+    if determinant not in {-1, 1}:
+        raise ValueError(f"overlay motion is not unimodular: {matrix_value!r}")
+    inverse_matrix = (
+        (matrix_value[1][1] // determinant, -matrix_value[0][1] // determinant),
+        (-matrix_value[1][0] // determinant, matrix_value[0][0] // determinant),
+    )
+    return (
+        inverse_matrix,
+        (
+            -(inverse_matrix[0][0] * vector_value[0]
+              + inverse_matrix[0][1] * vector_value[1]),
+            -(inverse_matrix[1][0] * vector_value[0]
+              + inverse_matrix[1][1] * vector_value[1]),
+        ),
+    )
+
+
+def _overlay_power(value: OverlayMotion, exponent: int) -> OverlayMotion:
+    if exponent < 0:
+        return _overlay_power(_overlay_inverse(value), -exponent)
+    result = OVERLAY_IDENTITY
+    for _ in range(exponent):
+        result = _overlay_compose(value, result)
+    return result
+
+
+def _overlay_physical_motion(
+    value: OverlayMotion,
+    basis: list[list[float]],
+) -> tuple[tuple[tuple[float, float], tuple[float, float]], tuple[float, float]]:
+    """Conjugate a lattice-coordinate motion into the plate's Euclidean plane."""
+
+    matrix_value, vector_value = value
+    physical_basis = [
+        [float(basis[0][0]), float(basis[1][0])],
+        [float(basis[0][1]), float(basis[1][1])],
+    ]
+    physical_matrix = _mat_mul(
+        _mat_mul(
+            physical_basis,
+            [[float(component) for component in row] for row in matrix_value],
+        ),
+        _mat_inv(physical_basis),
+    )
+    physical_vector = (
+        physical_basis[0][0] * float(vector_value[0])
+        + physical_basis[0][1] * float(vector_value[1]),
+        physical_basis[1][0] * float(vector_value[0])
+        + physical_basis[1][1] * float(vector_value[1]),
+    )
+    return (
+        tuple(tuple(component for component in row) for row in physical_matrix),
+        physical_vector,
+    )  # type: ignore[return-value]
+
+
+def _overlay_same_feature(
+    left: dict[str, Any],
+    right: dict[str, Any],
+    tolerance: float = 1e-6,
+) -> bool:
+    left_visual = left["visualization"]
+    right_visual = right["visualization"]
+    if left_visual["kind"] == right_visual["kind"] == "rotation":
+        return math.dist(left_visual["centre"], right_visual["centre"]) <= tolerance
+    if (
+        left_visual["kind"] in {"mirror", "glide"}
+        and right_visual["kind"] in {"mirror", "glide"}
+    ):
+        left_direction = left_visual["axis_direction"]
+        right_direction = right_visual["axis_direction"]
+        direction_cross = abs(
+            left_direction[0] * right_direction[1]
+            - left_direction[1] * right_direction[0]
+        )
+        offset = (
+            right_visual["axis_point"][0] - left_visual["axis_point"][0],
+            right_visual["axis_point"][1] - left_visual["axis_point"][1],
+        )
+        offset_cross = abs(
+            offset[0] * left_direction[1] - offset[1] * left_direction[0]
+        )
+        return direction_cross <= tolerance and offset_cross <= tolerance
+    return False
+
+
+def _overlay_relator_holds(
+    assignment: dict[str, dict[str, Any]],
+    relator: tuple[tuple[str, int], ...],
+) -> bool:
+    names = {name for name, _exponent in relator}
+    if not names.issubset(assignment):
+        return True
+    result = OVERLAY_IDENTITY
+    for name, exponent in relator:
+        result = _overlay_compose(
+            _overlay_power(assignment[name]["motion"], exponent),
+            result,
+        )
+    return result == OVERLAY_IDENTITY
+
+
+def _overlay_generates_plane(assignment: Iterable[dict[str, Any]]) -> bool:
+    """Reject relation-satisfying collapses whose translations have rank below two."""
+
+    motions = [candidate["motion"] for candidate in assignment]
+    steps = motions + [_overlay_inverse(motion) for motion in motions]
+    seen = {OVERLAY_IDENTITY}
+    queue = [OVERLAY_IDENTITY]
+    translations: list[tuple[Fraction, Fraction]] = []
+    for current in queue:
+        for step in steps:
+            value = _overlay_compose(step, current)
+            if max(abs(component) for component in value[1]) > 4:
+                continue
+            if value in seen:
+                continue
+            seen.add(value)
+            queue.append(value)
+            if value[0] == M_ID and value[1] != (0, 0):
+                if any(
+                    value[1][0] * prior[1] - value[1][1] * prior[0] != 0
+                    for prior in translations
+                ):
+                    return True
+                translations.append(value[1])
+            if len(queue) > 600:
+                return False
+    return False
+
+
+def _overlay_actions_match_phases(
+    actions: list[dict[str, Any]],
+    assignment: list[dict[str, Any]],
+) -> bool:
+    """Match Chaim's colour labels to plate phases by one cyclic relabelling."""
+
+    degree = len(actions[0]["colour_permutation"])
+    identity = tuple(range(degree))
+
+    def compose_permutations(
+        left: tuple[int, ...], right: tuple[int, ...]
+    ) -> tuple[int, ...]:
+        return tuple(left[right[index]] for index in range(degree))
+
+    image = permutation_group(actions)
+    for cycle in image:
+        if _permutation_order(cycle) != degree:
+            continue
+        exponent_by_permutation = {identity: 0}
+        value = identity
+        for exponent in range(1, degree):
+            value = compose_permutations(cycle, value)
+            exponent_by_permutation[value] = exponent
+        if all(
+            candidate["phase"]
+            == Fraction(
+                exponent_by_permutation[tuple(action["colour_permutation"])],
+                degree,
+            )
+            for action, candidate in zip(actions, assignment, strict=True)
+        ):
+            return True
+    return False
+
+
+def _plate_cell_scale(render: dict[str, Any]) -> float:
+    b1, _b2, _radius, _ranges = _site_geometry(
+        render,
+        IMAGE_WIDTH * ANTIALIAS,
+        IMAGE_HEIGHT * ANTIALIAS,
+    )
+    basis_length = math.hypot(*render["basis"][0])
+    if basis_length <= 1e-9:
+        raise ValueError("plate basis has a zero first vector")
+    return math.hypot(*b1) / basis_length / ANTIALIAS
+
+
+def _plate_generator_candidates(
+    record: dict[str, Any],
+    action: dict[str, Any],
+) -> list[dict[str, Any]]:
+    render = record["render"]
+    basis = render["basis"]
+    marker = action["marker"]
+    colour_order = _permutation_order(action["colour_permutation"])
+    plate_scale = _plate_cell_scale(render)
+    candidates: dict[OverlayMotion, dict[str, Any]] = {}
+    for source_index, operation in enumerate(render["ops"]):
+        if exact_fraction(operation["tau"]).denominator != colour_order:
+            continue
+        matrix_value = matrix(operation)
+        for shift_x in range(-3, 4):
+            for shift_y in range(-3, 4):
+                motion: OverlayMotion = (
+                    matrix_value,
+                    (
+                        exact_fraction(operation["v"][0]) + shift_x,
+                        exact_fraction(operation["v"][1]) + shift_y,
+                    ),
+                )
+                visualization = generator_visualization(
+                    _overlay_physical_motion(motion, basis)
+                )
+                if visualization["kind"] != marker["kind"]:
+                    continue
+                if (
+                    visualization["kind"] == "rotation"
+                    and spatial_order(matrix_value) != marker["order"]
+                ):
+                    continue
+                if visualization["kind"] == "rotation":
+                    centre = visualization["centre"]
+                    screen_x = IMAGE_WIDTH / 2 + plate_scale * centre[0]
+                    screen_y = IMAGE_HEIGHT / 2 - plate_scale * centre[1]
+                    if not (
+                        24 <= screen_x <= IMAGE_WIDTH - 24
+                        and 24 <= screen_y <= IMAGE_HEIGHT - 24
+                    ):
+                        continue
+                    score = centre[0] ** 2 + centre[1] ** 2
+                else:
+                    point = visualization["axis_point"]
+                    direction = visualization["axis_direction"]
+                    distance = abs(
+                        point[0] * direction[1] - point[1] * direction[0]
+                    )
+                    glide_penalty = (
+                        0.12 * visualization["glide_distance"] ** 2
+                        if visualization["kind"] == "glide"
+                        else 0
+                    )
+                    score = distance ** 2 + glide_penalty
+                candidate = {
+                    "motion": motion,
+                    "phase": exact_fraction(operation["tau"]),
+                    "source_index": source_index,
+                    "lattice_shift": (shift_x, shift_y),
+                    "visualization": visualization,
+                    "score": score,
+                }
+                previous = candidates.get(motion)
+                if previous is None or score < previous["score"]:
+                    candidates[motion] = candidate
+    return sorted(
+        candidates.values(),
+        key=lambda candidate: (
+            candidate["score"],
+            candidate["source_index"],
+            candidate["lattice_shift"],
+        ),
+    )[:OVERLAY_CANDIDATE_LIMIT]
+
+
+def _plate_generator_assignment(record: dict[str, Any]) -> list[dict[str, Any]]:
+    """Place Chaim's named generators as actual symmetries of this plate.
+
+    The render cell is often a colour-fixing sublattice, so canonical atlas
+    coordinates cannot simply be copied onto it.  We instead lift the plate's
+    own source cosets by nearby lattice translations, filter by the declared
+    geometry and colour-action order, and enforce the full wallpaper-group
+    relators.  A rank-two translation check rules out collapsed solutions.
+    """
+
+    actions = record["chaim_presentation"]["generators"]
+    candidate_sets = {
+        action["generator"]: _plate_generator_candidates(record, action)
+        for action in actions
+    }
+    for name, candidates in candidate_sets.items():
+        if not candidates:
+            raise ValueError(f"no plate-overlay candidate for {record['id']}:{name}")
+    names = [action["generator"] for action in actions]
+    relators = GROUP_PRESENTATIONS[record["parent"]["hm"]]["relators"]
+    solutions: list[tuple[float, dict[str, dict[str, Any]]]] = []
+
+    def search(index: int, assignment: dict[str, dict[str, Any]]) -> None:
+        if len(solutions) >= OVERLAY_SOLUTION_LIMIT:
+            return
+        if index == len(names):
+            ordered = [assignment[name] for name in names]
+            if (
+                _overlay_generates_plane(ordered)
+                and _overlay_actions_match_phases(actions, ordered)
+            ):
+                solutions.append((sum(row["score"] for row in ordered), dict(assignment)))
+            return
+        name = names[index]
+        for candidate in candidate_sets[name]:
+            if any(
+                _overlay_same_feature(candidate, assigned)
+                for assigned in assignment.values()
+            ):
+                continue
+            assignment[name] = candidate
+            if all(
+                _overlay_relator_holds(assignment, relator)
+                for relator in relators
+            ):
+                search(index + 1, assignment)
+            assignment.pop(name)
+
+    search(0, {})
+    if not solutions:
+        counts = {name: len(rows) for name, rows in candidate_sets.items()}
+        raise ValueError(
+            f"cannot place full-rank plate generators for {record['id']}: {counts}"
+        )
+    _score, best = min(solutions, key=lambda item: item[0])
+    return [
+        {
+            "generator": action["generator"],
+            "geometry": action["geometry"],
+            "marker": action["marker"],
+            "visualization": best[action["generator"]]["visualization"],
+            "motion": best[action["generator"]]["motion"],
+            "phase": best[action["generator"]]["phase"],
+        }
+        for action in actions
+    ]
+
+
 def render_plate(record: dict[str, Any]) -> bytes:
     width = IMAGE_WIDTH * ANTIALIAS
     height = IMAGE_HEIGHT * ANTIALIAS
@@ -2540,6 +2892,192 @@ def _generator_marker_html(action: dict[str, Any]) -> str:
         f'{extra_class}" data-generator-kind="{kind}"{data_order} aria-hidden="true">'
         f'<svg viewBox="0 0 40 24" focusable="false">{drawing}</svg>'
         "</span>"
+    )
+
+
+def _svg_number(value: float) -> str:
+    rendered = f"{value:.2f}".rstrip("0").rstrip(".")
+    return "0" if rendered == "-0" else rendered
+
+
+def _plate_screen_point(point: Iterable[float], scale: float) -> tuple[float, float]:
+    x, y = point
+    return IMAGE_WIDTH / 2 + scale * x, IMAGE_HEIGHT / 2 - scale * y
+
+
+def _clipped_plate_axis(
+    axis_point: Iterable[float],
+    axis_direction: Iterable[float],
+    scale: float,
+) -> dict[str, tuple[float, float]] | None:
+    point = _plate_screen_point(axis_point, scale)
+    world_dx, world_dy = axis_direction
+    screen_direction = (world_dx, -world_dy)
+    length = math.hypot(*screen_direction)
+    if length <= 1e-9:
+        raise ValueError("plate generator has a zero axis direction")
+    unit = (screen_direction[0] / length, screen_direction[1] / length)
+    lower = -math.inf
+    upper = math.inf
+    for coordinate, component, minimum, maximum in (
+        (point[0], unit[0], 9, IMAGE_WIDTH - 9),
+        (point[1], unit[1], 9, IMAGE_HEIGHT - 9),
+    ):
+        if abs(component) <= 1e-9:
+            if not minimum <= coordinate <= maximum:
+                return None
+            continue
+        first = (minimum - coordinate) / component
+        second = (maximum - coordinate) / component
+        lower = max(lower, min(first, second))
+        upper = min(upper, max(first, second))
+    if lower > upper:
+        return None
+    return {
+        "start": (point[0] + lower * unit[0], point[1] + lower * unit[1]),
+        "end": (point[0] + upper * unit[0], point[1] + upper * unit[1]),
+        "direction": unit,
+        "normal": (-unit[1], unit[0]),
+    }
+
+
+def _plate_generator_label_html(
+    generator: str,
+    x: float,
+    y: float,
+) -> str:
+    return (
+        f'<text class="plate-generator-label" x="{_svg_number(x)}" '
+        f'y="{_svg_number(y)}" text-anchor="middle" '
+        f'dominant-baseline="central">{escape(generator)}</text>'
+    )
+
+
+def _plate_rotation_glyph_html(order: int) -> str:
+    def layers(drawing: str) -> str:
+        return (
+            f'<g class="plate-generator-glyph-halo">{drawing}</g>'
+            f'<g class="plate-generator-glyph">{drawing}</g>'
+        )
+
+    if order == 2:
+        return layers(
+            '<line x1="-11" y1="0" x2="11" y2="0"></line>'
+            '<circle cx="0" cy="0" r="3.2"></circle>'
+        )
+    if order == 3:
+        return layers('<polygon points="0,-11 10,8 -10,8"></polygon>')
+    if order == 4:
+        return layers('<polygon points="0,-11 11,0 0,11 -11,0"></polygon>')
+    if order == 6:
+        return layers(
+            '<line x1="-12" y1="0" x2="12" y2="0"></line>'
+            '<line x1="-6" y1="-10.4" x2="6" y2="10.4"></line>'
+            '<line x1="6" y1="-10.4" x2="-6" y2="10.4"></line>'
+        )
+    raise ValueError(f"unsupported plate rotation order: {order}")
+
+
+def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
+    placement = _plate_generator_assignment(record)
+    scale = _plate_cell_scale(record["render"])
+    markers: list[str] = []
+    rotation_label_offsets = ((17, -15), (17, 16), (-17, 16), (-17, -15))
+    axis_label_fractions = (0.18, 0.78, 0.42, 0.64)
+    for index, generator in enumerate(placement):
+        name = generator["generator"]
+        marker = generator["marker"]
+        kind = marker["kind"]
+        order_attribute = ""
+        classes = f"plate-generator plate-generator--{kind}"
+        if kind == "rotation":
+            order = marker["order"]
+            classes += f" plate-generator--rotation-{order}"
+            order_attribute = f' data-rotation-order="{order}"'
+            centre_x, centre_y = _plate_screen_point(
+                generator["visualization"]["centre"], scale
+            )
+            label_dx, label_dy = rotation_label_offsets[
+                index % len(rotation_label_offsets)
+            ]
+            drawing = (
+                f'<g transform="translate({_svg_number(centre_x)} '
+                f'{_svg_number(centre_y)})">'
+                f'{_plate_rotation_glyph_html(order)}'
+                f'{_plate_generator_label_html(name, label_dx, label_dy)}'
+                '</g>'
+            )
+        else:
+            axis = _clipped_plate_axis(
+                generator["visualization"]["axis_point"],
+                generator["visualization"]["axis_direction"],
+                scale,
+            )
+            if axis is None:
+                raise ValueError(f"plate generator axis misses {record['id']}: {name}")
+            start = axis["start"]
+            end = axis["end"]
+            line_coordinates = (
+                f'x1="{_svg_number(start[0])}" y1="{_svg_number(start[1])}" '
+                f'x2="{_svg_number(end[0])}" y2="{_svg_number(end[1])}"'
+            )
+            drawing = (
+                f'<line class="plate-generator-axis-halo" {line_coordinates}></line>'
+                f'<line class="plate-generator-axis plate-generator-axis--{kind}" '
+                f'{line_coordinates}></line>'
+            )
+            if kind == "glide":
+                fraction = 0.5
+                midpoint = (
+                    start[0] + (end[0] - start[0]) * fraction,
+                    start[1] + (end[1] - start[1]) * fraction,
+                )
+                direction = axis["direction"]
+                if generator["visualization"]["glide_distance"] < 0:
+                    direction = (-direction[0], -direction[1])
+                normal = (-direction[1], direction[0])
+                tip = (midpoint[0] + 8 * direction[0], midpoint[1] + 8 * direction[1])
+                base = (midpoint[0] - 5 * direction[0], midpoint[1] - 5 * direction[1])
+                wings = (
+                    (base[0] + 5 * normal[0], base[1] + 5 * normal[1]),
+                    (base[0] - 5 * normal[0], base[1] - 5 * normal[1]),
+                )
+                arrow_path = (
+                    f'M {_svg_number(wings[0][0])} {_svg_number(wings[0][1])} '
+                    f'L {_svg_number(tip[0])} {_svg_number(tip[1])} '
+                    f'L {_svg_number(wings[1][0])} {_svg_number(wings[1][1])}'
+                )
+                drawing += (
+                    f'<path class="plate-generator-half-arrow-halo" d="{arrow_path}"></path>'
+                    f'<path class="plate-generator-half-arrow" d="{arrow_path}"></path>'
+                )
+            label_fraction = axis_label_fractions[index % len(axis_label_fractions)]
+            label_normal = 14 if index % 2 == 0 else -14
+            label_x = (
+                start[0]
+                + (end[0] - start[0]) * label_fraction
+                + axis["normal"][0] * label_normal
+            )
+            label_y = (
+                start[1]
+                + (end[1] - start[1]) * label_fraction
+                + axis["normal"][1] * label_normal
+            )
+            label_x = max(15, min(IMAGE_WIDTH - 15, label_x))
+            label_y = max(15, min(IMAGE_HEIGHT - 15, label_y))
+            drawing += _plate_generator_label_html(name, label_x, label_y)
+        markers.append(
+            f'<g class="{classes}" data-generator="{escape(name)}" '
+            f'data-generator-kind="{kind}"{order_attribute}>{drawing}</g>'
+        )
+    return (
+        f'<svg class="plate-generator-overlay" '
+        f'data-generator-overlay="{escape(record["id"])}" '
+        f'viewBox="0 0 {IMAGE_WIDTH} {IMAGE_HEIGHT}" '
+        'preserveAspectRatio="xMidYMid meet" aria-hidden="true" '
+        'focusable="false">'
+        + "".join(markers)
+        + "</svg>"
     )
 
 
@@ -2873,7 +3411,10 @@ def _entry_html(
             <div class="entry-visuals">
               {_film_html(record)}
               <figure class="colour-plate">
-                <img src="{escape(record['image'])}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
+                <div class="colour-plate-graphic">
+                  <img src="{escape(record['image'])}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
+                  {_plate_generator_overlay_html(record)}
+                </div>
                 <figcaption>
                   <ol class="colour-key" aria-label="Colour and phase key">
                     {_phase_legend(record)}

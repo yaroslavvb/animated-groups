@@ -70,6 +70,8 @@ class CorrespondenceParser(HTMLParser):
         self.directory_palette_spans = 0
         self.catalog_links: list[str] = []
         self.plate_images: list[tuple[str, str, str, str]] = []
+        self.plate_generator_overlays: list[dict[str, str | None]] = []
+        self.plate_generators: list[tuple[str, str, str]] = []
         self.book_links: list[tuple[str, str, str]] = []
         self.book_excerpt_links: list[dict[str, str | None]] = []
         self.book_dialog_ids: list[str] = []
@@ -215,6 +217,16 @@ class CorrespondenceParser(HTMLParser):
                     attributes.get("alt", ""),
                     attributes.get("width", ""),
                     attributes.get("height", ""),
+                )
+            )
+        if tag == "svg" and "plate-generator-overlay" in classes:
+            self.plate_generator_overlays.append(attributes)
+        if tag == "g" and "plate-generator" in classes:
+            self.plate_generators.append(
+                (
+                    attributes.get("data-generator", ""),
+                    attributes.get("data-generator-kind", ""),
+                    attributes.get("data-rotation-order", ""),
                 )
             )
 
@@ -988,7 +1000,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=presentation-color-time", self.page)
+        self.assertIn("?v=plate-generator-overlays", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -1616,6 +1628,102 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 for residue in group["phase_residues"]
             }
             self.assertTrue(expected_colors.issubset(colors), relative)
+
+    def test_static_plates_overlay_every_named_geometric_generator(self) -> None:
+        display_ids = [group["id"] for group in self.display_groups]
+        self.assertEqual(
+            [
+                attributes.get("data-generator-overlay")
+                for attributes in self.parser.plate_generator_overlays
+            ],
+            display_ids,
+        )
+        self.assertEqual(len(self.parser.plate_generator_overlays), 51)
+        for attributes in self.parser.plate_generator_overlays:
+            self.assertEqual(attributes.get("viewbox"), "0 0 720 420")
+            self.assertEqual(attributes.get("preserveaspectratio"), "xMidYMid meet")
+            self.assertEqual(attributes.get("aria-hidden"), "true")
+            self.assertEqual(attributes.get("focusable"), "false")
+
+        expected = [
+            (
+                generator["generator"],
+                generator["marker"]["kind"],
+                str(generator["marker"].get("order", "")),
+            )
+            for group in self.display_groups
+            for generator in group["chaim_presentation"]["generators"]
+        ]
+        self.assertEqual(self.parser.plate_generators, expected)
+        self.assertEqual(len(expected), 151)
+        self.assertEqual(
+            Counter((kind, order) for _name, kind, order in expected),
+            Counter(
+                {
+                    ("rotation", "2"): 39,
+                    ("rotation", "3"): 17,
+                    ("rotation", "4"): 15,
+                    ("rotation", "6"): 5,
+                    ("mirror", ""): 71,
+                    ("glide", ""): 4,
+                }
+            ),
+        )
+
+        for group in self.display_groups:
+            placement = correspondence._plate_generator_assignment(group)
+            self.assertEqual(
+                [row["generator"] for row in placement],
+                [
+                    row["generator"]
+                    for row in group["chaim_presentation"]["generators"]
+                ],
+                group["id"],
+            )
+            self.assertTrue(
+                correspondence._overlay_generates_plane(placement),
+                group["id"],
+            )
+            self.assertTrue(
+                correspondence._overlay_actions_match_phases(
+                    group["chaim_presentation"]["generators"], placement
+                ),
+                group["id"],
+            )
+
+        page = self.page
+        g225 = page[
+            page.index('<section class="correspondence-entry" id="g225"'):
+            page.index('<section class="correspondence-entry" id="g226"')
+        ]
+        self.assertEqual(g225.count("plate-generator--rotation-3"), 3)
+        g244 = page[
+            page.index('<section class="correspondence-entry" id="g244"'):
+            page.index('<section class="correspondence-entry" id="g245"')
+        ]
+        self.assertEqual(g244.count("plate-generator--rotation-6"), 1)
+        self.assertEqual(g244.count("plate-generator--rotation-3"), 1)
+        self.assertEqual(g244.count("plate-generator--rotation-2"), 1)
+        g269 = page[
+            page.index('<section class="correspondence-entry" id="g269"'):
+            page.index('<section class="correspondence-entry" id="g270"')
+        ]
+        self.assertEqual(g269.count("plate-generator--mirror"), 3)
+        g9_start = page.index('<section class="correspondence-entry" id="g9"')
+        g9_end = page.index('<section class="wallpaper-family"', g9_start)
+        g9 = page[g9_start:g9_end]
+        self.assertEqual(g9.count("plate-generator--mirror"), 1)
+        self.assertEqual(g9.count("plate-generator--glide"), 1)
+        self.assertEqual(g9.count("plate-generator-half-arrow\""), 1)
+
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".colour-plate-graphic {", css)
+        self.assertIn(".plate-generator-overlay {", css)
+        self.assertIn("stroke-dasharray: 9 7", css)
+        self.assertIn(".plate-generator-half-arrow {", css)
+        self.assertIn("@media (forced-colors: active)", css)
 
     def test_every_live_phase_circle_meets_the_measured_reference_size(self) -> None:
         geometry_module = ROOT / "clockwork-coloring-geometry.js"
