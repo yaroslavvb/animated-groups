@@ -945,6 +945,26 @@ a.short-signature-link[data-book-excerpt]::after {
   white-space: nowrap;
 }
 
+.presentation-cyclic-key {
+  margin: 0.48rem 0 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.presentation-cyclic-key strong {
+  color: var(--text);
+}
+
+.presentation-cyclic-key code {
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: "STIX Two Math", "Cambria Math", Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
 .presentation-generator-identity {
   display: grid;
   grid-template-columns: 2.35rem 1.3rem minmax(0, 1fr);

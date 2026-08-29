@@ -248,9 +248,9 @@
     const labels = ["A", "B", "C"].slice(0, group.number_of_colours);
     palette.setAttribute(
       "aria-label",
-      `Permutation cycles over canonical colour labels ${labels.join(", ")}`,
+      `Permutations of canonical colour labels ${labels.join(", ")}`,
     );
-    palette.append(document.createTextNode("cycles over"));
+    palette.append(document.createTextNode("permutations of"));
     labels.forEach((label, index) => {
       const swatch = textElement("span", "action-colour", label);
       swatch.style.setProperty("--swatch", PALETTES[group.number_of_colours][index]);

@@ -39,6 +39,17 @@ BOOK_DISCREPANCY_FIXTURE = {"g234", "g244", "g245"}
 COMPOSITE_EXTENSION_FIXTURE = {
     "g75", "g96", "g97", "g99", "g137", "g139", "g235", "g247", "g248"
 }
+PHASE_ALIGNMENT_FIXTURE = {
+    "g96": ("(ACDB)", ["A", "C", "D", "B"], ["3/4", "3/4", "1/2"]),
+    "g97": ("(ABDC)", ["A", "B", "D", "C"], ["1/4", "1/4", "1/2"]),
+    "g225": ("(ACB)", ["A", "C", "B"], ["2/3", "2/3", "2/3"]),
+    "g226": ("(ABC)", ["A", "B", "C"], ["1/3", "1/3", "1/3"]),
+    "g227": ("(ABC)", ["A", "B", "C"], ["1/3", "2/3", "0"]),
+    "g244": ("(ABC)", ["A", "B", "C"], ["1/3", "2/3", "0"]),
+    "g245": ("(ACB)", ["A", "C", "B"], ["2/3", "1/3", "0"]),
+    "g247": ("(ACEFDB)", ["A", "C", "E", "F", "D", "B"], ["5/6", "2/3", "1/2"]),
+    "g248": ("(ABDFEC)", ["A", "B", "D", "F", "E", "C"], ["1/6", "1/3", "1/2"]),
+}
 SUPERSCRIPT_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
 
 
@@ -83,7 +94,7 @@ class CorrespondenceParser(HTMLParser):
         self.scripts: list[tuple[str, str]] = []
         self.presentation_tables: list[str] = []
         self.presentation_generator_count = 0
-        self.presentation_time_steps: list[str] = []
+        self.presentation_time_shifts: list[str] = []
         self.presentation_markers: list[tuple[str, str]] = []
         self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
@@ -196,8 +207,8 @@ class CorrespondenceParser(HTMLParser):
         if tag == "tr" and "presentation-generator-row" in classes:
             self.presentation_generator_count += 1
         if tag == "td" and "presentation-time-action" in classes:
-            self.presentation_time_steps.append(
-                attributes.get("data-time-step", "")
+            self.presentation_time_shifts.append(
+                attributes.get("data-time-shift", "")
             )
         if tag == "span" and "presentation-generator-marker" in classes:
             self.presentation_markers.append(
@@ -266,6 +277,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ids = [group["id"] for group in groups]
         display_ids = [group["id"] for group in self.display_groups]
         trivial_ids = [group["id"] for group in self.trivial_groups]
+        self.assertEqual(self.payload["meta"]["schema_version"], 8)
         self.assertEqual(len(groups), 68)
         self.assertEqual(len(display_ids), correspondence.DISPLAYED_GROUP_COUNT)
         self.assertEqual(len(trivial_ids), correspondence.OMITTED_TRIVIAL_COUNT)
@@ -771,15 +783,18 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ),
         )
         self.assertEqual(self.parser.presentation_generator_count, 151)
-        expected_time_steps = [
-            generator["time_step"]
+        expected_time_shifts = [
+            generator["time_shift"]
             for group in self.display_groups
             for generator in group["chaim_presentation"]["generators"]
         ]
-        self.assertEqual(self.parser.presentation_time_steps, expected_time_steps)
+        self.assertEqual(
+            self.parser.presentation_time_shifts,
+            expected_time_shifts,
+        )
         self.assertEqual(
             Counter(
-                generator["time_step_label"]
+                generator["time_shift_label"]
                 for group in self.display_groups
                 for generator in group["chaim_presentation"]["generators"]
             ),
@@ -787,9 +802,12 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 {
                     "none": 47,
                     "+1/2 period": 77,
-                    "+1/3 period": 16,
-                    "+1/4 period": 9,
-                    "+1/6 period": 2,
+                    "+1/3 period": 7,
+                    "+2/3 period": 9,
+                    "+1/4 period": 6,
+                    "+3/4 period": 3,
+                    "+1/6 period": 1,
+                    "+5/6 period": 1,
                 }
             ),
         )
@@ -858,6 +876,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 group["clock_order"],
                 group["tos_notation"],
                 group["book_color_signature"],
+                group["render"],
             )
             self.assertEqual(group["chaim_presentation"], expected_chaim, group["id"])
             source_presentation = correspondence.group_presentation(
@@ -873,22 +892,56 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 source_presentation["relations"],
                 group["id"],
             )
+            positive_cycle = tuple(
+                expected_chaim["positive_phase_permutation"]
+            )
+            self.assertEqual(
+                correspondence._permutation_order(positive_cycle),
+                group["clock_order"],
+                group["id"],
+            )
+            labels_by_phase = expected_chaim["colour_labels_by_phase"]
+            phase_by_label = expected_chaim["colour_phase_indices"]
+            self.assertEqual(
+                sorted(labels_by_phase),
+                [
+                    chr(ord("A") + index)
+                    for index in range(group["clock_order"])
+                ],
+                group["id"],
+            )
+            self.assertEqual(
+                [
+                    phase_by_label[ord(label) - ord("A")]
+                    for label in labels_by_phase
+                ],
+                list(range(group["clock_order"])),
+                group["id"],
+            )
+            self.assertEqual(
+                [residue["book_label"] for residue in group["phase_residues"]],
+                labels_by_phase,
+                group["id"],
+            )
             for generator in expected_chaim["generators"]:
-                time_step = correspondence.Fraction(generator["time_step"])
+                time_shift = correspondence.Fraction(generator["time_shift"])
+                exponent = time_shift * group["clock_order"]
+                self.assertEqual(exponent.denominator, 1, group["id"])
                 self.assertEqual(
-                    time_step,
-                    correspondence._colour_cycle_time_step(
-                        generator["colour_permutation"]
+                    correspondence._colour_permutation_power(
+                        positive_cycle,
+                        exponent.numerator,
                     ),
+                    tuple(generator["colour_permutation"]),
+                    f'{group["id"]}:{generator["generator"]}',
+                )
+                self.assertEqual(
+                    generator["time_shift_label"],
+                    correspondence._time_shift_description(time_shift),
                     group["id"],
                 )
                 self.assertEqual(
-                    generator["time_step_label"],
-                    correspondence._time_shift_description(time_step),
-                    group["id"],
-                )
-                self.assertEqual(
-                    group["clock_order"] % time_step.denominator,
+                    group["clock_order"] % time_shift.denominator,
                     0,
                     group["id"],
                 )
@@ -903,6 +956,30 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 )
 
         by_id = {group["id"]: group for group in self.display_groups}
+        self.assertEqual(
+            set(correspondence.CANONICAL_TO_RENDER_CONJUGACY_BY_ID),
+            set(by_id),
+        )
+        for group_id, (cycle, labels_by_phase, time_shifts) in (
+            PHASE_ALIGNMENT_FIXTURE.items()
+        ):
+            presentation = by_id[group_id]["chaim_presentation"]
+            self.assertEqual(
+                presentation["positive_phase_cycle"],
+                cycle,
+                group_id,
+            )
+            self.assertEqual(
+                presentation["colour_labels_by_phase"],
+                labels_by_phase,
+                group_id,
+            )
+            self.assertEqual(
+                [row["time_shift"] for row in presentation["generators"]],
+                time_shifts,
+                group_id,
+            )
+
         g225 = by_id["g225"]["chaim_presentation"]
         self.assertEqual(
             [row["generator"] for row in g225["generators"]],
@@ -913,8 +990,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ["(ABC)", "(ABC)", "(ABC)"],
         )
         self.assertEqual(
-            [row["time_step_label"] for row in g225["generators"]],
-            ["+1/3 period", "+1/3 period", "+1/3 period"],
+            [row["time_shift_label"] for row in g225["generators"]],
+            ["+2/3 period", "+2/3 period", "+2/3 period"],
         )
         self.assertEqual(g225["relations"], "α³ = β³ = γ³ = αβγ = 1")
 
@@ -926,7 +1003,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         g225_html = self.page[g225_start:g225_end]
         self.assertEqual(g225_html.count('class="presentation-generator-row"'), 3)
-        self.assertEqual(g225_html.count(">+1/3 period</td>"), 3)
+        self.assertEqual(g225_html.count(">+2/3 period</td>"), 3)
         self.assertIn("Γ = ⟨α, β, γ | α³ = β³ = γ³ = αβγ = 1⟩", g225_html)
         self.assertNotIn("G/Λ", g225_html)
 
@@ -948,10 +1025,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertEqual(
             [
-                row["time_step_label"]
+                row["time_shift_label"]
                 for row in by_id["g227"]["chaim_presentation"]["generators"]
             ],
-            ["+1/3 period", "+1/3 period", "none"],
+            ["+1/3 period", "+2/3 period", "none"],
         )
         self.assertEqual(
             by_id["g227"]["signature_evidence"]["generator_relabeling"],
@@ -1000,7 +1077,46 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=plate-generator-overlays", self.page)
+        self.assertIn("?v=cyclic-phase-alignment", self.page)
+
+    def test_copy_distinguishes_a_cyclic_image_from_each_permutation(self) -> None:
+        self.assertIn(
+            "“Cyclic” describes the subgroup generated by all Color rows: "
+            "an individual row may be the inverse, the identity, or another "
+            "power of the positive phase cycle. Time is the directed shift "
+            "in the fixed phase palette.",
+            self.page,
+        )
+        self.assertNotIn("cycles over", self.page)
+        self.assertEqual(
+            self.page.count('class="presentation-palette"><span>permutations of</span>'),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count('class="presentation-cyclic-key"'),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count("Each Color row is a power of this permutation."),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count("colour permutations and directed time shifts"),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+
+        for group in self.display_groups:
+            presentation = group["chaim_presentation"]
+            positive_step = correspondence.fraction_label(
+                correspondence.Fraction(1, group["clock_order"])
+            )
+            self.assertIn(
+                f'C<sub>{group["clock_order"]}</sub> · '
+                f'+{positive_step} period acts as '
+                f'<code>{escape(presentation["positive_phase_cycle"])}</code>.',
+                self.page,
+                group["id"],
+            )
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -1671,25 +1787,66 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
 
         for group in self.display_groups:
+            actions = group["chaim_presentation"]["generators"]
+            alignment = correspondence._canonical_generator_alignment(
+                group["id"],
+                group["parent"]["hm"],
+                group["render"],
+            )
             placement = correspondence._plate_generator_assignment(group)
             self.assertEqual(
+                [row["generator"] for row in alignment],
+                [row["generator"] for row in actions],
+                group["id"],
+            )
+            self.assertEqual(
                 [row["generator"] for row in placement],
-                [
-                    row["generator"]
-                    for row in group["chaim_presentation"]["generators"]
-                ],
+                [row["generator"] for row in actions],
                 group["id"],
             )
-            self.assertTrue(
-                correspondence._overlay_generates_plane(placement),
-                group["id"],
-            )
-            self.assertTrue(
-                correspondence._overlay_actions_match_phases(
-                    group["chaim_presentation"]["generators"], placement
-                ),
-                group["id"],
-            )
+            for action, aligned, positioned in zip(
+                actions, alignment, placement, strict=True
+            ):
+                message = f'{group["id"]}:{action["generator"]}'
+                self.assertEqual(
+                    action["plate_source_index"],
+                    aligned["source_index"],
+                    message,
+                )
+                self.assertEqual(
+                    action["plate_lattice_shift"],
+                    list(aligned["lattice_shift"]),
+                    message,
+                )
+                self.assertEqual(
+                    action["plate_visualization"],
+                    aligned["visualization"],
+                    message,
+                )
+                self.assertEqual(
+                    correspondence.Fraction(action["time_shift"]),
+                    aligned["phase"],
+                    message,
+                )
+                source_operation = group["render"]["ops"][
+                    action["plate_source_index"]
+                ]
+                self.assertEqual(
+                    correspondence.exact_fraction(source_operation["tau"]),
+                    aligned["phase"],
+                    message,
+                )
+                self.assertEqual(
+                    positioned,
+                    {
+                        "generator": action["generator"],
+                        "geometry": action["geometry"],
+                        "marker": action["marker"],
+                        "visualization": action["plate_visualization"],
+                        "phase": correspondence.Fraction(action["time_shift"]),
+                    },
+                    message,
+                )
 
         page = self.page
         g225 = page[
