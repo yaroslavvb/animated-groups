@@ -253,10 +253,10 @@ def source_pages(colours: int, primitive: bool) -> tuple[int, ...]:
 
 ORIENTED_FORMS = {
     "333³/◦": (
-        "Two opposite cyclic orientations (the P3₁/P3₂ clockwork pair) define one plane colour type after colour relabelling."
+        "The P3₁/P3₂ clockwork records use complementary forward skips; traditional colour relabelling identifies them as one plane colour type."
     ),
     "632³/2222": (
-        "Two opposite cyclic orientations (the P6₂/P6₄ clockwork pair) define one plane colour type after colour relabelling."
+        "The P6₂/P6₄ clockwork records use complementary forward skips; traditional colour relabelling identifies them as one plane colour type."
     ),
 }
 
