@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Live Brownian hard-disc motion with exact symmetry under each of the 17 wallpaper groups.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Symmetric Brownian motion — Spacetime-group visualizations</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <link rel="stylesheet" href="brownian.css?v=1">
+</head>
+<body class="brownian-page">
+  <a class="skip-link" href="#brownian-lab">Skip to Brownian motion</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="brownian.html" aria-current="page">brownian</a>
+        <a href="future-directions.html">Colours</a>
+        <a href="color-pattern-catalog.html">Patterns</a>
+        <a href="torus-tutorial.html">Discrete torus</a>
+        <a href="clockwork-coloring-correspondence.html">Correspondence</a>
+        <a href="space-group-correspondence.html">Space groups</a>
+        <a href="dihedral-interactive.html">Dihedral</a>
+        <a href="docs/orbifold_notation.html">Notation</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+<main class="brownian" id="brownian-lab">
+  <header class="brownian-intro">
+    <p class="eyebrow">A live hard-disc gas on a wallpaper quotient</p>
+    <h1>Symmetric Brownian motion</h1>
+    <p class="subtitle">Choose one of the seventeen wallpaper groups. Random kicks
+      and near-elastic impacts move a handful of independent balls; the group rebuilds
+      every other ball on every frame, so the symmetry is exact while the motion
+      remains unpredictable.</p>
+  </header>
+
+  <section class="brownian-lab" aria-label="Brownian motion laboratory" aria-busy="true">
+    <div class="brownian-toolbar">
+      <label class="group-picker" for="wallpaper-group">
+        <span>Wallpaper group</span>
+        <select id="wallpaper-group" disabled></select>
+      </label>
+      <button id="brownian-new" type="button" class="primary" disabled>
+        New motion
+      </button>
+      <label class="check" for="show-axes">
+        <input id="show-axes" type="checkbox" disabled>
+        <span>Symmetry diagram</span>
+      </label>
+      <label class="check" for="show-trails">
+        <input id="show-trails" type="checkbox" checked disabled>
+        <span>Trails</span>
+      </label>
+    </div>
+
+    <div id="brownian-stage" class="brownian-stage" role="button" tabindex="0"
+         aria-label="Symmetric Brownian motion loading" aria-disabled="true">
+      <canvas id="brownian-canvas" aria-hidden="true"></canvas>
+      <div class="stage-overlay" aria-hidden="true">
+        <span id="group-symbol" class="sym">—</span>
+        <span id="group-name">—</span>
+      </div>
+      <p class="stage-hint" aria-hidden="true">click the field or press space to play</p>
+    </div>
+
+    <div class="brownian-playbar">
+      <button id="brownian-play" type="button" disabled>
+        <span class="icon" aria-hidden="true">▶</span>
+        <span class="label">Play</span>
+      </button>
+      <dl class="brownian-stats" aria-label="Simulation statistics">
+        <div><dt>independent</dt><dd id="stat-independent">—</dd></div>
+        <div><dt>balls / cell</dt><dd id="stat-balls">—</dd></div>
+        <div><dt>collisions</dt><dd id="stat-collisions">—</dd></div>
+        <div><dt>symmetry</dt><dd id="stat-symmetry">—</dd></div>
+      </dl>
+    </div>
+    <p id="generation-status" class="visually-hidden" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="brownian-notes" aria-label="About the simulation">
+    <div class="group-reading">
+      <p class="note-label">Selected group</p>
+      <p id="group-note">Loading the wallpaper groups…</p>
+    </div>
+
+    <details>
+      <summary>Motion and optimizer settings</summary>
+      <div class="advanced-grid">
+        <div>
+          <span class="control-label">Density</span>
+          <div class="density-buttons" role="group" aria-label="Particle density">
+            <button type="button" data-density="sparse" aria-pressed="false" disabled>Sparse</button>
+            <button type="button" data-density="balanced" aria-pressed="true" disabled>Balanced</button>
+            <button type="button" data-density="lively" aria-pressed="false" disabled>Lively</button>
+          </div>
+        </div>
+        <label class="temperature" for="temperature">
+          <span>Agitation <output id="temperature-out">1.00×</output></span>
+          <input id="temperature" type="range" min="0.35" max="1.9" step="0.05" value="1" disabled>
+        </label>
+      </div>
+      <p id="optimizer-copy" class="optimizer-copy">The optimizer is preparing a start.</p>
+    </details>
+
+    <div class="method-grid">
+      <article>
+        <h2>Exact every frame</h2>
+        <p>Only the independent balls are stored. Every rotation, reflection,
+          glide and lattice translate is applied again while drawing each frame.</p>
+      </article>
+      <article>
+        <h2>Brownian, not scripted</h2>
+        <p>A damped random force continuously perturbs velocity. The motion is
+          generated live and does not repeat; the seed in the address reproduces
+          its optimized starting state.</p>
+      </article>
+      <article>
+        <h2>Symmetric impacts</h2>
+        <p>Collisions are solved against nearby group images. The equal and
+          opposite impulse is carried back through the same isometry, preserving
+          both the bounce and the wallpaper symmetry.</p>
+      </article>
+    </div>
+  </section>
+  <footer class="brownian-footer">
+    <p><a href="./">Visualization gallery</a> · <a href="README.md">README</a> ·
+      <a href="https://github.com/yaroslavvb/animated-groups">GitHub source</a></p>
+  </footer>
+</main>
+<script type="module" src="brownian.js?v=1"></script>
+</body>
+</html>
