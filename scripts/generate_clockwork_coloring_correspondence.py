@@ -3066,6 +3066,7 @@ def page_html(payload: dict[str, Any]) -> str:
       <a class="site-name" href="./">Spacetime-group visualizations</a>
       <nav aria-label="Project links">
         <a href="./">Gallery</a>
+        <a href="brownian.html">brownian</a>
         <a href="future-directions.html">Colours</a>
         <a href="color-pattern-catalog.html">Patterns</a>
         <a href="clockwork-coloring-correspondence.html" aria-current="page">Correspondence</a>

@@ -596,6 +596,7 @@ NAV = """
       <a class="site-name" href="./">Spacetime-group visualizations</a>
       <nav aria-label="Project links">
         <a href="./">Gallery</a>
+        <a href="brownian.html">brownian</a>
         <a href="torus-tutorial.html">Torus guide</a>
         <a href="torus-colorings.html">Binary catalog</a>
         <a href="torus-patterns.html">Translation symmetries</a>

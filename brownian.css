@@ -1,0 +1,368 @@
+/* Symmetric Brownian motion — a large paper-like field with compact controls. */
+
+body.brownian-page { min-width: 320px; }
+
+.site-header nav a[aria-current="page"] {
+  color: var(--text);
+  font-weight: 650;
+  text-decoration-color: var(--accent);
+}
+
+main.brownian {
+  max-width: 1160px;
+  padding-top: clamp(1.6rem, 4vw, 3.2rem);
+}
+
+.brownian-intro {
+  max-width: 850px;
+  margin-bottom: 1.5rem;
+}
+
+.brownian-intro .eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font: 600 0.76rem/1.4 system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brownian-intro h1 {
+  margin-top: 0;
+  font-size: clamp(2rem, 4.8vw, 3.65rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.brownian-intro .subtitle {
+  max-width: 790px;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.55;
+}
+
+.brownian-lab {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--background);
+  box-shadow: 0 1px 3px rgba(20, 35, 29, 0.08), 0 8px 24px rgba(20, 35, 29, 0.05);
+}
+
+.brownian-toolbar {
+  display: flex;
+  align-items: end;
+  gap: 0.7rem 0.9rem;
+  padding: 0.8rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.brownian-toolbar .group-picker {
+  flex: 1 1 430px;
+  display: grid;
+  gap: 0.25rem;
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.brownian-toolbar select,
+.brownian-toolbar button,
+.brownian-playbar button,
+.density-buttons button {
+  min-height: 2.55rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font: 0.9rem/1.2 system-ui, -apple-system, sans-serif;
+}
+
+.brownian-toolbar select {
+  width: 100%;
+  padding: 0 2.4rem 0 0.7rem;
+}
+
+.brownian-toolbar button { padding: 0 1rem; }
+
+.brownian-toolbar button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--background);
+  font-weight: 650;
+}
+
+.brownian-toolbar button:hover,
+.brownian-playbar button:hover,
+.density-buttons button:hover { border-color: var(--accent); color: var(--accent); }
+
+.brownian-toolbar button.primary:hover {
+  border-color: #005d53;
+  background: #005d53;
+  color: var(--background);
+}
+
+.brownian-toolbar button:disabled,
+.brownian-toolbar select:disabled,
+.brownian-playbar button:disabled,
+.density-buttons button:disabled,
+.temperature input:disabled { cursor: wait; opacity: 0.55; }
+
+.brownian-toolbar .check {
+  min-height: 2.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: var(--muted);
+  cursor: pointer;
+  font: 0.84rem/1.25 system-ui, -apple-system, sans-serif;
+  white-space: nowrap;
+}
+
+.brownian-toolbar input,
+.advanced-grid input { accent-color: var(--accent); }
+
+.brownian-stage {
+  position: relative;
+  min-height: 360px;
+  background: var(--background);
+  cursor: pointer;
+  outline: none;
+}
+
+.brownian-stage:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+#brownian-canvas {
+  display: block;
+  width: 100%;
+  height: clamp(420px, 64vh, 700px);
+  background: var(--background);
+}
+
+.stage-overlay {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.85rem;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid rgba(120, 116, 104, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+  pointer-events: none;
+  backdrop-filter: blur(5px);
+  font: 600 0.78rem/1.2 system-ui, -apple-system, sans-serif;
+}
+
+.stage-overlay .sym {
+  color: var(--accent);
+  font: 1.06rem/1 Charter, Georgia, serif;
+}
+
+.stage-hint {
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.65rem;
+  margin: 0;
+  padding: 0.25rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--muted);
+  pointer-events: none;
+  font: 0.75rem/1.25 system-ui, -apple-system, sans-serif;
+}
+
+.brownian-playbar {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 0.75rem 0.9rem;
+  border-top: 1px solid var(--line);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.brownian-playbar > button {
+  flex: 0 0 7.5rem;
+  padding: 0 0.9rem;
+  background: var(--surface-raised);
+}
+
+.brownian-playbar > button .icon {
+  display: inline-block;
+  width: 1.35rem;
+  color: var(--accent);
+}
+
+.brownian-stats {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem 1.2rem;
+  margin: 0;
+}
+
+.brownian-stats > div {
+  min-width: 0;
+  padding-left: 0.8rem;
+  border-left: 1px solid var(--line);
+}
+
+.brownian-stats dt {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.055em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.brownian-stats dd {
+  margin: 0.12rem 0 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brownian-notes { margin-top: 1.15rem; }
+
+.group-reading {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.75rem 0.2rem;
+}
+
+.group-reading p { margin: 0; }
+
+.group-reading .note-label,
+.control-label {
+  color: var(--muted);
+  font: 0.74rem/1.4 system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.brownian-notes details { margin-top: 0.35rem; }
+
+.advanced-grid {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.85fr) minmax(240px, 1.15fr);
+  gap: 1.2rem 2rem;
+  align-items: end;
+  padding-top: 0.45rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.density-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.density-buttons button {
+  min-height: 2.2rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.density-buttons button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--surface-raised);
+  color: var(--accent);
+  font-weight: 650;
+}
+
+.temperature {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font: 0.82rem/1.3 system-ui, -apple-system, sans-serif;
+}
+
+.temperature span { display: flex; justify-content: space-between; gap: 1rem; }
+.temperature output { color: var(--text); font-variant-numeric: tabular-nums; }
+.temperature input { width: 100%; }
+
+.optimizer-copy {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font: 0.8rem/1.5 system-ui, -apple-system, sans-serif;
+}
+
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.method-grid article {
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--background);
+}
+
+.method-grid h2 {
+  margin: 0 0 0.35rem;
+  padding: 0;
+  border: 0;
+  font: 650 0.9rem/1.3 system-ui, -apple-system, sans-serif;
+}
+
+.method-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 800px) {
+  main.brownian { padding-inline: 0.8rem; }
+  .brownian-toolbar { align-items: center; flex-wrap: wrap; }
+  .brownian-toolbar .group-picker { flex-basis: 100%; }
+  .brownian-toolbar button.primary { flex: 1 1 auto; }
+  .brownian-playbar { flex-direction: column; gap: 0.7rem; }
+  .brownian-playbar > button { flex-basis: 2.55rem; }
+  .brownian-stats > div:first-child { border-left: 0; padding-left: 0; }
+  .method-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .brownian-intro h1 { font-size: 2.25rem; }
+  #brownian-canvas { height: clamp(340px, 58svh, 500px); }
+  .brownian-toolbar .check { flex: 1 1 calc(50% - 0.5rem); min-height: 2.25rem; }
+  .brownian-stats { grid-template-columns: repeat(2, 1fr); }
+  .brownian-stats > div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .group-reading { grid-template-columns: 1fr; gap: 0.15rem; }
+  .advanced-grid { grid-template-columns: 1fr; }
+  .stage-hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-hint { display: none; }
+}
