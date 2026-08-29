@@ -817,6 +817,28 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 )
 
         by_id = {group["id"]: group for group in self.display_groups}
+        g225 = by_id["g225"]["chaim_presentation"]
+        self.assertEqual(
+            [row["generator"] for row in g225["generators"]],
+            ["α", "β", "γ"],
+        )
+        self.assertEqual(
+            [row["cycle_notation"] for row in g225["generators"]],
+            ["(ABC)", "(ABC)", "(ABC)"],
+        )
+        self.assertEqual(g225["relations"], "α³ = β³ = γ³ = αβγ = 1")
+
+        g225_start = self.page.index(
+            '<section class="correspondence-entry" id="g225"'
+        )
+        g225_end = self.page.index(
+            '<section class="correspondence-entry" id="g226"'
+        )
+        g225_html = self.page[g225_start:g225_end]
+        self.assertEqual(g225_html.count('class="presentation-generator-row"'), 3)
+        self.assertIn("Γ = ⟨α, β, γ | α³ = β³ = γ³ = αβγ = 1⟩", g225_html)
+        self.assertNotIn("G/Λ", g225_html)
+
         self.assertEqual(
             [row["generator"] for row in by_id["g244"]["chaim_presentation"]["generators"]],
             ["α", "β", "γ"],
