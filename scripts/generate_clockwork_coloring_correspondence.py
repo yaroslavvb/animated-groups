@@ -302,10 +302,6 @@ TERM_HELP = {
         "The matching animated example in the forward-time catalog; gN is this "
         "project's record identifier."
     ),
-    "Parent plane-group type G": (
-        "The wallpaper group obtained after forgetting the colours; its operations "
-        "may preserve or permute the colour classes."
-    ),
     "Colour-fixing plane-group type K": (
         "The normal subgroup K ≤ G whose operations leave every colour class "
         "unchanged: the kernel of G → C_N."
@@ -319,10 +315,6 @@ TERM_HELP = {
         "Treat colour phase as a periodic height z. A planar operation with phase "
         "shift τ lifts to (x, y, z) ↦ (M(x, y) + v, z + τ), producing this "
         "three-dimensional space-group type."
-    ),
-    "Crystallographic tables": (
-        "The external UCL diagram and tables for that same space-group type in its "
-        "conventional setting."
     ),
     "Complementary forward skips": (
         "The paired entry replaces every +k/N period skip by +(N−k)/N modulo "
@@ -3518,17 +3510,21 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
             f'<li>{_term_help_html("Complementary forward skips")}<a href="#{mate_id}">{mate_id}</a></li>'
         )
     short_form_support = _short_form_support_html(record)
+    parent_reference = (
+        f'Plane group {_plane_group_name_html(parent_hm)} — '
+        'International Tables for Crystallography'
+    )
+    space_reference = f'Space group No. {space_number} {space_hm} — UCL'
     return f"""
               <section class="other-names" aria-labelledby="{group_id}-other-names-title">
                 <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
                   <li>{_term_help_html("Book type audit")}{book_link}</li>
                   <li>{_term_help_html("Catalog instance")}<a href="{escape(record['catalog_url'])}">{group_id}</a></li>
-                  <li>{_term_help_html("Parent plane-group type G")}<a href="{escape(parent_url)}">{_plane_group_name_html(parent_hm)}</a></li>
+                  <li class="crystallographic-references" data-crystallographic-references="{group_id}"><span class="other-name-category">Crystallographic</span><span class="other-name-value"><a class="international-tables-reference" href="{escape(parent_url)}">{parent_reference}</a><a class="ucl-reference" href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">{space_reference}</a></span></li>
                   <li>{_term_help_html("Colour-fixing plane-group type K")}<a href="{escape(kernel_url)}">{_plane_group_name_html(kernel_hm)}</a></li>
                   <li>{_term_help_html("Conway fibrifold notation")}<span class="other-name-value"><span class="fibrifold-name" aria-label="{escape(fibrifold)}">{fibrifold_html(fibrifold)}</span>{fibrifold_orientation_note}</span></li>
                   <li>{_term_help_html("Height-lift space-group type")}<span class="other-name-value"><a href="space-group-correspondence.html#{group_id}">No. {space_number} {space_hm}</a><code>Hall {escape(space_group['hall'])}</code></span></li>
-                  <li>{_term_help_html("Crystallographic tables")}<a href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">UCL diagram and tables</a></li>
                   {short_form_support}
                   {mate_html}
                 </ul>
