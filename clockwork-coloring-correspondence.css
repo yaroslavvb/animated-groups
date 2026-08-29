@@ -682,6 +682,48 @@ nav a[aria-current="page"] {
   text-underline-offset: 0.16em;
 }
 
+.short-signature-link {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, var(--accent) 52%, transparent);
+  text-decoration-style: dotted;
+  text-underline-offset: 0.14em;
+}
+
+.signature-evidence-note {
+  width: fit-content;
+  margin: 0.2rem 0 0;
+  padding: 0.15rem 0.38rem;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.signature-evidence-note--derived {
+  background: #eef3f0;
+  color: #53615b;
+}
+
+.signature-evidence-note--discrepancy {
+  border: 1px solid #d6a75d;
+  background: #fff8e8;
+  color: #6c4a15;
+}
+
+.other-name-category {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 550;
+}
+
+.short-form-support-links {
+  min-width: 0;
+}
+
+.short-form-support-link--conflict {
+  color: #8a4a1d;
+}
+
 a[data-book-excerpt] {
   display: inline-block;
   cursor: zoom-in;
@@ -697,11 +739,52 @@ a[data-book-excerpt]::after {
   margin: 0 0 1.25rem;
 }
 
+.presentation-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin: 0 0 0.28rem;
+}
+
 .group-presentation h4 {
-  margin: 0 0 0.22rem;
+  margin: 0;
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 700;
+}
+
+.presentation-palette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.28rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: 1;
+}
+
+.presentation-palette > span:first-child {
+  margin-right: 0.08rem;
+  letter-spacing: 0.02em;
+}
+
+.presentation-colour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.14rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.presentation-colour i {
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 1px solid #26332f;
+  border-radius: 50%;
+  background: var(--presentation-colour);
 }
 
 .group-presentation table {
@@ -713,32 +796,103 @@ a[data-book-excerpt]::after {
 
 .group-presentation th,
 .group-presentation td {
-  padding: 0.34rem 0.42rem;
+  padding: 0.32rem 0.42rem;
   border-bottom: 1px solid var(--line);
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
-.group-presentation th {
+.group-presentation thead th {
+  padding-block: 0.25rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.group-presentation tbody th {
   color: var(--text);
   font-weight: 500;
 }
 
-.group-presentation td:last-child {
-  width: 7.2rem;
+.group-presentation td:last-child,
+.group-presentation th:last-child {
+  width: 7.4rem;
+}
+
+.presentation-colour-action {
   color: var(--text);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
+.presentation-colour-action code {
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: "STIX Two Math", "Cambria Math", Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.presentation-generator-identity {
+  display: grid;
+  grid-template-columns: 2.35rem 1.3rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.presentation-generator-marker {
+  display: inline-flex;
+  width: 2.2rem;
+  height: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.presentation-generator-marker svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: color-mix(in srgb, var(--accent) 11%, white);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.presentation-generator-rotation-6 svg,
+.presentation-generator-rotation-2 svg {
+  fill: none;
+}
+
+.presentation-mirror-line {
+  stroke-dasharray: 3 3;
+}
+
+.presentation-glide-half-arrow,
+.presentation-translation-arrow {
+  fill: none;
+}
+
+.presentation-generator-glide svg > line {
+  stroke-width: 1.25;
+}
+
 .generator-key {
-  display: inline-block;
-  min-width: 1.45rem;
-  margin-right: 0.36rem;
   color: var(--accent);
   font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.92rem;
   font-weight: 700;
   line-height: 1;
+}
+
+.generator-geometry {
+  min-width: 0;
+  color: var(--text);
 }
 
 .group-presentation tbody tr:last-child th,
@@ -767,6 +921,13 @@ a[data-book-excerpt]::after {
 .presentation-relations span {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+.presentation-source-note {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
 }
 
 .provenance {
@@ -1053,9 +1214,25 @@ a[data-book-excerpt]::after {
     gap: 0.14rem;
   }
 
-  .group-presentation td:last-child {
+  .group-presentation td:last-child,
+  .group-presentation th:last-child {
     width: 5.6rem;
     white-space: normal;
+  }
+
+  .presentation-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.32rem;
+  }
+
+  .presentation-palette {
+    justify-content: flex-start;
+  }
+
+  .presentation-generator-identity {
+    grid-template-columns: 2.15rem 1.1rem minmax(0, 1fr);
+    gap: 0.22rem;
   }
 
 }
