@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cayley graphs of the 2x2 torus group D4 and all ten of its subgroups, with one edge colour per generator and the orbit colouring that specifies each subgroup.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Cayley graphs of the 2×2 torus group</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site-controls-v2.css">
+  <style>
+  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+          --card:#ffffff; --accent:#0072B2; }
+  body { background:var(--paper); color:var(--ink); }
+  .cayley-page { max-width:1140px; margin:0 auto; padding:0 20px 72px; }
+  .cayley-page h1 { font-size:2rem; line-height:1.2; margin:.2em 0 .3em; }
+  .cayley-page h2 { font-size:1.32rem; margin:2.4rem 0 .7rem;
+                    border-bottom:1px solid var(--rule); padding-bottom:.35rem; }
+  .cayley-page h3 { font-size:1rem; margin:0 0 .15rem; }
+  .overline { text-transform:uppercase; letter-spacing:.12em; font-size:.74rem;
+              color:var(--muted); margin:2rem 0 0; }
+  .lead { font-size:1.05rem; color:var(--muted); max-width:64ch; }
+  .cayley-page p, .cayley-page li { max-width:74ch; }
+  code { background:#eef1f4; padding:.08em .34em; border-radius:4px; font-size:.92em; }
+  .legend { display:flex; flex-wrap:wrap; gap:9px; margin:.4rem 0 0; font-size:.76rem; }
+  .legend span { display:inline-flex; align-items:center; gap:5px; color:var(--muted); }
+  .legend i { width:14px; height:4px; border-radius:2px; display:inline-block; }
+  .legend em { font-style:normal; opacity:.65; }
+  .big-graphs { display:grid; gap:18px;
+                grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr)); }
+  .big-graphs figure { background:var(--card); border:1px solid var(--rule);
+                       border-radius:12px; padding:14px 16px; margin:0; }
+  .big-graphs figcaption { font-size:.86rem; color:var(--muted); margin-top:.4rem; }
+  .sub-grid { display:grid; gap:16px;
+              grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)); }
+  .sub-card { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+              padding:14px 16px 8px; }
+  .elems { margin:.1rem 0 .6rem; font-size:.82rem; }
+  .art { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+  .pat-wrap { display:flex; flex-direction:column; gap:4px; }
+  .pat-caption { font-size:.66rem; color:var(--muted); }
+  .ok { color:#046a38; font-weight:700; }
+  .no { color:#a03000; font-weight:700; }
+  .sub-card dl { margin:.6rem 0 0; }
+  .sub-card dt { font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
+                 color:var(--accent); margin-top:.5rem; }
+  .sub-card dd { margin:.15rem 0 0; font-size:.86rem; }
+  .cg-head { font-size:1rem; margin:1.6rem 0 .5rem; color:var(--muted);
+             text-transform:uppercase; letter-spacing:.07em; font-size:.78rem; }
+  .cg-grid { display:grid; gap:16px;
+             grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)); }
+  .cg-card { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+             padding:14px 16px 10px; }
+  .cg-card h3 { font-size:1.05rem; margin:0 0 .2rem; }
+  .cg-meta { margin:.1rem 0 .7rem; font-size:.76rem; color:var(--muted); }
+  .cg-meta span { display:inline-block; background:#eef1f4; border-radius:20px;
+                  padding:.14em .7em; margin:0 .3em .3em 0; }
+  .cg-meta .reg { background:rgba(0,158,115,.18); color:#046a38; font-weight:700; }
+  .cg-meta .nonreg { background:rgba(213,94,0,.18); color:#a03000; font-weight:700; }
+  .cg-pats { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:.7rem; }
+  .cg-pats .more { font-size:.72rem; color:var(--muted); }
+  table.ghk { font-size:.84rem; width:100%; min-width:0; table-layout:fixed; }
+  table.ghk th { width:1.6em; color:var(--accent); font-weight:700; text-transform:none;
+                 letter-spacing:0; font-size:.9rem; }
+  table.ghk td { overflow-wrap:anywhere; }
+  table.ghk td.num { width:5.4em; white-space:nowrap; }
+  .pres { border-top:1px solid var(--rule); margin-top:.7rem; padding-top:.6rem; }
+  .pres-line { margin:0 0 .5rem; font-size:.86rem; }
+  table.rho { font-size:.86rem; width:auto; min-width:0; margin:0 0 .5rem; }
+  table.rho td { border-bottom:none; padding:.12em .5em .12em 0; }
+  table.rho td.num { color:var(--muted); font-size:.78rem; }
+  .sig { margin:.15rem 0; font-size:.84rem; }
+  .sig span { display:inline-block; min-width:6.4em; color:var(--muted);
+              font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; }
+  .checks { margin:.5rem 0 0; font-size:.76rem; color:#046a38; }
+  @media (prefers-color-scheme: dark) { .checks { color:#5fd39b; } }
+  .table-scroll { overflow-x:auto; }
+  table { border-collapse:collapse; font-size:.9rem; min-width:540px; }
+  th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }
+  th { font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .footnote { color:var(--muted); font-size:.86rem; }
+  svg.cayley, svg.pat { display:block; max-width:100%; height:auto; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
+            --card:#1e242b; --accent:#56B4E9; }
+    code { background:#2a323a; }
+    .ok { color:#5fd39b; } .no { color:#ff9d6b; }
+  }
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#cayley">Skip to graphs</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-name" href="./">Spacetime-group visualizations</a>
+      <nav aria-label="Project links">
+        <a href="./">Gallery</a>
+        <a href="torus-tutorial.html">Torus guide</a>
+        <a href="torus-colorings.html">Binary catalog</a>
+        <a href="torus-patterns.html">Translation symmetries</a>
+        <a href="torus-patterns-c4.html">With rotations</a>
+        <a href="torus-cayley.html" aria-current="page">Cayley graphs</a>
+        <a href="torus-nonregular.html">Non-regular</a>
+        <a href="color-pattern-catalog.html">Patterns</a>
+        <a href="https://github.com/yaroslavvb/animated-groups">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="cayley" class="cayley-page">
+    <p class="overline">Eight elements, ten subgroups, one octagon</p>
+    <h1>Cayley graphs of the 2&times;2 torus group</h1>
+    <p class="lead">
+      Translations of the wrapped 2&times;2 grid together with the diagonal flip give a group of
+      order 8. Small enough to draw completely — every element, every subgroup, and the pattern
+      that picks each subgroup out.
+    </p>
+
+    <h2>The group</h2>
+    <p>
+      Mod 2 the quarter turn <code>r(a,b) = (&minus;b, a)</code> becomes the diagonal flip
+      <code>s(a,b) = (b,a)</code>, because <code>&minus;1 &equiv; 1</code>. So there is no genuine
+      rotation here, and <code>r&sup2; = 1</code>. With the four translations this generates
+    </p>
+    <p><code>&Gamma; = (&#8484;/2)&sup2; &#8906; &#10216;s&#10217;</code> of order <strong>8</strong>,
+       which is <code>D&#8324;</code> — acting on the four cells as a Sylow 2-subgroup of
+       <code>S&#8324;</code>.</p>
+    <p>
+      Writing <code>X</code> and <code>Y</code> for the two translations, the flip conjugates one
+      into the other: <code>s X s&#8315;&sup1; = Y</code>. So <code>Y</code> is redundant and
+      <code>&Gamma; = &#10216;X, s&#10217;</code> — and since <code>X&sup2; = s&sup2; = 1</code>
+      with <code>(Xs)</code> of order 4, this is the dihedral presentation
+      <code>&#10216;X, s | X&sup2; = s&sup2; = (Xs)&#8308; = 1&#10217;</code>.
+    </p>
+
+    <h2>Two views of &Gamma;</h2>
+    <div class="big-graphs">
+      <figure><svg class="cayley" viewBox="0 0 280 280" width="280" height="280" role="img" aria-label="Cayley graph on 8 vertices"><line x1="59.4" y1="59.4" x2="140.0" y2="26.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="140.0" y1="254.0" x2="220.6" y2="220.6" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="59.4" y1="220.6" x2="26.0" y2="140.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="254.0" y1="140.0" x2="220.6" y2="59.4" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="59.4" y1="59.4" x2="26.0" y2="140.0" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><line x1="140.0" y1="254.0" x2="59.4" y2="220.6" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><line x1="220.6" y1="220.6" x2="254.0" y2="140.0" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><line x1="140.0" y1="26.0" x2="220.6" y2="59.4" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><circle cx="140.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="140.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="220.6" cy="59.4" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="220.6" y="63.0" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">s</text><circle cx="254.0" cy="140.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="254.0" y="143.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Ys</text><circle cx="220.6" cy="220.6" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="220.6" y="224.2" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Y</text><circle cx="140.0" cy="254.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="140.0" y="257.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XY</text><circle cx="59.4" cy="220.6" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="59.4" y="224.2" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XYs</text><circle cx="26.0" cy="140.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="26.0" y="143.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Xs</text><circle cx="59.4" cy="59.4" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="59.4" y="63.0" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">X</text></svg><p class="legend"><span><i style="background:#0072B2"></i>X<em>order 2</em></span><span><i style="background:#009E73"></i>s<em>order 2</em></span></p>
+        <figcaption><strong>Cay(&Gamma;, {X, s})</strong> — 8 vertices, 8 edges, degree 2.
+        Both generators are involutions, so each contributes one undirected edge per vertex and
+        the graph is a single <strong>octagon</strong> with edges alternating <code>X</code>,
+        <code>s</code>. Girth 8, diameter 4.</figcaption></figure>
+      <figure><svg class="cayley" viewBox="0 0 280 280" width="280" height="280" role="img" aria-label="Cayley graph on 8 vertices"><line x1="180.3" y1="99.7" x2="99.7" y2="99.7" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="180.3" y1="180.3" x2="99.7" y2="180.3" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="140.0" y1="26.0" x2="254.0" y2="140.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="140.0" y1="254.0" x2="26.0" y2="140.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="180.3" y1="99.7" x2="180.3" y2="180.3" stroke="#E69F00" stroke-width="2.6" stroke-linecap="round"/><line x1="140.0" y1="26.0" x2="140.0" y2="254.0" stroke="#E69F00" stroke-width="2.6" stroke-linecap="round"/><line x1="254.0" y1="140.0" x2="26.0" y2="140.0" stroke="#E69F00" stroke-width="2.6" stroke-linecap="round"/><line x1="99.7" y1="180.3" x2="99.7" y2="99.7" stroke="#E69F00" stroke-width="2.6" stroke-linecap="round"/><line x1="180.3" y1="99.7" x2="254.0" y2="140.0" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><line x1="180.3" y1="180.3" x2="140.0" y2="26.0" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><line x1="99.7" y1="180.3" x2="140.0" y2="254.0" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><line x1="99.7" y1="99.7" x2="26.0" y2="140.0" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><circle cx="180.3" cy="99.7" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="180.3" y="103.3" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">X</text><circle cx="180.3" cy="180.3" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="180.3" y="183.9" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XY</text><circle cx="99.7" cy="180.3" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="99.7" y="183.9" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Y</text><circle cx="99.7" cy="99.7" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="99.7" y="103.3" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="140.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="140.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XYs</text><circle cx="254.0" cy="140.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="254.0" y="143.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Xs</text><circle cx="140.0" cy="254.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="140.0" y="257.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Ys</text><circle cx="26.0" cy="140.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="26.0" y="143.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">s</text></svg><p class="legend"><span><i style="background:#0072B2"></i>X<em>order 2</em></span><span><i style="background:#E69F00"></i>Y<em>order 2</em></span><span><i style="background:#009E73"></i>s<em>order 2</em></span></p>
+        <figcaption><strong>Cay(&Gamma;, {X, Y, s})</strong> — 8 vertices, 12 edges, degree 3.
+        Keeping the redundant <code>Y</code> splits the group into two squares (the cosets of the
+        translation subgroup) joined by a perfect matching of <code>s</code>-edges. Girth 4,
+        diameter 3.</figcaption></figure>
+    </div>
+    <p class="footnote">
+      Dropping <code>s</code> altogether disconnects the graph into two components — the index of
+      the translation subgroup, visible as connected components.
+    </p>
+
+    <h2>All ten subgroups</h2>
+    <p>
+      Each card shows <code>Cay(H, gens)</code> with one colour per generator, next to the
+      <em>orbit colouring</em>: colour each orbit of <code>H</code> on the four cells a different
+      colour. That colouring is how you specify a subgroup by drawing — but it only works for
+      seven of the ten, and the three failures are labelled with their reason.
+    </p>
+    <div class="sub-grid">
+      <article class="sub-card" id="sub-0">
+        <header>
+          <h3>|H| = 8 &middot; <span class="ok">drawable</span></h3>
+          <p class="elems"><code>{X, XY, XYs, Xs, Y, Ys, e, s}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 8 vertices"><line x1="95.0" y1="26.0" x2="46.2" y2="46.2" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="95.0" y1="164.0" x2="143.8" y2="143.8" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="143.8" y1="46.2" x2="164.0" y2="95.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="46.2" y1="143.8" x2="26.0" y2="95.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="95.0" y1="26.0" x2="143.8" y2="46.2" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><line x1="46.2" y1="46.2" x2="26.0" y2="95.0" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><line x1="95.0" y1="164.0" x2="46.2" y2="143.8" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><line x1="143.8" y1="143.8" x2="164.0" y2="95.0" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="143.8" cy="46.2" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="143.8" y="49.8" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XYs</text><circle cx="164.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="164.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Xs</text><circle cx="143.8" cy="143.8" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="143.8" y="147.4" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Y</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XY</text><circle cx="46.2" cy="143.8" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="46.2" y="147.4" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">s</text><circle cx="26.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="26.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Ys</text><circle cx="46.2" cy="46.2" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="46.2" y="49.8" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">X</text></svg><p class="legend"><span><i style="background:#0072B2"></i>X<em>order 2</em></span><span><i style="background:#D55E00"></i>XYs<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#0072B2"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>X</code>, <code>XYs</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 1 in &Gamma;; normal</dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 1, 2, 3]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Colour each orbit differently and the stabilizer is exactly this subgroup. Needs <strong>1 colour</strong>.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-1">
+        <header>
+          <h3>|H| = 4 &middot; <span class="no">not drawable</span></h3>
+          <p class="elems"><code>{X, XY, Y, e}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 4 vertices"><line x1="95.0" y1="26.0" x2="26.0" y2="95.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="164.0" y1="95.0" x2="95.0" y2="164.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><line x1="95.0" y1="26.0" x2="164.0" y2="95.0" stroke="#56B4E9" stroke-width="2.6" stroke-linecap="round"/><line x1="26.0" y1="95.0" x2="95.0" y2="164.0" stroke="#56B4E9" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="164.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="164.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XY</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Y</text><circle cx="26.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="26.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">X</text></svg><p class="legend"><span><i style="background:#0072B2"></i>X<em>order 2</em></span><span><i style="background:#56B4E9"></i>XY<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#0072B2"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>X</code>, <code>XY</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 2 in &Gamma;; normal</dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 1, 2, 3]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Transitive on the four cells, so the only invariant pattern is constant — and a constant pattern is fixed by all of &Gamma;.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-2">
+        <header>
+          <h3>|H| = 4 &middot; <span class="ok">drawable</span></h3>
+          <p class="elems"><code>{XY, XYs, e, s}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 4 vertices"><line x1="95.0" y1="26.0" x2="164.0" y2="95.0" stroke="#56B4E9" stroke-width="2.6" stroke-linecap="round"/><line x1="26.0" y1="95.0" x2="95.0" y2="164.0" stroke="#56B4E9" stroke-width="2.6" stroke-linecap="round"/><line x1="95.0" y1="26.0" x2="26.0" y2="95.0" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><line x1="164.0" y1="95.0" x2="95.0" y2="164.0" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="164.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="164.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XY</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">s</text><circle cx="26.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="26.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XYs</text></svg><p class="legend"><span><i style="background:#56B4E9"></i>XY<em>order 2</em></span><span><i style="background:#D55E00"></i>XYs<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#E69F00"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#E69F00"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#0072B2"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>XY</code>, <code>XYs</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 2 in &Gamma;; normal</dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 3], [1, 2]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Colour each orbit differently and the stabilizer is exactly this subgroup. Needs <strong>2 colours</strong>.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-3">
+        <header>
+          <h3>|H| = 4 &middot; <span class="no">not drawable</span></h3>
+          <p class="elems"><code>{XY, Xs, Ys, e}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 4 vertices"><defs><marker id="a-Xs" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#CC79A7"/></marker></defs><line x1="95.0" y1="26.0" x2="164.0" y2="95.0" stroke="#CC79A7" stroke-width="2.6" stroke-linecap="round" marker-end="url(#a-Xs)"/><line x1="95.0" y1="164.0" x2="26.0" y2="95.0" stroke="#CC79A7" stroke-width="2.6" stroke-linecap="round" marker-end="url(#a-Xs)"/><line x1="164.0" y1="95.0" x2="95.0" y2="164.0" stroke="#CC79A7" stroke-width="2.6" stroke-linecap="round" marker-end="url(#a-Xs)"/><line x1="26.0" y1="95.0" x2="95.0" y2="26.0" stroke="#CC79A7" stroke-width="2.6" stroke-linecap="round" marker-end="url(#a-Xs)"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="164.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="164.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Xs</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XY</text><circle cx="26.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="26.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Ys</text></svg><p class="legend"><span><i style="background:#CC79A7"></i>Xs<em>order 4</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#0072B2"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>Xs</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 2 in &Gamma;; normal</dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 1, 2, 3]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Also transitive: its order-4 generator is a single 4-cycle, so again only the constant pattern survives.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-4">
+        <header>
+          <h3>|H| = 2 &middot; <span class="ok">drawable</span></h3>
+          <p class="elems"><code>{X, e}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 2 vertices"><line x1="95.0" y1="26.0" x2="95.0" y2="164.0" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">X</text></svg><p class="legend"><span><i style="background:#0072B2"></i>X<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#E69F00"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#E69F00"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>X</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 4 in &Gamma;; <strong>not normal</strong></dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 2], [1, 3]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Colour each orbit differently and the stabilizer is exactly this subgroup. Needs <strong>2 colours</strong>.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-5">
+        <header>
+          <h3>|H| = 2 &middot; <span class="no">not drawable</span></h3>
+          <p class="elems"><code>{XY, e}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 2 vertices"><line x1="95.0" y1="26.0" x2="95.0" y2="164.0" stroke="#56B4E9" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XY</text></svg><p class="legend"><span><i style="background:#56B4E9"></i>XY<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#E69F00"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#E69F00"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#0072B2"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>XY</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 4 in &Gamma;; normal</dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 3], [1, 2]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Its orbits force cell&nbsp;0 to match cell&nbsp;3 and cell&nbsp;1 to match cell&nbsp;2 — but that pattern is then also fixed by both flips, giving the order-4 group above instead.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-6">
+        <header>
+          <h3>|H| = 2 &middot; <span class="ok">drawable</span></h3>
+          <p class="elems"><code>{XYs, e}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 2 vertices"><line x1="95.0" y1="26.0" x2="95.0" y2="164.0" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">XYs</text></svg><p class="legend"><span><i style="background:#D55E00"></i>XYs<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#E69F00"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#009E73"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#0072B2"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>XYs</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 4 in &Gamma;; <strong>not normal</strong></dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 3], [1], [2]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Colour each orbit differently and the stabilizer is exactly this subgroup. Needs <strong>3 colours</strong>.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-7">
+        <header>
+          <h3>|H| = 2 &middot; <span class="ok">drawable</span></h3>
+          <p class="elems"><code>{Y, e}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 2 vertices"><line x1="95.0" y1="26.0" x2="95.0" y2="164.0" stroke="#E69F00" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">Y</text></svg><p class="legend"><span><i style="background:#E69F00"></i>Y<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#E69F00"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#E69F00"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>Y</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 4 in &Gamma;; <strong>not normal</strong></dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0, 1], [2, 3]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Colour each orbit differently and the stabilizer is exactly this subgroup. Needs <strong>2 colours</strong>.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-8">
+        <header>
+          <h3>|H| = 2 &middot; <span class="ok">drawable</span></h3>
+          <p class="elems"><code>{e, s}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 2 vertices"><line x1="95.0" y1="26.0" x2="95.0" y2="164.0" stroke="#009E73" stroke-width="2.6" stroke-linecap="round"/><circle cx="95.0" cy="26.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="29.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text><circle cx="95.0" cy="164.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="167.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">s</text></svg><p class="legend"><span><i style="background:#009E73"></i>s<em>order 2</em></span></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#E69F00"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#E69F00"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#009E73"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd><code>s</code></dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 4 in &Gamma;; <strong>not normal</strong></dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0], [1, 2], [3]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Colour each orbit differently and the stabilizer is exactly this subgroup. Needs <strong>3 colours</strong>.</dd>
+        </dl>
+      </article>
+      <article class="sub-card" id="sub-9">
+        <header>
+          <h3>|H| = 1 &middot; <span class="ok">drawable</span></h3>
+          <p class="elems"><code>{e}</code></p>
+        </header>
+        <div class="art">
+          <div><svg class="cayley" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="Cayley graph on 1 vertices"><circle cx="95.0" cy="95.0" r="11" fill="#ffffff" stroke="#1b2430" stroke-width="1.4"/><text x="95.0" y="98.6" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1b2430">e</text></svg><p class="legend"></p></div>
+          <div class="pat-wrap"><svg class="pat" viewBox="0 0 55 55" width="55" height="55" role="img" aria-label="orbit colouring"><rect x="0" y="0" width="26" height="26" rx="4" fill="#0072B2"/><rect x="29" y="0" width="26" height="26" rx="4" fill="#E69F00"/><rect x="0" y="29" width="26" height="26" rx="4" fill="#009E73"/><rect x="29" y="29" width="26" height="26" rx="4" fill="#CC79A7"/></svg>
+            <span class="pat-caption">orbit colouring</span></div>
+        </div>
+        <dl>
+          <dt>Generators</dt><dd>none (trivial)</dd>
+          <dt>Index &amp; normality</dt>
+          <dd>index 8 in &Gamma;; normal</dd>
+          <dt>Orbits on the four cells</dt>
+          <dd><code>[[0], [1], [2], [3]]</code></dd>
+          <dt>Connection with colouring</dt><dd>Colour each orbit differently and the stabilizer is exactly this subgroup. Needs <strong>4 colours</strong>.</dd>
+        </dl>
+      </article>
+    </div>
+
+    <h2>Colour groups</h2>
+    <p>
+      The subgroups above are single groups. A <em>colour group</em> records the whole triple
+      that a colouring produces:
+      <code>G</code> the symmetries permuting the colours,
+      <code>H</code> those fixing one chosen colour, and
+      <code>K</code> those fixing every colour. All three are stabilizers —
+      of the unordered partition, of one block, and of the labelled partition respectively —
+      and <code>K &sube; H &sube; G</code>. The colouring is <strong>regular</strong> when
+      <code>|G/K|</code> equals the number of colours, which happens exactly when
+      <code>H = K</code>; Conway then writes a single slash.
+    </p>
+
+    <h3 class="cg-head">Two colours &mdash; every colour group</h3>
+    <div class="cg-grid">
+      <article class="cg-card">
+        <header>
+          <h3><code>G<sup>2</sup>/K</code></h3>
+          <p class="cg-meta"><span>2 colours</span>
+            <span>|G/K| = 2</span>
+            <span class="reg">
+              regular</span>
+            <span>2 colourings</span></p>
+        </header>
+        <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0110"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1001"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg></div>
+        <div class="pres">
+          <p class="pres-line"><code>G = &#10216; X, s |
+            X<sup>2</sup> = s<sup>2</sup> = (Xs)<sup>4</sup> = 1 &#10217;</code></p>
+          <table class="rho"><tbody><tr><td><code>X</code></td><td>&#8614;</td><td><code>(AB)</code></td><td class='num'>order 2</td></tr><tr><td><code>s</code></td><td>&#8614;</td><td><code>1</code></td><td class='num'>order 1</td></tr></tbody></table>
+          <p class="sig"><span>signature</span> <code>X<sup>(AB)</sup> s<sup>1</sup></code></p>
+          <p class="sig"><span>short form</span> <code>X<sup>2</sup> s<sup>1</sup></code></p>
+          <p class="checks">&rho;(X)<sup>2</sup> = 1 &check; &nbsp; &rho;(s)<sup>2</sup> = 1 &check; &nbsp; &rho;(Xs)<sup>4</sup> = 1 &check;</p>
+        </div>
+        <table class="ghk">
+          <tbody>
+            <tr><th>G</th><td><code>{X, XY, XYs, Xs, Y, Ys, e, s}</code></td><td class="num">order 8</td></tr>
+            <tr><th>H</th><td><code>{XY, XYs, e, s}</code></td><td class="num">index 2</td></tr>
+            <tr><th>K</th><td><code>{XY, XYs, e, s}</code></td><td class="num">order 4</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="cg-card">
+        <header>
+          <h3><code>G<sup>2</sup>/K</code></h3>
+          <p class="cg-meta"><span>2 colours</span>
+            <span>|G/K| = 2</span>
+            <span class="reg">
+              regular</span>
+            <span>4 colourings</span></p>
+        </header>
+        <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0011"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0101"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1010"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1100"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#0072B2"/></svg></div>
+        <div class="pres">
+          <p class="pres-line"><code>G = &#10216; X, Y |
+            X<sup>2</sup> = Y<sup>2</sup> = (XY)<sup>2</sup> = 1 &#10217;</code></p>
+          <table class="rho"><tbody><tr><td><code>X</code></td><td>&#8614;</td><td><code>(AB)</code></td><td class='num'>order 2</td></tr><tr><td><code>Y</code></td><td>&#8614;</td><td><code>1</code></td><td class='num'>order 1</td></tr></tbody></table>
+          <p class="sig"><span>signature</span> <code>X<sup>(AB)</sup> Y<sup>1</sup></code></p>
+          <p class="sig"><span>short form</span> <code>X<sup>2</sup> Y<sup>1</sup></code></p>
+          <p class="checks">&rho;(X)<sup>2</sup> = 1 &check; &nbsp; &rho;(Y)<sup>2</sup> = 1 &check; &nbsp; &rho;(XY)<sup>2</sup> = 1 &check;</p>
+        </div>
+        <table class="ghk">
+          <tbody>
+            <tr><th>G</th><td><code>{X, XY, Y, e}</code></td><td class="num">order 4</td></tr>
+            <tr><th>H</th><td><code>{Y, e}</code></td><td class="num">index 2</td></tr>
+            <tr><th>K</th><td><code>{Y, e}</code></td><td class="num">order 2</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+    <p class="footnote">
+      Both are regular, so <code>H = K</code> and a single slash suffices. The first is the
+      checkerboard, whose symmetry is all of &Gamma;; the second is the striped colouring, where
+      the diagonal flip fails to act and <code>G</code> drops to the translation subgroup. Six
+      chromatic two-colourings in total &mdash; the colour classes must have equal size, so only
+      the three 2+2 partitions qualify, each with two labellings.
+    </p>
+
+    <h3 class="cg-head">Three colours &mdash; none</h3>
+    <p>
+      There are <strong>no</strong> chromatic three-colourings: the colour group permutes the
+      colour classes transitively, so they must all have the same size, and
+      <code>3 &#8740; 4</code>. Only <code>k</code> dividing 4 is possible &mdash; one, two or
+      four colours.
+    </p>
+
+    <h3 class="cg-head">Four colours &mdash; the non-regular one</h3>
+    <div class="cg-grid">
+      <article class="cg-card">
+        <header>
+          <h3><code>G<sup>4</sup>//K</code></h3>
+          <p class="cg-meta"><span>4 colours</span>
+            <span>|G/K| = 8</span>
+            <span class="nonreg">
+              non-regular</span>
+            <span>24 colourings</span></p>
+        </header>
+        <div class="cg-pats"><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0123"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0132"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0213"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#009E73"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0231"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#009E73"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0312"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 0321"><rect x="0" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#E69F00"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1023"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#009E73"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#CC79A7"/></svg><svg class="pat" viewBox="0 0 51 51" width="51" height="51" role="img" aria-label="colouring 1032"><rect x="0" y="0" width="24" height="24" rx="4" fill="#E69F00"/><rect x="27" y="0" width="24" height="24" rx="4" fill="#0072B2"/><rect x="0" y="27" width="24" height="24" rx="4" fill="#CC79A7"/><rect x="27" y="27" width="24" height="24" rx="4" fill="#009E73"/></svg><span class="more">+16 more</span></div>
+        <div class="pres">
+          <p class="pres-line"><code>G = &#10216; X, s |
+            X<sup>2</sup> = s<sup>2</sup> = (Xs)<sup>4</sup> = 1 &#10217;</code></p>
+          <table class="rho"><tbody><tr><td><code>X</code></td><td>&#8614;</td><td><code>(AC)(BD)</code></td><td class='num'>order 2</td></tr><tr><td><code>s</code></td><td>&#8614;</td><td><code>(BC)</code></td><td class='num'>order 2</td></tr></tbody></table>
+          <p class="sig"><span>signature</span> <code>X<sup>(AC)(BD)</sup> s<sup>(BC)</sup></code></p>
+          <p class="sig"><span>short form</span> <code>X<sup>2</sup> s<sup>2</sup></code></p>
+          <p class="checks">&rho;(X)<sup>2</sup> = 1 &check; &nbsp; &rho;(s)<sup>2</sup> = 1 &check; &nbsp; &rho;(Xs)<sup>4</sup> = 1 &check;</p>
+        </div>
+        <table class="ghk">
+          <tbody>
+            <tr><th>G</th><td><code>{X, XY, XYs, Xs, Y, Ys, e, s}</code></td><td class="num">order 8</td></tr>
+            <tr><th>H</th><td><code>{e, s}</code></td><td class="num">index 4</td></tr>
+            <tr><th>K</th><td><code>{e}</code></td><td class="num">order 1</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+    <p class="footnote">
+      Here <code>|G/K| = 8</code> but there are only 4 colours, so <code>H &ne; K</code> and the
+      symbol carries a double slash. This is the rainbow colouring; the
+      <a href="torus-nonregular.html">non-regular page</a> works through why <code>H</code> has
+      to be named separately.
+    </p>
+
+    <h2>Summary</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th class="num">|H|</th><th>generators</th><th class="num">index</th>
+          <th>normal</th><th class="num">orbits</th><th>as a stabilizer</th></tr></thead>
+        <tbody><tr><td class='num'>8</td><td><code>X, XYs</code></td><td class='num'>1</td><td>yes</td><td class='num'>1</td><td>drawable</td></tr><tr><td class='num'>4</td><td><code>X, XY</code></td><td class='num'>2</td><td>yes</td><td class='num'>1</td><td>not drawable</td></tr><tr><td class='num'>4</td><td><code>XY, XYs</code></td><td class='num'>2</td><td>yes</td><td class='num'>2</td><td>drawable</td></tr><tr><td class='num'>4</td><td><code>Xs</code></td><td class='num'>2</td><td>yes</td><td class='num'>1</td><td>not drawable</td></tr><tr><td class='num'>2</td><td><code>X</code></td><td class='num'>4</td><td>no</td><td class='num'>2</td><td>drawable</td></tr><tr><td class='num'>2</td><td><code>XY</code></td><td class='num'>4</td><td>yes</td><td class='num'>2</td><td>not drawable</td></tr><tr><td class='num'>2</td><td><code>XYs</code></td><td class='num'>4</td><td>no</td><td class='num'>3</td><td>drawable</td></tr><tr><td class='num'>2</td><td><code>Y</code></td><td class='num'>4</td><td>no</td><td class='num'>2</td><td>drawable</td></tr><tr><td class='num'>2</td><td><code>s</code></td><td class='num'>4</td><td>no</td><td class='num'>3</td><td>drawable</td></tr><tr><td class='num'>1</td><td><code>—</code></td><td class='num'>8</td><td>yes</td><td class='num'>4</td><td>drawable</td></tr></tbody>
+      </table>
+    </div>
+    <p class="footnote">
+      Seven of the ten subgroups are stabilizers of some pattern. The three exceptions fail for
+      two distinct reasons: the translation subgroup and the cyclic <code>C&#8324;</code> are
+      <em>transitive</em>, so they force the constant pattern; the centre
+      <code>{e, XY}</code> forces a pattern that carries strictly more symmetry than asked for.
+      Realizable subgroups are exactly the partition stabilizers, and they form a closure system.
+    </p>
+    <p class="footnote">
+      Generated by <a href="https://github.com/yaroslavvb/animated-groups/blob/main/scripts/generate_torus_cayley.py">scripts/generate_torus_cayley.py</a>.
+      Companion to the <a href="torus-tutorial.html">torus tutorial</a>.
+    </p>
+  </main>
+</body>
+</html>
