@@ -63,7 +63,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=quiet-signature-links"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=presentation-color-time"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -1590,6 +1590,30 @@ def _short_signature_orders(signature: str) -> tuple[int, ...]:
     return tuple(int(run.translate(SUPERSCRIPT_TO_ASCII)) for run in runs)
 
 
+def _colour_cycle_time_step(permutation: Iterable[int]) -> Fraction:
+    """Return the positive period step encoded by a semiregular colour cycle."""
+
+    values = tuple(permutation)
+    visited: set[int] = set()
+    cycle_lengths: list[int] = []
+    for start in range(len(values)):
+        if start in visited:
+            continue
+        cursor = start
+        length = 0
+        while cursor not in visited:
+            visited.add(cursor)
+            cursor = values[cursor]
+            length += 1
+        if cursor != start:
+            raise ValueError(f"not a permutation: {values}")
+        cycle_lengths.append(length)
+    if len(set(cycle_lengths)) != 1:
+        raise ValueError(f"colour action is not semiregular: {values}")
+    order = cycle_lengths[0]
+    return Fraction(0) if order == 1 else Fraction(1, order)
+
+
 def chaim_presentation(
     group_id: str,
     parent: str,
@@ -1651,6 +1675,7 @@ def chaim_presentation(
     rendered_actions = []
     for action in actions:
         visualization = affine_by_name[action["generator"]]
+        time_step = _colour_cycle_time_step(action["colour_permutation"])
         marker: dict[str, Any] = {"kind": visualization["kind"]}
         if visualization["kind"] == "rotation":
             marker["order"] = {
@@ -1663,6 +1688,8 @@ def chaim_presentation(
             action
             | {
                 "cycle_notation": _cycle_notation(action["permutation_code"]),
+                "time_step": fraction_label(time_step),
+                "time_step_label": _time_shift_description(time_step),
                 "marker": marker,
             }
         )
@@ -2529,6 +2556,8 @@ def _presentation_html(record: dict[str, Any]) -> str:
             f'<span class="generator-geometry">{escape(generator["geometry"])}</span>'
             "</span></th>"
             f'<td class="presentation-colour-action"><code>{escape(generator["cycle_notation"])}</code></td>'
+            f'<td class="presentation-time-action" data-time-step="{escape(generator["time_step"])}">'
+            f'{escape(generator["time_step_label"])}</td>'
             "</tr>"
         )
     rows_html = "\n".join(rows)
@@ -2555,8 +2584,8 @@ def _presentation_html(record: dict[str, Any]) -> str:
                   <p class="presentation-palette"><span>cycles over</span>{palette}</p>
                 </div>
                 <table data-presentation="{group_id}">
-                  <caption class="visually-hidden">Chaim’s named geometric generators and induced colour cycles for {group_id}</caption>
-                  <thead><tr><th scope="col">Generator</th><th scope="col">Colour action</th></tr></thead>
+                  <caption class="visually-hidden">Chaim’s named geometric generators with colour cycles and one-step time intervals for {group_id}</caption>
+                  <thead><tr><th scope="col">Generator</th><th scope="col">Color</th><th scope="col">Time</th></tr></thead>
                   <tbody>{rows_html}</tbody>
                 </table>
                 <p class="presentation-relations"><strong>Relations</strong> <span>Γ = ⟨{escape(generator_names)} | {escape(presentation['relations'])}⟩</span></p>

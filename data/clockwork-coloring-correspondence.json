@@ -174,6 +174,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "translation"
             }
@@ -186,6 +188,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "translation"
             }
@@ -352,6 +356,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -365,6 +371,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -378,6 +386,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -391,6 +401,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -566,6 +578,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -580,6 +594,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -594,6 +610,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -608,6 +626,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -834,6 +854,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -848,6 +870,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -862,6 +886,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -876,6 +902,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -1043,6 +1071,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -1055,6 +1085,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "glide"
             }
@@ -1229,6 +1261,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -1242,6 +1276,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "glide"
             }
@@ -1457,6 +1493,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "translation"
             }
@@ -1469,6 +1507,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -1481,6 +1521,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -1689,6 +1731,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "glide"
             }
@@ -1701,6 +1745,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "glide"
             }
@@ -1916,6 +1962,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -1928,6 +1976,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -1940,6 +1990,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -1952,6 +2004,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -2175,6 +2229,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -2188,6 +2244,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -2201,6 +2259,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -2214,6 +2274,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -2429,6 +2491,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -2442,6 +2506,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -2455,6 +2521,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -2678,6 +2746,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -2692,6 +2762,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -2706,6 +2778,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -2921,6 +2995,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -2934,6 +3010,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -2947,6 +3025,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "glide"
             }
@@ -3170,6 +3250,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -3184,6 +3266,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -3198,6 +3282,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "glide"
             }
@@ -3423,6 +3509,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -3436,6 +3524,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -3449,6 +3539,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -3462,6 +3554,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -3686,6 +3780,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -3700,6 +3796,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -3714,6 +3812,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -3938,6 +4038,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -3952,6 +4054,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -3966,6 +4070,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -4191,6 +4297,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -4205,6 +4313,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -4219,6 +4329,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "glide"
             }
@@ -4530,6 +4642,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -4543,6 +4657,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -4556,6 +4672,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -4569,6 +4687,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -4880,6 +5000,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -4893,6 +5015,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -4906,6 +5030,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -4919,6 +5045,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -5230,6 +5358,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -5244,6 +5374,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -5258,6 +5390,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -5569,6 +5703,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -5583,6 +5719,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -5597,6 +5735,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -5897,6 +6037,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -5910,6 +6052,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -5922,6 +6066,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -6230,6 +6376,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -6244,6 +6392,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -6257,6 +6407,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -6567,6 +6719,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -6581,6 +6735,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -6594,6 +6750,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -6904,6 +7062,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -6918,6 +7078,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -6931,6 +7093,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -7241,6 +7405,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -7255,6 +7421,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -7268,6 +7436,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -7579,6 +7749,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -7593,6 +7765,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -7606,6 +7780,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -8069,6 +8245,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -8082,6 +8260,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -8095,6 +8275,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -8108,6 +8290,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -8610,6 +8794,8 @@
               3
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -8626,6 +8812,8 @@
               2
             ],
             "cycle_notation": "(AB)(CD)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -8642,6 +8830,8 @@
               0
             ],
             "cycle_notation": "(ACBD)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "glide"
             }
@@ -8850,6 +9040,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -8863,6 +9055,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -8876,6 +9070,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -9093,6 +9289,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -9107,6 +9305,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -9121,6 +9321,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -9393,6 +9595,8 @@
               2
             ],
             "cycle_notation": "(ABDC)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -9409,6 +9613,8 @@
               2
             ],
             "cycle_notation": "(ABDC)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -9425,6 +9631,8 @@
               0
             ],
             "cycle_notation": "(AD)(BC)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -9697,6 +9905,8 @@
               2
             ],
             "cycle_notation": "(ABDC)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -9713,6 +9923,8 @@
               2
             ],
             "cycle_notation": "(ABDC)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -9729,6 +9941,8 @@
               0
             ],
             "cycle_notation": "(AD)(BC)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -10034,6 +10248,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -10048,6 +10264,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -10062,6 +10280,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -10420,6 +10640,8 @@
               0
             ],
             "cycle_notation": "(ACBD)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -10436,6 +10658,8 @@
               1
             ],
             "cycle_notation": "(ADBC)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -10452,6 +10676,8 @@
               3
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -10746,6 +10972,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -10758,6 +10986,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -10770,6 +11000,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -11072,6 +11304,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -11085,6 +11319,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -11098,6 +11334,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -11400,6 +11638,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -11413,6 +11653,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -11426,6 +11668,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -11727,6 +11971,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -11740,6 +11986,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -11753,6 +12001,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -12046,6 +12296,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -12059,6 +12311,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -12361,6 +12615,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -12375,6 +12631,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -12677,6 +12935,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -12691,6 +12951,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -12992,6 +13254,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -13006,6 +13270,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -13468,6 +13734,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -13481,6 +13749,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -13494,6 +13764,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -14004,6 +14276,8 @@
               0
             ],
             "cycle_notation": "(ACBD)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -14020,6 +14294,8 @@
               3
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -14482,6 +14758,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -14495,6 +14773,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -14508,6 +14788,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -15018,6 +15300,8 @@
               0
             ],
             "cycle_notation": "(ACBD)",
+            "time_step": "1/4",
+            "time_step_label": "+1/4 period",
             "marker": {
               "kind": "rotation",
               "order": 4
@@ -15034,6 +15318,8 @@
               2
             ],
             "cycle_notation": "(AB)(CD)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -15218,6 +15504,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15231,6 +15519,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15244,6 +15534,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15444,6 +15736,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15459,6 +15753,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15474,6 +15770,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15674,6 +15972,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15689,6 +15989,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -15704,6 +16006,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -16031,6 +16335,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -16046,6 +16352,8 @@
               1
             ],
             "cycle_notation": "(ACB)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -16061,6 +16369,8 @@
               2
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -16313,6 +16623,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -16325,6 +16637,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -16337,6 +16651,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -16596,6 +16912,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -16609,6 +16927,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -16622,6 +16942,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -16873,6 +17195,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -16886,6 +17210,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -17145,6 +17471,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -17159,6 +17487,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -17677,6 +18007,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -17692,6 +18024,8 @@
               2
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -18244,6 +18578,8 @@
               2
             ],
             "cycle_notation": "(ABD)(CEF)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -18262,6 +18598,8 @@
               3
             ],
             "cycle_notation": "(AC)(BE)(DF)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -18512,6 +18850,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 6
@@ -18525,6 +18865,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -18538,6 +18880,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -18840,6 +19184,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 6
@@ -18855,6 +19201,8 @@
               1
             ],
             "cycle_notation": "(ACB)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -18870,6 +19218,8 @@
               2
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -19172,6 +19522,8 @@
               0
             ],
             "cycle_notation": "(ABC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 6
@@ -19187,6 +19539,8 @@
               1
             ],
             "cycle_notation": "(ACB)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -19202,6 +19556,8 @@
               2
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -19461,6 +19817,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 6
@@ -19475,6 +19833,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -19489,6 +19849,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -19816,6 +20178,8 @@
               4
             ],
             "cycle_notation": "(ABDFEC)",
+            "time_step": "1/6",
+            "time_step_label": "+1/6 period",
             "marker": {
               "kind": "rotation",
               "order": 6
@@ -19834,6 +20198,8 @@
               2
             ],
             "cycle_notation": "(ADE)(BFC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -19852,6 +20218,8 @@
               0
             ],
             "cycle_notation": "(AF)(BE)(CD)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -20179,6 +20547,8 @@
               4
             ],
             "cycle_notation": "(ABDFEC)",
+            "time_step": "1/6",
+            "time_step_label": "+1/6 period",
             "marker": {
               "kind": "rotation",
               "order": 6
@@ -20197,6 +20567,8 @@
               2
             ],
             "cycle_notation": "(ADE)(BFC)",
+            "time_step": "1/3",
+            "time_step_label": "+1/3 period",
             "marker": {
               "kind": "rotation",
               "order": 3
@@ -20215,6 +20587,8 @@
               0
             ],
             "cycle_notation": "(AF)(BE)(CD)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "rotation",
               "order": 2
@@ -20587,6 +20961,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -20599,6 +20975,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -20611,6 +20989,8 @@
               0
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -20991,6 +21371,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -21004,6 +21386,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -21017,6 +21401,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -21396,6 +21782,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -21409,6 +21797,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -21422,6 +21812,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -21802,6 +22194,8 @@
               0
             ],
             "cycle_notation": "(AB)",
+            "time_step": "1/2",
+            "time_step_label": "+1/2 period",
             "marker": {
               "kind": "mirror"
             }
@@ -21815,6 +22209,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }
@@ -21828,6 +22224,8 @@
               1
             ],
             "cycle_notation": "1",
+            "time_step": "0",
+            "time_step_label": "none",
             "marker": {
               "kind": "mirror"
             }

@@ -826,12 +826,8 @@ a.short-signature-link[data-book-excerpt]::after {
   font-weight: 500;
 }
 
-.group-presentation td:last-child,
-.group-presentation th:last-child {
-  width: 7.4rem;
-}
-
 .presentation-colour-action {
+  width: 6rem;
   color: var(--text);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -844,6 +840,13 @@ a.short-signature-link[data-book-excerpt]::after {
   font-family: "STIX Two Math", "Cambria Math", Georgia, serif;
   font-size: 0.82rem;
   font-weight: 650;
+}
+
+.presentation-time-action {
+  width: 6.2rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .presentation-generator-identity {
@@ -1224,10 +1227,17 @@ a.short-signature-link[data-book-excerpt]::after {
     gap: 0.14rem;
   }
 
-  .group-presentation td:last-child,
-  .group-presentation th:last-child {
+  .group-presentation th,
+  .group-presentation td {
+    padding-inline: 0.28rem;
+  }
+
+  .presentation-colour-action {
+    width: 4.9rem;
+  }
+
+  .presentation-time-action {
     width: 5.6rem;
-    white-space: normal;
   }
 
   .presentation-heading {
