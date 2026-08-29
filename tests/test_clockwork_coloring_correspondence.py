@@ -81,6 +81,7 @@ class CorrespondenceParser(HTMLParser):
         self.scripts: list[tuple[str, str]] = []
         self.presentation_tables: list[str] = []
         self.presentation_generator_count = 0
+        self.presentation_time_steps: list[str] = []
         self.presentation_markers: list[tuple[str, str]] = []
         self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
@@ -192,6 +193,10 @@ class CorrespondenceParser(HTMLParser):
             )
         if tag == "tr" and "presentation-generator-row" in classes:
             self.presentation_generator_count += 1
+        if tag == "td" and "presentation-time-action" in classes:
+            self.presentation_time_steps.append(
+                attributes.get("data-time-step", "")
+            )
         if tag == "span" and "presentation-generator-marker" in classes:
             self.presentation_markers.append(
                 (
@@ -754,9 +759,47 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ),
         )
         self.assertEqual(self.parser.presentation_generator_count, 151)
+        expected_time_steps = [
+            generator["time_step"]
+            for group in self.display_groups
+            for generator in group["chaim_presentation"]["generators"]
+        ]
+        self.assertEqual(self.parser.presentation_time_steps, expected_time_steps)
+        self.assertEqual(
+            Counter(
+                generator["time_step_label"]
+                for group in self.display_groups
+                for generator in group["chaim_presentation"]["generators"]
+            ),
+            Counter(
+                {
+                    "none": 47,
+                    "+1/2 period": 77,
+                    "+1/3 period": 16,
+                    "+1/4 period": 9,
+                    "+1/6 period": 2,
+                }
+            ),
+        )
         self.assertEqual(
             self.page.count('class="group-presentation"'),
             correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count('<th scope="col">Color</th>'),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count('<th scope="col">Time</th>'),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
+        self.assertEqual(
+            self.page.count('class="presentation-colour-action"'),
+            self.parser.presentation_generator_count,
+        )
+        self.assertEqual(
+            self.page.count('class="presentation-time-action"'),
+            self.parser.presentation_generator_count,
         )
         self.assertEqual(
             self.page.count(">Presentation</h4>"),
@@ -818,6 +861,25 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 source_presentation["relations"],
                 group["id"],
             )
+            for generator in expected_chaim["generators"]:
+                time_step = correspondence.Fraction(generator["time_step"])
+                self.assertEqual(
+                    time_step,
+                    correspondence._colour_cycle_time_step(
+                        generator["colour_permutation"]
+                    ),
+                    group["id"],
+                )
+                self.assertEqual(
+                    generator["time_step_label"],
+                    correspondence._time_shift_description(time_step),
+                    group["id"],
+                )
+                self.assertEqual(
+                    group["clock_order"] % time_step.denominator,
+                    0,
+                    group["id"],
+                )
             if group["clock_order"] > 1:
                 self.assertEqual(
                     tuple(superscript_orders(group["book_color_signature"])),
@@ -838,6 +900,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             [row["cycle_notation"] for row in g225["generators"]],
             ["(ABC)", "(ABC)", "(ABC)"],
         )
+        self.assertEqual(
+            [row["time_step_label"] for row in g225["generators"]],
+            ["+1/3 period", "+1/3 period", "+1/3 period"],
+        )
         self.assertEqual(g225["relations"], "α³ = β³ = γ³ = αβγ = 1")
 
         g225_start = self.page.index(
@@ -848,6 +914,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         g225_html = self.page[g225_start:g225_end]
         self.assertEqual(g225_html.count('class="presentation-generator-row"'), 3)
+        self.assertEqual(g225_html.count(">+1/3 period</td>"), 3)
         self.assertIn("Γ = ⟨α, β, γ | α³ = β³ = γ³ = αβγ = 1⟩", g225_html)
         self.assertNotIn("G/Λ", g225_html)
 
@@ -866,6 +933,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(
             [row["cycle_notation"] for row in by_id["g227"]["chaim_presentation"]["generators"]],
             ["(ABC)", "(ACB)", "1"],
+        )
+        self.assertEqual(
+            [
+                row["time_step_label"]
+                for row in by_id["g227"]["chaim_presentation"]["generators"]
+            ],
+            ["+1/3 period", "+1/3 period", "none"],
         )
         self.assertEqual(
             by_id["g227"]["signature_evidence"]["generator_relabeling"],
@@ -914,7 +988,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=quiet-signature-links", self.page)
+        self.assertIn("?v=presentation-color-time", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
