@@ -102,6 +102,7 @@ class CorrespondenceParser(HTMLParser):
         self.plate_images: list[tuple[str, str, str, str]] = []
         self.plate_generator_overlays: list[dict[str, str | None]] = []
         self.plate_generators: list[tuple[str, str, str]] = []
+        self.plate_generator_symbols: list[str] = []
         self.book_links: list[tuple[str, str, str]] = []
         self.book_excerpt_links: list[dict[str, str | None]] = []
         self.book_dialog_ids: list[str] = []
@@ -117,6 +118,7 @@ class CorrespondenceParser(HTMLParser):
         self.presentation_clock_powers: list[str] = []
         self.presentation_source_cycles: list[str] = []
         self.presentation_markers: list[tuple[str, str]] = []
+        self.presentation_generator_symbols: list[str] = []
         self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
         self.plane_group_links: list[str] = []
@@ -245,6 +247,9 @@ class CorrespondenceParser(HTMLParser):
                     attributes.get("data-rotation-order", ""),
                 )
             )
+            self.presentation_generator_symbols.append(
+                attributes.get("data-generator-symbol", "")
+            )
         if tag == "a" and "short-signature-link" in classes:
             self.short_signature_links.append(attributes)
         if tag == "img" and (attributes.get("src") or "").startswith(
@@ -267,6 +272,9 @@ class CorrespondenceParser(HTMLParser):
                     attributes.get("data-generator-kind", ""),
                     attributes.get("data-rotation-order", ""),
                 )
+            )
+            self.plate_generator_symbols.append(
+                attributes.get("data-generator-symbol", "")
             )
 
 
@@ -1147,8 +1155,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn(".presentation-mirror-line", css)
         self.assertIn("stroke-dasharray: 3 3", css)
         self.assertIn(".presentation-glide-half-arrow", css)
-        self.assertIn(".presentation-generator-rotation-6", css)
-        self.assertIn(".presentation-generator-rotation-2", css)
+        self.assertIn(".generator-symbol-core", css)
+        self.assertIn(".generator-symbol-body .generator-symbol-arms", css)
         self.assertIn('data-rotation-order="3"', self.page)
         self.assertIn('data-rotation-order="6"', self.page)
         self.assertIn("font-variant-numeric: tabular-nums", css)
@@ -1159,7 +1167,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=fixed-clock-powers", self.page)
+        self.assertIn("?v=ucl-generator-symbols", self.page)
 
     def test_copy_uses_one_fixed_forward_clock(self) -> None:
         self.assertIn(
@@ -1872,6 +1880,43 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 }
             ),
         )
+        expected_symbols = []
+        rotation_steps = Counter()
+        for group in self.display_groups:
+            for generator in group["chaim_presentation"]["generators"]:
+                marker = generator["marker"]
+                if marker["kind"] == "rotation":
+                    order = marker["order"]
+                    step = correspondence._rotation_screw_step(
+                        order, generator["time_shift"]
+                    )
+                    expected_symbols.append(f"rotation-{order}-{step}")
+                    rotation_steps[(order, step)] += 1
+                else:
+                    expected_symbols.append(marker["kind"])
+        self.assertEqual(self.parser.presentation_generator_symbols, expected_symbols)
+        self.assertEqual(self.parser.plate_generator_symbols, expected_symbols)
+        self.assertEqual(
+            rotation_steps,
+            Counter(
+                {
+                    (2, 0): 15,
+                    (2, 1): 24,
+                    (3, 0): 3,
+                    (3, 1): 6,
+                    (3, 2): 8,
+                    (4, 0): 2,
+                    (4, 1): 5,
+                    (4, 2): 5,
+                    (4, 3): 3,
+                    (6, 1): 1,
+                    (6, 2): 1,
+                    (6, 3): 1,
+                    (6, 4): 1,
+                    (6, 5): 1,
+                }
+            ),
+        )
 
         for group in self.display_groups:
             actions = group["chaim_presentation"]["generators"]
@@ -1968,6 +2013,75 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("stroke-dasharray: 9 7", css)
         self.assertIn(".plate-generator-half-arrow {", css)
         self.assertIn("@media (forced-colors: active)", css)
+
+    def test_ucl_rotation_symbols_encode_the_directed_time_skip(self) -> None:
+        by_id = {group["id"]: group for group in self.display_groups}
+
+        def symbols(group_id: str) -> list[str]:
+            return [
+                correspondence._rotation_symbol_key(
+                    row["marker"]["order"], row["time_shift"]
+                )
+                if row["marker"]["kind"] == "rotation"
+                else row["marker"]["kind"]
+                for row in by_id[group_id]["chaim_presentation"]["generators"]
+            ]
+
+        self.assertEqual(
+            symbols("g225"),
+            ["rotation-3-2", "rotation-3-2", "rotation-3-2"],
+        )
+        self.assertEqual(
+            symbols("g244"),
+            ["rotation-6-2", "rotation-3-2", "rotation-2-0"],
+        )
+        self.assertEqual(
+            symbols("g95"),
+            ["rotation-4-2", "rotation-4-2", "rotation-2-0"],
+        )
+        self.assertEqual(symbols("g269"), ["mirror", "mirror", "mirror"])
+        self.assertEqual(symbols("g9"), ["mirror", "glide"])
+        self.assertEqual(symbols("g248")[0], "rotation-6-1")
+        self.assertEqual(symbols("g246")[0], "rotation-6-3")
+        self.assertEqual(symbols("g247")[0], "rotation-6-5")
+
+        self.assertNotIn(
+            "generator-symbol-arms",
+            correspondence._rotation_symbol_body_html(2, 0),
+        )
+        self.assertEqual(
+            correspondence._rotation_symbol_body_html(3, 2).count("L"), 3
+        )
+        self.assertEqual(
+            correspondence._rotation_symbol_body_html(4, 2).count("L"), 2
+        )
+        self.assertEqual(
+            correspondence._rotation_symbol_body_html(6, 2).count("L"), 3
+        )
+        self.assertNotEqual(
+            correspondence._rotation_symbol_body_html(3, 1),
+            correspondence._rotation_symbol_body_html(3, 2),
+        )
+        self.assertNotEqual(
+            correspondence._rotation_symbol_body_html(6, 1),
+            correspondence._rotation_symbol_body_html(6, 5),
+        )
+
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("--generator-ink: #74213f", css)
+        self.assertNotIn("--plate-generator-ink", css)
+        self.assertIn("color: var(--generator-ink)", css)
+        self.assertIn(".generator-symbol-core {", css)
+        self.assertIn(".generator-symbol-body .generator-symbol-arms {", css)
+        self.assertIn(
+            ".presentation-generator-glide svg > line {\n  stroke-dasharray: 3 3;",
+            css,
+        )
+        self.assertNotIn(
+            '<line x1="4" y1="12" x2="36" y2="12"></line>', self.page
+        )
 
     def test_every_live_phase_circle_meets_the_measured_reference_size(self) -> None:
         geometry_module = ROOT / "clockwork-coloring-geometry.js"

@@ -63,7 +63,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=fixed-clock-powers"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=ucl-generator-symbols"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -2907,50 +2907,125 @@ def _phase_profile(record: dict[str, Any]) -> str:
     return "<ul class=\"phase-profile\">" + "\n".join(rows) + "</ul>"
 
 
+def _rotation_screw_step(order: int, time_shift: str | Fraction) -> int:
+    """Return the UCL screw-axis subscript for one clockwork rotation.
+
+    The UCL diagrams distinguish an ordinary n-fold axis from n_m by drawing
+    m as a handed set of arms around the filled n-fold symbol.  A clockwork
+    time shift is the same datum: m = n * tau modulo n.
+    """
+
+    indexed_shift = order * Fraction(time_shift)
+    if indexed_shift.denominator != 1:
+        raise ValueError(
+            f"rotation of order {order} has incompatible time shift {time_shift}"
+        )
+    return indexed_shift.numerator % order
+
+
+def _rotation_symbol_key(order: int, time_shift: str | Fraction) -> str:
+    return f"rotation-{order}-{_rotation_screw_step(order, time_shift)}"
+
+
+def _rotation_symbol_body_html(order: int, screw_step: int) -> str:
+    """Draw one origin-centred UCL-style rotation/screw-axis symbol.
+
+    The filled lens, triangle, diamond and hexagon follow the crystallographic
+    projection symbols.  For n_m, gcd(n, m) chooses the evenly spaced arm
+    starts and m versus n-m chooses the handedness, matching the related UCL
+    Pn_m diagrams without copying their raster artwork.
+    """
+
+    if order not in {2, 3, 4, 6}:
+        raise ValueError(f"unsupported rotation marker order: {order}")
+    if not 0 <= screw_step < order:
+        raise ValueError(f"invalid {order}-fold screw step: {screw_step}")
+
+    radii = {2: 8.8, 3: 9.6, 4: 9.6, 6: 9.2}
+    radius = radii[order]
+    if order == 2:
+        core = (
+            '<path class="generator-symbol-core" '
+            'd="M0 -9.6 C-4.6 -6.2 -4.6 6.2 0 9.6 '
+            'C4.6 6.2 4.6 -6.2 0 -9.6Z"></path>'
+        )
+    else:
+        points = []
+        for index in range(order):
+            angle = -math.pi / 2 + 2 * math.pi * index / order
+            points.append(
+                f"{_svg_number(radius * math.cos(angle))},"
+                f"{_svg_number(radius * math.sin(angle))}"
+            )
+        core = (
+            '<polygon class="generator-symbol-core" '
+            f'points="{" ".join(points)}"></polygon>'
+        )
+
+    if screw_step == 0:
+        arms = ""
+    else:
+        spacing = math.gcd(order, screw_step)
+        handedness = -1 if screw_step <= order / 2 else 1
+        commands = []
+        for index in range(0, order, spacing):
+            angle = -math.pi / 2 + 2 * math.pi * index / order
+            radial = (math.cos(angle), math.sin(angle))
+            tangent = (-math.sin(angle), math.cos(angle))
+            start = (radius * radial[0], radius * radial[1])
+            end = (
+                start[0] + 4.3 * radial[0] + handedness * 4.1 * tangent[0],
+                start[1] + 4.3 * radial[1] + handedness * 4.1 * tangent[1],
+            )
+            commands.append(
+                f"M{_svg_number(start[0])} {_svg_number(start[1])}"
+                f"L{_svg_number(end[0])} {_svg_number(end[1])}"
+            )
+        arms = (
+            '<path class="generator-symbol-arms" '
+            f'd="{" ".join(commands)}"></path>'
+        )
+    return core + arms
+
+
 def _generator_marker_html(action: dict[str, Any]) -> str:
     marker = action["marker"]
     kind = marker["kind"]
     extra_class = ""
     data_order = ""
+    symbol_key = kind
     if kind == "rotation":
         order = marker["order"]
+        screw_step = _rotation_screw_step(order, action["time_shift"])
+        symbol_key = _rotation_symbol_key(order, action["time_shift"])
         extra_class = f" presentation-generator-rotation-{order}"
-        data_order = f' data-rotation-order="{order}"'
-        if order == 2:
-            drawing = (
-                '<line x1="8" y1="12" x2="32" y2="12"></line>'
-                '<circle cx="20" cy="12" r="3.2"></circle>'
-            )
-        elif order == 3:
-            drawing = '<polygon points="20,3 34,21 6,21"></polygon>'
-        elif order == 4:
-            drawing = '<polygon points="20,2.5 34,12 20,21.5 6,12"></polygon>'
-        elif order == 6:
-            drawing = (
-                '<line x1="4" y1="12" x2="36" y2="12"></line>'
-                '<line x1="12" y1="3" x2="28" y2="21"></line>'
-                '<line x1="28" y1="3" x2="12" y2="21"></line>'
-            )
-        else:
-            raise ValueError(f"unsupported rotation marker order: {order}")
+        data_order = (
+            f' data-rotation-order="{order}" data-screw-step="{screw_step}"'
+        )
+        drawing = (
+            '<g class="generator-symbol-body" transform="translate(20 16)">'
+            f'{_rotation_symbol_body_html(order, screw_step)}'
+            '</g>'
+        )
     elif kind == "mirror":
-        drawing = '<line class="presentation-mirror-line" x1="3" y1="12" x2="37" y2="12"></line>'
+        drawing = '<line class="presentation-mirror-line" x1="3" y1="16" x2="37" y2="16"></line>'
     elif kind == "glide":
         drawing = (
-            '<line x1="3" y1="12" x2="37" y2="12"></line>'
-            '<path class="presentation-glide-half-arrow" d="M17 6 L25 12 L17 18"></path>'
+            '<line x1="3" y1="16" x2="37" y2="16"></line>'
+            '<path class="presentation-glide-half-arrow" d="M17 10 L25 16 L17 22"></path>'
         )
     elif kind == "translation":
         drawing = (
-            '<line x1="4" y1="12" x2="34" y2="12"></line>'
-            '<path class="presentation-translation-arrow" d="M27 6 L35 12 L27 18"></path>'
+            '<line x1="4" y1="16" x2="34" y2="16"></line>'
+            '<path class="presentation-translation-arrow" d="M27 10 L35 16 L27 22"></path>'
         )
     else:
         raise ValueError(f"unsupported presentation marker: {kind}")
     return (
         f'<span class="presentation-generator-marker presentation-generator-{kind}'
-        f'{extra_class}" data-generator-kind="{kind}"{data_order} aria-hidden="true">'
-        f'<svg viewBox="0 0 40 24" focusable="false">{drawing}</svg>'
+        f'{extra_class}" data-generator-kind="{kind}" '
+        f'data-generator-symbol="{symbol_key}"{data_order} aria-hidden="true">'
+        f'<svg viewBox="0 0 40 32" focusable="false">{drawing}</svg>'
         "</span>"
     )
 
@@ -3013,47 +3088,42 @@ def _plate_generator_label_html(
     )
 
 
-def _plate_rotation_glyph_html(order: int) -> str:
+def _plate_rotation_glyph_html(order: int, screw_step: int) -> str:
     def layers(drawing: str) -> str:
         return (
             f'<g class="plate-generator-glyph-halo">{drawing}</g>'
             f'<g class="plate-generator-glyph">{drawing}</g>'
         )
 
-    if order == 2:
-        return layers(
-            '<line x1="-11" y1="0" x2="11" y2="0"></line>'
-            '<circle cx="0" cy="0" r="3.2"></circle>'
-        )
-    if order == 3:
-        return layers('<polygon points="0,-11 10,8 -10,8"></polygon>')
-    if order == 4:
-        return layers('<polygon points="0,-11 11,0 0,11 -11,0"></polygon>')
-    if order == 6:
-        return layers(
-            '<line x1="-12" y1="0" x2="12" y2="0"></line>'
-            '<line x1="-6" y1="-10.4" x2="6" y2="10.4"></line>'
-            '<line x1="6" y1="-10.4" x2="-6" y2="10.4"></line>'
-        )
-    raise ValueError(f"unsupported plate rotation order: {order}")
+    drawing = (
+        '<g class="generator-symbol-body">'
+        f'{_rotation_symbol_body_html(order, screw_step)}'
+        '</g>'
+    )
+    return layers(drawing)
 
 
 def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
     placement = _plate_generator_assignment(record)
     scale = _plate_cell_scale(record["render"])
     markers: list[str] = []
-    rotation_label_offsets = ((17, -15), (17, 16), (-17, 16), (-17, -15))
+    rotation_label_offsets = ((21, -17), (21, 18), (-21, 18), (-21, -17))
     axis_label_fractions = (0.18, 0.78, 0.42, 0.64)
     for index, generator in enumerate(placement):
         name = generator["generator"]
         marker = generator["marker"]
         kind = marker["kind"]
         order_attribute = ""
+        symbol_key = kind
         classes = f"plate-generator plate-generator--{kind}"
         if kind == "rotation":
             order = marker["order"]
+            screw_step = _rotation_screw_step(order, generator["phase"])
+            symbol_key = _rotation_symbol_key(order, generator["phase"])
             classes += f" plate-generator--rotation-{order}"
-            order_attribute = f' data-rotation-order="{order}"'
+            order_attribute = (
+                f' data-rotation-order="{order}" data-screw-step="{screw_step}"'
+            )
             centre_x, centre_y = _plate_screen_point(
                 generator["visualization"]["centre"], scale
             )
@@ -3063,7 +3133,7 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
             drawing = (
                 f'<g transform="translate({_svg_number(centre_x)} '
                 f'{_svg_number(centre_y)})">'
-                f'{_plate_rotation_glyph_html(order)}'
+                f'{_plate_rotation_glyph_html(order, screw_step)}'
                 f'{_plate_generator_label_html(name, label_dx, label_dy)}'
                 '</g>'
             )
@@ -3128,7 +3198,8 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
             drawing += _plate_generator_label_html(name, label_x, label_y)
         markers.append(
             f'<g class="{classes}" data-generator="{escape(name)}" '
-            f'data-generator-kind="{kind}"{order_attribute}>{drawing}</g>'
+            f'data-generator-kind="{kind}" data-generator-symbol="{symbol_key}"'
+            f'{order_attribute}>{drawing}</g>'
         )
     return (
         f'<svg class="plate-generator-overlay" '

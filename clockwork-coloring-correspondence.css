@@ -1,4 +1,5 @@
 .correspondence-page {
+  --generator-ink: #74213f;
   max-width: 1080px;
   padding-bottom: 4rem;
 }
@@ -526,12 +527,12 @@ nav a[aria-current="page"] {
 }
 
 .plate-generator-overlay {
-  --plate-generator-ink: #74213f;
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  color: var(--generator-ink);
   pointer-events: none;
 }
 
@@ -554,36 +555,29 @@ nav a[aria-current="page"] {
   stroke-width: 6px;
 }
 
+.plate-generator-glyph-halo {
+  color: rgba(255, 253, 247, 0.94);
+}
+
 .plate-generator-axis {
   fill: none;
-  stroke: var(--plate-generator-ink);
+  stroke: currentColor;
   stroke-width: 2.2px;
   stroke-dasharray: 9 7;
 }
 
 .plate-generator-half-arrow {
   fill: none;
-  stroke: var(--plate-generator-ink);
+  stroke: currentColor;
   stroke-width: 2.35px;
 }
 
 .plate-generator-glyph {
-  fill: rgba(255, 253, 247, 0.9);
-  stroke: var(--plate-generator-ink);
-  stroke-width: 2.35px;
-}
-
-.plate-generator--rotation-2 .plate-generator-glyph,
-.plate-generator--rotation-6 .plate-generator-glyph {
-  fill: none;
-}
-
-.plate-generator--rotation-2 .plate-generator-glyph circle {
-  fill: var(--plate-generator-ink);
+  color: var(--generator-ink);
 }
 
 .plate-generator-label {
-  fill: var(--plate-generator-ink);
+  fill: currentColor;
   stroke: rgba(255, 253, 247, 0.98);
   stroke-width: 4px;
   paint-order: stroke fill;
@@ -604,11 +598,10 @@ nav a[aria-current="page"] {
   .plate-generator-axis,
   .plate-generator-half-arrow,
   .plate-generator-glyph {
+    color: CanvasText;
     stroke: CanvasText;
   }
 
-  .plate-generator-glyph,
-  .plate-generator--rotation-2 .plate-generator-glyph circle,
   .plate-generator-label {
     fill: CanvasText;
   }
@@ -989,17 +982,17 @@ a.short-signature-link[data-book-excerpt]::after {
 .presentation-generator-marker {
   display: inline-flex;
   width: 2.2rem;
-  height: 1.35rem;
+  height: 1.55rem;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
+  color: var(--generator-ink);
 }
 
 .presentation-generator-marker svg {
   width: 100%;
   height: 100%;
   overflow: visible;
-  fill: color-mix(in srgb, var(--accent) 11%, white);
+  fill: none;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1007,12 +1000,29 @@ a.short-signature-link[data-book-excerpt]::after {
   vector-effect: non-scaling-stroke;
 }
 
-.presentation-generator-rotation-6 svg,
-.presentation-generator-rotation-2 svg {
-  fill: none;
+.generator-symbol-core {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
 }
 
-.presentation-mirror-line {
+.generator-symbol-body .generator-symbol-arms {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  vector-effect: non-scaling-stroke;
+}
+
+.plate-generator-glyph-halo .generator-symbol-core,
+.plate-generator-glyph-halo .generator-symbol-arms {
+  stroke-width: 6px;
+}
+
+.presentation-mirror-line,
+.presentation-generator-glide svg > line {
   stroke-dasharray: 3 3;
 }
 
@@ -1026,7 +1036,7 @@ a.short-signature-link[data-book-excerpt]::after {
 }
 
 .generator-key {
-  color: var(--accent);
+  color: var(--generator-ink);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 0.92rem;
   font-weight: 700;
