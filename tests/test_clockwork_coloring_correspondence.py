@@ -39,16 +39,35 @@ BOOK_DISCREPANCY_FIXTURE = {"g234", "g244", "g245"}
 COMPOSITE_EXTENSION_FIXTURE = {
     "g75", "g96", "g97", "g99", "g137", "g139", "g235", "g247", "g248"
 }
-PHASE_ALIGNMENT_FIXTURE = {
-    "g96": ("(ACDB)", ["A", "C", "D", "B"], ["3/4", "3/4", "1/2"]),
-    "g97": ("(ABDC)", ["A", "B", "D", "C"], ["1/4", "1/4", "1/2"]),
-    "g225": ("(ACB)", ["A", "C", "B"], ["2/3", "2/3", "2/3"]),
-    "g226": ("(ABC)", ["A", "B", "C"], ["1/3", "1/3", "1/3"]),
-    "g227": ("(ABC)", ["A", "B", "C"], ["1/3", "2/3", "0"]),
-    "g244": ("(ABC)", ["A", "B", "C"], ["1/3", "2/3", "0"]),
-    "g245": ("(ACB)", ["A", "C", "B"], ["2/3", "1/3", "0"]),
-    "g247": ("(ACEFDB)", ["A", "C", "E", "F", "D", "B"], ["5/6", "2/3", "1/2"]),
-    "g248": ("(ABDFEC)", ["A", "B", "D", "F", "E", "C"], ["1/6", "1/3", "1/2"]),
+FIXED_CLOCK_POWER_FIXTURE = {
+    "g75": [0, 2, 1],
+    "g96": [3, 3, 2],
+    "g97": [1, 1, 2],
+    "g99": [1, 3, 0],
+    "g137": [1, 0],
+    "g139": [1, 2],
+    "g225": [2, 2, 2],
+    "g226": [1, 1, 1],
+    "g227": [1, 2, 0],
+    "g234": [2, 0],
+    "g244": [1, 2, 0],
+    "g245": [2, 1, 0],
+    "g247": [5, 4, 3],
+    "g248": [1, 2, 3],
+}
+SOURCE_LABELING_FIXTURE = {
+    "g75": ["A", "C", "B", "D"],
+    "g96": ["A", "C", "D", "B"],
+    "g97": ["A", "B", "D", "C"],
+    "g99": ["A", "C", "B", "D"],
+    "g137": ["A", "C", "B", "D"],
+    "g139": ["A", "C", "B", "D"],
+    "g225": ["A", "C", "B"],
+    "g234": ["A", "C", "B"],
+    "g235": ["A", "E", "D", "C", "B", "F"],
+    "g245": ["A", "C", "B"],
+    "g247": ["A", "C", "E", "F", "D", "B"],
+    "g248": ["A", "B", "D", "F", "E", "C"],
 }
 SUPERSCRIPT_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
 
@@ -95,6 +114,8 @@ class CorrespondenceParser(HTMLParser):
         self.presentation_tables: list[str] = []
         self.presentation_generator_count = 0
         self.presentation_time_shifts: list[str] = []
+        self.presentation_clock_powers: list[str] = []
+        self.presentation_source_cycles: list[str] = []
         self.presentation_markers: list[tuple[str, str]] = []
         self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
@@ -210,6 +231,13 @@ class CorrespondenceParser(HTMLParser):
             self.presentation_time_shifts.append(
                 attributes.get("data-time-shift", "")
             )
+        if tag == "td" and "presentation-colour-action" in classes:
+            self.presentation_clock_powers.append(
+                attributes.get("data-clock-power", "")
+            )
+            self.presentation_source_cycles.append(
+                attributes.get("data-source-cycle", "")
+            )
         if tag == "span" and "presentation-generator-marker" in classes:
             self.presentation_markers.append(
                 (
@@ -277,7 +305,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ids = [group["id"] for group in groups]
         display_ids = [group["id"] for group in self.display_groups]
         trivial_ids = [group["id"] for group in self.trivial_groups]
-        self.assertEqual(self.payload["meta"]["schema_version"], 8)
+        self.assertEqual(self.payload["meta"]["schema_version"], 9)
         self.assertEqual(len(groups), 68)
         self.assertEqual(len(display_ids), correspondence.DISPLAYED_GROUP_COUNT)
         self.assertEqual(len(trivial_ids), correspondence.OMITTED_TRIVIAL_COUNT)
@@ -480,12 +508,12 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
 
     def test_category_help_is_hover_only_non_latching_and_complete(self) -> None:
         mate_count = sum(
-            bool(group["inverse_clock_mate"]) for group in self.display_groups
+            bool(group["complementary_skip_mate"]) for group in self.display_groups
         )
         for label, help_text in correspondence.TERM_HELP.items():
             if label == "Conway fibrifold notation":
                 expected = len(self.payload["groups"])
-            elif label == "Opposite clock orientation":
+            elif label == "Complementary forward skips":
                 expected = mate_count
             else:
                 expected = correspondence.DISPLAYED_GROUP_COUNT
@@ -505,7 +533,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
 
         self.assertNotIn('<details class="term-help">', self.page)
-        self.assertNotIn("<summary>", self.page)
+        self.assertEqual(
+            self.page.count('<details class="presentation-source-audit">'),
+            len(SOURCE_LABELING_FIXTURE),
+        )
         self.assertNotIn(" tabindex=", self.page)
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
             encoding="utf-8"
@@ -793,6 +824,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             expected_time_shifts,
         )
         self.assertEqual(
+            self.parser.presentation_clock_powers,
+            [
+                str(generator["clock_power"])
+                for group in self.display_groups
+                for generator in group["chaim_presentation"]["generators"]
+            ],
+        )
+        self.assertEqual(
+            self.parser.presentation_source_cycles,
+            [
+                generator["source_cycle_notation"]
+                for group in self.display_groups
+                for generator in group["chaim_presentation"]["generators"]
+            ],
+        )
+        self.assertEqual(
             Counter(
                 generator["time_shift_label"]
                 for group in self.display_groups
@@ -892,49 +939,72 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 source_presentation["relations"],
                 group["id"],
             )
-            positive_cycle = tuple(
-                expected_chaim["positive_phase_permutation"]
+            clock_cycle = tuple(expected_chaim["clock_cycle"]["permutation"])
+            self.assertEqual(
+                clock_cycle,
+                tuple(
+                    (index + 1) % group["clock_order"]
+                    for index in range(group["clock_order"])
+                ),
+                group["id"],
             )
             self.assertEqual(
-                correspondence._permutation_order(positive_cycle),
+                correspondence._permutation_order(clock_cycle),
                 group["clock_order"],
                 group["id"],
             )
-            labels_by_phase = expected_chaim["colour_labels_by_phase"]
-            phase_by_label = expected_chaim["colour_phase_indices"]
+            fixed_labels = [
+                chr(ord("A") + index)
+                for index in range(group["clock_order"])
+            ]
             self.assertEqual(
-                sorted(labels_by_phase),
-                [
-                    chr(ord("A") + index)
-                    for index in range(group["clock_order"])
-                ],
+                expected_chaim["colour_labels"],
+                fixed_labels,
                 group["id"],
             )
             self.assertEqual(
-                [
-                    phase_by_label[ord(label) - ord("A")]
-                    for label in labels_by_phase
-                ],
-                list(range(group["clock_order"])),
+                [residue["colour_label"] for residue in group["phase_residues"]],
+                fixed_labels,
                 group["id"],
             )
-            self.assertEqual(
-                [residue["book_label"] for residue in group["phase_residues"]],
-                labels_by_phase,
-                group["id"],
-            )
+            source_labels = [
+                ord(label) - ord("A")
+                for label in expected_chaim["source_labeling"][
+                    "labels_by_fixed_phase"
+                ]
+            ]
             for generator in expected_chaim["generators"]:
                 time_shift = correspondence.Fraction(generator["time_shift"])
                 exponent = time_shift * group["clock_order"]
                 self.assertEqual(exponent.denominator, 1, group["id"])
                 self.assertEqual(
+                    generator["clock_power"],
+                    exponent.numerator % group["clock_order"],
+                    f'{group["id"]}:{generator["generator"]}',
+                )
+                self.assertEqual(
                     correspondence._colour_permutation_power(
-                        positive_cycle,
-                        exponent.numerator,
+                        clock_cycle,
+                        generator["clock_power"],
                     ),
                     tuple(generator["colour_permutation"]),
                     f'{group["id"]}:{generator["generator"]}',
                 )
+                self.assertEqual(
+                    generator["cycle_notation"],
+                    correspondence._permutation_notation(
+                        generator["colour_permutation"]
+                    ),
+                    f'{group["id"]}:{generator["generator"]}',
+                )
+                source_permutation = tuple(generator["source_colour_permutation"])
+                fixed_permutation = tuple(generator["colour_permutation"])
+                for index in range(group["clock_order"]):
+                    self.assertEqual(
+                        source_permutation[source_labels[index]],
+                        source_labels[fixed_permutation[index]],
+                        f'{group["id"]}:{generator["generator"]}',
+                    )
                 self.assertEqual(
                     generator["time_shift_label"],
                     correspondence._time_shift_description(time_shift),
@@ -960,25 +1030,24 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             set(correspondence.CANONICAL_TO_RENDER_CONJUGACY_BY_ID),
             set(by_id),
         )
-        for group_id, (cycle, labels_by_phase, time_shifts) in (
-            PHASE_ALIGNMENT_FIXTURE.items()
-        ):
+        for group_id, clock_powers in FIXED_CLOCK_POWER_FIXTURE.items():
             presentation = by_id[group_id]["chaim_presentation"]
             self.assertEqual(
-                presentation["positive_phase_cycle"],
-                cycle,
+                [row["clock_power"] for row in presentation["generators"]],
+                clock_powers,
                 group_id,
             )
-            self.assertEqual(
-                presentation["colour_labels_by_phase"],
-                labels_by_phase,
-                group_id,
-            )
-            self.assertEqual(
-                [row["time_shift"] for row in presentation["generators"]],
-                time_shifts,
-                group_id,
-            )
+        nonidentity_source_labels = {
+            group["id"]: group["chaim_presentation"]["source_labeling"][
+                "labels_by_fixed_phase"
+            ]
+            for group in self.payload["groups"]
+            if group["chaim_presentation"]["source_labeling"][
+                "labels_by_fixed_phase"
+            ]
+            != group["chaim_presentation"]["colour_labels"]
+        }
+        self.assertEqual(nonidentity_source_labels, SOURCE_LABELING_FIXTURE)
 
         g225 = by_id["g225"]["chaim_presentation"]
         self.assertEqual(
@@ -987,6 +1056,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertEqual(
             [row["cycle_notation"] for row in g225["generators"]],
+            ["(ACB)", "(ACB)", "(ACB)"],
+        )
+        self.assertEqual(
+            [row["source_cycle_notation"] for row in g225["generators"]],
             ["(ABC)", "(ABC)", "(ABC)"],
         )
         self.assertEqual(
@@ -1004,6 +1077,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         g225_html = self.page[g225_start:g225_end]
         self.assertEqual(g225_html.count('class="presentation-generator-row"'), 3)
         self.assertEqual(g225_html.count(">+2/3 period</td>"), 3)
+        self.assertEqual(g225_html.count('data-clock-power="2"'), 3)
+        self.assertEqual(g225_html.count("<var>C</var><sub>3</sub><sup>2</sup>"), 3)
         self.assertIn("Γ = ⟨α, β, γ | α³ = β³ = γ³ = αβγ = 1⟩", g225_html)
         self.assertNotIn("G/Λ", g225_html)
 
@@ -1018,6 +1093,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 {"kind": "rotation", "order": 3},
                 {"kind": "rotation", "order": 2},
             ],
+        )
+        self.assertEqual(
+            [
+                (row["clock_power"], row["time_shift"])
+                for row in by_id["g244"]["chaim_presentation"]["generators"]
+            ],
+            [(1, "1/3"), (2, "2/3"), (0, "0")],
         )
         self.assertEqual(
             [row["cycle_notation"] for row in by_id["g227"]["chaim_presentation"]["generators"]],
@@ -1077,19 +1159,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=cyclic-phase-alignment", self.page)
+        self.assertIn("?v=fixed-clock-powers", self.page)
 
-    def test_copy_distinguishes_a_cyclic_image_from_each_permutation(self) -> None:
+    def test_copy_uses_one_fixed_forward_clock(self) -> None:
         self.assertIn(
-            "“Cyclic” describes the subgroup generated by all Color rows: "
-            "an individual row may be the inverse, the identity, or another "
-            "power of the positive phase cycle. Time is the directed shift "
-            "in the fixed phase palette.",
+            "Colors follow one fixed clock: A = phase 0, B = phase 1/N, "
+            "C = phase 2/N, and so on.",
+            self.page,
+        )
+        self.assertIn(
+            "Every action is a forward time skip; none reverses time.",
             self.page,
         )
         self.assertNotIn("cycles over", self.page)
+        self.assertNotIn("may be the inverse", self.page)
         self.assertEqual(
-            self.page.count('class="presentation-palette"><span>permutations of</span>'),
+            self.page.count('class="presentation-palette"><span>forward phase order</span>'),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
@@ -1097,11 +1182,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
-            self.page.count("Each Color row is a power of this permutation."),
+            self.page.count("is shown as “none.”"),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
-            self.page.count("colour permutations and directed time shifts"),
+            self.page.count("fixed-clock powers and directed time shifts"),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
 
@@ -1111,9 +1196,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 correspondence.Fraction(1, group["clock_order"])
             )
             self.assertIn(
-                f'C<sub>{group["clock_order"]}</sub> · '
-                f'+{positive_step} period acts as '
-                f'<code>{escape(presentation["positive_phase_cycle"])}</code>.',
+                f'<var>C</var><sub>{group["clock_order"]}</sub></span> = '
+                f'+{positive_step} period = '
+                f'<code>{escape(presentation["clock_cycle"]["cycle_notation"])}</code>.',
                 self.page,
                 group["id"],
             )
@@ -1700,17 +1785,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('WATERMARK = "© COPYRIGHTED EXCERPT"', excerpt_script)
         self.assertIn('highlight = _box(spec["highlight"]', excerpt_script)
 
-    def test_inverse_clock_pairs_explain_68_to_64(self) -> None:
+    def test_complementary_forward_skip_pairs_explain_68_to_64(self) -> None:
         paired_rows = {
-            group["id"]: group["inverse_clock_mate"]
+            group["id"]: group["complementary_skip_mate"]
             for group in self.payload["groups"]
-            if group["inverse_clock_mate"]
+            if group["complementary_skip_mate"]
         }
-        self.assertEqual(paired_rows, correspondence.INVERSE_CLOCK_MATE)
+        self.assertEqual(paired_rows, correspondence.COMPLEMENTARY_SKIP_MATE)
         unordered = {frozenset((group_id, mate)) for group_id, mate in paired_rows.items()}
         self.assertEqual(len(unordered), 4)
         self.assertEqual(
-            self.payload["meta"]["traditional_color_classes_after_clock_inversion"],
+            self.payload["meta"][
+                "traditional_colour_classes_after_identifying_complementary_skips"
+            ],
             64,
         )
         self.assertEqual(len(self.display_groups) - len(unordered), 47)

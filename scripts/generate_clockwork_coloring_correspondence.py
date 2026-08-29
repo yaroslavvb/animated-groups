@@ -63,7 +63,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=cyclic-phase-alignment"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=fixed-clock-powers"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -109,8 +109,8 @@ PALETTE = (
 # colour-fixing lattice instead.  For every nontrivial plate this audited map
 # sends a canonical point x to render-lattice coordinates q = Lx + d.  Keeping
 # the signed conjugacy explicit is important: an order-only search can silently
-# exchange a rotation with its inverse and consequently reverse its clock
-# shift while leaving the marker looking plausible.
+# exchange the two directed rotations and consequently choose the complementary
+# clock shift while leaving the marker looking plausible.
 _R3 = 1 / math.sqrt(3)
 CANONICAL_TO_RENDER_CONJUGACY_BY_ID: dict[
     str, tuple[list[list[float]], tuple[float, float]]
@@ -324,9 +324,9 @@ TERM_HELP = {
         "The external UCL diagram and tables for that same space-group type in its "
         "conventional setting."
     ),
-    "Opposite clock orientation": (
-        "The entry obtained by reversing every phase shift, τ ↦ −τ; it traverses "
-        "the same cyclic colours in the opposite order."
+    "Complementary forward skips": (
+        "The paired entry replaces every +k/N period skip by +(N−k)/N modulo "
+        "one period. Both entries preserve the same fixed forward time direction."
     ),
 }
 
@@ -379,9 +379,10 @@ KERNEL_BASE_BY_ID = {
     "g268": "p6m", "g269": "p31m", "g270": "p6", "g271": "p3m1",
 }
 
-# The two rows in each pair differ by inversion of the cyclic clock generator.
-# A traditional colouring permits the corresponding global colour relabelling.
-INVERSE_CLOCK_MATE = {
+# The two rows in each pair use complementary nonnegative powers of the fixed
+# forward clock generator. A traditional colouring identifies them by a global
+# colour relabelling even though the clockwork catalog keeps time fixed.
+COMPLEMENTARY_SKIP_MATE = {
     "g96": "g97", "g97": "g96",
     "g225": "g226", "g226": "g225",
     "g244": "g245", "g245": "g244",
@@ -392,7 +393,7 @@ INVERSE_CLOCK_MATE = {
 # preimage.  Keep this name separate from the fibrifold map: both unoriented
 # notations happen to have the same four fibres, but they classify different
 # objects.
-COLOUR_SIGNATURE_COLLISION_IDS = frozenset(INVERSE_CLOCK_MATE)
+COLOUR_SIGNATURE_COLLISION_IDS = frozenset(COMPLEMENTARY_SKIP_MATE)
 
 EXPECTED_ORDER_COUNTS = {1: 17, 2: 36, 3: 6, 4: 6, 5: 0, 6: 3}
 DISPLAYED_GROUP_COUNT = 51
@@ -957,8 +958,9 @@ def book_audit(
             "status_label": "book typo resolved by pp. 157 and 164",
             "summary": (
                 "The page's ³6³3¹2 is derived in the prose on p. 157 and Table "
-                "13.1 assigns the three generators a 3-cycle, its inverse, and the "
-                "identity for type 632³/2222. Table 12.1 on p. 156 instead prints "
+                "13.1 assigns the three generators the two nonzero powers C₃ and "
+                "C₃², and the identity for type 632³/2222. Table 12.1 on p. "
+                "156 instead prints "
                 "³6²3²2 beside 632/2222. Those raised 2s denote transpositions and "
                 "cannot describe a regular C3 action. We therefore treat p. 156 as "
                 "a book error; it is not listed in the authors' online errata."
@@ -1657,6 +1659,13 @@ def _permutation_notation(permutation: Iterable[int]) -> str:
     return "".join(cycles) or "1"
 
 
+def _permutation_code(permutation: Iterable[int]) -> str:
+    notation = _permutation_notation(permutation)
+    if notation == "1":
+        return notation
+    return ".".join(re.findall(r"\(([^)]+)\)", notation))
+
+
 def _compose_colour_permutations(
     left: tuple[int, ...], right: tuple[int, ...]
 ) -> tuple[int, ...]:
@@ -1679,58 +1688,52 @@ def _short_signature_orders(signature: str) -> tuple[int, ...]:
     return tuple(int(run.translate(SUPERSCRIPT_TO_ASCII)) for run in runs)
 
 
-def _cyclic_phase_basis(
+def _source_phase_labeling(
     group_id: str,
     colours: int,
-    actions: list[dict[str, Any]],
+    source_actions: list[dict[str, Any]],
+    clock_actions: list[dict[str, Any]],
 ) -> dict[str, Any]:
-    """Identify Chaim's colour letters with the plate's directed phase cycle.
+    """Audit one simultaneous relabeling from fixed phases to source letters."""
 
-    The book is free to call either orientation of a regular cyclic action
-    ``(ABC...)``.  The plate, however, fixes phase 0, +1/N, ... through its
-    palette.  We preserve the printed action labels and solve for the unique
-    book-letter permutation induced by one positive phase step.
-    """
-
-    identity = tuple(range(colours))
-    candidates: list[tuple[int, ...]] = []
-    for candidate in permutation_group(actions):
+    candidates = []
+    for candidate in permutation_group(source_actions):
         cycle = tuple(candidate)
         if _permutation_order(cycle) != colours:
             continue
-        matches = True
-        for action in actions:
-            phase = Fraction(action["time_shift"])
-            exponent = phase * colours
-            if exponent.denominator != 1:
-                raise ValueError(f"nonintegral phase exponent in {group_id}")
-            if _colour_permutation_power(cycle, exponent.numerator) != tuple(
-                action["colour_permutation"]
-            ):
-                matches = False
-                break
-        if matches:
+        if all(
+            _colour_permutation_power(cycle, action["clock_power"])
+            == tuple(source["colour_permutation"])
+            for source, action in zip(source_actions, clock_actions, strict=True)
+        ):
             candidates.append(cycle)
-    if colours == 1 and not candidates:
-        candidates = [identity]
     if len(candidates) != 1:
         raise ValueError(
-            f"phase/book-letter alignment is not unique in {group_id}: {candidates}"
+            f"fixed/source colour relabeling is not unique in {group_id}: {candidates}"
         )
-    positive_cycle = candidates[0]
-    labels_by_phase = [
-        chr(ord("A") + _colour_permutation_power(positive_cycle, phase)[0])
+    source_cycle = candidates[0]
+    labels_by_fixed_phase = [
+        _colour_permutation_power(source_cycle, phase)[0]
         for phase in range(colours)
     ]
-    phase_by_label = [0] * colours
-    for phase, label in enumerate(labels_by_phase):
-        phase_by_label[ord(label) - ord("A")] = phase
+    for source, action in zip(source_actions, clock_actions, strict=True):
+        source_permutation = tuple(source["colour_permutation"])
+        clock_permutation = tuple(action["colour_permutation"])
+        if any(
+            source_permutation[labels_by_fixed_phase[index]]
+            != labels_by_fixed_phase[clock_permutation[index]]
+            for index in range(colours)
+        ):
+            raise ValueError(
+                f"source action is not one simultaneous relabeling in "
+                f"{group_id}:{action['generator']}"
+            )
     return {
-        "cyclic_image": f"C_{colours}",
-        "positive_phase_permutation": list(positive_cycle),
-        "positive_phase_cycle": _permutation_notation(positive_cycle),
-        "colour_labels_by_phase": labels_by_phase,
-        "colour_phase_indices": phase_by_label,
+        "labels_by_fixed_phase": [
+            chr(ord("A") + index) for index in labels_by_fixed_phase
+        ],
+        "forward_step_permutation": list(source_cycle),
+        "forward_step_cycle": _permutation_notation(source_cycle),
     }
 
 
@@ -1745,7 +1748,7 @@ def chaim_presentation(
     """Build the full-Γ presentation in Chaim's named geometric generators."""
 
     if colours <= 3:
-        actions = generator_colour_actions(
+        chaim_actions = generator_colour_actions(
             parent,
             colours,
             notation,
@@ -1760,7 +1763,7 @@ def chaim_presentation(
         geometry = GENERATOR_GEOMETRY[parent]
         if len(codes) != len(geometry):
             raise ValueError(f"composite generator/action mismatch in {group_id}")
-        actions = [
+        chaim_actions = [
             {
                 "generator": generator,
                 "geometry": description,
@@ -1773,15 +1776,15 @@ def chaim_presentation(
         ]
         action_source = "regular-cyclic-rule-extension"
 
-    if len(permutation_group(actions)) != colours:
+    if len(permutation_group(chaim_actions)) != colours:
         raise ValueError(f"Chaim action does not generate C_{colours} in {group_id}")
-    if not presentation_relations_hold(parent, actions):
+    if not presentation_relations_hold(parent, chaim_actions):
         raise ValueError(f"Chaim action violates the {parent} relations in {group_id}")
 
     signature_orders = _short_signature_orders(short_signature)
     action_orders = tuple(
         _permutation_order(action["colour_permutation"])
-        for action in actions
+        for action in chaim_actions
     )
     if colours > 1 and action_orders != signature_orders:
         raise ValueError(
@@ -1797,14 +1800,21 @@ def chaim_presentation(
         row["generator"]: row
         for row in _canonical_generator_alignment(group_id, parent, render)
     } if colours > 1 else {}
+    clock_cycle = tuple((index + 1) % colours for index in range(colours))
     rendered_actions = []
-    for action in actions:
+    for action in chaim_actions:
         affine = affine_by_name[action["generator"]]
         alignment = aligned_by_name.get(action["generator"])
         visualization = (
             alignment["visualization"] if alignment else affine["visualization"]
         )
         time_shift = alignment["phase"] if alignment else Fraction(0)
+        exponent = time_shift * colours
+        if exponent.denominator != 1:
+            raise ValueError(f"nonintegral clock power in {group_id}")
+        clock_power = exponent.numerator % colours
+        colour_permutation = _colour_permutation_power(clock_cycle, clock_power)
+        permutation_code = _permutation_code(colour_permutation)
         marker: dict[str, Any] = {"kind": visualization["kind"]}
         if visualization["kind"] == "rotation":
             marker["order"] = {
@@ -1813,12 +1823,20 @@ def chaim_presentation(
                 "quarter-turn": 4,
                 "one-sixth turn": 6,
             }[action["geometry"]]
-        rendered = action | {
-                "cycle_notation": _cycle_notation(action["permutation_code"]),
-                "time_shift": fraction_label(time_shift),
-                "time_shift_label": _time_shift_description(time_shift),
-                "marker": marker,
-            }
+        rendered = {
+            "generator": action["generator"],
+            "geometry": action["geometry"],
+            "permutation_code": permutation_code,
+            "colour_permutation": list(colour_permutation),
+            "cycle_notation": _cycle_notation(permutation_code),
+            "clock_power": clock_power,
+            "time_shift": fraction_label(time_shift),
+            "time_shift_label": _time_shift_description(time_shift),
+            "source_permutation_code": action["permutation_code"],
+            "source_colour_permutation": action["colour_permutation"],
+            "source_cycle_notation": _cycle_notation(action["permutation_code"]),
+            "marker": marker,
+        }
         if alignment:
             rendered |= {
                 "plate_source_index": alignment["source_index"],
@@ -1826,6 +1844,20 @@ def chaim_presentation(
                 "plate_visualization": alignment["visualization"],
             }
         rendered_actions.append(rendered)
+
+    if len(permutation_group(rendered_actions)) != colours:
+        raise ValueError(f"clock action does not generate C_{colours} in {group_id}")
+    if not presentation_relations_hold(parent, rendered_actions):
+        raise ValueError(f"clock action violates the {parent} relations in {group_id}")
+    clock_action_orders = tuple(
+        _permutation_order(action["colour_permutation"])
+        for action in rendered_actions
+    )
+    if colours > 1 and clock_action_orders != signature_orders:
+        raise ValueError(
+            f"short-form/clock-action order mismatch in {group_id}: "
+            f"{signature_orders} != {clock_action_orders}"
+        )
 
     presentation = group_presentation(parent)
     if presentation["generators"] != [
@@ -1837,7 +1869,24 @@ def chaim_presentation(
         "generators": rendered_actions,
         "relations": presentation["relations"],
         "action_source": action_source,
-    } | _cyclic_phase_basis(group_id, colours, rendered_actions)
+        "cyclic_image": f"C_{colours}",
+        "colour_order": "fixed-forward-phase",
+        "colour_labels": [
+            chr(ord("A") + index) for index in range(colours)
+        ],
+        "clock_cycle": {
+            "symbol": f"C_{colours}",
+            "permutation": list(clock_cycle),
+            "cycle_notation": _permutation_notation(clock_cycle),
+            "time_shift": fraction_label(Fraction(1, colours)),
+        },
+        "source_labeling": _source_phase_labeling(
+            group_id,
+            colours,
+            chaim_actions,
+            rendered_actions,
+        ),
+    }
 
 
 def _key_power(value: tuple[Any, ...], exponent: int) -> tuple[Any, ...]:
@@ -1983,15 +2032,15 @@ def validate_render(group_id: str, render: dict[str, Any], order: int) -> None:
 
 
 def phase_character_signature(
-    group: dict[str, Any], *, invert_clock: bool = False
+    group: dict[str, Any], *, complement_skips: bool = False
 ) -> tuple[Any, ...]:
-    """Coordinate signature of one embedded kernel, modulo clock inversion."""
+    """Coordinate signature used for the traditional unoriented colour quotient."""
 
     order = group["clock_order"]
     rows = []
     for operation in group["render"]["ops"]:
         phase = int(exact_fraction(operation["tau"]) * order) % order
-        if invert_clock:
+        if complement_skips:
             phase = (-phase) % order
         rows.append(
             (
@@ -2107,7 +2156,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
                 "index": j,
                 "phase": fraction_label(Fraction(j, order)),
                 "color": PALETTE[j],
-                "book_label": presentation["colour_labels_by_phase"][j],
+                "colour_label": presentation["colour_labels"][j],
             }
             for j in range(order)
         ]
@@ -2137,7 +2186,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "book_audit": book_audit(
                 group_id, order, parent_orbifold, kernel_orbifold
             ),
-            "inverse_clock_mate": INVERSE_CLOCK_MATE.get(group_id),
+            "complementary_skip_mate": COMPLEMENTARY_SKIP_MATE.get(group_id),
             "catalog_url": f"{CATALOG_ROOT}#{group_id}",
             "image": f"output/clockwork-colorings/{group_id}.webp",
             "image_alt": (
@@ -2150,19 +2199,20 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 8,
+            "schema_version": 9,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
             "source_catalog_total_groups": 275,
             "selection": "group.forward == true",
             "forward_groups": 68,
-            "traditional_color_classes_after_clock_inversion": 64,
+            "traditional_colour_classes_after_identifying_complementary_skips": 64,
             "definition": (
                 "kappa(M,v) = N*tau mod N; K = ker(kappa); regular action has H = K; "
                 "ToS type is G for N=1, G/K for N=2, and G^N/K for N>2; "
-                "each named generator's Time is its directed tau, while Chaim's "
-                "colour letters are aligned to the positive phase cycle per record"
+                "each named generator has fixed chronological colour action "
+                "C_N^(N*tau), where C_N=(ABC...) is one positive phase step; "
+                "Chaim's source permutation labels remain separate provenance"
             ),
             "book_audit_counts": EXPECTED_BOOK_AUDIT_COUNTS,
             "signature_evidence_counts": EXPECTED_SIGNATURE_EVIDENCE_COUNTS,
@@ -2235,9 +2285,7 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
                 "index": index,
                 "phase": fraction_label(Fraction(index, order)),
                 "color": PALETTE[index],
-                "book_label": record["chaim_presentation"][
-                    "colour_labels_by_phase"
-                ][index],
+                "colour_label": record["chaim_presentation"]["colour_labels"][index],
             }
             for index in range(order)
         ]
@@ -2247,13 +2295,24 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
             source_like, order, record["kernel"]["hm"]
         )
         record["book_audit"] = book_audit(group_id, order, parent, kernel)
+        record["complementary_skip_mate"] = COMPLEMENTARY_SKIP_MATE.get(group_id)
+        record.pop("inverse_clock_mate", None)
         record["image_alt"] = (
             f"Static perfect {order}-colouring for group {group_id}: "
             f"asymmetric motifs carry phase colours for Conway type {notation}."
         )
 
     meta = payload["meta"]
-    meta["schema_version"] = 8
+    meta["schema_version"] = 9
+    meta["definition"] = (
+        "kappa(M,v) = N*tau mod N; K = ker(kappa); regular action has H = K; "
+        "ToS type is G for N=1, G/K for N=2, and G^N/K for N>2; "
+        "each named generator has fixed chronological colour action "
+        "C_N^(N*tau), where C_N=(ABC...) is one positive phase step; "
+        "Chaim's source permutation labels remain separate provenance"
+    )
+    meta["traditional_colour_classes_after_identifying_complementary_skips"] = 64
+    meta.pop("traditional_color_classes_after_clock_inversion", None)
     meta["book_audit_counts"] = EXPECTED_BOOK_AUDIT_COUNTS
     meta["signature_evidence_counts"] = EXPECTED_SIGNATURE_EVIDENCE_COUNTS
     meta["book"]["annotated_excerpt_count"] = len(BOOK_EXCERPTS)
@@ -2263,8 +2322,8 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 8:
-        raise ValueError("correspondence data must use schema version 8")
+    if meta.get("schema_version") != 9:
+        raise ValueError("correspondence data must use schema version 9")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -2412,24 +2471,21 @@ def validate_payload(payload: dict[str, Any]) -> None:
                 "index": index,
                 "phase": fraction_label(Fraction(index, order)),
                 "color": PALETTE[index],
-                "book_label": expected_chaim_presentation[
-                    "colour_labels_by_phase"
-                ][index],
+                "colour_label": expected_chaim_presentation["colour_labels"][index],
             }
             for index in range(order)
         ]
         if group["phase_residues"] != expected_residues:
             raise ValueError(f"phase palette/book-letter mapping differs in {group_id}")
-        positive_cycle = tuple(
-            expected_chaim_presentation["positive_phase_permutation"]
-        )
-        if _permutation_order(positive_cycle) != order:
-            raise ValueError(f"positive phase does not generate C_{order} in {group_id}")
+        clock_cycle = tuple(expected_chaim_presentation["clock_cycle"]["permutation"])
+        if _permutation_order(clock_cycle) != order:
+            raise ValueError(f"one positive phase does not generate C_{order} in {group_id}")
         for action in expected_chaim_presentation["generators"]:
             exponent = Fraction(action["time_shift"]) * order
             if (
                 exponent.denominator != 1
-                or _colour_permutation_power(positive_cycle, exponent.numerator)
+                or action["clock_power"] != exponent.numerator % order
+                or _colour_permutation_power(clock_cycle, action["clock_power"])
                 != tuple(action["colour_permutation"])
             ):
                 raise ValueError(
@@ -2454,23 +2510,28 @@ def validate_payload(payload: dict[str, Any]) -> None:
                 raise ValueError(f"geometric operation phases do not generate C_{order} in {group_id}")
         validate_render(group_id, group["render"], order)
 
-    for group_id, mate_id in INVERSE_CLOCK_MATE.items():
+    for group_id, mate_id in COMPLEMENTARY_SKIP_MATE.items():
         group = next(row for row in groups if row["id"] == group_id)
         mate = next(row for row in groups if row["id"] == mate_id)
-        if group["inverse_clock_mate"] != mate_id or mate["inverse_clock_mate"] != group_id:
-            raise ValueError("inverse-clock mate relation is not reciprocal")
+        if (
+            group["complementary_skip_mate"] != mate_id
+            or mate["complementary_skip_mate"] != group_id
+        ):
+            raise ValueError("complementary-skip mate relation is not reciprocal")
         if (
             group["parent"] != mate["parent"]
             or group["kernel"] != mate["kernel"]
             or group["clock_order"] != mate["clock_order"]
         ):
-            raise ValueError(f"inverse-clock pair differs as a traditional coloring: {group_id}")
+            raise ValueError(
+                f"complementary-skip pair differs as a traditional coloring: {group_id}"
+            )
 
     color_classes: dict[tuple[Any, ...], list[str]] = defaultdict(list)
     for group in groups:
         signature = min(
             phase_character_signature(group),
-            phase_character_signature(group, invert_clock=True),
+            phase_character_signature(group, complement_skips=True),
         )
         color_classes[signature].append(group["id"])
     repeated = {
@@ -2478,11 +2539,14 @@ def validate_payload(payload: dict[str, Any]) -> None:
     }
     expected_repeated = {
         frozenset((group_id, mate_id))
-        for group_id, mate_id in INVERSE_CLOCK_MATE.items()
+        for group_id, mate_id in COMPLEMENTARY_SKIP_MATE.items()
     }
     if len(color_classes) != 64 or repeated != expected_repeated:
-        raise ValueError("traditional clock-inversion quotient must have 64 classes")
-    if meta.get("traditional_color_classes_after_clock_inversion") != len(color_classes):
+        raise ValueError("traditional complementary-skip quotient must have 64 classes")
+    if (
+        meta.get("traditional_colour_classes_after_identifying_complementary_skips")
+        != len(color_classes)
+    ):
         raise ValueError("traditional color-class total does not match the operations")
 
 
@@ -2822,7 +2886,7 @@ def _phase_legend(record: dict[str, Any]) -> str:
         items.append(
             "<li>"
             f"<span class=\"swatch\" style=\"--swatch: {escape(residue['color'])}\"></span>"
-            f"<span>{escape(residue['book_label'])} · colour {residue['index']} · "
+            f"<span>{escape(residue['colour_label'])} · "
             f"phase {escape(residue['phase'])}</span>"
             "</li>"
         )
@@ -3077,11 +3141,21 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
     )
 
 
+def _clock_power_html(order: int, power: int) -> str:
+    exponent = "" if power == 1 else f"<sup>{power}</sup>"
+    return (
+        f'<span class="clock-power clock-power--{power}" '
+        f'aria-label="C {order} to power {power}">'
+        f'<var>C</var><sub>{order}</sub>{exponent}</span>'
+    )
+
+
 def _presentation_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     presentation = record["chaim_presentation"]
     rows = []
     for generator in presentation["generators"]:
+        power = generator["clock_power"]
         rows.append(
             '<tr class="presentation-generator-row">'
             '<th scope="row"><span class="presentation-generator-identity">'
@@ -3089,7 +3163,11 @@ def _presentation_html(record: dict[str, Any]) -> str:
             f'<span class="generator-key">{escape(generator["generator"])}</span>'
             f'<span class="generator-geometry">{escape(generator["geometry"])}</span>'
             "</span></th>"
-            f'<td class="presentation-colour-action"><code>{escape(generator["cycle_notation"])}</code></td>'
+            f'<td class="presentation-colour-action" '
+            f'data-clock-power="{power}" '
+            f'data-fixed-cycle="{escape(generator["cycle_notation"])}" '
+            f'data-source-cycle="{escape(generator["source_cycle_notation"])}">'
+            f'{_clock_power_html(record["clock_order"], power)}</td>'
             f'<td class="presentation-time-action" data-time-shift="{escape(generator["time_shift"])}">'
             f'{escape(generator["time_shift_label"])}</td>'
             "</tr>"
@@ -3097,24 +3175,56 @@ def _presentation_html(record: dict[str, Any]) -> str:
     rows_html = "\n".join(rows)
     palette = "".join(
         '<span class="presentation-colour">'
-        f'<i style="--presentation-colour: '
-        f'{escape(PALETTE[presentation["colour_phase_indices"][index]])}"></i>'
+        f'<i style="--presentation-colour: {escape(PALETTE[index])}"></i>'
         f'{chr(ord("A") + index)}</span>'
         for index in range(record["clock_order"])
     )
     positive_step = fraction_label(Fraction(1, record["clock_order"]))
     cyclic_key = (
-        '<p class="presentation-cyclic-key"><strong>Cyclic image</strong> '
-        f'C<sub>{record["clock_order"]}</sub> · +{escape(positive_step)} period '
-        f'acts as <code>{escape(presentation["positive_phase_cycle"])}</code>. '
-        'Each Color row is a power of this permutation.</p>'
+        '<p class="presentation-cyclic-key"><strong>Forward clock</strong> '
+        f'{_clock_power_html(record["clock_order"], 1)} = '
+        f'+{escape(positive_step)} period = '
+        f'<code>{escape(presentation["clock_cycle"]["cycle_notation"])}</code>. '
+        f'A row with Time +k/{record["clock_order"]} has Color '
+        f'C<sub>{record["clock_order"]}</sub><sup>k</sup>: k forward ticks '
+        f'modulo {record["clock_order"]}. C<sub>{record["clock_order"]}</sub>'
+        '<sup>0</sup> is shown as “none.”</p>'
     )
+    source_differences = [
+        generator
+        for generator in presentation["generators"]
+        if generator["cycle_notation"] != generator["source_cycle_notation"]
+    ]
+    source_audit = ""
+    if source_differences:
+        source_kind = (
+            "Book"
+            if presentation["action_source"] == "book-canonical"
+            else "Derived source"
+        )
+        source_rows = "".join(
+            f'<li><span>{escape(generator["generator"])}</span> '
+            f'<code>{escape(generator["source_cycle_notation"])}</code></li>'
+            for generator in source_differences
+        )
+        source_audit = (
+            '<details class="presentation-source-audit">'
+            f'<summary>{source_kind} cycle labels</summary><ul>{source_rows}</ul>'
+            '<p>The source letters are an independent simultaneous relabelling; '
+            'they do not change the fixed phase colors above.</p></details>'
+        )
     source_note = ""
     if presentation["action_source"] == "regular-cyclic-rule-extension":
         source_note = (
-            '<p class="presentation-source-note">Cyclic extension: these C<sub>'
-            f'{record["clock_order"]}</sub> actions follow Chaim’s order rule; the book '
-            "does not print a composite-colour row.</p>"
+            '<p class="presentation-source-note">Cyclic extension: these clock powers '
+            "come from the audited time shifts; the book does not print a "
+            "composite-colour row.</p>"
+        )
+    elif source_differences:
+        source_note = (
+            '<p class="presentation-source-note">Clock normalization: A, B, … stay '
+            "in forward phase order. The book’s independently lettered cycles are "
+            "available in the source audit; the short-form orders are unchanged.</p>"
         )
     generator_names = ", ".join(
         generator["generator"] for generator in presentation["generators"]
@@ -3123,16 +3233,17 @@ def _presentation_html(record: dict[str, Any]) -> str:
               <section class="group-presentation" aria-labelledby="{group_id}-presentation-title">
                 <div class="presentation-heading">
                   <h4 id="{group_id}-presentation-title">Presentation</h4>
-                  <p class="presentation-palette"><span>permutations of</span>{palette}</p>
+                  <p class="presentation-palette"><span>forward phase order</span>{palette}</p>
                 </div>
                 <table data-presentation="{group_id}">
-                  <caption class="visually-hidden">Chaim’s named geometric generators with colour permutations and directed time shifts for {group_id}</caption>
+                  <caption class="visually-hidden">Chaim’s named geometric generators with fixed-clock powers and directed time shifts for {group_id}</caption>
                   <thead><tr><th scope="col">Generator</th><th scope="col">Color</th><th scope="col">Time</th></tr></thead>
                   <tbody>{rows_html}</tbody>
                 </table>
                 {cyclic_key}
                 <p class="presentation-relations"><strong>Relations</strong> <span>Γ = ⟨{escape(generator_names)} | {escape(presentation['relations'])}⟩</span></p>
                 {source_note}
+                {source_audit}
               </section>"""
 
 
@@ -3330,10 +3441,10 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
         f"The Symmetries of Things · p. {primary_book_reference['printed_page']}",
     )
     mate_html = ""
-    if record["inverse_clock_mate"]:
-        mate_id = escape(record["inverse_clock_mate"])
+    if record["complementary_skip_mate"]:
+        mate_id = escape(record["complementary_skip_mate"])
         mate_html = (
-            f'<li>{_term_help_html("Opposite clock orientation")}<a href="#{mate_id}">{mate_id}</a></li>'
+            f'<li>{_term_help_html("Complementary forward skips")}<a href="#{mate_id}">{mate_id}</a></li>'
         )
     short_form_support = _short_form_support_html(record)
     return f"""
@@ -3591,7 +3702,7 @@ def page_html(payload: dict[str, Any]) -> str:
     )
     if repeated_colour_ids != COLOUR_SIGNATURE_COLLISION_IDS:
         raise ValueError(
-            "colour-signature collisions no longer match the inverse-clock pairs"
+            "colour-signature collisions no longer match the complementary-skip pairs"
         )
     if any(len(fibre) != 2 for fibre in repeated_colour_fibres.values()):
         raise ValueError("expected every repeated colour signature to be a pair")
@@ -3657,7 +3768,7 @@ def page_html(payload: dict[str, Any]) -> str:
   <main class="correspondence-page">
     <nav class="directory" aria-labelledby="page-title">
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
-      <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts. “Cyclic” describes the subgroup generated by all Color rows: an individual row may be the inverse, the identity, or another power of the positive phase cycle. Time is the directed shift in the fixed phase palette.</p>
+      <p class="directory-legend">Colors follow one fixed clock: A = phase 0, B = phase 1/N, C = phase 2/N, and so on. C<sub>N</sub> = (ABC…) is one forward +1/N-period tick, so a row with Time +k/N has Color C<sub>N</sub><sup>k</sup>. Every action is a forward time skip; none reverses time. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
         <h2 id="notation-caveat-title">Notation</h2>
         <p>The displayed names use Chaim Goodman–Strauss’s coloured-orbifold notation. Across all {len(trivial_groups) + len(displayed_groups)} forward groups it gives {len(trivial_groups) + colour_class_count} cyclic plane-colouring classes. Four types leave the two orientations of the polar fibre unresolved: 442<sup>4</sup>/◦, 333<sup>3</sup>/◦, 632<sup>6</sup>/◦, and 632<sup>3</sup>/2222. These are four two-to-one fibres, not missing colourings; standard fibrifold notation also identifies each pair under fibre reversal. <a href="docs/orbifold_notation.html#uncovered-cases">Four uncovered cases ↗</a> · <a href="{HIERARCHY_CHIRALITY_URL}">hierarchy ↗</a></p>

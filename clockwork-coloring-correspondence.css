@@ -929,13 +929,27 @@ a.short-signature-link[data-book-excerpt]::after {
   white-space: nowrap;
 }
 
-.presentation-colour-action code {
-  padding: 0;
-  background: transparent;
+.clock-power {
+  display: inline-block;
   color: var(--text);
   font-family: "STIX Two Math", "Cambria Math", Georgia, serif;
-  font-size: 0.82rem;
-  font-weight: 650;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.clock-power var {
+  font-style: italic;
+}
+
+.clock-power sub,
+.clock-power sup {
+  font-size: 0.62em;
+  line-height: 0;
+}
+
+.clock-power sub {
+  margin-left: 0.04em;
 }
 
 .presentation-time-action {
@@ -1057,6 +1071,52 @@ a.short-signature-link[data-book-excerpt]::after {
   color: var(--muted);
   font-size: 0.68rem;
   line-height: 1.4;
+}
+
+.presentation-source-audit {
+  margin-top: 0.42rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.presentation-source-audit summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 650;
+}
+
+.presentation-source-audit ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem 0.75rem;
+  margin: 0.38rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.presentation-source-audit li {
+  display: inline-flex;
+  gap: 0.28rem;
+  align-items: baseline;
+}
+
+.presentation-source-audit li span {
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.presentation-source-audit code {
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: "STIX Two Math", "Cambria Math", Georgia, serif;
+}
+
+.presentation-source-audit p {
+  margin: 0.3rem 0 0;
 }
 
 .provenance {

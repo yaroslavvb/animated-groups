@@ -255,7 +255,7 @@ _add(
     (85, 266, 445, 50),
     (88, 270, 438, 43),
     "The correct regular 632 derivation",
-    "Printed p. 157 derives the regular C3 case: the 6- and 3-generators act by inverse 3-cycles and the 2-generator is the identity, giving short orders 3,3,1 and type 632/2222.",
+    "Printed p. 157 derives the regular C3 case: the 6- and 3-generators act by C3 and C3² (printed (ABC) and (CBA)), while the 2-generator is the identity, giving short orders 3,3,1 and type 632/2222.",
     "Annotated p. 157 derivation of the regular three-color 632 over 2222 case.",
 )
 
@@ -287,7 +287,7 @@ _spec = _add(
     (300, 350, 145, 28),
     (307, 354, 134, 18),
     "The later exact 632³/2222 row",
-    "Complete Table 13.1 on printed p. 164; the outline joins generator permutations of a 3-cycle, its inverse, and the identity to regular type 632³/2222.",
+    "Complete Table 13.1 on printed p. 164; the outline joins generator permutations C3, C3², and the identity to regular type 632³/2222.",
     "Complete annotated Table 13.1 with the exact permutation signature and 632 cubed over 2222 type outlined.",
 )
 _complete_table(_spec, "Table 13.1", ((164, (196, 303, 326, 361)),))
