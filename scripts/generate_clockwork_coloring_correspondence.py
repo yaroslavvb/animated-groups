@@ -47,7 +47,6 @@ from PIL import Image, ImageDraw
 from chaim_short_signatures import TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
 from colour_generator_actions import (
     GENERATOR_GEOMETRY,
-    GROUP_PRESENTATIONS,
     THREE_COLOUR_ACTION_CODES,
     generator_colour_actions,
     group_presentation,
@@ -64,7 +63,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=plate-generator-overlays"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=cyclic-phase-alignment"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -104,6 +103,58 @@ PALETTE = (
     "#D55E00",  # vermillion
     "#56B4E9",  # sky blue
 )
+
+# The canonical affine presentations use the coordinates in
+# ``wallpaper_affine_generators.py``.  Static plates use a record-specific
+# colour-fixing lattice instead.  For every nontrivial plate this audited map
+# sends a canonical point x to render-lattice coordinates q = Lx + d.  Keeping
+# the signed conjugacy explicit is important: an order-only search can silently
+# exchange a rotation with its inverse and consequently reverse its clock
+# shift while leaving the marker looking plausible.
+_R3 = 1 / math.sqrt(3)
+CANONICAL_TO_RENDER_CONJUGACY_BY_ID: dict[
+    str, tuple[list[list[float]], tuple[float, float]]
+] = {}
+
+
+def _add_plate_conjugacy(
+    group_ids: str,
+    linear: list[list[float]],
+    offset: tuple[float, float] = (0, 0),
+) -> None:
+    for group_id in group_ids.split():
+        CANONICAL_TO_RENDER_CONJUGACY_BY_ID[group_id] = (linear, offset)
+
+
+_add_plate_conjugacy("g6", [[1, -1], [0, -1]])
+_add_plate_conjugacy("g7", [[0, 1], [-1 / 2, 0]])
+_add_plate_conjugacy("g9", [[-1, -1 / 2], [-1, 1 / 2]])
+_add_plate_conjugacy("g55 g60", [[1, 0], [0, 1]])
+_add_plate_conjugacy("g57 g61 g62", [[1, 0], [0, -1]])
+_add_plate_conjugacy("g59 g63", [[0, 1], [-1, 0]], (-1 / 4, 1 / 4))
+_add_plate_conjugacy("g64", [[1, 0], [0, -1 / 2]])
+_add_plate_conjugacy("g65", [[0, 1], [1 / 2, 0]], (0, -1 / 4))
+_add_plate_conjugacy("g66 g67", [[0, -1], [1 / 2, 0]])
+_add_plate_conjugacy("g69 g70 g71 g72", [[1, 0], [0, 1]])
+_add_plate_conjugacy("g73", [[0, 1], [1, 0]], (-1 / 4, -1 / 4))
+_add_plate_conjugacy("g74", [[1 / 2, 0], [0, 1 / 2]])
+_add_plate_conjugacy("g75", [[0, 1 / 2], [1 / 2, 0]], (0, -1 / 8))
+_add_plate_conjugacy("g95 g96 g97", [[0, -1], [-1, 0]])
+_add_plate_conjugacy("g98", [[-1 / 2, 1 / 2], [1 / 2, 1 / 2]])
+_add_plate_conjugacy("g99", [[1 / 2, 1 / 2], [-1 / 2, 1 / 2]], (-1 / 4, 0))
+_add_plate_conjugacy("g129 g130", [[-1, 0], [0, -1]])
+_add_plate_conjugacy("g131", [[-1, 1], [1, 1]])
+_add_plate_conjugacy("g133 g134 g135", [[-1, -1], [1, -1]])
+_add_plate_conjugacy("g136 g138", [[-1 / 2, 1 / 2], [1 / 2, 1 / 2]])
+_add_plate_conjugacy("g137", [[-1, 0], [0, -1]], (0, 1 / 4))
+_add_plate_conjugacy("g139", [[1, 0], [0, 1]], (0, -1 / 4))
+_add_plate_conjugacy("g225 g226", [[-1, _R3], [-1, -_R3]])
+_add_plate_conjugacy("g227", [[2 / 3, 0], [1 / 3, _R3]], (-1 / 3, 0))
+_add_plate_conjugacy("g231", [[-_R3, -1], [_R3, -1]])
+_add_plate_conjugacy("g233", [[-1, -_R3], [-1, _R3]])
+_add_plate_conjugacy("g234 g235", [[-2 / 3, 0], [-1 / 3, _R3]])
+_add_plate_conjugacy("g244 g245 g246 g247 g248", [[-1, _R3], [-1, -_R3]])
+_add_plate_conjugacy("g269 g270 g271", [[-1, -_R3], [-1, _R3]])
 
 BASE_ORDER = (
     "p1", "p2", "pm", "pg", "cm", "pmm", "pmg", "pgg", "cmm",
@@ -1586,33 +1637,101 @@ def _cycle_notation(code: str) -> str:
     return "1" if code == "1" else "".join(f"({cycle})" for cycle in code.split("."))
 
 
+def _permutation_notation(permutation: Iterable[int]) -> str:
+    values = tuple(permutation)
+    visited: set[int] = set()
+    cycles: list[str] = []
+    for start in range(len(values)):
+        if start in visited:
+            continue
+        cursor = start
+        cycle: list[int] = []
+        while cursor not in visited:
+            visited.add(cursor)
+            cycle.append(cursor)
+            cursor = values[cursor]
+        if cursor != start:
+            raise ValueError(f"not a permutation: {values}")
+        if len(cycle) > 1:
+            cycles.append("(" + "".join(chr(ord("A") + index) for index in cycle) + ")")
+    return "".join(cycles) or "1"
+
+
+def _compose_colour_permutations(
+    left: tuple[int, ...], right: tuple[int, ...]
+) -> tuple[int, ...]:
+    """Return ``left`` after ``right`` for permutations stored by images."""
+
+    return tuple(left[right[index]] for index in range(len(left)))
+
+
+def _colour_permutation_power(
+    permutation: tuple[int, ...], exponent: int
+) -> tuple[int, ...]:
+    result = tuple(range(len(permutation)))
+    for _ in range(exponent):
+        result = _compose_colour_permutations(permutation, result)
+    return result
+
+
 def _short_signature_orders(signature: str) -> tuple[int, ...]:
     runs = re.findall(r"[⁰¹²³⁴⁵⁶⁷⁸⁹]+", signature)
     return tuple(int(run.translate(SUPERSCRIPT_TO_ASCII)) for run in runs)
 
 
-def _colour_cycle_time_step(permutation: Iterable[int]) -> Fraction:
-    """Return the positive period step encoded by a semiregular colour cycle."""
+def _cyclic_phase_basis(
+    group_id: str,
+    colours: int,
+    actions: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Identify Chaim's colour letters with the plate's directed phase cycle.
 
-    values = tuple(permutation)
-    visited: set[int] = set()
-    cycle_lengths: list[int] = []
-    for start in range(len(values)):
-        if start in visited:
+    The book is free to call either orientation of a regular cyclic action
+    ``(ABC...)``.  The plate, however, fixes phase 0, +1/N, ... through its
+    palette.  We preserve the printed action labels and solve for the unique
+    book-letter permutation induced by one positive phase step.
+    """
+
+    identity = tuple(range(colours))
+    candidates: list[tuple[int, ...]] = []
+    for candidate in permutation_group(actions):
+        cycle = tuple(candidate)
+        if _permutation_order(cycle) != colours:
             continue
-        cursor = start
-        length = 0
-        while cursor not in visited:
-            visited.add(cursor)
-            cursor = values[cursor]
-            length += 1
-        if cursor != start:
-            raise ValueError(f"not a permutation: {values}")
-        cycle_lengths.append(length)
-    if len(set(cycle_lengths)) != 1:
-        raise ValueError(f"colour action is not semiregular: {values}")
-    order = cycle_lengths[0]
-    return Fraction(0) if order == 1 else Fraction(1, order)
+        matches = True
+        for action in actions:
+            phase = Fraction(action["time_shift"])
+            exponent = phase * colours
+            if exponent.denominator != 1:
+                raise ValueError(f"nonintegral phase exponent in {group_id}")
+            if _colour_permutation_power(cycle, exponent.numerator) != tuple(
+                action["colour_permutation"]
+            ):
+                matches = False
+                break
+        if matches:
+            candidates.append(cycle)
+    if colours == 1 and not candidates:
+        candidates = [identity]
+    if len(candidates) != 1:
+        raise ValueError(
+            f"phase/book-letter alignment is not unique in {group_id}: {candidates}"
+        )
+    positive_cycle = candidates[0]
+    labels_by_phase = [
+        chr(ord("A") + _colour_permutation_power(positive_cycle, phase)[0])
+        for phase in range(colours)
+    ]
+    phase_by_label = [0] * colours
+    for phase, label in enumerate(labels_by_phase):
+        phase_by_label[ord(label) - ord("A")] = phase
+    return {
+        "cyclic_image": f"C_{colours}",
+        "positive_phase_permutation": list(positive_cycle),
+        "positive_phase_cycle": _permutation_notation(positive_cycle),
+        "colour_labels_by_phase": labels_by_phase,
+        "colour_phase_indices": phase_by_label,
+    }
 
 
 def chaim_presentation(
@@ -1621,6 +1740,7 @@ def chaim_presentation(
     colours: int,
     notation: str,
     short_signature: str,
+    render: dict[str, Any],
 ) -> dict[str, Any]:
     """Build the full-Γ presentation in Chaim's named geometric generators."""
 
@@ -1670,13 +1790,21 @@ def chaim_presentation(
         )
 
     affine_by_name = {
-        row["generator"]: row["visualization"]
+        row["generator"]: row
         for row in affine_generators_for(parent)["generators"]
     }
+    aligned_by_name = {
+        row["generator"]: row
+        for row in _canonical_generator_alignment(group_id, parent, render)
+    } if colours > 1 else {}
     rendered_actions = []
     for action in actions:
-        visualization = affine_by_name[action["generator"]]
-        time_step = _colour_cycle_time_step(action["colour_permutation"])
+        affine = affine_by_name[action["generator"]]
+        alignment = aligned_by_name.get(action["generator"])
+        visualization = (
+            alignment["visualization"] if alignment else affine["visualization"]
+        )
+        time_shift = alignment["phase"] if alignment else Fraction(0)
         marker: dict[str, Any] = {"kind": visualization["kind"]}
         if visualization["kind"] == "rotation":
             marker["order"] = {
@@ -1685,15 +1813,19 @@ def chaim_presentation(
                 "quarter-turn": 4,
                 "one-sixth turn": 6,
             }[action["geometry"]]
-        rendered_actions.append(
-            action
-            | {
+        rendered = action | {
                 "cycle_notation": _cycle_notation(action["permutation_code"]),
-                "time_step": fraction_label(time_step),
-                "time_step_label": _time_shift_description(time_step),
+                "time_shift": fraction_label(time_shift),
+                "time_shift_label": _time_shift_description(time_shift),
                 "marker": marker,
             }
-        )
+        if alignment:
+            rendered |= {
+                "plate_source_index": alignment["source_index"],
+                "plate_lattice_shift": list(alignment["lattice_shift"]),
+                "plate_visualization": alignment["visualization"],
+            }
+        rendered_actions.append(rendered)
 
     presentation = group_presentation(parent)
     if presentation["generators"] != [
@@ -1705,7 +1837,7 @@ def chaim_presentation(
         "generators": rendered_actions,
         "relations": presentation["relations"],
         "action_source": action_source,
-    }
+    } | _cyclic_phase_basis(group_id, colours, rendered_actions)
 
 
 def _key_power(value: tuple[Any, ...], exponent: int) -> tuple[Any, ...]:
@@ -1962,11 +2094,20 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             group_id, parent_orbifold, notation, order
         )
         validate_render(group_id, group["render"], order)
+        presentation = chaim_presentation(
+            group_id,
+            group["base"],
+            order,
+            notation,
+            short_signature,
+            group["render"],
+        )
         residues = [
             {
                 "index": j,
                 "phase": fraction_label(Fraction(j, order)),
                 "color": PALETTE[j],
+                "book_label": presentation["colour_labels_by_phase"][j],
             }
             for j in range(order)
         ]
@@ -1990,13 +2131,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "cell_action_presentation": cell_action_presentation(
                 group_id, group["render"], group["base"]
             ),
-            "chaim_presentation": chaim_presentation(
-                group_id,
-                group["base"],
-                order,
-                notation,
-                short_signature,
-            ),
+            "chaim_presentation": presentation,
             "clockwork_description": clockwork_description(group, order),
             "coloring_description": coloring_description(group, order, kernel_base),
             "book_audit": book_audit(
@@ -2015,7 +2150,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 7,
+            "schema_version": 8,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -2025,7 +2160,9 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "traditional_color_classes_after_clock_inversion": 64,
             "definition": (
                 "kappa(M,v) = N*tau mod N; K = ker(kappa); regular action has H = K; "
-                "ToS type is G for N=1, G/K for N=2, and G^N/K for N>2"
+                "ToS type is G for N=1, G/K for N=2, and G^N/K for N>2; "
+                "each named generator's Time is its directed tau, while Chaim's "
+                "colour letters are aligned to the positive phase cycle per record"
             ),
             "book_audit_counts": EXPECTED_BOOK_AUDIT_COUNTS,
             "signature_evidence_counts": EXPECTED_SIGNATURE_EVIDENCE_COUNTS,
@@ -2091,7 +2228,19 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
             order,
             notation,
             record["book_color_signature"],
+            record["render"],
         )
+        record["phase_residues"] = [
+            {
+                "index": index,
+                "phase": fraction_label(Fraction(index, order)),
+                "color": PALETTE[index],
+                "book_label": record["chaim_presentation"][
+                    "colour_labels_by_phase"
+                ][index],
+            }
+            for index in range(order)
+        ]
         record.pop("geometric_operations", None)
         record["clockwork_description"] = clockwork_description(source_like, order)
         record["coloring_description"] = coloring_description(
@@ -2104,7 +2253,7 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
         )
 
     meta = payload["meta"]
-    meta["schema_version"] = 7
+    meta["schema_version"] = 8
     meta["book_audit_counts"] = EXPECTED_BOOK_AUDIT_COUNTS
     meta["signature_evidence_counts"] = EXPECTED_SIGNATURE_EVIDENCE_COUNTS
     meta["book"]["annotated_excerpt_count"] = len(BOOK_EXCERPTS)
@@ -2114,8 +2263,8 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 7:
-        raise ValueError("correspondence data must use schema version 7")
+    if meta.get("schema_version") != 8:
+        raise ValueError("correspondence data must use schema version 8")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -2142,6 +2291,11 @@ def validate_payload(payload: dict[str, Any]) -> None:
     counts = Counter(group["clock_order"] for group in groups)
     if {n: counts.get(n, 0) for n in range(1, 7)} != EXPECTED_ORDER_COUNTS:
         raise ValueError(f"unexpected clock-order distribution: {counts}")
+    nontrivial_ids = {
+        group["id"] for group in groups if group["clock_order"] > 1
+    }
+    if set(CANONICAL_TO_RENDER_CONJUGACY_BY_ID) != nontrivial_ids:
+        raise ValueError("canonical plate conjugacies must cover the 51 displayed groups")
 
     audit_counts = Counter(group["book_audit"]["status"] for group in groups)
     if dict(audit_counts) != EXPECTED_BOOK_AUDIT_COUNTS:
@@ -2249,9 +2403,39 @@ def validate_payload(payload: dict[str, Any]) -> None:
             order,
             group["tos_notation"],
             group["book_color_signature"],
+            group["render"],
         )
         if group.get("chaim_presentation") != expected_chaim_presentation:
             raise ValueError(f"Chaim presentation differs from source data in {group_id}")
+        expected_residues = [
+            {
+                "index": index,
+                "phase": fraction_label(Fraction(index, order)),
+                "color": PALETTE[index],
+                "book_label": expected_chaim_presentation[
+                    "colour_labels_by_phase"
+                ][index],
+            }
+            for index in range(order)
+        ]
+        if group["phase_residues"] != expected_residues:
+            raise ValueError(f"phase palette/book-letter mapping differs in {group_id}")
+        positive_cycle = tuple(
+            expected_chaim_presentation["positive_phase_permutation"]
+        )
+        if _permutation_order(positive_cycle) != order:
+            raise ValueError(f"positive phase does not generate C_{order} in {group_id}")
+        for action in expected_chaim_presentation["generators"]:
+            exponent = Fraction(action["time_shift"]) * order
+            if (
+                exponent.denominator != 1
+                or _colour_permutation_power(positive_cycle, exponent.numerator)
+                != tuple(action["colour_permutation"])
+            ):
+                raise ValueError(
+                    f"colour permutation and directed phase differ in "
+                    f"{group_id}:{action['generator']}"
+                )
         represented_phases = {
             exact_fraction(operation["tau"])
             for operation in group["render"]["ops"]
@@ -2404,57 +2588,8 @@ def _site_geometry(
 
 OverlayMotion = tuple[
     tuple[tuple[int, int], tuple[int, int]],
-    tuple[Fraction, Fraction],
+    tuple[float, float],
 ]
-OVERLAY_IDENTITY: OverlayMotion = (M_ID, (Fraction(0), Fraction(0)))
-OVERLAY_CANDIDATE_LIMIT = 24
-OVERLAY_SOLUTION_LIMIT = 128
-
-
-def _overlay_compose(left: OverlayMotion, right: OverlayMotion) -> OverlayMotion:
-    """Return ``left`` after ``right`` without reducing translations mod 1."""
-
-    left_matrix, left_vector = left
-    right_matrix, right_vector = right
-    matrix_value = multiply2(left_matrix, right_matrix)
-    vector_value = (
-        left_matrix[0][0] * right_vector[0]
-        + left_matrix[0][1] * right_vector[1]
-        + left_vector[0],
-        left_matrix[1][0] * right_vector[0]
-        + left_matrix[1][1] * right_vector[1]
-        + left_vector[1],
-    )
-    return matrix_value, vector_value
-
-
-def _overlay_inverse(value: OverlayMotion) -> OverlayMotion:
-    matrix_value, vector_value = value
-    determinant = det2(matrix_value)
-    if determinant not in {-1, 1}:
-        raise ValueError(f"overlay motion is not unimodular: {matrix_value!r}")
-    inverse_matrix = (
-        (matrix_value[1][1] // determinant, -matrix_value[0][1] // determinant),
-        (-matrix_value[1][0] // determinant, matrix_value[0][0] // determinant),
-    )
-    return (
-        inverse_matrix,
-        (
-            -(inverse_matrix[0][0] * vector_value[0]
-              + inverse_matrix[0][1] * vector_value[1]),
-            -(inverse_matrix[1][0] * vector_value[0]
-              + inverse_matrix[1][1] * vector_value[1]),
-        ),
-    )
-
-
-def _overlay_power(value: OverlayMotion, exponent: int) -> OverlayMotion:
-    if exponent < 0:
-        return _overlay_power(_overlay_inverse(value), -exponent)
-    result = OVERLAY_IDENTITY
-    for _ in range(exponent):
-        result = _overlay_compose(value, result)
-    return result
 
 
 def _overlay_physical_motion(
@@ -2487,114 +2622,102 @@ def _overlay_physical_motion(
     )  # type: ignore[return-value]
 
 
-def _overlay_same_feature(
-    left: dict[str, Any],
-    right: dict[str, Any],
-    tolerance: float = 1e-6,
-) -> bool:
-    left_visual = left["visualization"]
-    right_visual = right["visualization"]
-    if left_visual["kind"] == right_visual["kind"] == "rotation":
-        return math.dist(left_visual["centre"], right_visual["centre"]) <= tolerance
-    if (
-        left_visual["kind"] in {"mirror", "glide"}
-        and right_visual["kind"] in {"mirror", "glide"}
-    ):
-        left_direction = left_visual["axis_direction"]
-        right_direction = right_visual["axis_direction"]
-        direction_cross = abs(
-            left_direction[0] * right_direction[1]
-            - left_direction[1] * right_direction[0]
+def _canonical_generator_alignment(
+    group_id: str,
+    parent: str,
+    render: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Match each signed canonical generator to one exact rendered operation.
+
+    Geometry determines the render coset; the matched coset then supplies its
+    directed clock phase.  Matching modulo integer lattice translations keeps
+    the unmodded canonical lift available for an accurately positioned marker.
+    """
+
+    try:
+        linear, offset = CANONICAL_TO_RENDER_CONJUGACY_BY_ID[group_id]
+    except KeyError as error:
+        raise ValueError(f"missing canonical plate conjugacy for {group_id}") from error
+    inverse = _mat_inv(linear)
+    result = []
+    for affine in affine_generators_for(parent)["generators"]:
+        canonical_matrix = affine["matrix"]
+        canonical_vector = affine["translation"]
+        raw_matrix = _mat_mul(_mat_mul(linear, canonical_matrix), inverse)
+        snapped_matrix = tuple(
+            tuple(round(component) for component in row) for row in raw_matrix
         )
-        offset = (
-            right_visual["axis_point"][0] - left_visual["axis_point"][0],
-            right_visual["axis_point"][1] - left_visual["axis_point"][1],
-        )
-        offset_cross = abs(
-            offset[0] * left_direction[1] - offset[1] * left_direction[0]
-        )
-        return direction_cross <= tolerance and offset_cross <= tolerance
-    return False
-
-
-def _overlay_relator_holds(
-    assignment: dict[str, dict[str, Any]],
-    relator: tuple[tuple[str, int], ...],
-) -> bool:
-    names = {name for name, _exponent in relator}
-    if not names.issubset(assignment):
-        return True
-    result = OVERLAY_IDENTITY
-    for name, exponent in relator:
-        result = _overlay_compose(
-            _overlay_power(assignment[name]["motion"], exponent),
-            result,
-        )
-    return result == OVERLAY_IDENTITY
-
-
-def _overlay_generates_plane(assignment: Iterable[dict[str, Any]]) -> bool:
-    """Reject relation-satisfying collapses whose translations have rank below two."""
-
-    motions = [candidate["motion"] for candidate in assignment]
-    steps = motions + [_overlay_inverse(motion) for motion in motions]
-    seen = {OVERLAY_IDENTITY}
-    queue = [OVERLAY_IDENTITY]
-    translations: list[tuple[Fraction, Fraction]] = []
-    for current in queue:
-        for step in steps:
-            value = _overlay_compose(step, current)
-            if max(abs(component) for component in value[1]) > 4:
-                continue
-            if value in seen:
-                continue
-            seen.add(value)
-            queue.append(value)
-            if value[0] == M_ID and value[1] != (0, 0):
-                if any(
-                    value[1][0] * prior[1] - value[1][1] * prior[0] != 0
-                    for prior in translations
-                ):
-                    return True
-                translations.append(value[1])
-            if len(queue) > 600:
-                return False
-    return False
-
-
-def _overlay_actions_match_phases(
-    actions: list[dict[str, Any]],
-    assignment: list[dict[str, Any]],
-) -> bool:
-    """Match Chaim's colour labels to plate phases by one cyclic relabelling."""
-
-    degree = len(actions[0]["colour_permutation"])
-    identity = tuple(range(degree))
-
-    def compose_permutations(
-        left: tuple[int, ...], right: tuple[int, ...]
-    ) -> tuple[int, ...]:
-        return tuple(left[right[index]] for index in range(degree))
-
-    image = permutation_group(actions)
-    for cycle in image:
-        if _permutation_order(cycle) != degree:
-            continue
-        exponent_by_permutation = {identity: 0}
-        value = identity
-        for exponent in range(1, degree):
-            value = compose_permutations(cycle, value)
-            exponent_by_permutation[value] = exponent
-        if all(
-            candidate["phase"]
-            == Fraction(
-                exponent_by_permutation[tuple(action["colour_permutation"])],
-                degree,
-            )
-            for action, candidate in zip(actions, assignment, strict=True)
+        if any(
+            abs(raw_matrix[row][column] - snapped_matrix[row][column]) > 1e-8
+            for row in range(2)
+            for column in range(2)
         ):
-            return True
-    return False
+            raise ValueError(
+                f"canonical generator matrix does not snap in {group_id}: "
+                f"{affine['generator']}"
+            )
+        linear_vector = (
+            linear[0][0] * canonical_vector[0]
+            + linear[0][1] * canonical_vector[1],
+            linear[1][0] * canonical_vector[0]
+            + linear[1][1] * canonical_vector[1],
+        )
+        transformed_offset = (
+            snapped_matrix[0][0] * offset[0]
+            + snapped_matrix[0][1] * offset[1],
+            snapped_matrix[1][0] * offset[0]
+            + snapped_matrix[1][1] * offset[1],
+        )
+        raw_vector = (
+            linear_vector[0] + offset[0] - transformed_offset[0],
+            linear_vector[1] + offset[1] - transformed_offset[1],
+        )
+        snapped_vector = tuple(
+            float(Fraction(component).limit_denominator(48))
+            for component in raw_vector
+        )
+        if any(
+            abs(raw_vector[index] - snapped_vector[index]) > 1e-8
+            for index in range(2)
+        ):
+            raise ValueError(
+                f"canonical generator vector does not snap in {group_id}: "
+                f"{affine['generator']}"
+            )
+        matches = []
+        for source_index, operation in enumerate(render["ops"]):
+            if matrix(operation) != snapped_matrix:
+                continue
+            differences = tuple(
+                snapped_vector[index] - float(operation["v"][index])
+                for index in range(2)
+            )
+            shifts = tuple(round(component) for component in differences)
+            if all(
+                abs(differences[index] - shifts[index]) <= 1e-8
+                for index in range(2)
+            ):
+                matches.append((source_index, operation, shifts))
+        if len(matches) != 1:
+            raise ValueError(
+                f"canonical generator does not have one rendered coset in "
+                f"{group_id}:{affine['generator']}: {len(matches)}"
+            )
+        source_index, operation, lattice_shift = matches[0]
+        motion: OverlayMotion = (snapped_matrix, snapped_vector)  # type: ignore[assignment]
+        result.append(
+            {
+                "generator": affine["generator"],
+                "motion": motion,
+                "phase": exact_fraction(operation["tau"]),
+                "source_index": source_index,
+                "lattice_shift": lattice_shift,
+                "visualization": generator_visualization(
+                    _overlay_physical_motion(motion, render["basis"])
+                ),
+            }
+        )
+    return result
 
 
 def _plate_cell_scale(render: dict[str, Any]) -> float:
@@ -2609,145 +2732,17 @@ def _plate_cell_scale(render: dict[str, Any]) -> float:
     return math.hypot(*b1) / basis_length / ANTIALIAS
 
 
-def _plate_generator_candidates(
-    record: dict[str, Any],
-    action: dict[str, Any],
-) -> list[dict[str, Any]]:
-    render = record["render"]
-    basis = render["basis"]
-    marker = action["marker"]
-    colour_order = _permutation_order(action["colour_permutation"])
-    plate_scale = _plate_cell_scale(render)
-    candidates: dict[OverlayMotion, dict[str, Any]] = {}
-    for source_index, operation in enumerate(render["ops"]):
-        if exact_fraction(operation["tau"]).denominator != colour_order:
-            continue
-        matrix_value = matrix(operation)
-        for shift_x in range(-3, 4):
-            for shift_y in range(-3, 4):
-                motion: OverlayMotion = (
-                    matrix_value,
-                    (
-                        exact_fraction(operation["v"][0]) + shift_x,
-                        exact_fraction(operation["v"][1]) + shift_y,
-                    ),
-                )
-                visualization = generator_visualization(
-                    _overlay_physical_motion(motion, basis)
-                )
-                if visualization["kind"] != marker["kind"]:
-                    continue
-                if (
-                    visualization["kind"] == "rotation"
-                    and spatial_order(matrix_value) != marker["order"]
-                ):
-                    continue
-                if visualization["kind"] == "rotation":
-                    centre = visualization["centre"]
-                    screen_x = IMAGE_WIDTH / 2 + plate_scale * centre[0]
-                    screen_y = IMAGE_HEIGHT / 2 - plate_scale * centre[1]
-                    if not (
-                        24 <= screen_x <= IMAGE_WIDTH - 24
-                        and 24 <= screen_y <= IMAGE_HEIGHT - 24
-                    ):
-                        continue
-                    score = centre[0] ** 2 + centre[1] ** 2
-                else:
-                    point = visualization["axis_point"]
-                    direction = visualization["axis_direction"]
-                    distance = abs(
-                        point[0] * direction[1] - point[1] * direction[0]
-                    )
-                    glide_penalty = (
-                        0.12 * visualization["glide_distance"] ** 2
-                        if visualization["kind"] == "glide"
-                        else 0
-                    )
-                    score = distance ** 2 + glide_penalty
-                candidate = {
-                    "motion": motion,
-                    "phase": exact_fraction(operation["tau"]),
-                    "source_index": source_index,
-                    "lattice_shift": (shift_x, shift_y),
-                    "visualization": visualization,
-                    "score": score,
-                }
-                previous = candidates.get(motion)
-                if previous is None or score < previous["score"]:
-                    candidates[motion] = candidate
-    return sorted(
-        candidates.values(),
-        key=lambda candidate: (
-            candidate["score"],
-            candidate["source_index"],
-            candidate["lattice_shift"],
-        ),
-    )[:OVERLAY_CANDIDATE_LIMIT]
-
-
 def _plate_generator_assignment(record: dict[str, Any]) -> list[dict[str, Any]]:
-    """Place Chaim's named generators as actual symmetries of this plate.
-
-    The render cell is often a colour-fixing sublattice, so canonical atlas
-    coordinates cannot simply be copied onto it.  We instead lift the plate's
-    own source cosets by nearby lattice translations, filter by the declared
-    geometry and colour-action order, and enforce the full wallpaper-group
-    relators.  A rank-two translation check rules out collapsed solutions.
-    """
+    """Return the deterministic, signed placement stored with each action."""
 
     actions = record["chaim_presentation"]["generators"]
-    candidate_sets = {
-        action["generator"]: _plate_generator_candidates(record, action)
-        for action in actions
-    }
-    for name, candidates in candidate_sets.items():
-        if not candidates:
-            raise ValueError(f"no plate-overlay candidate for {record['id']}:{name}")
-    names = [action["generator"] for action in actions]
-    relators = GROUP_PRESENTATIONS[record["parent"]["hm"]]["relators"]
-    solutions: list[tuple[float, dict[str, dict[str, Any]]]] = []
-
-    def search(index: int, assignment: dict[str, dict[str, Any]]) -> None:
-        if len(solutions) >= OVERLAY_SOLUTION_LIMIT:
-            return
-        if index == len(names):
-            ordered = [assignment[name] for name in names]
-            if (
-                _overlay_generates_plane(ordered)
-                and _overlay_actions_match_phases(actions, ordered)
-            ):
-                solutions.append((sum(row["score"] for row in ordered), dict(assignment)))
-            return
-        name = names[index]
-        for candidate in candidate_sets[name]:
-            if any(
-                _overlay_same_feature(candidate, assigned)
-                for assigned in assignment.values()
-            ):
-                continue
-            assignment[name] = candidate
-            if all(
-                _overlay_relator_holds(assignment, relator)
-                for relator in relators
-            ):
-                search(index + 1, assignment)
-            assignment.pop(name)
-
-    search(0, {})
-    if not solutions:
-        counts = {name: len(rows) for name, rows in candidate_sets.items()}
-        raise ValueError(
-            f"cannot place full-rank plate generators for {record['id']}: {counts}"
-        )
-    _score, best = min(solutions, key=lambda item: item[0])
     return [
         {
             "generator": action["generator"],
             "geometry": action["geometry"],
             "marker": action["marker"],
-            "visualization": best[action["generator"]]["visualization"],
-            "motion": best[action["generator"]]["motion"],
-            "phase": best[action["generator"]]["phase"],
+            "visualization": action["plate_visualization"],
+            "phase": Fraction(action["time_shift"]),
         }
         for action in actions
     ]
@@ -2827,7 +2822,8 @@ def _phase_legend(record: dict[str, Any]) -> str:
         items.append(
             "<li>"
             f"<span class=\"swatch\" style=\"--swatch: {escape(residue['color'])}\"></span>"
-            f"<span>colour {residue['index']} · phase {escape(residue['phase'])}</span>"
+            f"<span>{escape(residue['book_label'])} · colour {residue['index']} · "
+            f"phase {escape(residue['phase'])}</span>"
             "</li>"
         )
     return "\n".join(items)
@@ -3094,16 +3090,24 @@ def _presentation_html(record: dict[str, Any]) -> str:
             f'<span class="generator-geometry">{escape(generator["geometry"])}</span>'
             "</span></th>"
             f'<td class="presentation-colour-action"><code>{escape(generator["cycle_notation"])}</code></td>'
-            f'<td class="presentation-time-action" data-time-step="{escape(generator["time_step"])}">'
-            f'{escape(generator["time_step_label"])}</td>'
+            f'<td class="presentation-time-action" data-time-shift="{escape(generator["time_shift"])}">'
+            f'{escape(generator["time_shift_label"])}</td>'
             "</tr>"
         )
     rows_html = "\n".join(rows)
     palette = "".join(
         '<span class="presentation-colour">'
-        f'<i style="--presentation-colour: {escape(PALETTE[index])}"></i>'
+        f'<i style="--presentation-colour: '
+        f'{escape(PALETTE[presentation["colour_phase_indices"][index]])}"></i>'
         f'{chr(ord("A") + index)}</span>'
         for index in range(record["clock_order"])
+    )
+    positive_step = fraction_label(Fraction(1, record["clock_order"]))
+    cyclic_key = (
+        '<p class="presentation-cyclic-key"><strong>Cyclic image</strong> '
+        f'C<sub>{record["clock_order"]}</sub> · +{escape(positive_step)} period '
+        f'acts as <code>{escape(presentation["positive_phase_cycle"])}</code>. '
+        'Each Color row is a power of this permutation.</p>'
     )
     source_note = ""
     if presentation["action_source"] == "regular-cyclic-rule-extension":
@@ -3119,13 +3123,14 @@ def _presentation_html(record: dict[str, Any]) -> str:
               <section class="group-presentation" aria-labelledby="{group_id}-presentation-title">
                 <div class="presentation-heading">
                   <h4 id="{group_id}-presentation-title">Presentation</h4>
-                  <p class="presentation-palette"><span>cycles over</span>{palette}</p>
+                  <p class="presentation-palette"><span>permutations of</span>{palette}</p>
                 </div>
                 <table data-presentation="{group_id}">
-                  <caption class="visually-hidden">Chaim’s named geometric generators with colour cycles and one-step time intervals for {group_id}</caption>
+                  <caption class="visually-hidden">Chaim’s named geometric generators with colour permutations and directed time shifts for {group_id}</caption>
                   <thead><tr><th scope="col">Generator</th><th scope="col">Color</th><th scope="col">Time</th></tr></thead>
                   <tbody>{rows_html}</tbody>
                 </table>
+                {cyclic_key}
                 <p class="presentation-relations"><strong>Relations</strong> <span>Γ = ⟨{escape(generator_names)} | {escape(presentation['relations'])}⟩</span></p>
                 {source_note}
               </section>"""
@@ -3652,7 +3657,7 @@ def page_html(payload: dict[str, Any]) -> str:
   <main class="correspondence-page">
     <nav class="directory" aria-labelledby="page-title">
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
-      <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
+      <p class="directory-legend">Each block is the displayed phase palette. Raised numbers in the signature give colour-permutation orders, not time shifts. “Cyclic” describes the subgroup generated by all Color rows: an individual row may be the inverse, the identity, or another power of the positive phase cycle. Time is the directed shift in the fixed phase palette.</p>
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
         <h2 id="notation-caveat-title">Notation</h2>
         <p>The displayed names use Chaim Goodman–Strauss’s coloured-orbifold notation. Across all {len(trivial_groups) + len(displayed_groups)} forward groups it gives {len(trivial_groups) + colour_class_count} cyclic plane-colouring classes. Four types leave the two orientations of the polar fibre unresolved: 442<sup>4</sup>/◦, 333<sup>3</sup>/◦, 632<sup>6</sup>/◦, and 632<sup>3</sup>/2222. These are four two-to-one fibres, not missing colourings; standard fibrifold notation also identifies each pair under fibre reversal. <a href="docs/orbifold_notation.html#uncovered-cases">Four uncovered cases ↗</a> · <a href="{HIERARCHY_CHIRALITY_URL}">hierarchy ↗</a></p>

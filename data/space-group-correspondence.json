@@ -3,7 +3,7 @@
     "schema_version": 3,
     "title": "Cyclic colourings and polar space groups",
     "source": "data/clockwork-coloring-correspondence.json",
-    "source_sha256": "4bc86c64a51fa57d5281e3d8f90c3ffdb9cf6d4f029a9bda2429d7ca5a044061",
+    "source_sha256": "ef6bf7ef9b8b772d1a3f4f5150217d21d5090a9ef2d656c59f66976eef77e847",
     "source_groups": 68,
     "wallpaper_families": 17,
     "space_group_types": 68,
@@ -133,7 +133,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [],
@@ -247,7 +248,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -418,12 +420,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -630,12 +634,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -947,7 +953,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -1118,12 +1125,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -1330,7 +1339,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -1598,7 +1608,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -1859,7 +1870,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -2127,12 +2139,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -2443,7 +2457,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -2711,12 +2726,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -3027,7 +3044,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -3295,12 +3313,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -3611,12 +3631,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -3928,12 +3950,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -4245,12 +4269,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -4562,12 +4588,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -4879,12 +4907,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -5386,12 +5416,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -5893,12 +5925,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -6400,12 +6434,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -6907,7 +6943,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -7356,12 +7393,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -7861,12 +7900,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -8367,12 +8408,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -8874,12 +8917,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -9381,12 +9426,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -9888,12 +9935,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -10748,22 +10797,26 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/4",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "1/2",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "B"
         },
         {
           "index": 3,
           "phase": "3/4",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "D"
         }
       ],
       "phase_profile": [
@@ -11588,7 +11641,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -11849,12 +11903,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -12151,22 +12207,26 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/4",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "1/2",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "D"
         },
         {
           "index": 3,
           "phase": "3/4",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -12464,22 +12524,26 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/4",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         },
         {
           "index": 2,
           "phase": "1/2",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "D"
         },
         {
           "index": 3,
           "phase": "3/4",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "C"
         }
       ],
       "phase_profile": [
@@ -12777,12 +12841,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -13269,22 +13335,26 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/4",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "1/2",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "B"
         },
         {
           "index": 3,
           "phase": "3/4",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "D"
         }
       ],
       "phase_profile": [
@@ -13771,7 +13841,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -14213,12 +14284,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -14704,12 +14777,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -15195,12 +15270,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -15685,7 +15762,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -16127,12 +16205,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -16618,12 +16698,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -17109,12 +17191,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -17599,12 +17683,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -18449,22 +18535,26 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/4",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "1/2",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "B"
         },
         {
           "index": 3,
           "phase": "3/4",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "D"
         }
       ],
       "phase_profile": [
@@ -19297,12 +19387,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -20147,22 +20239,26 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/4",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "1/2",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "B"
         },
         {
           "index": 3,
           "phase": "3/4",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "D"
         }
       ],
       "phase_profile": [
@@ -20995,7 +21091,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -21208,17 +21305,20 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/3",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "2/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -21468,17 +21568,20 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/3",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         },
         {
           "index": 2,
           "phase": "2/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "C"
         }
       ],
       "phase_profile": [
@@ -21728,17 +21831,20 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/3",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         },
         {
           "index": 2,
           "phase": "2/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "C"
         }
       ],
       "phase_profile": [
@@ -22262,7 +22368,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -22614,12 +22721,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -23014,7 +23123,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -23366,12 +23476,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -23766,17 +23878,20 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/3",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "2/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -24686,32 +24801,38 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/6",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "E"
         },
         {
           "index": 2,
           "phase": "1/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "D"
         },
         {
           "index": 3,
           "phase": "1/2",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "C"
         },
         {
           "index": 4,
           "phase": "2/3",
-          "color": "#D55E00"
+          "color": "#D55E00",
+          "book_label": "B"
         },
         {
           "index": 5,
           "phase": "5/6",
-          "color": "#56B4E9"
+          "color": "#56B4E9",
+          "book_label": "F"
         }
       ],
       "phase_profile": [
@@ -25621,7 +25742,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -25972,17 +26094,20 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/3",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         },
         {
           "index": 2,
           "phase": "2/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "C"
         }
       ],
       "phase_profile": [
@@ -26371,17 +26496,20 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/3",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "2/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -26770,12 +26898,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -27162,32 +27292,38 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/6",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "C"
         },
         {
           "index": 2,
           "phase": "1/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "E"
         },
         {
           "index": 3,
           "phase": "1/2",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "F"
         },
         {
           "index": 4,
           "phase": "2/3",
-          "color": "#D55E00"
+          "color": "#D55E00",
+          "book_label": "D"
         },
         {
           "index": 5,
           "phase": "5/6",
-          "color": "#56B4E9"
+          "color": "#56B4E9",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -27576,32 +27712,38 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/6",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         },
         {
           "index": 2,
           "phase": "1/3",
-          "color": "#009E73"
+          "color": "#009E73",
+          "book_label": "D"
         },
         {
           "index": 3,
           "phase": "1/2",
-          "color": "#CC79A7"
+          "color": "#CC79A7",
+          "book_label": "F"
         },
         {
           "index": 4,
           "phase": "2/3",
-          "color": "#D55E00"
+          "color": "#D55E00",
+          "book_label": "E"
         },
         {
           "index": 5,
           "phase": "5/6",
-          "color": "#56B4E9"
+          "color": "#56B4E9",
+          "book_label": "C"
         }
       ],
       "phase_profile": [
@@ -27990,7 +28132,8 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         }
       ],
       "phase_profile": [
@@ -28606,12 +28749,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -29271,12 +29416,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
@@ -29935,12 +30082,14 @@
         {
           "index": 0,
           "phase": "0",
-          "color": "#0072B2"
+          "color": "#0072B2",
+          "book_label": "A"
         },
         {
           "index": 1,
           "phase": "1/2",
-          "color": "#E69F00"
+          "color": "#E69F00",
+          "book_label": "B"
         }
       ],
       "phase_profile": [
