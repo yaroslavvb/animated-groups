@@ -51,7 +51,7 @@ IMAGE_DIR = ROOT / "output" / "space-groups"
 
 STYLE_SRC = "space-group-correspondence.css?v=concise-catalog"
 SCRIPT_SRC = "space-group-correspondence.js?v=compact-tabs"
-SOURCE_SHA256 = "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330"
+SOURCE_SHA256 = "fe13f17f4f3410be4443ffaff975304a7e14efff06a77a912dfd9f75e1e8465f"
 UCL_SPACE_GROUP_BASE = "http://img.chem.ucl.ac.uk/sgp/large"
 UCL_PAGE_BY_NUMBER = {
     1: "001az1.htm",
