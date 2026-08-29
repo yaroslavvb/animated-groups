@@ -81,6 +81,8 @@ class CorrespondenceParser(HTMLParser):
         self.scripts: list[tuple[str, str]] = []
         self.presentation_tables: list[str] = []
         self.presentation_generator_count = 0
+        self.presentation_markers: list[tuple[str, str]] = []
+        self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
         self.plane_group_links: list[str] = []
         self.height_lift_links: list[str] = []
@@ -190,6 +192,15 @@ class CorrespondenceParser(HTMLParser):
             )
         if tag == "tr" and "presentation-generator-row" in classes:
             self.presentation_generator_count += 1
+        if tag == "span" and "presentation-generator-marker" in classes:
+            self.presentation_markers.append(
+                (
+                    attributes.get("data-generator-kind", ""),
+                    attributes.get("data-rotation-order", ""),
+                )
+            )
+        if tag == "a" and "short-signature-link" in classes:
+            self.short_signature_links.append(attributes)
         if tag == "img" and (attributes.get("src") or "").startswith(
             "output/clockwork-colorings/"
         ):
@@ -343,7 +354,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.DISPLAYED_GROUP_COUNT,
         )
         self.assertEqual(
-            self.page.count('<span class="term-help-label" aria-hidden="true">Chaim source</span>'),
+            self.page.count('<span class="term-help-label" aria-hidden="true">Book type audit</span>'),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
 
@@ -558,7 +569,6 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
 
         self.assertNotIn('class="notation-crosswalk"', self.page)
         self.assertNotIn("A reduced clock phase a/b induces permutation order b", self.page)
-        self.assertNotIn("Short colour signature", self.page)
         self.assertNotIn("unique Table 11.1 short signature", self.page)
         self.assertNotIn("non-product forward lift", self.page)
         self.assertNotIn("Clockwork symbol", self.page)
@@ -721,17 +731,17 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('font-family: "STIX Two Math", "Cambria Math"', css)
         self.assertIn("vertical-align: baseline", css)
 
-    def test_every_example_has_a_minimal_cell_action_presentation(self) -> None:
+    def test_every_example_displays_chaims_full_group_presentation(self) -> None:
         display_ids = [group["id"] for group in self.display_groups]
         self.assertEqual(self.parser.presentation_tables, display_ids)
         self.assertEqual(
             self.parser.presentation_generator_count,
             sum(
-                len(group["cell_action_presentation"]["generators"])
+                len(group["chaim_presentation"]["generators"])
                 for group in self.display_groups
             ),
         )
-        self.assertEqual(self.parser.presentation_generator_count, 103)
+        self.assertEqual(self.parser.presentation_generator_count, 151)
         self.assertEqual(
             self.page.count('class="group-presentation"'),
             correspondence.DISPLAYED_GROUP_COUNT,
@@ -750,15 +760,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn("about centre", self.page)
         self.assertNotIn("axis direction A", self.page)
         self.assertNotIn("axis direction B", self.page)
+        self.assertNotIn("G/Λ =", self.page)
+        self.assertEqual(
+            self.page.count("Γ = ⟨"),
+            correspondence.DISPLAYED_GROUP_COUNT,
+        )
 
         for group in self.payload["groups"]:
-            expected = correspondence.cell_action_presentation(
+            # The old finite quotient remains an internal render check, but it
+            # is no longer mislabeled as the visible group presentation.
+            expected_cell = correspondence.cell_action_presentation(
                 group["id"], group["render"], group["parent"]["hm"]
             )
-            self.assertEqual(group["cell_action_presentation"], expected, group["id"])
-            self.assertEqual(expected["quotient"], "G/Λ")
-            self.assertEqual(expected["quotient_order"], len(group["render"]["ops"]))
-            for generator in expected["generators"]:
+            self.assertEqual(
+                group["cell_action_presentation"], expected_cell, group["id"]
+            )
+            for generator in expected_cell["generators"]:
                 phase = correspondence.Fraction(generator["phase"])
                 self.assertEqual(
                     group["clock_order"] % phase.denominator,
@@ -768,34 +785,79 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 self.assertTrue(generator["operation"])
                 self.assertTrue(generator["time_shift"])
 
+            expected_chaim = correspondence.chaim_presentation(
+                group["id"],
+                group["parent"]["hm"],
+                group["clock_order"],
+                group["tos_notation"],
+                group["book_color_signature"],
+            )
+            self.assertEqual(group["chaim_presentation"], expected_chaim, group["id"])
+            source_presentation = correspondence.group_presentation(
+                group["parent"]["hm"]
+            )
+            self.assertEqual(
+                [row["generator"] for row in expected_chaim["generators"]],
+                source_presentation["generators"],
+                group["id"],
+            )
+            self.assertEqual(
+                expected_chaim["relations"],
+                source_presentation["relations"],
+                group["id"],
+            )
+            if group["clock_order"] > 1:
+                self.assertEqual(
+                    tuple(superscript_orders(group["book_color_signature"])),
+                    tuple(
+                        correspondence._permutation_order(row["colour_permutation"])
+                        for row in expected_chaim["generators"]
+                    ),
+                    group["id"],
+                )
+
         by_id = {group["id"]: group for group in self.display_groups}
         self.assertEqual(
-            by_id["g244"]["cell_action_presentation"]["generators"],
+            [row["generator"] for row in by_id["g244"]["chaim_presentation"]["generators"]],
+            ["α", "β", "γ"],
+        )
+        self.assertEqual(
+            [row["marker"] for row in by_id["g244"]["chaim_presentation"]["generators"]],
             [
-                {
-                    "name": "A",
-                    "kind": "rotation",
-                    "operation": "1/6-turn rotation (60°)",
-                    "phase": "2/3",
-                    "time_shift": "+2/3 period",
-                },
+                {"kind": "rotation", "order": 6},
+                {"kind": "rotation", "order": 3},
+                {"kind": "rotation", "order": 2},
             ],
         )
         self.assertEqual(
-            by_id["g244"]["cell_action_presentation"]["relations"],
-            "A⁶ = 1",
+            [row["cycle_notation"] for row in by_id["g227"]["chaim_presentation"]["generators"]],
+            ["(ABC)", "(ACB)", "1"],
         )
         self.assertEqual(
-            by_id["g74"]["cell_action_presentation"]["relations"],
-            "A² = B² = C² = D² = 1; AB = BA, AC = CA, AD = DA, BC = CB, BD = DB, CD = DC",
+            by_id["g227"]["signature_evidence"]["generator_relabeling"],
+            {"α": "fable β", "β": "fable γ", "γ": "fable α"},
         )
         self.assertEqual(
-            by_id["g75"]["cell_action_presentation"]["relations"],
-            "A² = B⁴ = (AB)⁴ = 1; AB² = B²A",
+            [row["generator"] for row in by_id["g269"]["chaim_presentation"]["generators"]],
+            ["P", "Q", "R"],
+        )
+        self.assertTrue(
+            all(
+                row["marker"]["kind"] == "mirror"
+                for row in by_id["g269"]["chaim_presentation"]["generators"]
+            )
         )
         self.assertEqual(
-            by_id["g234"]["cell_action_presentation"]["relations"],
-            "A² = B³ = 1; B(ABA) = (ABA)B",
+            by_id["g75"]["chaim_presentation"]["generators"][-1]["generator"],
+            "Z",
+        )
+        self.assertEqual(
+            by_id["g75"]["chaim_presentation"]["generators"][-1]["marker"]["kind"],
+            "glide",
+        )
+        self.assertEqual(
+            correspondence.THREE_COLOUR_ACTION_CODES["*333³//◦"],
+            ("AB", "BC", "CA"),
         )
 
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
@@ -803,6 +865,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertIn(".group-presentation table", css)
         self.assertIn(".presentation-relations", css)
+        self.assertIn(".presentation-mirror-line", css)
+        self.assertIn("stroke-dasharray: 3 3", css)
+        self.assertIn(".presentation-glide-half-arrow", css)
+        self.assertIn(".presentation-generator-rotation-6", css)
+        self.assertIn(".presentation-generator-rotation-2", css)
+        self.assertIn('data-rotation-order="3"', self.page)
+        self.assertIn('data-rotation-order="6"', self.page)
         self.assertIn("font-variant-numeric: tabular-nums", css)
         self.assertIn("@media (max-width: 430px)", css)
         self.assertIn(".directory-families", css)
@@ -811,7 +880,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=chirality-disambiguation", self.page)
+        self.assertIn("?v=chaim-presentations", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -1063,6 +1132,85 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
         self.assertNotIn("official errata does not list that typo", self.page)
 
+    def test_short_form_crops_match_the_displayed_notation(self) -> None:
+        colour_catalog = json.loads(
+            correspondence.COLOR_PATTERN_DATA.read_text(encoding="utf-8")
+        )
+        colour_groups = {
+            row["id"]: row for row in colour_catalog["colour_groups"]
+        }
+        direct = [
+            group
+            for group in self.display_groups
+            if group["book_audit"]["status"] == "direct-table"
+        ]
+        self.assertEqual(len(direct), 39)
+        for group in direct:
+            evidence = group["signature_evidence"]
+            source = colour_groups[evidence["source_colour_group_id"]]
+            self.assertEqual(
+                source["chaim_notation"], group["tos_notation"], group["id"]
+            )
+            self.assertEqual(
+                source["chaim_short_signature"],
+                group["book_color_signature"],
+                group["id"],
+            )
+            self.assertEqual(
+                evidence["printed_signature"],
+                group["book_color_signature"],
+                group["id"],
+            )
+            self.assertEqual(
+                evidence["excerpt"]["image"],
+                source["book_excerpt"]["image"],
+                group["id"],
+            )
+            self.assertEqual(
+                evidence["excerpt"]["highlight_target"],
+                "short-signature",
+                group["id"],
+            )
+
+        by_id = {group["id"]: group for group in self.display_groups}
+        g234 = by_id["g234"]["signature_evidence"]
+        self.assertEqual(g234["displayed_signature"], "³3*¹3")
+        self.assertEqual(g234["printed_signature"], "³3*¹3")
+        self.assertEqual(g234["printed_type"], "3*3³/◦")
+        self.assertEqual(g234["excerpt"]["highlight_target"], "short-signature")
+
+        for group_id in ("g244", "g245"):
+            evidence = by_id[group_id]["signature_evidence"]
+            self.assertEqual(evidence["displayed_signature"], "³6³3¹2")
+            self.assertEqual(
+                evidence["excerpt"]["highlight_target"],
+                "short-signature-and-type",
+            )
+            self.assertEqual(
+                evidence["conflicts"][0]["printed_signature"],
+                "³6²3²2",
+            )
+            self.assertEqual(
+                evidence["conflicts"][0]["excerpt"]["highlight_target"],
+                "short-signature",
+            )
+
+        derived = [
+            group
+            for group in self.display_groups
+            if group["signature_evidence"]["status"] == "rule-extension"
+        ]
+        self.assertEqual({group["id"] for group in derived}, COMPOSITE_EXTENSION_FIXTURE)
+        for group in derived:
+            self.assertIsNone(group["signature_evidence"]["excerpt"], group["id"])
+            self.assertEqual(len(group["book_audit"]["prime_chain"]), 2)
+            for step in group["book_audit"]["prime_chain"]:
+                self.assertEqual(
+                    step["short_signature_excerpt"]["highlight_target"],
+                    "short-signature",
+                    group["id"],
+                )
+
     def test_all_book_links_open_separate_annotated_excerpt_pages(self) -> None:
         expected_references = []
         for group in self.display_groups:
@@ -1073,11 +1221,16 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
 
         self.assertEqual(len(expected_references), correspondence.DISPLAYED_GROUP_COUNT)
+        primary_links = [
+            attributes
+            for attributes in self.parser.book_excerpt_links
+            if "book-page-link" in (attributes.get("class") or "").split()
+        ]
         self.assertEqual(
-            len(self.parser.book_excerpt_links),
+            len(primary_links),
             correspondence.DISPLAYED_GROUP_COUNT,
         )
-        for attributes, reference in zip(self.parser.book_excerpt_links, expected_references):
+        for attributes, reference in zip(primary_links, expected_references):
             excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
             viewer = urlparse(attributes.get("href") or "")
             self.assertEqual(viewer.path, "book-excerpt.html")
@@ -1106,9 +1259,42 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         expected_excerpt_keys = {reference["excerpt_key"] for reference in expected_references}
         self.assertEqual(len(expected_excerpt_keys), 41)
         self.assertEqual(
-            {attributes["data-book-excerpt"] for attributes in self.parser.book_excerpt_links},
+            {attributes["data-book-excerpt"] for attributes in primary_links},
             expected_excerpt_keys,
         )
+
+        linked_heading_groups = [
+            group
+            for group in self.display_groups
+            if group["signature_evidence"]["excerpt"] is not None
+        ]
+        self.assertEqual(len(linked_heading_groups), 42)
+        self.assertEqual(len(self.parser.short_signature_links), 42)
+        for attributes, group in zip(
+            self.parser.short_signature_links,
+            linked_heading_groups,
+        ):
+            excerpt = group["signature_evidence"]["excerpt"]
+            self.assertEqual(attributes.get("data-book-image"), excerpt["image"])
+            self.assertEqual(
+                attributes.get("data-printed-page"),
+                str(excerpt["printed_page"]),
+            )
+            self.assertIn("data-short-signature-excerpt", attributes)
+            self.assertTrue(
+                (attributes.get("data-book-excerpt") or "").startswith("short-form::")
+            )
+
+        support_links = [
+            attributes
+            for attributes in self.parser.book_excerpt_links
+            if "short-form-support-link" in (attributes.get("class") or "").split()
+        ]
+        self.assertEqual(len(support_links), 20)
+        self.assertTrue(
+            all("data-short-signature-excerpt" in attributes for attributes in support_links)
+        )
+        self.assertEqual(len(self.parser.book_excerpt_links), 113)
 
     def test_the_separate_viewer_loads_complete_tables_or_contextual_webps(self) -> None:
         self.assertEqual(self.parser.book_dialog_ids, [])
@@ -1466,7 +1652,23 @@ process.stdout.write(JSON.stringify({
 
     def test_generated_outputs_are_current(self) -> None:
         correspondence.validate_payload(self.payload)
-        self.assertEqual(correspondence.check_outputs(self.payload), [])
+        self.assertEqual(
+            correspondence.check_outputs(self.payload, include_images=False),
+            [],
+        )
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts" / "generate_clockwork_coloring_correspondence.py"),
+                "--check",
+                "--text-only",
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
 
 
 if __name__ == "__main__":

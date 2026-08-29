@@ -19,6 +19,7 @@ catalog explicitly only to audit or deliberately refresh the extract::
 
     python3 scripts/generate_clockwork_coloring_correspondence.py
     python3 scripts/generate_clockwork_coloring_correspondence.py --check
+    python3 scripts/generate_clockwork_coloring_correspondence.py --text-only
     python3 scripts/generate_clockwork_coloring_correspondence.py \
         --source-catalog /path/to/catalog.json
 """
@@ -28,6 +29,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter, defaultdict
 from fractions import Fraction
+from functools import cache
 from html import escape
 import hashlib
 import io
@@ -42,8 +44,17 @@ from urllib.parse import urlencode
 
 from PIL import Image, ImageDraw
 
-from tos_book_excerpt_specs import BOOK_EXCERPTS
 from chaim_short_signatures import TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
+from colour_generator_actions import (
+    GENERATOR_GEOMETRY,
+    THREE_COLOUR_ACTION_CODES,
+    generator_colour_actions,
+    group_presentation,
+    permutation_group,
+    presentation_relations_hold,
+)
+from tos_book_excerpt_specs import BOOK_EXCERPTS
+from wallpaper_affine_generators import affine_generators_for
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,9 +63,10 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=chirality-disambiguation"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=chaim-presentations"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
+COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
 CATALOG_ROOT = "https://yaroslavvb.github.io/animated-groups-fable/catalog.html?time=forward"
@@ -230,8 +242,9 @@ FIBRIFOLD_ENANTIOMORPHIC_IDS = frozenset({
 })
 
 TERM_HELP = {
-    "Chaim source": (
-        "The book page or table used to identify and audit this colour symmetry."
+    "Book type audit": (
+        "The book page or table used to audit the parent/kernel colour type; the "
+        "clickable short form in the heading uses its own signature-cell crop."
     ),
     "Catalog instance": (
         "The matching animated example in the forward-time catalog; gN is this "
@@ -450,6 +463,25 @@ COMPOSITE_BOOK_CHAINS = {
     },
 }
 
+# The book stops at primefold colourings.  These seven action representatives
+# are the regular C4/C6 extensions used by the checked local patterns catalog.
+# A dot separates disjoint cycles, so ``AB.CD`` means (AB)(CD).
+COMPOSITE_COLOUR_ACTION_CODES = {
+    "g75": ("1", "AB.CD", "ACBD"),
+    "g96": ("ABDC", "ABDC", "AD.BC"),
+    "g97": ("ABDC", "ABDC", "AD.BC"),
+    "g99": ("ACBD", "ADBC", "1"),
+    "g137": ("ACBD", "1"),
+    "g139": ("ACBD", "AB.CD"),
+    "g235": ("ABD.CEF", "AC.BE.DF"),
+    "g247": ("ABDFEC", "ADE.BFC", "AF.BE.CD"),
+    "g248": ("ABDFEC", "ADE.BFC", "AF.BE.CD"),
+}
+
+SHORT_FORM_EXACT_IDS = frozenset({
+    "g225", "g226", "g227",
+})
+
 
 def exact_fraction(value: Any) -> Fraction:
     """Recover a small exact catalog fraction from a JSON number."""
@@ -503,22 +535,108 @@ def book_color_signature(
         raise ValueError(f"missing higher-fold short signature: {group_id}") from error
 
 
+@cache
+def _colour_group_records() -> tuple[dict[str, Any], ...]:
+    payload = json.loads(COLOR_PATTERN_DATA.read_text(encoding="utf-8"))
+    return tuple(payload["colour_groups"])
+
+
+def _catalogue_short_form(
+    notation: str,
+    signature: str | None = None,
+    colours: int | None = None,
+) -> dict[str, Any]:
+    """Resolve one regular colour-group row without relying on catalog order."""
+
+    matches = [
+        row
+        for row in _colour_group_records()
+        if row["regular"]
+        and row["chaim_notation"] == notation
+        and (signature is None or row["chaim_short_signature"] == signature)
+        and (colours is None or row["number_of_colours"] == colours)
+    ]
+    if len(matches) != 1:
+        raise ValueError(
+            f"expected one regular colour-catalog row for {notation}, "
+            f"signature={signature!r}, colours={colours!r}; found {len(matches)}"
+        )
+    return matches[0]
+
+
+def _catalogue_excerpt(row: dict[str, Any]) -> dict[str, Any]:
+    excerpt = dict(row["book_excerpt"])
+    excerpt.update({
+        "pdf_page": excerpt["printed_page"] + 19,
+        "highlight_target": "short-signature",
+    })
+    return excerpt
+
+
+def _mapped_book_excerpt(excerpt_key: str, printed_page: int) -> dict[str, Any]:
+    source = BOOK_EXCERPTS[excerpt_key]
+    if source["printed_page"] != printed_page:
+        raise ValueError(f"book excerpt page mismatch for {excerpt_key}")
+    return {
+        "work": "The Symmetries of Things",
+        "image": source["image"],
+        "title": source["title"],
+        "context": source["context"],
+        "alt": source["alt"],
+        "printed_page": printed_page,
+        "pdf_page": printed_page + 19,
+        "source_url": BOOK_PAGE_URL.format(page=printed_page),
+        "highlight_target": "short-signature-and-type",
+        "excerpt_key": excerpt_key,
+    }
+
+
 def signature_evidence(
     group_id: str,
     order: int,
     notation: str,
 ) -> dict[str, Any]:
-    """Classify how literally the visible short signature follows the book."""
+    """Classify and attach the crop that supports the visible short form."""
+
+    signature = (
+        notation
+        if order == 1
+        else BOOK_TWO_FOLD_SIGNATURE_BY_TYPE[notation]
+        if order == 2
+        else BOOK_HIGHER_SIGNATURE_BY_ID[group_id]
+    )
+    common: dict[str, Any] = {
+        "displayed_signature": signature,
+        "printed_signature": None,
+        "printed_type": None,
+        "source_colour_group_id": None,
+        "excerpt": None,
+        "generator_relabeling": None,
+        "conflicts": [],
+    }
 
     if order == 1:
-        return {
+        return common | {
             "status": "onefold",
             "label": "ordinary onefold plane group",
             "summary": "No nontrivial short colour signature is needed.",
         }
+
+    # Every twofold row and the three unproblematic direct C3 rows have a
+    # unique crop of the *short-signature* cell in the sibling colour catalog.
+    direct_catalogue_row: dict[str, Any] | None = None
+    if order == 2 or group_id in SHORT_FORM_EXACT_IDS or group_id == "g234":
+        direct_catalogue_row = _catalogue_short_form(notation, signature, order)
+        common.update({
+            "printed_signature": direct_catalogue_row["chaim_short_signature"],
+            "printed_type": direct_catalogue_row["chaim_notation"],
+            "source_colour_group_id": direct_catalogue_row["id"],
+            "excerpt": _catalogue_excerpt(direct_catalogue_row),
+        })
+
     if group_id in BOOK_REPRESENTATIVE_MULTIPLICITY_BY_ID:
         multiplicity = BOOK_REPRESENTATIVE_MULTIPLICITY_BY_ID[group_id]
-        return {
+        return common | {
             "status": "type-representative",
             "label": "book-normalized representative",
             "summary": (
@@ -530,7 +648,7 @@ def signature_evidence(
             "variant_count": multiplicity,
         }
     if order == 2:
-        return {
+        return common | {
             "status": "exact-printed",
             "label": "unique Table 11.1 short signature",
             "summary": (
@@ -539,7 +657,15 @@ def signature_evidence(
             ),
         }
     if group_id == "g234":
-        return {
+        common.update({
+            "printed_type": "3*3³/◦",
+            "conflicts": [{
+                "printed_signature": signature,
+                "printed_type": "3*3³/◦",
+                "note": "Table 12.1 prints the displayed short form beside the wrong kernel.",
+            }],
+        })
+        return common | {
             "status": "book-internal-discrepancy",
             "label": "signature and kernel split across book rows",
             "summary": (
@@ -551,7 +677,20 @@ def signature_evidence(
             ),
         }
     if group_id in {"g244", "g245"}:
-        return {
+        conflicting_row = _catalogue_short_form(notation, signature, order)
+        common.update({
+            "printed_signature": signature,
+            "printed_type": notation,
+            "excerpt": _mapped_book_excerpt("p164::632³/2222-exact", 164),
+            "conflicts": [{
+                "printed_signature": "³6²3²2",
+                "printed_type": notation,
+                "source_colour_group_id": conflicting_row["id"],
+                "excerpt": _catalogue_excerpt(conflicting_row),
+                "note": "Table 12.1 has transposition orders that cannot define C3.",
+            }],
+        })
+        return common | {
             "status": "book-internal-discrepancy",
             "label": "p. 156 typo corrected by pp. 157 and 164",
             "summary": (
@@ -561,15 +700,22 @@ def signature_evidence(
             ),
         }
     if order == 3:
-        return {
+        evidence = common | {
             "status": "exact-printed",
             "label": "exact Table 12.1 short signature",
             "summary": (
                 "Table 12.1 prints this order-only short signature for the cited type."
             ),
         }
+        if group_id == "g227":
+            evidence["generator_relabeling"] = {
+                "α": "fable β",
+                "β": "fable γ",
+                "γ": "fable α",
+            }
+        return evidence
     if order in (4, 6):
-        return {
+        return common | {
             "status": "rule-extension",
             "label": f"Goodman–Strauss-style C{order} extension",
             "summary": (
@@ -855,17 +1001,23 @@ def book_audit(
         chain = COMPOSITE_BOOK_CHAINS.get(group_id)
         if not chain:
             raise ValueError(f"composite coloring lacks a prime-chain audit: {group_id}")
-        steps = [
-            {
+        steps = []
+        for step_notation, index, page in chain["steps"]:
+            source_group = _catalogue_short_form(
+                step_notation,
+                colours=index,
+            )
+            steps.append({
                 "notation": step_notation,
                 "index": index,
                 "printed_page": page,
                 "pdf_page": page + 19,
                 "url": BOOK_PAGE_URL.format(page=page),
                 "excerpt_key": f"p{page}::{step_notation}",
-            }
-            for step_notation, index, page in chain["steps"]
-        ]
+                "short_signature": source_group["chaim_short_signature"],
+                "source_colour_group_id": source_group["id"],
+                "short_signature_excerpt": _catalogue_excerpt(source_group),
+            })
         for step in steps:
             if step["index"] == 2 and step["notation"] not in TOS_TWO_FOLD_TYPES:
                 raise ValueError(f"composite twofold layer is absent: {step}")
@@ -1399,6 +1551,135 @@ def cell_action_presentation(
     }
 
 
+def _permutation_from_cycle_code(code: str, colours: int) -> tuple[int, ...]:
+    permutation = list(range(colours))
+    if code == "1":
+        return tuple(permutation)
+    for cycle in code.split("."):
+        indices = [ord(letter) - ord("A") for letter in cycle]
+        if len(indices) < 2 or any(index < 0 or index >= colours for index in indices):
+            raise ValueError(f"invalid {colours}-colour cycle code: {code}")
+        for index, image in zip(indices, indices[1:] + indices[:1], strict=True):
+            if permutation[index] != index:
+                raise ValueError(f"overlapping cycles in code: {code}")
+            permutation[index] = image
+    return tuple(permutation)
+
+
+def _permutation_order(permutation: Iterable[int]) -> int:
+    values = tuple(permutation)
+    result = 1
+    for start in range(len(values)):
+        cursor = values[start]
+        length = 1
+        while cursor != start:
+            cursor = values[cursor]
+            length += 1
+            if length > len(values):
+                raise ValueError(f"not a permutation: {values}")
+        result = math.lcm(result, length)
+    return result
+
+
+def _cycle_notation(code: str) -> str:
+    return "1" if code == "1" else "".join(f"({cycle})" for cycle in code.split("."))
+
+
+def _short_signature_orders(signature: str) -> tuple[int, ...]:
+    runs = re.findall(r"[⁰¹²³⁴⁵⁶⁷⁸⁹]+", signature)
+    return tuple(int(run.translate(SUPERSCRIPT_TO_ASCII)) for run in runs)
+
+
+def chaim_presentation(
+    group_id: str,
+    parent: str,
+    colours: int,
+    notation: str,
+    short_signature: str,
+) -> dict[str, Any]:
+    """Build the full-Γ presentation in Chaim's named geometric generators."""
+
+    if colours <= 3:
+        actions = generator_colour_actions(
+            parent,
+            colours,
+            notation,
+            short_signature,
+        )
+        action_source = "book-canonical"
+    else:
+        try:
+            codes = COMPOSITE_COLOUR_ACTION_CODES[group_id]
+        except KeyError as error:
+            raise ValueError(f"missing composite colour action for {group_id}") from error
+        geometry = GENERATOR_GEOMETRY[parent]
+        if len(codes) != len(geometry):
+            raise ValueError(f"composite generator/action mismatch in {group_id}")
+        actions = [
+            {
+                "generator": generator,
+                "geometry": description,
+                "permutation_code": code,
+                "colour_permutation": list(
+                    _permutation_from_cycle_code(code, colours)
+                ),
+            }
+            for (generator, description), code in zip(geometry, codes, strict=True)
+        ]
+        action_source = "regular-cyclic-rule-extension"
+
+    if len(permutation_group(actions)) != colours:
+        raise ValueError(f"Chaim action does not generate C_{colours} in {group_id}")
+    if not presentation_relations_hold(parent, actions):
+        raise ValueError(f"Chaim action violates the {parent} relations in {group_id}")
+
+    signature_orders = _short_signature_orders(short_signature)
+    action_orders = tuple(
+        _permutation_order(action["colour_permutation"])
+        for action in actions
+    )
+    if colours > 1 and action_orders != signature_orders:
+        raise ValueError(
+            f"short-form/action order mismatch in {group_id}: "
+            f"{signature_orders} != {action_orders}"
+        )
+
+    affine_by_name = {
+        row["generator"]: row["visualization"]
+        for row in affine_generators_for(parent)["generators"]
+    }
+    rendered_actions = []
+    for action in actions:
+        visualization = affine_by_name[action["generator"]]
+        marker: dict[str, Any] = {"kind": visualization["kind"]}
+        if visualization["kind"] == "rotation":
+            marker["order"] = {
+                "half-turn": 2,
+                "one-third turn": 3,
+                "quarter-turn": 4,
+                "one-sixth turn": 6,
+            }[action["geometry"]]
+        rendered_actions.append(
+            action
+            | {
+                "cycle_notation": _cycle_notation(action["permutation_code"]),
+                "marker": marker,
+            }
+        )
+
+    presentation = group_presentation(parent)
+    if presentation["generators"] != [
+        action["generator"] for action in rendered_actions
+    ]:
+        raise ValueError(f"presentation generator order mismatch in {group_id}")
+    return {
+        "ambient_group": "Γ",
+        "generators": rendered_actions,
+        "relations": presentation["relations"],
+        "action_source": action_source,
+    }
+
+
 def _key_power(value: tuple[Any, ...], exponent: int) -> tuple[Any, ...]:
     result = (M_ID, (Fraction(0), Fraction(0)), 1, Fraction(0))
     for _ in range(exponent):
@@ -1681,6 +1962,13 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             "cell_action_presentation": cell_action_presentation(
                 group_id, group["render"], group["base"]
             ),
+            "chaim_presentation": chaim_presentation(
+                group_id,
+                group["base"],
+                order,
+                notation,
+                short_signature,
+            ),
             "clockwork_description": clockwork_description(group, order),
             "coloring_description": coloring_description(group, order, kernel_base),
             "book_audit": book_audit(
@@ -1699,7 +1987,7 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "schema_version": 6,
+            "schema_version": 7,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -1769,6 +2057,13 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
         record["cell_action_presentation"] = cell_action_presentation(
             group_id, record["render"], record["parent"]["hm"]
         )
+        record["chaim_presentation"] = chaim_presentation(
+            group_id,
+            record["parent"]["hm"],
+            order,
+            notation,
+            record["book_color_signature"],
+        )
         record.pop("geometric_operations", None)
         record["clockwork_description"] = clockwork_description(source_like, order)
         record["coloring_description"] = coloring_description(
@@ -1781,7 +2076,7 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
         )
 
     meta = payload["meta"]
-    meta["schema_version"] = 6
+    meta["schema_version"] = 7
     meta["book_audit_counts"] = EXPECTED_BOOK_AUDIT_COUNTS
     meta["signature_evidence_counts"] = EXPECTED_SIGNATURE_EVIDENCE_COUNTS
     meta["book"]["annotated_excerpt_count"] = len(BOOK_EXCERPTS)
@@ -1791,8 +2086,8 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 6:
-        raise ValueError("correspondence data must use schema version 6")
+    if meta.get("schema_version") != 7:
+        raise ValueError("correspondence data must use schema version 7")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -1861,6 +2156,17 @@ def validate_payload(payload: dict[str, Any]) -> None:
         )
         if group.get("signature_evidence") != expected_signature_evidence:
             raise ValueError(f"signature evidence mismatch in {group_id}")
+        signature_excerpt = expected_signature_evidence.get("excerpt")
+        if expected_signature_evidence["status"] == "rule-extension":
+            if signature_excerpt is not None:
+                raise ValueError(f"derived short form claims a direct crop in {group_id}")
+        elif order > 1:
+            if not signature_excerpt or signature_excerpt.get("highlight_target") not in {
+                "short-signature", "short-signature-and-type",
+            }:
+                raise ValueError(f"short form lacks matching crop metadata in {group_id}")
+            if not (ROOT / signature_excerpt["image"]).is_file():
+                raise ValueError(f"short-form crop is missing in {group_id}")
         if "//" in group["tos_notation"]:
             raise ValueError(f"regular cyclic action uses a double slash in {group_id}")
         if group["parent"]["hm"] == "p1" and "◦" not in group["parent"]["orbifold"]:
@@ -1893,6 +2199,13 @@ def validate_payload(payload: dict[str, Any]) -> None:
             excerpt = BOOK_EXCERPTS.get(step.get("excerpt_key"))
             if not excerpt or excerpt["printed_page"] != step["printed_page"]:
                 raise ValueError(f"prime-chain link lacks an excerpt asset in {group_id}")
+            short_excerpt = step.get("short_signature_excerpt")
+            if (
+                not short_excerpt
+                or short_excerpt.get("highlight_target") != "short-signature"
+                or short_excerpt.get("printed_page") != step["printed_page"]
+            ):
+                raise ValueError(f"prime-chain short-form crop mismatch in {group_id}")
         if group["catalog_url"] != f"{CATALOG_ROOT}#{group_id}":
             raise ValueError(f"catalog deep link mismatch in {group_id}")
         if [row["index"] for row in group["phase_residues"]] != list(range(order)):
@@ -1902,6 +2215,15 @@ def validate_payload(payload: dict[str, Any]) -> None:
         )
         if group.get("cell_action_presentation") != expected_presentation:
             raise ValueError(f"cell-action presentation differs from render data in {group_id}")
+        expected_chaim_presentation = chaim_presentation(
+            group_id,
+            group["parent"]["hm"],
+            order,
+            group["tos_notation"],
+            group["book_color_signature"],
+        )
+        if group.get("chaim_presentation") != expected_chaim_presentation:
+            raise ValueError(f"Chaim presentation differs from source data in {group_id}")
         represented_phases = {
             exact_fraction(operation["tau"])
             for operation in group["render"]["ops"]
@@ -2146,28 +2468,135 @@ def _phase_profile(record: dict[str, Any]) -> str:
     return "<ul class=\"phase-profile\">" + "\n".join(rows) + "</ul>"
 
 
+def _generator_marker_html(action: dict[str, Any]) -> str:
+    marker = action["marker"]
+    kind = marker["kind"]
+    extra_class = ""
+    data_order = ""
+    if kind == "rotation":
+        order = marker["order"]
+        extra_class = f" presentation-generator-rotation-{order}"
+        data_order = f' data-rotation-order="{order}"'
+        if order == 2:
+            drawing = (
+                '<line x1="8" y1="12" x2="32" y2="12"></line>'
+                '<circle cx="20" cy="12" r="3.2"></circle>'
+            )
+        elif order == 3:
+            drawing = '<polygon points="20,3 34,21 6,21"></polygon>'
+        elif order == 4:
+            drawing = '<polygon points="20,2.5 34,12 20,21.5 6,12"></polygon>'
+        elif order == 6:
+            drawing = (
+                '<line x1="4" y1="12" x2="36" y2="12"></line>'
+                '<line x1="12" y1="3" x2="28" y2="21"></line>'
+                '<line x1="28" y1="3" x2="12" y2="21"></line>'
+            )
+        else:
+            raise ValueError(f"unsupported rotation marker order: {order}")
+    elif kind == "mirror":
+        drawing = '<line class="presentation-mirror-line" x1="3" y1="12" x2="37" y2="12"></line>'
+    elif kind == "glide":
+        drawing = (
+            '<line x1="3" y1="12" x2="37" y2="12"></line>'
+            '<path class="presentation-glide-half-arrow" d="M17 6 L25 12 L17 18"></path>'
+        )
+    elif kind == "translation":
+        drawing = (
+            '<line x1="4" y1="12" x2="34" y2="12"></line>'
+            '<path class="presentation-translation-arrow" d="M27 6 L35 12 L27 18"></path>'
+        )
+    else:
+        raise ValueError(f"unsupported presentation marker: {kind}")
+    return (
+        f'<span class="presentation-generator-marker presentation-generator-{kind}'
+        f'{extra_class}" data-generator-kind="{kind}"{data_order} aria-hidden="true">'
+        f'<svg viewBox="0 0 40 24" focusable="false">{drawing}</svg>'
+        "</span>"
+    )
+
+
 def _presentation_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
-    presentation = record["cell_action_presentation"]
+    presentation = record["chaim_presentation"]
     rows = []
     for generator in presentation["generators"]:
         rows.append(
-            "<tr class=\"presentation-generator-row\">"
-            f"<th scope=\"row\"><span class=\"generator-key\">{escape(generator['name'])}</span>"
-            f"<span>{escape(generator['operation'])}</span></th>"
-            f"<td>{escape(generator['time_shift'])}</td>"
+            '<tr class="presentation-generator-row">'
+            '<th scope="row"><span class="presentation-generator-identity">'
+            f'{_generator_marker_html(generator)}'
+            f'<span class="generator-key">{escape(generator["generator"])}</span>'
+            f'<span class="generator-geometry">{escape(generator["geometry"])}</span>'
+            "</span></th>"
+            f'<td class="presentation-colour-action"><code>{escape(generator["cycle_notation"])}</code></td>'
             "</tr>"
         )
     rows_html = "\n".join(rows)
+    palette = "".join(
+        '<span class="presentation-colour">'
+        f'<i style="--presentation-colour: {escape(PALETTE[index])}"></i>'
+        f'{chr(ord("A") + index)}</span>'
+        for index in range(record["clock_order"])
+    )
+    source_note = ""
+    if presentation["action_source"] == "regular-cyclic-rule-extension":
+        source_note = (
+            '<p class="presentation-source-note">Cyclic extension: these C<sub>'
+            f'{record["clock_order"]}</sub> actions follow Chaim’s order rule; the book '
+            "does not print a composite-colour row.</p>"
+        )
+    generator_names = ", ".join(
+        generator["generator"] for generator in presentation["generators"]
+    )
     return f"""
               <section class="group-presentation" aria-labelledby="{group_id}-presentation-title">
-                <h4 id="{group_id}-presentation-title">Presentation</h4>
+                <div class="presentation-heading">
+                  <h4 id="{group_id}-presentation-title">Presentation</h4>
+                  <p class="presentation-palette"><span>cycles over</span>{palette}</p>
+                </div>
                 <table data-presentation="{group_id}">
-                  <caption class="visually-hidden">Minimal geometric generators for the cell action of {group_id}</caption>
+                  <caption class="visually-hidden">Chaim’s named geometric generators and induced colour cycles for {group_id}</caption>
+                  <thead><tr><th scope="col">Generator</th><th scope="col">Colour action</th></tr></thead>
                   <tbody>{rows_html}</tbody>
                 </table>
-                <p class="presentation-relations"><strong>Relations</strong> <span>G/Λ = ⟨{escape(', '.join(generator['name'] for generator in presentation['generators']))} | {escape(presentation['relations'])}⟩</span></p>
+                <p class="presentation-relations"><strong>Relations</strong> <span>Γ = ⟨{escape(generator_names)} | {escape(presentation['relations'])}⟩</span></p>
+                {source_note}
               </section>"""
+
+
+def _excerpt_link(
+    excerpt: dict[str, Any],
+    excerpt_id: str,
+    css_class: str,
+    label_html: str,
+    *,
+    short_signature: bool = False,
+) -> str:
+    source_url = excerpt.get("source_url") or excerpt.get("source")
+    if not source_url:
+        raise ValueError(f"excerpt lacks a source URL: {excerpt_id}")
+    viewer_url = f"book-excerpt.html?v={BOOK_EXCERPT_VIEWER_VERSION}&" + urlencode(
+        {
+            "image": excerpt["image"],
+            "title": excerpt["title"],
+            "context": excerpt["context"],
+            "alt": excerpt["alt"],
+            "source": source_url,
+        }
+    )
+    short_attribute = " data-short-signature-excerpt" if short_signature else ""
+    return (
+        f'<a class="{css_class}" href="{escape(viewer_url)}" '
+        f'data-printed-page="{excerpt["printed_page"]}" '
+        f'data-pdf-page="{excerpt["pdf_page"]}" '
+        f'data-book-excerpt="{escape(excerpt_id)}" '
+        f'data-book-image="{escape(excerpt["image"])}" '
+        f'data-book-title="{escape(excerpt["title"])}" '
+        f'data-book-context="{escape(excerpt["context"])}" '
+        f'data-book-alt="{escape(excerpt["alt"])}" '
+        f'data-book-source="{escape(source_url)}"{short_attribute} '
+        f'target="{BOOK_EXCERPT_TARGET}">{label_html}</a>'
+    )
 
 
 def _book_link(
@@ -2176,27 +2605,15 @@ def _book_link(
     label: str,
 ) -> str:
     excerpt = BOOK_EXCERPTS[reference["excerpt_key"]]
-    viewer_url = f"book-excerpt.html?v={BOOK_EXCERPT_VIEWER_VERSION}&" + urlencode(
-        {
-            "image": excerpt["image"],
-            "title": excerpt["title"],
-            "context": excerpt["context"],
-            "alt": excerpt["alt"],
-            "source": reference["url"],
-        }
-    )
-    return (
-        f'<a class="{css_class}" href="{escape(viewer_url)}" '
-        f'data-printed-page="{reference["printed_page"]}" '
-        f'data-pdf-page="{reference["pdf_page"]}" '
-        f'data-book-excerpt="{escape(excerpt["key"])}" '
-        f'data-book-image="{escape(excerpt["image"])}" '
-        f'data-book-title="{escape(excerpt["title"])}" '
-        f'data-book-context="{escape(excerpt["context"])}" '
-        f'data-book-alt="{escape(excerpt["alt"])}" '
-        f'data-book-source="{escape(reference["url"])}" '
-        f'target="{BOOK_EXCERPT_TARGET}">'
-        f"{escape(label)}</a>"
+    resolved = {
+        **excerpt,
+        "source_url": reference["url"],
+    }
+    return _excerpt_link(
+        resolved,
+        excerpt["key"],
+        css_class,
+        escape(label),
     )
 
 
@@ -2265,6 +2682,50 @@ def _clockwork_disambiguator_html(
     )
 
 
+def _short_form_support_html(record: dict[str, Any]) -> str:
+    links: list[str] = []
+    for step in record["book_audit"]["prime_chain"]:
+        excerpt = step["short_signature_excerpt"]
+        links.append(
+            _excerpt_link(
+                excerpt,
+                f'short-form::{step["source_colour_group_id"]}',
+                "short-form-support-link",
+                (
+                    f'C<sub>{step["index"]}</sub> layer '
+                    f'{superscript_html(step["short_signature"])} · '
+                    f'p. {step["printed_page"]}'
+                ),
+                short_signature=True,
+            )
+        )
+    for conflict in record["signature_evidence"]["conflicts"]:
+        excerpt = conflict.get("excerpt")
+        if not excerpt:
+            continue
+        links.append(
+            _excerpt_link(
+                excerpt,
+                f'conflict::{conflict.get("source_colour_group_id", record["id"])}',
+                "short-form-support-link short-form-support-link--conflict",
+                (
+                    "conflicting row "
+                    f'{superscript_html(conflict["printed_signature"])} · '
+                    f'p. {excerpt["printed_page"]}'
+                ),
+                short_signature=True,
+            )
+        )
+    if not links:
+        return ""
+    return (
+        '<li class="short-form-support"><span class="other-name-category">'
+        'Short-form evidence</span><span class="short-form-support-links">'
+        + '<span aria-hidden="true"> · </span>'.join(links)
+        + "</span></li>"
+    )
+
+
 def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> str:
     """Link exact catalog, plane-group, and height-lift identities."""
 
@@ -2302,20 +2763,61 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
         mate_html = (
             f'<li>{_term_help_html("Opposite clock orientation")}<a href="#{mate_id}">{mate_id}</a></li>'
         )
+    short_form_support = _short_form_support_html(record)
     return f"""
               <section class="other-names" aria-labelledby="{group_id}-other-names-title">
                 <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
-                  <li>{_term_help_html("Chaim source")}{book_link}</li>
+                  <li>{_term_help_html("Book type audit")}{book_link}</li>
                   <li>{_term_help_html("Catalog instance")}<a href="{escape(record['catalog_url'])}">{group_id}</a></li>
                   <li>{_term_help_html("Parent plane-group type G")}<a href="{escape(parent_url)}">{_plane_group_name_html(parent_hm)}</a></li>
                   <li>{_term_help_html("Colour-fixing plane-group type K")}<a href="{escape(kernel_url)}">{_plane_group_name_html(kernel_hm)}</a></li>
                   <li>{_term_help_html("Conway fibrifold notation")}<span class="other-name-value"><span class="fibrifold-name" aria-label="{escape(fibrifold)}">{fibrifold_html(fibrifold)}</span>{fibrifold_orientation_note}</span></li>
                   <li>{_term_help_html("Height-lift space-group type")}<span class="other-name-value"><a href="space-group-correspondence.html#{group_id}">No. {space_number} {space_hm}</a><code>Hall {escape(space_group['hall'])}</code></span></li>
                   <li>{_term_help_html("Crystallographic tables")}<a href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">UCL diagram and tables</a></li>
+                  {short_form_support}
                   {mate_html}
                 </ul>
               </section>"""
+
+
+def _short_signature_heading_html(record: dict[str, Any]) -> tuple[str, str]:
+    signature = record["book_color_signature"]
+    signature_span = (
+        f'<span class="book-color-signature" aria-label="Chaim notation '
+        f'{escape(signature)}">{superscript_html(signature)}</span>'
+    )
+    evidence = record["signature_evidence"]
+    excerpt = evidence.get("excerpt")
+    if excerpt:
+        excerpt_id = (
+            evidence.get("source_colour_group_id")
+            or excerpt.get("excerpt_key")
+            or f'{record["id"]}-short-form'
+        )
+        signature_html = _excerpt_link(
+            excerpt,
+            f"short-form::{excerpt_id}",
+            "short-signature-link",
+            signature_span,
+            short_signature=True,
+        )
+    else:
+        signature_html = signature_span
+
+    status_html = ""
+    if evidence["status"] == "rule-extension":
+        status_html = (
+            '<p class="signature-evidence-note signature-evidence-note--derived">'
+            f'<span>Derived C<sub>{record["clock_order"]}</sub> short form</span>'
+            " — no literal book row</p>"
+        )
+    elif evidence["status"] == "book-internal-discrepancy":
+        status_html = (
+            '<p class="signature-evidence-note signature-evidence-note--discrepancy">'
+            f'{escape(evidence["label"])}</p>'
+        )
+    return signature_html, status_html
 
 
 def _entry_html(
@@ -2324,8 +2826,7 @@ def _entry_html(
 ) -> str:
     group_id = escape(record["id"])
     order = record["clock_order"]
-    short_signature = record["book_color_signature"]
-    short_signature_html = superscript_html(short_signature)
+    short_signature_html, signature_status_html = _short_signature_heading_html(record)
     clockwork_disambiguator = _clockwork_disambiguator_html(
         record,
         context="heading",
@@ -2334,7 +2835,8 @@ def _entry_html(
       <li class="correspondence-item">
         <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clockwork-tabpanel data-clock-order="{order}">
           <header class="entry-header">
-            <h3 id="{group_id}-title"><span class="book-color-signature" aria-label="Chaim notation {escape(short_signature)}">{short_signature_html}</span> <span class="group-id">{group_id}</span></h3>
+            <h3 id="{group_id}-title">{short_signature_html} <span class="group-id">{group_id}</span></h3>
+            {signature_status_html}
             {clockwork_disambiguator}
           </header>
 
@@ -2618,24 +3120,36 @@ def data_text(payload: dict[str, Any]) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 
 
-def expected_outputs(payload: dict[str, Any]) -> tuple[dict[Path, str], dict[Path, bytes]]:
-    text_outputs = {
+def expected_text_outputs(payload: dict[str, Any]) -> dict[Path, str]:
+    return {
         DATA: data_text(payload),
         PAGE: page_html(payload),
     }
-    binary_outputs = {
+
+
+def expected_binary_outputs(payload: dict[str, Any]) -> dict[Path, bytes]:
+    return {
         IMAGE_DIR / f"{group['id']}.webp": render_plate(group)
         for group in payload["groups"]
     }
-    return text_outputs, binary_outputs
 
 
-def check_outputs(payload: dict[str, Any]) -> list[Path]:
+def expected_outputs(payload: dict[str, Any]) -> tuple[dict[Path, str], dict[Path, bytes]]:
+    return expected_text_outputs(payload), expected_binary_outputs(payload)
+
+
+def check_outputs(
+    payload: dict[str, Any],
+    *,
+    include_images: bool = True,
+) -> list[Path]:
     stale: list[Path] = []
-    text_outputs, binary_outputs = expected_outputs(payload)
-    for path, expected in text_outputs.items():
+    for path, expected in expected_text_outputs(payload).items():
         if not path.exists() or path.read_text(encoding="utf-8") != expected:
             stale.append(path)
+    if not include_images:
+        return stale
+    binary_outputs = expected_binary_outputs(payload)
     for path, expected in binary_outputs.items():
         if not path.exists() or path.read_bytes() != expected:
             stale.append(path)
@@ -2645,12 +3159,13 @@ def check_outputs(payload: dict[str, Any]) -> list[Path]:
     return stale
 
 
-def write_outputs(payload: dict[str, Any]) -> None:
-    text_outputs, binary_outputs = expected_outputs(payload)
-    for path, text in text_outputs.items():
+def write_outputs(payload: dict[str, Any], *, include_images: bool = True) -> None:
+    for path, text in expected_text_outputs(payload).items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text, encoding="utf-8")
-    for path, data in binary_outputs.items():
+    if not include_images:
+        return
+    for path, data in expected_binary_outputs(payload).items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(data)
 
@@ -2666,6 +3181,11 @@ def main(argv: list[str] | None = None) -> int:
         "--refresh-derived-data",
         action="store_true",
         help="refresh descriptions and book evidence in the checked-in extract",
+    )
+    parser.add_argument(
+        "--text-only",
+        action="store_true",
+        help="write or check JSON and HTML without rendering colour plates",
     )
     parser.add_argument("--check", action="store_true", help="fail if generated outputs are stale")
     args = parser.parse_args(argv)
@@ -2686,14 +3206,10 @@ def main(argv: list[str] | None = None) -> int:
         payload = json.loads(DATA.read_text(encoding="utf-8"))
         if args.refresh_derived_data:
             payload = refresh_derived_payload(payload)
-            DATA.write_text(
-                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
         validate_payload(payload)
 
     if args.check:
-        stale = check_outputs(payload)
+        stale = check_outputs(payload, include_images=not args.text_only)
         if stale:
             for path in stale:
                 print(f"stale: {path.relative_to(ROOT)}", file=sys.stderr)
@@ -2701,8 +3217,9 @@ def main(argv: list[str] | None = None) -> int:
         print("clockwork/colouring correspondence: tracked outputs are current")
         return 0
 
-    write_outputs(payload)
-    print("wrote 68 correspondence records, 51 displayed rows, and static colour plates")
+    write_outputs(payload, include_images=not args.text_only)
+    suffix = "JSON and HTML" if args.text_only else "JSON, HTML, and static colour plates"
+    print(f"wrote 68 correspondence records and 51 displayed rows; outputs: {suffix}")
     return 0
 
 

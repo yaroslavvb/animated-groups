@@ -3,7 +3,7 @@
     "schema_version": 3,
     "title": "Cyclic colourings and polar space groups",
     "source": "data/clockwork-coloring-correspondence.json",
-    "source_sha256": "242a467001ac496aaf048ad2467886f79e5e6139630789ead537ef76bcae1330",
+    "source_sha256": "fe13f17f4f3410be4443ffaff975304a7e14efff06a77a912dfd9f75e1e8465f",
     "source_groups": 68,
     "wallpaper_families": 17,
     "space_group_types": 68,
