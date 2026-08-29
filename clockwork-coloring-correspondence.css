@@ -510,12 +510,108 @@ nav a[aria-current="page"] {
   margin: 0;
 }
 
+.colour-plate-graphic {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 12 / 7;
+  overflow: hidden;
+}
+
 .colour-plate img {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 12 / 7;
   object-fit: cover;
+}
+
+.plate-generator-overlay {
+  --plate-generator-ink: #74213f;
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.plate-generator-axis-halo,
+.plate-generator-axis,
+.plate-generator-half-arrow-halo,
+.plate-generator-half-arrow,
+.plate-generator-glyph-halo,
+.plate-generator-glyph {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.plate-generator-axis-halo,
+.plate-generator-half-arrow-halo,
+.plate-generator-glyph-halo {
+  fill: none;
+  stroke: rgba(255, 253, 247, 0.94);
+  stroke-width: 6px;
+}
+
+.plate-generator-axis {
+  fill: none;
+  stroke: var(--plate-generator-ink);
+  stroke-width: 2.2px;
+  stroke-dasharray: 9 7;
+}
+
+.plate-generator-half-arrow {
+  fill: none;
+  stroke: var(--plate-generator-ink);
+  stroke-width: 2.35px;
+}
+
+.plate-generator-glyph {
+  fill: rgba(255, 253, 247, 0.9);
+  stroke: var(--plate-generator-ink);
+  stroke-width: 2.35px;
+}
+
+.plate-generator--rotation-2 .plate-generator-glyph,
+.plate-generator--rotation-6 .plate-generator-glyph {
+  fill: none;
+}
+
+.plate-generator--rotation-2 .plate-generator-glyph circle {
+  fill: var(--plate-generator-ink);
+}
+
+.plate-generator-label {
+  fill: var(--plate-generator-ink);
+  stroke: rgba(255, 253, 247, 0.98);
+  stroke-width: 4px;
+  paint-order: stroke fill;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (forced-colors: active) {
+  .plate-generator-axis-halo,
+  .plate-generator-half-arrow-halo,
+  .plate-generator-glyph-halo,
+  .plate-generator-label {
+    stroke: Canvas;
+  }
+
+  .plate-generator-axis,
+  .plate-generator-half-arrow,
+  .plate-generator-glyph {
+    stroke: CanvasText;
+  }
+
+  .plate-generator-glyph,
+  .plate-generator--rotation-2 .plate-generator-glyph circle,
+  .plate-generator-label {
+    fill: CanvasText;
+  }
 }
 
 .colour-plate figcaption {
