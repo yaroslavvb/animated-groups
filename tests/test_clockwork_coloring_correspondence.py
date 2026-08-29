@@ -731,6 +731,18 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('font-family: "STIX Two Math", "Cambria Math"', css)
         self.assertIn("vertical-align: baseline", css)
 
+    def test_short_signature_source_links_are_visually_quiet_at_rest(self) -> None:
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        resting_rule = css.split(".short-signature-link {", 1)[1].split("}", 1)[0]
+        self.assertIn("text-decoration: none", resting_rule)
+        self.assertIn(".short-signature-link:hover,", css)
+        heading_icon_rule = css.split(
+            "a.short-signature-link[data-book-excerpt]::after {", 1
+        )[1].split("}", 1)[0]
+        self.assertIn("content: none", heading_icon_rule)
+
     def test_every_example_displays_chaims_full_group_presentation(self) -> None:
         display_ids = [group["id"] for group in self.display_groups]
         self.assertEqual(self.parser.presentation_tables, display_ids)
@@ -902,7 +914,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=chaim-presentations", self.page)
+        self.assertIn("?v=quiet-signature-links", self.page)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (

@@ -684,8 +684,14 @@ nav a[aria-current="page"] {
 
 .short-signature-link {
   color: inherit;
-  text-decoration-color: color-mix(in srgb, var(--accent) 52%, transparent);
-  text-decoration-style: dotted;
+  text-decoration: none;
+}
+
+.short-signature-link:hover,
+.short-signature-link:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.05em;
   text-underline-offset: 0.14em;
 }
 
@@ -733,6 +739,10 @@ a[data-book-excerpt]::after {
   content: "  ◫";
   color: var(--accent);
   font-size: 0.86em;
+}
+
+a.short-signature-link[data-book-excerpt]::after {
+  content: none;
 }
 
 .group-presentation {
