@@ -866,32 +866,37 @@ nav a[aria-current="page"] {
   text-transform: uppercase;
 }
 
-.colour-key {
+.colour-order {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 0.75rem;
+  align-items: center;
+  gap: 0.32rem;
   margin: 0;
   padding: 0;
-  list-style: none;
   color: #37413d;
+  line-height: 1;
+}
+
+.colour-order--plate {
   font-size: 0.68rem;
   letter-spacing: 0;
   text-transform: none;
 }
 
-.colour-key li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.32rem;
+.colour-order-label {
+  margin-right: 0.08rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
 }
 
-.swatch {
+.colour-order-swatch {
+  display: block;
   width: 0.76rem;
   height: 0.76rem;
   flex: none;
   border: 1px solid #26332f;
   border-radius: 2px;
-  background: var(--swatch);
+  background: var(--colour-order-swatch);
 }
 
 .crystal-viewer-stage {
@@ -1372,37 +1377,14 @@ a.short-signature-link[data-book-excerpt]::after {
   font-weight: 700;
 }
 
-.presentation-palette {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+.colour-order--presentation {
   justify-content: flex-end;
-  gap: 0.28rem;
-  margin: 0;
-  color: var(--muted);
   font-size: 0.66rem;
-  line-height: 1;
 }
 
-.presentation-palette > span:first-child {
-  margin-right: 0.08rem;
-  letter-spacing: 0.02em;
-}
-
-.presentation-colour {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.14rem;
-  color: var(--text);
-  font-weight: 700;
-}
-
-.presentation-colour i {
+.colour-order--presentation .colour-order-swatch {
   width: 0.62rem;
   height: 0.62rem;
-  border: 1px solid #26332f;
-  border-radius: 50%;
-  background: var(--presentation-colour);
 }
 
 .group-presentation table {
@@ -1962,7 +1944,7 @@ a.short-signature-link[data-book-excerpt]::after {
     gap: 0.32rem;
   }
 
-  .presentation-palette {
+  .colour-order--presentation {
     justify-content: flex-start;
   }
 
