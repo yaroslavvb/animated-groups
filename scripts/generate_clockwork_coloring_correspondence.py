@@ -63,7 +63,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=ucl-generator-symbols"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=diagram-generator-notation"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -76,6 +76,10 @@ BOOK_PAGE_URL = BOOK_RECORD_URL + "&pg=PA{page}"
 BOOK_EXCERPT_TARGET = "clockwork-book-excerpt"
 BOOK_ERRATA_URL = "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html"
 FARRIS_URL = "https://archive.bridgesmathart.org/2017/bridges2017-131.pdf#page=6"
+IUCR_DIAGRAM_SYMBOLS_URL = (
+    "https://journals.iucr.org/j/issues/2010/05/02/kk5061/kk5061fig12.html"
+)
+UCL_P31C_DIAGRAM_URL = "http://img.chem.ucl.ac.uk/sgp/large/159az1.htm"
 
 IMAGE_WIDTH = 720
 IMAGE_HEIGHT = 420
@@ -2899,12 +2903,17 @@ def _phase_profile(record: dict[str, Any]) -> str:
     return "<ul class=\"phase-profile\">" + "\n".join(rows) + "</ul>"
 
 
-def _rotation_screw_step(order: int, time_shift: str | Fraction) -> int:
-    """Return the UCL screw-axis subscript for one clockwork rotation.
+def _rotation_screw_step(
+    order: int,
+    time_shift: str | Fraction,
+    angle_degrees: float,
+) -> int:
+    """Return the crystallographic screw-axis subscript of a polar rotation.
 
-    The UCL diagrams distinguish an ordinary n-fold axis from n_m by drawing
-    m as a handed set of arms around the filled n-fold symbol.  A clockwork
-    time shift is the same datum: m = n * tau modulo n.
+    In the polar height lift, a spatial n-fold rotation with clock shift tau
+    is the screw axis n_m.  The sign of the displayed elementary turn matters:
+    m = s*n*tau modulo n, with s=+1 for +360/n and s=-1 for -360/n.  This makes
+    inverse operations on the same crystallographic axis share its n_m mark.
     """
 
     indexed_shift = order * Fraction(time_shift)
@@ -2912,20 +2921,40 @@ def _rotation_screw_step(order: int, time_shift: str | Fraction) -> int:
         raise ValueError(
             f"rotation of order {order} has incompatible time shift {time_shift}"
         )
-    return indexed_shift.numerator % order
+    elementary_angle = 360 / order
+    normalized_angle = angle_degrees % 360
+    if math.isclose(normalized_angle, elementary_angle, abs_tol=1e-7):
+        orientation = 1
+    elif math.isclose(
+        normalized_angle,
+        (360 - elementary_angle) % 360,
+        abs_tol=1e-7,
+    ):
+        orientation = -1
+    else:
+        raise ValueError(
+            f"rotation of order {order} has non-elementary angle {angle_degrees}"
+        )
+    return (orientation * indexed_shift.numerator) % order
 
 
-def _rotation_symbol_key(order: int, time_shift: str | Fraction) -> str:
-    return f"rotation-{order}-{_rotation_screw_step(order, time_shift)}"
+def _rotation_symbol_key(
+    order: int,
+    time_shift: str | Fraction,
+    angle_degrees: float,
+) -> str:
+    return (
+        f"rotation-{order}-"
+        f"{_rotation_screw_step(order, time_shift, angle_degrees)}"
+    )
 
 
 def _rotation_symbol_body_html(order: int, screw_step: int) -> str:
-    """Draw one origin-centred UCL-style rotation/screw-axis symbol.
+    """Draw one origin-centred crystallographic rotation/screw-axis symbol.
 
-    The filled lens, triangle, diamond and hexagon follow the crystallographic
-    projection symbols.  For n_m, gcd(n, m) chooses the evenly spaced arm
-    starts and m versus n-m chooses the handedness, matching the related UCL
-    Pn_m diagrams without copying their raster artwork.
+    Filled lenses, triangles, diamonds and hexagons follow the International
+    Tables projection vocabulary.  For n_m, gcd(n, m) selects the evenly
+    spaced arm starts, while m versus n-m reverses their handedness.
     """
 
     if order not in {2, 3, 4, 6}:
@@ -2980,46 +3009,66 @@ def _rotation_symbol_body_html(order: int, screw_step: int) -> str:
     return core + arms
 
 
-def _generator_marker_html(action: dict[str, Any]) -> str:
-    marker = action["marker"]
-    kind = marker["kind"]
-    extra_class = ""
-    data_order = ""
-    symbol_key = kind
-    if kind == "rotation":
-        order = marker["order"]
-        screw_step = _rotation_screw_step(order, action["time_shift"])
-        symbol_key = _rotation_symbol_key(order, action["time_shift"])
-        extra_class = f" presentation-generator-rotation-{order}"
-        data_order = (
-            f' data-rotation-order="{order}" data-screw-step="{screw_step}"'
+# The four named planar glides require conventional-setting information that
+# cannot be inferred from the plotted 2D glide vector alone.  The classification
+# records the chosen lifted operation in the constructed polar coordinates,
+# rather than collapsing centring-related representatives into one conventional
+# symmetry-element set.  All canonical mirror generators have zero in-plane
+# glide and are classified directly by their polar (c-axis) shift below.
+_PLANE_LIFT_OVERRIDE_BY_GENERATOR: dict[
+    tuple[str, str], tuple[str, Fraction]
+] = {
+    ("g9", "Z"): ("n", Fraction(1, 2)),
+    ("g59", "Z"): ("n", Fraction(1, 2)),
+    ("g63", "Z"): ("axial", Fraction(0)),
+    ("g75", "Z"): ("d", Fraction(1, 4)),
+}
+
+_PLANE_LIFT_KIND = {
+    "m": "mirror-plane",
+    "c": "c-glide-plane",
+    "axial": "axial-glide-plane",
+    "n": "n-glide-plane",
+    "d": "d-glide-plane",
+}
+
+
+def _polar_plane_symbol(
+    group_id: str,
+    generator: dict[str, Any],
+) -> str:
+    """Classify one orientation-reversing lift in projection along time."""
+
+    marker_kind = generator["marker"]["kind"]
+    phase = Fraction(generator["phase"])
+    if marker_kind == "mirror":
+        if phase == 0:
+            return "m"
+        if phase == Fraction(1, 2):
+            return "c"
+        raise ValueError(
+            f"unsupported polar mirror shift in {group_id}:"
+            f"{generator['generator']}={phase}"
         )
-        drawing = (
-            '<g class="generator-symbol-body" transform="translate(20 16)">'
-            f'{_rotation_symbol_body_html(order, screw_step)}'
-            '</g>'
+    if marker_kind != "glide":
+        raise ValueError(
+            f"unsupported polar plane generator in {group_id}: {marker_kind}"
         )
-    elif kind == "mirror":
-        drawing = '<line class="presentation-mirror-line" x1="3" y1="16" x2="37" y2="16"></line>'
-    elif kind == "glide":
-        drawing = (
-            '<line x1="3" y1="16" x2="37" y2="16"></line>'
-            '<path class="presentation-glide-half-arrow" d="M17 10 L25 16 L17 22"></path>'
+    try:
+        plane_symbol, expected_phase = _PLANE_LIFT_OVERRIDE_BY_GENERATOR[
+            (group_id, generator["generator"])
+        ]
+    except KeyError as error:
+        raise ValueError(
+            f"unclassified planar glide lift in {group_id}:"
+            f"{generator['generator']}"
+        ) from error
+    if phase != expected_phase:
+        raise ValueError(
+            f"polar glide phase drift in {group_id}:{generator['generator']}: "
+            f"{phase} != {expected_phase}"
         )
-    elif kind == "translation":
-        drawing = (
-            '<line x1="4" y1="16" x2="34" y2="16"></line>'
-            '<path class="presentation-translation-arrow" d="M27 10 L35 16 L27 22"></path>'
-        )
-    else:
-        raise ValueError(f"unsupported presentation marker: {kind}")
-    return (
-        f'<span class="presentation-generator-marker presentation-generator-{kind}'
-        f'{extra_class}" data-generator-kind="{kind}" '
-        f'data-generator-symbol="{symbol_key}"{data_order} aria-hidden="true">'
-        f'<svg viewBox="0 0 40 32" focusable="false">{drawing}</svg>'
-        "</span>"
-    )
+    return plane_symbol
 
 
 def _svg_number(value: float) -> str:
@@ -3095,6 +3144,53 @@ def _plate_rotation_glyph_html(order: int, screw_step: int) -> str:
     return layers(drawing)
 
 
+def _plate_d_glide_arrows_html(
+    axis: dict[str, tuple[float, float]],
+    glide_distance: float,
+    time_shift: Fraction,
+) -> str:
+    """Draw the paired arrows used by the International Tables d-glide mark."""
+
+    start = axis["start"]
+    end = axis["end"]
+    direction = axis["direction"]
+    signed_shift = time_shift if time_shift <= Fraction(1, 2) else time_shift - 1
+    if abs(signed_shift) != Fraction(1, 4):
+        raise ValueError(f"d-glide requires a quarter polar shift, got {time_shift}")
+    if glide_distance * signed_shift < 0:
+        direction = (-direction[0], -direction[1])
+    normal = (-direction[1], direction[0])
+    paths = []
+    for fraction in (0.43, 0.57):
+        anchor = (
+            start[0] + (end[0] - start[0]) * fraction,
+            start[1] + (end[1] - start[1]) * fraction,
+        )
+        tip = (
+            anchor[0] + 5.5 * direction[0],
+            anchor[1] + 5.5 * direction[1],
+        )
+        base = (
+            anchor[0] - 4.5 * direction[0],
+            anchor[1] - 4.5 * direction[1],
+        )
+        wings = (
+            (base[0] + 4.2 * normal[0], base[1] + 4.2 * normal[1]),
+            (base[0] - 4.2 * normal[0], base[1] - 4.2 * normal[1]),
+        )
+        paths.append(
+            f'M {_svg_number(wings[0][0])} {_svg_number(wings[0][1])} '
+            f'L {_svg_number(tip[0])} {_svg_number(tip[1])} '
+            f'L {_svg_number(wings[1][0])} {_svg_number(wings[1][1])}'
+        )
+    drawing = "".join(
+        f'<path class="plate-generator-quarter-arrow-halo" d="{path}"></path>'
+        f'<path class="plate-generator-quarter-arrow" d="{path}"></path>'
+        for path in paths
+    )
+    return drawing
+
+
 def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
     placement = _plate_generator_assignment(record)
     scale = _plate_cell_scale(record["render"])
@@ -3108,11 +3204,22 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
         order_attribute = ""
         symbol_key = kind
         classes = f"plate-generator plate-generator--{kind}"
+        phase_attribute = escape(str(generator["phase"]))
         if kind == "rotation":
             order = marker["order"]
-            screw_step = _rotation_screw_step(order, generator["phase"])
-            symbol_key = _rotation_symbol_key(order, generator["phase"])
+            angle_degrees = generator["visualization"]["angle_degrees"]
+            screw_step = _rotation_screw_step(
+                order,
+                generator["phase"],
+                angle_degrees,
+            )
+            symbol_key = _rotation_symbol_key(
+                order,
+                generator["phase"],
+                angle_degrees,
+            )
             classes += f" plate-generator--rotation-{order}"
+            lift_kind = "rotation-axis" if screw_step == 0 else "screw-axis"
             order_attribute = (
                 f' data-rotation-order="{order}" data-screw-step="{screw_step}"'
             )
@@ -3130,6 +3237,11 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
                 '</g>'
             )
         else:
+            plane_symbol = _polar_plane_symbol(record["id"], generator)
+            symbol_key = f"plane-{plane_symbol}"
+            lift_kind = _PLANE_LIFT_KIND[plane_symbol]
+            classes += f" plate-generator--plane-{plane_symbol}"
+            order_attribute = f' data-plane-symbol="{plane_symbol}"'
             axis = _clipped_plate_axis(
                 generator["visualization"]["axis_point"],
                 generator["visualization"]["axis_direction"],
@@ -3145,33 +3257,15 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
             )
             drawing = (
                 f'<line class="plate-generator-axis-halo" {line_coordinates}></line>'
-                f'<line class="plate-generator-axis plate-generator-axis--{kind}" '
+                f'<line class="plate-generator-axis '
+                f'plate-generator-axis--plane-{plane_symbol}" '
                 f'{line_coordinates}></line>'
             )
-            if kind == "glide":
-                fraction = 0.5
-                midpoint = (
-                    start[0] + (end[0] - start[0]) * fraction,
-                    start[1] + (end[1] - start[1]) * fraction,
-                )
-                direction = axis["direction"]
-                if generator["visualization"]["glide_distance"] < 0:
-                    direction = (-direction[0], -direction[1])
-                normal = (-direction[1], direction[0])
-                tip = (midpoint[0] + 8 * direction[0], midpoint[1] + 8 * direction[1])
-                base = (midpoint[0] - 5 * direction[0], midpoint[1] - 5 * direction[1])
-                wings = (
-                    (base[0] + 5 * normal[0], base[1] + 5 * normal[1]),
-                    (base[0] - 5 * normal[0], base[1] - 5 * normal[1]),
-                )
-                arrow_path = (
-                    f'M {_svg_number(wings[0][0])} {_svg_number(wings[0][1])} '
-                    f'L {_svg_number(tip[0])} {_svg_number(tip[1])} '
-                    f'L {_svg_number(wings[1][0])} {_svg_number(wings[1][1])}'
-                )
-                drawing += (
-                    f'<path class="plate-generator-half-arrow-halo" d="{arrow_path}"></path>'
-                    f'<path class="plate-generator-half-arrow" d="{arrow_path}"></path>'
+            if plane_symbol == "d":
+                drawing += _plate_d_glide_arrows_html(
+                    axis,
+                    generator["visualization"]["glide_distance"],
+                    generator["phase"],
                 )
             label_fraction = axis_label_fractions[index % len(axis_label_fractions)]
             label_normal = 14 if index % 2 == 0 else -14
@@ -3191,6 +3285,7 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
         markers.append(
             f'<g class="{classes}" data-generator="{escape(name)}" '
             f'data-generator-kind="{kind}" data-generator-symbol="{symbol_key}"'
+            f' data-lift-kind="{lift_kind}" data-time-shift="{phase_attribute}"'
             f'{order_attribute}>{drawing}</g>'
         )
     return (
@@ -3222,7 +3317,6 @@ def _presentation_html(record: dict[str, Any]) -> str:
         rows.append(
             '<tr class="presentation-generator-row">'
             '<th scope="row"><span class="presentation-generator-identity">'
-            f'{_generator_marker_html(generator)}'
             f'<span class="generator-key">{escape(generator["generator"])}</span>'
             f'<span class="generator-geometry">{escape(generator["geometry"])}</span>'
             "</span></th>"
@@ -3836,6 +3930,12 @@ def page_html(payload: dict[str, Any]) -> str:
     <nav class="directory" aria-labelledby="page-title">
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Colors follow one fixed clock: A = phase 0, B = phase 1/N, C = phase 2/N, and so on. C<sub>N</sub> = (ABC…) is one forward +1/N-period tick, so a row with Time +k/N has Color C<sub>N</sub><sup>k</sup>. Every action is a forward time skip; none reverses time. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
+      <aside class="diagram-symbol-legend" aria-labelledby="diagram-symbol-legend-title">
+        <h2 id="diagram-symbol-legend-title">Crystallographic generator symbols</h2>
+        <p>Viewed along the clock axis, these are crystallographic projection symbols for the height-lifted generators, and they appear only on the static 2D diagram. A filled lens, triangle, diamond, or hexagon marks a 2-, 3-, 4-, or 6-fold axis; arms distinguish a screw axis <i>n</i><sub><i>m</i></sub>. For a forward skip τ, <i>m</i> = <i>n</i>τ for a positive 1/<i>n</i>-turn and <i>m</i> = <i>n</i>(1−τ) for the oppositely oriented turn. Mirrored arms record spatial turn sense—not backward time.</p>
+        <p>For planes normal to the picture, a solid line is a mirror, a dashed line is an axial glide in the picture, a dotted line is a glide along the perpendicular clock axis, and a dash–dot line is a diagonal <i>n</i>-glide. An arrowed dash–dot line is the quarter-diagonal <i>d</i>-glide. The nearby α, β, γ, … or P, Q, … label matches the Generator row; its Color and Time columns state the same clock action explicitly.</p>
+        <p class="diagram-symbol-sources">Notation: <a href="{IUCR_DIAGRAM_SYMBOLS_URL}" target="_blank" rel="noopener"><cite>International Tables for Crystallography</cite> projection symbols</a> · <a href="{UCL_P31C_DIAGRAM_URL}" target="_blank" rel="noopener">UCL P 3 1 c example</a>.</p>
+      </aside>
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
         <h2 id="notation-caveat-title">Notation</h2>
         <p>The displayed names use Chaim Goodman–Strauss’s coloured-orbifold notation. Across all {len(trivial_groups) + len(displayed_groups)} forward groups it gives {len(trivial_groups) + colour_class_count} cyclic plane-colouring classes. Four types leave the two orientations of the polar fibre unresolved: 442<sup>4</sup>/◦, 333<sup>3</sup>/◦, 632<sup>6</sup>/◦, and 632<sup>3</sup>/2222. These are four two-to-one fibres, not missing colourings; standard fibrifold notation also identifies each pair under fibre reversal. <a href="docs/orbifold_notation.html#uncovered-cases">Four uncovered cases ↗</a> · <a href="{HIERARCHY_CHIRALITY_URL}">hierarchy ↗</a></p>
