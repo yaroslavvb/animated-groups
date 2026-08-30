@@ -763,6 +763,9 @@ nav a[aria-current="page"] {
 .plate-generator-axis-halo,
 .plate-generator-axis,
 .diagram-symbol-plane,
+.plate-generator-translation-halo,
+.plate-generator-translation,
+.diagram-symbol-translation,
 .plate-generator-quarter-arrow-halo,
 .plate-generator-quarter-arrow,
 .diagram-symbol-quarter-arrow,
@@ -774,6 +777,7 @@ nav a[aria-current="page"] {
 }
 
 .plate-generator-axis-halo,
+.plate-generator-translation-halo,
 .plate-generator-quarter-arrow-halo,
 .plate-generator-glyph-halo {
   fill: none;
@@ -786,7 +790,9 @@ nav a[aria-current="page"] {
 }
 
 .plate-generator-axis,
-.diagram-symbol-plane {
+.diagram-symbol-plane,
+.plate-generator-translation,
+.diagram-symbol-translation {
   fill: none;
   stroke: currentColor;
   stroke-width: 2.2px;
@@ -837,6 +843,7 @@ nav a[aria-current="page"] {
   }
 
   .plate-generator-axis-halo,
+  .plate-generator-translation-halo,
   .plate-generator-quarter-arrow-halo,
   .plate-generator-glyph-halo,
   .plate-generator-label {
@@ -845,6 +852,8 @@ nav a[aria-current="page"] {
 
   .plate-generator-axis,
   .diagram-symbol-plane,
+  .plate-generator-translation,
+  .diagram-symbol-translation,
   .plate-generator-quarter-arrow,
   .diagram-symbol-quarter-arrow,
   .plate-generator-glyph {

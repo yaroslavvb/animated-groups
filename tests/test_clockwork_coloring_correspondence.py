@@ -108,6 +108,8 @@ class CorrespondenceParser(HTMLParser):
         ] = []
         self.plate_generator_symbols: list[str] = []
         self.plate_generator_axes: list[str] = []
+        self.plate_translation_arrows = 0
+        self.plate_translation_arrow_halos = 0
         self.plate_quarter_arrows = 0
         self.plate_quarter_arrow_halos = 0
         self.crystal_viewers: list[dict[str, str | None]] = []
@@ -370,6 +372,10 @@ class CorrespondenceParser(HTMLParser):
             self.plate_quarter_arrows += 1
         if tag == "path" and "plate-generator-quarter-arrow-halo" in classes:
             self.plate_quarter_arrow_halos += 1
+        if tag == "path" and "plate-generator-translation" in classes:
+            self.plate_translation_arrows += 1
+        if tag == "path" and "plate-generator-translation-halo" in classes:
+            self.plate_translation_arrow_halos += 1
 
     def handle_data(self, data: str) -> None:
         if self._current_legend_row_index is not None:
@@ -1375,7 +1381,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     group["id"],
                 )
 
-        by_id = {group["id"]: group for group in self.display_groups}
+        by_id = {group["id"]: group for group in self.page_groups}
         self.assertEqual(
             set(correspondence.CANONICAL_TO_RENDER_CONJUGACY_BY_ID),
             set(by_id),
@@ -1572,7 +1578,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('data-legend-icon="rotation-3-1"', teaser)
         self.assertIn('data-legend-icon="plane-d"', teaser)
         self.assertIn("Open visual index", teaser)
-        self.assertIn("Rotation, screw-axis, mirror, and glide marks", teaser)
+        self.assertIn(
+            "Translation, rotation, screw-axis, mirror, and glide marks",
+            teaser,
+        )
 
         self.assertEqual(
             self.parser.diagram_symbol_dialog_attributes,
@@ -1602,6 +1611,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             "Close visual index",
         )
         expected_symbols = [
+            "translation",
             "rotation-2-0",
             "rotation-2-1",
             "rotation-3-0",
@@ -1611,6 +1621,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             "rotation-4-1",
             "rotation-4-2",
             "rotation-4-3",
+            "rotation-6-0",
             "rotation-6-1",
             "rotation-6-2",
             "rotation-6-3",
@@ -1644,7 +1655,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(legend.count("<svg"), len(expected_symbols))
         self.assertEqual(legend.count("data-legend-symbol="), len(expected_symbols))
         self.assertNotIn("data-generator-symbol=", legend)
-        self.assertEqual(legend.count('class="diagram-symbol-list" role="list"'), 2)
+        self.assertEqual(legend.count('class="diagram-symbol-list" role="list"'), 3)
         self.assertEqual(legend.count('role="img" aria-label='), 11)
         legend_symbols = [
             symbol for _tag, symbol in self.parser.diagram_legend_symbol_rows
@@ -1666,6 +1677,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         copy = " ".join(" ".join(visible.parts).split()).lower()
         for phrase in (
             "crystallographic generator symbols",
+            "primitive translation",
             "2-fold",
             "3-fold",
             "4-fold",
@@ -2324,7 +2336,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertTrue(expected_colors.issubset(colors), relative)
 
     def test_static_plates_overlay_every_named_geometric_generator(self) -> None:
-        display_ids = [group["id"] for group in self.display_groups]
+        display_ids = [group["id"] for group in self.page_groups]
         self.assertEqual(
             [
                 attributes.get("data-generator-overlay")
@@ -2334,7 +2346,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertEqual(
             len(self.parser.plate_generator_overlays),
-            len(self.display_groups),
+            len(self.page_groups),
         )
         for attributes in self.parser.plate_generator_overlays:
             self.assertEqual(attributes.get("viewbox"), "0 0 720 420")
@@ -2348,23 +2360,24 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 generator["marker"]["kind"],
                 str(generator["marker"].get("order", "")),
             )
-            for group in self.display_groups
+            for group in self.page_groups
             for generator in group["chaim_presentation"]["generators"]
         ]
         self.assertEqual(self.parser.plate_generators, expected)
-        self.assertEqual(len(expected), 151)
+        self.assertEqual(len(expected), 199)
         self.assertEqual(self.page.count("data-generator-symbol="), len(expected))
         self.assertEqual(self.page.count("data-lift-kind="), len(expected))
         self.assertEqual(
             Counter((kind, order) for _name, kind, order in expected),
             Counter(
                 {
-                    ("rotation", "2"): 39,
-                    ("rotation", "3"): 17,
-                    ("rotation", "4"): 15,
-                    ("rotation", "6"): 5,
-                    ("mirror", ""): 71,
-                    ("glide", ""): 4,
+                    ("translation", ""): 3,
+                    ("rotation", "2"): 50,
+                    ("rotation", "3"): 22,
+                    ("rotation", "4"): 18,
+                    ("rotation", "6"): 6,
+                    ("mirror", ""): 92,
+                    ("glide", ""): 8,
                 }
             ),
         )
@@ -2373,11 +2386,16 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         expected_plane_symbols = []
         expected_attributes = []
         rotation_steps = Counter()
-        for group in self.display_groups:
+        for group in self.page_groups:
             for generator in group["chaim_presentation"]["generators"]:
                 marker = generator["marker"]
                 phase = correspondence.Fraction(generator["time_shift"])
-                if marker["kind"] == "rotation":
+                if marker["kind"] == "translation":
+                    symbol = "translation"
+                    plane_symbol = None
+                    lift_kind = "translation-vector"
+                    screw_step = None
+                elif marker["kind"] == "rotation":
                     order = marker["order"]
                     step = correspondence._rotation_screw_step(
                         order,
@@ -2390,19 +2408,14 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     rotation_steps[(order, step)] += 1
                     screw_step = str(step)
                 else:
-                    if marker["kind"] == "mirror":
-                        plane_symbol = "m" if phase == 0 else "c"
-                    elif phase == 0:
-                        plane_symbol = "axial"
-                    elif phase == correspondence.Fraction(1, 2):
-                        plane_symbol = "n"
-                    elif phase == correspondence.Fraction(1, 4):
-                        plane_symbol = "d"
-                    else:
-                        self.fail(
-                            f"unclassified plane lift "
-                            f'{group["id"]}:{generator["generator"]}'
-                        )
+                    plane_symbol = correspondence._polar_plane_symbol(
+                        group["id"],
+                        {
+                            "generator": generator["generator"],
+                            "marker": marker,
+                            "phase": phase,
+                        },
+                    )
                     symbol = f"plane-{plane_symbol}"
                     lift_kind = {
                         "m": "mirror-plane",
@@ -2444,11 +2457,12 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             Counter(expected_lift_kinds),
             Counter(
                 {
-                    "rotation-axis": 20,
+                    "translation-vector": 3,
+                    "rotation-axis": 40,
                     "screw-axis": 56,
-                    "mirror-plane": 26,
+                    "mirror-plane": 47,
                     "c-glide-plane": 45,
-                    "axial-glide-plane": 1,
+                    "axial-glide-plane": 5,
                     "n-glide-plane": 2,
                     "d-glide-plane": 1,
                 }
@@ -2456,7 +2470,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertEqual(
             Counter(expected_plane_symbols),
-            Counter({"m": 26, "c": 45, "axial": 1, "n": 2, "d": 1}),
+            Counter({"m": 47, "c": 45, "axial": 5, "n": 2, "d": 1}),
         )
         self.assertEqual(
             Counter(self.parser.plate_generator_axes),
@@ -2466,15 +2480,16 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             rotation_steps,
             Counter(
                 {
-                    (2, 0): 15,
+                    (2, 0): 26,
                     (2, 1): 24,
-                    (3, 0): 3,
+                    (3, 0): 8,
                     (3, 1): 8,
                     (3, 2): 6,
-                    (4, 0): 2,
+                    (4, 0): 5,
                     (4, 1): 5,
                     (4, 2): 5,
                     (4, 3): 3,
+                    (6, 0): 1,
                     (6, 1): 1,
                     (6, 2): 1,
                     (6, 3): 1,
@@ -2484,7 +2499,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ),
         )
 
-        for group in self.display_groups:
+        for group in self.page_groups:
             actions = group["chaim_presentation"]["generators"]
             alignment = correspondence._canonical_generator_alignment(
                 group["id"],
@@ -2600,6 +2615,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
         self.assertEqual(self.parser.plate_quarter_arrows, 2)
         self.assertEqual(self.parser.plate_quarter_arrow_halos, 2)
+        self.assertEqual(self.parser.plate_translation_arrows, 3)
+        self.assertEqual(self.parser.plate_translation_arrow_halos, 3)
 
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
             encoding="utf-8"
@@ -2611,6 +2628,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 f".plate-generator-axis--plane-{plane_symbol}", css
             )
         self.assertIn(".plate-generator-quarter-arrow", css)
+        self.assertIn(".plate-generator-translation", css)
         self.assertNotIn(".plate-generator-half-arrow", css)
         self.assertIn("@media (forced-colors: active)", css)
 
@@ -2703,9 +2721,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("color: var(--generator-ink)", css)
         self.assertIn(".generator-symbol-core {", css)
         self.assertIn(".generator-symbol-body .generator-symbol-arms {", css)
-        self.assertIn(
-            ".plate-generator-axis,\n.diagram-symbol-plane {", css
-        )
+        self.assertIn(".plate-generator-axis,", css)
+        self.assertIn(".diagram-symbol-plane,", css)
+        self.assertIn(".diagram-symbol-translation {", css)
         self.assertIn(
             ".plate-generator-quarter-arrow,\n.diagram-symbol-quarter-arrow {",
             css,
