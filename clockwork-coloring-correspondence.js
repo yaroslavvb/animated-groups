@@ -686,6 +686,90 @@ function initializeBookExcerptDialog() {
   dialog.addEventListener("close", resetExcerpt);
 }
 
+function initializeDiagramSymbolDialog() {
+  const dialog = document.querySelector("#diagram-symbol-dialog");
+  const openButton = document.querySelector("[data-diagram-symbol-open]");
+  if (!dialog || !openButton) return;
+
+  const closeButton = dialog.querySelector("[data-diagram-symbol-close]");
+  const supportsNativeDialog = typeof dialog.showModal === "function";
+  let opener = null;
+
+  dialog.dataset.mode = supportsNativeDialog ? "native" : "fallback";
+
+  function restorePage() {
+    document.documentElement.classList.remove("diagram-symbol-dialog-open");
+    if (opener && opener.isConnected) opener.focus();
+    opener = null;
+  }
+
+  function closeIndex() {
+    if (!dialog.hasAttribute("open")) return;
+    if (supportsNativeDialog) {
+      dialog.close();
+      return;
+    }
+    dialog.removeAttribute("open");
+    dialog.classList.remove("is-fallback-open");
+    restorePage();
+  }
+
+  function openIndex() {
+    if (dialog.hasAttribute("open")) return;
+    opener = openButton;
+    if (supportsNativeDialog) {
+      dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+      dialog.classList.add("is-fallback-open");
+    }
+    document.documentElement.classList.add("diagram-symbol-dialog-open");
+    closeButton?.focus();
+  }
+
+  openButton.addEventListener("click", openIndex);
+  closeButton?.addEventListener("click", closeIndex);
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) closeIndex();
+  });
+  dialog.addEventListener("close", restorePage);
+
+  document.addEventListener("click", (event) => {
+    if (
+      !supportsNativeDialog
+      && dialog.hasAttribute("open")
+      && event.target !== openButton
+      && !dialog.contains(event.target)
+    ) {
+      event.preventDefault();
+      closeIndex();
+    }
+  }, true);
+
+  document.addEventListener("keydown", (event) => {
+    if (supportsNativeDialog || !dialog.hasAttribute("open")) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeIndex();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusable = [
+      ...dialog.querySelectorAll('button, a[href]'),
+    ].filter((element) => !element.hidden);
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+}
+
 function initializeBookExcerptLinks() {
   let viewerWindow = null;
   window.addEventListener("message", (event) => {
@@ -795,5 +879,6 @@ async function initialize() {
 }
 
 initializeClockworkTabs();
+initializeDiagramSymbolDialog();
 initializeBookExcerptLinks();
 void initialize();

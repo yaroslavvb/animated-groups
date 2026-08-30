@@ -65,9 +65,12 @@ IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=crystallographic-symbol-index-extra-crystal-catalogs"
+    "v=crystallographic-symbol-index-extra-crystal-catalogs-modal"
 )
-CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
+CORRESPONDENCE_SCRIPT_SRC = (
+    "clockwork-coloring-correspondence.js?"
+    "v=deep-link-canvas-fix-diagram-symbol-dialog"
+)
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
 
@@ -3407,6 +3410,54 @@ def _diagram_symbol_legend_html() -> str:
     )
 
 
+def _diagram_symbol_teaser_html() -> str:
+    """Show two representative glyphs and a control for the full index."""
+
+    return (
+        '<aside class="diagram-symbol-teaser" '
+        'aria-labelledby="diagram-symbol-teaser-title">'
+        '<div class="diagram-symbol-teaser-icons" aria-hidden="true">'
+        '<span class="diagram-symbol-teaser-icon">'
+        f'{_diagram_rotation_symbol_html(3, 1)}'
+        '<small>3<sub>1</sub> screw</small></span>'
+        '<span class="diagram-symbol-teaser-icon">'
+        f'{_diagram_plane_symbol_html("d")}'
+        '<small>d glide</small></span>'
+        '</div>'
+        '<div class="diagram-symbol-teaser-copy">'
+        '<h2 id="diagram-symbol-teaser-title">Diagram symbols</h2>'
+        '<p>Rotation, screw-axis, mirror, and glide marks on the colouring '
+        'plates follow crystallographic projection notation.</p>'
+        '<button class="diagram-symbol-open" type="button" '
+        'data-diagram-symbol-open aria-haspopup="dialog" '
+        'aria-controls="diagram-symbol-dialog">Open visual index</button>'
+        '</div></aside>'
+    )
+
+
+def _diagram_symbol_dialog_html() -> str:
+    """Render the complete symbol index inside an initially closed dialog."""
+
+    return f"""
+    <dialog class="diagram-symbol-dialog" id="diagram-symbol-dialog" role="dialog" aria-modal="true" aria-labelledby="diagram-symbol-dialog-title">
+      <article class="diagram-symbol-dialog-panel">
+        <header class="diagram-symbol-dialog-header">
+          <div>
+            <p class="overline">Diagram key</p>
+            <h2 id="diagram-symbol-dialog-title">Crystallographic generator symbols: visual index</h2>
+          </div>
+          <button class="diagram-symbol-close" type="button" data-diagram-symbol-close aria-label="Close visual index">×</button>
+        </header>
+        <div class="diagram-symbol-dialog-scroll">
+          <p class="diagram-symbol-dialog-intro">Projected along the clock axis, these are the actual symbols used on the static 2D diagrams. The filled core shows the 2-, 3-, 4-, or 6-fold spatial order. For a forward skip τ, the screw subscript is <i>m</i> ≡ <i>n</i>τ (mod <i>n</i>) for a positive 1/<i>n</i>-turn and <i>m</i> ≡ −<i>n</i>τ (mod <i>n</i>) for the opposite turn, with 0 ≤ <i>m</i> &lt; <i>n</i>. Mirrored blades record spatial turn sense—not backward time.</p>
+          {_diagram_symbol_legend_html()}
+          <p class="diagram-symbol-note">The burgundy α, β, γ, … or P, Q, … beside a diagram symbol identifies its Generator row. The Color and Time columns state the same forward clock action directly.</p>
+          <p class="diagram-symbol-sources">Notation: <a href="{IUCR_DIAGRAM_SYMBOLS_URL}" target="_blank" rel="noopener"><cite>International Tables for Crystallography</cite> projection symbols</a> · <a href="{UCL_P31C_DIAGRAM_URL}" target="_blank" rel="noopener">UCL P 3 1 c example</a>.</p>
+        </div>
+      </article>
+    </dialog>""".strip()
+
+
 def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
     placement = _plate_generator_assignment(record)
     scale = _plate_cell_scale(record["render"])
@@ -4186,13 +4237,7 @@ def page_html(payload: dict[str, Any]) -> str:
     <nav class="directory" aria-labelledby="page-title">
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Colors follow one fixed clock: A = phase 0, B = phase 1/N, C = phase 2/N, and so on. C<sub>N</sub> = (ABC…) is one forward +1/N-period tick, so a row with Time +k/N has Color C<sub>N</sub><sup>k</sup>. Every action is a forward time skip; none reverses time. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
-      <aside class="diagram-symbol-legend" aria-labelledby="diagram-symbol-legend-title">
-        <h2 id="diagram-symbol-legend-title">Crystallographic generator symbols: visual index</h2>
-        <p>Projected along the clock axis, these are the actual symbols used on the static 2D diagrams. The filled core shows the 2-, 3-, 4-, or 6-fold spatial order. For a forward skip τ, the screw subscript is <i>m</i> ≡ <i>n</i>τ (mod <i>n</i>) for a positive 1/<i>n</i>-turn and <i>m</i> ≡ −<i>n</i>τ (mod <i>n</i>) for the opposite turn, with 0 ≤ <i>m</i> &lt; <i>n</i>. Mirrored blades record spatial turn sense—not backward time.</p>
-        {_diagram_symbol_legend_html()}
-        <p class="diagram-symbol-note">The burgundy α, β, γ, … or P, Q, … beside a diagram symbol identifies its Generator row. The Color and Time columns state the same forward clock action directly.</p>
-        <p class="diagram-symbol-sources">Notation: <a href="{IUCR_DIAGRAM_SYMBOLS_URL}" target="_blank" rel="noopener"><cite>International Tables for Crystallography</cite> projection symbols</a> · <a href="{UCL_P31C_DIAGRAM_URL}" target="_blank" rel="noopener">UCL P 3 1 c example</a>.</p>
-      </aside>
+      {_diagram_symbol_teaser_html()}
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
         <h2 id="notation-caveat-title">Notation</h2>
         <p>The displayed names use Chaim Goodman–Strauss’s coloured-orbifold notation. Across all {len(trivial_groups) + len(displayed_groups)} forward groups it gives {len(trivial_groups) + colour_class_count} cyclic plane-colouring classes. Four types leave the two orientations of the polar fibre unresolved: 442<sup>4</sup>/◦, 333<sup>3</sup>/◦, 632<sup>6</sup>/◦, and 632<sup>3</sup>/2222. These are four two-to-one fibres, not missing colourings; standard fibrifold notation also identifies each pair under fibre reversal. <a href="docs/orbifold_notation.html#uncovered-cases">Four uncovered cases ↗</a> · <a href="{HIERARCHY_CHIRALITY_URL}">hierarchy ↗</a></p>
@@ -4206,6 +4251,8 @@ def page_html(payload: dict[str, Any]) -> str:
         {directory}
       </div>
     </nav>
+
+    {_diagram_symbol_dialog_html()}
 
     <div class="correspondence-atlas" id="correspondences">
 {families}
