@@ -66,7 +66,7 @@ SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CRYSTAL_EXAMPLE_DATA = ROOT / "data" / "crystal-examples.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=space-time-lift-preview"
+    "v=colour-order-squares"
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
