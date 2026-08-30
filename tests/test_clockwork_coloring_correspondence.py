@@ -2413,7 +2413,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence._rotation_symbol_body_html(2, 0),
         )
         self.assertEqual(
-            correspondence._rotation_symbol_body_html(3, 2).count("L"), 2
+            correspondence._rotation_symbol_body_html(3, 2).count("L"), 3
+        )
+        self.assertEqual(
+            correspondence._rotation_symbol_body_html(3, 1).count("L"), 3
         )
         self.assertEqual(
             correspondence._rotation_symbol_body_html(4, 2).count("L"), 2
