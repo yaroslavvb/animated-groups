@@ -177,6 +177,7 @@ class CorrespondenceParser(HTMLParser):
         self.presentation_source_cycles: list[str] = []
         self.presentation_generator_keys = 0
         self.presentation_generator_geometries = 0
+        self.turn_directions: list[dict[str, str | None]] = []
         self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
         self.identification_rows: list[tuple[str, tuple[str, ...]]] = []
@@ -400,6 +401,8 @@ class CorrespondenceParser(HTMLParser):
             self.presentation_generator_keys += 1
         if tag == "span" and "generator-geometry" in classes:
             self.presentation_generator_geometries += 1
+        if tag == "span" and "turn-direction" in classes:
+            self.turn_directions.append(attributes)
         if tag == "a" and "short-signature-link" in classes:
             self.short_signature_links.append(attributes)
         if tag == "img" and (attributes.get("src") or "").startswith(
@@ -928,6 +931,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
 
         for group in self.page_groups:
             group_id = group["id"]
+            space_group = space_by_id[group_id]
             section_start = self.page.index(
                 f'<section class="other-names" aria-labelledby="{group_id}-other-names-title">'
             )
@@ -941,6 +945,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 correspondence.fibrifold_html(
                     correspondence.FIBRIFOLD_BY_ID[group_id]
                 ),
+                section,
+                group_id,
+            )
+            self.assertIn(
+                '<span class="international-tables-name">'
+                f'No. {space_group["it_number"]} '
+                f'{correspondence._hm_html(space_group["hm_short"])}</span>',
                 section,
                 group_id,
             )
@@ -964,6 +975,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count('class="fibrifold-name"'),
             68,
         )
+        self.assertEqual(
+            self.page.count('class="international-tables-name"'),
+            68,
+        )
         self.assertNotIn('class="fibrifold-orientation-note"', self.page)
         self.assertNotIn("data-trivial-product", self.page)
 
@@ -979,6 +994,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 "Book type audit",
                 "Catalog instance",
                 "Conway fibrifold notation",
+                "International Tables space-group designation",
                 "Complementary forward skips",
             },
         )
@@ -1002,7 +1018,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             (group["id"], system)
             for group in self.page_groups
             for system in (
-                ["Catalog instance", "Conway fibrifold notation"]
+                [
+                    "Catalog instance",
+                    "Conway fibrifold notation",
+                    "International Tables space-group designation",
+                ]
                 + (
                     ["Complementary forward skips"]
                     if group["complementary_skip_mate"]
@@ -1010,7 +1030,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 )
             )
         ]
-        self.assertEqual(len(expected_name_systems), 68 * 2 + 8)
+        self.assertEqual(len(expected_name_systems), 68 * 3 + 8)
         self.assertEqual(
             [
                 attributes.get("data-name-system")
@@ -1024,6 +1044,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ):
             classes = set((attributes.get("class") or "").split())
             self.assertTrue({"identified-name", "term-help"} <= classes, group_id)
+            self.assertNotIn("tabindex", attributes, group_id)
             title = attributes.get("title") or ""
             self.assertTrue(title.startswith(f"{system}: "), group_id)
             self.assertIn(correspondence.TERM_HELP[system], title, group_id)
@@ -1059,12 +1080,12 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count('<details class="presentation-source-audit">'),
             len(SOURCE_LABELING_FIXTURE),
         )
-        self.assertNotIn(" tabindex=", self.page)
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
             encoding="utf-8"
         )
         self.assertIn(".term-help:hover .term-help-copy", css)
         self.assertIn(".term-help:focus-within .term-help-copy", css)
+        self.assertIn(".international-tables-name", css)
         self.assertNotIn(".term-help[open]", css)
         self.assertNotIn("@media (hover: none)", css)
         self.assertIn("pointer-events: none", css)
@@ -1729,45 +1750,73 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count('class="presentation-palette"><span>forward phase order</span>'),
             len(self.page_groups),
         )
-        self.assertEqual(
-            self.page.count('class="presentation-cyclic-key"'),
-            len(self.page_groups),
+        self.assertNotIn('class="presentation-cyclic-key"', self.page)
+        self.assertNotIn("A row with Time +k/", self.page)
+        self.assertNotIn("is shown as “none.”", self.page)
+        self.assertNotIn(
+            "C<sub>N</sub> is a color/time cycle, not a spatial rotation,",
+            self.page,
         )
-        self.assertEqual(
-            self.page.count("is shown as “none.”"),
-            len(self.page_groups),
-        )
-        self.assertEqual(
-            self.page.count(
-                "C<sub>N</sub> is a color/time cycle, not a spatial rotation, "
-                "so it is neither clockwise nor counterclockwise."
-            ),
-            len(self.page_groups),
-        )
-        self.assertEqual(
-            self.page.count(
-                "Spatial rotation angles are measured counterclockwise when the "
-                "pattern is viewed from the front of the page."
-            ),
-            len(self.page_groups),
+        self.assertNotIn(
+            "Spatial rotation angles are measured counterclockwise when the pattern",
+            self.page,
         )
         self.assertEqual(
             self.page.count("fixed-clock powers and directed time shifts"),
             len(self.page_groups),
         )
 
-        for group in self.page_groups:
-            presentation = group["chaim_presentation"]
-            positive_step = correspondence.fraction_label(
-                correspondence.Fraction(1, group["clock_order"])
+    def test_turn_hover_uses_one_counterclockwise_face_order_convention(self) -> None:
+        turn_generators = [
+            generator
+            for group in self.page_groups
+            for generator in group["chaim_presentation"]["generators"]
+            if "turn" in generator["geometry"]
+        ]
+        self.assertEqual(len(turn_generators), 96)
+        self.assertEqual(len(self.parser.turn_directions), len(turn_generators))
+        self.assertEqual(
+            Counter(
+                generator["plate_visualization"]["angle_degrees"]
+                for generator in turn_generators
+            ),
+            Counter({180: 50, 120: 18, 270: 10, 90: 8, 60: 6, 240: 4}),
+        )
+
+        for attributes in self.parser.turn_directions:
+            self.assertEqual(
+                attributes.get("data-turn-direction"),
+                "counterclockwise",
             )
-            self.assertIn(
-                f'<var>C</var><sub>{group["clock_order"]}</sub></span> = '
-                f'+{positive_step} period = '
-                f'<code>{escape(presentation["clock_cycle"]["cycle_notation"])}</code>.',
-                self.page,
-                group["id"],
+            self.assertNotIn("data-turn-degrees", attributes)
+            self.assertEqual(attributes.get("tabindex"), "0")
+            self.assertEqual(attributes.get("title"), correspondence.TURN_DIRECTION_HELP)
+            self.assertEqual(
+                attributes.get("aria-label"),
+                f"turn: {correspondence.TURN_DIRECTION_HELP}",
             )
+        self.assertEqual(
+            self.page.count('class="turn-direction-tooltip" role="tooltip"'),
+            len(turn_generators),
+        )
+        self.assertEqual(
+            self.page.count(correspondence.TURN_DIRECTION_HELP),
+            3 * len(turn_generators),
+        )
+
+        for parent in correspondence.BASE_ORDER:
+            canonical = {
+                generator["generator"]: generator
+                for generator in correspondence.affine_generators_for(parent)[
+                    "generators"
+                ]
+            }
+            for name, geometry in correspondence.GENERATOR_GEOMETRY[parent]:
+                if "turn" not in geometry:
+                    continue
+                angle = canonical[name]["visualization"]["angle_degrees"]
+                self.assertGreater(angle, 0)
+                self.assertLessEqual(angle, 180)
 
     def test_top_teaser_opens_complete_visual_crystallographic_index(self) -> None:
         self.assertEqual(self.parser.diagram_symbol_teasers, 1)
