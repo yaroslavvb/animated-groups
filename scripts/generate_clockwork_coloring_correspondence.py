@@ -63,7 +63,10 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=crystallographic-symbol-index"
+CORRESPONDENCE_STYLE_SRC = (
+    "clockwork-coloring-correspondence.css?"
+    "v=crystallographic-symbol-index-extra-crystal-catalogs"
+)
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -74,6 +77,13 @@ CATALOG_DATA_URL = "https://yaroslavvb.github.io/animated-groups-fable/data/cata
 BOOK_RECORD_URL = "https://books.google.com/books?id=EtQCk0TNafsC"
 BOOK_PAGE_URL = BOOK_RECORD_URL + "&pg=PA{page}"
 BOOK_EXCERPT_TARGET = "clockwork-book-excerpt"
+EXTRA_LINK_SCOPE_LABELS = {
+    "exact_space_group": "exact space group",
+    "polar_point_group": "shared polar point group",
+    "point_group_reference": "point-group reference",
+    "parent_plane_group": "parent plane group",
+    "manual_space_group_selection": "manual space-group selection",
+}
 BOOK_ERRATA_URL = "https://www.mit.edu/~hlb/Symmetries_of_Things/SoTerrors.html"
 FARRIS_URL = "https://archive.bridgesmathart.org/2017/bridges2017-131.pdf#page=6"
 IUCR_DIAGRAM_SYMBOLS_URL = (
@@ -3773,14 +3783,10 @@ def _short_form_support_html(record: dict[str, Any]) -> str:
 
 
 def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> str:
-    """Link exact catalog, plane-group, and height-lift identities."""
+    """Link the book, plane-group kernel, and height-lift identities."""
 
     group_id = escape(record["id"])
-    parent_hm = record["parent"]["hm"]
     kernel_hm = record["kernel"]["hm"]
-    parent_url = IUCR_PLANE_GROUP_URL.format(
-        number=PLANE_GROUP_NUMBER_BY_HM[parent_hm]
-    )
     kernel_url = IUCR_PLANE_GROUP_URL.format(
         number=PLANE_GROUP_NUMBER_BY_HM[kernel_hm]
     )
@@ -3810,23 +3816,59 @@ def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
             f'<li>{_term_help_html("Complementary forward skips")}<a href="#{mate_id}">{mate_id}</a></li>'
         )
     short_form_support = _short_form_support_html(record)
-    parent_reference = (
-        f'Plane group {_plane_group_name_html(parent_hm)} — '
-        'International Tables for Crystallography'
-    )
-    space_reference = f'Space group No. {space_number} {space_hm} — UCL'
     return f"""
               <section class="other-names" aria-labelledby="{group_id}-other-names-title">
                 <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
                   <li>{_term_help_html("Book type audit")}{book_link}</li>
                   <li>{_term_help_html("Catalog instance")}<a href="{escape(record['catalog_url'])}">{group_id}</a></li>
-                  <li class="crystallographic-references" data-crystallographic-references="{group_id}"><span class="other-name-category">Crystallographic</span><span class="other-name-value"><a class="international-tables-reference" href="{escape(parent_url)}">{parent_reference}</a><a class="ucl-reference" href="{escape(space_group['ucl_reference_url'])}" target="_blank" rel="noopener">{space_reference}</a></span></li>
                   <li>{_term_help_html("Colour-fixing plane-group type K")}<a href="{escape(kernel_url)}">{_plane_group_name_html(kernel_hm)}</a></li>
                   <li>{_term_help_html("Conway fibrifold notation")}<span class="other-name-value"><span class="fibrifold-name" aria-label="{escape(fibrifold)}">{fibrifold_html(fibrifold)}</span>{fibrifold_orientation_note}</span></li>
                   <li>{_term_help_html("Height-lift space-group type")}<span class="other-name-value"><a href="space-group-correspondence.html#{group_id}">No. {space_number} {space_hm}</a><code>Hall {escape(space_group['hall'])}</code></span></li>
                   {short_form_support}
                   {mate_html}
+                </ul>
+              </section>"""
+
+
+def _extra_links_html(record: dict[str, Any], space_group: dict[str, Any]) -> str:
+    """Render the audited crystal-catalogue crosswalk for one record."""
+
+    group_id = escape(record["id"])
+    items: list[str] = []
+    seen_urls: set[str] = set()
+    for link in space_group["extra_links"]:
+        url = link["url"]
+        if url in seen_urls:
+            continue
+        seen_urls.add(url)
+        catalog_id = link["catalog_id"]
+        scope = link["scope"]
+        try:
+            scope_label = EXTRA_LINK_SCOPE_LABELS[scope]
+        except KeyError as error:
+            raise ValueError(f"unknown extra-link scope {scope!r}") from error
+        classes = ["extra-link"]
+        if catalog_id == "iucr-plane-group":
+            classes.append("international-tables-reference")
+        elif catalog_id == "ucl-space-group":
+            classes.append("ucl-reference")
+        items.append(
+            '<li>'
+            f'<a class="{" ".join(classes)}" data-catalog-id="{escape(catalog_id)}" '
+            f'data-link-scope="{escape(scope)}" data-group-id="{group_id}" '
+            f'href="{escape(url)}" target="_blank" rel="noopener">'
+            f'<span class="extra-link-catalog">{escape(link["catalog"])}</span>'
+            f'<span class="extra-link-target">{escape(link["target"])}</span>'
+            f'<span class="extra-link-scope">{escape(scope_label)}</span>'
+            '</a></li>'
+        )
+    items_html = "\n                  ".join(items)
+    return f"""
+              <section class="extra-links" data-extra-links="{group_id}" aria-labelledby="{group_id}-extra-links-title">
+                <h4 id="{group_id}-extra-links-title">Extra links</h4>
+                <ul class="extra-links-list">
+                  {items_html}
                 </ul>
               </section>"""
 
@@ -3909,6 +3951,7 @@ def _entry_html(
             <div class="entry-copy">
               {_presentation_html(record)}
               {_other_names_html(record, space_group)}
+              {_extra_links_html(record, space_group)}
             </div>
           </div>
         </section>
@@ -3943,7 +3986,10 @@ def _order_census_html(rows: list[dict[str, Any]]) -> str:
     return " · ".join(parts)
 
 
-def _trivial_product_html(record: dict[str, Any]) -> str:
+def _trivial_product_html(
+    record: dict[str, Any],
+    space_group: dict[str, Any],
+) -> str:
     group_id = escape(record["id"])
     orbifold = orbifold_html(record["parent"]["orbifold"])
     fibrifold = fibrifold_html(FIBRIFOLD_BY_ID[record["id"]])
@@ -3956,6 +4002,7 @@ def _trivial_product_html(record: dict[str, Any]) -> str:
         f'{_term_help_html("Conway fibrifold notation")}'
         f'<span class="fibrifold-name" aria-label="{escape(FIBRIFOLD_BY_ID[record["id"]])}">{fibrifold}</span>'
         "</div>"
+        f'{_extra_links_html(record, space_group)}'
         "</aside>"
     )
 
@@ -4031,7 +4078,10 @@ def _family_html(
         <p class="family-summary">{orbifold_html(summary)}</p>
       </header>
 {contents}
-      {_trivial_product_html(trivial_record)}
+      {_trivial_product_html(
+          trivial_record,
+          space_groups_by_id[trivial_record["id"]],
+      )}
     </section>"""
 
 

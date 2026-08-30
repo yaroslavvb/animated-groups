@@ -128,7 +128,7 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
 
     def test_pinned_map_is_bijection_onto_the_68_polar_types(self) -> None:
         groups = self.payload["groups"]
-        self.assertEqual(self.payload["meta"]["schema_version"], 3)
+        self.assertEqual(self.payload["meta"]["schema_version"], 4)
         self.assertEqual(len(groups), 68)
         self.assertEqual({group["id"] for group in groups}, set(correspondence.SPACE_GROUP_BY_ID))
         numbers = [group["space_group"]["it_number"] for group in groups]
@@ -474,6 +474,7 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
     def test_external_links_are_exact_and_unique(self) -> None:
         ucl_urls = []
         catalog_urls = []
+        extra_urls_by_catalog: dict[str, list[str]] = defaultdict(list)
         for group in self.payload["groups"]:
             space_group = group["space_group"]
             expected_ucl = (
@@ -486,10 +487,112 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
             )
             self.assertEqual(space_group["ucl_reference_url"], expected_ucl)
             self.assertEqual(group["catalog_url"], expected_catalog)
+            links = space_group["extra_links"]
+            self.assertEqual(
+                tuple(link["catalog_id"] for link in links),
+                correspondence.EXTRA_CATALOG_IDS,
+                group["id"],
+            )
+            self.assertEqual(
+                len({link["url"] for link in links}),
+                len(correspondence.EXTRA_CATALOG_IDS),
+                group["id"],
+            )
+            self.assertTrue(
+                all(
+                    set(link) == {"catalog_id", "catalog", "scope", "target", "url"}
+                    and link["catalog"]
+                    and link["target"]
+                    and link["url"].startswith(("http://", "https://"))
+                    for link in links
+                ),
+                group["id"],
+            )
+            links_by_id = {link["catalog_id"]: link for link in links}
+            number = space_group["it_number"]
+            point_group = space_group["point_group"]
+            post_slug = "33-3" if number == 33 else str(number)
+            self.assertEqual(
+                links_by_id["crystal-symmetry-example"]["url"],
+                "https://crystalsymmetry.wordpress.com/"
+                f"{correspondence.CRYSTAL_SYMMETRY_POST_DATE_BY_NUMBER[number]}/"
+                f"{post_slug}/",
+            )
+            self.assertEqual(
+                links_by_id["crystal-symmetry-diagram"]["url"],
+                "https://crystalsymmetry.wordpress.com/space-group-diagrams/"
+                f"{correspondence.CRYSTAL_SYMMETRY_DIAGRAM_BY_NUMBER[number]}/",
+            )
+            self.assertEqual(
+                links_by_id["iucr-space-group"]["url"],
+                "https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/"
+                f"sgtable2o3o{number:03d}/",
+            )
+            self.assertEqual(links_by_id["ucl-space-group"]["url"], expected_ucl)
+            self.assertEqual(
+                links_by_id["bilbao-point-group"]["url"],
+                correspondence.POINT_GROUP_CATALOG_LINKS[point_group]["bilbao"],
+            )
+            self.assertEqual(
+                links_by_id["aflow-prototypes"]["url"],
+                f"https://aflow.org/p/{space_group['crystal_system']}_spacegroup.html#sg{number}",
+            )
+            for catalog_id, source_key in (
+                ("gsp-point-group", "gsp"),
+                ("webmineral-crystal-class", "webmineral"),
+                ("smorf-crystal-form", "smorf"),
+            ):
+                self.assertEqual(
+                    links_by_id[catalog_id]["url"],
+                    correspondence.POINT_GROUP_CATALOG_LINKS[point_group][source_key],
+                )
+            self.assertEqual(
+                links_by_id["gemmology-cdl"]["url"],
+                "https://gemmology.dev/docs/cdl/#crystal-systems",
+            )
+            parent_number = correspondence.clockwork.PLANE_GROUP_NUMBER_BY_HM[
+                group["parent"]["hm"]
+            ]
+            self.assertEqual(
+                links_by_id["iucr-plane-group"]["url"],
+                correspondence.clockwork.IUCR_PLANE_GROUP_URL.format(
+                    number=parent_number
+                ),
+            )
+            self.assertEqual(
+                links_by_id["jmol-sgsv"]["url"],
+                "https://spacegroups.symotter.org/",
+            )
+            self.assertEqual(
+                links_by_id["crystallify"]["url"],
+                "https://www.crystallify.com/",
+            )
+            self.assertEqual(
+                links_by_id["jmol-sgsv"]["scope"],
+                "manual_space_group_selection",
+            )
+            self.assertIn(f"No. {number} ", links_by_id["jmol-sgsv"]["target"])
+            for link in links:
+                extra_urls_by_catalog[link["catalog_id"]].append(link["url"])
             ucl_urls.append(expected_ucl)
             catalog_urls.append(expected_catalog)
         self.assertEqual(len(set(ucl_urls)), 68)
         self.assertEqual(len(set(catalog_urls)), 68)
+        for catalog_id in (
+            "crystal-symmetry-example",
+            "crystal-symmetry-diagram",
+            "iucr-space-group",
+            "ucl-space-group",
+            "aflow-prototypes",
+        ):
+            self.assertEqual(len(set(extra_urls_by_catalog[catalog_id])), 68)
+        for catalog_id in (
+            "bilbao-point-group",
+            "gsp-point-group",
+            "webmineral-crystal-class",
+            "smorf-crystal-form",
+        ):
+            self.assertEqual(len(set(extra_urls_by_catalog[catalog_id])), 10)
         self.assertEqual(self.page.count('class="colouring-catalog-link"'), 51)
         self.assertEqual(self.page.count('class="ucl-link"'), 51)
 
