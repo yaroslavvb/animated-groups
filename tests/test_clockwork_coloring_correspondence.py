@@ -5,6 +5,7 @@ from html import escape
 from html.parser import HTMLParser
 import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 import unittest
