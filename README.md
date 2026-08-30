@@ -17,8 +17,8 @@ The site also includes the [colour-group census](https://yaroslavvb.github.io/an
 a [periodic colour-pattern catalog](https://yaroslavvb.github.io/animated-groups/color-pattern-catalog.html)
 covering all 51 ordinary, 88 two-colour, and 59 three-colour Grünbaum--Shephard
 pattern types, nested under 17 wallpaper groups and 86 colour groups,
-and an exact [51-row nontrivial clockwork/coloring correspondence](https://yaroslavvb.github.io/animated-groups/clockwork-coloring-correspondence.html),
-backed by the complete 68-record audit, with Conway orbifold pairs and static coloured-wallpaper plates.
+and an exact [68-row clockwork/coloring correspondence](https://yaroslavvb.github.io/animated-groups/clockwork-coloring-correspondence.html),
+with a film, static coloured-wallpaper plate, and lazy interactive real-crystal example for every audited record.
 The companion [cyclic-colouring/polar-space-group atlas](https://yaroslavvb.github.io/animated-groups/space-group-correspondence.html)
 organizes the 51 more-than-one-colour plates by Conway orbifold and Goodman–Strauss short
 colour signature, then pairs each with its current Hermann–Mauguin space-group name,
@@ -263,7 +263,8 @@ continuous motif states, including the endpoint identification `t=0 mod T`.
 - `future-directions.js` / `future-directions.css` — generated census tables and report styles.
 - `scripts/generate_color_forward_census.py` — validates the 68-record manifest and regenerates the census downloads.
 - `data/color-forward-*` — pinned forward manifest, JSON census, and CSV audit tables.
-- `clockwork-coloring-correspondence.html` / `.css` — the 51-row nontrivial orbifold-pair atlas, backed by 68 audited records, and its responsive styles.
+- `clockwork-coloring-correspondence.html` / `.css` / `.js` — the 68-row orbifold-pair atlas, with a clockwork film, static coloured plate, and lazy real-crystal viewer for every record.
+- `crystal-viewer.js` / `data/crystal-examples.json` — the single-live-viewer controller and pinned real-crystal exemplar crosswalk used by the correspondence atlas.
 - `scripts/generate_clockwork_coloring_correspondence.py` — validates the phase characters and regenerates the atlas, JSON, and 68 static plates.
 - `data/clockwork-coloring-correspondence.json` / `output/clockwork-colorings/` — the pinned correspondence records and lossless WebP visualizations.
 - `space-group-correspondence.html` / `.css` / `.js` — the 51-entry orbifold-labelled colouring/space-group atlas with classical 3D names, UCL links, compact `G/Λ` presentations, and 17 one-colour audit notes.

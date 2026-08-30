@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the 68-record clockwork/colouring data and 51-row atlas page.
+"""Build the 68-record clockwork/colouring data and 68-row atlas page.
 
 The page reads each forward entry of one pinned 275-group catalog as a
 regular cyclic colouring.  For an operation ``(M, v, tau)``, the colour
@@ -63,14 +63,16 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
+CRYSTAL_EXAMPLE_DATA = ROOT / "data" / "crystal-examples.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=crystallographic-symbol-index-extra-crystal-catalogs-modal"
+    "v=interactive-real-crystal-viewers"
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
-    "v=deep-link-canvas-fix-diagram-symbol-dialog"
+    "v=all-68-full-entries"
 )
+CRYSTAL_VIEWER_SCRIPT_SRC = "crystal-viewer.js?v=one-live-real-crystal-viewer"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
 
@@ -2818,6 +2820,7 @@ def _plate_generator_assignment(record: dict[str, Any]) -> list[dict[str, Any]]:
             "phase": Fraction(action["time_shift"]),
         }
         for action in actions
+        if "plate_visualization" in action
     ]
 
 
@@ -3460,6 +3463,8 @@ def _diagram_symbol_dialog_html() -> str:
 
 def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
     placement = _plate_generator_assignment(record)
+    if not placement:
+        return ""
     scale = _plate_cell_scale(record["render"])
     markers: list[str] = []
     rotation_label_offsets = ((21, -17), (21, 18), (-21, 18), (-21, -17))
@@ -3753,6 +3758,28 @@ def _space_groups_by_id() -> dict[str, dict[str, Any]]:
     return by_id
 
 
+@cache
+def _crystal_examples_by_id() -> dict[str, dict[str, Any]]:
+    """Load the pinned real-crystal examples used by the lazy 3D viewers."""
+
+    payload = json.loads(CRYSTAL_EXAMPLE_DATA.read_text(encoding="utf-8"))
+    groups = payload.get("groups", [])
+    by_id = {record["id"]: record for record in groups}
+    if payload.get("meta", {}).get("schema_version") != 1:
+        raise ValueError("unsupported crystal-example schema")
+    if payload.get("meta", {}).get("groups") != 68:
+        raise ValueError("crystal-example metadata must declare 68 records")
+    if len(groups) != 68 or len(by_id) != 68:
+        raise ValueError("expected 68 uniquely identified crystal examples")
+    providers = Counter(record.get("provider") for record in groups)
+    if providers != Counter({"sketchfab": 67, "3dmol-cod": 1}):
+        raise ValueError(f"unexpected crystal-example providers: {providers}")
+    if any(record.get("reference_match") not in {"exact", "same-space-group-substitute"}
+           for record in groups):
+        raise ValueError("unknown crystal-example reference status")
+    return by_id
+
+
 def _plane_group_name_html(hm: str) -> str:
     number = PLANE_GROUP_NUMBER_BY_HM[hm]
     full_hm = PLANE_GROUP_FULL_HM[hm]
@@ -3963,9 +3990,111 @@ def _short_signature_heading_html(record: dict[str, Any]) -> tuple[str, str]:
     return signature_html, status_html
 
 
+def _crystal_embed_url(example: dict[str, Any]) -> str:
+    """Return the external, click-to-load WebGL document for one exemplar."""
+
+    provider = example["provider"]
+    if provider == "sketchfab":
+        model_uid = example["model_uid"]
+        if not re.fullmatch(r"[0-9a-f]{32}", model_uid):
+            raise ValueError(f"invalid Sketchfab model UID: {model_uid!r}")
+        return (
+            f"https://sketchfab.com/models/{model_uid}/embed?"
+            + urlencode(
+                {
+                    "autostart": "1",
+                    "ui_controls": "1",
+                    "ui_infos": "1",
+                    "ui_watermark": "1",
+                    "ui_watermark_link": "1",
+                }
+            )
+        )
+    if provider == "3dmol-cod":
+        cif_url = example["cif_url"]
+        if not cif_url.startswith("https://www.crystallography.net/cod/"):
+            raise ValueError(f"unexpected COD CIF URL: {cif_url!r}")
+        return (
+            "https://3dmol.csb.pitt.edu/viewer.html?"
+            + urlencode(
+                {
+                    "url": cif_url,
+                    "type": "cif",
+                    "style": "stick;sphere:scale~0.25",
+                }
+            )
+        )
+    raise ValueError(f"unsupported crystal viewer provider: {provider!r}")
+
+
+def _crystal_viewer_html(
+    record: dict[str, Any],
+    space_group: dict[str, Any],
+    example: dict[str, Any],
+) -> str:
+    """Render a lazy real-crystal viewer with a local generic fallback plate."""
+
+    group_id = escape(record["id"])
+    if example["id"] != record["id"]:
+        raise ValueError(f"crystal example mismatch for {record['id']}")
+    if example["it_number"] != space_group["it_number"]:
+        raise ValueError(f"crystal space-group number mismatch for {record['id']}")
+    if example["hm_short"] != space_group["hm_short"]:
+        raise ValueError(f"crystal Hermann–Mauguin mismatch for {record['id']}")
+
+    provider = example["provider"]
+    if provider == "sketchfab":
+        provider_name = "Sketchfab"
+        provider_link_label = "Open model on Sketchfab"
+        load_note = "Loads the public Sketchfab WebGL viewer."
+    elif provider == "3dmol-cod":
+        provider_name = "3Dmol.js + COD"
+        provider_link_label = f"COD {example['cod_id']} structure data"
+        load_note = "Loads 3Dmol.js with the open COD structure."
+    else:
+        raise ValueError(f"unknown crystal provider for {record['id']}: {provider}")
+
+    crystal_name = escape(example["crystal_name"])
+    stage_id = f"{group_id}-crystal-stage"
+    status_id = f"{group_id}-crystal-status"
+    match_note = ""
+    if example["reference_match"] == "same-space-group-substitute":
+        match_note = (
+            '<p class="crystal-viewer-exception"><strong>Same-space-group '
+            f'substitute.</strong> {escape(example["note"])}</p>'
+        )
+    source_warning = ""
+    if example.get("source_warning"):
+        source_warning = (
+            '<p class="crystal-viewer-source-note"><strong>Source-label note.</strong> '
+            f'{escape(example["source_warning"])}</p>'
+        )
+    return f"""
+              <figure class="crystal-viewer" data-crystal-viewer="{group_id}" data-group-id="{group_id}" data-provider="{escape(provider)}" data-reference-match="{escape(example['reference_match'])}" data-crystal-name="{crystal_name}" data-crystal-embed="{escape(_crystal_embed_url(example))}">
+                <div class="crystal-viewer-stage" id="{stage_id}" data-crystal-stage data-state="idle" aria-describedby="{status_id}">
+                  <img class="crystal-viewer-preview" src="{escape(space_group['image'])}" width="720" height="480" loading="lazy" decoding="async" alt="Generic space-group preview for No. {space_group['it_number']} {escape(space_group['hm_short'])}; activate the interactive viewer to examine {crystal_name}.">
+                  <div class="crystal-viewer-prompt" data-crystal-prompt>
+                    <button class="crystal-viewer-load" type="button" data-crystal-load aria-controls="{stage_id}">Explore {crystal_name} in 3D</button>
+                    <small>{escape(load_note)} The external provider receives this request; only one crystal viewer stays live at a time.</small>
+                  </div>
+                  <div class="crystal-viewer-frame" data-crystal-frame></div>
+                  <button class="crystal-viewer-close" type="button" data-crystal-close aria-controls="{stage_id}" hidden>Close 3D viewer</button>
+                </div>
+                <figcaption>
+                  <span class="crystal-viewer-title"><strong>3D crystal · {crystal_name}</strong><span>No. {space_group['it_number']} {_hm_html(space_group['hm_short'])}</span></span>
+                  <span class="crystal-viewer-links"><a href="{escape(example['source_url'])}" target="_blank" rel="noopener">CrystalSymmetry example</a><span aria-hidden="true"> · </span><a href="{escape(example['viewer_url'])}" target="_blank" rel="noopener">{escape(provider_link_label)}</a></span>
+                  <small>Before loading, the image is this project’s generic symmetry preview; the interactive pane is the real-crystal exemplar via {escape(provider_name)}.</small>
+                  {match_note}
+                  {source_warning}
+                </figcaption>
+                <p class="visually-hidden" id="{status_id}" data-crystal-status aria-live="polite">Interactive 3D viewer not loaded.</p>
+              </figure>"""
+
+
 def _entry_html(
     record: dict[str, Any],
     space_group: dict[str, Any],
+    crystal_example: dict[str, Any],
 ) -> str:
     group_id = escape(record["id"])
     order = record["clock_order"]
@@ -3997,6 +4126,7 @@ def _entry_html(
                   </ol>
                 </figcaption>
               </figure>
+              {_crystal_viewer_html(record, space_group, crystal_example)}
             </div>
 
             <div class="entry-copy">
@@ -4037,27 +4167,6 @@ def _order_census_html(rows: list[dict[str, Any]]) -> str:
     return " · ".join(parts)
 
 
-def _trivial_product_html(
-    record: dict[str, Any],
-    space_group: dict[str, Any],
-) -> str:
-    group_id = escape(record["id"])
-    orbifold = orbifold_html(record["parent"]["orbifold"])
-    fibrifold = fibrifold_html(FIBRIFOLD_BY_ID[record["id"]])
-    return (
-        f'<aside class="trivial-product" id="{group_id}" data-trivial-product '
-        'aria-label="Trivial time group">'
-        "<p><strong>C<sub>1</sub> product.</strong> "
-        f"{orbifold} · {group_id} · κ = 0 · K = G</p>"
-        '<div class="trivial-fibrifold">'
-        f'{_term_help_html("Conway fibrifold notation")}'
-        f'<span class="fibrifold-name" aria-label="{escape(FIBRIFOLD_BY_ID[record["id"]])}">{fibrifold}</span>'
-        "</div>"
-        f'{_extra_links_html(record, space_group)}'
-        "</aside>"
-    )
-
-
 def _directory_group_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     signature = superscript_html(record["book_color_signature"])
@@ -4095,44 +4204,37 @@ def _directory_family_html(base: str, rows: list[dict[str, Any]]) -> str:
 def _family_html(
     base: str,
     rows: list[dict[str, Any]],
-    trivial_record: dict[str, Any],
     space_groups_by_id: dict[str, dict[str, Any]],
+    crystal_examples_by_id: dict[str, dict[str, Any]],
 ) -> str:
     orbifold = ORBIFOLD_BY_BASE[base]
     summary = WALLPAPER_SUMMARIES[base]
-    lift_word = "lift" if len(rows) == 1 else "lifts"
+    group_word = "group" if len(rows) == 1 else "groups"
     tabs = "\n".join(_tab_html(row) for row in rows)
     entries = "\n".join(
         _entry_html(
             row,
             space_groups_by_id[row["id"]],
+            crystal_examples_by_id[row["id"]],
         )
         for row in rows
     )
-    family_class = "wallpaper-family" + (" is-empty" if not rows else "")
-    if rows:
-        contents = f"""
+    contents = f"""
       <div class="clockwork-tabs" data-clockwork-tabs>
-        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Nontrivial colour actions over orbifold {escape(orbifold)}">
+        <nav class="clockwork-tabbar" data-clockwork-tablist aria-label="Forward clockwork groups over orbifold {escape(orbifold)}">
           {tabs}
         </nav>
         <ol class="correspondence-list">
 {entries}
         </ol>
       </div>"""
-    else:
-        contents = ""
     return f"""
-    <section class="{family_class}" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
+    <section class="wallpaper-family" id="wallpaper-{escape(base)}" aria-labelledby="wallpaper-{escape(base)}-title" data-wallpaper-family>
       <header class="family-header">
-        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{orbifold_html(orbifold)}</span> <span class="family-count">{len(rows)} nontrivial {lift_word}</span></h2>
+        <h2 id="wallpaper-{escape(base)}-title"><span class="family-orbifold">{orbifold_html(orbifold)}</span> <span class="family-count">{len(rows)} forward {group_word}</span></h2>
         <p class="family-summary">{orbifold_html(summary)}</p>
       </header>
 {contents}
-      {_trivial_product_html(
-          trivial_record,
-          space_groups_by_id[trivial_record["id"]],
-      )}
     </section>"""
 
 
@@ -4146,6 +4248,7 @@ def page_html(payload: dict[str, Any]) -> str:
             f"fibrifold mapping mismatch; missing={missing}, extra={extra}"
         )
     space_groups_by_id = _space_groups_by_id()
+    crystal_examples_by_id = _crystal_examples_by_id()
     displayed_groups = [group for group in groups if group["clock_order"] > 1]
     trivial_groups = [group for group in groups if group["clock_order"] == 1]
     three_plus_colour_groups = [
@@ -4155,6 +4258,8 @@ def page_html(payload: dict[str, Any]) -> str:
         raise ValueError(f"expected {DISPLAYED_GROUP_COUNT} nontrivial display groups")
     if len(trivial_groups) != OMITTED_TRIVIAL_COUNT:
         raise ValueError(f"expected {OMITTED_TRIVIAL_COUNT} trivial product groups")
+    if set(crystal_examples_by_id) != group_ids:
+        raise ValueError("crystal examples must cover the same 68 clockwork groups")
     colour_signature_fibres: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for group in displayed_groups:
         colour_signature_fibres[group["book_color_signature"]].append(group)
@@ -4178,7 +4283,7 @@ def page_html(payload: dict[str, Any]) -> str:
         raise ValueError("clockwork symbols must disambiguate every display row")
     colour_class_count = len(colour_signature_fibres)
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for group in displayed_groups:
+    for group in groups:
         grouped[group["parent"]["hm"]].append(group)
     trivial_by_base = {group["parent"]["hm"]: group for group in trivial_groups}
     if set(trivial_by_base) != set(BASE_ORDER):
@@ -4187,25 +4292,24 @@ def page_html(payload: dict[str, Any]) -> str:
         _family_html(
             base,
             grouped[base],
-            trivial_by_base[base],
             space_groups_by_id,
+            crystal_examples_by_id,
         )
         for base in BASE_ORDER
     )
     directory = "\n".join(
         _directory_family_html(base, grouped[base])
         for base in BASE_ORDER
-        if grouped[base]
     )
-    if sum(bool(grouped[base]) for base in BASE_ORDER) != 14:
-        raise ValueError("expected 14 projected orbifold families with nontrivial actions")
+    if sum(bool(grouped[base]) for base in BASE_ORDER) != 17:
+        raise ValueError("expected all 17 projected orbifold families")
     digest = payload["meta"]["source_catalog_sha256"]
     return f"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An audited atlas of 51 nontrivial forward clockwork groups and their regular cyclic plane colourings, organized by Euclidean orbifold signature.">
+  <meta name="description" content="An audited atlas of 68 forward clockwork groups, cyclic plane colourings, and interactive real-crystal examples, organized by Euclidean orbifold signature.">
   <meta name="theme-color" content="#ffffff">
   <title>Clockwork/coloring correspondence</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -4237,6 +4341,7 @@ def page_html(payload: dict[str, Any]) -> str:
     <nav class="directory" aria-labelledby="page-title">
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Colors follow one fixed clock: A = phase 0, B = phase 1/N, C = phase 2/N, and so on. C<sub>N</sub> = (ABC…) is one forward +1/N-period tick, so a row with Time +k/N has Color C<sub>N</sub><sup>k</sup>. Every action is a forward time skip; none reverses time. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
+      <p class="directory-viewer-note">Every record now carries the same three-part visual trail: clockwork film, static 2D colouring, then a click-to-load interactive example of a real crystal in the associated polar space group.</p>
       {_diagram_symbol_teaser_html()}
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
         <h2 id="notation-caveat-title">Notation</h2>
@@ -4260,7 +4365,7 @@ def page_html(payload: dict[str, Any]) -> str:
 
     <section class="provenance" aria-labelledby="provenance-title">
       <h2 id="provenance-title">Data</h2>
-      <p><a href="data/clockwork-coloring-correspondence.json">68-record JSON</a> · <a href="scripts/generate_clockwork_coloring_correspondence.py">generator</a> · <a href="scripts/tos_book_excerpt_specs.py">book-excerpt map</a> · <a href="{BOOK_ERRATA_URL}">errata</a> · SHA-256 <code>{escape(digest)}</code></p>
+      <p><a href="data/clockwork-coloring-correspondence.json">68-record correspondence JSON</a> · <a href="data/crystal-examples.json">68-record crystal-example map</a> · <a href="scripts/generate_clockwork_coloring_correspondence.py">generator</a> · <a href="scripts/tos_book_excerpt_specs.py">book-excerpt map</a> · <a href="{BOOK_ERRATA_URL}">errata</a> · SHA-256 <code>{escape(digest)}</code></p>
     </section>
 
     <footer>
@@ -4269,6 +4374,7 @@ def page_html(payload: dict[str, Any]) -> str:
   </main>
 
   <script type="module" src="{CORRESPONDENCE_SCRIPT_SRC}"></script>
+  <script type="module" src="{CRYSTAL_VIEWER_SCRIPT_SRC}"></script>
 </body>
 </html>
 """
@@ -4377,7 +4483,7 @@ def main(argv: list[str] | None = None) -> int:
 
     write_outputs(payload, include_images=not args.text_only)
     suffix = "JSON and HTML" if args.text_only else "JSON, HTML, and static colour plates"
-    print(f"wrote 68 correspondence records and 51 displayed rows; outputs: {suffix}")
+    print(f"wrote 68 correspondence records and 68 displayed rows; outputs: {suffix}")
     return 0
 
 

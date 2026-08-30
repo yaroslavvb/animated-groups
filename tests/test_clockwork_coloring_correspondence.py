@@ -602,7 +602,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     group_id,
                 )
             else:
-                self.assertEqual(embed.netloc, "3dmol.org", group_id)
+                self.assertEqual(embed.netloc, "3dmol.csb.pitt.edu", group_id)
                 self.assertEqual(embed.path, "/viewer.html", group_id)
                 query = parse_qs(embed.query)
                 self.assertEqual(query.get("url"), [example["cif_url"]])
@@ -636,6 +636,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
 
         self.assertEqual(self.page.count(escape(example_by_id["g7"]["note"])), 1)
+        self.assertEqual(
+            self.page.count(escape(example_by_id["g137"]["source_warning"])),
+            1,
+        )
 
     def test_crystal_viewer_module_allows_only_one_live_iframe(self) -> None:
         script_path = ROOT / "crystal-viewer.js"
@@ -647,6 +651,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('document.addEventListener("clockwork:tab-change"', script)
         self.assertIn("activeRoot", script)
         self.assertIn("frameHost.replaceChildren()", script)
+        self.assertIn('iframe.referrerPolicy = "no-referrer"', script)
+        self.assertIn('iframe.setAttribute(\n    "sandbox"', script)
+        self.assertIn("closeButton.focus()", script)
         self.assertNotIn("https://cdn", script)
 
     def test_generated_page_has_no_wolfram_or_mathematica_content(self) -> None:

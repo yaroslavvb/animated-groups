@@ -1,4 +1,4 @@
-/* Paused, local film renderer for the 51 displayed nontrivial rows.
+/* Paused, local film renderer for all 68 forward clockwork rows.
  *
  * Every canvas is driven by the checked-in correspondence JSON.  No code or
  * data is loaded from animated-groups-fable.  A film is the orbit of one
