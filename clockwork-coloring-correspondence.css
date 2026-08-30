@@ -1228,6 +1228,11 @@ nav a[aria-current="page"] {
   white-space: nowrap;
 }
 
+.international-tables-name {
+  color: var(--text);
+  font-weight: 620;
+}
+
 .other-name-list {
   position: relative;
   display: flex;
@@ -1466,26 +1471,6 @@ a.short-signature-link[data-book-excerpt]::after {
   white-space: nowrap;
 }
 
-.presentation-cyclic-key {
-  margin: 0.48rem 0 0;
-  color: var(--muted);
-  font-size: 0.7rem;
-  line-height: 1.4;
-}
-
-.presentation-cyclic-key strong {
-  color: var(--text);
-}
-
-.presentation-cyclic-key code {
-  padding: 0;
-  background: transparent;
-  color: var(--text);
-  font-family: "STIX Two Math", "Cambria Math", Georgia, serif;
-  font-size: 0.75rem;
-  font-weight: 650;
-}
-
 .presentation-generator-identity {
   display: grid;
   grid-template-columns: 1.3rem minmax(0, 1fr);
@@ -1526,6 +1511,40 @@ a.short-signature-link[data-book-excerpt]::after {
 .generator-geometry {
   min-width: 0;
   color: var(--text);
+}
+
+.turn-direction {
+  position: relative;
+  cursor: help;
+  text-decoration: underline dotted var(--muted);
+  text-underline-offset: 0.16em;
+}
+
+.turn-direction-tooltip {
+  position: absolute;
+  z-index: 12;
+  bottom: calc(100% + 0.35rem);
+  left: -0.4rem;
+  display: none;
+  width: max-content;
+  max-width: min(18rem, calc(100vw - 2rem));
+  padding: 0.42rem 0.52rem;
+  border: 1px solid #59635f;
+  border-radius: 4px;
+  background: #17201d;
+  box-shadow: 0 5px 16px rgb(15 21 19 / 0.2);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.turn-direction:hover .turn-direction-tooltip,
+.turn-direction:focus .turn-direction-tooltip {
+  display: block;
 }
 
 .group-presentation tbody tr:last-child th,

@@ -351,6 +351,11 @@ TERM_HELP = {
         "base orbifold and the fractional height translations coupled to its "
         "generators; this page uses the alias for the chosen height direction."
     ),
+    "International Tables space-group designation": (
+        "The standard International Tables number followed by the short "
+        "Hermann–Mauguin symbol for the associated three-dimensional polar "
+        "space group."
+    ),
     "Complementary forward skips": (
         "The paired entry replaces every +k/N period skip by +(N−k)/N modulo "
         "one period. Both entries preserve the same fixed forward time direction."
@@ -3698,6 +3703,31 @@ def _clock_power_html(order: int, power: int) -> str:
     )
 
 
+TURN_DIRECTION_HELP = (
+    "Counterclockwise in the canonical face-order convention; some plates use "
+    "a reflected setting."
+)
+
+
+def _generator_geometry_html(generator: dict[str, Any]) -> str:
+    """Make only the word ``turn`` reveal the global face-order convention."""
+
+    geometry = generator["geometry"]
+    if "turn" not in geometry:
+        return escape(geometry)
+    if generator["marker"]["kind"] != "rotation":
+        raise ValueError(f"non-rotation generator is labelled as a turn: {generator!r}")
+    before, after = geometry.split("turn", 1)
+    return (
+        f'{escape(before)}<span class="turn-direction" tabindex="0" '
+        'data-turn-direction="counterclockwise" '
+        f'aria-label="turn: {escape(TURN_DIRECTION_HELP)}" '
+        f'title="{escape(TURN_DIRECTION_HELP)}">'
+        'turn<span class="turn-direction-tooltip" role="tooltip">'
+        f'{escape(TURN_DIRECTION_HELP)}</span></span>{escape(after)}'
+    )
+
+
 def _presentation_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     presentation = record["chaim_presentation"]
@@ -3713,7 +3743,7 @@ def _presentation_html(record: dict[str, Any]) -> str:
             '<tr class="presentation-generator-row">'
             '<th scope="row"><span class="presentation-generator-identity">'
             f'<span class="generator-key">{escape(generator["generator"])}</span>'
-            f'<span class="generator-geometry">{escape(generator["geometry"])}</span>'
+            f'<span class="generator-geometry">{_generator_geometry_html(generator)}</span>'
             "</span></th>"
             f'<td class="presentation-colour-action" '
             f'data-clock-power="{power}" '
@@ -3730,20 +3760,6 @@ def _presentation_html(record: dict[str, Any]) -> str:
         f'<i style="--presentation-colour: {escape(PALETTE[index])}"></i>'
         f'{chr(ord("A") + index)}</span>'
         for index in range(record["clock_order"])
-    )
-    positive_step = fraction_label(Fraction(1, record["clock_order"]))
-    cyclic_key = (
-        '<p class="presentation-cyclic-key"><strong>Forward clock</strong> '
-        f'{_clock_power_html(record["clock_order"], 1)} = '
-        f'+{escape(positive_step)} period = '
-        f'<code>{escape(presentation["clock_cycle"]["cycle_notation"])}</code>. '
-        f'A row with Time +k/{record["clock_order"]} has Color '
-        f'C<sub>{record["clock_order"]}</sub><sup>k</sup>: k forward ticks '
-        f'modulo {record["clock_order"]}. C<sub>{record["clock_order"]}</sub>'
-        '<sup>0</sup> is shown as “none.” C<sub>N</sub> is a color/time cycle, '
-        'not a spatial rotation, so it is neither clockwise nor counterclockwise. '
-        'Spatial rotation angles are measured counterclockwise when the pattern is '
-        'viewed from the front of the page.</p>'
     )
     source_differences = [
         generator
@@ -3795,7 +3811,6 @@ def _presentation_html(record: dict[str, Any]) -> str:
                   <thead><tr><th scope="col">Generator</th><th scope="col">Color</th><th scope="col">Time</th></tr></thead>
                   <tbody>{rows_html}</tbody>
                 </table>
-                {cyclic_key}
                 <p class="presentation-relations"><strong>Relations</strong> <span>Γ = ⟨{escape(generator_names)} | {escape(presentation['relations'])}⟩</span></p>
                 {source_note}
                 {source_audit}
@@ -4052,7 +4067,10 @@ def _book_audit_link_html(record: dict[str, Any]) -> str:
     )
 
 
-def _other_names_html(record: dict[str, Any]) -> str:
+def _other_names_html(
+    record: dict[str, Any],
+    space_group: dict[str, Any],
+) -> str:
     """Render one book-audit row and one wrapping row of alternate names."""
 
     group_id = escape(record["id"])
@@ -4076,6 +4094,14 @@ def _other_names_html(record: dict[str, Any]) -> str:
         ),
         extra_help=fibrifold_extra_help,
     )
+    international_tables_name = _identified_name_html(
+        "International Tables space-group designation",
+        (
+            '<span class="international-tables-name">'
+            f'No. {space_group["it_number"]} '
+            f'{_hm_html(space_group["hm_short"])}</span>'
+        ),
+    )
     mate_html = ""
     if record["complementary_skip_mate"]:
         mate_id = escape(record["complementary_skip_mate"])
@@ -4089,7 +4115,7 @@ def _other_names_html(record: dict[str, Any]) -> str:
                 <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
                   <li class="book-audit-row">{_term_help_html("Book type audit")}<span class="book-audit-value">{book_link}{short_form_support}</span></li>
-                  <li class="other-names-row"><span class="other-name-category">Other names</span><span class="other-name-list">{catalog_name}{fibrifold_name}{mate_html}</span></li>
+                  <li class="other-names-row"><span class="other-name-category">Other names</span><span class="other-name-list">{catalog_name}{fibrifold_name}{international_tables_name}{mate_html}</span></li>
                 </ul>
               </section>"""
 
@@ -4321,7 +4347,7 @@ def _entry_html(
 
             <div class="entry-copy">
               {_presentation_html(record)}
-              {_other_names_html(record)}
+              {_other_names_html(record, space_group)}
               {_extra_links_html(record, space_group)}
             </div>
           </div>
