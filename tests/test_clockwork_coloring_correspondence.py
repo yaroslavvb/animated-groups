@@ -633,13 +633,38 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 + self.parser.crystal_close_buttons
             )
         )
+        preview_urls = [
+            urlparse(attributes.get("src") or "")
+            for attributes in self.parser.crystal_previews
+        ]
         self.assertEqual(
-            [attributes.get("src") for attributes in self.parser.crystal_previews],
+            [preview.path for preview in preview_urls],
             [f"output/space-groups/{group_id}.webp" for group_id in page_ids],
         )
+        self.assertTrue(all(not preview.fragment for preview in preview_urls))
         self.assertTrue(
-            all(attributes.get("alt") for attributes in self.parser.crystal_previews)
+            all(
+                not preview.query or set(parse_qs(preview.query)) == {"v"}
+                for preview in preview_urls
+            )
         )
+        for group_id, attributes in zip(page_ids, self.parser.crystal_previews):
+            alt = (attributes.get("alt") or "").casefold()
+            self.assertIn("space–time", alt, group_id)
+            self.assertIn("vertical time", alt, group_id)
+            self.assertIn("one clock period", alt, group_id)
+
+        figures = re.findall(
+            r'<figure class="crystal-viewer".*?</figure>',
+            self.page,
+            re.DOTALL,
+        )
+        self.assertEqual(len(figures), 68)
+        for group_id, figure in zip(page_ids, figures):
+            visible_copy = re.sub(r"<[^>]+>", " ", figure)
+            visible_copy = re.sub(r"\s+", " ", visible_copy).casefold()
+            self.assertIn("vertical axis is time", visible_copy, group_id)
+            self.assertIn("one clock period", visible_copy, group_id)
 
         self.assertEqual(self.page.count(escape(example_by_id["g7"]["note"])), 1)
         self.assertEqual(

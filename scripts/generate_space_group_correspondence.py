@@ -38,7 +38,7 @@ import re
 import sys
 from typing import Any, Iterable
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 import generate_clockwork_coloring_correspondence as clockwork
 
@@ -932,8 +932,9 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
                 ),
                 "image": f"output/space-groups/{group_id}.webp",
                 "image_alt": (
-                    f"Axonometric unit-cell view of polar space group No. {number} "
-                    f"{hm_short}, lifted from cyclic colouring {group_id}."
+                    f"Space–time lift diagram for {group_id} and polar space group "
+                    f"No. {number} {hm_short}; exact clock phases form stacked "
+                    "sheets in vertical time through one clock period."
                 ),
                 "ucl_reference_url": ucl_url,
                 "extra_links": _extra_catalog_links(
@@ -976,7 +977,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
             "construction": "Embed (M, v, τ) as (diag(M, 1), (v, τ)); cyclic phase becomes fractional height along the new z coordinate.",
             "scope_caveat": SCOPE_CAVEAT,
             "image_size": [IMAGE_WIDTH, IMAGE_HEIGHT],
-            "image_note": "Space-group plate hues repeat the cyclic phase palette only to trace the height lift; colour is not additional crystallographic structure in the 3D group.",
+            "image_note": "Space–time preview sheets place every operation at its exact cyclic phase in vertical time, repeat phase zero after one clock period, and reuse the colouring palette only to trace the height lift; colour is not additional crystallographic structure in the 3D group.",
             "external_reference": "Jeremy K. Cockcroft, A Hypertext Book of Crystallographic Space Group Diagrams and Tables, UCL/Birkbeck College, 1997-1999.",
             "external_reference_index": f"{UCL_SPACE_GROUP_BASE}/sgp.htm",
             "external_reference_cache_policy": "The project does not redistribute UCL pages or images because their published end-user licence prohibits Internet distribution; hover cards reuse locally generated project plates.",
@@ -1066,15 +1067,116 @@ def _mix(colour: tuple[int, int, int], other: tuple[int, int, int], amount: floa
     return tuple(round((1 - amount) * left + amount * right) for left, right in zip(colour, other))  # type: ignore[return-value]
 
 
-def _fractional_site(record: dict[str, Any], operation: dict[str, Any]) -> tuple[float, float, float]:
+def _fractional_planar_site(
+    record: dict[str, Any], operation: dict[str, Any]
+) -> tuple[float, float]:
     base_x, base_y = record["render"]["base"]
     matrix = operation["M"]
     x = matrix[0][0] * base_x + matrix[0][1] * base_y + operation["v"][0]
     y = matrix[1][0] * base_x + matrix[1][1] * base_y + operation["v"][1]
-    # A small non-special height keeps the motif away from a cell face while
-    # preserving every relative tau exactly.
-    z = 0.083 + operation["tau"]
-    return x % 1.0, y % 1.0, z % 1.0
+    return x % 1.0, y % 1.0
+
+
+def _preview_phase_index(record: dict[str, Any], operation: dict[str, Any]) -> int:
+    """Return the exact cyclic residue represented by an operation's height."""
+
+    order = int(record["clock_order"])
+    scaled = float(operation["tau"]) * order
+    residue = round(scaled)
+    if not math.isclose(scaled, residue, abs_tol=1e-8):
+        raise ValueError(
+            f"non-cyclic preview height for {record['id']}: {operation['tau']}"
+        )
+    return residue % order
+
+
+PREVIEW_LATTICE_SHIFTS = (
+    (0, 0),
+    (-1, 0),
+    (1, 0),
+    (0, -1),
+    (0, 1),
+)
+
+
+def _height_lift_preview_layout(record: dict[str, Any]) -> dict[str, Any]:
+    """Build deterministic phase sheets and tiled sites for the preview plate."""
+
+    order = int(record["clock_order"])
+    layers = [
+        {
+            "phase": Fraction(index, order),
+            "phase_index": index,
+            "closure": False,
+            "colour": PALETTE[index],
+        }
+        for index in range(order)
+    ]
+    layers.append(
+        {
+            "phase": Fraction(1),
+            "phase_index": 0,
+            "closure": True,
+            "colour": PALETTE[0],
+        }
+    )
+
+    sites: list[dict[str, Any]] = []
+    for operation_index, operation in enumerate(record["render"]["ops"]):
+        phase_index = _preview_phase_index(record, operation)
+        u, v = _fractional_planar_site(record, operation)
+        for shift_u, shift_v in PREVIEW_LATTICE_SHIFTS:
+            site = {
+                "u": u + shift_u,
+                "v": v + shift_v,
+                "phase": Fraction(phase_index, order),
+                "phase_index": phase_index,
+                "closure": False,
+                "lattice_shift": (shift_u, shift_v),
+                "neighbor": (shift_u, shift_v) != (0, 0),
+                "colour": PALETTE[phase_index],
+                "operation": operation,
+                "operation_index": operation_index,
+            }
+            sites.append(site)
+            if phase_index == 0:
+                closure_site = dict(site)
+                closure_site["phase"] = Fraction(1)
+                closure_site["closure"] = True
+                sites.append(closure_site)
+    return {"layers": layers, "sites": sites}
+
+
+def _preview_camera(record: dict[str, Any]) -> dict[str, Any]:
+    """Choose an orientation-preserving view that avoids edge-on base vectors."""
+
+    basis = record["render"]["basis"]
+    vectors = [
+        (float(basis[index][0]), float(basis[index][1]))
+        for index in (0, 1)
+    ]
+    best: tuple[float, int, tuple[float, float], tuple[float, float]] | None = None
+    for degrees in range(0, 180, 15):
+        radians = math.radians(degrees)
+        horizontal = (math.cos(radians), math.sin(radians))
+        depth = (-horizontal[1], horizontal[0])
+        scores = [
+            abs(vector[0] * horizontal[0] + vector[1] * horizontal[1])
+            / max(math.hypot(*vector), 1e-8)
+            for vector in vectors
+        ]
+        candidate = (min(scores), -degrees, horizontal, depth)
+        if best is None or candidate[:2] > best[:2]:
+            best = candidate
+    if best is None:  # pragma: no cover - the candidate range is nonempty
+        raise AssertionError("preview camera search produced no candidates")
+    score, negative_degrees, horizontal, depth = best
+    return {
+        "angle_degrees": -negative_degrees,
+        "horizontal": horizontal,
+        "depth": depth,
+        "minimum_horizontal_score": score,
+    }
 
 
 def _projection(record: dict[str, Any]) -> tuple[Any, Any]:
@@ -1085,24 +1187,40 @@ def _projection(record: dict[str, Any]) -> tuple[Any, Any]:
     a = (a[0] / longest, a[1] / longest)
     b = (b[0] / longest, b[1] / longest)
 
+    camera = _preview_camera(record)
+    horizontal = camera["horizontal"]
+    depth = camera["depth"]
+
     def raw(u: float, v: float, w: float) -> tuple[float, float]:
         x = u * a[0] + v * b[0]
         y = u * a[1] + v * b[1]
-        return x - 0.62 * y, 0.31 * x + 0.50 * y - 1.08 * w
+        across = x * horizontal[0] + y * horizontal[1]
+        away = x * depth[0] + y * depth[1]
+        return across, 0.38 * away - 1.16 * w
 
-    corners = [raw(u, v, w) for u in (0.0, 1.0) for v in (0.0, 1.0) for w in (0.0, 1.0)]
+    spatial_extent = (-0.42, 1.42)
+    corners = [
+        raw(u, v, w)
+        for u in spatial_extent
+        for v in spatial_extent
+        for w in (0.0, 1.0)
+    ]
     min_x = min(point[0] for point in corners)
     max_x = max(point[0] for point in corners)
     min_y = min(point[1] for point in corners)
     max_y = max(point[1] for point in corners)
-    usable_width = IMAGE_WIDTH * ANTIALIAS - 132 * ANTIALIAS
-    usable_height = IMAGE_HEIGHT * ANTIALIAS - 96 * ANTIALIAS
+    left = 28 * ANTIALIAS
+    right = (IMAGE_WIDTH - 142) * ANTIALIAS
+    top = 24 * ANTIALIAS
+    bottom = (IMAGE_HEIGHT - 142) * ANTIALIAS
+    usable_width = right - left
+    usable_height = bottom - top
     scale = min(
         usable_width / max(max_x - min_x, 1e-8),
         usable_height / max(max_y - min_y, 1e-8),
     )
-    offset_x = (IMAGE_WIDTH * ANTIALIAS - scale * (min_x + max_x)) / 2
-    offset_y = (IMAGE_HEIGHT * ANTIALIAS - scale * (min_y + max_y)) / 2
+    offset_x = left + (usable_width - scale * (max_x - min_x)) / 2 - scale * min_x
+    offset_y = top + (usable_height - scale * (max_y - min_y)) / 2 - scale * min_y
 
     def project(u: float, v: float, w: float) -> tuple[float, float]:
         x, y = raw(u, v, w)
@@ -1142,39 +1260,84 @@ def _draw_dashed_line(
 def render_space_group_plate(record: dict[str, Any]) -> bytes:
     width = IMAGE_WIDTH * ANTIALIAS
     height = IMAGE_HEIGHT * ANTIALIAS
-    background = (247, 244, 236)
+    background = (249, 247, 241)
     image = Image.new("RGB", (width, height), background)
     draw = ImageDraw.Draw(image)
     project, scale = _projection(record)
+    layout = _height_lift_preview_layout(record)
+    sheet_extent = (-0.42, 1.42)
+    rail_colour = (191, 198, 194)
+    grid_colour = (153, 164, 159)
+    cell_colour = (70, 91, 83)
 
-    # Back faces first.  The solid/dashed distinction makes the cell legible
-    # without requiring WebGL or JavaScript.
-    cell_edges = []
-    for axis in range(3):
-        for first in (0.0, 1.0):
-            for second in (0.0, 1.0):
-                low = [0.0, 0.0, 0.0]
-                high = [0.0, 0.0, 0.0]
-                low[axis] = 0.0
-                high[axis] = 1.0
-                other_axes = [index for index in range(3) if index != axis]
-                low[other_axes[0]] = high[other_axes[0]] = first
-                low[other_axes[1]] = high[other_axes[1]] = second
-                cell_edges.append((tuple(low), tuple(high), sum(low) / 3))
-    cell_edges.sort(key=lambda edge: edge[2])
-    for start, end, depth in cell_edges:
-        colour = (183, 191, 186) if depth < 0.34 else (85, 104, 97)
-        line_width = max(2, round((1.0 if depth < 0.34 else 1.5) * ANTIALIAS))
-        draw.line((*project(*start), *project(*end)), fill=colour, width=line_width)
+    # Vertical rails make the new coordinate unmistakable without implying a
+    # trajectory for any one motif.
+    for u, v in ((0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)):
+        _draw_dashed_line(
+            draw,
+            project(u, v, 0.0),
+            project(u, v, 1.0),
+            rail_colour,
+            max(1, ANTIALIAS),
+            3.2 * ANTIALIAS,
+        )
+
+    # Draw one exact wallpaper sheet per cyclic residue.  The final outline is
+    # phase zero repeated at t/T=1, making periodic closure visible.
+    for layer in layout["layers"]:
+        w = float(layer["phase"])
+        corners = [
+            project(u, v, w)
+            for u, v in (
+                (sheet_extent[0], sheet_extent[0]),
+                (sheet_extent[1], sheet_extent[0]),
+                (sheet_extent[1], sheet_extent[1]),
+                (sheet_extent[0], sheet_extent[1]),
+            )
+        ]
+        layer_colour = _rgb(layer["colour"])
+        if layer["closure"]:
+            for index, start in enumerate(corners):
+                _draw_dashed_line(
+                    draw,
+                    start,
+                    corners[(index + 1) % len(corners)],
+                    _mix(layer_colour, background, 0.34),
+                    max(2, ANTIALIAS),
+                    4.2 * ANTIALIAS,
+                )
+        else:
+            draw.polygon(corners, fill=_mix(layer_colour, background, 0.91))
+            draw.line(
+                corners + [corners[0]],
+                fill=_mix(layer_colour, background, 0.50),
+                width=max(2, ANTIALIAS),
+                joint="curve",
+            )
+        for coordinate in (0.0, 1.0):
+            for start, end in (
+                ((coordinate, sheet_extent[0], w), (coordinate, sheet_extent[1], w)),
+                ((sheet_extent[0], coordinate, w), (sheet_extent[1], coordinate, w)),
+            ):
+                draw.line(
+                    (*project(*start), *project(*end)),
+                    fill=_mix(grid_colour, background, 0.28 if layer["closure"] else 0.48),
+                    width=max(1, ANTIALIAS),
+                )
+        main_cell = [
+            project(u, v, w)
+            for u, v in ((0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0))
+        ]
+        draw.line(
+            main_cell + [main_cell[0]],
+            fill=_mix(cell_colour, background, 0.30 if layer["closure"] else 0.10),
+            width=max(2, ANTIALIAS),
+            joint="curve",
+        )
 
     operations = record["render"]["ops"]
-    site_rows = []
-    for operation in operations:
-        u, v, w = _fractional_site(record, operation)
-        site_rows.append((project(u, v, w)[1], u, v, w, operation))
-    site_rows.sort(reverse=True)
-
-    motif_scale = 1.65 if len(operations) <= 2 else 1.30 if len(operations) <= 4 else 1.0
+    core_per_layer = max(1, len(operations) // int(record["clock_order"]))
+    motif_scale = 1.05 if core_per_layer <= 2 else 0.82 if core_per_layer <= 4 else 0.68
     motif = tuple(
         (motif_scale * x, motif_scale * y)
         for x, y in (
@@ -1182,67 +1345,108 @@ def render_space_group_plate(record: dict[str, Any]) -> bytes:
             (0.073, 0.050), (-0.020, 0.037),
         )
     )
-    guide_colour = (198, 204, 200)
     outline = (38, 51, 47)
-    for _, u, v, w, operation in site_rows:
-        centre = project(u, v, w)
-        floor = project(u, v, 0.0)
-        _draw_dashed_line(
-            draw, floor, centre, guide_colour,
-            max(1, ANTIALIAS), 3.2 * ANTIALIAS,
-        )
-        floor_radius = 2.4 * ANTIALIAS
-        draw.ellipse(
-            (floor[0] - floor_radius, floor[1] - floor_radius,
-             floor[0] + floor_radius, floor[1] + floor_radius),
-            fill=(132, 145, 139),
-        )
+    site_rows = []
+    for site_index, site in enumerate(layout["sites"]):
+        if not (
+            sheet_extent[0] - 0.08 <= site["u"] <= sheet_extent[1] + 0.08
+            and sheet_extent[0] - 0.08 <= site["v"] <= sheet_extent[1] + 0.08
+        ):
+            continue
+        w = float(site["phase"])
+        centre = project(site["u"], site["v"], w)
+        site_rows.append((centre[1], site_index, site, centre))
+    site_rows.sort(key=lambda row: (row[0], row[1]))
 
+    for _, _, site, centre in site_rows:
+        u, v, w = site["u"], site["v"], float(site["phase"])
+        operation = site["operation"]
         matrix = operation["M"]
         points = []
         for local_x, local_y in motif:
             du = matrix[0][0] * local_x + matrix[0][1] * local_y
             dv = matrix[1][0] * local_x + matrix[1][1] * local_y
             points.append(project(u + du, v + dv, w))
-        phase = int(round(float(operation["tau"]) * record["clock_order"])) % record["clock_order"]
-        base_colour = _rgb(PALETTE[phase])
-        shadow_points = [(x + 3 * ANTIALIAS, y + 4 * ANTIALIAS) for x, y in points]
-        draw.polygon(shadow_points, fill=_mix(outline, background, 0.60))
-        draw.polygon(points, fill=base_colour)
-        draw.line(points + [points[0]], fill=outline, width=max(2, ANTIALIAS), joint="curve")
+        base_colour = _rgb(site["colour"])
+        if site["closure"]:
+            draw.line(
+                points + [points[0]],
+                fill=_mix(base_colour, background, 0.12 if not site["neighbor"] else 0.58),
+                width=max(2, ANTIALIAS),
+                joint="curve",
+            )
+        else:
+            fill = _mix(base_colour, background, 0.58) if site["neighbor"] else base_colour
+            edge = _mix(outline, background, 0.50) if site["neighbor"] else outline
+            draw.polygon(points, fill=fill)
+            draw.line(points + [points[0]], fill=edge, width=max(2, ANTIALIAS), joint="curve")
         marker = points[1]
-        marker_radius = max(2.0 * ANTIALIAS, 0.012 * scale)
-        draw.ellipse(
-            (marker[0] - marker_radius, marker[1] - marker_radius,
-             marker[0] + marker_radius, marker[1] + marker_radius),
-            fill=background,
-            outline=outline,
-            width=max(1, ANTIALIAS),
-        )
+        if not site["closure"] and not site["neighbor"]:
+            marker_radius = max(1.8 * ANTIALIAS, 0.010 * scale)
+            draw.ellipse(
+                (marker[0] - marker_radius, marker[1] - marker_radius,
+                 marker[0] + marker_radius, marker[1] + marker_radius),
+                fill=background,
+                outline=outline,
+                width=max(1, ANTIALIAS),
+            )
 
-    # A compact three-axis key at the lower left: the first two axes lie in the
-    # base and the constructed z/height direction is vertical.  This is shown
-    # before any change to the conventional crystallographic setting.
-    axis_origin = (58 * ANTIALIAS, (IMAGE_HEIGHT - 42) * ANTIALIAS)
-    axes = (
-        ((105 * ANTIALIAS, (IMAGE_HEIGHT - 42) * ANTIALIAS), (193, 75, 61)),
-        ((34 * ANTIALIAS, (IMAGE_HEIGHT - 69) * ANTIALIAS), (40, 137, 103)),
-        ((58 * ANTIALIAS, (IMAGE_HEIGHT - 100) * ANTIALIAS), _rgb(PALETTE[0])),
+    # Keep the explanatory ruler above the viewer's bottom loading prompt.
+    axis_x = (IMAGE_WIDTH - 62) * ANTIALIAS
+    axis_top = 45 * ANTIALIAS
+    axis_bottom = 306 * ANTIALIAS
+    axis_colour = (42, 59, 53)
+    draw.line(
+        (axis_x, axis_bottom, axis_x, axis_top),
+        fill=axis_colour,
+        width=3 * ANTIALIAS,
     )
-    for endpoint, colour in axes:
-        draw.line((*axis_origin, *endpoint), fill=colour, width=3 * ANTIALIAS)
-        dx, dy = endpoint[0] - axis_origin[0], endpoint[1] - axis_origin[1]
-        length = max(math.hypot(dx, dy), 1e-8)
-        ux, uy = dx / length, dy / length
-        perpendicular = (-uy, ux)
-        arrow = [
-            endpoint,
-            (endpoint[0] - 8 * ANTIALIAS * ux + 4 * ANTIALIAS * perpendicular[0],
-             endpoint[1] - 8 * ANTIALIAS * uy + 4 * ANTIALIAS * perpendicular[1]),
-            (endpoint[0] - 8 * ANTIALIAS * ux - 4 * ANTIALIAS * perpendicular[0],
-             endpoint[1] - 8 * ANTIALIAS * uy - 4 * ANTIALIAS * perpendicular[1]),
-        ]
-        draw.polygon(arrow, fill=colour)
+    draw.polygon(
+        (
+            (axis_x, axis_top - 9 * ANTIALIAS),
+            (axis_x - 5 * ANTIALIAS, axis_top + 1 * ANTIALIAS),
+            (axis_x + 5 * ANTIALIAS, axis_top + 1 * ANTIALIAS),
+        ),
+        fill=axis_colour,
+    )
+    font = ImageFont.load_default(size=11 * ANTIALIAS)
+    small_font = ImageFont.load_default(size=9 * ANTIALIAS)
+    draw.text(
+        ((IMAGE_WIDTH - 107) * ANTIALIAS, 14 * ANTIALIAS),
+        "TIME  t/T",
+        fill=axis_colour,
+        font=font,
+    )
+    order = int(record["clock_order"])
+    for index in range(order + 1):
+        y = axis_bottom - (axis_bottom - axis_top) * index / order
+        phase_index = index % order
+        colour = _rgb(PALETTE[phase_index])
+        draw.line(
+            (axis_x - 9 * ANTIALIAS, y, axis_x + 5 * ANTIALIAS, y),
+            fill=axis_colour,
+            width=max(2, ANTIALIAS),
+        )
+        radius = 4 * ANTIALIAS
+        draw.ellipse(
+            (axis_x - radius, y - radius, axis_x + radius, y + radius),
+            fill=background if index == order else colour,
+            outline=colour,
+            width=max(2, ANTIALIAS),
+        )
+        if index == 0:
+            label = "0"
+        elif index == order:
+            label = "1 = 0"
+        else:
+            common = math.gcd(index, order)
+            label = f"{index // common}/{order // common}"
+        draw.text(
+            (axis_x + 10 * ANTIALIAS, y - 5 * ANTIALIAS),
+            label,
+            fill=axis_colour,
+            font=small_font,
+        )
 
     image = image.resize((IMAGE_WIDTH, IMAGE_HEIGHT), Image.Resampling.LANCZOS)
     buffer = io.BytesIO()

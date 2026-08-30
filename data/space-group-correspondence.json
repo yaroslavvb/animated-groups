@@ -18,7 +18,7 @@
       720,
       480
     ],
-    "image_note": "Space-group plate hues repeat the cyclic phase palette only to trace the height lift; colour is not additional crystallographic structure in the 3D group.",
+    "image_note": "Space–time preview sheets place every operation at its exact cyclic phase in vertical time, repeat phase zero after one clock period, and reuse the colouring palette only to trace the height lift; colour is not additional crystallographic structure in the 3D group.",
     "external_reference": "Jeremy K. Cockcroft, A Hypertext Book of Crystallographic Space Group Diagrams and Tables, UCL/Birkbeck College, 1997-1999.",
     "external_reference_index": "http://img.chem.ucl.ac.uk/sgp/large/sgp.htm",
     "external_reference_cache_policy": "The project does not redistribute UCL pages or images because their published end-user licence prohibits Internet distribution; hover cards reuse locally generated project plates.",
@@ -223,7 +223,7 @@
         "point_group": "1",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g1.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 1 P1, lifted from cyclic colouring g1.",
+        "image_alt": "Space–time lift diagram for g1 and polar space group No. 1 P1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/001az1.htm",
         "extra_links": [
           {
@@ -488,7 +488,7 @@
         "point_group": "2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g5.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 3 P2, lifted from cyclic colouring g5.",
+        "image_alt": "Space–time lift diagram for g5 and polar space group No. 3 P2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/003ay1.htm",
         "extra_links": [
           {
@@ -795,7 +795,7 @@
         "point_group": "2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g6.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 4 P2_1, lifted from cyclic colouring g6.",
+        "image_alt": "Space–time lift diagram for g6 and polar space group No. 4 P2_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/004ay1.htm",
         "extra_links": [
           {
@@ -1207,7 +1207,7 @@
         "point_group": "2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g7.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 5 C2, lifted from cyclic colouring g7.",
+        "image_alt": "Space–time lift diagram for g7 and polar space group No. 5 C2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/005ay1.htm",
         "extra_links": [
           {
@@ -1472,7 +1472,7 @@
         "point_group": "m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g8.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 8 Cm, lifted from cyclic colouring g8.",
+        "image_alt": "Space–time lift diagram for g8 and polar space group No. 8 Cm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/008ay1.htm",
         "extra_links": [
           {
@@ -1779,7 +1779,7 @@
         "point_group": "m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g9.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 9 Cc, lifted from cyclic colouring g9.",
+        "image_alt": "Space–time lift diagram for g9 and polar space group No. 9 Cc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/009ay1.htm",
         "extra_links": [
           {
@@ -2141,7 +2141,7 @@
         "point_group": "m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g10.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 6 Pm, lifted from cyclic colouring g10.",
+        "image_alt": "Space–time lift diagram for g10 and polar space group No. 6 Pm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/006ay1.htm",
         "extra_links": [
           {
@@ -2496,7 +2496,7 @@
         "point_group": "m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g11.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 7 Pc, lifted from cyclic colouring g11.",
+        "image_alt": "Space–time lift diagram for g11 and polar space group No. 7 Pc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/007ay1.htm",
         "extra_links": [
           {
@@ -2858,7 +2858,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g54.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 25 Pmm2, lifted from cyclic colouring g54.",
+        "image_alt": "Space–time lift diagram for g54 and polar space group No. 25 Pmm2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/025az1.htm",
         "extra_links": [
           {
@@ -3269,7 +3269,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g55.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 27 Pcc2, lifted from cyclic colouring g55.",
+        "image_alt": "Space–time lift diagram for g55 and polar space group No. 27 Pcc2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/027az1.htm",
         "extra_links": [
           {
@@ -3631,7 +3631,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g56.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 28 Pma2, lifted from cyclic colouring g56.",
+        "image_alt": "Space–time lift diagram for g56 and polar space group No. 28 Pma2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/028az1.htm",
         "extra_links": [
           {
@@ -4042,7 +4042,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g57.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 30 Pnc2, lifted from cyclic colouring g57.",
+        "image_alt": "Space–time lift diagram for g57 and polar space group No. 30 Pnc2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/030az1.htm",
         "extra_links": [
           {
@@ -4404,7 +4404,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g58.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 32 Pba2, lifted from cyclic colouring g58.",
+        "image_alt": "Space–time lift diagram for g58 and polar space group No. 32 Pba2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/032az1.htm",
         "extra_links": [
           {
@@ -4815,7 +4815,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g59.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 34 Pnn2, lifted from cyclic colouring g59.",
+        "image_alt": "Space–time lift diagram for g59 and polar space group No. 34 Pnn2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/034az1.htm",
         "extra_links": [
           {
@@ -5227,7 +5227,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g60.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 26 Pmc2_1, lifted from cyclic colouring g60.",
+        "image_alt": "Space–time lift diagram for g60 and polar space group No. 26 Pmc2_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/026az1.htm",
         "extra_links": [
           {
@@ -5639,7 +5639,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g61.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 29 Pca2_1, lifted from cyclic colouring g61.",
+        "image_alt": "Space–time lift diagram for g61 and polar space group No. 29 Pca2_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/029az1.htm",
         "extra_links": [
           {
@@ -6051,7 +6051,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g62.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 31 Pmn2_1, lifted from cyclic colouring g62.",
+        "image_alt": "Space–time lift diagram for g62 and polar space group No. 31 Pmn2_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/031az1.htm",
         "extra_links": [
           {
@@ -6463,7 +6463,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g63.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 33 Pna2_1, lifted from cyclic colouring g63.",
+        "image_alt": "Space–time lift diagram for g63 and polar space group No. 33 Pna2_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/033az1.htm",
         "extra_links": [
           {
@@ -7065,7 +7065,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g64.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 38 Amm2, lifted from cyclic colouring g64.",
+        "image_alt": "Space–time lift diagram for g64 and polar space group No. 38 Amm2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/038az1.htm",
         "extra_links": [
           {
@@ -7667,7 +7667,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g65.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 39 Aem2, lifted from cyclic colouring g65.",
+        "image_alt": "Space–time lift diagram for g65 and polar space group No. 39 Aem2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/039az1.htm",
         "extra_links": [
           {
@@ -8269,7 +8269,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g66.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 40 Ama2, lifted from cyclic colouring g66.",
+        "image_alt": "Space–time lift diagram for g66 and polar space group No. 40 Ama2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/040az1.htm",
         "extra_links": [
           {
@@ -8871,7 +8871,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g67.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 41 Aea2, lifted from cyclic colouring g67.",
+        "image_alt": "Space–time lift diagram for g67 and polar space group No. 41 Aea2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/041az1.htm",
         "extra_links": [
           {
@@ -9414,7 +9414,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g68.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 35 Cmm2, lifted from cyclic colouring g68.",
+        "image_alt": "Space–time lift diagram for g68 and polar space group No. 35 Cmm2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/035az1.htm",
         "extra_links": [
           {
@@ -10014,7 +10014,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g69.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 37 Ccc2, lifted from cyclic colouring g69.",
+        "image_alt": "Space–time lift diagram for g69 and polar space group No. 37 Ccc2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/037az1.htm",
         "extra_links": [
           {
@@ -10615,7 +10615,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g70.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 36 Cmc2_1, lifted from cyclic colouring g70.",
+        "image_alt": "Space–time lift diagram for g70 and polar space group No. 36 Cmc2_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/036az1.htm",
         "extra_links": [
           {
@@ -11217,7 +11217,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g71.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 44 Imm2, lifted from cyclic colouring g71.",
+        "image_alt": "Space–time lift diagram for g71 and polar space group No. 44 Imm2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/044az1.htm",
         "extra_links": [
           {
@@ -11819,7 +11819,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g72.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 45 Iba2, lifted from cyclic colouring g72.",
+        "image_alt": "Space–time lift diagram for g72 and polar space group No. 45 Iba2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/045az1.htm",
         "extra_links": [
           {
@@ -12421,7 +12421,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g73.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 46 Ima2, lifted from cyclic colouring g73.",
+        "image_alt": "Space–time lift diagram for g73 and polar space group No. 46 Ima2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/046az1.htm",
         "extra_links": [
           {
@@ -13376,7 +13376,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g74.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 42 Fmm2, lifted from cyclic colouring g74.",
+        "image_alt": "Space–time lift diagram for g74 and polar space group No. 42 Fmm2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/042az1.htm",
         "extra_links": [
           {
@@ -14313,7 +14313,7 @@
         "point_group": "mm2",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g75.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 43 Fdd2, lifted from cyclic colouring g75.",
+        "image_alt": "Space–time lift diagram for g75 and polar space group No. 43 Fdd2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/043az1.htm",
         "extra_links": [
           {
@@ -14668,7 +14668,7 @@
         "point_group": "4",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g94.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 75 P4, lifted from cyclic colouring g94.",
+        "image_alt": "Space–time lift diagram for g94 and polar space group No. 75 P4; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/075az1.htm",
         "extra_links": [
           {
@@ -15065,7 +15065,7 @@
         "point_group": "4",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g95.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 77 P4_2, lifted from cyclic colouring g95.",
+        "image_alt": "Space–time lift diagram for g95 and polar space group No. 77 P4_2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/077az1.htm",
         "extra_links": [
           {
@@ -15475,7 +15475,7 @@
         "point_group": "4",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g96.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 76 P4_1, lifted from cyclic colouring g96.",
+        "image_alt": "Space–time lift diagram for g96 and polar space group No. 76 P4_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/076az1.htm",
         "extra_links": [
           {
@@ -15885,7 +15885,7 @@
         "point_group": "4",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g97.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 78 P4_3, lifted from cyclic colouring g97.",
+        "image_alt": "Space–time lift diagram for g97 and polar space group No. 78 P4_3; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/078az1.htm",
         "extra_links": [
           {
@@ -16472,7 +16472,7 @@
         "point_group": "4",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g98.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 79 I4, lifted from cyclic colouring g98.",
+        "image_alt": "Space–time lift diagram for g98 and polar space group No. 79 I4; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/079az1.htm",
         "extra_links": [
           {
@@ -17071,7 +17071,7 @@
         "point_group": "4",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g99.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 80 I4_1, lifted from cyclic colouring g99.",
+        "image_alt": "Space–time lift diagram for g99 and polar space group No. 80 I4_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/080a.htm",
         "extra_links": [
           {
@@ -17607,7 +17607,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g128.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 99 P4mm, lifted from cyclic colouring g128.",
+        "image_alt": "Space–time lift diagram for g128 and polar space group No. 99 P4mm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/099az1.htm",
         "extra_links": [
           {
@@ -18193,7 +18193,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g129.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 105 P4_2mc, lifted from cyclic colouring g129.",
+        "image_alt": "Space–time lift diagram for g129 and polar space group No. 105 P4_2mc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/105az1.htm",
         "extra_links": [
           {
@@ -18779,7 +18779,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g130.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 101 P4_2cm, lifted from cyclic colouring g130.",
+        "image_alt": "Space–time lift diagram for g130 and polar space group No. 101 P4_2cm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/101az1.htm",
         "extra_links": [
           {
@@ -19364,7 +19364,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g131.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 103 P4cc, lifted from cyclic colouring g131.",
+        "image_alt": "Space–time lift diagram for g131 and polar space group No. 103 P4cc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/103az1.htm",
         "extra_links": [
           {
@@ -19900,7 +19900,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g132.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 100 P4bm, lifted from cyclic colouring g132.",
+        "image_alt": "Space–time lift diagram for g132 and polar space group No. 100 P4bm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/100az1.htm",
         "extra_links": [
           {
@@ -20486,7 +20486,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g133.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 106 P4_2bc, lifted from cyclic colouring g133.",
+        "image_alt": "Space–time lift diagram for g133 and polar space group No. 106 P4_2bc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/106az1.htm",
         "extra_links": [
           {
@@ -21072,7 +21072,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g134.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 102 P4_2nm, lifted from cyclic colouring g134.",
+        "image_alt": "Space–time lift diagram for g134 and polar space group No. 102 P4_2nm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/102az1.htm",
         "extra_links": [
           {
@@ -21657,7 +21657,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g135.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 104 P4nc, lifted from cyclic colouring g135.",
+        "image_alt": "Space–time lift diagram for g135 and polar space group No. 104 P4nc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/104az1.htm",
         "extra_links": [
           {
@@ -22602,7 +22602,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g136.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 107 I4mm, lifted from cyclic colouring g136.",
+        "image_alt": "Space–time lift diagram for g136 and polar space group No. 107 I4mm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/107az1.htm",
         "extra_links": [
           {
@@ -23547,7 +23547,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g137.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 109 I4_1md, lifted from cyclic colouring g137.",
+        "image_alt": "Space–time lift diagram for g137 and polar space group No. 109 I4_1md; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/109az1.htm",
         "extra_links": [
           {
@@ -24492,7 +24492,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g138.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 108 I4cm, lifted from cyclic colouring g138.",
+        "image_alt": "Space–time lift diagram for g138 and polar space group No. 108 I4cm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/108az1.htm",
         "extra_links": [
           {
@@ -25437,7 +25437,7 @@
         "point_group": "4mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g139.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 110 I4_1cd, lifted from cyclic colouring g139.",
+        "image_alt": "Space–time lift diagram for g139 and polar space group No. 110 I4_1cd; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/110az1.htm",
         "extra_links": [
           {
@@ -25744,7 +25744,7 @@
         "point_group": "3",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g224.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 143 P3, lifted from cyclic colouring g224.",
+        "image_alt": "Space–time lift diagram for g224 and polar space group No. 143 P3; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/143az1.htm",
         "extra_links": [
           {
@@ -26100,7 +26100,7 @@
         "point_group": "3",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g225.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 145 P3_2, lifted from cyclic colouring g225.",
+        "image_alt": "Space–time lift diagram for g225 and polar space group No. 145 P3_2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/145az1.htm",
         "extra_links": [
           {
@@ -26456,7 +26456,7 @@
         "point_group": "3",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g226.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 144 P3_1, lifted from cyclic colouring g226.",
+        "image_alt": "Space–time lift diagram for g226 and polar space group No. 144 P3_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/144az1.htm",
         "extra_links": [
           {
@@ -27086,7 +27086,7 @@
         "point_group": "3",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g227.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 146 R3, lifted from cyclic colouring g227.",
+        "image_alt": "Space–time lift diagram for g227 and polar space group No. 146 R3; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/146az1.htm",
         "extra_links": [
           {
@@ -27532,7 +27532,7 @@
         "point_group": "3m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g230.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 156 P3m1, lifted from cyclic colouring g230.",
+        "image_alt": "Space–time lift diagram for g230 and polar space group No. 156 P3m1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/156az1.htm",
         "extra_links": [
           {
@@ -28027,7 +28027,7 @@
         "point_group": "3m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g231.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 158 P3c1, lifted from cyclic colouring g231.",
+        "image_alt": "Space–time lift diagram for g231 and polar space group No. 158 P3c1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/158az1.htm",
         "extra_links": [
           {
@@ -28473,7 +28473,7 @@
         "point_group": "3m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g232.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 157 P31m, lifted from cyclic colouring g232.",
+        "image_alt": "Space–time lift diagram for g232 and polar space group No. 157 P31m; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/157az1.htm",
         "extra_links": [
           {
@@ -28968,7 +28968,7 @@
         "point_group": "3m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g233.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 159 P31c, lifted from cyclic colouring g233.",
+        "image_alt": "Space–time lift diagram for g233 and polar space group No. 159 P31c; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/159az1.htm",
         "extra_links": [
           {
@@ -29984,7 +29984,7 @@
         "point_group": "3m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g234.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 160 R3m, lifted from cyclic colouring g234.",
+        "image_alt": "Space–time lift diagram for g234 and polar space group No. 160 R3m; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/160az1.htm",
         "extra_links": [
           {
@@ -31018,7 +31018,7 @@
         "point_group": "3m",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g235.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 161 R3c, lifted from cyclic colouring g235.",
+        "image_alt": "Space–time lift diagram for g235 and polar space group No. 161 R3c; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/161az1.htm",
         "extra_links": [
           {
@@ -31463,7 +31463,7 @@
         "point_group": "6",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g243.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 168 P6, lifted from cyclic colouring g243.",
+        "image_alt": "Space–time lift diagram for g243 and polar space group No. 168 P6; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/168az1.htm",
         "extra_links": [
           {
@@ -31958,7 +31958,7 @@
         "point_group": "6",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g244.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 171 P6_2, lifted from cyclic colouring g244.",
+        "image_alt": "Space–time lift diagram for g244 and polar space group No. 171 P6_2; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/171az1.htm",
         "extra_links": [
           {
@@ -32453,7 +32453,7 @@
         "point_group": "6",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g245.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 172 P6_4, lifted from cyclic colouring g245.",
+        "image_alt": "Space–time lift diagram for g245 and polar space group No. 172 P6_4; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/172az1.htm",
         "extra_links": [
           {
@@ -32940,7 +32940,7 @@
         "point_group": "6",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g246.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 173 P6_3, lifted from cyclic colouring g246.",
+        "image_alt": "Space–time lift diagram for g246 and polar space group No. 173 P6_3; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/173az1.htm",
         "extra_links": [
           {
@@ -33453,7 +33453,7 @@
         "point_group": "6",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g247.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 170 P6_5, lifted from cyclic colouring g247.",
+        "image_alt": "Space–time lift diagram for g247 and polar space group No. 170 P6_5; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/170az1.htm",
         "extra_links": [
           {
@@ -33966,7 +33966,7 @@
         "point_group": "6",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g248.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 169 P6_1, lifted from cyclic colouring g248.",
+        "image_alt": "Space–time lift diagram for g248 and polar space group No. 169 P6_1; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/169az1.htm",
         "extra_links": [
           {
@@ -34676,7 +34676,7 @@
         "point_group": "6mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g268.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 183 P6mm, lifted from cyclic colouring g268.",
+        "image_alt": "Space–time lift diagram for g268 and polar space group No. 183 P6mm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/183az1.htm",
         "extra_links": [
           {
@@ -35436,7 +35436,7 @@
         "point_group": "6mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g269.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 185 P6_3cm, lifted from cyclic colouring g269.",
+        "image_alt": "Space–time lift diagram for g269 and polar space group No. 185 P6_3cm; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/185az1.htm",
         "extra_links": [
           {
@@ -36195,7 +36195,7 @@
         "point_group": "6mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g270.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 184 P6cc, lifted from cyclic colouring g270.",
+        "image_alt": "Space–time lift diagram for g270 and polar space group No. 184 P6cc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/184az1.htm",
         "extra_links": [
           {
@@ -36955,7 +36955,7 @@
         "point_group": "6mm",
         "polar_axis": "z (constructed lift coordinate; before conventional-setting normalization)",
         "image": "output/space-groups/g271.webp",
-        "image_alt": "Axonometric unit-cell view of polar space group No. 186 P6_3mc, lifted from cyclic colouring g271.",
+        "image_alt": "Space–time lift diagram for g271 and polar space group No. 186 P6_3mc; exact clock phases form stacked sheets in vertical time through one clock period.",
         "ucl_reference_url": "http://img.chem.ucl.ac.uk/sgp/large/186az1.htm",
         "extra_links": [
           {
