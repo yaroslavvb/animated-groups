@@ -73,6 +73,7 @@ CORRESPONDENCE_SCRIPT_SRC = (
     "v=all-68-full-entries"
 )
 CRYSTAL_VIEWER_SCRIPT_SRC = "crystal-viewer.js?v=one-live-real-crystal-viewer"
+SPACE_TIME_PREVIEW_VERSION = "stacked-clock-period"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
 
@@ -4156,7 +4157,7 @@ def _crystal_viewer_html(
     space_group: dict[str, Any],
     example: dict[str, Any],
 ) -> str:
-    """Render a lazy real-crystal viewer with a local generic fallback plate."""
+    """Render a lazy real-crystal viewer with a local space-time lift preview."""
 
     group_id = escape(record["id"])
     if example["id"] != record["id"]:
@@ -4193,10 +4194,15 @@ def _crystal_viewer_html(
             '<p class="crystal-viewer-source-note"><strong>Source-label note.</strong> '
             f'{escape(example["source_warning"])}</p>'
         )
+    preview_src = f"{space_group['image']}?v={SPACE_TIME_PREVIEW_VERSION}"
+    preview_alt = (
+        f"{space_group['image_alt']} Activate the interactive viewer to examine "
+        f"{example['crystal_name']}."
+    )
     return f"""
               <figure class="crystal-viewer" data-crystal-viewer="{group_id}" data-group-id="{group_id}" data-provider="{escape(provider)}" data-reference-match="{escape(example['reference_match'])}" data-crystal-name="{crystal_name}" data-crystal-embed="{escape(_crystal_embed_url(example))}">
                 <div class="crystal-viewer-stage" id="{stage_id}" data-crystal-stage data-state="idle" aria-describedby="{status_id}">
-                  <img class="crystal-viewer-preview" src="{escape(space_group['image'])}" width="720" height="480" loading="lazy" decoding="async" alt="Generic space-group preview for No. {space_group['it_number']} {escape(space_group['hm_short'])}; activate the interactive viewer to examine {crystal_name}.">
+                  <img class="crystal-viewer-preview" src="{escape(preview_src)}" width="720" height="480" loading="lazy" decoding="async" alt="{escape(preview_alt)}">
                   <div class="crystal-viewer-prompt" data-crystal-prompt>
                     <button class="crystal-viewer-load" type="button" data-crystal-load aria-controls="{stage_id}">Explore {crystal_name} in 3D</button>
                     <small>{escape(load_note)} The external provider receives this request; only one crystal viewer stays live at a time.</small>
@@ -4207,7 +4213,7 @@ def _crystal_viewer_html(
                 <figcaption>
                   <span class="crystal-viewer-title"><strong>3D crystal · {crystal_name}</strong><span>No. {space_group['it_number']} {_hm_html(space_group['hm_short'])}</span></span>
                   <span class="crystal-viewer-links"><a href="{escape(example['source_url'])}" target="_blank" rel="noopener">CrystalSymmetry example</a><span aria-hidden="true"> · </span><a href="{escape(example['viewer_url'])}" target="_blank" rel="noopener">{escape(provider_link_label)}</a></span>
-                  <small>Before loading, the image is this project’s generic symmetry preview; the interactive pane is the real-crystal exemplar via {escape(provider_name)}.</small>
+                  <small>Before loading, this space–time lift shows the clockwork wallpaper; the vertical axis is time through one clock period. The interactive pane is the real-crystal exemplar via {escape(provider_name)}.</small>
                   {match_note}
                   {source_warning}
                 </figcaption>

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from fractions import Fraction
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -16,6 +17,21 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import generate_space_group_correspondence as correspondence  # noqa: E402
+
+
+TIME_PREVIEW_FIXTURES = {
+    # group: (clock order, operations in the fundamental cell)
+    "g1": (1, 1),
+    "g6": (2, 2),
+    "g9": (2, 2),
+    "g225": (3, 3),
+    "g96": (4, 4),
+    "g97": (4, 4),
+    "g244": (3, 6),
+    "g247": (6, 6),
+    "g235": (6, 18),
+    "g271": (2, 12),
+}
 
 
 class SpaceCorrespondenceParser(HTMLParser):
@@ -186,6 +202,176 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
                     [operation["v"][0], operation["v"][1], operation["tau"]],
                     group["id"],
                 )
+
+    def test_time_preview_layout_has_exact_layers_palette_and_period_closure(self) -> None:
+        self.assertEqual(correspondence.PALETTE, correspondence.clockwork.PALETTE)
+        for group in self.payload["groups"]:
+            group_id = group["id"]
+            order = group["clock_order"]
+            layout = correspondence._height_lift_preview_layout(group)
+            self.assertEqual(
+                layout,
+                correspondence._height_lift_preview_layout(group),
+                group_id,
+            )
+            layers = layout["layers"]
+            sites = layout["sites"]
+
+            self.assertEqual(
+                [layer["phase"] for layer in layers],
+                [Fraction(index, order) for index in range(order)]
+                + [Fraction(1)],
+                group_id,
+            )
+            self.assertEqual(
+                [layer["phase_index"] for layer in layers],
+                list(range(order)) + [0],
+                group_id,
+            )
+            self.assertEqual(
+                [layer["closure"] for layer in layers],
+                [False] * order + [True],
+                group_id,
+            )
+            self.assertEqual(
+                [layer["colour"] for layer in layers],
+                [correspondence.PALETTE[index] for index in range(order)]
+                + [correspondence.PALETTE[0]],
+                group_id,
+            )
+
+            ordinary_core = [
+                site
+                for site in sites
+                if site["lattice_shift"] == (0, 0) and not site["closure"]
+            ]
+            self.assertEqual(len(ordinary_core), len(group["render"]["ops"]), group_id)
+            self.assertEqual(
+                sorted(
+                    json.dumps(site["operation"], sort_keys=True)
+                    for site in ordinary_core
+                ),
+                sorted(
+                    json.dumps(operation, sort_keys=True)
+                    for operation in group["render"]["ops"]
+                ),
+                group_id,
+            )
+
+            for site in sites:
+                phase_index = correspondence._preview_phase_index(
+                    group, site["operation"]
+                )
+                self.assertEqual(site["phase_index"], phase_index, group_id)
+                self.assertEqual(
+                    site["colour"], correspondence.PALETTE[phase_index], group_id
+                )
+                self.assertEqual(
+                    site["phase"],
+                    Fraction(1) if site["closure"] else Fraction(phase_index, order),
+                    group_id,
+                )
+                shift = site["lattice_shift"]
+                self.assertEqual(len(shift), 2, group_id)
+                self.assertTrue(all(value in {-1, 0, 1} for value in shift), group_id)
+                self.assertEqual(site["neighbor"], shift != (0, 0), group_id)
+
+            phase_zero = [site for site in sites if site["phase"] == 0]
+            closure = [site for site in sites if site["closure"]]
+
+            def closure_key(site: dict[str, object]) -> tuple[object, ...]:
+                return (
+                    site["u"],
+                    site["v"],
+                    site["phase_index"],
+                    site["lattice_shift"],
+                    site["neighbor"],
+                    site["colour"],
+                    json.dumps(site["operation"], sort_keys=True),
+                )
+
+            self.assertEqual(
+                sorted(closure_key(site) for site in closure),
+                sorted(closure_key(site) for site in phase_zero),
+                group_id,
+            )
+            self.assertTrue(any(site["neighbor"] for site in sites), group_id)
+
+    def test_time_preview_phase_assignment_is_the_exact_cyclic_residue(self) -> None:
+        for group in self.payload["groups"]:
+            order = group["clock_order"]
+            indices = []
+            for operation in group["render"]["ops"]:
+                phase_index = correspondence._preview_phase_index(group, operation)
+                self.assertIsInstance(phase_index, int, group["id"])
+                self.assertGreaterEqual(phase_index, 0, group["id"])
+                self.assertLess(phase_index, order, group["id"])
+                self.assertEqual(
+                    phase_index,
+                    round(float(operation["tau"]) * order) % order,
+                    group["id"],
+                )
+                indices.append(phase_index)
+            self.assertEqual(set(indices), set(range(order)), group["id"])
+            self.assertEqual(
+                {indices.count(index) for index in range(order)},
+                {len(group["render"]["ops"]) // order},
+                group["id"],
+            )
+
+    def test_time_preview_camera_is_orientation_preserving_and_time_points_up(self) -> None:
+        cameras: dict[str, dict[str, object]] = {}
+        for group in self.payload["groups"]:
+            group_id = group["id"]
+            camera = correspondence._preview_camera(group)
+            cameras[group_id] = camera
+            horizontal = camera["horizontal"]
+            depth = camera["depth"]
+            self.assertAlmostEqual(
+                horizontal[0] ** 2 + horizontal[1] ** 2,
+                1.0,
+                places=12,
+                msg=group_id,
+            )
+            self.assertAlmostEqual(
+                depth[0] ** 2 + depth[1] ** 2,
+                1.0,
+                places=12,
+                msg=group_id,
+            )
+            self.assertAlmostEqual(
+                horizontal[0] * depth[0] + horizontal[1] * depth[1],
+                0.0,
+                places=12,
+                msg=group_id,
+            )
+            self.assertAlmostEqual(
+                horizontal[0] * depth[1] - horizontal[1] * depth[0],
+                1.0,
+                places=12,
+                msg=group_id,
+            )
+            self.assertGreater(camera["minimum_horizontal_score"], 0, group_id)
+
+            project, _ = correspondence._projection(group)
+            lower = project(0.5, 0.5, 0.0)
+            upper = project(0.5, 0.5, 1.0)
+            self.assertAlmostEqual(lower[0], upper[0], places=9, msg=group_id)
+            self.assertLess(upper[1], lower[1], group_id)
+
+        # These two space groups differ only in screw handedness.  A reflected
+        # camera would make that distinction disappear, so they share one view.
+        self.assertEqual(cameras["g96"], cameras["g97"])
+
+    def test_time_preview_representatives_cover_orders_handedness_and_density(self) -> None:
+        by_id = {group["id"]: group for group in self.payload["groups"]}
+        for group_id, (order, operation_count) in TIME_PREVIEW_FIXTURES.items():
+            group = by_id[group_id]
+            self.assertEqual(group["clock_order"], order, group_id)
+            self.assertEqual(len(group["render"]["ops"]), operation_count, group_id)
+            layout = correspondence._height_lift_preview_layout(group)
+            self.assertEqual(len(layout["layers"]), order + 1, group_id)
+            self.assertGreater(len(layout["sites"]), operation_count, group_id)
 
     def test_all_17_sections_display_only_the_51_nontrivial_pairs(self) -> None:
         expected_ids = [group["id"] for group in self.displayed_groups]
@@ -610,6 +796,7 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
         self.assertNotIn("requestAnimationFrame(tick)", controller)
 
     def test_static_space_group_plates_remain_reproducible_data_assets(self) -> None:
+        rendered_assets = []
         for group in self.payload["groups"]:
             image_path = ROOT / group["space_group"]["image"]
             self.assertTrue(image_path.is_file(), group["id"])
@@ -618,7 +805,24 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
                 self.assertEqual(image.size, (correspondence.IMAGE_WIDTH, correspondence.IMAGE_HEIGHT))
                 self.assertEqual(image.mode, "RGB", group["id"])
                 self.assertIsNotNone(image.getbbox(), group["id"])
-            self.assertEqual(image_path.read_bytes()[12:16], b"VP8L", group["id"])
+                rendered_colours = {
+                    colour
+                    for _, colour in image.getcolors(
+                        maxcolors=correspondence.IMAGE_WIDTH
+                        * correspondence.IMAGE_HEIGHT
+                    )
+                }
+                self.assertTrue(
+                    {
+                        correspondence._rgb(correspondence.PALETTE[index])
+                        for index in range(group["clock_order"])
+                    }.issubset(rendered_colours),
+                    group["id"],
+                )
+            rendered = image_path.read_bytes()
+            rendered_assets.append(rendered)
+            self.assertEqual(rendered[12:16], b"VP8L", group["id"])
+        self.assertEqual(len(set(rendered_assets)), 68)
 
     def test_generator_check_mode_passes(self) -> None:
         result = subprocess.run(
