@@ -4168,12 +4168,12 @@ def _extra_links_html(record: dict[str, Any], space_group: dict[str, Any]) -> st
         )
     items_html = "\n                  ".join(items)
     return f"""
-              <section class="extra-links" data-extra-links="{group_id}" aria-labelledby="{group_id}-extra-links-title">
-                <h4 id="{group_id}-extra-links-title">Extra links</h4>
+              <details class="extra-links" data-extra-links="{group_id}">
+                <summary id="{group_id}-extra-links-title">Extra links</summary>
                 <ul class="extra-links-list">
                   {items_html}
                 </ul>
-              </section>"""
+              </details>"""
 
 
 def _short_signature_heading_html(record: dict[str, Any]) -> tuple[str, str]:
