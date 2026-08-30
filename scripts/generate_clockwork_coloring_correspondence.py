@@ -125,7 +125,7 @@ PALETTE = (
 
 # The canonical affine presentations use the coordinates in
 # ``wallpaper_affine_generators.py``.  Static plates use a record-specific
-# colour-fixing lattice instead.  For every nontrivial plate this audited map
+# colour-fixing lattice instead.  For every plate this audited map
 # sends a canonical point x to render-lattice coordinates q = Lx + d.  Keeping
 # the signed conjugacy explicit is important: an order-only search can silently
 # exchange the two directed rotations and consequently choose the complementary
@@ -174,6 +174,29 @@ _add_plate_conjugacy("g233", [[-1, -_R3], [-1, _R3]])
 _add_plate_conjugacy("g234 g235", [[-2 / 3, 0], [-1 / 3, _R3]])
 _add_plate_conjugacy("g244 g245 g246 g247 g248", [[-1, _R3], [-1, -_R3]])
 _add_plate_conjugacy("g269 g270 g271", [[-1, -_R3], [-1, _R3]])
+
+# Most order-one rows use the same signed coordinates as a nontrivial row in
+# their wallpaper family.  The p1 row uses the identity primitive-cell map;
+# g10 sends the pm translation to the (1/2, 1/2) coset, while g11 uses the
+# rectangular pg cell whose two glide axes differ by its second primitive
+# translation.
+_add_plate_conjugacy("g1", [[1, 0], [0, 1]])
+_add_plate_conjugacy("g5", [[1, -1], [0, -1]])
+_add_plate_conjugacy("g8", [[-1, -1 / 2], [-1, 1 / 2]])
+_add_plate_conjugacy("g10", [[1 / 2, 1 / 2], [1 / 2, -1 / 2]])
+_add_plate_conjugacy("g11", [[1 / 2, 1], [1 / 2, -1]])
+_add_plate_conjugacy("g54", [[1, 0], [0, 1]])
+_add_plate_conjugacy("g56", [[1, 0], [0, -1]])
+_add_plate_conjugacy("g58", [[0, 1], [-1, 0]], (-1 / 4, 1 / 4))
+_add_plate_conjugacy("g68", [[1, 0], [0, 1]])
+_add_plate_conjugacy("g94", [[0, -1], [-1, 0]])
+_add_plate_conjugacy("g128", [[-1, 0], [0, -1]])
+_add_plate_conjugacy("g132", [[-1, -1], [1, -1]])
+_add_plate_conjugacy("g224", [[-1, _R3], [-1, -_R3]])
+_add_plate_conjugacy("g230", [[-_R3, -1], [_R3, -1]])
+_add_plate_conjugacy("g232", [[-1, -_R3], [-1, _R3]])
+_add_plate_conjugacy("g243", [[-1, _R3], [-1, -_R3]])
+_add_plate_conjugacy("g268", [[-1, -_R3], [-1, _R3]])
 
 BASE_ORDER = (
     "p1", "p2", "pm", "pg", "cm", "pmm", "pmg", "pgg", "cmm",
@@ -1803,23 +1826,16 @@ def chaim_presentation(
             f"{signature_orders} != {action_orders}"
         )
 
-    affine_by_name = {
-        row["generator"]: row
-        for row in affine_generators_for(parent)["generators"]
-    }
     aligned_by_name = {
         row["generator"]: row
         for row in _canonical_generator_alignment(group_id, parent, render)
-    } if colours > 1 else {}
+    }
     clock_cycle = tuple((index + 1) % colours for index in range(colours))
     rendered_actions = []
     for action in chaim_actions:
-        affine = affine_by_name[action["generator"]]
-        alignment = aligned_by_name.get(action["generator"])
-        visualization = (
-            alignment["visualization"] if alignment else affine["visualization"]
-        )
-        time_shift = alignment["phase"] if alignment else Fraction(0)
+        alignment = aligned_by_name[action["generator"]]
+        visualization = alignment["visualization"]
+        time_shift = alignment["phase"]
         exponent = time_shift * colours
         if exponent.denominator != 1:
             raise ValueError(f"nonintegral clock power in {group_id}")
@@ -1848,12 +1864,11 @@ def chaim_presentation(
             "source_cycle_notation": _cycle_notation(action["permutation_code"]),
             "marker": marker,
         }
-        if alignment:
-            rendered |= {
-                "plate_source_index": alignment["source_index"],
-                "plate_lattice_shift": list(alignment["lattice_shift"]),
-                "plate_visualization": alignment["visualization"],
-            }
+        rendered |= {
+            "plate_source_index": alignment["source_index"],
+            "plate_lattice_shift": list(alignment["lattice_shift"]),
+            "plate_visualization": alignment["visualization"],
+        }
         rendered_actions.append(rendered)
 
     if len(permutation_group(rendered_actions)) != colours:
@@ -2361,11 +2376,9 @@ def validate_payload(payload: dict[str, Any]) -> None:
     counts = Counter(group["clock_order"] for group in groups)
     if {n: counts.get(n, 0) for n in range(1, 7)} != EXPECTED_ORDER_COUNTS:
         raise ValueError(f"unexpected clock-order distribution: {counts}")
-    nontrivial_ids = {
-        group["id"] for group in groups if group["clock_order"] > 1
-    }
-    if set(CANONICAL_TO_RENDER_CONJUGACY_BY_ID) != nontrivial_ids:
-        raise ValueError("canonical plate conjugacies must cover the 51 displayed groups")
+    group_ids = {group["id"] for group in groups}
+    if set(CANONICAL_TO_RENDER_CONJUGACY_BY_ID) != group_ids:
+        raise ValueError("canonical plate conjugacies must cover all 68 groups")
 
     audit_counts = Counter(group["book_audit"]["status"] for group in groups)
     if dict(audit_counts) != EXPECTED_BOOK_AUDIT_COUNTS:
@@ -3025,7 +3038,7 @@ def _rotation_symbol_body_html(order: int, screw_step: int) -> str:
     return core + arms
 
 
-# The four named planar glides require conventional-setting information that
+# The named planar glides require conventional-setting information that
 # cannot be inferred from the plotted 2D glide vector alone.  The classification
 # records the chosen lifted operation in the constructed polar coordinates,
 # rather than collapsing centring-related representatives into one conventional
@@ -3034,7 +3047,11 @@ def _rotation_symbol_body_html(order: int, screw_step: int) -> str:
 _PLANE_LIFT_OVERRIDE_BY_GENERATOR: dict[
     tuple[str, str], tuple[str, Fraction]
 ] = {
+    ("g8", "Z"): ("axial", Fraction(0)),
     ("g9", "Z"): ("n", Fraction(1, 2)),
+    ("g11", "Y"): ("axial", Fraction(0)),
+    ("g11", "Z"): ("axial", Fraction(0)),
+    ("g58", "Z"): ("axial", Fraction(0)),
     ("g59", "Z"): ("n", Fraction(1, 2)),
     ("g63", "Z"): ("axial", Fraction(0)),
     ("g75", "Z"): ("d", Fraction(1, 4)),
@@ -3264,9 +3281,62 @@ def _diagram_plane_symbol_html(plane_symbol: str) -> str:
     )
 
 
+def _translation_arrow_path(
+    start: tuple[float, float],
+    end: tuple[float, float],
+) -> str:
+    """Return a clean open arrow for one primitive in-plane translation."""
+
+    dx = end[0] - start[0]
+    dy = end[1] - start[1]
+    length = math.hypot(dx, dy)
+    if length <= 1e-9:
+        raise ValueError("translation generator has a zero display vector")
+    direction = (dx / length, dy / length)
+    normal = (-direction[1], direction[0])
+    head_length = min(11.0, length * 0.22)
+    head_width = min(5.5, length * 0.11)
+    base = (
+        end[0] - head_length * direction[0],
+        end[1] - head_length * direction[1],
+    )
+    wings = (
+        (base[0] + head_width * normal[0], base[1] + head_width * normal[1]),
+        (base[0] - head_width * normal[0], base[1] - head_width * normal[1]),
+    )
+    return (
+        f'M {_svg_number(start[0])} {_svg_number(start[1])} '
+        f'L {_svg_number(end[0])} {_svg_number(end[1])} '
+        f'M {_svg_number(wings[0][0])} {_svg_number(wings[0][1])} '
+        f'L {_svg_number(end[0])} {_svg_number(end[1])} '
+        f'L {_svg_number(wings[1][0])} {_svg_number(wings[1][1])}'
+    )
+
+
+def _diagram_translation_symbol_html() -> str:
+    """Render the primitive-translation arrow used on the order-one plates."""
+
+    path = _translation_arrow_path((8.0, 23.0), (60.0, 9.0))
+    return (
+        '<svg class="diagram-symbol-icon diagram-symbol-icon--translation" '
+        'data-legend-icon="translation" viewBox="0 0 68 32" '
+        'aria-hidden="true" focusable="false">'
+        f'<path class="diagram-symbol-translation" d="{path}"></path>'
+        '</svg>'
+    )
+
+
 def _diagram_symbol_legend_html() -> str:
     """Build the scan-friendly, one-symbol-per-row crystallographic key."""
 
+    translation_rows = (
+        (
+            "translation",
+            _diagram_translation_symbol_html(),
+            "Primitive translation",
+            "Open arrow; its direction is the named in-plane translation X, Y, or α.",
+        ),
+    )
     rotation_rows = (
         (
             "rotation-2-0",
@@ -3321,6 +3391,12 @@ def _diagram_symbol_legend_html() -> str:
             _diagram_rotation_symbol_html(4, 3),
             '<span role="img" aria-label="four-three screw axis">4<sub>3</sub> screw axis</span>',
             "Opposite four-arm diamond; positive quarter-turn with a +3/4-period rise.",
+        ),
+        (
+            "rotation-6-0",
+            _diagram_rotation_symbol_html(6, 0),
+            "6-fold rotation axis",
+            "Filled hexagon; one-sixth turn with no clock-axis rise.",
         ),
         (
             "rotation-6-1",
@@ -3399,6 +3475,12 @@ def _diagram_symbol_legend_html() -> str:
 
     return (
         '<section class="diagram-symbol-group" '
+        'aria-labelledby="diagram-translation-symbols-title">'
+        '<h3 id="diagram-translation-symbols-title">'
+        'Translations in the projection plane</h3>'
+        '<ul class="diagram-symbol-list" role="list">'
+        f'{items_html(translation_rows)}</ul></section>'
+        '<section class="diagram-symbol-group" '
         'aria-labelledby="diagram-rotation-symbols-title">'
         '<h3 id="diagram-rotation-symbols-title">'
         'Rotation and screw axes (along the clock axis)</h3>'
@@ -3429,7 +3511,7 @@ def _diagram_symbol_teaser_html() -> str:
         '</div>'
         '<div class="diagram-symbol-teaser-copy">'
         '<h2 id="diagram-symbol-teaser-title">Diagram symbols</h2>'
-        '<p>Rotation, screw-axis, mirror, and glide marks on the colouring '
+        '<p>Translation, rotation, screw-axis, mirror, and glide marks on the colouring '
         'plates follow crystallographic projection notation.</p>'
         '<button class="diagram-symbol-open" type="button" '
         'data-diagram-symbol-open aria-haspopup="dialog" '
@@ -3452,7 +3534,7 @@ def _diagram_symbol_dialog_html() -> str:
           <button class="diagram-symbol-close" type="button" data-diagram-symbol-close aria-label="Close visual index">×</button>
         </header>
         <div class="diagram-symbol-dialog-scroll">
-          <p class="diagram-symbol-dialog-intro">Projected along the clock axis, these are the actual symbols used on the static 2D diagrams. The filled core shows the 2-, 3-, 4-, or 6-fold spatial order. For a forward skip τ, the screw subscript is <i>m</i> ≡ <i>n</i>τ (mod <i>n</i>) for a positive 1/<i>n</i>-turn and <i>m</i> ≡ −<i>n</i>τ (mod <i>n</i>) for the opposite turn, with 0 ≤ <i>m</i> &lt; <i>n</i>. Mirrored blades record spatial turn sense—not backward time.</p>
+          <p class="diagram-symbol-dialog-intro">Projected along the clock axis, these are the actual symbols used on the static 2D diagrams. Open arrows mark primitive translations in the picture; the crystallographic filled core shows the 2-, 3-, 4-, or 6-fold spatial order. For a forward skip τ, the screw subscript is <i>m</i> ≡ <i>n</i>τ (mod <i>n</i>) for a positive 1/<i>n</i>-turn and <i>m</i> ≡ −<i>n</i>τ (mod <i>n</i>) for the opposite turn, with 0 ≤ <i>m</i> &lt; <i>n</i>. Mirrored blades record spatial turn sense—not backward time.</p>
           {_diagram_symbol_legend_html()}
           <p class="diagram-symbol-note">The burgundy α, β, γ, … or P, Q, … beside a diagram symbol identifies its Generator row. The Color and Time columns state the same forward clock action directly.</p>
           <p class="diagram-symbol-sources">Notation: <a href="{IUCR_DIAGRAM_SYMBOLS_URL}" target="_blank" rel="noopener"><cite>International Tables for Crystallography</cite> projection symbols</a> · <a href="{UCL_P31C_DIAGRAM_URL}" target="_blank" rel="noopener">UCL P 3 1 c example</a>.</p>
@@ -3477,7 +3559,45 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
         symbol_key = kind
         classes = f"plate-generator plate-generator--{kind}"
         phase_attribute = escape(str(generator["phase"]))
-        if kind == "rotation":
+        if kind == "translation":
+            vector = generator["visualization"]["vector"]
+            screen_vector = (scale * vector[0], -scale * vector[1])
+            vector_length = math.hypot(*screen_vector)
+            if vector_length <= 1e-9:
+                raise ValueError(
+                    f"plate translation has zero length in {record['id']}: {name}"
+                )
+            maximum_length = 112.0
+            if vector_length > maximum_length:
+                screen_vector = (
+                    screen_vector[0] * maximum_length / vector_length,
+                    screen_vector[1] * maximum_length / vector_length,
+                )
+                vector_length = maximum_length
+            start = (58.0, IMAGE_HEIGHT - 38.0)
+            end = (start[0] + screen_vector[0], start[1] + screen_vector[1])
+            arrow_path = _translation_arrow_path(start, end)
+            direction = (
+                screen_vector[0] / vector_length,
+                screen_vector[1] / vector_length,
+            )
+            label_x = max(15, min(IMAGE_WIDTH - 15, end[0] + 14 * direction[0]))
+            label_y = max(15, min(IMAGE_HEIGHT - 15, end[1] + 14 * direction[1]))
+            symbol_key = "translation"
+            lift_kind = "translation-vector"
+            classes += " plate-generator--translation-vector"
+            order_attribute = (
+                ' data-translation-vector="'
+                f'{_svg_number(vector[0])},{_svg_number(vector[1])}"'
+            )
+            drawing = (
+                f'<path class="plate-generator-translation-halo" '
+                f'd="{arrow_path}"></path>'
+                f'<path class="plate-generator-translation" '
+                f'd="{arrow_path}"></path>'
+                f'{_plate_generator_label_html(name, label_x, label_y)}'
+            )
+        elif kind == "rotation":
             order = marker["order"]
             angle_degrees = generator["visualization"]["angle_degrees"]
             screw_step = _rotation_screw_step(
@@ -3508,7 +3628,7 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
                 f'{_plate_generator_label_html(name, label_dx, label_dy)}'
                 '</g>'
             )
-        else:
+        elif kind in {"mirror", "glide"}:
             plane_symbol = _polar_plane_symbol(record["id"], generator)
             symbol_key = f"plane-{plane_symbol}"
             lift_kind = _PLANE_LIFT_KIND[plane_symbol]
@@ -3554,6 +3674,10 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
             label_x = max(15, min(IMAGE_WIDTH - 15, label_x))
             label_y = max(15, min(IMAGE_HEIGHT - 15, label_y))
             drawing += _plate_generator_label_html(name, label_x, label_y)
+        else:
+            raise ValueError(
+                f"unsupported plate generator kind in {record['id']}: {kind}"
+            )
         markers.append(
             f'<g class="{classes}" data-generator="{escape(name)}" '
             f'data-generator-kind="{kind}" data-generator-symbol="{symbol_key}"'
