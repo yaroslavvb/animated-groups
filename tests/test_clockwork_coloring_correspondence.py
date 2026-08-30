@@ -135,7 +135,11 @@ class CorrespondenceParser(HTMLParser):
         self.ucl_links: list[str] = []
         self.international_tables_references: list[dict[str, str | None]] = []
         self.ucl_references: list[dict[str, str | None]] = []
-        self.diagram_symbol_legends = 0
+        self.diagram_symbol_teasers = 0
+        self.diagram_symbol_dialogs = 0
+        self.diagram_symbol_dialog_attributes: list[dict[str, str | None]] = []
+        self.diagram_symbol_open_buttons: list[dict[str, str | None]] = []
+        self.diagram_symbol_close_buttons: list[dict[str, str | None]] = []
         self.diagram_legend_symbol_rows: list[tuple[str, str]] = []
         self.diagram_legend_svgs: list[
             tuple[int | None, dict[str, str | None]]
@@ -151,9 +155,16 @@ class CorrespondenceParser(HTMLParser):
         classes = set((attributes.get("class") or "").split())
         if tag == "section" and "correspondence-entry" in classes:
             self.section_ids.append(attributes.get("id", ""))
-        if tag == "aside" and "diagram-symbol-legend" in classes:
-            self.diagram_symbol_legends += 1
+        if tag == "aside" and "diagram-symbol-teaser" in classes:
+            self.diagram_symbol_teasers += 1
+        if tag == "dialog" and "diagram-symbol-dialog" in classes:
+            self.diagram_symbol_dialogs += 1
+            self.diagram_symbol_dialog_attributes.append(attributes)
             self._inside_diagram_symbol_legend = True
+        if tag == "button" and "data-diagram-symbol-open" in attributes:
+            self.diagram_symbol_open_buttons.append(attributes)
+        if tag == "button" and "data-diagram-symbol-close" in attributes:
+            self.diagram_symbol_close_buttons.append(attributes)
         if self._inside_diagram_symbol_legend and attributes.get(
             "data-legend-symbol"
         ):
@@ -351,7 +362,7 @@ class CorrespondenceParser(HTMLParser):
         if tag == self._current_legend_row_tag:
             self._current_legend_row_tag = ""
             self._current_legend_row_index = None
-        if tag == "aside" and self._inside_diagram_symbol_legend:
+        if tag == "dialog" and self._inside_diagram_symbol_legend:
             self._inside_diagram_symbol_legend = False
 
 
@@ -1400,13 +1411,51 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 group["id"],
             )
 
-    def test_top_legend_is_a_visual_crystallographic_index(self) -> None:
-        self.assertEqual(self.parser.diagram_symbol_legends, 1)
-        start = self.page.index('<aside class="diagram-symbol-legend"')
-        end = self.page.index("</aside>", start)
+    def test_top_teaser_opens_complete_visual_crystallographic_index(self) -> None:
+        self.assertEqual(self.parser.diagram_symbol_teasers, 1)
+        self.assertEqual(self.parser.diagram_symbol_dialogs, 1)
+        teaser_start = self.page.index('<aside class="diagram-symbol-teaser"')
+        teaser_end = self.page.index("</aside>", teaser_start)
+        teaser = self.page[teaser_start:teaser_end]
+        start = self.page.index('<dialog class="diagram-symbol-dialog"')
+        end = self.page.index("</dialog>", start)
         first_family = self.page.index('<section class="wallpaper-family"')
         legend = self.page[start:end]
+        self.assertLess(teaser_start, first_family)
         self.assertLess(start, first_family)
+        self.assertEqual(teaser.count("<svg"), 2)
+        self.assertIn('data-legend-icon="rotation-3-1"', teaser)
+        self.assertIn('data-legend-icon="plane-d"', teaser)
+        self.assertIn("Open visual index", teaser)
+        self.assertIn("Rotation, screw-axis, mirror, and glide marks", teaser)
+
+        self.assertEqual(
+            self.parser.diagram_symbol_dialog_attributes,
+            [
+                {
+                    "class": "diagram-symbol-dialog",
+                    "id": "diagram-symbol-dialog",
+                    "role": "dialog",
+                    "aria-modal": "true",
+                    "aria-labelledby": "diagram-symbol-dialog-title",
+                }
+            ],
+        )
+        self.assertNotIn("open", self.parser.diagram_symbol_dialog_attributes[0])
+        self.assertEqual(len(self.parser.diagram_symbol_open_buttons), 1)
+        self.assertEqual(
+            self.parser.diagram_symbol_open_buttons[0].get("aria-haspopup"),
+            "dialog",
+        )
+        self.assertEqual(
+            self.parser.diagram_symbol_open_buttons[0].get("aria-controls"),
+            "diagram-symbol-dialog",
+        )
+        self.assertEqual(len(self.parser.diagram_symbol_close_buttons), 1)
+        self.assertEqual(
+            self.parser.diagram_symbol_close_buttons[0].get("aria-label"),
+            "Close visual index",
+        )
         expected_symbols = [
             "rotation-2-0",
             "rotation-2-1",
@@ -1484,6 +1533,25 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             "quarter-diagonal d-glide",
         ):
             self.assertIn(phrase, copy)
+
+        script = (ROOT / "clockwork-coloring-correspondence.js").read_text(
+            encoding="utf-8"
+        )
+        controller_start = script.index("function initializeDiagramSymbolDialog()")
+        controller_end = script.index("function initializeBookExcerptLinks()")
+        controller = script[controller_start:controller_end]
+        self.assertIn("dialog.showModal()", controller)
+        self.assertIn("dialog.close()", controller)
+        self.assertIn("event.target === dialog", controller)
+        self.assertIn('event.key === "Escape"', controller)
+        self.assertIn("opener.focus()", controller)
+        self.assertIn("initializeDiagramSymbolDialog();", script)
+
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".diagram-symbol-dialog::backdrop", css)
+        self.assertIn(".diagram-symbol-dialog:not([open])", css)
 
     def test_visible_copy_is_orbifold_first_not_crystallographic(self) -> None:
         forbidden_terms = (
@@ -2053,7 +2121,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("viewerWindow.location.href = link.href", script)
         self.assertIn('event.data?.type === "clockwork:book-excerpt-ready"', script)
         self.assertIn("viewerWindow.focus()", script)
-        self.assertNotIn("<dialog", self.page)
+        self.assertNotIn('class="book-excerpt-dialog"', self.page)
         self.assertNotIn("view annotated excerpt in the excerpt tab", self.page)
         self.assertEqual(
             self.page.count("The Symmetries of Things · p. "),

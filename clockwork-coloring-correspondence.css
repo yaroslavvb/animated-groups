@@ -30,26 +30,181 @@ nav a[aria-current="page"] {
   font-size: 0.78rem;
 }
 
-.diagram-symbol-legend {
+.diagram-symbol-teaser {
+  display: flex;
+  align-items: center;
   max-width: 760px;
+  gap: 0.9rem;
   margin: 0 0 0.8rem;
-  padding: 0.72rem 0.82rem;
+  padding: 0.64rem 0.78rem;
   border: 1px solid var(--line);
   border-left: 3px solid var(--generator-ink);
   background: var(--surface);
 }
 
-.diagram-symbol-legend h2 {
-  margin: 0 0 0.3rem;
+.diagram-symbol-teaser-icons {
+  display: flex;
+  flex: none;
+  gap: 0.3rem;
+}
+
+.diagram-symbol-teaser-icon {
+  display: grid;
+  justify-items: center;
+  width: 4.35rem;
+  color: var(--generator-ink);
+}
+
+.diagram-symbol-teaser-icon .diagram-symbol-icon {
+  width: 3.8rem;
+}
+
+.diagram-symbol-teaser-icon small {
+  color: var(--muted);
+  font-size: 0.58rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.diagram-symbol-teaser-copy {
+  min-width: 0;
+}
+
+.diagram-symbol-teaser h2 {
+  margin: 0 0 0.12rem;
   color: var(--text);
-  font-size: 0.92rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
-.diagram-symbol-legend p {
+.diagram-symbol-teaser p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.diagram-symbol-open {
+  margin-top: 0.38rem;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px dotted currentColor;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 680;
+  cursor: pointer;
+}
+
+.diagram-symbol-open:hover,
+.diagram-symbol-open:focus-visible {
+  border-bottom-style: solid;
+}
+
+.diagram-symbol-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: min(52rem, calc(100vw - 2rem));
+  max-width: none;
+  max-height: min(90dvh, 60rem);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #706d65;
+  border-radius: 7px;
+  background: #faf8f2;
+  color: var(--text);
+  box-shadow: 0 22px 70px rgb(20 24 22 / 0.34);
+}
+
+.diagram-symbol-dialog:not([open]) {
+  display: none;
+}
+
+.diagram-symbol-dialog.is-fallback-open {
+  display: block;
+  box-shadow:
+    0 0 0 100vmax rgb(19 25 23 / 0.72),
+    0 22px 70px rgb(20 24 22 / 0.34);
+}
+
+.diagram-symbol-dialog::backdrop {
+  background: rgb(19 25 23 / 0.72);
+  backdrop-filter: blur(2px);
+}
+
+.diagram-symbol-dialog-open {
+  overflow: hidden;
+}
+
+.diagram-symbol-dialog-panel {
+  display: flex;
+  max-height: min(90dvh, 60rem);
+  margin: 0;
+  flex-direction: column;
+}
+
+.diagram-symbol-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--background);
+}
+
+.diagram-symbol-dialog-header .overline {
+  margin: 0 0 0.16rem;
+  color: var(--generator-ink);
+  font-size: 0.62rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.diagram-symbol-dialog-header h2 {
+  margin: 0;
+  font-size: clamp(1rem, 2.6vw, 1.35rem);
+  line-height: 1.2;
+}
+
+.diagram-symbol-close {
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.diagram-symbol-close:hover,
+.diagram-symbol-close:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.diagram-symbol-dialog-scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  padding: 0.9rem 1.15rem 1.1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.diagram-symbol-dialog-scroll > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 
@@ -121,7 +276,7 @@ nav a[aria-current="page"] {
   margin-top: 0.7rem !important;
 }
 
-.diagram-symbol-legend .diagram-symbol-sources {
+.diagram-symbol-dialog .diagram-symbol-sources {
   margin-top: 0.42rem;
   font-size: 0.78rem;
 }
@@ -1523,6 +1678,24 @@ a.short-signature-link[data-book-excerpt]::after {
     grid-template-columns: 1fr;
   }
 
+  .diagram-symbol-teaser {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .diagram-symbol-dialog {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .diagram-symbol-dialog-panel {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
   .diagram-symbol-explanation {
     display: block;
   }
@@ -1629,6 +1802,7 @@ a.short-signature-link[data-book-excerpt]::after {
   .directory,
   .clockwork-film,
   .book-excerpt-dialog,
+  .diagram-symbol-dialog,
   footer {
     display: none;
   }
