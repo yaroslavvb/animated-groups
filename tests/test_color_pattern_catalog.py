@@ -7,24 +7,24 @@ from math import hypot, isfinite
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 
-from PIL import Image
+from PIL import Image, ImageChops, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import generate_color_pattern_catalog as catalog  # noqa: E402
+import generate_color_pattern_book_excerpts as excerpt_generator  # noqa: E402
 from chaim_short_signatures import (  # noqa: E402
     THREE_FOLD_SHORT_SIGNATURE_BY_TYPE,
     TWO_FOLD_SHORT_SIGNATURE_BY_TYPE,
 )
 from color_pattern_book_excerpt_specs import (  # noqa: E402
     GS_PAGE_SLOTS,
-    SOT_THREE_ROW,
-    SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X,
-    SOT_TWO_ROW,
     build_excerpt_specs,
 )
 from tos_book_excerpt_specs import BOOK_EXCERPTS  # noqa: E402
@@ -806,33 +806,75 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertTrue(all(path.stat().st_size > 1_000 for path in actual_paths))
 
         groups = self.payload["colour_groups"]
-        self.assertEqual(len(SOT_TWO_ROW), 46)
-        self.assertEqual(len(SOT_THREE_ROW), 23)
-        self.assertEqual(SOT_TWO_ROW["××/◦"], (141, 309.5, 18))
-        self.assertEqual(
-            specs["output/color-pattern-excerpts/tos-cg-pg-2-1.webp"]["highlight"],
-            (225.0, 309.5, 112.0, 18),
-        )
-        representative_groups = {
-            group["chaim_notation"]: group
-            for group in groups
-            if group["chaim_notation"] in SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X
+        sot_specs = {
+            path: spec for path, spec in specs.items() if spec["kind"] == "sot"
         }
+        detected = {
+            path: spec for path, spec in sot_specs.items() if "highlight_probe" in spec
+        }
+        blank = {
+            path: spec
+            for path, spec in sot_specs.items()
+            if spec.get("blank_short_signature") is True
+        }
+        self.assertEqual(len(detected), 68)
         self.assertEqual(
-            set(representative_groups),
-            set(SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X),
+            blank.keys(),
+            {"output/color-pattern-excerpts/tos-cg-p6-3-2.webp"},
         )
-        for notation, (highlight_x, highlight_width) in (
-            SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X.items()
-        ):
-            group = representative_groups[notation]
-            page, y, height = SOT_TWO_ROW[notation]
-            self.assertEqual(
-                specs[group["book_excerpt"]["image"]]["highlight"],
-                (highlight_x, y, highlight_width, height),
-            )
-            number_column_x = 401.4 if page == 140 else 284.8
-            self.assertLess(highlight_x + highlight_width, number_column_x)
+        self.assertEqual(excerpt_generator.INK_PADDING_POINTS, 4.5)
+        for path, spec in detected.items():
+            self.assertNotIn("highlight", spec, path)
+            self.assertNotIn("blank_short_signature", spec, path)
+            probe_x, probe_y, probe_width, probe_height = spec["highlight_probe"]
+            self.assertGreater(probe_width, 0, path)
+            self.assertGreater(probe_height, 0, path)
+            self.assertGreaterEqual(probe_x, 0, path)
+            self.assertGreaterEqual(probe_y, 0, path)
+            self.assertLessEqual(probe_x + probe_width, 612, path)
+            self.assertLessEqual(probe_y + probe_height, 792, path)
+        blank_spec = next(iter(blank.values()))
+        self.assertNotIn("highlight_probe", blank_spec)
+        self.assertIn("highlight", blank_spec)
+        regression_probes = {
+            # Reported example: *²3²3²3 must hug the notation, not its cell.
+            "output/color-pattern-excerpts/tos-cg-p3m1-2-1.webp": (
+                330.34,
+                337.16,
+                32.28,
+                12.23,
+            ),
+            # g129: select *¹4²4¹2, not its *442/*2222 type cell.
+            "output/color-pattern-excerpts/tos-cg-p4m-2-4.webp": (
+                330.34,
+                248.24,
+                32.28,
+                12.35,
+            ),
+            # The final p. 141 block formerly reached the preceding row or
+            # the Table 11.1 continuation caption.
+            "output/color-pattern-excerpts/tos-cg-pg-2-2.webp": (
+                217.66,
+                303.80,
+                20.61,
+                12.35,
+            ),
+            "output/color-pattern-excerpts/tos-cg-pg-2-1.webp": (
+                230.26,
+                314.84,
+                22.05,
+                12.23,
+            ),
+            "output/color-pattern-excerpts/tos-cg-p1-2-1.webp": (
+                215.14,
+                326.12,
+                13.29,
+                12.35,
+            ),
+        }
+        for path, probe in regression_probes.items():
+            self.assertEqual(sot_specs[path]["highlight_probe"], probe, path)
+        self.assertEqual(blank_spec["highlight"], (337.0, 199.5, 76.0, 13.0))
 
         self.assertEqual(
             BOOK_EXCERPTS["p164::632³/2222-exact"]["highlight"],
@@ -870,95 +912,259 @@ class ColorPatternCatalogTests(unittest.TestCase):
                 self.assertLessEqual(crop_x + crop_width, 545)
                 self.assertLessEqual(crop_y + crop_height, 646)
 
-    def test_every_sot_outline_is_baked_into_the_short_form_column(self) -> None:
+    def test_every_sot_outline_is_baked_and_tight_around_its_selected_target(self) -> None:
         specs = {
             path: spec
             for path, spec in build_excerpt_specs(self.payload).items()
             if spec["kind"] == "sot"
         }
         self.assertEqual(len(specs), 69)
+        blank_path = "output/color-pattern-excerpts/tos-cg-p6-3-2.webp"
+        source_pdf = ROOT / "Conway J., Goodman-Strauss C. (2008) The Symmetries of Things.pdf"
+        self.assertTrue(source_pdf.is_file())
 
-        # These bounds stop before the printed Colour Type column on each
-        # source page. A type-cell rectangle, including the former g129
-        # p140::*442/*2222 target, cannot satisfy them.
-        short_form_column_bounds = {
-            140: (295.0, 445.0),
-            141: (200.0, 338.0),
-            156: (325.0, 421.0),
-        }
+        def outline_mask(rgb: Image.Image) -> Image.Image:
+            red, green, blue = rgb.split()
+            red_enough = red.point(lambda value: 255 if value > 130 else 0)
+            red_over_green = ImageChops.subtract(red, green).point(
+                lambda value: 255 if value > 65 else 0
+            )
+            red_over_blue = ImageChops.subtract(red, blue).point(
+                lambda value: 255 if value > 80 else 0
+            )
+            return ImageChops.darker(
+                red_enough,
+                ImageChops.darker(red_over_green, red_over_blue),
+            )
 
-        def framed_highlight_box(spec: dict[str, object]) -> tuple[int, int, int, int]:
-            scale = 3  # 216 DPI source render / 72 PDF points per inch.
+        def filtered_probe_ink_box(
+            page: Image.Image,
+            probe: tuple[float, float, float, float],
+        ) -> tuple[int, int, int, int]:
+            probe_box = excerpt_generator._box(
+                probe,
+                page,
+                excerpt_generator.SOURCE_SIZE["sot"],
+            )
+            mask = page.crop(probe_box).convert("L").point(
+                lambda value: 255
+                if value < excerpt_generator.INK_THRESHOLD
+                else 0
+            )
+            width, height = mask.size
+            pixels = mask.load()
+            rule_cutoff = max(
+                1,
+                round(width * excerpt_generator.HORIZONTAL_RULE_DENSITY),
+            )
+            rule_rows = [
+                row
+                for row in range(height)
+                if sum(bool(pixels[column, row]) for column in range(width))
+                >= rule_cutoff
+            ]
+            if rule_rows:
+                draw = ImageDraw.Draw(mask)
+                for row in rule_rows:
+                    draw.line((0, row, width - 1, row), fill=0)
+            ink = mask.getbbox()
+            self.assertIsNotNone(ink)
+            assert ink is not None
+            return (
+                probe_box[0] + ink[0],
+                probe_box[1] + ink[1],
+                probe_box[0] + ink[2],
+                probe_box[1] + ink[3],
+            )
+
+        def framed_highlight_box(
+            pages: dict[int, Image.Image],
+            spec: dict[str, object],
+            highlight: tuple[int, int, int, int],
+        ) -> tuple[int, int, int, int]:
             panels = spec["table_panels"]
             assert isinstance(panels, tuple)
-            panel_widths = []
-            panel_heights = []
-            for panel in panels:
-                crop_x, crop_y, crop_width, crop_height = panel["crop"]
-                panel_widths.append(
-                    round((crop_x + crop_width) * scale) - round(crop_x * scale)
+            panel_boxes = [
+                excerpt_generator._box(
+                    panel["crop"],
+                    pages[panel["pdf_page"]],
+                    excerpt_generator.SOURCE_SIZE["sot"],
                 )
-                panel_heights.append(
-                    round((crop_y + crop_height) * scale) - round(crop_y * scale)
-                )
-
-            content_width = max(panel_widths)
-            highlight_x, highlight_y, highlight_width, highlight_height = spec[
-                "highlight"
+                for panel in panels
             ]
+            content_width = max(right - left for left, _top, right, _bottom in panel_boxes)
             y_offset = 0
-            for index, panel in enumerate(panels):
-                crop_x, crop_y, _crop_width, _crop_height = panel["crop"]
+            for panel, crop_box in zip(panels, panel_boxes):
+                panel_width = crop_box[2] - crop_box[0]
+                panel_height = crop_box[3] - crop_box[1]
                 if panel["pdf_page"] == spec["pdf_page"]:
-                    x_offset = (content_width - panel_widths[index]) // 2
-                    padding = 12
+                    x_offset = (content_width - panel_width) // 2
                     return (
-                        padding
-                        + x_offset
-                        + round(highlight_x * scale)
-                        - round(crop_x * scale),
-                        padding
-                        + y_offset
-                        + round(highlight_y * scale)
-                        - round(crop_y * scale),
-                        padding
-                        + x_offset
-                        + round((highlight_x + highlight_width) * scale)
-                        - round(crop_x * scale),
-                        padding
-                        + y_offset
-                        + round((highlight_y + highlight_height) * scale)
-                        - round(crop_y * scale),
+                        12 + x_offset + highlight[0] - crop_box[0],
+                        12 + y_offset + highlight[1] - crop_box[1],
+                        12 + x_offset + highlight[2] - crop_box[0],
+                        12 + y_offset + highlight[3] - crop_box[1],
                     )
-                y_offset += panel_heights[index] + 18
+                y_offset += panel_height + 18
             self.fail(f"highlight page missing from table panels: {spec}")
 
-        def is_outline_red(pixel: tuple[int, int, int]) -> bool:
-            red, green, blue = pixel
-            return red > 130 and red - green > 65 and red - blue > 80
+        with tempfile.TemporaryDirectory(prefix="sot-outline-test-") as raw:
+            pages = excerpt_generator._render_pages(
+                source_pdf,
+                {159, 160, 175},
+                Path(raw),
+                "sot",
+            )
+            for path, spec in specs.items():
+                with self.subTest(path=path):
+                    page = pages[spec["pdf_page"]]
+                    if path == blank_path:
+                        self.assertTrue(spec.get("blank_short_signature"), path)
+                        highlight = excerpt_generator._box(
+                            spec["highlight"],
+                            page,
+                            excerpt_generator.SOURCE_SIZE["sot"],
+                        )
+                    else:
+                        probe = spec["highlight_probe"]
+                        ink = filtered_probe_ink_box(page, probe)
+                        highlight = excerpt_generator._detected_table_ink_box(
+                            page,
+                            probe,
+                            excerpt_generator.SOURCE_SIZE["sot"],
+                        )
+                        pad_x = round(
+                            excerpt_generator.INK_PADDING_POINTS
+                            * page.width
+                            / excerpt_generator.SOURCE_SIZE["sot"][0]
+                        )
+                        pad_y = round(
+                            excerpt_generator.INK_PADDING_POINTS
+                            * page.height
+                            / excerpt_generator.SOURCE_SIZE["sot"][1]
+                        )
+                        self.assertEqual(
+                            highlight,
+                            (
+                                ink[0] - pad_x,
+                                ink[1] - pad_y,
+                                ink[2] + pad_x,
+                                ink[3] + pad_y,
+                            ),
+                            path,
+                        )
 
-        for path, spec in specs.items():
-            page = spec["printed_page"]
-            highlight_x, _highlight_y, highlight_width, _highlight_height = spec[
-                "highlight"
+                    expected = framed_highlight_box(pages, spec, highlight)
+                    with Image.open(ROOT / path) as image:
+                        outline = outline_mask(image.convert("RGB"))
+                    # Pillow's rounded rectangle includes its right and bottom
+                    # coordinates, while getbbox returns exclusive bounds.
+                    self.assertEqual(
+                        outline.getbbox(),
+                        (expected[0], expected[1], expected[2] + 1, expected[3] + 1),
+                        path,
+                    )
+
+    def test_sot_table_detector_has_fixed_padding_and_rejects_ambiguous_probes(self) -> None:
+        page = Image.new("RGB", (300, 300), "white")
+        draw = ImageDraw.Draw(page)
+        draw.rectangle((60, 45, 109, 64), fill="black")
+        source_size = (100.0, 100.0)
+        probe = (10.0, 10.0, 50.0, 20.0)
+
+        self.assertEqual(excerpt_generator.INK_PADDING_POINTS, 4.5)
+        self.assertEqual(
+            excerpt_generator._detected_table_ink_box(page, probe, source_size),
+            (46, 31, 124, 79),
+        )
+
+        ambiguous = page.copy()
+        ImageDraw.Draw(ambiguous).rectangle((60, 78, 109, 84), fill="black")
+        with self.assertRaisesRegex(ValueError, "ambiguous table highlight probe"):
+            excerpt_generator._detected_table_ink_box(
+                ambiguous,
+                probe,
+                source_size,
+            )
+
+        clipped = Image.new("RGB", (300, 300), "white")
+        ImageDraw.Draw(clipped).rectangle((30, 45, 60, 64), fill="black")
+        with self.assertRaisesRegex(ValueError, "clips notation ink at its edge"):
+            excerpt_generator._detected_table_ink_box(
+                clipped,
+                probe,
+                source_size,
+            )
+
+    def test_sot_only_excerpt_selection_does_not_require_or_render_gs(self) -> None:
+        rendered_sources: list[tuple[Path, set[int], str]] = []
+
+        def fake_render_pages(
+            source_pdf: Path,
+            pages: set[int],
+            _directory: Path,
+            prefix: str,
+        ) -> dict[int, Image.Image]:
+            rendered_sources.append((source_pdf, pages, prefix))
+            return {}
+
+        sot_pdf = Path("source-sot.pdf")
+        with (
+            patch.object(excerpt_generator, "build_payload", return_value=self.payload),
+            patch.object(excerpt_generator, "_render_pages", side_effect=fake_render_pages),
+            patch.object(excerpt_generator, "render_excerpt", return_value=b"excerpt"),
+        ):
+            assets = excerpt_generator.expected_assets(
+                sot_pdf,
+                None,
+                kind="sot",
+            )
+
+        self.assertEqual(len(assets), 69)
+        self.assertTrue(all(path.name.startswith("tos-") for path in assets))
+        self.assertEqual(
+            rendered_sources,
+            [(sot_pdf, {159, 160, 175}, "sot")],
+        )
+
+    def test_sot_only_write_preserves_gs_and_byte_identical_assets(self) -> None:
+        (ROOT / "tmp").mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix="sot-only-test-", dir=ROOT / "tmp") as raw:
+            temporary = Path(raw)
+            output = temporary / "output"
+            output.mkdir()
+            source_pdf = temporary / "sot.pdf"
+            source_pdf.write_bytes(b"pdf fixture")
+            unchanged = output / "tos-current.webp"
+            new = output / "tos-new.webp"
+            stale = output / "tos-stale.webp"
+            preserved = output / "gs-preserved.webp"
+            unchanged.write_bytes(b"same")
+            stale.write_bytes(b"stale")
+            preserved.write_bytes(b"gs")
+            unchanged_mtime = unchanged.stat().st_mtime_ns
+
+            expected = {unchanged: b"same", new: b"new"}
+            argv = [
+                "generate_color_pattern_book_excerpts.py",
+                "--kind",
+                "sot",
+                "--sot-pdf",
+                str(source_pdf),
             ]
-            column_left, column_right = short_form_column_bounds[page]
-            self.assertGreaterEqual(highlight_x, column_left, path)
-            self.assertLessEqual(highlight_x + highlight_width, column_right, path)
+            with (
+                patch.object(excerpt_generator, "OUTPUT_DIR", output),
+                patch.object(excerpt_generator, "expected_assets", return_value=expected) as generate,
+                patch.object(sys, "argv", argv),
+            ):
+                self.assertEqual(excerpt_generator.main(), 0)
 
-            with Image.open(ROOT / path) as image:
-                rgb = image.convert("RGB")
-                left, top, right, bottom = framed_highlight_box(spec)
-                edge_midpoints = (
-                    (left, (top + bottom) // 2),
-                    (right, (top + bottom) // 2),
-                    ((left + right) // 2, top),
-                    ((left + right) // 2, bottom),
-                )
-                self.assertTrue(
-                    all(is_outline_red(rgb.getpixel(point)) for point in edge_midpoints),
-                    f"{path} does not contain the configured short-form outline",
-                )
+            generate.assert_called_once_with(source_pdf.resolve(), None, kind="sot")
+            self.assertEqual(unchanged.read_bytes(), b"same")
+            self.assertEqual(unchanged.stat().st_mtime_ns, unchanged_mtime)
+            self.assertEqual(new.read_bytes(), b"new")
+            self.assertFalse(stale.exists())
+            self.assertEqual(preserved.read_bytes(), b"gs")
 
     def test_one_colour_pattern_links_are_honest_chapter_8_cross_references(self) -> None:
         one_colour = [

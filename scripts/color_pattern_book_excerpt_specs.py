@@ -79,28 +79,6 @@ SOT_TWO_ROW: dict[str, tuple[int, float, float]] = {
     "◦/◦": (141, 331.5, 26),
 }
 
-# Most Table 11.1 rows contain one short signature, so their outline can span
-# the complete short-form cell.  These rows instead print equivalent
-# alternatives (or an ``etc.`` family) and the atlas deliberately displays the
-# first one.  The tighter source-PDF x spans isolate that exact representative
-# and do not run into the ``Number`` column.
-SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X: dict[str, tuple[float, float]] = {
-    "2222/2222": (211.0, 40.5),
-    "*2222/*2222": (314.0, 45.0),
-    "*2222/**": (300.5, 45.0),
-    "*2222/2*22": (314.0, 45.0),
-    "*2222/22*": (314.0, 45.0),
-    "22*/22*": (314.5, 29.5),
-    "22*/22×": (314.5, 29.5),
-    "22×/××": (207.0, 32.0),
-    "2*22/*×": (310.3, 34.2),
-    "2*22/22*": (310.3, 34.2),
-    "442/442": (313.5, 33.0),
-    "*442/4*2": (309.5, 35.5),
-    "*442/*442": (309.5, 35.5),
-}
-
-
 # Table 12.1 row baselines.  The 632^3//333 short-signature cell is blank in
 # print; outlining the empty cell records that omission rather than inventing
 # a signature for the source.
@@ -140,6 +118,90 @@ SOT_PRINTED_TYPE_FOR_CANONICAL = {
     "2*22³//*×": "2*22³//**",
     "3*3³/*333": "3*3³/◦",
     "3*3³//◦": "3*3³//*333",
+}
+
+
+# Exact source-PDF search regions for the printed short signatures in Tables
+# 11.1 and 12.1.  These are deliberately probes, not final outlines: the
+# renderer tightens every ink probe to the rasterized dark glyphs and then
+# applies its single 4.5 pt highlight padding.  On rows with comma-separated
+# alternatives or an ``etc.`` family, the probe stops after the first printed
+# representative used by the catalog.  The one genuinely blank Table 12.1
+# cell is explicitly inset from its neighbouring rules instead of pretending
+# that adjacent line ink is a signature.
+SOT_SHORT_SIGNATURE_HIGHLIGHTS: dict[str, dict[str, Any]] = {
+    "*632/3*3": {"mode": "ink", "highlight_probes": ((331.06, 170.72, 30.96, 12.35),)},
+    "*632/*333": {"mode": "ink", "highlight_probes": ((331.78, 181.76, 29.52, 12.23),)},
+    "*632/632": {"mode": "ink", "highlight_probes": ((330.34, 192.68, 32.28, 12.23),)},
+    "632/333": {"mode": "ink", "highlight_probes": ((332.50, 203.96, 28.08, 12.35),)},
+    "*442/*442": {"mode": "ink", "highlight_probes": ((312.10, 226.28, 32.28, 12.35),)},
+    "*442/4*2": {"mode": "ink", "highlight_probes": ((312.10, 237.32, 32.28, 12.23),)},
+    "*442/*2222": {"mode": "ink", "highlight_probes": ((330.34, 248.24, 32.28, 12.35),)},
+    "*442/2*22": {"mode": "ink", "highlight_probes": ((330.34, 259.16, 32.28, 12.35),)},
+    "*442/442": {"mode": "ink", "highlight_probes": ((330.34, 270.20, 32.28, 12.23),)},
+    "4*2/442": {"mode": "ink", "highlight_probes": ((334.90, 281.48, 23.28, 12.35),)},
+    "4*2/2*22": {"mode": "ink", "highlight_probes": ((334.90, 292.52, 23.28, 12.23),)},
+    "4*2/22×": {"mode": "ink", "highlight_probes": ((334.90, 303.44, 23.28, 12.23),)},
+    "442/442": {"mode": "ink", "highlight_probes": ((316.30, 314.84, 28.08, 12.23),)},
+    "442/2222": {"mode": "ink", "highlight_probes": ((333.22, 325.76, 26.64, 12.23),)},
+    "*333/333": {"mode": "ink", "highlight_probes": ((330.34, 337.16, 32.28, 12.23),)},
+    "3*3/333": {"mode": "ink", "highlight_probes": ((334.90, 359.48, 23.28, 12.23),)},
+    "*2222/*2222": {"mode": "ink", "highlight_probes": ((316.66, 404.12, 41.40, 12.23),)},
+    "*2222/2*22": {"mode": "ink", "highlight_probes": ((316.66, 415.04, 41.40, 12.23),)},
+    "*2222/**": {"mode": "ink", "highlight_probes": ((303.10, 425.96, 41.28, 12.35),)},
+    "*2222/22*": {"mode": "ink", "highlight_probes": ((316.66, 437.00, 41.40, 12.23),)},
+    "*2222/2222": {"mode": "ink", "highlight_probes": ((325.78, 447.92, 41.40, 12.23),)},
+    "2*22/22*": {"mode": "ink", "highlight_probes": ((312.82, 459.20, 30.84, 12.35),)},
+    "2*22/2222": {"mode": "ink", "highlight_probes": ((330.34, 470.24, 32.28, 12.23),)},
+    "2*22/*2222": {"mode": "ink", "highlight_probes": ((331.06, 481.16, 30.96, 12.35),)},
+    "2*22/*×": {"mode": "ink", "highlight_probes": ((312.82, 492.08, 30.84, 12.35),)},
+    "2*22/22×": {"mode": "ink", "highlight_probes": ((330.34, 503.12, 32.28, 12.23),)},
+    "22*/2222": {"mode": "ink", "highlight_probes": ((332.74, 514.40, 26.97, 12.35),)},
+    "22*/22*": {"mode": "ink", "highlight_probes": ((317.02, 525.44, 26.85, 12.23),)},
+    "22*/22×": {"mode": "ink", "highlight_probes": ((317.02, 536.36, 26.85, 12.35),)},
+    "22*/**": {"mode": "ink", "highlight_probes": ((332.74, 547.28, 26.97, 12.35),)},
+    "22*/××": {"mode": "ink", "highlight_probes": ((332.74, 558.32, 26.97, 12.23),)},
+    "22×/2222": {"mode": "ink", "highlight_probes": ((226.66, 170.72, 29.25, 12.35),)},
+    "22×/××": {"mode": "ink", "highlight_probes": ((209.62, 181.76, 29.37, 12.23),)},
+    "2222/2222": {"mode": "ink", "highlight_probes": ((213.82, 193.04, 37.08, 12.35),)},
+    "2222/◦": {"mode": "ink", "highlight_probes": ((222.94, 203.96, 37.20, 12.35),)},
+    "**/◦": {"mode": "ink", "highlight_probes": ((230.62, 215.36, 21.33, 12.35),)},
+    "**/** (2)": {"mode": "ink", "highlight_probes": ((217.54, 226.28, 21.45, 12.35),)},
+    "**/** (1)": {"mode": "ink", "highlight_probes": ((230.62, 237.32, 21.33, 12.23),)},
+    "**/*×": {"mode": "ink", "highlight_probes": ((217.54, 248.24, 21.45, 12.35),)},
+    "**/××": {"mode": "ink", "highlight_probes": ((230.62, 259.16, 21.33, 12.35),)},
+    "*×/**": {"mode": "ink", "highlight_probes": ((232.18, 270.56, 18.21, 12.35),)},
+    "*×/××": {"mode": "ink", "highlight_probes": ((231.46, 281.48, 19.65, 12.35),)},
+    "*×/◦": {"mode": "ink", "highlight_probes": ((231.46, 292.52, 19.65, 12.23),)},
+    "××/××": {"mode": "ink", "highlight_probes": ((217.66, 303.80, 20.61, 12.35),)},
+    "××/◦": {"mode": "ink", "highlight_probes": ((230.26, 314.84, 22.05, 12.23),)},
+    "◦/◦": {"mode": "ink", "highlight_probes": ((215.14, 326.12, 13.29, 12.35),)},
+    "*632³//*333": {"mode": "ink", "highlight_probes": ((358.78, 161.12, 33.90, 13.66),)},
+    "*632³//2222": {"mode": "ink", "highlight_probes": ((358.78, 173.72, 33.90, 13.66),)},
+    "632³/2222": {"mode": "ink", "highlight_probes": ((361.06, 186.68, 29.34, 13.66),)},
+    "632³//333": {"mode": "blank", "highlight": (337.0, 199.5, 76.0, 13.0)},
+    "*333³//◦": {"mode": "ink", "highlight_probes": ((338.50, 212.36, 74.34, 13.66),)},
+    "*333³//333": {"mode": "ink", "highlight_probes": ((338.38, 224.96, 74.70, 13.66),)},
+    "3*3³/*333": {"mode": "ink", "highlight_probes": ((361.42, 237.92, 28.62, 13.66),)},
+    "3*3³//◦": {"mode": "ink", "highlight_probes": ((361.42, 250.52, 28.62, 13.66),)},
+    "333³/◦": {"mode": "ink", "highlight_probes": ((361.06, 263.60, 29.34, 13.54),)},
+    "333³/333": {"mode": "ink", "highlight_probes": ((361.06, 276.20, 29.34, 13.54),)},
+    "*2222³//**": {"mode": "ink", "highlight_probes": ((353.98, 289.16, 43.50, 13.66),)},
+    "2*22³//*×": {"mode": "ink", "highlight_probes": ((356.62, 302.12, 38.10, 13.66),)},
+    "22*³//××": {"mode": "ink", "highlight_probes": ((361.42, 315.20, 28.17, 13.54),)},
+    "22*³//**": {"mode": "ink", "highlight_probes": ((361.42, 327.80, 28.17, 13.54),)},
+    "22×³//××": {"mode": "ink", "highlight_probes": ((360.10, 340.76, 30.69, 13.66),)},
+    "2222³//◦": {"mode": "ink", "highlight_probes": ((356.26, 353.72, 38.82, 13.66),)},
+    "**³/**": {"mode": "ink", "highlight_probes": ((362.38, 366.79, 26.13, 13.54),)},
+    "**³//◦": {"mode": "ink", "highlight_probes": ((362.38, 379.40, 26.13, 13.54),)},
+    "*×³/*×": {"mode": "ink", "highlight_probes": ((365.14, 392.36, 20.61, 13.66),)},
+    "*×³//◦": {"mode": "ink", "highlight_probes": ((365.14, 404.96, 20.61, 13.66),)},
+    "××³/××": {"mode": "ink", "highlight_probes": ((363.94, 417.92, 23.13, 13.66),)},
+    "××³//◦": {"mode": "ink", "highlight_probes": ((363.94, 430.52, 23.13, 13.66),)},
+    # The PDF's font metrics make this line's ◦ bounding box overlap both the
+    # preceding row and the rule above it.  This vertical span follows the
+    # rendered glyph ink while retaining whitespace at both probe edges.
+    "◦³/◦": {"mode": "ink", "highlight_probes": ((366.58, 445.00, 17.73, 8.00),)},
 }
 
 
@@ -400,31 +462,33 @@ def build_excerpt_specs(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
         raw_type = _raw_colour_type(group)
         excerpt = group["book_excerpt"]
         if group["number_of_colours"] == 2:
-            page, y, height = SOT_TWO_ROW[raw_type]
-            representative_span = SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X.get(raw_type)
-            if representative_span is None:
-                highlight = (
-                    (300.0, y, 137.0, height)
-                    if page == 140
-                    else (225.0, y, 112.0, height)
-                )
-            else:
-                highlight_x, highlight_width = representative_span
-                highlight = (highlight_x, y, highlight_width, height)
+            page, _y, _height = SOT_TWO_ROW[raw_type]
             panels = (
                 {"printed_page": 140, "pdf_page": 159, "crop": (198, 143, 324, 454)},
                 {"printed_page": 141, "pdf_page": 160, "crop": (105, 140, 294, 225)},
             )
         else:
             page = 156
-            y, height = SOT_THREE_ROW[raw_type]
-            highlight = (332.0, y, 86.0, height)
             panels = ({"printed_page": 156, "pdf_page": 175, "crop": (228, 140, 262, 340)},)
+
+        highlight_spec = SOT_SHORT_SIGNATURE_HIGHLIGHTS[raw_type]
+        if highlight_spec["mode"] == "ink":
+            probes = highlight_spec["highlight_probes"]
+            if len(probes) != 1:
+                raise ValueError(
+                    f"SOT short-signature entry {raw_type!r} needs one ink probe"
+                )
+            rendered_highlight = {"highlight_probe": probes[0]}
+        else:
+            rendered_highlight = {
+                "blank_short_signature": True,
+                "highlight": highlight_spec["highlight"],
+            }
         specs[excerpt["image"]] = {
             "kind": "sot",
             "printed_page": page,
             "pdf_page": page + 19,
-            "highlight": highlight,
+            **rendered_highlight,
             "table_panels": panels,
             "footer": "THE SYMMETRIES OF THINGS",
         }
@@ -459,6 +523,31 @@ def validate_excerpt_metadata(payload: dict[str, Any]) -> None:
         _raw_colour_type(group) for group in groups if group["number_of_colours"] == 3
     }:
         raise ValueError("Table 12.1 excerpt map does not match the three-colour census")
+    expected_sot_types = set(SOT_TWO_ROW) | set(SOT_THREE_ROW)
+    if set(SOT_SHORT_SIGNATURE_HIGHLIGHTS) != expected_sot_types:
+        raise ValueError(
+            "short-signature highlight map does not match the colour-group census"
+        )
+    blank_types = {
+        raw_type
+        for raw_type, spec in SOT_SHORT_SIGNATURE_HIGHLIGHTS.items()
+        if spec["mode"] == "blank"
+    }
+    if blank_types != {"632³//333"}:
+        raise ValueError(
+            "Table 12.1 must have exactly the known blank short-signature cell"
+        )
+    for raw_type, spec in SOT_SHORT_SIGNATURE_HIGHLIGHTS.items():
+        if spec["mode"] == "ink":
+            if set(spec) != {"mode", "highlight_probes"}:
+                raise ValueError(f"unexpected ink-probe fields for {raw_type!r}")
+            if len(spec["highlight_probes"]) != 1:
+                raise ValueError(f"expected one ink probe for {raw_type!r}")
+        elif spec["mode"] == "blank":
+            if set(spec) != {"mode", "highlight"}:
+                raise ValueError(f"unexpected blank-cell fields for {raw_type!r}")
+        else:
+            raise ValueError(f"unknown SOT short-signature mode for {raw_type!r}")
     slots_by_page: defaultdict[int, list[int]] = defaultdict(list)
     coloured_keys: set[tuple[int, str]] = set()
     for pattern in patterns:
