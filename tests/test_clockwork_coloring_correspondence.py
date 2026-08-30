@@ -134,6 +134,14 @@ class CorrespondenceParser(HTMLParser):
         self.international_tables_references: list[dict[str, str | None]] = []
         self.ucl_references: list[dict[str, str | None]] = []
         self.diagram_symbol_legends = 0
+        self.diagram_legend_symbol_rows: list[tuple[str, str]] = []
+        self.diagram_legend_svgs: list[
+            tuple[int | None, dict[str, str | None]]
+        ] = []
+        self.diagram_legend_row_texts: list[list[str]] = []
+        self._inside_diagram_symbol_legend = False
+        self._current_legend_row_tag = ""
+        self._current_legend_row_index: int | None = None
         self._current_plate_overlay = ""
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -143,6 +151,22 @@ class CorrespondenceParser(HTMLParser):
             self.section_ids.append(attributes.get("id", ""))
         if tag == "aside" and "diagram-symbol-legend" in classes:
             self.diagram_symbol_legends += 1
+            self._inside_diagram_symbol_legend = True
+        if self._inside_diagram_symbol_legend and attributes.get(
+            "data-legend-symbol"
+        ):
+            self.diagram_legend_symbol_rows.append(
+                (tag, attributes.get("data-legend-symbol", ""))
+            )
+            self.diagram_legend_row_texts.append([])
+            self._current_legend_row_tag = tag
+            self._current_legend_row_index = (
+                len(self.diagram_legend_symbol_rows) - 1
+            )
+        if tag == "svg" and self._inside_diagram_symbol_legend:
+            self.diagram_legend_svgs.append(
+                (self._current_legend_row_index, attributes)
+            )
         if tag == "section" and "other-names" in classes:
             labelled_by = attributes.get("aria-labelledby", "")
             self.other_names_ids.append(
@@ -313,9 +337,20 @@ class CorrespondenceParser(HTMLParser):
         if tag == "path" and "plate-generator-quarter-arrow-halo" in classes:
             self.plate_quarter_arrow_halos += 1
 
+    def handle_data(self, data: str) -> None:
+        if self._current_legend_row_index is not None:
+            self.diagram_legend_row_texts[
+                self._current_legend_row_index
+            ].append(data)
+
     def handle_endtag(self, tag: str) -> None:
         if tag == "svg" and self._current_plate_overlay:
             self._current_plate_overlay = ""
+        if tag == self._current_legend_row_tag:
+            self._current_legend_row_tag = ""
+            self._current_legend_row_index = None
+        if tag == "aside" and self._inside_diagram_symbol_legend:
+            self._inside_diagram_symbol_legend = False
 
 
 class VisibleTextParser(HTMLParser):
@@ -1271,7 +1306,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=diagram-generator-notation", self.page)
+        self.assertIn("?v=crystallographic-symbol-index", self.page)
 
     def test_copy_uses_one_fixed_forward_clock(self) -> None:
         self.assertIn(
@@ -1315,32 +1350,88 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 group["id"],
             )
 
-    def test_top_legend_explains_the_text_only_crystallographic_key(self) -> None:
+    def test_top_legend_is_a_visual_crystallographic_index(self) -> None:
         self.assertEqual(self.parser.diagram_symbol_legends, 1)
         start = self.page.index('<aside class="diagram-symbol-legend"')
         end = self.page.index("</aside>", start)
         first_family = self.page.index('<section class="wallpaper-family"')
         legend = self.page[start:end]
         self.assertLess(start, first_family)
-        self.assertNotIn("<svg", legend)
-        self.assertNotIn("<path", legend)
+        expected_symbols = [
+            "rotation-2-0",
+            "rotation-2-1",
+            "rotation-3-0",
+            "rotation-3-1",
+            "rotation-3-2",
+            "rotation-4-0",
+            "rotation-4-1",
+            "rotation-4-2",
+            "rotation-4-3",
+            "rotation-6-1",
+            "rotation-6-2",
+            "rotation-6-3",
+            "rotation-6-4",
+            "rotation-6-5",
+            "plane-m",
+            "plane-axial",
+            "plane-c",
+            "plane-n",
+            "plane-d",
+        ]
+        self.assertEqual(
+            self.parser.diagram_legend_symbol_rows,
+            [("li", symbol) for symbol in expected_symbols],
+        )
+        self.assertEqual(
+            [
+                row_index
+                for row_index, _attributes in self.parser.diagram_legend_svgs
+            ],
+            list(range(len(expected_symbols))),
+        )
+        for row_index, attributes in self.parser.diagram_legend_svgs:
+            self.assertTrue(attributes.get("viewbox"))
+            self.assertEqual(attributes.get("aria-hidden"), "true")
+            self.assertEqual(attributes.get("focusable"), "false")
+            self.assertEqual(
+                attributes.get("data-legend-icon"),
+                expected_symbols[row_index],
+            )
+        self.assertEqual(legend.count("<svg"), len(expected_symbols))
+        self.assertEqual(legend.count("data-legend-symbol="), len(expected_symbols))
+        self.assertNotIn("data-generator-symbol=", legend)
+        self.assertEqual(legend.count('class="diagram-symbol-list" role="list"'), 2)
+        self.assertEqual(legend.count('role="img" aria-label='), 11)
+        legend_symbols = [
+            symbol for _tag, symbol in self.parser.diagram_legend_symbol_rows
+        ]
+        self.assertEqual(
+            set(legend_symbols),
+            set(self.parser.plate_generator_symbols),
+        )
+        self.assertTrue(
+            all(count == 1 for count in Counter(legend_symbols).values())
+        )
+        for parts in self.parser.diagram_legend_row_texts:
+            explanation = " ".join(" ".join(parts).split())
+            self.assertGreaterEqual(len(explanation.split()), 3)
+            self.assertLessEqual(len(explanation.split()), 24)
 
         visible = VisibleTextParser()
         visible.feed(legend)
         copy = " ".join(" ".join(visible.parts).split()).lower()
         for phrase in (
-            "generator symbols",
-            "static 2d",
-            "filled lens",
-            "triangle",
-            "diamond",
-            "hexagon",
-            "screw axis",
-            "solid line",
-            "dashed line",
-            "dotted line",
-            "dash–dot",
-            "color and time",
+            "crystallographic generator symbols",
+            "2-fold",
+            "3-fold",
+            "4-fold",
+            "6-fold",
+            "screw",
+            "mirror",
+            "axial glide",
+            "clock-axis glide",
+            "diagonal n-glide",
+            "quarter-diagonal d-glide",
         ):
             self.assertIn(phrase, copy)
 
@@ -2322,7 +2413,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence._rotation_symbol_body_html(2, 0),
         )
         self.assertEqual(
-            correspondence._rotation_symbol_body_html(3, 2).count("L"), 3
+            correspondence._rotation_symbol_body_html(3, 2).count("L"), 2
         )
         self.assertEqual(
             correspondence._rotation_symbol_body_html(4, 2).count("L"), 2
@@ -2347,6 +2438,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("color: var(--generator-ink)", css)
         self.assertIn(".generator-symbol-core {", css)
         self.assertIn(".generator-symbol-body .generator-symbol-arms {", css)
+        self.assertIn(
+            ".plate-generator-axis,\n.diagram-symbol-plane {", css
+        )
+        self.assertIn(
+            ".plate-generator-quarter-arrow,\n.diagram-symbol-quarter-arrow {",
+            css,
+        )
         self.assertNotIn(".presentation-generator-glide", css)
         self.assertNotIn(
             '<line x1="4" y1="12" x2="36" y2="12"></line>', self.page
