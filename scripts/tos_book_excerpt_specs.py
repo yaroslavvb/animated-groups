@@ -285,10 +285,10 @@ _spec = _add(
     "p164::632³/2222-exact",
     164,
     (300, 350, 145, 28),
-    (307, 354, 134, 18),
-    "The later exact 632³/2222 row",
-    "Complete Table 13.1 on printed p. 164; the outline joins generator permutations C3, C3², and the identity to regular type 632³/2222.",
-    "Complete annotated Table 13.1 with the exact permutation signature and 632 cubed over 2222 type outlined.",
+    (307, 354, 72, 18),
+    "The later exact 632³/2222 signature row",
+    "Complete Table 13.1 on printed p. 164; the outline marks generator permutations C3, C3², and the identity, whose order-only short form is ³6³3¹2.",
+    "Complete annotated Table 13.1 with the permutation signature corresponding to short form 3,3,1 outlined.",
 )
 _complete_table(_spec, "Table 13.1", ((164, (196, 303, 326, 361)),))
 

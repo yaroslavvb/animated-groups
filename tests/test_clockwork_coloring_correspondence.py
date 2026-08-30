@@ -88,10 +88,51 @@ def superscript_orders(signature: str) -> list[int]:
     return [int(run) for run in runs]
 
 
+def expected_book_audit_target(
+    group: dict[str, object],
+) -> tuple[dict[str, object], str, str, bool, str]:
+    """Resolve the independently expected source for one Book type audit link."""
+
+    evidence = group["signature_evidence"]
+    assert isinstance(evidence, dict)
+    excerpt = evidence.get("excerpt")
+    if excerpt is not None:
+        assert isinstance(excerpt, dict)
+        excerpt_id = (
+            evidence.get("source_colour_group_id")
+            or excerpt.get("excerpt_key")
+            or f'{group["id"]}-short-form'
+        )
+        source_url = excerpt.get("source_url") or excerpt.get("source")
+        assert isinstance(excerpt_id, str)
+        assert isinstance(source_url, str)
+        return excerpt, f"book-audit::{excerpt_id}", source_url, True, "signature"
+
+    references = group["book_audit"]
+    assert isinstance(references, dict)
+    primary = next(
+        reference
+        for reference in references["references"]
+        if reference["role"] == "primary"
+    )
+    excerpt = correspondence.BOOK_EXCERPTS[primary["excerpt_key"]]
+    if group["clock_order"] == 1:
+        route = "onefold"
+        short_signature = True
+    else:
+        assert evidence["status"] == "rule-extension"
+        route = "type-fallback"
+        short_signature = False
+    return excerpt, excerpt["key"], primary["url"], short_signature, route
+
+
 class CorrespondenceParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.section_ids: list[str] = []
+        self.section_labelled_by: list[str] = []
+        self.entry_heading_ids: list[str] = []
+        self.entry_heading_texts: list[list[str]] = []
         self.family_ids: list[str] = []
         self.empty_family_ids: list[str] = []
         self.trivial_product_ids: list[str] = []
@@ -138,6 +179,9 @@ class CorrespondenceParser(HTMLParser):
         self.presentation_generator_geometries = 0
         self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
+        self.identification_rows: list[tuple[str, tuple[str, ...]]] = []
+        self.identified_names: list[dict[str, str | None]] = []
+        self.short_form_support_in_book_audit: list[bool] = []
         self.extra_links_ids: list[str] = []
         self.extra_link_references: list[dict[str, str | None]] = []
         self.plane_group_links: list[str] = []
@@ -159,12 +203,27 @@ class CorrespondenceParser(HTMLParser):
         self._current_legend_row_tag = ""
         self._current_legend_row_index: int | None = None
         self._current_plate_overlay = ""
+        self._current_other_names_id = ""
+        self._inside_book_audit_row = False
+        self._current_entry_heading_index: int | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
         classes = set((attributes.get("class") or "").split())
         if tag == "section" and "correspondence-entry" in classes:
             self.section_ids.append(attributes.get("id", ""))
+            self.section_labelled_by.append(attributes.get("aria-labelledby", ""))
+        heading_id = attributes.get("id") or ""
+        heading_group_id = heading_id.removesuffix("-title")
+        if (
+            tag == "h3"
+            and heading_id.endswith("-title")
+            and heading_group_id.startswith("g")
+            and heading_group_id[1:].isdigit()
+        ):
+            self.entry_heading_ids.append(heading_id)
+            self.entry_heading_texts.append([])
+            self._current_entry_heading_index = len(self.entry_heading_texts) - 1
         if tag == "aside" and "diagram-symbol-teaser" in classes:
             self.diagram_symbol_teasers += 1
         if tag == "dialog" and "diagram-symbol-dialog" in classes:
@@ -192,9 +251,16 @@ class CorrespondenceParser(HTMLParser):
             )
         if tag == "section" and "other-names" in classes:
             labelled_by = attributes.get("aria-labelledby", "")
-            self.other_names_ids.append(
-                labelled_by.removesuffix("-other-names-title")
+            group_id = labelled_by.removesuffix("-other-names-title")
+            self.other_names_ids.append(group_id)
+            self._current_other_names_id = group_id
+        if tag == "li" and self._current_other_names_id:
+            self.identification_rows.append(
+                (self._current_other_names_id, tuple(sorted(classes)))
             )
+            self._inside_book_audit_row = "book-audit-row" in classes
+        if tag == "span" and "identified-name" in classes:
+            self.identified_names.append(attributes)
         if tag == "section" and "extra-links" in classes:
             self.extra_links_ids.append(attributes.get("data-extra-links", ""))
         if tag == "a" and attributes.get("data-catalog-id"):
@@ -260,6 +326,10 @@ class CorrespondenceParser(HTMLParser):
             )
         if tag == "a" and attributes.get("data-book-excerpt"):
             self.book_excerpt_links.append(attributes)
+            if "short-form-support-link" in classes:
+                self.short_form_support_in_book_audit.append(
+                    self._inside_book_audit_row
+                )
         if tag == "dialog" and "book-excerpt-dialog" in classes:
             self.book_dialog_ids.append(attributes.get("id", ""))
         if tag == "img" and "data-book-excerpt-image" in attributes:
@@ -379,12 +449,20 @@ class CorrespondenceParser(HTMLParser):
             self.plate_translation_arrow_halos += 1
 
     def handle_data(self, data: str) -> None:
+        if self._current_entry_heading_index is not None:
+            self.entry_heading_texts[self._current_entry_heading_index].append(data)
         if self._current_legend_row_index is not None:
             self.diagram_legend_row_texts[
                 self._current_legend_row_index
             ].append(data)
 
     def handle_endtag(self, tag: str) -> None:
+        if tag == "h3" and self._current_entry_heading_index is not None:
+            self._current_entry_heading_index = None
+        if tag == "li" and self._inside_book_audit_row:
+            self._inside_book_audit_row = False
+        if tag == "section" and self._current_other_names_id:
+            self._current_other_names_id = ""
         if tag == "svg" and self._current_plate_overlay:
             self._current_plate_overlay = ""
         if tag == self._current_legend_row_tag:
@@ -413,8 +491,14 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         cls.page_groups = [
             group
             for base in correspondence.BASE_ORDER
-            for group in cls.payload["groups"]
-            if group["parent"]["hm"] == base
+            for group in sorted(
+                (
+                    group
+                    for group in cls.payload["groups"]
+                    if group["parent"]["hm"] == base
+                ),
+                key=lambda group: group["clock_order"] == 1,
+            )
         ]
         cls.display_groups = [
             group
@@ -443,6 +527,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(len(page_ids), 68)
         self.assertEqual(len(trivial_ids), 17)
         self.assertEqual(self.parser.section_ids, page_ids)
+        self.assertEqual(
+            self.parser.section_labelled_by,
+            [f"{group_id}-title" for group_id in page_ids],
+        )
+        self.assertEqual(
+            self.parser.entry_heading_ids,
+            [f"{group_id}-title" for group_id in page_ids],
+        )
+        self.assertEqual(len(self.parser.entry_heading_texts), len(page_ids))
+        for group_id, heading_parts in zip(
+            page_ids,
+            self.parser.entry_heading_texts,
+        ):
+            heading_text = " ".join(heading_parts)
+            self.assertNotIn(group_id, heading_text, group_id)
+        self.assertNotIn('class="group-id"', self.page)
         self.assertEqual(self.parser.trivial_product_ids, [])
         self.assertEqual(ids, [group["id"] for group in manifest["groups"]])
         self.assertEqual(len(ids), len(set(ids)))
@@ -497,6 +597,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         for base in correspondence.BASE_ORDER:
             summary = correspondence.WALLPAPER_SUMMARIES[base]
             self.assertIn(correspondence.orbifold_html(summary), self.page)
+
+            family_groups = [
+                group for group in self.page_groups if group["parent"]["hm"] == base
+            ]
+            self.assertEqual(family_groups[-1]["clock_order"], 1, base)
 
         self.assertNotIn("Forward note", self.page)
         self.assertNotIn("No nontrivial forward lift occurs", self.page)
@@ -716,6 +821,25 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count('<span class="term-help-label" aria-hidden="true">Book type audit</span>'),
             len(self.page_groups),
         )
+        self.assertEqual(
+            self.parser.identification_rows,
+            [
+                row
+                for group_id in page_ids
+                for row in (
+                    (group_id, ("book-audit-row",)),
+                    (group_id, ("other-names-row",)),
+                )
+            ],
+        )
+        self.assertEqual(
+            self.page.count(
+                '<span class="other-name-category">Other names</span>'
+            ),
+            len(self.page_groups),
+        )
+        self.assertNotIn("Colour-fixing plane-group type K", self.page)
+        self.assertNotIn("Height-lift space-group type", self.page)
 
         space_payload = json.loads(
             correspondence.SPACE_GROUP_DATA.read_text(encoding="utf-8")
@@ -771,24 +895,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             urls = [item.get("href") for item in attributes_list]
             self.assertEqual(len(urls), len(set(urls)), group_id)
 
-        expected_plane_links = []
-        expected_parent_links = []
-        for group in page_groups:
-            expected_plane_links.append(
-                correspondence.IUCR_PLANE_GROUP_URL.format(
-                    number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
-                        group["kernel"]["hm"]
-                    ]
-                )
-            )
-            parent_link = correspondence.IUCR_PLANE_GROUP_URL.format(
-                number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
-                    group["parent"]["hm"]
-                ]
-            )
-            expected_parent_links.append(parent_link)
-            expected_plane_links.append(parent_link)
-        self.assertEqual(self.parser.plane_group_links, expected_plane_links)
+        expected_parent_links = [
+            link["url"]
+            for group in page_groups
+            for link in space_by_id[group["id"]]["extra_links"]
+            if link["catalog_id"] == "iucr-plane-group"
+        ]
+        self.assertEqual(self.parser.plane_group_links, expected_parent_links)
         self.assertEqual(
             [
                 attributes.get("href")
@@ -796,10 +909,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ],
             expected_parent_links,
         )
-        self.assertEqual(
-            self.parser.height_lift_links,
-            [f"space-group-correspondence.html#{group_id}" for group_id in page_ids],
-        )
+        self.assertEqual(self.parser.height_lift_links, [])
         self.assertEqual(
             self.parser.ucl_links,
             [space_by_id[group_id]["ucl_reference_url"] for group_id in page_ids],
@@ -823,16 +933,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
             section_end = self.page.index("</section>", section_start)
             section = self.page[section_start:section_end]
-            space_group = space_by_id[group_id]
-            self.assertIn(
-                f'No. {space_group["it_number"]} '
-                f'{correspondence._hm_html(space_group["hm_short"])}',
-                section,
-                group_id,
-            )
             self.assertNotIn("international-tables-reference", section, group_id)
             self.assertNotIn("ucl-reference", section, group_id)
-            self.assertIn(f'Hall {escape(space_group["hall"])}', section, group_id)
+            self.assertNotIn("space-group-correspondence.html#", section, group_id)
+            self.assertNotIn("Hall ", section, group_id)
             self.assertIn(
                 correspondence.fibrifold_html(
                     correspondence.FIBRIFOLD_BY_ID[group_id]
@@ -857,17 +961,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             {group["id"] for group in self.payload["groups"]},
         )
         self.assertEqual(
-            self.page.count('<span class="term-help-label" aria-hidden="true">Conway fibrifold notation</span>'),
-            68,
-        )
-        self.assertEqual(
             self.page.count('class="fibrifold-name"'),
             68,
         )
-        self.assertEqual(
-            self.page.count('class="fibrifold-orientation-note"'),
-            len(correspondence.FIBRIFOLD_ENANTIOMORPHIC_IDS),
-        )
+        self.assertNotIn('class="fibrifold-orientation-note"', self.page)
         self.assertNotIn("data-trivial-product", self.page)
 
         self.assertNotIn(
@@ -875,30 +972,86 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page,
         )
 
-    def test_category_help_is_hover_only_non_latching_and_complete(self) -> None:
-        mate_count = sum(
-            bool(group["complementary_skip_mate"]) for group in self.display_groups
+    def test_identification_help_is_non_latching_and_complete(self) -> None:
+        self.assertEqual(
+            set(correspondence.TERM_HELP),
+            {
+                "Book type audit",
+                "Catalog instance",
+                "Conway fibrifold notation",
+                "Complementary forward skips",
+            },
         )
-        for label, help_text in correspondence.TERM_HELP.items():
-            if label == "Conway fibrifold notation":
-                expected = len(self.payload["groups"])
-            elif label == "Complementary forward skips":
-                expected = mate_count
-            else:
-                expected = len(self.page_groups)
-            self.assertEqual(
-                self.page.count(
-                    f'<span class="term-help-label" aria-hidden="true">{escape(label)}</span>'
-                ),
-                expected,
-                label,
+        book_help = correspondence.TERM_HELP["Book type audit"]
+        self.assertEqual(
+            self.page.count(
+                '<span class="term-help-label" aria-hidden="true">'
+                "Book type audit</span>"
+            ),
+            len(self.page_groups),
+        )
+        self.assertEqual(
+            self.page.count(
+                '<span class="term-help-copy" aria-hidden="true">'
+                f"{escape(book_help)}</span>"
+            ),
+            len(self.page_groups),
+        )
+
+        expected_name_systems = [
+            (group["id"], system)
+            for group in self.page_groups
+            for system in (
+                ["Catalog instance", "Conway fibrifold notation"]
+                + (
+                    ["Complementary forward skips"]
+                    if group["complementary_skip_mate"]
+                    else []
+                )
             )
-            self.assertEqual(
-                self.page.count(
-                    f'<span class="term-help-copy" aria-hidden="true">{escape(help_text)}</span>'
-                ),
-                expected,
-                label,
+        ]
+        self.assertEqual(len(expected_name_systems), 68 * 2 + 8)
+        self.assertEqual(
+            [
+                attributes.get("data-name-system")
+                for attributes in self.parser.identified_names
+            ],
+            [system for _, system in expected_name_systems],
+        )
+        for attributes, (group_id, system) in zip(
+            self.parser.identified_names,
+            expected_name_systems,
+        ):
+            classes = set((attributes.get("class") or "").split())
+            self.assertTrue({"identified-name", "term-help"} <= classes, group_id)
+            title = attributes.get("title") or ""
+            self.assertTrue(title.startswith(f"{system}: "), group_id)
+            self.assertIn(correspondence.TERM_HELP[system], title, group_id)
+            if system == "Conway fibrifold notation":
+                orientation_note = "Two orientations share this fibrifold name"
+                if group_id in correspondence.FIBRIFOLD_ENANTIOMORPHIC_IDS:
+                    self.assertIn(orientation_note, title, group_id)
+                else:
+                    self.assertNotIn(orientation_note, title, group_id)
+
+        mates = [
+            group for group in self.page_groups if group["complementary_skip_mate"]
+        ]
+        self.assertEqual(len(mates), 8)
+        self.assertEqual(
+            self.page.count('data-name-system="Complementary forward skips"'),
+            len(mates),
+        )
+        for group in mates:
+            section_start = self.page.index(
+                f'<section class="other-names" aria-labelledby="{group["id"]}-other-names-title">'
+            )
+            section_end = self.page.index("</section>", section_start)
+            section = self.page[section_start:section_end]
+            self.assertIn(
+                f'href="#{group["complementary_skip_mate"]}"',
+                section,
+                group["id"],
             )
 
         self.assertNotIn('<details class="term-help">', self.page)
@@ -911,7 +1064,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn(".term-help:hover .term-help-copy", css)
-        self.assertNotIn(".term-help:focus-within", css)
+        self.assertIn(".term-help:focus-within .term-help-copy", css)
         self.assertNotIn(".term-help[open]", css)
         self.assertNotIn("@media (hover: none)", css)
         self.assertIn("pointer-events: none", css)
@@ -1243,6 +1396,20 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count('class="presentation-colour-action"'),
             self.parser.presentation_generator_count,
         )
+        identity_actions = sum(
+            generator["clock_power"] % group["clock_order"] == 0
+            for group in self.page_groups
+            for generator in group["chaim_presentation"]["generators"]
+        )
+        self.assertEqual(
+            len(
+                re.findall(
+                    r'<td class="presentation-colour-action"[^>]*data-clock-power="0"[^>]*>none</td>',
+                    self.page,
+                )
+            ),
+            identity_actions,
+        )
         self.assertEqual(
             self.page.count('class="presentation-time-action"'),
             self.parser.presentation_generator_count,
@@ -1571,6 +1738,20 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             len(self.page_groups),
         )
         self.assertEqual(
+            self.page.count(
+                "C<sub>N</sub> is a color/time cycle, not a spatial rotation, "
+                "so it is neither clockwise nor counterclockwise."
+            ),
+            len(self.page_groups),
+        )
+        self.assertEqual(
+            self.page.count(
+                "Spatial rotation angles are measured counterclockwise when the "
+                "pattern is viewed from the front of the page."
+            ),
+            len(self.page_groups),
+        )
+        self.assertEqual(
             self.page.count("fixed-clock powers and directed time shifts"),
             len(self.page_groups),
         )
@@ -1768,7 +1949,6 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn('class="entry-identity"', self.page)
         self.assertNotIn('class="entry-kicker"', self.page)
         self.assertNotIn('class="group-data"', self.page)
-        self.assertNotIn('class="book-audit', self.page)
         self.assertNotIn('class="orientation-note"', self.page)
         self.assertNotIn("The phase character maps", self.page)
         self.assertNotIn("Static perfect-colouring plate", self.page)
@@ -1888,7 +2068,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.payload["meta"]["signature_evidence_counts"],
             correspondence.EXPECTED_SIGNATURE_EVIDENCE_COUNTS,
         )
-        expected_primary = []
+        expected_book_audits = []
+        audit_routes: Counter[str] = Counter()
         for group in self.page_groups:
             primary = [
                 reference
@@ -1897,15 +2078,30 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ]
             self.assertEqual(len(primary), 1, group["id"])
             reference = primary[0]
-            expected_primary.append(
+            excerpt, _, source_url, _, route = expected_book_audit_target(group)
+            audit_routes[route] += 1
+            expected_book_audits.append(
                 (
-                    reference["url"],
-                    str(reference["printed_page"]),
-                    str(reference["pdf_page"]),
+                    source_url,
+                    str(excerpt["printed_page"]),
+                    str(excerpt["pdf_page"]),
                 )
             )
             self.assertEqual(reference["pdf_page"], reference["printed_page"] + 19)
-        self.assertEqual(self.parser.book_links, expected_primary)
+            if route == "onefold":
+                self.assertEqual(group["clock_order"], 1, group["id"])
+                self.assertEqual(excerpt["printed_page"], 40, group["id"])
+            elif route == "type-fallback":
+                self.assertEqual(
+                    group["signature_evidence"]["status"],
+                    "rule-extension",
+                    group["id"],
+                )
+        self.assertEqual(
+            audit_routes,
+            Counter({"signature": 42, "onefold": 17, "type-fallback": 9}),
+        )
+        self.assertEqual(self.parser.book_links, expected_book_audits)
 
         for group in groups:
             order = group["clock_order"]
@@ -2034,7 +2230,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertEqual(evidence["displayed_signature"], "³6³3¹2")
             self.assertEqual(
                 evidence["excerpt"]["highlight_target"],
-                "short-signature-and-type",
+                "short-signature",
             )
             self.assertEqual(
                 evidence["conflicts"][0]["printed_signature"],
@@ -2061,56 +2257,107 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     group["id"],
                 )
 
-    def test_all_book_links_open_separate_annotated_excerpt_pages(self) -> None:
-        expected_references = []
-        for group in self.page_groups:
-            expected_references.extend(
-                reference
-                for reference in group["book_audit"]["references"]
-                if reference["role"] == "primary"
+    def test_g129_heading_and_book_audit_share_the_short_signature_crop(self) -> None:
+        expected_image = "output/color-pattern-excerpts/tos-cg-p4m-2-4.webp"
+        heading_links = [
+            attributes
+            for attributes in self.parser.short_signature_links
+            if attributes.get("data-book-excerpt") == "short-form::cg-p4m-2-4"
+        ]
+        audit_links = [
+            attributes
+            for attributes in self.parser.book_excerpt_links
+            if (
+                "book-page-link" in (attributes.get("class") or "").split()
+                and attributes.get("data-book-excerpt")
+                == "book-audit::cg-p4m-2-4"
             )
+        ]
+        self.assertEqual(len(heading_links), 1)
+        self.assertEqual(len(audit_links), 1)
+        for attributes in (*heading_links, *audit_links):
+            self.assertEqual(attributes.get("data-book-image"), expected_image)
+            self.assertIn("data-short-signature-excerpt", attributes)
+            self.assertEqual(
+                attributes.get("data-book-title"),
+                "Short colour signature for *442/*2222",
+            )
+        self.assertNotEqual(
+            audit_links[0].get("data-book-image"),
+            "output/book-excerpts/p140-star442-over-star2222.webp",
+        )
 
-        self.assertEqual(len(expected_references), len(self.page_groups))
-        primary_links = [
+    def test_all_book_links_open_separate_annotated_excerpt_pages(self) -> None:
+        audit_links = [
             attributes
             for attributes in self.parser.book_excerpt_links
             if "book-page-link" in (attributes.get("class") or "").split()
         ]
         self.assertEqual(
-            len(primary_links),
+            len(audit_links),
             len(self.page_groups),
         )
-        for attributes, reference in zip(primary_links, expected_references):
-            excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
+        routes: Counter[str] = Counter()
+        for attributes, group in zip(audit_links, self.page_groups):
+            excerpt, excerpt_id, source_url, short_signature, route = (
+                expected_book_audit_target(group)
+            )
+            routes[route] += 1
             viewer = urlparse(attributes.get("href") or "")
             self.assertEqual(viewer.path, "book-excerpt.html")
             expected_query = {
-                    "image": [excerpt["image"]],
-                    "title": [excerpt["title"]],
-                    "context": [excerpt["context"]],
-                    "alt": [excerpt["alt"]],
-                    "source": [reference["url"]],
-                    "v": [correspondence.BOOK_EXCERPT_VIEWER_VERSION],
-                }
+                "image": [excerpt["image"]],
+                "title": [excerpt["title"]],
+                "context": [excerpt["context"]],
+                "alt": [excerpt["alt"]],
+                "source": [source_url],
+                "v": [correspondence.BOOK_EXCERPT_VIEWER_VERSION],
+            }
             self.assertEqual(parse_qs(viewer.query), expected_query)
-            self.assertEqual(attributes.get("data-printed-page"), str(reference["printed_page"]))
-            self.assertEqual(attributes.get("data-pdf-page"), str(reference["pdf_page"]))
-            self.assertEqual(attributes.get("data-book-excerpt"), reference["excerpt_key"])
+            self.assertEqual(
+                attributes.get("data-printed-page"),
+                str(excerpt["printed_page"]),
+            )
+            self.assertEqual(
+                attributes.get("data-pdf-page"),
+                str(excerpt["pdf_page"]),
+            )
+            self.assertEqual(attributes.get("data-book-excerpt"), excerpt_id)
             self.assertEqual(attributes.get("data-book-image"), excerpt["image"])
             self.assertEqual(attributes.get("data-book-title"), excerpt["title"])
             self.assertEqual(attributes.get("data-book-context"), excerpt["context"])
             self.assertEqual(attributes.get("data-book-alt"), excerpt["alt"])
-            self.assertEqual(attributes.get("data-book-source"), reference["url"])
+            self.assertEqual(attributes.get("data-book-source"), source_url)
             self.assertEqual(attributes.get("target"), correspondence.BOOK_EXCERPT_TARGET)
             self.assertNotIn("rel", attributes)
             self.assertNotIn("aria-haspopup", attributes)
             self.assertNotIn("aria-controls", attributes)
+            if short_signature:
+                self.assertIn("data-short-signature-excerpt", attributes)
+            else:
+                self.assertNotIn("data-short-signature-excerpt", attributes)
 
-        expected_excerpt_keys = {reference["excerpt_key"] for reference in expected_references}
-        self.assertEqual(len(expected_excerpt_keys), 58)
         self.assertEqual(
-            {attributes["data-book-excerpt"] for attributes in primary_links},
-            expected_excerpt_keys,
+            routes,
+            Counter({"signature": 42, "onefold": 17, "type-fallback": 9}),
+        )
+        self.assertEqual(
+            sum(
+                (attributes.get("data-book-excerpt") or "").startswith(
+                    "book-audit::"
+                )
+                for attributes in audit_links
+            ),
+            42,
+        )
+        self.assertEqual(
+            sum("data-short-signature-excerpt" in attributes for attributes in audit_links),
+            42 + 17,
+        )
+        self.assertEqual(self.page.count('class="book-audit-limit"'), 9)
+        self.assertEqual(
+            self.page.count(">no literal row; short form derived</span>"),
+            9,
         )
 
         linked_heading_groups = [
@@ -2144,6 +2391,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertTrue(
             all("data-short-signature-excerpt" in attributes for attributes in support_links)
         )
+        self.assertEqual(len(self.parser.short_form_support_in_book_audit), 20)
+        self.assertTrue(all(self.parser.short_form_support_in_book_audit))
         self.assertEqual(len(self.parser.book_excerpt_links), 130)
 
     def test_the_separate_viewer_loads_complete_tables_or_contextual_webps(self) -> None:
@@ -2283,8 +2532,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("window.opener.postMessage", viewer_script)
         self.assertIn('type: "clockwork:book-excerpt-ready"', viewer_script)
         self.assertIn("book-excerpts|color-pattern-excerpts", viewer_script)
-        self.assertIn("?v=pg-short-row-fix", viewer_script)
-        self.assertIn("book-excerpt.js?v=pg-short-row-fix", viewer_page)
+        self.assertIn("?v=short-signature-audit-v2", viewer_script)
+        self.assertIn("book-excerpt.js?v=short-signature-audit-v2", viewer_page)
         self.assertIn('media.dataset.zoom = actual ? "actual" : "fit"', viewer_script)
         self.assertIn('[data-zoom="actual"]', viewer_style)
         self.assertIn('[data-zoom="fit"]', viewer_style)
@@ -2606,7 +2855,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ]
         self.assertEqual(g269.count("plate-generator--mirror"), 3)
         g9_start = page.index('<section class="correspondence-entry" id="g9"')
-        g9_end = page.index('<section class="wallpaper-family"', g9_start)
+        g9_end = page.index('<section class="correspondence-entry" id="g8"', g9_start)
         g9 = page[g9_start:g9_end]
         self.assertEqual(g9.count("plate-generator--mirror"), 1)
         self.assertEqual(g9.count("plate-generator--glide"), 1)
