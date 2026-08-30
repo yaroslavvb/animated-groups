@@ -2985,24 +2985,6 @@ def _rotation_symbol_body_html(order: int, screw_step: int) -> str:
 
     if screw_step == 0:
         arms = ""
-    elif order == 3:
-        # International Tables/UCL draw 3_1 and 3_2 as a filled triangle
-        # with two exterior strokes.  They are mirror images, rather than
-        # three-bladed decorative pinwheels.
-        if screw_step == 1:
-            commands = (
-                "M8.31 4.8L14.1 4.8",
-                "M-8.31 4.8L-11.35 10.05",
-            )
-        else:
-            commands = (
-                "M-8.31 4.8L-14.1 4.8",
-                "M8.31 4.8L11.35 10.05",
-            )
-        arms = (
-            '<path class="generator-symbol-arms" '
-            f'd="{" ".join(commands)}"></path>'
-        )
     else:
         spacing = math.gcd(order, screw_step)
         handedness = -1 if screw_step <= order / 2 else 1
@@ -3292,13 +3274,13 @@ def _diagram_symbol_legend_html() -> str:
             "rotation-3-1",
             _diagram_rotation_symbol_html(3, 1),
             '<span role="img" aria-label="three-one screw axis">3<sub>1</sub> screw axis</span>',
-            "Two-stroke triangle; positive one-third turn with a +1/3-period rise.",
+            "Three-stroke triangle; positive one-third turn with a +1/3-period rise.",
         ),
         (
             "rotation-3-2",
             _diagram_rotation_symbol_html(3, 2),
             '<span role="img" aria-label="three-two screw axis">3<sub>2</sub> screw axis</span>',
-            "Opposite two-stroke triangle; positive one-third turn with a +2/3-period rise.",
+            "Opposite three-stroke triangle; positive one-third turn with a +2/3-period rise.",
         ),
         (
             "rotation-4-0",
