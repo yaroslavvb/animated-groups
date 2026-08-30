@@ -72,6 +72,183 @@ UCL_PAGE_BY_NUMBER = {
     **{number: f"{number:03d}az1.htm" for number in range(183, 187)},
 }
 
+# Audited human-facing catalogue targets.  CrystalSymmetry dates and attachment
+# slugs are pinned because they are not safely derivable (No. 33 is ``33-3``;
+# several diagram slugs carry a numeric suffix, and rhombohedral groups have
+# separate axis choices).
+CRYSTAL_SYMMETRY_POST_DATE_BY_NUMBER = {
+    1: "2014/06/03",
+    **{number: "2014/06/05" for number in (3, 4, 5)},
+    **{number: "2014/06/06" for number in (6, 7)},
+    8: "2014/06/10",
+    9: "2014/06/11",
+    25: "2014/07/06",
+    26: "2014/07/09",
+    27: "2014/07/10",
+    **{number: "2014/07/11" for number in range(28, 33)},
+    **{number: "2014/07/12" for number in range(33, 39)},
+    **{number: "2014/07/14" for number in range(39, 45)},
+    **{number: "2014/07/15" for number in (45, 46)},
+    75: "2014/07/20",
+    76: "2014/07/21",
+    **{number: "2014/07/22" for number in (77, 78, 79)},
+    80: "2014/07/23",
+    **{number: "2014/07/31" for number in range(99, 103)},
+    **{number: "2014/08/01" for number in range(103, 111)},
+    **{number: "2014/08/05" for number in range(143, 147)},
+    **{number: "2014/08/06" for number in range(156, 162)},
+    **{number: "2014/08/07" for number in (*range(168, 174), *range(183, 187))},
+}
+CRYSTAL_SYMMETRY_DIAGRAM_BY_NUMBER = {
+    1: "001-p1-2",
+    3: "003-p2-2",
+    4: "004-p21-2",
+    5: "005-c2-2",
+    6: "006-pm-2",
+    7: "007-pc-2",
+    8: "008-cm-2",
+    9: "009-cc-2",
+    25: "025-pmm2-3",
+    26: "026-pmc21-2",
+    27: "027-pcc2-2",
+    28: "028-pma2",
+    29: "029-pca21",
+    30: "030-pnc2",
+    31: "031-pmn21",
+    32: "032-pba2",
+    33: "033-pna21",
+    34: "034-pnn2",
+    35: "035-cmm2",
+    36: "036-cmc21",
+    37: "037-ccc2",
+    38: "038-amm2",
+    39: "039-aem2",
+    40: "040-ama2",
+    41: "041-aea2",
+    42: "042-fmm2",
+    43: "043-fdd2",
+    44: "044-imm2",
+    45: "045-iba2",
+    46: "046-ima2",
+    75: "075-p4",
+    76: "076-p41",
+    77: "077-p42",
+    78: "078-p43",
+    79: "079-i4",
+    80: "080-i41",
+    99: "099-p4mm",
+    100: "100-p4bm",
+    101: "101-p42cm",
+    102: "102-p42nm",
+    103: "103-p4cc",
+    104: "104-p4nc",
+    105: "105-p42mc",
+    106: "106-p42bc",
+    107: "107-i4mm",
+    108: "108-i4cm",
+    109: "109-i41md",
+    110: "110-i41cd",
+    143: "143-p3",
+    144: "144-p31",
+    145: "145-p32",
+    146: "146-r3-hex",
+    156: "156-p3m1",
+    157: "157-p31m",
+    158: "158-p3c1",
+    159: "159-p31c",
+    160: "160-r3m-hex",
+    161: "161-r3c-hex",
+    168: "168-p6",
+    169: "169-p61",
+    170: "170-p65",
+    171: "171-p62",
+    172: "172-p64",
+    173: "173-p63",
+    183: "183-p6mm",
+    184: "184-p6cc",
+    185: "185-p63cm",
+    186: "186-p63mc",
+}
+
+POINT_GROUP_CATALOG_LINKS = {
+    "1": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=1&num=1",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/1.pdf",
+        "webmineral": "https://webmineral.com/crystal/Triclinic-Pedial.shtml",
+        "smorf": "https://smorf.nl/crystals_triclinic.php?crystal=pv/triclinicpedion1",
+    },
+    "2": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=3&num=3",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/2.pdf",
+        "webmineral": "https://webmineral.com/crystal/Monoclinic-Sphenoidal.shtml",
+        "smorf": "https://smorf.nl/crystals_monoclinic.php?crystal=pv/monoclinicsphenoid1",
+    },
+    "m": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=6&num=4",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/m.pdf",
+        "webmineral": "https://webmineral.com/crystal/Monoclinic-Domatic.shtml",
+        "smorf": "https://smorf.nl/crystals_monoclinic.php?crystal=pv/monoclinicdoma1",
+    },
+    "mm2": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=25&num=7",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/mm2.pdf",
+        "webmineral": "https://webmineral.com/crystal/Orthorhombic-Pyramidal.shtml",
+        "smorf": "https://smorf.nl/crystals_orthorhombic.php?crystal=pv/rhombicpyramid",
+    },
+    "4": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=75&num=9",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/4.pdf",
+        "webmineral": "https://webmineral.com/crystal/Tetragonal-Pyramidal.shtml",
+        "smorf": "https://smorf.nl/crystals_tetragonal.php?crystal=pv/tetragonalpyramid1",
+    },
+    "4mm": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=99&num=13",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/4mm.pdf",
+        "webmineral": "https://webmineral.com/crystal/Tetragonal-DitetragonalPyramidal.shtml",
+        "smorf": "https://smorf.nl/crystals_tetragonal.php?crystal=pv/ditetragonalpyramid",
+    },
+    "3": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=143&num=16",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/3.pdf",
+        "webmineral": "https://webmineral.com/crystal/Trigonal-Pyramidal.shtml",
+        "smorf": "https://smorf.nl/crystals_trigonal.php?crystal=pv/trigonalpyramid",
+    },
+    "3m": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=156&num=19",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/3m.pdf",
+        "webmineral": "https://webmineral.com/crystal/Trigonal-DitrigonalPyramidal.shtml",
+        "smorf": "https://smorf.nl/crystals_trigonal.php?crystal=pv/ditrigonalpyramid",
+    },
+    "6": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=168&num=21",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/6.pdf",
+        "webmineral": "https://webmineral.com/crystal/Hexagonal-Pyramidal.shtml",
+        "smorf": "https://smorf.nl/crystals_hexagonal.php?crystal=pv/hexagonalpyramid",
+    },
+    "6mm": {
+        "bilbao": "https://cryst.ehu.es/cgi-bin/rep/programs/sam/point.py?sg=183&num=25",
+        "gsp": "https://github.com/LluisCasas/GSP/blob/main/6mm.pdf",
+        "webmineral": "https://webmineral.com/crystal/Hexagonal-DihexagonalPyramidal.shtml",
+        "smorf": "https://smorf.nl/crystals_hexagonal.php?crystal=pv/dihexagonalpyramid",
+    },
+}
+
+EXTRA_CATALOG_IDS = (
+    "crystal-symmetry-example",
+    "crystal-symmetry-diagram",
+    "iucr-space-group",
+    "ucl-space-group",
+    "bilbao-point-group",
+    "aflow-prototypes",
+    "gsp-point-group",
+    "webmineral-crystal-class",
+    "smorf-crystal-form",
+    "gemmology-cdl",
+    "iucr-plane-group",
+    "jmol-sgsv",
+    "crystallify",
+)
+
 IMAGE_WIDTH = 720
 IMAGE_HEIGHT = 480
 ANTIALIAS = 2
@@ -240,6 +417,136 @@ def _crystal_system(number: int) -> str:
         if number in numbers:
             return label
     raise ValueError(f"space-group number {number} is outside the supported systems")
+
+
+def _extra_catalog_links(
+    source_record: dict[str, Any],
+    *,
+    number: int,
+    hm_short: str,
+    ucl_url: str,
+) -> list[dict[str, str]]:
+    """Return one audited, nonduplicated link per catalogue resource."""
+
+    post_date = CRYSTAL_SYMMETRY_POST_DATE_BY_NUMBER[number]
+    post_slug = "33-3" if number == 33 else str(number)
+    diagram_slug = CRYSTAL_SYMMETRY_DIAGRAM_BY_NUMBER[number]
+    point_group = _point_group(number)
+    crystal_system = _crystal_system(number)
+    point_links = POINT_GROUP_CATALOG_LINKS[point_group]
+    parent_hm = source_record["parent"]["hm"]
+    plane_number = clockwork.PLANE_GROUP_NUMBER_BY_HM[parent_hm]
+    space_target = f"No. {number} {hm_short}"
+    point_target = f"Point group {point_group}"
+
+    links = [
+        {
+            "catalog_id": "crystal-symmetry-example",
+            "catalog": "CrystalSymmetry worked example",
+            "scope": "exact_space_group",
+            "target": space_target,
+            "url": (
+                "https://crystalsymmetry.wordpress.com/"
+                f"{post_date}/{post_slug}/"
+            ),
+        },
+        {
+            "catalog_id": "crystal-symmetry-diagram",
+            "catalog": "CrystalSymmetry diagram",
+            "scope": "exact_space_group",
+            "target": space_target,
+            "url": (
+                "https://crystalsymmetry.wordpress.com/space-group-diagrams/"
+                f"{diagram_slug}/"
+            ),
+        },
+        {
+            "catalog_id": "iucr-space-group",
+            "catalog": "IUCr Volume A space-group table",
+            "scope": "exact_space_group",
+            "target": space_target,
+            "url": (
+                "https://onlinelibrary.wiley.com/iucr/itc/Ac/ch2o3v0001/"
+                f"sgtable2o3o{number:03d}/"
+            ),
+        },
+        {
+            "catalog_id": "ucl-space-group",
+            "catalog": "UCL space-group diagrams",
+            "scope": "exact_space_group",
+            "target": space_target,
+            "url": ucl_url,
+        },
+        {
+            "catalog_id": "bilbao-point-group",
+            "catalog": "Bilbao Point Group Tables",
+            "scope": "polar_point_group",
+            "target": point_target,
+            "url": point_links["bilbao"],
+        },
+        {
+            "catalog_id": "aflow-prototypes",
+            "catalog": "AFLOW crystal prototypes",
+            "scope": "exact_space_group",
+            "target": space_target,
+            "url": f"https://aflow.org/p/{crystal_system}_spacegroup.html#sg{number}",
+        },
+        {
+            "catalog_id": "gsp-point-group",
+            "catalog": "GSP crystal morphology",
+            "scope": "polar_point_group",
+            "target": point_target,
+            "url": point_links["gsp"],
+        },
+        {
+            "catalog_id": "webmineral-crystal-class",
+            "catalog": "Webmineral crystal class",
+            "scope": "polar_point_group",
+            "target": point_target,
+            "url": point_links["webmineral"],
+        },
+        {
+            "catalog_id": "smorf-crystal-form",
+            "catalog": "Smorf crystal form",
+            "scope": "polar_point_group",
+            "target": point_target,
+            "url": point_links["smorf"],
+        },
+        {
+            "catalog_id": "gemmology-cdl",
+            "catalog": "gemmology.dev CDL",
+            "scope": "point_group_reference",
+            "target": f"CDL point-group table · {point_group}",
+            "url": "https://gemmology.dev/docs/cdl/#crystal-systems",
+        },
+        {
+            "catalog_id": "iucr-plane-group",
+            "catalog": "IUCr plane-group table",
+            "scope": "parent_plane_group",
+            "target": f"No. {plane_number} {parent_hm}",
+            "url": clockwork.IUCR_PLANE_GROUP_URL.format(number=plane_number),
+        },
+        {
+            "catalog_id": "jmol-sgsv",
+            "catalog": "Jmol Space Group Visualizer",
+            "scope": "manual_space_group_selection",
+            "target": f"Select {space_target} manually",
+            "url": "https://spacegroups.symotter.org/",
+        },
+        {
+            "catalog_id": "crystallify",
+            "catalog": "Crystallify",
+            "scope": "manual_space_group_selection",
+            "target": f"Select {space_target} manually",
+            "url": "https://www.crystallify.com/",
+        },
+    ]
+    if tuple(link["catalog_id"] for link in links) != EXTRA_CATALOG_IDS:
+        raise AssertionError("extra catalogue order no longer matches its schema")
+    urls = [link["url"] for link in links]
+    if len(urls) != len(set(urls)):
+        raise ValueError(f"duplicate extra catalogue URL for {source_record['id']}")
+    return links
 
 
 def _lift_operations(render: dict[str, Any]) -> list[dict[str, Any]]:
@@ -586,6 +893,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
         ucl_page = UCL_PAGE_BY_NUMBER.get(number)
         if ucl_page is None:
             raise ValueError(f"missing UCL reference page for space group No. {number}")
+        ucl_url = f"{UCL_SPACE_GROUP_BASE}/{ucl_page}"
         render = source_record["render"]
         lifted = _lift_operations(render)
         if len(lifted) != len(render["ops"]):
@@ -627,7 +935,13 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
                     f"Axonometric unit-cell view of polar space group No. {number} "
                     f"{hm_short}, lifted from cyclic colouring {group_id}."
                 ),
-                "ucl_reference_url": f"{UCL_SPACE_GROUP_BASE}/{ucl_page}",
+                "ucl_reference_url": ucl_url,
+                "extra_links": _extra_catalog_links(
+                    source_record,
+                    number=number,
+                    hm_short=hm_short,
+                    ucl_url=ucl_url,
+                ),
                 "reference_preview_image": f"output/space-groups/{group_id}.webp",
                 "reference_preview_note": (
                     "Locally cached project rendering; the linked UCL diagram is not "
@@ -647,7 +961,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
 
     return {
         "meta": {
-            "schema_version": 3,
+            "schema_version": 4,
             "title": "Cyclic colourings and polar space groups",
             "source": "data/clockwork-coloring-correspondence.json",
             "source_sha256": digest,
@@ -666,6 +980,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
             "external_reference": "Jeremy K. Cockcroft, A Hypertext Book of Crystallographic Space Group Diagrams and Tables, UCL/Birkbeck College, 1997-1999.",
             "external_reference_index": f"{UCL_SPACE_GROUP_BASE}/sgp.htm",
             "external_reference_cache_policy": "The project does not redistribute UCL pages or images because their published end-user licence prohibits Internet distribution; hover cards reuse locally generated project plates.",
+            "extra_catalog_count": len(EXTRA_CATALOG_IDS),
             "polar_it_numbers": sorted(POLAR_IT_NUMBERS),
             "family_counts": {base: family_counts[base] for base in BASE_ORDER},
         },
@@ -674,8 +989,22 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
 
 
 def validate_payload(payload: dict[str, Any]) -> None:
-    if payload.get("meta", {}).get("scope_caveat") != SCOPE_CAVEAT:
+    meta = payload.get("meta", {})
+    if meta.get("schema_version") != 4:
+        raise ValueError("expected space-group correspondence schema 4")
+    if meta.get("scope_caveat") != SCOPE_CAVEAT:
         raise ValueError("scope caveat is missing or changed")
+    if meta.get("extra_catalog_count") != len(EXTRA_CATALOG_IDS):
+        raise ValueError("extra catalogue count is missing or changed")
+    if set(CRYSTAL_SYMMETRY_POST_DATE_BY_NUMBER) != POLAR_IT_NUMBERS:
+        raise ValueError("CrystalSymmetry post mapping must cover the 68 polar types")
+    if set(CRYSTAL_SYMMETRY_DIAGRAM_BY_NUMBER) != POLAR_IT_NUMBERS:
+        raise ValueError("CrystalSymmetry diagram mapping must cover the 68 polar types")
+    expected_point_groups = {label for _, label in POINT_GROUP_BY_RANGE}
+    if set(POINT_GROUP_CATALOG_LINKS) != expected_point_groups:
+        raise ValueError("point-group catalogue mapping must cover all polar classes")
+    if len(EXTRA_CATALOG_IDS) != len(set(EXTRA_CATALOG_IDS)):
+        raise ValueError("extra catalogue IDs must be unique")
     groups = payload.get("groups", [])
     if len(groups) != 68:
         raise ValueError("expected 68 group records")
@@ -707,6 +1036,22 @@ def validate_payload(payload: dict[str, Any]) -> None:
         expected_presentation = _space_group_presentation(group)
         if group.get("space_group_presentation") != expected_presentation:
             raise ValueError(f"incorrect space-group presentation for {group['id']}")
+        expected_links = _extra_catalog_links(
+            group,
+            number=actual["it_number"],
+            hm_short=actual["hm_short"],
+            ucl_url=actual["ucl_reference_url"],
+        )
+        if actual.get("extra_links") != expected_links:
+            raise ValueError(f"incorrect extra catalogue links for {group['id']}")
+        links = actual["extra_links"]
+        if tuple(link["catalog_id"] for link in links) != EXTRA_CATALOG_IDS:
+            raise ValueError(f"incorrect extra catalogue order for {group['id']}")
+        urls = [link["url"] for link in links]
+        if len(urls) != len(set(urls)):
+            raise ValueError(f"duplicate extra catalogue URL for {group['id']}")
+        if any(not link["url"].startswith(("http://", "https://")) for link in links):
+            raise ValueError(f"invalid extra catalogue URL for {group['id']}")
         numbers.append(actual["it_number"])
     if len(set(numbers)) != 68 or set(numbers) != POLAR_IT_NUMBERS:
         raise ValueError("space-group numbers are not the 68 polar types")

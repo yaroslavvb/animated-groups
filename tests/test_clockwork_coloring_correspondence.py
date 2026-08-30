@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import generate_clockwork_coloring_correspondence as correspondence  # noqa: E402
+import generate_space_group_correspondence as space_correspondence  # noqa: E402
 import generate_tos_book_excerpts as book_excerpts  # noqa: E402
 
 
@@ -127,10 +128,11 @@ class CorrespondenceParser(HTMLParser):
         self.presentation_generator_geometries = 0
         self.short_signature_links: list[dict[str, str | None]] = []
         self.other_names_ids: list[str] = []
+        self.extra_links_ids: list[str] = []
+        self.extra_link_references: list[dict[str, str | None]] = []
         self.plane_group_links: list[str] = []
         self.height_lift_links: list[str] = []
         self.ucl_links: list[str] = []
-        self.crystallographic_reference_ids: list[str] = []
         self.international_tables_references: list[dict[str, str | None]] = []
         self.ucl_references: list[dict[str, str | None]] = []
         self.diagram_symbol_legends = 0
@@ -172,10 +174,10 @@ class CorrespondenceParser(HTMLParser):
             self.other_names_ids.append(
                 labelled_by.removesuffix("-other-names-title")
             )
-        if tag == "li" and attributes.get("data-crystallographic-references"):
-            self.crystallographic_reference_ids.append(
-                attributes.get("data-crystallographic-references", "")
-            )
+        if tag == "section" and "extra-links" in classes:
+            self.extra_links_ids.append(attributes.get("data-extra-links", ""))
+        if tag == "a" and attributes.get("data-catalog-id"):
+            self.extra_link_references.append(attributes)
         if tag == "section" and "wallpaper-family" in classes:
             self.family_ids.append(attributes.get("id", ""))
             if "is-empty" in classes:
@@ -486,10 +488,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ]
         self.assertEqual(self.parser.catalog_links, expected)
 
-    def test_every_row_has_compact_sourced_other_names_and_instances(self) -> None:
+    def test_every_row_has_identifications_and_complete_extra_catalogues(self) -> None:
         display_ids = [group["id"] for group in self.display_groups]
         self.assertEqual(self.parser.other_names_ids, display_ids)
-        self.assertEqual(self.parser.crystallographic_reference_ids, display_ids)
         self.assertEqual(
             self.page.count("Identifications"),
             correspondence.DISPLAYED_GROUP_COUNT,
@@ -499,25 +500,89 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.DISPLAYED_GROUP_COUNT,
         )
 
+        space_payload = json.loads(
+            correspondence.SPACE_GROUP_DATA.read_text(encoding="utf-8")
+        )
+        space_by_id = {
+            record["id"]: record["space_group"]
+            for record in space_payload["groups"]
+        }
+        page_groups = []
+        for base in correspondence.BASE_ORDER:
+            page_groups.extend(
+                group
+                for group in self.payload["groups"]
+                if group["parent"]["hm"] == base and group["clock_order"] > 1
+            )
+            page_groups.extend(
+                group
+                for group in self.payload["groups"]
+                if group["parent"]["hm"] == base and group["clock_order"] == 1
+            )
+        page_ids = [group["id"] for group in page_groups]
+        self.assertEqual(self.parser.extra_links_ids, page_ids)
+        self.assertEqual(len(set(self.parser.extra_links_ids)), 68)
+        self.assertEqual(self.page.count(">Extra links</h4>"), 68)
+
+        expected_extra_links = [
+            (group["id"], link)
+            for group in page_groups
+            for link in space_by_id[group["id"]]["extra_links"]
+        ]
+        self.assertEqual(
+            [attributes.get("data-group-id") for attributes in self.parser.extra_link_references],
+            [group_id for group_id, _ in expected_extra_links],
+        )
+        self.assertEqual(
+            [attributes.get("data-catalog-id") for attributes in self.parser.extra_link_references],
+            [link["catalog_id"] for _, link in expected_extra_links],
+        )
+        self.assertEqual(
+            [attributes.get("href") for attributes in self.parser.extra_link_references],
+            [link["url"] for _, link in expected_extra_links],
+        )
+        self.assertEqual(
+            [attributes.get("data-link-scope") for attributes in self.parser.extra_link_references],
+            [link["scope"] for _, link in expected_extra_links],
+        )
+        self.assertTrue(
+            all(
+                attributes.get("target") == "_blank"
+                and attributes.get("rel") == "noopener"
+                for attributes in self.parser.extra_link_references
+            )
+        )
+        extra_by_group: dict[str, list[dict[str, str | None]]] = defaultdict(list)
+        for attributes in self.parser.extra_link_references:
+            extra_by_group[attributes.get("data-group-id", "")].append(attributes)
+        self.assertEqual(set(extra_by_group), set(page_ids))
+        for group_id, attributes_list in extra_by_group.items():
+            self.assertEqual(
+                tuple(item.get("data-catalog-id") for item in attributes_list),
+                space_correspondence.EXTRA_CATALOG_IDS,
+                group_id,
+            )
+            urls = [item.get("href") for item in attributes_list]
+            self.assertEqual(len(urls), len(set(urls)), group_id)
+
         expected_plane_links = []
         expected_parent_links = []
-        for group in self.display_groups:
+        for group in page_groups:
+            if group["clock_order"] > 1:
+                expected_plane_links.append(
+                    correspondence.IUCR_PLANE_GROUP_URL.format(
+                        number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
+                            group["kernel"]["hm"]
+                        ]
+                    )
+                )
             parent_link = correspondence.IUCR_PLANE_GROUP_URL.format(
                 number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
                     group["parent"]["hm"]
                 ]
             )
             expected_parent_links.append(parent_link)
-            expected_plane_links.extend(
-                [
-                    parent_link,
-                    correspondence.IUCR_PLANE_GROUP_URL.format(
-                        number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
-                            group["kernel"]["hm"]
-                        ]
-                    ),
-                ]
-            )
+            expected_plane_links.append(parent_link)
         self.assertEqual(self.parser.plane_group_links, expected_plane_links)
         self.assertEqual(
             [
@@ -526,25 +591,17 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ],
             expected_parent_links,
         )
-
-        space_payload = json.loads(
-            correspondence.SPACE_GROUP_DATA.read_text(encoding="utf-8")
-        )
-        space_by_id = {
-            record["id"]: record["space_group"]
-            for record in space_payload["groups"]
-        }
         self.assertEqual(
             self.parser.height_lift_links,
             [f"space-group-correspondence.html#{group_id}" for group_id in display_ids],
         )
         self.assertEqual(
             self.parser.ucl_links,
-            [space_by_id[group_id]["ucl_reference_url"] for group_id in display_ids],
+            [space_by_id[group_id]["ucl_reference_url"] for group_id in page_ids],
         )
         self.assertEqual(
             [attributes.get("href") for attributes in self.parser.ucl_references],
-            [space_by_id[group_id]["ucl_reference_url"] for group_id in display_ids],
+            [space_by_id[group_id]["ucl_reference_url"] for group_id in page_ids],
         )
         self.assertTrue(
             all(
@@ -568,19 +625,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 section,
                 group_id,
             )
-            self.assertIn(
-                "Plane group "
-                f'{correspondence._plane_group_name_html(group["parent"]["hm"])} '
-                "— International Tables for Crystallography",
-                section,
-                group_id,
-            )
-            self.assertIn(
-                f'Space group No. {space_group["it_number"]} '
-                f'{correspondence._hm_html(space_group["hm_short"])} — UCL',
-                section,
-                group_id,
-            )
+            self.assertNotIn("international-tables-reference", section, group_id)
+            self.assertNotIn("ucl-reference", section, group_id)
             self.assertIn(f'Hall {escape(space_group["hall"])}', section, group_id)
             self.assertIn(
                 correspondence.fibrifold_html(
@@ -590,16 +636,14 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 group_id,
             )
 
-        g246_start = self.page.index(
-            '<section class="other-names" aria-labelledby="g246-other-names-title">'
-        )
+        g246_start = self.page.index('<section class="extra-links" data-extra-links="g246"')
         g246_end = self.page.index("</section>", g246_start)
         g246 = self.page[g246_start:g246_end]
-        self.assertIn(
-            "Plane group No. 16 p6 — International Tables for Crystallography",
-            g246,
-        )
-        self.assertIn("Space group No. 173 P6<sub>3</sub> — UCL", g246)
+        self.assertIn("CrystalSymmetry worked example", g246)
+        self.assertIn("No. 173 P6_3", g246)
+        self.assertIn("Point group 6", g246)
+        self.assertIn("No. 16 p6", g246)
+        self.assertIn("Select No. 173 P6_3 manually", g246)
         self.assertNotIn("UCL diagram and tables", self.page)
         self.assertNotIn("Parent plane-group type G", self.page)
 
@@ -624,11 +668,17 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 f'<aside class="trivial-product" id="{group["id"]}"'
             )
             end = self.page.index("</aside>", start)
+            trivial = self.page[start:end]
             self.assertIn(
                 correspondence.fibrifold_html(
                     correspondence.FIBRIFOLD_BY_ID[group["id"]]
                 ),
-                self.page[start:end],
+                trivial,
+                group["id"],
+            )
+            self.assertIn(
+                f'data-extra-links="{group["id"]}"',
+                trivial,
                 group["id"],
             )
 
@@ -1449,7 +1499,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             "symmorphic",
             "p31m/3 p3m1",
         )
-        page_lower = self.page.lower()
+        visible_parser = VisibleTextParser()
+        visible_parser.feed(self.page)
+        page_lower = " ".join(visible_parser.parts).lower()
         for term in forbidden_terms:
             self.assertNotIn(term, page_lower)
 
