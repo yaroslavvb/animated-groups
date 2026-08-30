@@ -123,6 +123,14 @@ PALETTE = (
     "#D55E00",  # vermillion
     "#56B4E9",  # sky blue
 )
+PALETTE_NAME_BY_COLOR = {
+    "#0072B2": "blue",
+    "#E69F00": "orange",
+    "#009E73": "green",
+    "#CC79A7": "reddish purple",
+    "#D55E00": "vermillion",
+    "#56B4E9": "sky blue",
+}
 
 # The canonical affine presentations use the coordinates in
 # ``wallpaper_affine_generators.py``.  Static plates use a record-specific
@@ -2904,17 +2912,29 @@ def render_plate(record: dict[str, Any]) -> bytes:
     return buffer.getvalue()
 
 
-def _phase_legend(record: dict[str, Any]) -> str:
-    items = []
-    for residue in record["phase_residues"]:
-        items.append(
-            "<li>"
-            f"<span class=\"swatch\" style=\"--swatch: {escape(residue['color'])}\"></span>"
-            f"<span>{escape(residue['colour_label'])} · "
-            f"phase {escape(residue['phase'])}</span>"
-            "</li>"
-        )
-    return "\n".join(items)
+def _colour_order_html(record: dict[str, Any], placement: str) -> str:
+    """Render the same label-free colour sequence in both compact legends."""
+
+    if placement not in {"plate", "presentation"}:
+        raise ValueError(f"unsupported colour-order placement: {placement}")
+    colors = [residue["color"] for residue in record["phase_residues"]]
+    try:
+        color_names = [PALETTE_NAME_BY_COLOR[color] for color in colors]
+    except KeyError as error:
+        raise ValueError(f"unnamed colour-order swatch: {error.args[0]}") from error
+    swatches = "".join(
+        '<span class="colour-order-swatch" '
+        f'style="--colour-order-swatch: {escape(color)}" '
+        'aria-hidden="true"></span>'
+        for color in colors
+    )
+    accessible_order = escape("Colour order: " + ", ".join(color_names))
+    return (
+        f'<p class="colour-order colour-order--{placement}" '
+        f'role="img" aria-label="{accessible_order}">'
+        '<span class="colour-order-label" aria-hidden="true">order</span>'
+        f"{swatches}</p>"
+    )
 
 
 def _phase_profile(record: dict[str, Any]) -> str:
@@ -3755,12 +3775,6 @@ def _presentation_html(record: dict[str, Any]) -> str:
             "</tr>"
         )
     rows_html = "\n".join(rows)
-    palette = "".join(
-        '<span class="presentation-colour">'
-        f'<i style="--presentation-colour: {escape(PALETTE[index])}"></i>'
-        f'{chr(ord("A") + index)}</span>'
-        for index in range(record["clock_order"])
-    )
     source_differences = [
         generator
         for generator in presentation["generators"]
@@ -3804,7 +3818,7 @@ def _presentation_html(record: dict[str, Any]) -> str:
               <section class="group-presentation" aria-labelledby="{group_id}-presentation-title">
                 <div class="presentation-heading">
                   <h4 id="{group_id}-presentation-title">Presentation</h4>
-                  <p class="presentation-palette"><span>forward phase order</span>{palette}</p>
+                  {_colour_order_html(record, "presentation")}
                 </div>
                 <table data-presentation="{group_id}">
                   <caption class="visually-hidden">Chaim’s named geometric generators with fixed-clock powers and directed time shifts for {group_id}</caption>
@@ -4337,9 +4351,7 @@ def _entry_html(
                   {_plate_generator_overlay_html(record)}
                 </div>
                 <figcaption>
-                  <ol class="colour-key" aria-label="Colour and phase key">
-                    {_phase_legend(record)}
-                  </ol>
+                  {_colour_order_html(record, "plate")}
                 </figcaption>
               </figure>
               {_crystal_viewer_html(record, space_group, crystal_example)}

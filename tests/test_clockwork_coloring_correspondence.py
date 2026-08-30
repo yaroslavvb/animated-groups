@@ -1747,7 +1747,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn("cycles over", self.page)
         self.assertNotIn("may be the inverse", self.page)
         self.assertEqual(
-            self.page.count('class="presentation-palette"><span>forward phase order</span>'),
+            self.page.count('class="colour-order colour-order--presentation"'),
             len(self.page_groups),
         )
         self.assertNotIn('class="presentation-cyclic-key"', self.page)
@@ -1765,6 +1765,62 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count("fixed-clock powers and directed time shifts"),
             len(self.page_groups),
         )
+
+    def test_both_colour_legends_show_only_order_and_square_swatches(self) -> None:
+        expected_swatches = sum(
+            group["clock_order"] for group in self.page_groups
+        )
+        self.assertEqual(expected_swatches, 149)
+        self.assertEqual(
+            self.page.count('class="colour-order colour-order--plate"'),
+            len(self.page_groups),
+        )
+        self.assertEqual(
+            self.page.count('class="colour-order colour-order--presentation"'),
+            len(self.page_groups),
+        )
+        self.assertEqual(
+            self.page.count('role="img" aria-label="Colour order:'),
+            2 * len(self.page_groups),
+        )
+        self.assertEqual(
+            self.page.count(
+                '<span class="colour-order-label" aria-hidden="true">order</span>'
+            ),
+            2 * len(self.page_groups),
+        )
+        self.assertEqual(
+            self.page.count('class="colour-order-swatch"'),
+            2 * expected_swatches,
+        )
+
+        for group in self.page_groups:
+            section_start = self.page.index(
+                f'<section class="correspondence-entry" id="{group["id"]}"'
+            )
+            section_end = self.page.index("</section>", section_start)
+            section = self.page[section_start:section_end]
+            for placement in ("plate", "presentation"):
+                expected = correspondence._colour_order_html(group, placement)
+                self.assertIn(expected, section, group["id"])
+                visible = VisibleTextParser()
+                visible.feed(expected)
+                self.assertEqual("".join(visible.parts), "order", group["id"])
+
+        self.assertNotIn('class="colour-key"', self.page)
+        self.assertNotIn('class="presentation-palette"', self.page)
+        self.assertNotIn('class="presentation-colour"', self.page)
+        self.assertNotIn(" · phase ", self.page)
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".colour-order--plate", css)
+        self.assertIn(".colour-order--presentation", css)
+        self.assertIn(".colour-order-swatch", css)
+        self.assertIn("border-radius: 2px", css)
+        self.assertNotIn(".colour-key", css)
+        self.assertNotIn(".presentation-colour {", css)
+        self.assertNotIn(".presentation-colour i", css)
 
     def test_turn_hover_uses_one_counterclockwise_face_order_convention(self) -> None:
         turn_generators = [
