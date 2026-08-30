@@ -656,16 +656,6 @@ nav a[aria-current="page"] {
   vertical-align: 0.68em;
 }
 
-.group-id {
-  margin-left: 0.35rem;
-  color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  vertical-align: middle;
-}
-
 .entry-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
@@ -1123,8 +1113,19 @@ nav a[aria-current="page"] {
   pointer-events: none;
 }
 
-.term-help:hover .term-help-copy {
+.term-help:hover .term-help-copy,
+.term-help:focus-within .term-help-copy {
   display: block;
+}
+
+.term-help-copy strong,
+.term-help-copy > span {
+  display: block;
+}
+
+.term-help-copy strong {
+  margin-bottom: 0.18rem;
+  font-size: 0.68rem;
 }
 
 .other-names a {
@@ -1200,14 +1201,22 @@ nav a[aria-current="page"] {
   text-transform: uppercase;
 }
 
-.other-name-value {
-  display: grid;
-  gap: 0.16rem;
+.book-audit-value {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.22rem 0.62rem;
 }
 
-.other-name-value code {
-  color: var(--muted);
+.book-audit-limit {
+  width: fit-content;
+  padding: 0.08rem 0.3rem;
+  border-radius: 999px;
+  background: #eef3f0;
+  color: #59665f;
   font-size: 0.68rem;
+  font-weight: 620;
 }
 
 .fibrifold-name {
@@ -1219,11 +1228,41 @@ nav a[aria-current="page"] {
   white-space: nowrap;
 }
 
-.fibrifold-orientation-note {
-  max-width: 24rem;
+.other-name-list {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.5rem;
+}
+
+.identified-name {
+  position: static;
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.identified-name + .identified-name::before {
+  margin-right: 0.5rem;
+  content: "·";
   color: var(--muted);
-  font-size: 0.66rem;
-  line-height: 1.35;
+}
+
+.identified-name .term-help-label {
+  padding-right: 0;
+}
+
+.identified-name .term-help-label::after {
+  content: none;
+}
+
+.identified-name .term-help-copy {
+  right: 0;
+  left: auto;
+  width: min(19rem, calc(100vw - 3rem));
+  white-space: normal;
 }
 
 .book-page-link {
@@ -1270,6 +1309,20 @@ nav a[aria-current="page"] {
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 550;
+}
+
+.short-form-support {
+  display: inline-flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.18rem 0.42rem;
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.short-form-support-label {
+  font-weight: 620;
 }
 
 .short-form-support-links {
@@ -1860,6 +1913,11 @@ a.short-signature-link[data-book-excerpt]::after {
   .other-names li {
     grid-template-columns: 1fr;
     gap: 0.14rem;
+  }
+
+  .identified-name .term-help-copy {
+    right: auto;
+    left: 0;
   }
 
   .extra-links-list {

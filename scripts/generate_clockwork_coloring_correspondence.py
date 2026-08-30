@@ -74,7 +74,7 @@ CORRESPONDENCE_SCRIPT_SRC = (
 )
 CRYSTAL_VIEWER_SCRIPT_SRC = "crystal-viewer.js?v=one-live-real-crystal-viewer"
 SPACE_TIME_PREVIEW_VERSION = "stacked-clock-period"
-BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
+BOOK_EXCERPT_VIEWER_VERSION = "short-signature-audit-v2"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -338,26 +338,18 @@ FIBRIFOLD_ENANTIOMORPHIC_IDS = frozenset({
 
 TERM_HELP = {
     "Book type audit": (
-        "The book page or table used to audit the parent/kernel colour type; the "
-        "clickable short form in the heading uses its own signature-cell crop."
+        "The book crop supporting the displayed short form. For a composite "
+        "cyclic extension with no literal book row, this uses the nearest "
+        "available rule or type audit and marks that limitation."
     ),
     "Catalog instance": (
         "The matching animated example in the forward-time catalog; gN is this "
         "project's record identifier."
     ),
-    "Colour-fixing plane-group type K": (
-        "The normal subgroup K ≤ G whose operations leave every colour class "
-        "unchanged: the kernel of G → C_N."
-    ),
     "Conway fibrifold notation": (
         "Conway's decorated orbifold name for this lift. It records the horizontal "
         "base orbifold and the fractional height translations coupled to its "
         "generators; this page uses the alias for the chosen height direction."
-    ),
-    "Height-lift space-group type": (
-        "Treat colour phase as a periodic height z. A planar operation with phase "
-        "shift τ lifts to (x, y, z) ↦ (M(x, y) + v, z + τ), producing this "
-        "three-dimensional space-group type."
     ),
     "Complementary forward skips": (
         "The paired entry replaces every +k/N period skip by +(N−k)/N modulo "
@@ -674,7 +666,7 @@ def _mapped_book_excerpt(excerpt_key: str, printed_page: int) -> dict[str, Any]:
         "printed_page": printed_page,
         "pdf_page": printed_page + 19,
         "source_url": BOOK_PAGE_URL.format(page=printed_page),
-        "highlight_target": "short-signature-and-type",
+        "highlight_target": "short-signature",
         "excerpt_key": excerpt_key,
     }
 
@@ -2427,9 +2419,10 @@ def validate_payload(payload: dict[str, Any]) -> None:
             if signature_excerpt is not None:
                 raise ValueError(f"derived short form claims a direct crop in {group_id}")
         elif order > 1:
-            if not signature_excerpt or signature_excerpt.get("highlight_target") not in {
-                "short-signature", "short-signature-and-type",
-            }:
+            if (
+                not signature_excerpt
+                or signature_excerpt.get("highlight_target") != "short-signature"
+            ):
                 raise ValueError(f"short form lacks matching crop metadata in {group_id}")
             if not (ROOT / signature_excerpt["image"]).is_file():
                 raise ValueError(f"short-form crop is missing in {group_id}")
@@ -3711,6 +3704,11 @@ def _presentation_html(record: dict[str, Any]) -> str:
     rows = []
     for generator in presentation["generators"]:
         power = generator["clock_power"]
+        colour_action = (
+            "none"
+            if power % record["clock_order"] == 0
+            else _clock_power_html(record["clock_order"], power)
+        )
         rows.append(
             '<tr class="presentation-generator-row">'
             '<th scope="row"><span class="presentation-generator-identity">'
@@ -3721,7 +3719,7 @@ def _presentation_html(record: dict[str, Any]) -> str:
             f'data-clock-power="{power}" '
             f'data-fixed-cycle="{escape(generator["cycle_notation"])}" '
             f'data-source-cycle="{escape(generator["source_cycle_notation"])}">'
-            f'{_clock_power_html(record["clock_order"], power)}</td>'
+            f'{colour_action}</td>'
             f'<td class="presentation-time-action" data-time-shift="{escape(generator["time_shift"])}">'
             f'{escape(generator["time_shift_label"])}</td>'
             "</tr>"
@@ -3742,7 +3740,10 @@ def _presentation_html(record: dict[str, Any]) -> str:
         f'A row with Time +k/{record["clock_order"]} has Color '
         f'C<sub>{record["clock_order"]}</sub><sup>k</sup>: k forward ticks '
         f'modulo {record["clock_order"]}. C<sub>{record["clock_order"]}</sub>'
-        '<sup>0</sup> is shown as “none.”</p>'
+        '<sup>0</sup> is shown as “none.” C<sub>N</sub> is a color/time cycle, '
+        'not a spatial rotation, so it is neither clockwise nor counterclockwise. '
+        'Spatial rotation angles are measured counterclockwise when the pattern is '
+        'viewed from the front of the page.</p>'
     )
     source_differences = [
         generator
@@ -3840,6 +3841,8 @@ def _book_link(
     reference: dict[str, Any],
     css_class: str,
     label: str,
+    *,
+    short_signature: bool = False,
 ) -> str:
     excerpt = BOOK_EXCERPTS[reference["excerpt_key"]]
     resolved = {
@@ -3851,6 +3854,7 @@ def _book_link(
         excerpt["key"],
         css_class,
         escape(label),
+        short_signature=short_signature,
     )
 
 
@@ -3978,58 +3982,114 @@ def _short_form_support_html(record: dict[str, Any]) -> str:
     if not links:
         return ""
     return (
-        '<li class="short-form-support"><span class="other-name-category">'
+        '<span class="short-form-support"><span class="short-form-support-label">'
         'Short-form evidence</span><span class="short-form-support-links">'
         + '<span aria-hidden="true"> · </span>'.join(links)
-        + "</span></li>"
+        + "</span></span>"
     )
 
 
-def _other_names_html(record: dict[str, Any], space_group: dict[str, Any]) -> str:
-    """Link the book, plane-group kernel, and height-lift identities."""
+def _identified_name_html(
+    category: str,
+    value_html: str,
+    *,
+    extra_help: str = "",
+) -> str:
+    """Render one compact name whose category is revealed on hover."""
 
-    group_id = escape(record["id"])
-    kernel_hm = record["kernel"]["hm"]
-    kernel_url = IUCR_PLANE_GROUP_URL.format(
-        number=PLANE_GROUP_NUMBER_BY_HM[kernel_hm]
+    help_text = TERM_HELP[category]
+    if extra_help:
+        help_text = f"{help_text} {extra_help}"
+    tooltip = f"{category}: {help_text}"
+    return (
+        f'<span class="identified-name term-help" data-name-system="{escape(category)}" '
+        f'title="{escape(tooltip)}">'
+        f'<span class="term-help-label">{value_html}</span>'
+        f'<span class="term-help-copy" aria-hidden="true"><strong>{escape(category)}</strong>'
+        f'<span>{escape(help_text)}</span></span></span>'
     )
-    space_number = space_group["it_number"]
-    space_hm = _hm_html(space_group["hm_short"])
-    fibrifold = FIBRIFOLD_BY_ID[record["id"]]
-    fibrifold_orientation_note = ""
-    if record["id"] in FIBRIFOLD_ENANTIOMORPHIC_IDS:
-        fibrifold_orientation_note = (
-            '<small class="fibrifold-orientation-note">Two orientations share this '
-            'fibrifold name; the space-group name below selects this handed form.</small>'
+
+
+def _book_audit_link_html(record: dict[str, Any]) -> str:
+    """Prefer a literal short-form crop, falling back only when none exists."""
+
+    evidence = record["signature_evidence"]
+    excerpt = evidence.get("excerpt")
+    if excerpt:
+        excerpt_id = (
+            evidence.get("source_colour_group_id")
+            or excerpt.get("excerpt_key")
+            or f'{record["id"]}-short-form'
         )
-    primary_book_reference = next(
+        return _excerpt_link(
+            excerpt,
+            f"book-audit::{excerpt_id}",
+            "book-page-link",
+            escape(
+                "The Symmetries of Things "
+                f"· p. {excerpt['printed_page']}"
+            ),
+            short_signature=True,
+        )
+
+    primary_reference = next(
         reference
         for reference in record["book_audit"]["references"]
         if reference["role"] == "primary"
     )
-    book_link = _book_link(
-        primary_book_reference,
+    link = _book_link(
+        primary_reference,
         "book-page-link",
-        f"The Symmetries of Things · p. {primary_book_reference['printed_page']}",
+        f"The Symmetries of Things · p. {primary_reference['printed_page']}",
+        short_signature=record["clock_order"] == 1,
+    )
+    if evidence["status"] != "rule-extension":
+        return link
+    return (
+        f'{link}<span class="book-audit-limit" '
+        'title="The book does not print a literal row for this composite cyclic '
+        'short form.">no literal row; short form derived</span>'
+    )
+
+
+def _other_names_html(record: dict[str, Any]) -> str:
+    """Render one book-audit row and one wrapping row of alternate names."""
+
+    group_id = escape(record["id"])
+    fibrifold = FIBRIFOLD_BY_ID[record["id"]]
+    fibrifold_extra_help = ""
+    if record["id"] in FIBRIFOLD_ENANTIOMORPHIC_IDS:
+        fibrifold_extra_help = (
+            "Two orientations share this fibrifold name; the current catalog "
+            "record selects one orientation."
+        )
+    book_link = _book_audit_link_html(record)
+    catalog_name = _identified_name_html(
+        "Catalog instance",
+        f'<a href="{escape(record["catalog_url"])}">{group_id}</a>',
+    )
+    fibrifold_name = _identified_name_html(
+        "Conway fibrifold notation",
+        (
+            f'<span class="fibrifold-name" aria-label="{escape(fibrifold)}">'
+            f'{fibrifold_html(fibrifold)}</span>'
+        ),
+        extra_help=fibrifold_extra_help,
     )
     mate_html = ""
     if record["complementary_skip_mate"]:
         mate_id = escape(record["complementary_skip_mate"])
-        mate_html = (
-            f'<li>{_term_help_html("Complementary forward skips")}<a href="#{mate_id}">{mate_id}</a></li>'
+        mate_html = _identified_name_html(
+            "Complementary forward skips",
+            f'<a href="#{mate_id}">{mate_id}</a>',
         )
     short_form_support = _short_form_support_html(record)
     return f"""
               <section class="other-names" aria-labelledby="{group_id}-other-names-title">
                 <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
-                  <li>{_term_help_html("Book type audit")}{book_link}</li>
-                  <li>{_term_help_html("Catalog instance")}<a href="{escape(record['catalog_url'])}">{group_id}</a></li>
-                  <li>{_term_help_html("Colour-fixing plane-group type K")}<a href="{escape(kernel_url)}">{_plane_group_name_html(kernel_hm)}</a></li>
-                  <li>{_term_help_html("Conway fibrifold notation")}<span class="other-name-value"><span class="fibrifold-name" aria-label="{escape(fibrifold)}">{fibrifold_html(fibrifold)}</span>{fibrifold_orientation_note}</span></li>
-                  <li>{_term_help_html("Height-lift space-group type")}<span class="other-name-value"><a href="space-group-correspondence.html#{group_id}">No. {space_number} {space_hm}</a><code>Hall {escape(space_group['hall'])}</code></span></li>
-                  {short_form_support}
-                  {mate_html}
+                  <li class="book-audit-row">{_term_help_html("Book type audit")}<span class="book-audit-value">{book_link}{short_form_support}</span></li>
+                  <li class="other-names-row"><span class="other-name-category">Other names</span><span class="other-name-list">{catalog_name}{fibrifold_name}{mate_html}</span></li>
                 </ul>
               </section>"""
 
@@ -4237,7 +4297,7 @@ def _entry_html(
       <li class="correspondence-item">
         <section class="correspondence-entry" id="{group_id}" aria-labelledby="{group_id}-title" data-clockwork-tabpanel data-clock-order="{order}">
           <header class="entry-header">
-            <h3 id="{group_id}-title">{short_signature_html} <span class="group-id">{group_id}</span></h3>
+            <h3 id="{group_id}-title">{short_signature_html}</h3>
             {signature_status_html}
             {clockwork_disambiguator}
           </header>
@@ -4261,7 +4321,7 @@ def _entry_html(
 
             <div class="entry-copy">
               {_presentation_html(record)}
-              {_other_names_html(record, space_group)}
+              {_other_names_html(record)}
               {_extra_links_html(record, space_group)}
             </div>
           </div>
@@ -4415,6 +4475,8 @@ def page_html(payload: dict[str, Any]) -> str:
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for group in groups:
         grouped[group["parent"]["hm"]].append(group)
+    for family_groups in grouped.values():
+        family_groups.sort(key=lambda group: group["clock_order"] == 1)
     trivial_by_base = {group["parent"]["hm"]: group for group in trivial_groups}
     if set(trivial_by_base) != set(BASE_ORDER):
         raise ValueError("expected one trivial product for every wallpaper group")

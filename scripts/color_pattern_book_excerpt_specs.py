@@ -79,6 +79,27 @@ SOT_TWO_ROW: dict[str, tuple[int, float, float]] = {
     "◦/◦": (141, 331.5, 26),
 }
 
+# Most Table 11.1 rows contain one short signature, so their outline can span
+# the complete short-form cell.  These rows instead print equivalent
+# alternatives (or an ``etc.`` family) and the atlas deliberately displays the
+# first one.  The tighter source-PDF x spans isolate that exact representative
+# and do not run into the ``Number`` column.
+SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X: dict[str, tuple[float, float]] = {
+    "2222/2222": (211.0, 40.5),
+    "*2222/*2222": (314.0, 45.0),
+    "*2222/**": (300.5, 45.0),
+    "*2222/2*22": (314.0, 45.0),
+    "*2222/22*": (314.0, 45.0),
+    "22*/22*": (314.5, 29.5),
+    "22*/22×": (314.5, 29.5),
+    "22×/××": (207.0, 32.0),
+    "2*22/*×": (310.3, 34.2),
+    "2*22/22*": (310.3, 34.2),
+    "442/442": (313.5, 33.0),
+    "*442/4*2": (309.5, 35.5),
+    "*442/*442": (309.5, 35.5),
+}
+
 
 # Table 12.1 row baselines.  The 632^3//333 short-signature cell is blank in
 # print; outlining the empty cell records that omission rather than inventing
@@ -380,7 +401,16 @@ def build_excerpt_specs(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
         excerpt = group["book_excerpt"]
         if group["number_of_colours"] == 2:
             page, y, height = SOT_TWO_ROW[raw_type]
-            highlight = (300.0, y, 137.0, height) if page == 140 else (225.0, y, 112.0, height)
+            representative_span = SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X.get(raw_type)
+            if representative_span is None:
+                highlight = (
+                    (300.0, y, 137.0, height)
+                    if page == 140
+                    else (225.0, y, 112.0, height)
+                )
+            else:
+                highlight_x, highlight_width = representative_span
+                highlight = (highlight_x, y, highlight_width, height)
             panels = (
                 {"printed_page": 140, "pdf_page": 159, "crop": (198, 143, 324, 454)},
                 {"printed_page": 141, "pdf_page": 160, "crop": (105, 140, 294, 225)},

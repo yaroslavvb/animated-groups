@@ -23,9 +23,11 @@ from chaim_short_signatures import (  # noqa: E402
 from color_pattern_book_excerpt_specs import (  # noqa: E402
     GS_PAGE_SLOTS,
     SOT_THREE_ROW,
+    SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X,
     SOT_TWO_ROW,
     build_excerpt_specs,
 )
+from tos_book_excerpt_specs import BOOK_EXCERPTS  # noqa: E402
 from wallpaper_affine_generators import (  # noqa: E402
     affine_relations_hold,
     colour_blind_discrepancy,
@@ -811,6 +813,35 @@ class ColorPatternCatalogTests(unittest.TestCase):
             specs["output/color-pattern-excerpts/tos-cg-pg-2-1.webp"]["highlight"],
             (225.0, 309.5, 112.0, 18),
         )
+        representative_groups = {
+            group["chaim_notation"]: group
+            for group in groups
+            if group["chaim_notation"] in SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X
+        }
+        self.assertEqual(
+            set(representative_groups),
+            set(SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X),
+        )
+        for notation, (highlight_x, highlight_width) in (
+            SOT_TWO_REPRESENTATIVE_HIGHLIGHT_X.items()
+        ):
+            group = representative_groups[notation]
+            page, y, height = SOT_TWO_ROW[notation]
+            self.assertEqual(
+                specs[group["book_excerpt"]["image"]]["highlight"],
+                (highlight_x, y, highlight_width, height),
+            )
+            number_column_x = 401.4 if page == 140 else 284.8
+            self.assertLess(highlight_x + highlight_width, number_column_x)
+
+        self.assertEqual(
+            BOOK_EXCERPTS["p164::632³/2222-exact"]["highlight"],
+            (307, 354, 72, 18),
+        )
+        self.assertIn(
+            "short form is ³6³3¹2",
+            BOOK_EXCERPTS["p164::632³/2222-exact"]["context"],
+        )
         blank_short = next(group for group in groups if group["chaim_notation"] == "632³//333")
         self.assertIn("leaves this short-signature cell blank", blank_short["book_excerpt"]["context"])
         corrected_pmg = next(group for group in groups if group["chaim_notation"] == "22*³//××")
@@ -838,6 +869,96 @@ class ColorPatternCatalogTests(unittest.TestCase):
                 self.assertGreaterEqual(crop_y, 0)
                 self.assertLessEqual(crop_x + crop_width, 545)
                 self.assertLessEqual(crop_y + crop_height, 646)
+
+    def test_every_sot_outline_is_baked_into_the_short_form_column(self) -> None:
+        specs = {
+            path: spec
+            for path, spec in build_excerpt_specs(self.payload).items()
+            if spec["kind"] == "sot"
+        }
+        self.assertEqual(len(specs), 69)
+
+        # These bounds stop before the printed Colour Type column on each
+        # source page. A type-cell rectangle, including the former g129
+        # p140::*442/*2222 target, cannot satisfy them.
+        short_form_column_bounds = {
+            140: (295.0, 445.0),
+            141: (200.0, 338.0),
+            156: (325.0, 421.0),
+        }
+
+        def framed_highlight_box(spec: dict[str, object]) -> tuple[int, int, int, int]:
+            scale = 3  # 216 DPI source render / 72 PDF points per inch.
+            panels = spec["table_panels"]
+            assert isinstance(panels, tuple)
+            panel_widths = []
+            panel_heights = []
+            for panel in panels:
+                crop_x, crop_y, crop_width, crop_height = panel["crop"]
+                panel_widths.append(
+                    round((crop_x + crop_width) * scale) - round(crop_x * scale)
+                )
+                panel_heights.append(
+                    round((crop_y + crop_height) * scale) - round(crop_y * scale)
+                )
+
+            content_width = max(panel_widths)
+            highlight_x, highlight_y, highlight_width, highlight_height = spec[
+                "highlight"
+            ]
+            y_offset = 0
+            for index, panel in enumerate(panels):
+                crop_x, crop_y, _crop_width, _crop_height = panel["crop"]
+                if panel["pdf_page"] == spec["pdf_page"]:
+                    x_offset = (content_width - panel_widths[index]) // 2
+                    padding = 12
+                    return (
+                        padding
+                        + x_offset
+                        + round(highlight_x * scale)
+                        - round(crop_x * scale),
+                        padding
+                        + y_offset
+                        + round(highlight_y * scale)
+                        - round(crop_y * scale),
+                        padding
+                        + x_offset
+                        + round((highlight_x + highlight_width) * scale)
+                        - round(crop_x * scale),
+                        padding
+                        + y_offset
+                        + round((highlight_y + highlight_height) * scale)
+                        - round(crop_y * scale),
+                    )
+                y_offset += panel_heights[index] + 18
+            self.fail(f"highlight page missing from table panels: {spec}")
+
+        def is_outline_red(pixel: tuple[int, int, int]) -> bool:
+            red, green, blue = pixel
+            return red > 130 and red - green > 65 and red - blue > 80
+
+        for path, spec in specs.items():
+            page = spec["printed_page"]
+            highlight_x, _highlight_y, highlight_width, _highlight_height = spec[
+                "highlight"
+            ]
+            column_left, column_right = short_form_column_bounds[page]
+            self.assertGreaterEqual(highlight_x, column_left, path)
+            self.assertLessEqual(highlight_x + highlight_width, column_right, path)
+
+            with Image.open(ROOT / path) as image:
+                rgb = image.convert("RGB")
+                left, top, right, bottom = framed_highlight_box(spec)
+                edge_midpoints = (
+                    (left, (top + bottom) // 2),
+                    (right, (top + bottom) // 2),
+                    ((left + right) // 2, top),
+                    ((left + right) // 2, bottom),
+                )
+                self.assertTrue(
+                    all(is_outline_red(rgb.getpixel(point)) for point in edge_midpoints),
+                    f"{path} does not contain the configured short-form outline",
+                )
 
     def test_one_colour_pattern_links_are_honest_chapter_8_cross_references(self) -> None:
         one_colour = [
