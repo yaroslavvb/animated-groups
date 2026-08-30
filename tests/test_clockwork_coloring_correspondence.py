@@ -110,6 +110,13 @@ class CorrespondenceParser(HTMLParser):
         self.plate_generator_axes: list[str] = []
         self.plate_quarter_arrows = 0
         self.plate_quarter_arrow_halos = 0
+        self.crystal_viewers: list[dict[str, str | None]] = []
+        self.crystal_stages: list[dict[str, str | None]] = []
+        self.crystal_load_buttons: list[dict[str, str | None]] = []
+        self.crystal_close_buttons: list[dict[str, str | None]] = []
+        self.crystal_previews: list[dict[str, str | None]] = []
+        self.crystal_frame_hosts: list[dict[str, str | None]] = []
+        self.iframes: list[dict[str, str | None]] = []
         self.book_links: list[tuple[str, str, str]] = []
         self.book_excerpt_links: list[dict[str, str | None]] = []
         self.book_dialog_ids: list[str] = []
@@ -256,6 +263,20 @@ class CorrespondenceParser(HTMLParser):
             self.book_excerpt_images.append(attributes)
         if tag == "figure" and "clockwork-film" in classes:
             self.film_group_ids.append(attributes.get("data-group-id", ""))
+        if tag == "figure" and "crystal-viewer" in classes:
+            self.crystal_viewers.append(attributes)
+        if "crystal-viewer-stage" in classes:
+            self.crystal_stages.append(attributes)
+        if tag == "button" and "data-crystal-load" in attributes:
+            self.crystal_load_buttons.append(attributes)
+        if tag == "button" and "data-crystal-close" in attributes:
+            self.crystal_close_buttons.append(attributes)
+        if tag == "img" and "crystal-viewer-preview" in classes:
+            self.crystal_previews.append(attributes)
+        if "data-crystal-frame" in attributes:
+            self.crystal_frame_hosts.append(attributes)
+        if tag == "iframe":
+            self.iframes.append(attributes)
         if tag == "canvas" and "clockwork-canvas" in classes:
             self.canvases.append(
                 (
@@ -382,6 +403,12 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         cls.page = correspondence.PAGE.read_text(encoding="utf-8")
         cls.parser = CorrespondenceParser()
         cls.parser.feed(cls.page)
+        cls.page_groups = [
+            group
+            for base in correspondence.BASE_ORDER
+            for group in cls.payload["groups"]
+            if group["parent"]["hm"] == base
+        ]
         cls.display_groups = [
             group
             for base in correspondence.BASE_ORDER
@@ -394,20 +421,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             for group in cls.payload["groups"]
             if group["parent"]["hm"] == base and group["clock_order"] == 1
         ]
+        cls.crystal_examples = json.loads(
+            (ROOT / "data" / "crystal-examples.json").read_text(encoding="utf-8")
+        )
 
-    def test_68_record_source_renders_exactly_51_nontrivial_sections(self) -> None:
+    def test_68_record_source_renders_all_68_full_sections(self) -> None:
         groups = self.payload["groups"]
         manifest = json.loads(correspondence.MANIFEST.read_text(encoding="utf-8"))
         ids = [group["id"] for group in groups]
-        display_ids = [group["id"] for group in self.display_groups]
+        page_ids = [group["id"] for group in self.page_groups]
         trivial_ids = [group["id"] for group in self.trivial_groups]
         self.assertEqual(self.payload["meta"]["schema_version"], 9)
         self.assertEqual(len(groups), 68)
-        self.assertEqual(len(display_ids), correspondence.DISPLAYED_GROUP_COUNT)
-        self.assertEqual(len(trivial_ids), correspondence.OMITTED_TRIVIAL_COUNT)
-        self.assertEqual(self.parser.section_ids, display_ids)
-        self.assertTrue(set(display_ids).isdisjoint(trivial_ids))
-        self.assertEqual(self.parser.trivial_product_ids, trivial_ids)
+        self.assertEqual(len(page_ids), 68)
+        self.assertEqual(len(trivial_ids), 17)
+        self.assertEqual(self.parser.section_ids, page_ids)
+        self.assertEqual(self.parser.trivial_product_ids, [])
         self.assertEqual(ids, [group["id"] for group in manifest["groups"]])
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(
@@ -428,39 +457,36 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             else:
                 end = self.page.index('<section class="provenance"')
             family_html = self.page[start:end]
-            trivial_position = family_html.index("data-trivial-product")
-            content_marker = (
-                "data-clockwork-tabs"
-                if any(group["parent"]["hm"] == base for group in self.display_groups)
-                else "</header>"
+            family_groups = [
+                group for group in self.page_groups if group["parent"]["hm"] == base
+            ]
+            self.assertEqual(family_html.count("data-clockwork-tabs"), 1, base)
+            self.assertEqual(
+                family_html.count('class="correspondence-entry"'),
+                len(family_groups),
+                base,
             )
-            self.assertGreater(trivial_position, family_html.index(content_marker), base)
-            self.assertEqual(family_html.count("data-trivial-product"), 1, base)
-            self.assertIn('class="trivial-product"', family_html)
+            self.assertNotIn("data-trivial-product", family_html)
+            self.assertNotIn('class="trivial-product"', family_html)
 
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
             encoding="utf-8"
         )
-        self.assertIn(".trivial-product", css)
-        self.assertIn("background: #f1f2f1", css)
-        self.assertIn("color: #7b837f", css)
+        self.assertNotIn(".trivial-product", css)
         self.assertNotIn("family-omission", self.page)
 
-    def test_17_wallpaper_sections_have_tabs_only_for_nontrivial_groups(self) -> None:
+    def test_all_17_wallpaper_sections_have_tabs_for_every_forward_group(self) -> None:
         self.assertEqual(
             self.parser.family_ids,
             [f"wallpaper-{base}" for base in correspondence.BASE_ORDER],
         )
-        display_ids = [group["id"] for group in self.display_groups]
+        page_ids = [group["id"] for group in self.page_groups]
         self.assertEqual(
             self.parser.tabs,
-            [(f"tab-{group_id}", f"#{group_id}", group_id) for group_id in display_ids],
+            [(f"tab-{group_id}", f"#{group_id}", group_id) for group_id in page_ids],
         )
-        self.assertEqual(self.parser.tabbar_count, 14)
-        self.assertEqual(
-            self.parser.empty_family_ids,
-            ["wallpaper-p1", "wallpaper-pm", "wallpaper-pg"],
-        )
+        self.assertEqual(self.parser.tabbar_count, 17)
+        self.assertEqual(self.parser.empty_family_ids, [])
         for base in correspondence.BASE_ORDER:
             summary = correspondence.WALLPAPER_SUMMARIES[base]
             self.assertIn(correspondence.orbifold_html(summary), self.page)
@@ -482,6 +508,147 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn('if (previousId !== groupId)', script)
         self.assertIn('if (inactive && inactive !== active)', script)
 
+    def test_crystal_example_map_is_complete_pinned_and_auditable(self) -> None:
+        examples = self.crystal_examples["groups"]
+        source_ids = [group["id"] for group in self.payload["groups"]]
+        example_ids = [example["id"] for example in examples]
+        self.assertEqual(len(examples), 68)
+        self.assertEqual(len(example_ids), len(set(example_ids)))
+        self.assertEqual(example_ids, source_ids)
+        self.assertEqual(self.crystal_examples["meta"]["groups"], 68)
+        self.assertEqual(
+            Counter(example["provider"] for example in examples),
+            Counter({"sketchfab": 67, "3dmol-cod": 1}),
+        )
+
+        space_payload = json.loads(
+            correspondence.SPACE_GROUP_DATA.read_text(encoding="utf-8")
+        )
+        space_by_id = {
+            record["id"]: record["space_group"]
+            for record in space_payload["groups"]
+        }
+        for example in examples:
+            group_id = example["id"]
+            self.assertEqual(example["it_number"], space_by_id[group_id]["it_number"])
+            self.assertEqual(example["hm_short"], space_by_id[group_id]["hm_short"])
+            self.assertTrue(example["crystal_name"], group_id)
+            self.assertEqual(urlparse(example["source_url"]).scheme, "https", group_id)
+            self.assertEqual(
+                urlparse(example["source_url"]).netloc,
+                "crystalsymmetry.wordpress.com",
+                group_id,
+            )
+            self.assertNotIn("embed_url", example, group_id)
+
+            if example["provider"] == "sketchfab":
+                self.assertEqual(len(example["model_uid"]), 32, group_id)
+                self.assertTrue(
+                    all(character in "0123456789abcdef" for character in example["model_uid"]),
+                    group_id,
+                )
+                self.assertTrue(example["model_name"], group_id)
+                self.assertTrue(example["creator"], group_id)
+                viewer = urlparse(example["viewer_url"])
+                self.assertEqual(viewer.scheme, "https", group_id)
+                self.assertEqual(viewer.netloc, "sketchfab.com", group_id)
+                self.assertIn(example["model_uid"], viewer.path, group_id)
+            else:
+                self.assertEqual(group_id, "g247")
+                self.assertEqual(str(example["cod_id"]), "2101517")
+                self.assertEqual(
+                    example["cif_url"],
+                    "https://www.crystallography.net/cod/2101517.cif",
+                )
+                self.assertEqual(
+                    urlparse(example["viewer_url"]).netloc,
+                    "www.crystallography.net",
+                )
+
+        mismatches = [
+            example for example in examples if example["reference_match"] != "exact"
+        ]
+        self.assertEqual([example["id"] for example in mismatches], ["g7"])
+        self.assertTrue(mismatches[0]["note"])
+
+    def test_every_entry_has_a_lazy_real_crystal_viewer(self) -> None:
+        examples = self.crystal_examples["groups"]
+        example_by_id = {example["id"]: example for example in examples}
+        page_ids = [group["id"] for group in self.page_groups]
+        self.assertEqual(len(self.parser.crystal_viewers), 68)
+        self.assertEqual(
+            [attributes.get("data-group-id") for attributes in self.parser.crystal_viewers],
+            page_ids,
+        )
+        self.assertEqual(len(self.parser.crystal_stages), 68)
+        self.assertEqual(len(self.parser.crystal_load_buttons), 68)
+        self.assertEqual(len(self.parser.crystal_close_buttons), 68)
+        self.assertEqual(len(self.parser.crystal_previews), 68)
+        self.assertEqual(len(self.parser.crystal_frame_hosts), 68)
+        self.assertEqual(self.parser.iframes, [])
+
+        for viewer in self.parser.crystal_viewers:
+            group_id = viewer.get("data-group-id") or ""
+            example = example_by_id[group_id]
+            self.assertIn("data-crystal-viewer", viewer)
+            self.assertEqual(viewer.get("data-provider"), example["provider"])
+            embed = urlparse(viewer.get("data-crystal-embed") or "")
+            self.assertEqual(embed.scheme, "https", group_id)
+            if example["provider"] == "sketchfab":
+                self.assertEqual(embed.netloc, "sketchfab.com", group_id)
+                self.assertEqual(
+                    embed.path,
+                    f'/models/{example["model_uid"]}/embed',
+                    group_id,
+                )
+            else:
+                self.assertEqual(embed.netloc, "3dmol.org", group_id)
+                self.assertEqual(embed.path, "/viewer.html", group_id)
+                query = parse_qs(embed.query)
+                self.assertEqual(query.get("url"), [example["cif_url"]])
+                self.assertEqual(query.get("type"), ["cif"])
+
+        self.assertEqual(
+            [attributes.get("id") for attributes in self.parser.crystal_stages],
+            [f"{group_id}-crystal-stage" for group_id in page_ids],
+        )
+        self.assertEqual(
+            [attributes.get("aria-describedby") for attributes in self.parser.crystal_stages],
+            [f"{group_id}-crystal-status" for group_id in page_ids],
+        )
+        self.assertEqual(
+            [attributes.get("aria-controls") for attributes in self.parser.crystal_load_buttons],
+            [f"{group_id}-crystal-stage" for group_id in page_ids],
+        )
+        self.assertTrue(
+            all(
+                attributes.get("type") == "button"
+                for attributes in self.parser.crystal_load_buttons
+                + self.parser.crystal_close_buttons
+            )
+        )
+        self.assertEqual(
+            [attributes.get("src") for attributes in self.parser.crystal_previews],
+            [f"output/space-groups/{group_id}.webp" for group_id in page_ids],
+        )
+        self.assertTrue(
+            all(attributes.get("alt") for attributes in self.parser.crystal_previews)
+        )
+
+        self.assertEqual(self.page.count(escape(example_by_id["g7"]["note"])), 1)
+
+    def test_crystal_viewer_module_allows_only_one_live_iframe(self) -> None:
+        script_path = ROOT / "crystal-viewer.js"
+        self.assertTrue(script_path.is_file())
+        script = script_path.read_text(encoding="utf-8")
+        self.assertEqual(script.count("let activeRoot = null"), 1)
+        self.assertIn('document.querySelectorAll("[data-crystal-viewer]")', script)
+        self.assertIn('document.createElement("iframe")', script)
+        self.assertIn('document.addEventListener("clockwork:tab-change"', script)
+        self.assertIn("activeRoot", script)
+        self.assertIn("frameHost.replaceChildren()", script)
+        self.assertNotIn("https://cdn", script)
+
     def test_generated_page_has_no_wolfram_or_mathematica_content(self) -> None:
         self.assertNotIn("Wolfram", self.page)
         self.assertNotIn("Mathematica", self.page)
@@ -495,20 +662,20 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
     def test_every_row_has_an_exact_forward_catalog_deep_link(self) -> None:
         expected = [
             f"{correspondence.CATALOG_ROOT}#{group['id']}"
-            for group in self.display_groups
+            for group in self.page_groups
         ]
         self.assertEqual(self.parser.catalog_links, expected)
 
     def test_every_row_has_identifications_and_complete_extra_catalogues(self) -> None:
-        display_ids = [group["id"] for group in self.display_groups]
-        self.assertEqual(self.parser.other_names_ids, display_ids)
+        page_ids = [group["id"] for group in self.page_groups]
+        self.assertEqual(self.parser.other_names_ids, page_ids)
         self.assertEqual(
             self.page.count("Identifications"),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count('<span class="term-help-label" aria-hidden="true">Book type audit</span>'),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
 
         space_payload = json.loads(
@@ -518,18 +685,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             record["id"]: record["space_group"]
             for record in space_payload["groups"]
         }
-        page_groups = []
-        for base in correspondence.BASE_ORDER:
-            page_groups.extend(
-                group
-                for group in self.payload["groups"]
-                if group["parent"]["hm"] == base and group["clock_order"] > 1
-            )
-            page_groups.extend(
-                group
-                for group in self.payload["groups"]
-                if group["parent"]["hm"] == base and group["clock_order"] == 1
-            )
+        page_groups = self.page_groups
         page_ids = [group["id"] for group in page_groups]
         self.assertEqual(self.parser.extra_links_ids, page_ids)
         self.assertEqual(len(set(self.parser.extra_links_ids)), 68)
@@ -579,14 +735,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         expected_plane_links = []
         expected_parent_links = []
         for group in page_groups:
-            if group["clock_order"] > 1:
-                expected_plane_links.append(
-                    correspondence.IUCR_PLANE_GROUP_URL.format(
-                        number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
-                            group["kernel"]["hm"]
-                        ]
-                    )
+            expected_plane_links.append(
+                correspondence.IUCR_PLANE_GROUP_URL.format(
+                    number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
+                        group["kernel"]["hm"]
+                    ]
                 )
+            )
             parent_link = correspondence.IUCR_PLANE_GROUP_URL.format(
                 number=correspondence.PLANE_GROUP_NUMBER_BY_HM[
                     group["parent"]["hm"]
@@ -604,7 +759,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertEqual(
             self.parser.height_lift_links,
-            [f"space-group-correspondence.html#{group_id}" for group_id in display_ids],
+            [f"space-group-correspondence.html#{group_id}" for group_id in page_ids],
         )
         self.assertEqual(
             self.parser.ucl_links,
@@ -622,7 +777,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
         )
 
-        for group in self.display_groups:
+        for group in self.page_groups:
             group_id = group["id"]
             section_start = self.page.index(
                 f'<section class="other-names" aria-labelledby="{group_id}-other-names-title">'
@@ -674,24 +829,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count('class="fibrifold-orientation-note"'),
             len(correspondence.FIBRIFOLD_ENANTIOMORPHIC_IDS),
         )
-        for group in self.trivial_groups:
-            start = self.page.index(
-                f'<aside class="trivial-product" id="{group["id"]}"'
-            )
-            end = self.page.index("</aside>", start)
-            trivial = self.page[start:end]
-            self.assertIn(
-                correspondence.fibrifold_html(
-                    correspondence.FIBRIFOLD_BY_ID[group["id"]]
-                ),
-                trivial,
-                group["id"],
-            )
-            self.assertIn(
-                f'data-extra-links="{group["id"]}"',
-                trivial,
-                group["id"],
-            )
+        self.assertNotIn("data-trivial-product", self.page)
 
         self.assertNotIn(
             "chaimgoodmanstrauss.com/various-crystallographic-space-groups/",
@@ -708,7 +846,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             elif label == "Complementary forward skips":
                 expected = mate_count
             else:
-                expected = correspondence.DISPLAYED_GROUP_COUNT
+                expected = len(self.page_groups)
             self.assertEqual(
                 self.page.count(
                     f'<span class="term-help-label" aria-hidden="true">{escape(label)}</span>'
@@ -805,9 +943,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.page.count(
                 '<span class="book-color-signature" aria-label="Chaim notation '
             ),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
-        for group in self.display_groups:
+        for group in self.page_groups:
             entry_start = self.page.index(
                 f'<section class="correspondence-entry" id="{group["id"]}"'
             )
@@ -868,7 +1006,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(len(fibres), 47)
         self.assertEqual(
             len({group["symbol"] for group in self.display_groups}),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.display_groups),
         )
 
         self.assertEqual(self.page.count('class="notation-caveat"'), 1)
@@ -960,7 +1098,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                         fragment,
                         group_id,
                     )
-        self.assertNotIn("aria-describedby=", self.page)
+        self.assertEqual(self.page.count("aria-describedby="), len(self.page_groups))
 
     def test_visible_mirror_atoms_use_the_books_baseline_math_glyph(self) -> None:
         protected_star = '<span class="orbifold-star">∗</span>'
@@ -996,19 +1134,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("content: none", heading_icon_rule)
 
     def test_every_example_displays_chaims_full_group_presentation(self) -> None:
-        display_ids = [group["id"] for group in self.display_groups]
-        self.assertEqual(self.parser.presentation_tables, display_ids)
+        page_ids = [group["id"] for group in self.page_groups]
+        self.assertEqual(self.parser.presentation_tables, page_ids)
         self.assertEqual(
             self.parser.presentation_generator_count,
             sum(
                 len(group["chaim_presentation"]["generators"])
-                for group in self.display_groups
+                for group in self.page_groups
             ),
         )
-        self.assertEqual(self.parser.presentation_generator_count, 151)
+        self.assertEqual(self.parser.presentation_generator_count, 199)
         expected_time_shifts = [
             generator["time_shift"]
-            for group in self.display_groups
+            for group in self.page_groups
             for generator in group["chaim_presentation"]["generators"]
         ]
         self.assertEqual(
@@ -1019,7 +1157,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.parser.presentation_clock_powers,
             [
                 str(generator["clock_power"])
-                for group in self.display_groups
+                for group in self.page_groups
                 for generator in group["chaim_presentation"]["generators"]
             ],
         )
@@ -1027,19 +1165,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.parser.presentation_source_cycles,
             [
                 generator["source_cycle_notation"]
-                for group in self.display_groups
+                for group in self.page_groups
                 for generator in group["chaim_presentation"]["generators"]
             ],
         )
         self.assertEqual(
             Counter(
                 generator["time_shift_label"]
-                for group in self.display_groups
+                for group in self.page_groups
                 for generator in group["chaim_presentation"]["generators"]
             ),
             Counter(
                 {
-                    "none": 47,
+                    "none": 95,
                     "+1/2 period": 77,
                     "+1/3 period": 7,
                     "+2/3 period": 9,
@@ -1052,15 +1190,15 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertEqual(
             self.page.count('class="group-presentation"'),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count('<th scope="col">Color</th>'),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count('<th scope="col">Time</th>'),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count('class="presentation-colour-action"'),
@@ -1079,17 +1217,17 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.parser.presentation_generator_count,
         )
         self.assertNotIn("presentation-generator-marker", self.page)
-        for group_id in display_ids:
+        for group_id in page_ids:
             table_start = self.page.index(f'<table data-presentation="{group_id}"')
             table_end = self.page.index("</table>", table_start)
             self.assertNotIn("<svg", self.page[table_start:table_end], group_id)
         self.assertEqual(
             self.page.count(">Presentation</h4>"),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count('<strong>Relations</strong>'),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertNotIn("Geometric generators and their powers", self.page)
         self.assertNotIn("A, B, … form a minimal set", self.page)
@@ -1100,7 +1238,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn("G/Λ =", self.page)
         self.assertEqual(
             self.page.count("Γ = ⟨"),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
 
         for group in self.payload["groups"]:
@@ -1367,7 +1505,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=crystallographic-symbol-index", self.page)
+        self.assertIn("?v=interactive-real-crystal-viewers", self.page)
 
     def test_copy_uses_one_fixed_forward_clock(self) -> None:
         self.assertIn(
@@ -1383,22 +1521,22 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn("may be the inverse", self.page)
         self.assertEqual(
             self.page.count('class="presentation-palette"><span>forward phase order</span>'),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count('class="presentation-cyclic-key"'),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count("is shown as “none.”"),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             self.page.count("fixed-clock powers and directed time shifts"),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
 
-        for group in self.display_groups:
+        for group in self.page_groups:
             presentation = group["chaim_presentation"]
             positive_step = correspondence.fraction_label(
                 correspondence.Fraction(1, group["clock_order"])
@@ -1559,7 +1697,6 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             "triclinic",
             "monoclinic",
             "orthorhombic",
-            "tetragonal",
             "trigonal",
             "hexagonal",
             "bravais",
@@ -1592,30 +1729,25 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn("Static perfect-colouring plate", self.page)
         self.assertEqual(
             self.parser.wallpaper_links,
-            [
-                f"#wallpaper-{base}"
-                for base in correspondence.BASE_ORDER
-                if any(group["parent"]["hm"] == base for group in self.display_groups)
-            ],
+            [f"#wallpaper-{base}" for base in correspondence.BASE_ORDER],
         )
-        display_ids = [group["id"] for group in self.display_groups]
+        page_ids = [group["id"] for group in self.page_groups]
         self.assertEqual(
             self.parser.directory_groups,
-            [(group_id, f"#{group_id}") for group_id in display_ids],
+            [(group_id, f"#{group_id}") for group_id in page_ids],
         )
-        self.assertEqual(len(self.parser.wallpaper_links), 14)
-        self.assertEqual(len(self.parser.directory_groups), 51)
+        self.assertEqual(len(self.parser.wallpaper_links), 17)
+        self.assertEqual(len(self.parser.directory_groups), 68)
         self.assertEqual(
             self.parser.directory_palette_spans,
-            sum(group["clock_order"] for group in self.display_groups),
+            sum(group["clock_order"] for group in self.page_groups),
         )
         directory_start = self.page.index('<nav class="directory"')
         directory_end = self.page.index('<div class="correspondence-atlas"')
         directory_html = self.page[directory_start:directory_end]
-        self.assertNotIn('href="#wallpaper-p1"', directory_html)
-        self.assertNotIn('href="#wallpaper-pm"', directory_html)
-        self.assertNotIn('href="#wallpaper-pg"', directory_html)
-        self.assertNotIn("68 forward groups · 17 plane-orbifold families", directory_html)
+        self.assertIn('href="#wallpaper-p1"', directory_html)
+        self.assertIn('href="#wallpaper-pm"', directory_html)
+        self.assertIn('href="#wallpaper-pg"', directory_html)
         three_plus_groups = [
             group for group in self.display_groups if group["clock_order"] >= 3
         ]
@@ -1656,7 +1788,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             r"[^}]*grid-template-columns: 1fr;",
         )
         self.assertIn("Raised numbers in the signature give colour-permutation orders", directory_html)
-        for group in self.display_groups:
+        for group in self.page_groups:
             card_start = directory_html.index(f'data-directory-group="{group["id"]}"')
             card_end = directory_html.index("</a>", card_start)
             card = directory_html[card_start:card_end]
@@ -1712,7 +1844,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             correspondence.EXPECTED_SIGNATURE_EVIDENCE_COUNTS,
         )
         expected_primary = []
-        for group in self.display_groups:
+        for group in self.page_groups:
             primary = [
                 reference
                 for reference in group["book_audit"]["references"]
@@ -1886,14 +2018,14 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
 
     def test_all_book_links_open_separate_annotated_excerpt_pages(self) -> None:
         expected_references = []
-        for group in self.display_groups:
+        for group in self.page_groups:
             expected_references.extend(
                 reference
                 for reference in group["book_audit"]["references"]
                 if reference["role"] == "primary"
             )
 
-        self.assertEqual(len(expected_references), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(len(expected_references), len(self.page_groups))
         primary_links = [
             attributes
             for attributes in self.parser.book_excerpt_links
@@ -1901,7 +2033,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ]
         self.assertEqual(
             len(primary_links),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         for attributes, reference in zip(primary_links, expected_references):
             excerpt = correspondence.BOOK_EXCERPTS[reference["excerpt_key"]]
@@ -1930,7 +2062,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertNotIn("aria-controls", attributes)
 
         expected_excerpt_keys = {reference["excerpt_key"] for reference in expected_references}
-        self.assertEqual(len(expected_excerpt_keys), 41)
+        self.assertEqual(len(expected_excerpt_keys), 58)
         self.assertEqual(
             {attributes["data-book-excerpt"] for attributes in primary_links},
             expected_excerpt_keys,
@@ -1967,7 +2099,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertTrue(
             all("data-short-signature-excerpt" in attributes for attributes in support_links)
         )
-        self.assertEqual(len(self.parser.book_excerpt_links), 113)
+        self.assertEqual(len(self.parser.book_excerpt_links), 130)
 
     def test_the_separate_viewer_loads_complete_tables_or_contextual_webps(self) -> None:
         self.assertEqual(self.parser.book_dialog_ids, [])
@@ -2125,7 +2257,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn("view annotated excerpt in the excerpt tab", self.page)
         self.assertEqual(
             self.page.count("The Symmetries of Things · p. "),
-            correspondence.DISPLAYED_GROUP_COUNT,
+            len(self.page_groups),
         )
         self.assertEqual(
             {attributes.get("target") for attributes in self.parser.book_excerpt_links},
@@ -2155,9 +2287,9 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(len(self.display_groups) - len(unordered), 47)
 
     def test_every_static_plate_exists_and_contains_its_phase_palette(self) -> None:
-        self.assertEqual(len(self.parser.plate_images), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(len(self.parser.plate_images), len(self.page_groups))
         by_path = {group["image"]: group for group in self.payload["groups"]}
-        displayed_paths = {group["image"] for group in self.display_groups}
+        displayed_paths = {group["image"] for group in self.page_groups}
         self.assertEqual(
             {relative for relative, _alt, _width, _height in self.parser.plate_images},
             displayed_paths,
@@ -2193,7 +2325,10 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             ],
             display_ids,
         )
-        self.assertEqual(len(self.parser.plate_generator_overlays), 51)
+        self.assertEqual(
+            len(self.parser.plate_generator_overlays),
+            len(self.display_groups),
+        )
         for attributes in self.parser.plate_generator_overlays:
             self.assertEqual(attributes.get("viewbox"), "0 0 720 420")
             self.assertEqual(attributes.get("preserveaspectratio"), "xMidYMid meet")
@@ -2587,7 +2722,7 @@ const payload = JSON.parse(
 );
 const sizes = [[507, 296], [411, 240], [325, 190], [260, 152]];
 const measurements = [];
-for (const group of payload.groups.filter((record) => record.clock_order > 1)) {
+for (const group of payload.groups) {
   for (const [width, height] of sizes) {
     const geometry = buildClockworkGeometry(group.render, width, height, 1);
     measurements.push({
@@ -2614,7 +2749,7 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(report["floor"], correspondence.MIN_VISIBLE_MOTIF_DIAMETER_PX)
         self.assertEqual(
             len(report["measurements"]),
-            correspondence.DISPLAYED_GROUP_COUNT * 4,
+            len(self.page_groups) * 4,
         )
         for measurement in report["measurements"]:
             self.assertGreaterEqual(
@@ -2632,7 +2767,7 @@ process.stdout.write(JSON.stringify({
 
     def test_every_static_plate_uses_the_same_reference_scale(self) -> None:
         minimum_visible = float("inf")
-        for group in self.display_groups:
+        for group in self.page_groups:
             _b1, _b2, radius, _ranges = correspondence._site_geometry(
                 group["render"],
                 correspondence.IMAGE_WIDTH * correspondence.ANTIALIAS,
@@ -2656,30 +2791,39 @@ process.stdout.write(JSON.stringify({
             correspondence.MIN_VISIBLE_MOTIF_DIAMETER_PX,
         )
 
-    def test_all_51_nontrivial_films_are_local_and_stopped_by_default(self) -> None:
-        ids = [group["id"] for group in self.display_groups]
+    def test_all_68_films_are_local_and_stopped_by_default(self) -> None:
+        ids = [group["id"] for group in self.page_groups]
         self.assertEqual(self.parser.film_group_ids, ids)
         self.assertEqual(
             self.parser.canvases,
             [(f"{group_id}-film", "1", "1") for group_id in ids],
         )
-        self.assertEqual(len(self.parser.buttons), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(len(self.parser.buttons), len(self.page_groups))
         self.assertTrue(all(disabled for disabled, _pressed, _controls in self.parser.buttons))
         self.assertTrue(all(pressed == "false" for _disabled, pressed, _controls in self.parser.buttons))
         self.assertEqual(
             [controls for _disabled, _pressed, controls in self.parser.buttons],
             [f"{group_id}-film" for group_id in ids],
         )
-        self.assertEqual(len(self.parser.sliders), correspondence.DISPLAYED_GROUP_COUNT)
+        self.assertEqual(len(self.parser.sliders), len(self.page_groups))
         self.assertTrue(
             all(
                 disabled and value == "0" and input_type == "range"
                 for disabled, value, input_type, _slider_id in self.parser.sliders
             )
         )
-        self.assertEqual(
+        self.assertEqual(len(self.parser.scripts), 2)
+        self.assertIn(
+            (correspondence.CORRESPONDENCE_SCRIPT_SRC, "module"),
             self.parser.scripts,
-            [(correspondence.CORRESPONDENCE_SCRIPT_SRC, "module")],
+        )
+        self.assertEqual(
+            [
+                (urlparse(src).path, script_type)
+                for src, script_type in self.parser.scripts
+                if urlparse(src).path == "crystal-viewer.js"
+            ],
+            [("crystal-viewer.js", "module")],
         )
         script_path = ROOT / "clockwork-coloring-correspondence.js"
         self.assertTrue(script_path.is_file())
@@ -2699,7 +2843,7 @@ process.stdout.write(JSON.stringify({
         self.assertNotIn("The upper canvas repeats one continuously animated asymmetric motif", self.page)
         self.assertNotIn("autoplay", self.page.lower())
         self.assertNotIn("autoplay", script.lower())
-        self.assertNotIn("<iframe", self.page)
+        self.assertEqual(self.parser.iframes, [])
         self.assertNotIn("<video", self.page)
         self.assertNotIn('src="https://yaroslavvb.github.io/animated-groups-fable', self.page)
         self.assertNotIn('href="https://yaroslavvb.github.io/animated-groups-fable/js/', self.page)
