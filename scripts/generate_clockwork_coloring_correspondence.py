@@ -66,7 +66,7 @@ SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CRYSTAL_EXAMPLE_DATA = ROOT / "data" / "crystal-examples.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=interactive-real-crystal-viewers"
+    "v=space-time-lift-preview"
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
@@ -4171,11 +4171,11 @@ def _crystal_viewer_html(
     if provider == "sketchfab":
         provider_name = "Sketchfab"
         provider_link_label = "Open model on Sketchfab"
-        load_note = "Loads the public Sketchfab WebGL viewer."
+        load_note = "Opens the public Sketchfab WebGL viewer externally."
     elif provider == "3dmol-cod":
         provider_name = "3Dmol.js + COD"
         provider_link_label = f"COD {example['cod_id']} structure data"
-        load_note = "Loads 3Dmol.js with the open COD structure."
+        load_note = "Opens 3Dmol.js with the open COD structure externally."
     else:
         raise ValueError(f"unknown crystal provider for {record['id']}: {provider}")
 
@@ -4205,7 +4205,7 @@ def _crystal_viewer_html(
                   <img class="crystal-viewer-preview" src="{escape(preview_src)}" width="720" height="480" loading="lazy" decoding="async" alt="{escape(preview_alt)}">
                   <div class="crystal-viewer-prompt" data-crystal-prompt>
                     <button class="crystal-viewer-load" type="button" data-crystal-load aria-controls="{stage_id}">Explore {crystal_name} in 3D</button>
-                    <small>{escape(load_note)} The external provider receives this request; only one crystal viewer stays live at a time.</small>
+                    <small>{escape(load_note)} Only one crystal viewer stays live at a time.</small>
                   </div>
                   <div class="crystal-viewer-frame" data-crystal-frame></div>
                   <button class="crystal-viewer-close" type="button" data-crystal-close aria-controls="{stage_id}" hidden>Close 3D viewer</button>

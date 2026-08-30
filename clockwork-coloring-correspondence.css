@@ -1900,6 +1900,17 @@ a.short-signature-link[data-book-excerpt]::after {
     gap: 0.08rem;
   }
 
+  .crystal-viewer-prompt {
+    gap: 0.22rem;
+    padding: 1.2rem 0.55rem 0.48rem;
+  }
+
+  .crystal-viewer-prompt small {
+    max-width: 19rem;
+    font-size: 0.6rem;
+    line-height: 1.2;
+  }
+
 }
 
 @media print {
