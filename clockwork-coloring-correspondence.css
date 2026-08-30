@@ -1145,11 +1145,47 @@ nav a[aria-current="page"] {
   margin-top: 0.9rem;
 }
 
-.extra-links h4 {
-  margin: 0 0 0.32rem;
+.extra-links > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2.75rem;
+  padding: 0.42rem 0.58rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #faf8f1;
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.extra-links > summary::-webkit-details-marker {
+  display: none;
+}
+
+.extra-links > summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  margin-left: 0.75rem;
+  color: var(--accent);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.extra-links[open] > summary {
+  margin-bottom: 0.42rem;
+}
+
+.extra-links[open] > summary::after {
+  content: "−";
+}
+
+.extra-links > summary:hover,
+.extra-links > summary:focus-visible {
+  border-color: var(--accent);
+  background: #fffdf7;
 }
 
 .extra-links-list {
@@ -1923,6 +1959,12 @@ a.short-signature-link[data-book-excerpt]::after {
 
   .extra-links-list {
     grid-template-columns: 1fr;
+  }
+
+  .extra-links > summary {
+    width: 100%;
+    min-height: 2.9rem;
+    padding-inline: 0.68rem;
   }
 
   .group-presentation th,

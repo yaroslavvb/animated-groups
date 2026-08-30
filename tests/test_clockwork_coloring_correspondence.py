@@ -262,7 +262,7 @@ class CorrespondenceParser(HTMLParser):
             self._inside_book_audit_row = "book-audit-row" in classes
         if tag == "span" and "identified-name" in classes:
             self.identified_names.append(attributes)
-        if tag == "section" and "extra-links" in classes:
+        if tag == "details" and "extra-links" in classes:
             self.extra_links_ids.append(attributes.get("data-extra-links", ""))
         if tag == "a" and attributes.get("data-catalog-id"):
             self.extra_link_references.append(attributes)
@@ -855,7 +855,15 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         page_ids = [group["id"] for group in page_groups]
         self.assertEqual(self.parser.extra_links_ids, page_ids)
         self.assertEqual(len(set(self.parser.extra_links_ids)), 68)
-        self.assertEqual(self.page.count(">Extra links</h4>"), 68)
+        self.assertEqual(self.page.count(">Extra links</summary>"), 68)
+        self.assertEqual(self.page.count('<details class="extra-links"'), 68)
+        self.assertNotIn('<details class="extra-links" open', self.page)
+        extra_links_css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(".extra-links > summary", extra_links_css)
+        self.assertIn(".extra-links[open] > summary::after", extra_links_css)
+        self.assertIn("min-height: 2.9rem", extra_links_css)
 
         expected_extra_links = [
             (group["id"], link)
@@ -956,8 +964,8 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 group_id,
             )
 
-        g246_start = self.page.index('<section class="extra-links" data-extra-links="g246"')
-        g246_end = self.page.index("</section>", g246_start)
+        g246_start = self.page.index('<details class="extra-links" data-extra-links="g246"')
+        g246_end = self.page.index("</details>", g246_start)
         g246 = self.page[g246_start:g246_end]
         self.assertIn("CrystalSymmetry worked example", g246)
         self.assertIn("No. 173 P6_3", g246)
