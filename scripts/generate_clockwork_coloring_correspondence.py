@@ -63,7 +63,7 @@ DATA = ROOT / "data" / "clockwork-coloring-correspondence.json"
 PAGE = ROOT / "clockwork-coloring-correspondence.html"
 IMAGE_DIR = ROOT / "output" / "clockwork-colorings"
 SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
-CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=diagram-generator-notation"
+CORRESPONDENCE_STYLE_SRC = "clockwork-coloring-correspondence.css?v=crystallographic-symbol-index"
 CORRESPONDENCE_SCRIPT_SRC = "clockwork-coloring-correspondence.js?v=deep-link-canvas-fix"
 BOOK_EXCERPT_VIEWER_VERSION = "whole-tables"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
@@ -2985,6 +2985,24 @@ def _rotation_symbol_body_html(order: int, screw_step: int) -> str:
 
     if screw_step == 0:
         arms = ""
+    elif order == 3:
+        # International Tables/UCL draw 3_1 and 3_2 as a filled triangle
+        # with two exterior strokes.  They are mirror images, rather than
+        # three-bladed decorative pinwheels.
+        if screw_step == 1:
+            commands = (
+                "M8.31 4.8L14.1 4.8",
+                "M-8.31 4.8L-11.35 10.05",
+            )
+        else:
+            commands = (
+                "M-8.31 4.8L-14.1 4.8",
+                "M8.31 4.8L11.35 10.05",
+            )
+        arms = (
+            '<path class="generator-symbol-arms" '
+            f'd="{" ".join(commands)}"></path>'
+        )
     else:
         spacing = math.gcd(order, screw_step)
         handedness = -1 if screw_step <= order / 2 else 1
@@ -3151,6 +3169,21 @@ def _plate_d_glide_arrows_html(
 ) -> str:
     """Draw the paired arrows used by the International Tables d-glide mark."""
 
+    paths = _d_glide_arrow_paths(axis, glide_distance, time_shift)
+    return "".join(
+        f'<path class="plate-generator-quarter-arrow-halo" d="{path}"></path>'
+        f'<path class="plate-generator-quarter-arrow" d="{path}"></path>'
+        for path in paths
+    )
+
+
+def _d_glide_arrow_paths(
+    axis: dict[str, tuple[float, float]],
+    glide_distance: float,
+    time_shift: Fraction,
+) -> tuple[str, str]:
+    """Return the two arrow paths shared by plate and legend d-glide marks."""
+
     start = axis["start"]
     end = axis["end"]
     direction = axis["direction"]
@@ -3160,7 +3193,7 @@ def _plate_d_glide_arrows_html(
     if glide_distance * signed_shift < 0:
         direction = (-direction[0], -direction[1])
     normal = (-direction[1], direction[0])
-    paths = []
+    paths: list[str] = []
     for fraction in (0.43, 0.57):
         anchor = (
             start[0] + (end[0] - start[0]) * fraction,
@@ -3183,12 +3216,203 @@ def _plate_d_glide_arrows_html(
             f'L {_svg_number(tip[0])} {_svg_number(tip[1])} '
             f'L {_svg_number(wings[1][0])} {_svg_number(wings[1][1])}'
         )
-    drawing = "".join(
-        f'<path class="plate-generator-quarter-arrow-halo" d="{path}"></path>'
-        f'<path class="plate-generator-quarter-arrow" d="{path}"></path>'
-        for path in paths
+    return paths[0], paths[1]
+
+
+def _diagram_rotation_symbol_html(order: int, screw_step: int) -> str:
+    """Render one legend-sized example through the plate's SVG glyph source."""
+
+    key = f"rotation-{order}-{screw_step}"
+    return (
+        '<svg class="diagram-symbol-icon diagram-symbol-icon--rotation" '
+        f'data-legend-icon="{key}" viewBox="0 0 68 32" '
+        'aria-hidden="true" focusable="false">'
+        '<g class="generator-symbol-body" transform="translate(34 16)">'
+        f'{_rotation_symbol_body_html(order, screw_step)}'
+        '</g></svg>'
     )
-    return drawing
+
+
+def _diagram_plane_symbol_html(plane_symbol: str) -> str:
+    """Render one legend-sized International Tables plane/glide line."""
+
+    if plane_symbol not in _PLANE_LIFT_KIND:
+        raise ValueError(f"unsupported legend plane symbol: {plane_symbol}")
+    axis = {
+        "start": (6.0, 16.0),
+        "end": (62.0, 16.0),
+        "direction": (1.0, 0.0),
+        "normal": (0.0, 1.0),
+    }
+    drawing = (
+        '<line class="diagram-symbol-plane '
+        f'plate-generator-axis--plane-{plane_symbol}" '
+        'x1="6" y1="16" x2="62" y2="16"></line>'
+    )
+    if plane_symbol == "d":
+        drawing += "".join(
+            f'<path class="diagram-symbol-quarter-arrow" d="{path}"></path>'
+            for path in _d_glide_arrow_paths(
+                axis,
+                glide_distance=1.0,
+                time_shift=Fraction(1, 4),
+            )
+        )
+    return (
+        '<svg class="diagram-symbol-icon diagram-symbol-icon--plane" '
+        f'data-legend-icon="plane-{plane_symbol}" viewBox="0 0 68 32" '
+        'aria-hidden="true" focusable="false">'
+        f'{drawing}</svg>'
+    )
+
+
+def _diagram_symbol_legend_html() -> str:
+    """Build the scan-friendly, one-symbol-per-row crystallographic key."""
+
+    rotation_rows = (
+        (
+            "rotation-2-0",
+            _diagram_rotation_symbol_html(2, 0),
+            "2-fold rotation axis",
+            "Filled lens; half-turn with no clock-axis rise.",
+        ),
+        (
+            "rotation-2-1",
+            _diagram_rotation_symbol_html(2, 1),
+            '<span role="img" aria-label="two-one screw axis">2<sub>1</sub> screw axis</span>',
+            "Two-arm lens; half-turn with a +1/2-period rise.",
+        ),
+        (
+            "rotation-3-0",
+            _diagram_rotation_symbol_html(3, 0),
+            "3-fold rotation axis",
+            "Filled triangle; one-third turn with no clock-axis rise.",
+        ),
+        (
+            "rotation-3-1",
+            _diagram_rotation_symbol_html(3, 1),
+            '<span role="img" aria-label="three-one screw axis">3<sub>1</sub> screw axis</span>',
+            "Two-stroke triangle; positive one-third turn with a +1/3-period rise.",
+        ),
+        (
+            "rotation-3-2",
+            _diagram_rotation_symbol_html(3, 2),
+            '<span role="img" aria-label="three-two screw axis">3<sub>2</sub> screw axis</span>',
+            "Opposite two-stroke triangle; positive one-third turn with a +2/3-period rise.",
+        ),
+        (
+            "rotation-4-0",
+            _diagram_rotation_symbol_html(4, 0),
+            "4-fold rotation axis",
+            "Filled diamond; quarter-turn with no clock-axis rise.",
+        ),
+        (
+            "rotation-4-1",
+            _diagram_rotation_symbol_html(4, 1),
+            '<span role="img" aria-label="four-one screw axis">4<sub>1</sub> screw axis</span>',
+            "Four-arm diamond; positive quarter-turn with a +1/4-period rise.",
+        ),
+        (
+            "rotation-4-2",
+            _diagram_rotation_symbol_html(4, 2),
+            '<span role="img" aria-label="four-two screw axis">4<sub>2</sub> screw axis</span>',
+            "Two-arm diamond; quarter-turn with a +1/2-period rise.",
+        ),
+        (
+            "rotation-4-3",
+            _diagram_rotation_symbol_html(4, 3),
+            '<span role="img" aria-label="four-three screw axis">4<sub>3</sub> screw axis</span>',
+            "Opposite four-arm diamond; positive quarter-turn with a +3/4-period rise.",
+        ),
+        (
+            "rotation-6-1",
+            _diagram_rotation_symbol_html(6, 1),
+            '<span role="img" aria-label="six-one screw axis">6<sub>1</sub> screw axis</span>',
+            "Six-arm hexagon; positive one-sixth turn with a +1/6-period rise.",
+        ),
+        (
+            "rotation-6-2",
+            _diagram_rotation_symbol_html(6, 2),
+            '<span role="img" aria-label="six-two screw axis">6<sub>2</sub> screw axis</span>',
+            "Three-arm hexagon; positive one-sixth turn with a +1/3-period rise.",
+        ),
+        (
+            "rotation-6-3",
+            _diagram_rotation_symbol_html(6, 3),
+            '<span role="img" aria-label="six-three screw axis">6<sub>3</sub> screw axis</span>',
+            "Two-arm hexagon; one-sixth turn with a +1/2-period rise.",
+        ),
+        (
+            "rotation-6-4",
+            _diagram_rotation_symbol_html(6, 4),
+            '<span role="img" aria-label="six-four screw axis">6<sub>4</sub> screw axis</span>',
+            "Opposite three-arm hexagon; positive one-sixth turn with a +2/3-period rise.",
+        ),
+        (
+            "rotation-6-5",
+            _diagram_rotation_symbol_html(6, 5),
+            '<span role="img" aria-label="six-five screw axis">6<sub>5</sub> screw axis</span>',
+            "Opposite six-arm hexagon; positive one-sixth turn with a +5/6-period rise.",
+        ),
+    )
+    plane_rows = (
+        (
+            "plane-m",
+            _diagram_plane_symbol_html("m"),
+            "Mirror plane (m)",
+            "Solid line; reflection with no glide component.",
+        ),
+        (
+            "plane-axial",
+            _diagram_plane_symbol_html("axial"),
+            "In-plane axial glide",
+            "Dashed line; reflection plus a half-cell step in the picture.",
+        ),
+        (
+            "plane-c",
+            _diagram_plane_symbol_html("c"),
+            "Clock-axis glide (c)",
+            "Dotted line; reflection plus a half-period step perpendicular to the picture.",
+        ),
+        (
+            "plane-n",
+            _diagram_plane_symbol_html("n"),
+            "Diagonal n-glide",
+            "Dash–dot line; half-steps in the picture and along the clock axis.",
+        ),
+        (
+            "plane-d",
+            _diagram_plane_symbol_html("d"),
+            "Quarter-diagonal d-glide",
+            "Arrowed dash–dot line; arrows select the sign of the quarter-period component.",
+        ),
+    )
+
+    def items_html(rows: tuple[tuple[str, str, str, str], ...]) -> str:
+        return "".join(
+            '<li class="diagram-symbol-item" '
+            f'data-legend-symbol="{escape(key)}">'
+            f'<span class="diagram-symbol-image">{symbol}</span>'
+            '<span class="diagram-symbol-explanation">'
+            f'<strong>{label}</strong><span>{description}</span>'
+            '</span></li>'
+            for key, symbol, label, description in rows
+        )
+
+    return (
+        '<section class="diagram-symbol-group" '
+        'aria-labelledby="diagram-rotation-symbols-title">'
+        '<h3 id="diagram-rotation-symbols-title">'
+        'Rotation and screw axes (along the clock axis)</h3>'
+        '<ul class="diagram-symbol-list" role="list">'
+        f'{items_html(rotation_rows)}</ul></section>'
+        '<section class="diagram-symbol-group" '
+        'aria-labelledby="diagram-plane-symbols-title">'
+        '<h3 id="diagram-plane-symbols-title">'
+        'Mirror and glide planes (seen edge-on)</h3>'
+        '<ul class="diagram-symbol-list" role="list">'
+        f'{items_html(plane_rows)}</ul></section>'
+    )
 
 
 def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
@@ -3931,9 +4155,10 @@ def page_html(payload: dict[str, Any]) -> str:
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
       <p class="directory-legend">Colors follow one fixed clock: A = phase 0, B = phase 1/N, C = phase 2/N, and so on. C<sub>N</sub> = (ABC…) is one forward +1/N-period tick, so a row with Time +k/N has Color C<sub>N</sub><sup>k</sup>. Every action is a forward time skip; none reverses time. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
       <aside class="diagram-symbol-legend" aria-labelledby="diagram-symbol-legend-title">
-        <h2 id="diagram-symbol-legend-title">Crystallographic generator symbols</h2>
-        <p>Viewed along the clock axis, these are crystallographic projection symbols for the height-lifted generators, and they appear only on the static 2D diagram. A filled lens, triangle, diamond, or hexagon marks a 2-, 3-, 4-, or 6-fold axis; arms distinguish a screw axis <i>n</i><sub><i>m</i></sub>. For a forward skip τ, <i>m</i> = <i>n</i>τ for a positive 1/<i>n</i>-turn and <i>m</i> = <i>n</i>(1−τ) for the oppositely oriented turn. Mirrored arms record spatial turn sense—not backward time.</p>
-        <p>For planes normal to the picture, a solid line is a mirror, a dashed line is an axial glide in the picture, a dotted line is a glide along the perpendicular clock axis, and a dash–dot line is a diagonal <i>n</i>-glide. An arrowed dash–dot line is the quarter-diagonal <i>d</i>-glide. The nearby α, β, γ, … or P, Q, … label matches the Generator row; its Color and Time columns state the same clock action explicitly.</p>
+        <h2 id="diagram-symbol-legend-title">Crystallographic generator symbols: visual index</h2>
+        <p>Projected along the clock axis, these are the actual symbols used on the static 2D diagrams. The filled core shows the 2-, 3-, 4-, or 6-fold spatial order. For a forward skip τ, the screw subscript is <i>m</i> ≡ <i>n</i>τ (mod <i>n</i>) for a positive 1/<i>n</i>-turn and <i>m</i> ≡ −<i>n</i>τ (mod <i>n</i>) for the opposite turn, with 0 ≤ <i>m</i> &lt; <i>n</i>. Mirrored blades record spatial turn sense—not backward time.</p>
+        {_diagram_symbol_legend_html()}
+        <p class="diagram-symbol-note">The burgundy α, β, γ, … or P, Q, … beside a diagram symbol identifies its Generator row. The Color and Time columns state the same forward clock action directly.</p>
         <p class="diagram-symbol-sources">Notation: <a href="{IUCR_DIAGRAM_SYMBOLS_URL}" target="_blank" rel="noopener"><cite>International Tables for Crystallography</cite> projection symbols</a> · <a href="{UCL_P31C_DIAGRAM_URL}" target="_blank" rel="noopener">UCL P 3 1 c example</a>.</p>
       </aside>
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
