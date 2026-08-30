@@ -1732,7 +1732,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=space-time-lift-preview", self.page)
+        self.assertIn("?v=colour-order-squares", self.page)
 
     def test_copy_uses_one_fixed_forward_clock(self) -> None:
         self.assertIn(
