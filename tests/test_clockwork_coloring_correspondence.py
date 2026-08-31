@@ -11,6 +11,7 @@ import subprocess
 import sys
 import unittest
 from urllib.parse import parse_qs, urlparse
+from xml.etree import ElementTree
 
 from PIL import Image
 
@@ -71,6 +72,24 @@ SOURCE_LABELING_FIXTURE = {
     "g245": ["A", "C", "B"],
     "g247": ["A", "C", "E", "F", "D", "B"],
     "g248": ["A", "B", "D", "F", "E", "C"],
+}
+
+MOTIF_CLEAR_LABEL_POSITION_FIXTURE = {
+    "g59": {
+        "α": (423.41, 212.83),
+        "β": (404.6, 321.29),
+        "Z": (374.0, 354.72),
+    },
+    "g63": {
+        "α": (423.41, 212.83),
+        "β": (404.6, 321.29),
+        "Z": (374.0, 354.72),
+    },
+    "g75": {
+        "α": (401.58, 240.62),
+        "β": (402.44, 106.06),
+        "Z": (374.0, 282.36),
+    },
 }
 
 # Each compact item below the static plate is a distinct crystallographic
@@ -4465,6 +4484,208 @@ process.stdout.write(JSON.stringify({
         self.assertIn(".plate-generator-translation", css)
         self.assertNotIn(".plate-generator-half-arrow", css)
         self.assertIn("@media (forced-colors: active)", css)
+
+    def test_every_plate_label_clears_motifs_labels_glyphs_and_frame(self) -> None:
+        translate_pattern = re.compile(
+            r"translate\(([-+0-9.eE]+)[ ,]+([-+0-9.eE]+)\)"
+        )
+
+        def absolute_label_point(
+            marker: ElementTree.Element,
+        ) -> tuple[float, float]:
+            points: list[tuple[float, float]] = []
+
+            def visit(
+                element: ElementTree.Element,
+                translate_x: float = 0.0,
+                translate_y: float = 0.0,
+            ) -> None:
+                transform = element.attrib.get("transform", "")
+                if transform:
+                    match = translate_pattern.fullmatch(transform)
+                    self.assertIsNotNone(match, transform)
+                    translate_x += float(match.group(1))
+                    translate_y += float(match.group(2))
+                classes = set(element.attrib.get("class", "").split())
+                if element.tag == "text" and "plate-generator-label" in classes:
+                    points.append(
+                        (
+                            float(element.attrib["x"]) + translate_x,
+                            float(element.attrib["y"]) + translate_y,
+                        )
+                    )
+                for child in element:
+                    visit(child, translate_x, translate_y)
+
+            visit(marker)
+            self.assertEqual(len(points), 1)
+            return points[0]
+
+        label_count = 0
+        rotation_transform_count = 0
+        axis_count = 0
+        for group in self.page_groups:
+            overlay_html = correspondence._plate_generator_overlay_html(group)
+            overlay = ElementTree.fromstring(overlay_html)
+            placement = correspondence._plate_generator_assignment(group)
+            markers = list(overlay)
+            self.assertEqual(len(markers), len(placement), group["id"])
+
+            scale = correspondence._plate_cell_scale(group["render"])
+            viewport_center = group["viewport_center"]
+            glyph_boxes = []
+            for generator in placement:
+                if generator["marker"]["kind"] != "rotation":
+                    continue
+                centre_x, centre_y = correspondence._plate_screen_point(
+                    generator["visualization"]["centre"],
+                    scale,
+                    viewport_center,
+                )
+                half_size = correspondence.PLATE_ROTATION_GLYPH_HALF_SIZE_PX
+                glyph_boxes.append(
+                    (
+                        math.floor(centre_x - half_size),
+                        math.floor(centre_y - half_size),
+                        math.ceil(centre_x + half_size),
+                        math.ceil(centre_y + half_size),
+                    )
+                )
+
+            motif_mask = correspondence._plate_motif_occupancy_mask(group)
+            self.assertEqual(
+                motif_mask.size,
+                (correspondence.IMAGE_WIDTH, correspondence.IMAGE_HEIGHT),
+            )
+            occupied_label_boxes: list[
+                tuple[str, correspondence.PlateLabelBox]
+            ] = []
+            actual_positions: dict[str, tuple[float, float]] = {}
+            for marker, generator in zip(markers, placement, strict=True):
+                name = generator["generator"]
+                self.assertEqual(marker.attrib.get("data-generator"), name)
+                point = absolute_label_point(marker)
+                actual_positions[name] = point
+                bounds = correspondence._plate_label_box(point)
+                label_count += 1
+
+                self.assertEqual(
+                    correspondence._plate_label_motif_pixels(motif_mask, bounds),
+                    0,
+                    f'{group["id"]}:{name}:motif',
+                )
+                self.assertGreaterEqual(
+                    bounds[0],
+                    correspondence.PLATE_LABEL_FRAME_INSET_PX,
+                    f'{group["id"]}:{name}:left frame',
+                )
+                self.assertGreaterEqual(
+                    bounds[1],
+                    correspondence.PLATE_LABEL_FRAME_INSET_PX,
+                    f'{group["id"]}:{name}:top frame',
+                )
+                self.assertLessEqual(
+                    bounds[2],
+                    correspondence.IMAGE_WIDTH
+                    - correspondence.PLATE_LABEL_FRAME_INSET_PX,
+                    f'{group["id"]}:{name}:right frame',
+                )
+                self.assertLessEqual(
+                    bounds[3],
+                    correspondence.IMAGE_HEIGHT
+                    - correspondence.PLATE_LABEL_FRAME_INSET_PX,
+                    f'{group["id"]}:{name}:bottom frame',
+                )
+                for other_name, other_bounds in occupied_label_boxes:
+                    self.assertEqual(
+                        correspondence._plate_box_intersection_area(
+                            bounds,
+                            other_bounds,
+                        ),
+                        0,
+                        f'{group["id"]}:{name}/{other_name}:labels',
+                    )
+                for glyph_box in glyph_boxes:
+                    self.assertEqual(
+                        correspondence._plate_box_intersection_area(
+                            bounds,
+                            glyph_box,
+                        ),
+                        0,
+                        f'{group["id"]}:{name}:glyph',
+                    )
+                occupied_label_boxes.append((name, bounds))
+
+                kind = generator["marker"]["kind"]
+                if kind == "rotation":
+                    transform_nodes = [
+                        element
+                        for element in marker.iter("g")
+                        if element.attrib.get("transform")
+                    ]
+                    self.assertEqual(len(transform_nodes), 1)
+                    match = translate_pattern.fullmatch(
+                        transform_nodes[0].attrib["transform"]
+                    )
+                    self.assertIsNotNone(match)
+                    expected_centre = correspondence._plate_screen_point(
+                        generator["visualization"]["centre"],
+                        scale,
+                        viewport_center,
+                    )
+                    for actual, expected in zip(
+                        (float(match.group(1)), float(match.group(2))),
+                        expected_centre,
+                        strict=True,
+                    ):
+                        self.assertAlmostEqual(
+                            actual,
+                            expected,
+                            delta=0.011,
+                            msg=f'{group["id"]}:{name}:glyph transform',
+                        )
+                    rotation_transform_count += 1
+                elif kind in {"mirror", "glide"}:
+                    axis_lines = [
+                        element
+                        for element in marker.iter("line")
+                        if "plate-generator-axis"
+                        in set(element.attrib.get("class", "").split())
+                    ]
+                    self.assertEqual(len(axis_lines), 1)
+                    expected_axis = correspondence._clipped_plate_axis(
+                        generator["visualization"]["axis_point"],
+                        generator["visualization"]["axis_direction"],
+                        scale,
+                        viewport_center,
+                    )
+                    self.assertIsNotNone(expected_axis)
+                    actual_axis = axis_lines[0].attrib
+                    for attribute, expected in zip(
+                        ("x1", "y1", "x2", "y2"),
+                        (*expected_axis["start"], *expected_axis["end"]),
+                        strict=True,
+                    ):
+                        self.assertAlmostEqual(
+                            float(actual_axis[attribute]),
+                            expected,
+                            delta=0.011,
+                            msg=f'{group["id"]}:{name}:axis {attribute}',
+                        )
+                    axis_count += 1
+
+            if group["id"] in MOTIF_CLEAR_LABEL_POSITION_FIXTURE:
+                self.assertEqual(
+                    {
+                        name: (round(point[0], 2), round(point[1], 2))
+                        for name, point in actual_positions.items()
+                    },
+                    MOTIF_CLEAR_LABEL_POSITION_FIXTURE[group["id"]],
+                )
+
+        self.assertEqual(label_count, 199)
+        self.assertEqual(rotation_transform_count, 96)
+        self.assertEqual(axis_count, 100)
 
     def test_crystallographic_symbols_encode_the_polar_lift(self) -> None:
         by_id = {group["id"]: group for group in self.display_groups}
