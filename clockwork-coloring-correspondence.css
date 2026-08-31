@@ -1290,9 +1290,22 @@ nav a[aria-current="page"] {
   white-space: nowrap;
 }
 
-.international-tables-name {
+.hermann-mauguin-name,
+.international-tables-number,
+.schoenflies-name,
+.hall-symbol-name {
   color: var(--text);
   font-weight: 620;
+}
+
+.schoenflies-name {
+  font-family: "STIX Two Math", "Cambria Math", Georgia, "Times New Roman", serif;
+  font-size: 0.98rem;
+}
+
+.hall-symbol-name {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.82rem;
 }
 
 .other-name-list {

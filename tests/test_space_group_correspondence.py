@@ -144,12 +144,34 @@ class SpaceGroupCorrespondenceTests(unittest.TestCase):
 
     def test_pinned_map_is_bijection_onto_the_68_polar_types(self) -> None:
         groups = self.payload["groups"]
-        self.assertEqual(self.payload["meta"]["schema_version"], 4)
+        self.assertEqual(self.payload["meta"]["schema_version"], 5)
         self.assertEqual(len(groups), 68)
         self.assertEqual({group["id"] for group in groups}, set(correspondence.SPACE_GROUP_BY_ID))
         numbers = [group["space_group"]["it_number"] for group in groups]
         self.assertEqual(len(numbers), len(set(numbers)))
         self.assertEqual(set(numbers), correspondence.POLAR_IT_NUMBERS)
+        self.assertEqual(
+            set(correspondence.SCHOENFLIES_BY_IT_NUMBER),
+            correspondence.POLAR_IT_NUMBERS,
+        )
+        self.assertEqual(
+            len(set(correspondence.SCHOENFLIES_BY_IT_NUMBER.values())), 68
+        )
+        for group in groups:
+            space_group = group["space_group"]
+            self.assertEqual(
+                space_group["schoenflies"],
+                correspondence.SCHOENFLIES_BY_IT_NUMBER[
+                    space_group["it_number"]
+                ],
+                group["id"],
+            )
+        self.assertEqual(
+            next(group for group in groups if group["id"] == "g235")["space_group"][
+                "schoenflies"
+            ],
+            "C3v^6",
+        )
 
         low_symmetry = {
             "g1": (1, "P1", "P 1", "P 1", ""),

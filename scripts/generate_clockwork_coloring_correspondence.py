@@ -66,7 +66,7 @@ SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CRYSTAL_EXAMPLE_DATA = ROOT / "data" / "crystal-examples.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=forward-rotation-key"
+    "v=crystallographic-name-expansion"
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
@@ -411,15 +411,36 @@ TERM_HELP = {
         "base orbifold and the fractional height translations coupled to its "
         "generators; this page uses the alias for the chosen height direction."
     ),
-    "International Tables space-group designation": (
-        "The standard International Tables number followed by the short "
-        "Hermann–Mauguin symbol for the associated three-dimensional polar "
-        "space group."
+    "Hermann–Mauguin space-group symbol": (
+        "The short international Hermann–Mauguin symbol for this "
+        "three-dimensional space-group type."
+    ),
+    "Full Hermann–Mauguin space-group symbol": (
+        "The full international Hermann–Mauguin symbol, showing the complete "
+        "sequence of symmetry directions for the selected conventional setting."
+    ),
+    "International Tables number": (
+        "The standard International Tables number identifying this "
+        "three-dimensional space-group type."
+    ),
+    "Schoenflies space-group symbol": (
+        "The Schoenflies symbol for the full three-dimensional space-group "
+        "type; its superscript distinguishes types with the same point group."
+    ),
+    "Hall setting symbol": (
+        "The Hall symbol for the selected coordinate setting; unlike a bare "
+        "Hermann–Mauguin type symbol, it fixes the setting unambiguously."
     ),
     "Complementary forward skips": (
         "The paired entry replaces every +k/N period skip by +(N−k)/N modulo "
         "one period. Both entries preserve the same fixed forward time direction."
     ),
+}
+
+SPACE_GROUP_SETTING_HELP = {
+    "b": "Selected setting: unique axis b.",
+    "b1": "Selected setting: unique axis b, cell choice 1.",
+    "H": "Selected setting: hexagonal axes for the rhombohedral lattice.",
 }
 
 # Canonical first short color signature printed for each relevant type in
@@ -951,6 +972,24 @@ def _hm_html(value: str) -> str:
     """Typeset Hermann--Mauguin screw-axis subscripts."""
 
     return re.sub(r"_([0-9]+)", r"<sub>\1</sub>", escape(value))
+
+
+def _hm_compare_key(value: str) -> str:
+    """Normalize short/full Hermann--Mauguin forms for duplicate suppression."""
+
+    return re.sub(r"[\s_]", "", value)
+
+
+def _schoenflies_html(value: str) -> str:
+    """Typeset a pinned full space-group Schoenflies symbol."""
+
+    match = re.fullmatch(r"([A-Z])([0-9]*[a-z]?)(?:\^([0-9]+))?", value)
+    if not match:
+        raise ValueError(f"unsupported Schoenflies symbol {value!r}")
+    family, point_group, type_index = match.groups()
+    point_group_html = f"<sub>{escape(point_group)}</sub>" if point_group else ""
+    type_html = f"<sup>{escape(type_index)}</sup>" if type_index else ""
+    return f"{escape(family)}{point_group_html}{type_html}"
 
 
 def color_type_html(parent: str, kernel: str, order: int) -> str:
@@ -4461,13 +4500,51 @@ def _other_names_html(
         ),
         extra_help=fibrifold_extra_help,
     )
-    international_tables_name = _identified_name_html(
-        "International Tables space-group designation",
+    setting_help = SPACE_GROUP_SETTING_HELP.get(space_group["choice"], "")
+    short_hm_extra = f'Full form: {space_group["hm_full"]}.'
+    if setting_help:
+        short_hm_extra = f"{short_hm_extra} {setting_help}"
+    short_hm_name = _identified_name_html(
+        "Hermann–Mauguin space-group symbol",
         (
-            '<span class="international-tables-name">'
-            f'No. {space_group["it_number"]} '
+            '<span class="hermann-mauguin-name">'
             f'{_hm_html(space_group["hm_short"])}</span>'
         ),
+        extra_help=short_hm_extra,
+    )
+    full_hm_name = ""
+    if _hm_compare_key(space_group["hm_full"]) != _hm_compare_key(
+        space_group["hm_short"]
+    ):
+        full_hm_name = _identified_name_html(
+            "Full Hermann–Mauguin space-group symbol",
+            (
+                '<span class="hermann-mauguin-name hermann-mauguin-name--full">'
+                f'{_hm_html(space_group["hm_full"])}</span>'
+            ),
+            extra_help=setting_help,
+        )
+    international_tables_number = _identified_name_html(
+        "International Tables number",
+        (
+            '<span class="international-tables-number">'
+            f'No. {space_group["it_number"]}</span>'
+        ),
+    )
+    schoenflies_name = _identified_name_html(
+        "Schoenflies space-group symbol",
+        (
+            f'<span class="schoenflies-name" aria-label="{escape(space_group["schoenflies"])}">'
+            f'{_schoenflies_html(space_group["schoenflies"])}</span>'
+        ),
+    )
+    hall_name = _identified_name_html(
+        "Hall setting symbol",
+        (
+            '<span class="hall-symbol-name">'
+            f'{escape(space_group["hall"])}</span>'
+        ),
+        extra_help=setting_help,
     )
     mate_html = ""
     if record["complementary_skip_mate"]:
@@ -4482,7 +4559,7 @@ def _other_names_html(
                 <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
                   <li class="book-audit-row">{_term_help_html("Book type audit")}<span class="book-audit-value">{book_link}{short_form_support}</span></li>
-                  <li class="other-names-row"><span class="other-name-category">Other names</span><span class="other-name-list">{catalog_name}{fibrifold_name}{international_tables_name}{mate_html}</span></li>
+                  <li class="other-names-row"><span class="other-name-category">Other names</span><span class="other-name-list">{catalog_name}{fibrifold_name}{short_hm_name}{full_hm_name}{international_tables_number}{schoenflies_name}{hall_name}{mate_html}</span></li>
                 </ul>
               </section>"""
 
