@@ -1849,7 +1849,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn(".orbifold-star {", css)
-        self.assertIn('font-family: "STIX Two Math", "Cambria Math"', css)
+        self.assertIn('"STIX Two Math", "Cambria Math"', css)
         self.assertIn("vertical-align: baseline", css)
 
     def test_short_signature_source_links_are_visually_quiet_at_rest(self) -> None:

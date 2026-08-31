@@ -9,7 +9,9 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <style>
-  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+  :root {
+  color-scheme: light;
+  --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
           --card:#ffffff; --accent:#0072B2; }
   body { background:var(--paper); color:var(--ink); }
   .cayley-page { max-width:1140px; margin:0 auto; padding:0 20px 72px; }
@@ -73,7 +75,6 @@
   .sig span { display:inline-block; min-width:6.4em; color:var(--muted);
               font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; }
   .checks { margin:.5rem 0 0; font-size:.76rem; color:#046a38; }
-  @media (prefers-color-scheme: dark) { .checks { color:#5fd39b; } }
   .table-scroll { overflow-x:auto; }
   table { border-collapse:collapse; font-size:.9rem; min-width:540px; }
   th, td { text-align:left; padding:.42em .8em; border-bottom:1px solid var(--rule); }
@@ -81,12 +82,6 @@
   td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
   .footnote { color:var(--muted); font-size:.86rem; }
   svg.cayley, svg.pat { display:block; max-width:100%; height:auto; }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
-            --card:#1e242b; --accent:#56B4E9; }
-    code { background:#2a323a; }
-    .ok { color:#5fd39b; } .no { color:#ff9d6b; }
-  }
 </style>
 </head>
 <body>

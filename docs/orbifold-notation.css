@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --note-ink: #17201d;
   --note-muted: #5b6863;
   --note-line: #d9e0dc;
@@ -69,7 +70,7 @@ nav a[aria-current="page"] {
 .colour-type,
 .fibrifold {
   color: var(--note-ink);
-  font-family: "STIX Two Math", "Cambria Math", Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "STIX Two Math", "Cambria Math", sans-serif;
   font-variant-numeric: lining-nums;
 }
 

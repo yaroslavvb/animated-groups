@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --pattern-ink: #171b19;
   --pattern-muted: #5d6864;
   --pattern-rule: #d4ded9;
@@ -87,7 +88,7 @@ body {
   display: block;
   padding: 0 0.1rem 0.2rem;
   text-align: center;
-  font: 700 clamp(0.95rem, 1.35vw, 1.2rem)/1 Georgia, "Times New Roman", serif;
+  font: 700 clamp(0.95rem, 1.35vw, 1.2rem)/1 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .directory-family img {
@@ -140,7 +141,7 @@ body {
 }
 
 .family-orbifold {
-  font: 700 clamp(2.6rem, 5vw, 5rem)/0.9 Georgia, "Times New Roman", serif;
+  font: 700 clamp(2.6rem, 5vw, 5rem)/0.9 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   letter-spacing: -0.055em;
 }
 
@@ -210,12 +211,12 @@ body {
 
 .tab-name {
   min-height: 1.65rem;
-  font: 700 1.15rem/1.1 Georgia, "Times New Roman", serif;
+  font: 700 1.15rem/1.1 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   white-space: nowrap;
 }
 
 .orbifold-star {
-  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "STIX Two Math", "Cambria Math", sans-serif;
   font-size: 1em;
   font-style: normal;
   font-weight: inherit;
@@ -306,7 +307,7 @@ body {
   border-radius: 0.4rem 0.4rem 0 0;
   color: #51605a;
   background: var(--pattern-soft);
-  font: 650 0.83rem/1.1 Georgia, "Times New Roman", serif;
+  font: 650 0.83rem/1.1 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -440,7 +441,7 @@ body {
 
 .generator-label {
   fill: var(--pattern-accent);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 17px;
   font-weight: 700;
   line-height: 1;
@@ -452,7 +453,7 @@ body {
   gap: 0.32rem;
   margin: 0;
   color: var(--pattern-ink);
-  font: 650 1.08rem/1.15 Georgia, "Times New Roman", serif;
+  font: 650 1.08rem/1.15 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   text-decoration-color: #7f9c92;
 }
 
@@ -462,7 +463,7 @@ body {
 }
 
 .source-math-symbol {
-  font: 650 1.08rem/1.15 Georgia, "Times New Roman", serif;
+  font: 650 1.08rem/1.15 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .ghk-expression {
@@ -484,7 +485,7 @@ body {
   gap: 0.3rem;
   margin: 0;
   color: var(--pattern-muted);
-  font: 650 0.72rem/1 Arial, Helvetica, sans-serif;
+  font: 650 0.72rem/1 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   white-space: nowrap;
 }
 
@@ -497,7 +498,7 @@ body {
   border-radius: 0.2rem;
   color: #fff;
   background: var(--swatch);
-  font: 700 0.72rem/1 Arial, Helvetica, sans-serif;
+  font: 700 0.72rem/1 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .action-colour:nth-child(2) {
@@ -554,7 +555,7 @@ body {
   min-width: 1.45rem;
   margin-right: 0.36rem;
   color: var(--pattern-accent);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-weight: 700;
   line-height: 1;
 }
@@ -566,7 +567,7 @@ body {
 
 .presentation-permutation {
   color: var(--pattern-ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
 
@@ -580,13 +581,13 @@ body {
   gap: 0.6rem;
   margin: 0.5rem 0 0;
   color: var(--pattern-ink);
-  font: 0.82rem/1.45 Georgia, "Times New Roman", serif;
+  font: 0.82rem/1.45 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .presentation-relations strong {
   flex: 0 0 auto;
   color: var(--pattern-muted);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.7rem;
   letter-spacing: 0.025em;
 }
@@ -598,7 +599,7 @@ body {
 
 .source-link-mark {
   color: var(--pattern-accent);
-  font: 650 0.72rem/1 Arial, Helvetica, sans-serif;
+  font: 650 0.72rem/1 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .inline-short-signature sup {

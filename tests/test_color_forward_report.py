@@ -72,7 +72,7 @@ class ColorForwardReportTests(unittest.TestCase):
             "firstColumnRenderer: renderOrbifoldNotation"
         ), 2)
         self.assertIn(".orbifold-star {", self.styles)
-        self.assertIn('font-family: "STIX Two Math", "Cambria Math"', self.styles)
+        self.assertIn('"STIX Two Math", "Cambria Math"', self.styles)
         self.assertIn("vertical-align: baseline", self.styles)
         self.assertIn("future-directions.css?v=book-orbifold-stars", self.page)
         self.assertIn("future-directions.js?v=book-orbifold-stars", self.page)

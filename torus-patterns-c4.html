@@ -9,7 +9,9 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <style>
-  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+  :root {
+  color-scheme: light;
+  --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
           --card:#ffffff; --accent:#0072B2; }
   body { background:var(--paper); color:var(--ink); }
   .patterns { max-width:1180px; margin:0 auto; padding:0 20px 72px; }
@@ -44,11 +46,6 @@
   th { font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
   td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
   .footnote { color:var(--muted); font-size:.86rem; }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
-            --card:#1e242b; --accent:#56B4E9; }
-    code, .row-meta span { background:#2a323a; }
-  }
 </style>
 </head>
 <body>

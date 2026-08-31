@@ -9,7 +9,9 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <style>
-  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+  :root {
+  color-scheme: light;
+  --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
           --card:#ffffff; --accent:#0072B2; }
   body { background:var(--paper); color:var(--ink); }
   .nr { max-width:1120px; margin:0 auto; padding:0 20px 72px; }
@@ -47,13 +49,6 @@
   .table-scroll { overflow-x:auto; }
   .footnote { color:var(--muted); font-size:.86rem; }
   svg.pat, svg.oct { display:block; max-width:100%; height:auto; }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
-            --card:#1e242b; --accent:#56B4E9; }
-    code { background:#2a323a; }
-    .action tr.in-h td { background:rgba(0,158,115,.22); }
-    .action tr.in-k td { background:rgba(0,158,115,.4); }
-  }
 </style>
 </head>
 <body>
