@@ -37,7 +37,7 @@ nav a[aria-current="page"] {
 .height-lift {
   display: inline-block;
   color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: clamp(0.9rem, 1.6vw, 1.08rem);
   line-height: 1.5;
   white-space: normal;
@@ -80,7 +80,7 @@ nav a[aria-current="page"] {
 
 .directory-family h3 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.1;
 }
@@ -99,7 +99,7 @@ nav a[aria-current="page"] {
   display: block;
   margin-top: 0.25rem;
   color: var(--muted);
-  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.62rem;
   font-weight: 500;
 }
@@ -133,7 +133,7 @@ nav a[aria-current="page"] {
 
 .directory-signature {
   justify-self: center;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.82rem;
   font-weight: 650;
   line-height: 1.1;
@@ -158,7 +158,7 @@ nav a[aria-current="page"] {
 .directory-group-id {
   justify-self: center;
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 0.58rem;
   line-height: 1;
 }
@@ -189,7 +189,7 @@ nav a[aria-current="page"] {
   align-items: baseline;
   gap: 0.3rem 0.7rem;
   margin: 0 0 0.8rem;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: clamp(2rem, 4vw, 3.25rem);
   font-weight: 570;
   line-height: 1;
@@ -201,7 +201,7 @@ nav a[aria-current="page"] {
 
 .family-count {
   color: var(--muted);
-  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.28em;
   font-weight: 500;
 }
@@ -245,7 +245,7 @@ nav a[aria-current="page"] {
 }
 
 .tab-signature {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 1.02rem;
   font-weight: 650;
   line-height: 1.15;
@@ -320,7 +320,7 @@ nav a[aria-current="page"] {
 
 .space-group-name {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: clamp(2.5rem, 7vw, 5.4rem);
   font-weight: 570;
   letter-spacing: -0.045em;
@@ -333,7 +333,7 @@ nav a[aria-current="page"] {
 }
 
 .orbifold-star {
-  font-family: "STIX Two Math", "Cambria Math", "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "STIX Two Math", "Cambria Math", sans-serif;
   font-size: 1em;
   font-style: normal;
   font-weight: inherit;
@@ -379,7 +379,7 @@ nav a[aria-current="page"] {
 
 .base-orbifold {
   color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-weight: 650;
 }
 
@@ -435,7 +435,7 @@ nav a[aria-current="page"] {
 }
 
 .generator-key {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .presentation-relations {
@@ -443,7 +443,7 @@ nav a[aria-current="page"] {
   gap: 0.6rem;
   margin: 0.5rem 0 0;
   color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.8rem;
   line-height: 1.45;
 }
@@ -451,7 +451,7 @@ nav a[aria-current="page"] {
 .presentation-relations strong {
   flex: 0 0 auto;
   color: var(--muted);
-  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.7rem;
   letter-spacing: 0.025em;
 }

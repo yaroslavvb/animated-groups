@@ -14,9 +14,9 @@
   --mono: #6d746e;
   --content: 1000px;
   --reading: 760px;
-  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 * { box-sizing: border-box; }
@@ -358,7 +358,7 @@ section > p,
 
 .motif-glyph {
   display: block;
-  font-family: Arial Black, Arial, Helvetica, sans-serif;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: clamp(1.35rem, 3.6vw, 2.2rem);
   font-weight: 900;
   line-height: 0.8;
@@ -376,7 +376,7 @@ section > p,
   padding: 0.05rem 0.24rem;
   background: rgba(255, 255, 255, 0.9);
   color: currentColor;
-  font-family: var(--mono);
+  font-family: var(--font-mono);
   font-size: clamp(0.5rem, 1vw, 0.64rem);
   font-weight: 700;
   line-height: 1.15;

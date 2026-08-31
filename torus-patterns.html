@@ -9,7 +9,9 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <style>
-  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+  :root {
+  color-scheme: light;
+  --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
           --card:#ffffff; --accent:#0072B2; }
   body { background:var(--paper); color:var(--ink); }
   .patterns { max-width:1120px; margin:0 auto; padding:0 20px 72px; }
@@ -17,7 +19,7 @@
   .patterns h2 { font-size:1.32rem; margin:2.4rem 0 .7rem;
                  border-bottom:1px solid var(--rule); padding-bottom:.35rem; }
   .patterns h3 { font-size:1.05rem; margin:0 0 .2rem;
-                 font-family:ui-monospace,Menlo,Consolas,monospace; }
+                 font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
   .overline { text-transform:uppercase; letter-spacing:.12em; font-size:.74rem;
               color:var(--muted); margin:2rem 0 0; }
   .lead { font-size:1.05rem; color:var(--muted); max-width:64ch; }
@@ -51,11 +53,6 @@
   th { font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
   td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
   .footnote { color:var(--muted); font-size:.86rem; }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
-            --card:#1e242b; --accent:#56B4E9; }
-    code, .row-meta span { background:#2a323a; }
-  }
 </style>
 </head>
 <body>

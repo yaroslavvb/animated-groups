@@ -9,7 +9,9 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site-controls-v2.css">
   <style>
-  :root { --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
+  :root {
+  color-scheme: light;
+  --ink:#1b2430; --muted:#5a6470; --paper:#faf8f2; --rule:#ded8c9;
           --card:#ffffff; --accent:#0072B2; }
   body { background:var(--paper); color:var(--ink); }
   .tutorial { max-width:1120px; margin:0 auto; padding:0 20px 72px; }
@@ -33,7 +35,7 @@
                    grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr)); }
   .subgroup-card { background:var(--card); border:1px solid var(--rule);
                    border-radius:12px; padding:16px 18px 6px; }
-  .card-head h3 { font-family:ui-monospace,Menlo,Consolas,monospace; }
+  .card-head h3 { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
   .card-shape { margin:.1rem 0 .3rem; color:var(--muted); font-size:.92rem; }
   .card-meta { margin:0 0 .8rem; font-size:.78rem; color:var(--muted); }
   .card-meta span { display:inline-block; background:#eef1f4; border-radius:20px;
@@ -53,12 +55,6 @@
   th { font-size:.76rem; text-transform:uppercase; letter-spacing:.07em;
        color:var(--muted); }
   .footnote { color:var(--muted); font-size:.86rem; }
-  @media (prefers-color-scheme: dark) {
-    :root { --ink:#e8e6e1; --muted:#a8b0ba; --paper:#161a1f; --rule:#333a42;
-            --card:#1e242b; --accent:#56B4E9; }
-    code { background:#2a323a; }
-    .card-meta span { background:#2a323a; }
-  }
 </style>
 </head>
 <body>
