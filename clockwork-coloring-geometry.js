@@ -55,10 +55,24 @@ function latticeToPixel(matrix, b1, b2) {
   return multiply2(multiply2(basis, matrix), invert2(basis));
 }
 
-export function buildClockworkGeometry(spec, width, height, dpr = 1) {
+export function buildClockworkGeometry(
+  spec,
+  width,
+  height,
+  dpr = 1,
+  viewportCenter = [0, 0],
+) {
   if (!spec || !Array.isArray(spec.ops) || !Array.isArray(spec.basis)) {
     throw new Error("invalid clockwork render specification");
   }
+  if (
+    !Array.isArray(viewportCenter)
+    || viewportCenter.length !== 2
+    || viewportCenter.some((value) => typeof value !== "number" || !Number.isFinite(value))
+  ) {
+    throw new Error("invalid clockwork viewport center");
+  }
+  const viewCenter = [...viewportCenter];
   const safeWidth = Math.max(1, Number(width));
   const safeHeight = Math.max(1, Number(height));
   const basis = spec.basis;
@@ -138,13 +152,17 @@ export function buildClockworkGeometry(spec, width, height, dpr = 1) {
   const inverse = invert2([[b1[0], b2[0]], [b1[1], b2[1]]]);
   const centerX = safeWidth / 2;
   const centerY = safeHeight / 2;
+  // The stored centre is a point in the same physical plane as `basis`.
+  // Mapping that point to the middle of the canvas pans the complete scene—
+  // motifs and generator geometry together—without changing its scale.
+  const viewportPixelOffset = [-cell * viewCenter[0], cell * viewCenter[1]];
   let min1 = Infinity;
   let max1 = -Infinity;
   let min2 = Infinity;
   let max2 = -Infinity;
   for (const [pixelX, pixelY] of [[0, 0], [safeWidth, 0], [0, safeHeight], [safeWidth, safeHeight]]) {
-    const x = pixelX - centerX;
-    const y = pixelY - centerY;
+    const x = pixelX - centerX - viewportPixelOffset[0];
+    const y = pixelY - centerY - viewportPixelOffset[1];
     const lattice1 = inverse[0][0] * x + inverse[0][1] * y;
     const lattice2 = inverse[1][0] * x + inverse[1][1] * y;
     min1 = Math.min(min1, lattice1);
@@ -168,8 +186,12 @@ export function buildClockworkGeometry(spec, width, height, dpr = 1) {
       for (let lattice2 = Math.floor(min2 - pad); lattice2 <= Math.ceil(max2 + pad); lattice2 += 1) {
         const position1 = baseX + lattice1;
         const position2 = baseY + lattice2;
-        const pixelX = position1 * b1[0] + position2 * b2[0];
-        const pixelY = position1 * b1[1] + position2 * b2[1];
+        const pixelX = (
+          position1 * b1[0] + position2 * b2[0] + viewportPixelOffset[0]
+        );
+        const pixelY = (
+          position1 * b1[1] + position2 * b2[1] + viewportPixelOffset[1]
+        );
         if (
           pixelX < -safeWidth / 2 - motifRadius * 3
           || pixelX > safeWidth / 2 + motifRadius * 3
@@ -192,5 +214,7 @@ export function buildClockworkGeometry(spec, width, height, dpr = 1) {
     motifRadius,
     circleDiameter,
     placements,
+    viewportCenter: viewCenter,
+    viewportPixelOffset,
   };
 }

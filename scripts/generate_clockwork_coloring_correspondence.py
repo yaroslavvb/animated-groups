@@ -70,11 +70,12 @@ CORRESPONDENCE_STYLE_SRC = (
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
-    "v=all-68-full-entries"
+    "v=reflection-centering-v1"
 )
 CRYSTAL_VIEWER_SCRIPT_SRC = "crystal-viewer.js?v=one-live-real-crystal-viewer"
 SPACE_TIME_PREVIEW_VERSION = "stacked-clock-period"
 BOOK_EXCERPT_VIEWER_VERSION = "short-signature-audit-v2"
+CLOCKWORK_PLATE_VERSION = "reflection-centering-v1"
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -106,6 +107,7 @@ MIN_VISIBLE_MOTIF_DIAMETER_PX = 38
 # asymmetric stamp a 38 CSS-pixel circumscribed diameter after image scaling.
 PLATE_MIN_MOTIF_RADIUS_PX = 36
 PLATE_MOTIF_DIAMETER_FACTOR = 1.5057224179774968
+MIN_REFLECTION_SMALL_SIDE_FRACTION = 0.38
 PLATE_MOTIF_SHAPE = (
     (-0.58, -0.44),
     (-0.03, -0.68),
@@ -206,6 +208,56 @@ _add_plate_conjugacy("g230", [[-_R3, -1], [_R3, -1]])
 _add_plate_conjugacy("g232", [[-1, -_R3], [-1, _R3]])
 _add_plate_conjugacy("g243", [[-1, _R3], [-1, -_R3]])
 _add_plate_conjugacy("g268", [[-1, -_R3], [-1, _R3]])
+
+# Each reflection-bearing canonical presentation is viewed from the natural
+# centre of its fundamental mirror region.  Parallel pairs use the midpoint of
+# their strip, intersecting axes use their intersection, and the Coxeter
+# triangles use their incenter.  The point is subsequently carried through the
+# same signed conjugacy as the named generators, so every colour variant of one
+# parent follows one geometric convention without shrinking its motifs.
+_SQRT_2 = math.sqrt(2)
+_SQRT_3 = math.sqrt(3)
+CANONICAL_REFLECTION_VIEWPORT_CENTER_BY_PARENT: dict[str, tuple[float, float]] = {
+    "pm": (0, 1 / 4),
+    "pg": (0, 1 / 4),
+    "cm": (0, 1 / 4),
+    "pmm": (1 / 4, 1 / 4),
+    "pmg": (0, 0),
+    "pgg": (0, 0),
+    "cmm": (0, 0),
+    "p4m": (_SQRT_2 / 4, (2 - _SQRT_2) / 4),
+    "p4g": (0, 0),
+    "p3m1": (1 / (2 * _SQRT_3), 1 / 6),
+    "p31m": (0, 0),
+    "p6m": ((1 + 1 / _SQRT_3) / 4, (1 - 1 / _SQRT_3) / 4),
+}
+
+
+def _clean_coordinate(value: float) -> float:
+    return 0.0 if abs(value) < 1e-12 else round(value, 12)
+
+
+def _plate_viewport_center(
+    group_id: str,
+    parent: str,
+    render: dict[str, Any],
+) -> list[float]:
+    """Return the physical world point placed at the plate viewport centre."""
+
+    canonical = CANONICAL_REFLECTION_VIEWPORT_CENTER_BY_PARENT.get(parent)
+    if canonical is None:
+        return [0.0, 0.0]
+    linear, offset = CANONICAL_TO_RENDER_CONJUGACY_BY_ID[group_id]
+    render_lattice = (
+        linear[0][0] * canonical[0] + linear[0][1] * canonical[1] + offset[0],
+        linear[1][0] * canonical[0] + linear[1][1] * canonical[1] + offset[1],
+    )
+    basis = render["basis"]
+    physical = (
+        basis[0][0] * render_lattice[0] + basis[1][0] * render_lattice[1],
+        basis[0][1] * render_lattice[0] + basis[1][1] * render_lattice[1],
+    )
+    return [_clean_coordinate(value) for value in physical]
 
 BASE_ORDER = (
     "p1", "p2", "pm", "pg", "cm", "pmm", "pmg", "pgg", "cmm",
@@ -2183,6 +2235,11 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
             short_signature,
             group["render"],
         )
+        viewport_center = _plate_viewport_center(
+            group_id,
+            group["base"],
+            group["render"],
+        )
         residues = [
             {
                 "index": j,
@@ -2225,13 +2282,14 @@ def build_payload(source_catalog: Path) -> dict[str, Any]:
                 f"Static perfect {order}-colouring for group {group_id}: "
                 f"asymmetric motifs carry phase colours for Conway type {notation}."
             ),
+            "viewport_center": viewport_center,
             "render": group["render"],
         }
         records.append(record)
 
     payload = {
         "meta": {
-            "schema_version": 9,
+            "schema_version": 10,
             "title": "Clockwork/coloring correspondence",
             "source_catalog_url": CATALOG_DATA_URL,
             "source_catalog_sha256": digest,
@@ -2312,6 +2370,11 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
             record["book_color_signature"],
             record["render"],
         )
+        record["viewport_center"] = _plate_viewport_center(
+            group_id,
+            record["parent"]["hm"],
+            record["render"],
+        )
         record["phase_residues"] = [
             {
                 "index": index,
@@ -2335,7 +2398,7 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
         )
 
     meta = payload["meta"]
-    meta["schema_version"] = 9
+    meta["schema_version"] = 10
     meta["definition"] = (
         "kappa(M,v) = N*tau mod N; K = ker(kappa); regular action has H = K; "
         "ToS type is G for N=1, G/K for N=2, and G^N/K for N>2; "
@@ -2354,8 +2417,8 @@ def refresh_derived_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
     groups = payload.get("groups", [])
-    if meta.get("schema_version") != 9:
-        raise ValueError("correspondence data must use schema version 9")
+    if meta.get("schema_version") != 10:
+        raise ValueError("correspondence data must use schema version 10")
     if meta.get("source_catalog_sha256") != SOURCE_SHA256:
         raise ValueError("correspondence data does not identify the pinned source")
     if meta.get("forward_groups") != 68 or len(groups) != 68:
@@ -2403,6 +2466,13 @@ def validate_payload(payload: dict[str, Any]) -> None:
     for group in groups:
         group_id = group["id"]
         order = group["clock_order"]
+        expected_viewport_center = _plate_viewport_center(
+            group_id,
+            group["parent"]["hm"],
+            group["render"],
+        )
+        if group.get("viewport_center") != expected_viewport_center:
+            raise ValueError(f"reflection viewport center mismatch in {group_id}")
         if group["parent"]["orbifold"] != ORBIFOLD_BY_BASE[group["parent"]["hm"]]:
             raise ValueError(f"parent notation mismatch in {group_id}")
         if group["kernel"]["hm"] != KERNEL_BASE_BY_ID[group_id]:
@@ -2541,6 +2611,25 @@ def validate_payload(payload: dict[str, Any]) -> None:
                 raise ValueError(f"geometric operation phases do not generate C_{order} in {group_id}")
         validate_render(group_id, group["render"], order)
 
+    reflection_splits = [
+        (
+            group["id"],
+            action["generator"],
+            _reflection_small_side_fraction(group, action),
+        )
+        for group in groups
+        for action in group["chaim_presentation"]["generators"]
+        if action["marker"]["kind"] in {"mirror", "glide"}
+    ]
+    if len(reflection_splits) != 100:
+        raise ValueError("correspondence must contain 100 audited reflection axes")
+    for group_id, generator, fraction in reflection_splits:
+        if fraction + 1e-9 < MIN_REFLECTION_SMALL_SIDE_FRACTION:
+            raise ValueError(
+                f"reflection axis is too close to the viewport edge in "
+                f"{group_id}:{generator}: {fraction:.6f}"
+            )
+
     for group_id, mate_id in COMPLEMENTARY_SKIP_MATE.items():
         group = next(row for row in groups if row["id"] == group_id)
         mate = next(row for row in groups if row["id"] == mate_id)
@@ -2599,7 +2688,10 @@ def _mat_mul(a: list[list[float]], b: list[list[float]]) -> list[list[float]]:
 
 
 def _site_geometry(
-    spec: dict[str, Any], width: int, height: int
+    spec: dict[str, Any],
+    width: int,
+    height: int,
+    viewport_center: Iterable[float] = (0, 0),
 ) -> tuple[list[float], list[float], float, tuple[range, range]]:
     basis = spec["basis"]
     minimum_side = min(width, height)
@@ -2668,9 +2760,15 @@ def _site_geometry(
     inverse = _mat_inv([[b1[0], b2[0]], [b1[1], b2[1]]])
     m1s: list[float] = []
     m2s: list[float] = []
-    center_x, center_y = width / 2, height / 2
+    view_x, view_y = viewport_center
+    basis_length = math.hypot(*basis[0])
+    if basis_length <= 1e-9:
+        raise ValueError("plate basis has a zero first vector")
+    physical_scale = math.hypot(*b1) / basis_length
+    origin_x = width / 2 - physical_scale * float(view_x)
+    origin_y = height / 2 + physical_scale * float(view_y)
     for px, py in ((0, 0), (width, 0), (0, height), (width, height)):
-        x, y = px - center_x, py - center_y
+        x, y = px - origin_x, py - origin_y
         m1s.append(inverse[0][0] * x + inverse[0][1] * y)
         m2s.append(inverse[1][0] * x + inverse[1][1] * y)
     pad = 2
@@ -2852,11 +2950,20 @@ def render_plate(record: dict[str, Any]) -> bytes:
     image = Image.new("RGB", (width, height), background)
     draw = ImageDraw.Draw(image)
     spec = record["render"]
-    b1, b2, radius, ranges = _site_geometry(spec, width, height)
+    viewport_center = record["viewport_center"]
+    b1, b2, radius, ranges = _site_geometry(
+        spec,
+        width,
+        height,
+        viewport_center,
+    )
     pixel_basis = [[b1[0], b2[0]], [b1[1], b2[1]]]
     inverse_basis = _mat_inv(pixel_basis)
     base = spec.get("base", [0.31, 0.17])
-    center_x, center_y = width / 2, height / 2
+    basis_length = math.hypot(*spec["basis"][0])
+    physical_scale = math.hypot(*b1) / basis_length
+    center_x = width / 2 - physical_scale * viewport_center[0]
+    center_y = height / 2 + physical_scale * viewport_center[1]
 
     # A deliberately asymmetric, chiral stamp; its transformed copies make
     # rotations, reflections and glides visible without a clock overlay.
@@ -3128,17 +3235,26 @@ def _svg_number(value: float) -> str:
     return "0" if rendered == "-0" else rendered
 
 
-def _plate_screen_point(point: Iterable[float], scale: float) -> tuple[float, float]:
+def _plate_screen_point(
+    point: Iterable[float],
+    scale: float,
+    viewport_center: Iterable[float] = (0, 0),
+) -> tuple[float, float]:
     x, y = point
-    return IMAGE_WIDTH / 2 + scale * x, IMAGE_HEIGHT / 2 - scale * y
+    view_x, view_y = viewport_center
+    return (
+        IMAGE_WIDTH / 2 + scale * (x - view_x),
+        IMAGE_HEIGHT / 2 - scale * (y - view_y),
+    )
 
 
 def _clipped_plate_axis(
     axis_point: Iterable[float],
     axis_direction: Iterable[float],
     scale: float,
+    viewport_center: Iterable[float] = (0, 0),
 ) -> dict[str, tuple[float, float]] | None:
-    point = _plate_screen_point(axis_point, scale)
+    point = _plate_screen_point(axis_point, scale, viewport_center)
     world_dx, world_dy = axis_direction
     screen_direction = (world_dx, -world_dy)
     length = math.hypot(*screen_direction)
@@ -3167,6 +3283,67 @@ def _clipped_plate_axis(
         "direction": unit,
         "normal": (-unit[1], unit[0]),
     }
+
+
+def _reflection_small_side_fraction(
+    record: dict[str, Any],
+    generator: dict[str, Any],
+) -> float:
+    """Return the smaller area fraction cut by one infinite plane axis."""
+
+    visualization = generator["plate_visualization"]
+    scale = _plate_cell_scale(record["render"])
+    point = _plate_screen_point(
+        visualization["axis_point"],
+        scale,
+        record["viewport_center"],
+    )
+    world_dx, world_dy = visualization["axis_direction"]
+    screen_direction = (float(world_dx), -float(world_dy))
+    length = math.hypot(*screen_direction)
+    if length <= 1e-9:
+        raise ValueError("reflection axis has zero direction")
+    normal = (-screen_direction[1] / length, screen_direction[0] / length)
+
+    def signed(vertex: tuple[float, float]) -> float:
+        return (
+            (vertex[0] - point[0]) * normal[0]
+            + (vertex[1] - point[1]) * normal[1]
+        )
+
+    def clipped_area(keep_positive: bool) -> float:
+        polygon = [
+            (0.0, 0.0),
+            (float(IMAGE_WIDTH), 0.0),
+            (float(IMAGE_WIDTH), float(IMAGE_HEIGHT)),
+            (0.0, float(IMAGE_HEIGHT)),
+        ]
+        output: list[tuple[float, float]] = []
+        for start, end in zip(polygon, polygon[1:] + polygon[:1], strict=True):
+            start_value = signed(start)
+            end_value = signed(end)
+            start_inside = start_value >= 0 if keep_positive else start_value <= 0
+            end_inside = end_value >= 0 if keep_positive else end_value <= 0
+            if start_inside:
+                output.append(start)
+            if start_inside != end_inside:
+                denominator = start_value - end_value
+                fraction = start_value / denominator
+                output.append(
+                    (
+                        start[0] + fraction * (end[0] - start[0]),
+                        start[1] + fraction * (end[1] - start[1]),
+                    )
+                )
+        return abs(
+            sum(
+                left[0] * right[1] - right[0] * left[1]
+                for left, right in zip(output, output[1:] + output[:1], strict=True)
+            )
+        ) / 2
+
+    total = IMAGE_WIDTH * IMAGE_HEIGHT
+    return min(clipped_area(True), clipped_area(False)) / total
 
 
 def _plate_generator_label_html(
@@ -3567,6 +3744,7 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
     if not placement:
         return ""
     scale = _plate_cell_scale(record["render"])
+    viewport_center = record["viewport_center"]
     markers: list[str] = []
     rotation_label_offsets = ((21, -17), (21, 18), (-21, 18), (-21, -17))
     axis_label_fractions = (0.18, 0.78, 0.42, 0.64)
@@ -3635,7 +3813,9 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
                 f' data-rotation-order="{order}" data-screw-step="{screw_step}"'
             )
             centre_x, centre_y = _plate_screen_point(
-                generator["visualization"]["centre"], scale
+                generator["visualization"]["centre"],
+                scale,
+                viewport_center,
             )
             label_dx, label_dy = rotation_label_offsets[
                 index % len(rotation_label_offsets)
@@ -3657,6 +3837,7 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
                 generator["visualization"]["axis_point"],
                 generator["visualization"]["axis_direction"],
                 scale,
+                viewport_center,
             )
             if axis is None:
                 raise ValueError(f"plate generator axis misses {record['id']}: {name}")
@@ -4347,7 +4528,7 @@ def _entry_html(
               {_film_html(record)}
               <figure class="colour-plate">
                 <div class="colour-plate-graphic">
-                  <img src="{escape(record['image'])}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
+                  <img src="{escape(record['image'])}?v={CLOCKWORK_PLATE_VERSION}" width="{IMAGE_WIDTH}" height="{IMAGE_HEIGHT}" loading="lazy" decoding="async" alt="{escape(record['image_alt'])}">
                   {_plate_generator_overlay_html(record)}
                 </div>
                 <figcaption>

@@ -4,6 +4,7 @@ from collections import Counter, defaultdict
 from html import escape
 from html.parser import HTMLParser
 import json
+import math
 from pathlib import Path
 import re
 import subprocess
@@ -72,6 +73,186 @@ SOURCE_LABELING_FIXTURE = {
     "g248": ["A", "B", "D", "F", "E", "C"],
 }
 SUPERSCRIPT_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
+
+VIEWPORT_CENTER_FIXTURE = {
+    "g8": (-0.1767766952965, 0.0),
+    "g10": (0.17677675, 0.0),
+    "g11": (0.3535535, 0.0),
+    "g54": (0.25, 0.25),
+    "g64": (0.25, -0.275567625),
+    "g73": (-0.12451575, 0.25),
+    "g128": (-0.35355339059327373, -0.14644660940672624),
+    "g131": (-0.20710678118654754, 0.5),
+    "g230": (-1 / 6, 0.28867513459473976),
+    "g268": (-0.3943375672974532, 0.10566243270254677),
+    "g269": (-0.10566243270263011, -0.39433756729736996),
+}
+
+
+def _polygon_area(points: list[tuple[float, float]]) -> float:
+    if len(points) < 3:
+        return 0.0
+    return abs(
+        sum(
+            left[0] * right[1] - right[0] * left[1]
+            for left, right in zip(points, points[1:] + points[:1], strict=True)
+        )
+    ) / 2
+
+
+def _clip_to_axis_half_plane(
+    points: list[tuple[float, float]],
+    normal: tuple[float, float],
+    offset: float,
+) -> list[tuple[float, float]]:
+    """Clip a polygon to one side of an infinite projected generator axis."""
+
+    clipped: list[tuple[float, float]] = []
+    for start, end in zip(points, points[1:] + points[:1], strict=True):
+        start_value = normal[0] * start[0] + normal[1] * start[1] - offset
+        end_value = normal[0] * end[0] + normal[1] * end[1] - offset
+        start_inside = start_value <= 1e-9
+        end_inside = end_value <= 1e-9
+        if start_inside:
+            clipped.append(start)
+        if start_inside != end_inside:
+            interpolation = start_value / (start_value - end_value)
+            clipped.append(
+                (
+                    start[0] + interpolation * (end[0] - start[0]),
+                    start[1] + interpolation * (end[1] - start[1]),
+                )
+            )
+    return clipped
+
+
+def _projected_axis_metrics(
+    group: dict[str, object],
+    action: dict[str, object],
+) -> tuple[float, tuple[tuple[float, float], tuple[float, float]]]:
+    """Return the smaller area share and inset-clipped endpoints for one axis."""
+
+    center = group["viewport_center"]
+    render = group["render"]
+    visualization = action["plate_visualization"]
+    assert isinstance(center, list)
+    assert isinstance(render, dict)
+    assert isinstance(visualization, dict)
+    axis_point = visualization["axis_point"]
+    axis_direction = visualization["axis_direction"]
+    assert isinstance(axis_point, list)
+    assert isinstance(axis_direction, list)
+    scale = correspondence._plate_cell_scale(render)
+    point = (
+        correspondence.IMAGE_WIDTH / 2
+        + scale * (float(axis_point[0]) - float(center[0])),
+        correspondence.IMAGE_HEIGHT / 2
+        - scale * (float(axis_point[1]) - float(center[1])),
+    )
+    screen_direction = (
+        float(axis_direction[0]),
+        -float(axis_direction[1]),
+    )
+    direction_length = math.hypot(*screen_direction)
+    unit = (
+        screen_direction[0] / direction_length,
+        screen_direction[1] / direction_length,
+    )
+    normal = (-unit[1], unit[0])
+    offset = normal[0] * point[0] + normal[1] * point[1]
+    rectangle = [
+        (0.0, 0.0),
+        (float(correspondence.IMAGE_WIDTH), 0.0),
+        (
+            float(correspondence.IMAGE_WIDTH),
+            float(correspondence.IMAGE_HEIGHT),
+        ),
+        (0.0, float(correspondence.IMAGE_HEIGHT)),
+    ]
+    one_side = _polygon_area(
+        _clip_to_axis_half_plane(rectangle, normal, offset)
+    )
+    total = correspondence.IMAGE_WIDTH * correspondence.IMAGE_HEIGHT
+    smaller_share = min(one_side, total - one_side) / total
+
+    lower = -math.inf
+    upper = math.inf
+    inset = 9.0
+    for coordinate, component, minimum, maximum in (
+        (point[0], unit[0], inset, correspondence.IMAGE_WIDTH - inset),
+        (point[1], unit[1], inset, correspondence.IMAGE_HEIGHT - inset),
+    ):
+        if abs(component) <= 1e-9:
+            assert minimum <= coordinate <= maximum
+            continue
+        first = (minimum - coordinate) / component
+        second = (maximum - coordinate) / component
+        lower = max(lower, min(first, second))
+        upper = min(upper, max(first, second))
+    assert lower <= upper
+    endpoints = (
+        (point[0] + lower * unit[0], point[1] + lower * unit[1]),
+        (point[0] + upper * unit[0], point[1] + upper * unit[1]),
+    )
+    return smaller_share, endpoints
+
+
+def _fully_visible_static_centers(
+    group: dict[str, object],
+) -> list[tuple[float, float]]:
+    """Enumerate motif centres whose full circumscribed radius is on the plate."""
+
+    render = group["render"]
+    viewport_center = group["viewport_center"]
+    assert isinstance(render, dict)
+    assert isinstance(viewport_center, list)
+    width = correspondence.IMAGE_WIDTH * correspondence.ANTIALIAS
+    height = correspondence.IMAGE_HEIGHT * correspondence.ANTIALIAS
+    b1, b2, radius, ranges = correspondence._site_geometry(
+        render,
+        width,
+        height,
+        viewport_center,
+    )
+    physical_scale = math.hypot(*b1) / math.hypot(*render["basis"][0])
+    origin = (
+        width / 2 - physical_scale * float(viewport_center[0]),
+        height / 2 + physical_scale * float(viewport_center[1]),
+    )
+    base = render.get("base", [0.31, 0.17])
+    centers: list[tuple[float, float]] = []
+    for operation in render["ops"]:
+        matrix = operation["M"]
+        base_x = (
+            matrix[0][0] * base[0]
+            + matrix[0][1] * base[1]
+            + operation["v"][0]
+        )
+        base_y = (
+            matrix[1][0] * base[0]
+            + matrix[1][1] * base[1]
+            + operation["v"][1]
+        )
+        for lattice_x in ranges[0]:
+            for lattice_y in ranges[1]:
+                x = (
+                    origin[0]
+                    + (base_x + lattice_x) * b1[0]
+                    + (base_y + lattice_y) * b2[0]
+                )
+                y = (
+                    origin[1]
+                    + (base_x + lattice_x) * b1[1]
+                    + (base_y + lattice_y) * b2[1]
+                )
+                if radius <= x <= width - radius and radius <= y <= height - radius:
+                    centers.append(
+                        (
+                            x / correspondence.ANTIALIAS,
+                            y / correspondence.ANTIALIAS,
+                        )
+                    )
+    return centers
 
 
 def superscript_orders(signature: str) -> list[int]:
@@ -148,6 +329,9 @@ class CorrespondenceParser(HTMLParser):
         self.plate_generator_attributes: list[
             tuple[str, dict[str, str | None]]
         ] = []
+        self.plate_generator_axis_lines: list[
+            tuple[str, str, dict[str, str | None]]
+        ] = []
         self.plate_generator_symbols: list[str] = []
         self.plate_generator_axes: list[str] = []
         self.plate_translation_arrows = 0
@@ -204,6 +388,7 @@ class CorrespondenceParser(HTMLParser):
         self._current_legend_row_tag = ""
         self._current_legend_row_index: int | None = None
         self._current_plate_overlay = ""
+        self._current_plate_generator = ""
         self._current_other_names_id = ""
         self._inside_book_audit_row = False
         self._current_entry_heading_index: int | None = None
@@ -422,6 +607,7 @@ class CorrespondenceParser(HTMLParser):
                 "data-generator-overlay", ""
             )
         if tag == "g" and "plate-generator" in classes:
+            self._current_plate_generator = attributes.get("data-generator", "")
             self.plate_generators.append(
                 (
                     attributes.get("data-generator", ""),
@@ -436,6 +622,13 @@ class CorrespondenceParser(HTMLParser):
                 (self._current_plate_overlay, attributes)
             )
         if tag == "line" and "plate-generator-axis" in classes:
+            self.plate_generator_axis_lines.append(
+                (
+                    self._current_plate_overlay,
+                    self._current_plate_generator,
+                    attributes,
+                )
+            )
             plane_classes = sorted(
                 class_name.removeprefix("plate-generator-axis--plane-")
                 for class_name in classes
@@ -468,6 +661,7 @@ class CorrespondenceParser(HTMLParser):
             self._current_other_names_id = ""
         if tag == "svg" and self._current_plate_overlay:
             self._current_plate_overlay = ""
+            self._current_plate_generator = ""
         if tag == self._current_legend_row_tag:
             self._current_legend_row_tag = ""
             self._current_legend_row_index = None
@@ -525,7 +719,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ids = [group["id"] for group in groups]
         page_ids = [group["id"] for group in self.page_groups]
         trivial_ids = [group["id"] for group in self.trivial_groups]
-        self.assertEqual(self.payload["meta"]["schema_version"], 9)
+        self.assertEqual(self.payload["meta"]["schema_version"], 10)
         self.assertEqual(len(groups), 68)
         self.assertEqual(len(page_ids), 68)
         self.assertEqual(len(trivial_ids), 17)
@@ -2698,11 +2892,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         by_path = {group["image"]: group for group in self.payload["groups"]}
         displayed_paths = {group["image"] for group in self.page_groups}
         self.assertEqual(
-            {relative for relative, _alt, _width, _height in self.parser.plate_images},
+            {
+                urlparse(relative).path
+                for relative, _alt, _width, _height in self.parser.plate_images
+            },
             displayed_paths,
         )
-        for relative, alt, width, height in self.parser.plate_images:
+        for image_url, alt, width, height in self.parser.plate_images:
+            parsed = urlparse(image_url)
+            relative = parsed.path
             self.assertIn(relative, by_path)
+            self.assertEqual(
+                parse_qs(parsed.query), {"v": ["reflection-centering-v1"]}
+            )
             self.assertTrue(alt)
             self.assertEqual((width, height), ("720", "420"))
         for relative, group in by_path.items():
@@ -3121,6 +3323,120 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             '<line x1="4" y1="12" x2="36" y2="12"></line>', self.page
         )
 
+    def test_every_record_has_the_audited_viewport_center(self) -> None:
+        self.assertEqual(len(self.page_groups), 68)
+        for group in self.page_groups:
+            center = group.get("viewport_center")
+            self.assertIsInstance(center, list, group["id"])
+            self.assertEqual(len(center), 2, group["id"])
+            self.assertTrue(
+                all(math.isfinite(float(component)) for component in center),
+                group["id"],
+            )
+
+        by_id = {group["id"]: group for group in self.page_groups}
+        for group_id, expected in VIEWPORT_CENTER_FIXTURE.items():
+            actual = by_id[group_id]["viewport_center"]
+            for component, expected_component in zip(
+                actual, expected, strict=True
+            ):
+                self.assertAlmostEqual(
+                    float(component), expected_component, places=9, msg=group_id
+                )
+
+    def test_every_reflected_axis_roughly_bisects_the_plate(self) -> None:
+        expected_lines: dict[
+            tuple[str, str], tuple[tuple[float, float], tuple[float, float]]
+        ] = {}
+        smaller_shares: dict[tuple[str, str], float] = {}
+        centers_by_group = {
+            group["id"]: _fully_visible_static_centers(group)
+            for group in self.page_groups
+        }
+        for group in self.page_groups:
+            for action in group["chaim_presentation"]["generators"]:
+                if action["marker"]["kind"] not in {"mirror", "glide"}:
+                    continue
+                key = (group["id"], action["generator"])
+                smaller_share, endpoints = _projected_axis_metrics(group, action)
+                smaller_shares[key] = smaller_share
+                expected_lines[key] = endpoints
+                self.assertGreaterEqual(
+                    smaller_share + 1e-9,
+                    0.388,
+                    f"{key[0]}:{key[1]} leaves only "
+                    f"{smaller_share:.3%} on one side",
+                )
+                start, end = endpoints
+                direction = (end[0] - start[0], end[1] - start[1])
+                signed_centers = [
+                    direction[0] * (center[1] - start[1])
+                    - direction[1] * (center[0] - start[0])
+                    for center in centers_by_group[group["id"]]
+                ]
+                side_counts = (
+                    sum(value < -1e-6 for value in signed_centers),
+                    sum(value > 1e-6 for value in signed_centers),
+                )
+                self.assertGreaterEqual(
+                    min(side_counts),
+                    6,
+                    f"{key[0]}:{key[1]} has too few full motifs on one side: "
+                    f"{side_counts}",
+                )
+
+        self.assertEqual(len(smaller_shares), 100)
+        g269_shares = {
+            generator: share
+            for (group_id, generator), share in smaller_shares.items()
+            if group_id == "g269"
+        }
+        self.assertEqual(set(g269_shares), {"P", "Q", "R"})
+        self.assertTrue(
+            all(share > 0.39 for share in g269_shares.values()),
+            g269_shares,
+        )
+        self.assertGreater(g269_shares["R"], 0.40)
+
+        actual_lines = {
+            (group_id, generator): (
+                (float(attributes["x1"]), float(attributes["y1"])),
+                (float(attributes["x2"]), float(attributes["y2"])),
+            )
+            for group_id, generator, attributes
+            in self.parser.plate_generator_axis_lines
+        }
+        self.assertEqual(set(actual_lines), set(expected_lines))
+        inset = 9.0
+        for key, actual_endpoints in actual_lines.items():
+            expected_endpoints = expected_lines[key]
+            for actual, expected in zip(
+                actual_endpoints, expected_endpoints, strict=True
+            ):
+                self.assertAlmostEqual(actual[0], expected[0], places=2, msg=key)
+                self.assertAlmostEqual(actual[1], expected[1], places=2, msg=key)
+                self.assertGreaterEqual(actual[0] + 1e-9, inset, key)
+                self.assertLessEqual(
+                    actual[0] - 1e-9,
+                    correspondence.IMAGE_WIDTH - inset,
+                    key,
+                )
+                self.assertGreaterEqual(actual[1] + 1e-9, inset, key)
+                self.assertLessEqual(
+                    actual[1] - 1e-9,
+                    correspondence.IMAGE_HEIGHT - inset,
+                    key,
+                )
+                self.assertTrue(
+                    abs(actual[0] - inset) <= 0.01
+                    or abs(actual[0] - (correspondence.IMAGE_WIDTH - inset))
+                    <= 0.01
+                    or abs(actual[1] - inset) <= 0.01
+                    or abs(actual[1] - (correspondence.IMAGE_HEIGHT - inset))
+                    <= 0.01,
+                    key,
+                )
+
     def test_every_live_phase_circle_meets_the_measured_reference_size(self) -> None:
         geometry_module = ROOT / "clockwork-coloring-geometry.js"
         self.assertTrue(geometry_module.is_file())
@@ -3137,12 +3453,30 @@ const sizes = [[507, 296], [411, 240], [325, 190], [260, 152]];
 const measurements = [];
 for (const group of payload.groups) {
   for (const [width, height] of sizes) {
-    const geometry = buildClockworkGeometry(group.render, width, height, 1);
+    const geometry = buildClockworkGeometry(
+      group.render,
+      width,
+      height,
+      1,
+      group.viewport_center,
+    );
+    const centerless = buildClockworkGeometry(
+      group.render,
+      width,
+      height,
+      1,
+      [0, 0],
+    );
     measurements.push({
       id: group.id,
       width,
       height,
       diameter: geometry.circleDiameter,
+      centerlessDiameter: centerless.circleDiameter,
+      motifRadius: geometry.motifRadius,
+      centerlessMotifRadius: centerless.motifRadius,
+      viewportCenter: geometry.viewportCenter,
+      viewportPixelOffset: geometry.viewportPixelOffset,
     });
   }
 }
@@ -3170,12 +3504,69 @@ process.stdout.write(JSON.stringify({
                 report["floor"],
                 f"{measurement['id']} at {measurement['width']}×{measurement['height']}",
             )
+            self.assertAlmostEqual(
+                measurement["diameter"],
+                measurement["centerlessDiameter"],
+                places=9,
+                msg=measurement["id"],
+            )
+            self.assertAlmostEqual(
+                measurement["motifRadius"],
+                measurement["centerlessMotifRadius"],
+                places=9,
+                msg=measurement["id"],
+            )
+
+            group = next(
+                group
+                for group in self.page_groups
+                if group["id"] == measurement["id"]
+            )
+            self.assertEqual(
+                measurement["viewportCenter"], group["viewport_center"]
+            )
+            center = [float(value) for value in group["viewport_center"]]
+            offset = [
+                float(value) for value in measurement["viewportPixelOffset"]
+            ]
+            scale_candidates = []
+            if abs(center[0]) > 1e-9:
+                scale_candidates.append(-offset[0] / center[0])
+            else:
+                self.assertAlmostEqual(offset[0], 0.0, places=9)
+            if abs(center[1]) > 1e-9:
+                scale_candidates.append(offset[1] / center[1])
+            else:
+                self.assertAlmostEqual(offset[1], 0.0, places=9)
+            self.assertTrue(
+                all(scale > 0 for scale in scale_candidates),
+                measurement["id"],
+            )
+            if len(scale_candidates) == 2:
+                self.assertAlmostEqual(
+                    scale_candidates[0],
+                    scale_candidates[1],
+                    places=9,
+                    msg=measurement["id"],
+                )
 
         controller = (ROOT / "clockwork-coloring-correspondence.js").read_text(
             encoding="utf-8"
         )
-        self.assertIn('from "./clockwork-coloring-geometry.js"', controller)
-        self.assertIn("buildClockworkGeometry(this.record.render", controller)
+        self.assertIn(
+            'from "./clockwork-coloring-geometry.js?v=reflection-centering-v1"',
+            controller,
+        )
+        self.assertIn(
+            '"data/clockwork-coloring-correspondence.json?'
+            'v=reflection-centering-v1"',
+            controller,
+        )
+        self.assertRegex(
+            controller,
+            r"buildClockworkGeometry\(\s*this\.record\.render,\s*width,\s*"
+            r"height,\s*dpr,\s*this\.record\.viewport_center,?\s*\)",
+        )
         self.assertNotIn("MIN_CELLS", controller)
 
     def test_every_static_plate_uses_the_same_reference_scale(self) -> None:
