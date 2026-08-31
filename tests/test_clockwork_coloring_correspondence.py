@@ -78,8 +78,8 @@ SOURCE_LABELING_FIXTURE = {
 # exactly one step.  Repeated equivalent centres intentionally collapse to one
 # item.  Tuple fields are kind, symbol, source, direction, and visible label.
 FORWARD_COLOUR_ACTION_FIXTURE = {
-    "g6": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
-    "g7": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g6": (("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),),
+    "g7": (("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),),
     "g9": (
         ("reflection", "plane-c", "direct", "", "colour reflection"),
         ("reflection", "plane-n", "direct", "", "colour glide reflection"),
@@ -89,78 +89,78 @@ FORWARD_COLOUR_ACTION_FIXTURE = {
     "g59": (("reflection", "plane-n", "direct", "", "colour glide reflection"),),
     "g60": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g61": (
-        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),
         ("reflection", "plane-c", "direct", "", "colour reflection"),
     ),
-    "g62": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
-    "g63": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g62": (("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),),
+    "g63": (("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),),
     "g64": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g65": (("reflection", "plane-c", "direct", "", "colour reflection"),),
-    "g66": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g66": (("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),),
     "g67": (
-        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),
         ("reflection", "plane-c", "direct", "", "colour reflection"),
     ),
     "g69": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g70": (
-        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),
         ("reflection", "plane-c", "direct", "", "colour reflection"),
     ),
-    "g71": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g71": (("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),),
     "g72": (
-        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),
         ("reflection", "plane-c", "direct", "", "colour reflection"),
     ),
     "g73": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g74": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g75": (("reflection", "plane-d", "direct", "", "colour glide reflection"),),
-    "g95": (("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),),
-    "g96": (("rotation", "rotation-4-1", "inverse", "counterclockwise", "¼ turn counterclockwise"),),
-    "g97": (("rotation", "rotation-4-3", "direct", "clockwise", "¼ turn clockwise"),),
+    "g95": (("rotation", "rotation-4-2", "direct", "counterclockwise", "1/4 turn CCW · colour +1/2"),),
+    "g96": (("rotation", "rotation-4-1", "inverse", "counterclockwise", "1/4 turn CCW"),),
+    "g97": (("rotation", "rotation-4-3", "direct", "clockwise", "1/4 turn CW"),),
     "g98": (
-        ("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),
-        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("rotation", "rotation-4-2", "direct", "counterclockwise", "1/4 turn CCW · colour +1/2"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),
     ),
     "g99": (
-        ("rotation", "rotation-4-1", "direct", "counterclockwise", "¼ turn counterclockwise"),
-        ("rotation", "rotation-4-3", "inverse", "clockwise", "¼ turn clockwise"),
+        ("rotation", "rotation-4-1", "direct", "counterclockwise", "1/4 turn CCW"),
+        ("rotation", "rotation-4-3", "inverse", "clockwise", "1/4 turn CW"),
     ),
     "g129": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g130": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g131": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g133": (
-        ("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),
+        ("rotation", "rotation-4-2", "direct", "counterclockwise", "1/4 turn CCW · colour +1/2"),
         ("reflection", "plane-c", "direct", "", "colour reflection"),
     ),
-    "g134": (("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),),
+    "g134": (("rotation", "rotation-4-2", "direct", "counterclockwise", "1/4 turn CCW · colour +1/2"),),
     "g135": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g136": (("reflection", "plane-c", "direct", "", "colour reflection"),),
-    "g137": (("rotation", "rotation-4-1", "direct", "counterclockwise", "¼ turn counterclockwise"),),
+    "g137": (("rotation", "rotation-4-1", "direct", "counterclockwise", "1/4 turn CCW"),),
     "g138": (("reflection", "plane-c", "direct", "", "colour reflection"),),
-    "g139": (("rotation", "rotation-4-1", "direct", "counterclockwise", "¼ turn counterclockwise"),),
-    "g225": (("rotation", "rotation-3-2", "inverse", "clockwise", "⅓ turn clockwise"),),
-    "g226": (("rotation", "rotation-3-1", "direct", "counterclockwise", "⅓ turn counterclockwise"),),
+    "g139": (("rotation", "rotation-4-1", "direct", "counterclockwise", "1/4 turn CCW"),),
+    "g225": (("rotation", "rotation-3-2", "inverse", "clockwise", "1/3 turn CW"),),
+    "g226": (("rotation", "rotation-3-1", "direct", "counterclockwise", "1/3 turn CCW"),),
     "g227": (
-        ("rotation", "rotation-3-1", "direct", "counterclockwise", "⅓ turn counterclockwise"),
-        ("rotation", "rotation-3-2", "inverse", "clockwise", "⅓ turn clockwise"),
+        ("rotation", "rotation-3-1", "direct", "counterclockwise", "1/3 turn CCW"),
+        ("rotation", "rotation-3-2", "inverse", "clockwise", "1/3 turn CW"),
     ),
     "g231": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g233": (("reflection", "plane-c", "direct", "", "colour reflection"),),
-    "g234": (("rotation", "rotation-3-1", "inverse", "counterclockwise", "⅓ turn counterclockwise"),),
+    "g234": (("rotation", "rotation-3-1", "inverse", "counterclockwise", "1/3 turn CCW"),),
     "g244": (
-        ("rotation", "rotation-6-2", "direct", "counterclockwise", "⅙ turn counterclockwise"),
-        ("rotation", "rotation-3-2", "inverse", "clockwise", "⅓ turn clockwise"),
+        ("rotation", "rotation-6-2", "direct", "counterclockwise", "1/6 turn CCW · colour +1/3"),
+        ("rotation", "rotation-3-2", "inverse", "clockwise", "1/3 turn CW"),
     ),
     "g245": (
-        ("rotation", "rotation-6-4", "inverse", "clockwise", "⅙ turn clockwise"),
-        ("rotation", "rotation-3-1", "direct", "counterclockwise", "⅓ turn counterclockwise"),
+        ("rotation", "rotation-6-4", "inverse", "clockwise", "1/6 turn CW · colour +1/3"),
+        ("rotation", "rotation-3-1", "direct", "counterclockwise", "1/3 turn CCW"),
     ),
     "g246": (
-        ("rotation", "rotation-6-3", "direct", "counterclockwise", "⅙ turn counterclockwise"),
-        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("rotation", "rotation-6-3", "direct", "counterclockwise", "1/6 turn CCW · colour +1/2"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "1/2 turn CCW"),
     ),
-    "g247": (("rotation", "rotation-6-5", "inverse", "clockwise", "⅙ turn clockwise"),),
-    "g248": (("rotation", "rotation-6-1", "direct", "counterclockwise", "⅙ turn counterclockwise"),),
+    "g247": (("rotation", "rotation-6-5", "inverse", "clockwise", "1/6 turn CW"),),
+    "g248": (("rotation", "rotation-6-1", "direct", "counterclockwise", "1/6 turn CCW"),),
     "g269": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g270": (("reflection", "plane-c", "direct", "", "colour reflection"),),
     "g271": (("reflection", "plane-c", "direct", "", "colour reflection"),),
@@ -2630,10 +2630,16 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(len(self.parser.colour_order_action_svgs), 62)
 
         accessible_turns = {
-            "½": "half-turn",
-            "⅓": "one-third turn",
-            "¼": "quarter-turn",
-            "⅙": "one-sixth turn",
+            2: "half-turn",
+            3: "one-third turn",
+            4: "quarter-turn",
+            6: "one-sixth turn",
+        }
+        accessible_palette_steps = {
+            2: "one-half",
+            3: "one-third",
+            4: "one-quarter",
+            6: "one-sixth",
         }
         plane_names = {
             "plane-c": "c-glide-plane symbol",
@@ -2669,9 +2675,18 @@ process.stdout.write(JSON.stringify({
                     if kind == "rotation":
                         _rotation, order, step = symbol.split("-")
                         symbol_name = f"{order} subscript {step} screw-axis symbol"
+                        spatial_order = int(order)
                         accessible_description = (
-                            f"{accessible_turns[description[0]]} {direction}"
+                            f"{accessible_turns[spatial_order]} {direction}"
                         )
+                        if spatial_order != group["clock_order"]:
+                            palette_step = accessible_palette_steps[
+                                group["clock_order"]
+                            ]
+                            accessible_description += (
+                                ", with colour advancing by "
+                                f"{palette_step} of the fixed palette cycle"
+                            )
                     else:
                         symbol_name = plane_names[symbol]
                         accessible_description = description
@@ -2860,10 +2875,54 @@ process.stdout.write(JSON.stringify({
                     direction,
                 )
 
+    def test_forward_turn_descriptions_separate_spatial_and_palette_fractions(
+        self,
+    ) -> None:
+        cases = (
+            (
+                (3, 3, "clockwise"),
+                ("1/3 turn CW", "one-third turn clockwise"),
+            ),
+            (
+                (4, 2, "counterclockwise"),
+                (
+                    "1/4 turn CCW · colour +1/2",
+                    "quarter-turn counterclockwise, with colour advancing by "
+                    "one-half of the fixed palette cycle",
+                ),
+            ),
+            (
+                (6, 3, "counterclockwise"),
+                (
+                    "1/6 turn CCW · colour +1/3",
+                    "one-sixth turn counterclockwise, with colour advancing by "
+                    "one-third of the fixed palette cycle",
+                ),
+            ),
+        )
+        for inputs, expected in cases:
+            with self.subTest(inputs=inputs):
+                self.assertEqual(
+                    correspondence._forward_turn_descriptions(*inputs),
+                    expected,
+                )
+
+        invalid_cases = (
+            (5, 3, "counterclockwise"),
+            (3, 5, "counterclockwise"),
+            (3, 3, "sideways"),
+        )
+        for inputs in invalid_cases:
+            with self.subTest(inputs=inputs):
+                with self.assertRaisesRegex(
+                    ValueError,
+                    "unsupported compact turn description",
+                ):
+                    correspondence._forward_turn_descriptions(*inputs)
+
     def test_forward_action_legend_uses_direct_or_inverse_one_step_and_deduplicates(
         self,
     ) -> None:
-        visible_turn = {2: "½ turn", 3: "⅓ turn", 4: "¼ turn", 6: "⅙ turn"}
         derived_fixture: dict[
             str, tuple[tuple[str, str, str, str, str], ...]
         ] = {}
@@ -2907,7 +2966,12 @@ process.stdout.write(JSON.stringify({
                         if screw_step <= order / 2
                         else "clockwise"
                     )
-                    description = f"{visible_turn[order]} {direction}"
+                    direction_abbreviation = (
+                        "CCW" if direction == "counterclockwise" else "CW"
+                    )
+                    description = f"1/{order} turn {direction_abbreviation}"
+                    if order != group["clock_order"]:
+                        description += f' · colour +1/{group["clock_order"]}'
                     fixture_kind = "rotation"
                 elif kind in {"mirror", "glide"}:
                     plane_symbol = correspondence._polar_plane_symbol(
@@ -3028,6 +3092,45 @@ process.stdout.write(JSON.stringify({
             ),
             Counter({"counterclockwise": 27, "clockwise": 7}),
         )
+        rotation_items = [
+            (group_id, symbol, description)
+            for group_id, items in derived_fixture.items()
+            for kind, symbol, _source, _direction, description in items
+            if kind == "rotation"
+        ]
+        qualified_rotation_items = {
+            (group_id, symbol)
+            for group_id, symbol, description in rotation_items
+            if " · colour +" in description
+        }
+        self.assertEqual(
+            qualified_rotation_items,
+            {
+                ("g95", "rotation-4-2"),
+                ("g98", "rotation-4-2"),
+                ("g133", "rotation-4-2"),
+                ("g134", "rotation-4-2"),
+                ("g244", "rotation-6-2"),
+                ("g245", "rotation-6-4"),
+                ("g246", "rotation-6-3"),
+            },
+        )
+        self.assertEqual(len(rotation_items), 34)
+        self.assertEqual(len(qualified_rotation_items), 7)
+        equal_fraction_items = [
+            description
+            for group_id, symbol, description in rotation_items
+            if int(symbol.split("-")[1])
+            == next(
+                group["clock_order"]
+                for group in self.page_groups
+                if group["id"] == group_id
+            )
+        ]
+        self.assertEqual(len(equal_fraction_items), 27)
+        self.assertTrue(
+            all("colour +" not in description for description in equal_fraction_items)
+        )
 
         # Equivalent centres collapse to one symbol/action entry.
         self.assertEqual(raw_match_counts["g6"], 4)
@@ -3058,7 +3161,7 @@ process.stdout.write(JSON.stringify({
                     "rotation-3-2",
                     "inverse",
                     "clockwise",
-                    "⅓ turn clockwise",
+                    "1/3 turn CW",
                 ),
             ),
         )
@@ -3078,9 +3181,74 @@ process.stdout.write(JSON.stringify({
             'data-palette-step-source="inverse" '
             'data-forward-rotation-symbol="rotation-3-2" '
             'data-polar-turn-direction="clockwise" '
-            'data-turn-description="⅓ turn clockwise"',
+            'data-turn-description="1/3 turn CW"',
             section,
         )
+
+    def test_mismatched_turn_and_palette_fractions_are_explicit_and_accessible(
+        self,
+    ) -> None:
+        cases = {
+            "g95": (
+                ("1/4 turn CCW · colour +1/2",),
+                "Colour order: blue, orange. Symbol advancing the displayed "
+                "colour order by one step as polar height increases: 4 "
+                "subscript 2 screw-axis symbol, quarter-turn counterclockwise, "
+                "with colour advancing by one-half of the fixed palette cycle.",
+            ),
+            "g244": (
+                ("1/6 turn CCW · colour +1/3", "1/3 turn CW"),
+                "Colour order: blue, orange, green. Symbols each advancing the "
+                "displayed colour order by one step as polar height increases: "
+                "6 subscript 2 screw-axis symbol, one-sixth turn "
+                "counterclockwise, with colour advancing by one-third of the "
+                "fixed palette cycle; 3 subscript 2 screw-axis symbol, "
+                "one-third turn clockwise.",
+            ),
+            "g245": (
+                ("1/6 turn CW · colour +1/3", "1/3 turn CCW"),
+                "Colour order: blue, orange, green. Symbols each advancing the "
+                "displayed colour order by one step as polar height increases: "
+                "6 subscript 4 screw-axis symbol, one-sixth turn clockwise, "
+                "with colour advancing by one-third of the fixed palette cycle; "
+                "3 subscript 1 screw-axis symbol, one-third turn "
+                "counterclockwise.",
+            ),
+            "g246": (
+                ("1/6 turn CCW · colour +1/2", "1/2 turn CCW"),
+                "Colour order: blue, orange. Symbols each advancing the displayed "
+                "colour order by one step as polar height increases: 6 subscript "
+                "3 screw-axis symbol, one-sixth turn counterclockwise, with colour "
+                "advancing by one-half of the fixed palette cycle; 2 subscript 1 "
+                "screw-axis symbol, half-turn counterclockwise.",
+            ),
+        }
+        for group_id, (visible_labels, expected_aria) in cases.items():
+            with self.subTest(group_id=group_id):
+                section_start = self.page.index(
+                    f'<section class="correspondence-entry" id="{group_id}"'
+                )
+                section_end = self.page.index("</section>", section_start)
+                section = self.page[section_start:section_end]
+                caption_start = section.index(
+                    '<p class="colour-order colour-order--plate"'
+                )
+                caption_end = section.index("</p>", caption_start)
+                caption = section[caption_start:caption_end]
+                self.assertIn(
+                    f'role="img" aria-label="{expected_aria}"',
+                    caption,
+                )
+                self.assertEqual(
+                    re.findall(r'data-turn-description="([^"]+)"', caption),
+                    list(visible_labels),
+                )
+                for label in visible_labels:
+                    self.assertIn(
+                        '<span class="colour-order-action-description" '
+                        f'aria-hidden="true">{label}</span>',
+                        caption,
+                    )
 
     def test_g9_keys_both_colour_reflections_and_g235_stays_honest(self) -> None:
         g9_start = self.page.index(
