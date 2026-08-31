@@ -66,7 +66,7 @@ SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CRYSTAL_EXAMPLE_DATA = ROOT / "data" / "crystal-examples.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=colour-order-squares"
+    "v=forward-rotation-key"
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
@@ -3020,7 +3020,7 @@ def render_plate(record: dict[str, Any]) -> bytes:
 
 
 def _colour_order_html(record: dict[str, Any], placement: str) -> str:
-    """Render the same label-free colour sequence in both compact legends."""
+    """Render the compact palette, with its plate-only forward-rotation key."""
 
     if placement not in {"plate", "presentation"}:
         raise ValueError(f"unsupported colour-order placement: {placement}")
@@ -3035,12 +3035,38 @@ def _colour_order_html(record: dict[str, Any], placement: str) -> str:
         'aria-hidden="true"></span>'
         for color in colors
     )
-    accessible_order = escape("Colour order: " + ", ".join(color_names))
+    rotation_items = (
+        _forward_rotation_legend_items(record)
+        if placement == "plate"
+        else []
+    )
+    rotations = "".join(
+        '<span class="colour-order-rotation" '
+        f'data-forward-rotation-symbol="{escape(item["symbol_key"])}" '
+        f'data-turn-description="{escape(item["description"])}">'
+        f'{item["symbol_html"]}'
+        '<span class="colour-order-rotation-description" aria-hidden="true">'
+        f'{escape(item["description"])}'
+        '</span></span>'
+        for item in rotation_items
+    )
+    accessible_order = "Colour order: " + ", ".join(color_names)
+    if rotation_items:
+        rotation_label = (
+            "Rotation advancing the colour order"
+            if len(rotation_items) == 1
+            else "Rotations advancing the colour order"
+        )
+        rotation_descriptions = "; ".join(
+            f'{item["accessible_name"]}, {item["description"]}'
+            for item in rotation_items
+        )
+        accessible_order += f". {rotation_label}: {rotation_descriptions}."
     return (
         f'<p class="colour-order colour-order--{placement}" '
-        f'role="img" aria-label="{accessible_order}">'
+        f'role="img" aria-label="{escape(accessible_order)}">'
         '<span class="colour-order-label" aria-hidden="true">order</span>'
-        f"{swatches}</p>"
+        f"{swatches}{rotations}</p>"
     )
 
 
@@ -3442,6 +3468,124 @@ def _diagram_rotation_symbol_html(order: int, screw_step: int) -> str:
         f'{_rotation_symbol_body_html(order, screw_step)}'
         '</g></svg>'
     )
+
+
+def _compact_rotation_symbol_html(order: int, screw_step: int) -> str:
+    """Render the exact plate glyph in a tightly cropped caption-sized SVG."""
+
+    key = f"rotation-{order}-{screw_step}"
+    return (
+        '<svg class="colour-order-rotation-glyph" '
+        f'data-rotation-symbol="{key}" viewBox="0 0 32 32" '
+        'aria-hidden="true" focusable="false">'
+        '<g class="generator-symbol-body" transform="translate(16 16)">'
+        f'{_rotation_symbol_body_html(order, screw_step)}'
+        '</g></svg>'
+    )
+
+
+def _rotation_symbol_accessible_name(order: int, screw_step: int) -> str:
+    if screw_step == 0:
+        return f"{order}-fold rotation-axis symbol"
+    return f"{order} subscript {screw_step} screw-axis symbol"
+
+
+def _forward_rotation_turn_description(
+    order: int,
+    angle_degrees: float,
+) -> str:
+    """Describe the displayed spatial action that advances the palette once."""
+
+    if order not in {2, 3, 4, 6}:
+        raise ValueError(f"unsupported forward rotation order: {order}")
+    normalized_angle = angle_degrees % 360
+    elementary_angle = 360 / order
+    opposite_angle = (360 - elementary_angle) % 360
+    if not (
+        math.isclose(normalized_angle, elementary_angle, abs_tol=1e-7)
+        or math.isclose(normalized_angle, opposite_angle, abs_tol=1e-7)
+    ):
+        raise ValueError(
+            f"forward rotation of order {order} has non-elementary angle "
+            f"{angle_degrees}"
+        )
+    if order == 2:
+        return "half-turn"
+    if order == 3:
+        return "one-third turn"
+    turn_name = {4: "quarter-turn", 6: "one-sixth turn"}[order]
+    direction = (
+        "counterclockwise"
+        if math.isclose(normalized_angle, elementary_angle, abs_tol=1e-7)
+        else "clockwise"
+    )
+    return f"{turn_name} {direction}"
+
+
+def _forward_rotation_legend_items(record: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return distinct plate symbols whose generators advance one palette step."""
+
+    if record["clock_order"] <= 1:
+        return []
+    presentation = record["chaim_presentation"]
+    forward_permutation = tuple(presentation["clock_cycle"]["permutation"])
+    items: list[dict[str, Any]] = []
+    seen_symbols: dict[str, str] = {}
+    for generator in presentation["generators"]:
+        if generator["marker"]["kind"] != "rotation":
+            continue
+        is_forward = tuple(generator["colour_permutation"]) == forward_permutation
+        if is_forward != (
+            generator["clock_power"] % record["clock_order"] == 1
+        ):
+            raise ValueError(
+                f'forward permutation/power mismatch in {record["id"]}:'
+                f'{generator["generator"]}'
+            )
+        if not is_forward:
+            continue
+        order = generator["marker"]["order"]
+        angle_degrees = generator["plate_visualization"]["angle_degrees"]
+        screw_step = _rotation_screw_step(
+            order,
+            generator["time_shift"],
+            angle_degrees,
+        )
+        symbol_key = _rotation_symbol_key(
+            order,
+            generator["time_shift"],
+            angle_degrees,
+        )
+        description = _forward_rotation_turn_description(
+            order,
+            angle_degrees,
+        )
+        if symbol_key in seen_symbols:
+            if seen_symbols[symbol_key] != description:
+                raise ValueError(
+                    f'conflicting forward rotation descriptions in {record["id"]}: '
+                    f'{symbol_key} is both {seen_symbols[symbol_key]!r} and '
+                    f'{description!r}'
+                )
+            continue
+        seen_symbols[symbol_key] = description
+        items.append(
+            {
+                "symbol_key": symbol_key,
+                "description": description,
+                "accessible_name": _rotation_symbol_accessible_name(
+                    order,
+                    screw_step,
+                ),
+                "symbol_html": _compact_rotation_symbol_html(order, screw_step),
+            }
+        )
+    if len(items) > 2:
+        raise ValueError(
+            f'more than two forward rotation symbols in {record["id"]}: '
+            f'{[item["symbol_key"] for item in items]}'
+        )
+    return items
 
 
 def _diagram_plane_symbol_html(plane_symbol: str) -> str:

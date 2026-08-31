@@ -899,6 +899,27 @@ nav a[aria-current="page"] {
   background: var(--colour-order-swatch);
 }
 
+.colour-order-rotation {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.18rem;
+  white-space: nowrap;
+}
+
+.colour-order-rotation-glyph {
+  display: block;
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: none;
+  overflow: visible;
+  color: var(--generator-ink);
+}
+
+.colour-order-rotation-description {
+  line-height: 1.1;
+}
+
 .crystal-viewer-stage {
   position: relative;
   width: 100%;
