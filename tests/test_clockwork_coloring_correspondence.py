@@ -78,37 +78,40 @@ SOURCE_LABELING_FIXTURE = {
 # forward step through that record's fixed colour palette.  Several wallpaper
 # presentations have multiple centres carrying the same symbol/action; those
 # repetitions intentionally collapse to one legend item.
+HALF_TURN_POLAR_DESCRIPTION = (
+    "half-turn (clockwise and counterclockwise are the same)"
+)
 FORWARD_ROTATION_LEGEND_FIXTURE = {
-    "g6": (("rotation-2-1", "half-turn"),),
-    "g7": (("rotation-2-1", "half-turn"),),
-    "g61": (("rotation-2-1", "half-turn"),),
-    "g62": (("rotation-2-1", "half-turn"),),
-    "g63": (("rotation-2-1", "half-turn"),),
-    "g66": (("rotation-2-1", "half-turn"),),
-    "g67": (("rotation-2-1", "half-turn"),),
-    "g70": (("rotation-2-1", "half-turn"),),
-    "g71": (("rotation-2-1", "half-turn"),),
-    "g72": (("rotation-2-1", "half-turn"),),
-    "g95": (("rotation-4-2", "quarter-turn clockwise"),),
-    "g97": (("rotation-4-3", "quarter-turn clockwise"),),
+    "g6": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g7": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g61": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g62": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g63": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g66": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g67": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g70": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g71": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g72": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
+    "g95": (("rotation-4-2", "clockwise", "quarter-turn clockwise"),),
+    "g97": (("rotation-4-3", "clockwise", "quarter-turn clockwise"),),
     "g98": (
-        ("rotation-4-2", "quarter-turn clockwise"),
-        ("rotation-2-1", "half-turn"),
+        ("rotation-4-2", "clockwise", "quarter-turn clockwise"),
+        ("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
     ),
-    "g99": (("rotation-4-1", "quarter-turn counterclockwise"),),
-    "g133": (("rotation-4-2", "quarter-turn counterclockwise"),),
-    "g134": (("rotation-4-2", "quarter-turn counterclockwise"),),
-    "g137": (("rotation-4-1", "quarter-turn counterclockwise"),),
-    "g139": (("rotation-4-1", "quarter-turn counterclockwise"),),
-    "g226": (("rotation-3-1", "one-third turn"),),
-    "g227": (("rotation-3-1", "one-third turn"),),
-    "g244": (("rotation-6-2", "one-sixth turn counterclockwise"),),
-    "g245": (("rotation-3-1", "one-third turn"),),
+    "g99": (("rotation-4-1", "counterclockwise", "quarter-turn counterclockwise"),),
+    "g133": (("rotation-4-2", "counterclockwise", "quarter-turn counterclockwise"),),
+    "g134": (("rotation-4-2", "counterclockwise", "quarter-turn counterclockwise"),),
+    "g137": (("rotation-4-1", "counterclockwise", "quarter-turn counterclockwise"),),
+    "g139": (("rotation-4-1", "counterclockwise", "quarter-turn counterclockwise"),),
+    "g226": (("rotation-3-1", "counterclockwise", "one-third turn counterclockwise"),),
+    "g227": (("rotation-3-1", "counterclockwise", "one-third turn counterclockwise"),),
+    "g244": (("rotation-6-2", "counterclockwise", "one-sixth turn counterclockwise"),),
+    "g245": (("rotation-3-1", "counterclockwise", "one-third turn counterclockwise"),),
     "g246": (
-        ("rotation-6-3", "one-sixth turn counterclockwise"),
-        ("rotation-2-1", "half-turn"),
+        ("rotation-6-3", "counterclockwise", "one-sixth turn counterclockwise"),
+        ("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
     ),
-    "g248": (("rotation-6-1", "one-sixth turn counterclockwise"),),
+    "g248": (("rotation-6-1", "counterclockwise", "one-sixth turn counterclockwise"),),
 }
 SUPERSCRIPT_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
 
@@ -393,6 +396,7 @@ class CorrespondenceParser(HTMLParser):
         self.buttons: list[tuple[bool, str, str | None]] = []
         self.sliders: list[tuple[bool, str, str, str | None]] = []
         self.scripts: list[tuple[str, str]] = []
+        self.mobile_viewport_bootstraps = 0
         self.presentation_tables: list[str] = []
         self.presentation_generator_count = 0
         self.presentation_time_shifts: list[str] = []
@@ -617,9 +621,12 @@ class CorrespondenceParser(HTMLParser):
                 )
             )
         if tag == "script":
-            self.scripts.append(
-                (attributes.get("src", ""), attributes.get("type", ""))
-            )
+            if "data-mobile-viewport-bootstrap" in attributes:
+                self.mobile_viewport_bootstraps += 1
+            else:
+                self.scripts.append(
+                    (attributes.get("src", ""), attributes.get("type", ""))
+                )
         if tag == "table" and attributes.get("data-presentation"):
             self.presentation_tables.append(
                 attributes.get("data-presentation", "")
@@ -1490,7 +1497,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(
             correspondence.CORRESPONDENCE_STYLE_SRC,
             "clockwork-coloring-correspondence.css?"
-            "v=crystallographic-name-expansion",
+            "v=mobile-visual-viewport-polar-direction-v1",
         )
         self.assertIn(
             f'href="{correspondence.CORRESPONDENCE_STYLE_SRC}"', self.page
@@ -2172,7 +2179,301 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=crystallographic-name-expansion", self.page)
+        self.assertIn("?v=mobile-visual-viewport-polar-direction-v1", self.page)
+
+    def test_page_reflows_below_the_shared_320px_viewport_floor(self) -> None:
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+
+        # Android display or page zoom can make the effective layout viewport
+        # narrower than the shared stylesheet's historical 320px body floor.
+        # The page must remove that floor, then keep its longest heading word
+        # from recreating root-level horizontal overflow at those widths.
+        self.assertRegex(
+            css,
+            r"(?ms)^body\s*\{\s*min-width:\s*0;\s*\}",
+        )
+
+        mobile = re.search(
+            r"(?ms)^@media \(max-width: 430px\) \{(?P<rules>.*?)^\}",
+            css,
+        )
+        if mobile is None:
+            self.fail("missing max-width: 430px correspondence rules")
+        heading = re.search(
+            r"\.directory h1\s*\{(?P<declarations>[^}]*)\}",
+            mobile.group("rules"),
+        )
+        if heading is None:
+            self.fail("missing narrow-viewport .directory h1 rule")
+        declarations = heading.group("declarations")
+        self.assertIn("font-size: clamp(2rem, 11.5vw, 2.35rem);", declarations)
+        self.assertIn("overflow-wrap: anywhere;", declarations)
+
+        self.assertEqual(
+            correspondence.CORRESPONDENCE_STYLE_SRC,
+            "clockwork-coloring-correspondence.css?"
+            "v=mobile-visual-viewport-polar-direction-v1",
+        )
+        self.assertIn(
+            f'href="{correspondence.CORRESPONDENCE_STYLE_SRC}"',
+            self.page,
+        )
+
+    def test_visual_viewport_reflow_constrains_the_visible_mobile_slice(self) -> None:
+        css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
+            encoding="utf-8"
+        )
+
+        # Android page zoom may leave a 320px layout viewport while exposing a
+        # narrower VisualViewport.  Both top-level containers must use that
+        # visible width and stay left-anchored; centering would clip both sides.
+        containers = re.search(
+            r"(?ms)^:root\[data-visual-viewport-constrained\] \.header-inner,\s*"
+            r"^:root\[data-visual-viewport-constrained\] \.correspondence-page\s*"
+            r"\{(?P<declarations>.*?)^\}",
+            css,
+        )
+        if containers is None:
+            self.fail("missing VisualViewport-constrained page containers")
+        declarations = containers.group("declarations")
+        self.assertRegex(
+            declarations,
+            r"width:\s*min\(\s*calc\(var\(--clockwork-visual-viewport-width\)\s*"
+            r"-\s*1\.25rem\),\s*var\(--content\)\s*\);",
+        )
+        self.assertIn("margin-right: auto;", declarations)
+        self.assertIn("margin-left: 0.625rem;", declarations)
+        self.assertRegex(
+            css,
+            r"(?ms)^:root\[data-visual-viewport-constrained\] \.directory h1\s*"
+            r"\{[^}]*overflow-wrap:\s*anywhere;[^}]*\}",
+        )
+
+        bootstrap_tag = (
+            "  <script data-mobile-viewport-bootstrap>\n"
+            f"{correspondence.MOBILE_VIEWPORT_BOOTSTRAP}\n"
+            "  </script>"
+        )
+        self.assertEqual(self.parser.mobile_viewport_bootstraps, 1)
+        self.assertEqual(self.page.count("<script data-mobile-viewport-bootstrap>"), 1)
+        self.assertIn(bootstrap_tag, self.page)
+        self.assertLess(
+            self.page.index("<script data-mobile-viewport-bootstrap>"),
+            self.page.index('href="site-controls-v2.css"'),
+        )
+        self.assertLess(
+            self.page.index("<script data-mobile-viewport-bootstrap>"),
+            self.page.index(f'href="{correspondence.CORRESPONDENCE_STYLE_SRC}"'),
+        )
+
+        # Execute the generated inline bootstrap with a small DOM mock. This
+        # verifies its synchronous first commit, finite/positive fallback,
+        # Math.min cap, and rAF-coalesced passive resize listeners.
+        node_script = r"""
+import fs from "node:fs";
+
+const page = fs.readFileSync("clockwork-coloring-correspondence.html", "utf8");
+const marker = "<script data-mobile-viewport-bootstrap>";
+const tagStart = page.indexOf(marker);
+const scriptStart = page.indexOf(">", tagStart) + 1;
+const scriptEnd = page.indexOf("</script>", scriptStart);
+if (tagStart < 0 || scriptStart <= 0 || scriptEnd < 0) {
+  throw new Error("generated mobile viewport bootstrap not found");
+}
+const implementation = page.slice(scriptStart, scriptEnd);
+
+const attributes = new Set();
+const properties = new Map();
+const root = {
+  toggleAttribute(name, force) {
+    if (force) attributes.add(name);
+    else attributes.delete(name);
+  },
+  style: {
+    setProperty(name, value) { properties.set(name, value); },
+    removeProperty(name) { properties.delete(name); },
+  },
+};
+const listeners = { window: new Map(), visualViewport: new Map() };
+const frames = new Map();
+let nextFrame = 1;
+const visualViewport = {
+  width: 300,
+  addEventListener(type, callback, options) {
+    listeners.visualViewport.set(type, { callback, options });
+  },
+};
+globalThis.document = { documentElement: root };
+globalThis.window = {
+  innerWidth: 320,
+  visualViewport,
+  requestAnimationFrame(callback) {
+    const id = nextFrame++;
+    frames.set(id, callback);
+    return id;
+  },
+  addEventListener(type, callback, options) {
+    listeners.window.set(type, { callback, options });
+  },
+};
+
+function snapshot() {
+  return {
+    constrained: attributes.has("data-visual-viewport-constrained"),
+    width: properties.get("--clockwork-visual-viewport-width") ?? null,
+  };
+}
+
+function flushAnimationFrames() {
+  const callbacks = [...frames.values()];
+  frames.clear();
+  for (const callback of callbacks) callback();
+}
+
+eval(implementation);
+const initial = snapshot();
+const initialFrames = frames.size;
+
+window.visualViewport.width = 280;
+listeners.visualViewport.get("resize").callback();
+listeners.window.get("resize").callback();
+const coalescedFrames = frames.size;
+const beforeFlush = snapshot();
+flushAnimationFrames();
+const narrowed = snapshot();
+
+window.visualViewport.width = 319.5;
+listeners.visualViewport.get("resize").callback();
+flushAnimationFrames();
+const withinEpsilon = snapshot();
+
+window.visualViewport.width = 400;
+listeners.window.get("resize").callback();
+flushAnimationFrames();
+const cappedAtLayout = snapshot();
+
+window.visualViewport.width = 0;
+listeners.visualViewport.get("resize").callback();
+flushAnimationFrames();
+const nonPositive = snapshot();
+
+window.visualViewport.width = Number.NaN;
+listeners.visualViewport.get("resize").callback();
+flushAnimationFrames();
+const invalid = snapshot();
+
+window.innerWidth = 360;
+window.visualViewport.width = 300;
+listeners.window.get("resize").callback();
+flushAnimationFrames();
+const resizedLayout = snapshot();
+
+window.innerWidth = 620;
+window.visualViewport.width = 300;
+listeners.window.get("resize").callback();
+flushAnimationFrames();
+const mobileBoundary = snapshot();
+
+window.innerWidth = 621;
+listeners.window.get("resize").callback();
+flushAnimationFrames();
+const aboveMobileBoundary = snapshot();
+
+window.innerWidth = 800;
+window.visualViewport.width = 600;
+listeners.visualViewport.get("resize").callback();
+flushAnimationFrames();
+const desktopZoom = snapshot();
+
+process.stdout.write(JSON.stringify({
+  initial,
+  initialFrames,
+  coalescedFrames,
+  beforeFlush,
+  withinEpsilon,
+  narrowed,
+  cappedAtLayout,
+  nonPositive,
+  invalid,
+  resizedLayout,
+  mobileBoundary,
+  aboveMobileBoundary,
+  desktopZoom,
+  windowPassive: listeners.window.get("resize").options.passive,
+  visualViewportPassive:
+    listeners.visualViewport.get("resize").options.passive,
+  sharedResizeCallback:
+    listeners.window.get("resize").callback
+      === listeners.visualViewport.get("resize").callback,
+}));
+"""
+        completed = subprocess.run(
+            ["node", "--input-type=module", "-e", node_script],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        report = json.loads(completed.stdout)
+        self.assertEqual(
+            report["initial"],
+            {"constrained": True, "width": "300px"},
+        )
+        self.assertEqual(report["initialFrames"], 0)
+        self.assertEqual(report["coalescedFrames"], 1)
+        self.assertEqual(
+            report["beforeFlush"],
+            {"constrained": True, "width": "300px"},
+        )
+        self.assertEqual(
+            report["narrowed"],
+            {"constrained": True, "width": "280px"},
+        )
+        for state in ("withinEpsilon", "cappedAtLayout", "nonPositive", "invalid"):
+            self.assertEqual(
+                report[state],
+                {"constrained": False, "width": None},
+                state,
+            )
+        self.assertEqual(
+            report["resizedLayout"],
+            {"constrained": True, "width": "300px"},
+        )
+        self.assertEqual(
+            report["mobileBoundary"],
+            {"constrained": True, "width": "300px"},
+        )
+        self.assertEqual(
+            report["aboveMobileBoundary"],
+            {"constrained": False, "width": None},
+        )
+        self.assertEqual(
+            report["desktopZoom"],
+            {"constrained": False, "width": None},
+        )
+        self.assertTrue(report["windowPassive"])
+        self.assertTrue(report["visualViewportPassive"])
+        self.assertTrue(report["sharedResizeCallback"])
+
+        expected_version = "mobile-visual-viewport-polar-direction-v1"
+        self.assertEqual(
+            correspondence.CORRESPONDENCE_STYLE_SRC,
+            f"clockwork-coloring-correspondence.css?v={expected_version}",
+        )
+        self.assertEqual(
+            correspondence.CORRESPONDENCE_SCRIPT_SRC,
+            "clockwork-coloring-correspondence.js?v=reflection-centering-v1",
+        )
+        self.assertIn(
+            f'href="{correspondence.CORRESPONDENCE_STYLE_SRC}"',
+            self.page,
+        )
+        self.assertIn(
+            f'src="{correspondence.CORRESPONDENCE_SCRIPT_SRC}"',
+            self.page,
+        )
 
     def test_copy_uses_one_fixed_forward_clock(self) -> None:
         self.assertIn(
@@ -2290,7 +2591,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
             if expected_rotations:
                 rotation_pairs = []
-                for symbol, description in expected_rotations:
+                for symbol, _direction, description in expected_rotations:
                     _rotation, order, step = symbol.split("-")
                     symbol_name = (
                         f"{order}-fold rotation-axis symbol"
@@ -2299,9 +2600,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                     )
                     rotation_pairs.append(f"{symbol_name}, {description}")
                 prefix = (
-                    "Rotation advancing the colour order"
+                    "Rotation advancing the displayed colour order by one step "
+                    "as polar height increases"
                     if len(rotation_pairs) == 1
-                    else "Rotations advancing the colour order"
+                    else "Rotations each advancing the displayed colour order by "
+                    "one step as polar height increases"
                 )
                 expected_aria = (
                     f"{palette_label}. {prefix}: "
@@ -2318,6 +2621,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 [
                     (
                         row.get("data-forward-rotation-symbol"),
+                        row.get("data-polar-turn-direction"),
                         row.get("data-turn-description"),
                     )
                     for row in actual_rotations
@@ -2330,7 +2634,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 len(expected_rotations),
                 f'{group["id"]}:{placement}',
             )
-            for svg, (symbol, _description) in zip(
+            for svg, (symbol, _direction, _description) in zip(
                 svgs_by_order[order_index], expected_rotations, strict=True
             ):
                 self.assertEqual(svg.get("aria-hidden"), "true")
@@ -2345,12 +2649,19 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             visible_parts = [part.strip() for part in text_parts if part.strip()]
             self.assertEqual(
                 visible_parts,
-                ["order", *(description for _symbol, description in expected_rotations)],
+                [
+                    "order",
+                    *(
+                        description
+                        for _symbol, _direction, description in expected_rotations
+                    ),
+                ],
                 f'{group["id"]}:{placement}',
             )
             if placement == "presentation":
                 self.assertNotIn("<svg", expected_html, group["id"])
                 self.assertNotIn("data-forward-rotation-symbol", expected_html)
+                self.assertNotIn("data-polar-turn-direction", expected_html)
 
         self.assertNotIn('class="colour-key"', self.page)
         self.assertNotIn('class="presentation-palette"', self.page)
@@ -2369,28 +2680,60 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertNotIn(".presentation-colour {", css)
         self.assertNotIn(".presentation-colour i", css)
 
+    def test_forward_rotation_helpers_follow_increasing_polar_height(self) -> None:
+        cases = (
+            (2, 180, "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
+            (2, -180, "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
+            (3, 120, "counterclockwise", "one-third turn counterclockwise"),
+            (3, 240, "clockwise", "one-third turn clockwise"),
+            (4, 90, "counterclockwise", "quarter-turn counterclockwise"),
+            (4, 270, "clockwise", "quarter-turn clockwise"),
+            (6, 60, "counterclockwise", "one-sixth turn counterclockwise"),
+            (6, 300, "clockwise", "one-sixth turn clockwise"),
+        )
+        for order, angle, direction, description in cases:
+            with self.subTest(order=order, angle=angle):
+                self.assertEqual(
+                    correspondence._forward_rotation_direction(order, angle),
+                    direction,
+                )
+                self.assertEqual(
+                    correspondence._forward_rotation_turn_description(order, angle),
+                    description,
+                )
+
     def test_forward_rotation_legend_uses_the_exact_palette_step_and_deduplicates(
         self,
     ) -> None:
-        def turn_description(order: int, angle_degrees: float) -> str:
-            if order == 2:
-                return "half-turn"
-            if order == 3:
-                return "one-third turn"
+        def polar_direction(order: int, angle_degrees: float) -> str:
+            self.assertIn(order, {2, 3, 4, 6})
             elementary = 360 / order
             angle = angle_degrees % 360
-            if math.isclose(angle, elementary, abs_tol=1e-7):
-                direction = "counterclockwise"
-            elif math.isclose(angle, 360 - elementary, abs_tol=1e-7):
-                direction = "clockwise"
-            else:
+            if not (
+                math.isclose(angle, elementary, abs_tol=1e-7)
+                or math.isclose(angle, 360 - elementary, abs_tol=1e-7)
+            ):
                 self.fail(f"non-elementary {order}-fold turn: {angle_degrees}")
-            return {
+            if order == 2:
+                return "direction-neutral"
+            if math.isclose(angle, elementary, abs_tol=1e-7):
+                return "counterclockwise"
+            return "clockwise"
+
+        def turn_description(
+            order: int,
+            direction: str,
+        ) -> str:
+            if order == 2:
+                return HALF_TURN_POLAR_DESCRIPTION
+            turn_name = {
+                3: "one-third turn",
                 4: "quarter-turn",
                 6: "one-sixth turn",
-            }[order] + f" {direction}"
+            }[order]
+            return f"{turn_name} {direction}"
 
-        derived_fixture: dict[str, tuple[tuple[str, str], ...]] = {}
+        derived_fixture: dict[str, tuple[tuple[str, str, str], ...]] = {}
         item_census: Counter[int] = Counter()
         raw_match_counts: dict[str, int] = {}
         for group in self.page_groups:
@@ -2398,7 +2741,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             forward_cycle = tuple(presentation["clock_cycle"]["permutation"])
             raw_matches = []
             semantic_items = []
-            seen_symbols = set()
+            seen_symbols: dict[str, tuple[str, str]] = {}
             for generator in presentation["generators"]:
                 permutation_is_forward = (
                     group["clock_order"] > 1
@@ -2418,17 +2761,32 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 raw_matches.append(generator)
                 order = generator["marker"]["order"]
                 angle = generator["plate_visualization"]["angle_degrees"]
+                direction = polar_direction(order, angle)
+                description = turn_description(order, direction)
                 symbol = correspondence._rotation_symbol_key(
                     order,
                     correspondence.Fraction(generator["time_shift"]),
                     angle,
                 )
-                if symbol in seen_symbols:
-                    continue
-                seen_symbols.add(symbol)
-                semantic_items.append(
-                    (symbol, turn_description(order, angle))
+                self.assertEqual(
+                    correspondence._forward_rotation_direction(order, angle),
+                    direction,
+                    f'{group["id"]}:{generator["generator"]}',
                 )
+                self.assertEqual(
+                    correspondence._forward_rotation_turn_description(order, angle),
+                    description,
+                    f'{group["id"]}:{generator["generator"]}',
+                )
+                if symbol in seen_symbols:
+                    self.assertEqual(
+                        seen_symbols[symbol],
+                        (direction, description),
+                        f'{group["id"]}:{symbol}',
+                    )
+                    continue
+                seen_symbols[symbol] = (direction, description)
+                semantic_items.append((symbol, direction, description))
 
             raw_match_counts[group["id"]] = len(raw_matches)
             expected_items = tuple(semantic_items)
@@ -2440,7 +2798,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertLessEqual(len(rendered_items), 2, group["id"])
             self.assertEqual(
                 tuple(
-                    (item["symbol_key"], item["description"])
+                    (
+                        item["symbol_key"],
+                        item["polar_direction"],
+                        item["description"],
+                    )
                     for item in rendered_items
                 ),
                 expected_items,
@@ -2449,7 +2811,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             for item in rendered_items:
                 self.assertEqual(
                     set(item),
-                    {"symbol_key", "description", "accessible_name", "symbol_html"},
+                    {
+                        "symbol_key",
+                        "polar_direction",
+                        "description",
+                        "accessible_name",
+                        "symbol_html",
+                    },
                     group["id"],
                 )
                 _rotation, order, step = item["symbol_key"].split("-")
@@ -2468,6 +2836,14 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(derived_fixture, FORWARD_ROTATION_LEGEND_FIXTURE)
         self.assertEqual(item_census, Counter({0: 44, 1: 22, 2: 2}))
         self.assertEqual(sum(size * count for size, count in item_census.items()), 26)
+        self.assertEqual(
+            Counter(
+                direction
+                for items in derived_fixture.values()
+                for _symbol, direction, _description in items
+            ),
+            Counter({"direction-neutral": 12, "counterclockwise": 11, "clockwise": 3}),
+        )
 
         # Equivalent centres collapse to one symbol/action entry.
         self.assertEqual(raw_match_counts["g6"], 4)
@@ -2483,20 +2859,67 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertNotIn(group_id, FORWARD_ROTATION_LEGEND_FIXTURE)
 
         for _group_id, items in FORWARD_ROTATION_LEGEND_FIXTURE.items():
-            for symbol, description in items:
+            for symbol, direction, description in items:
                 order = int(symbol.split("-")[1])
                 if order == 2:
-                    self.assertEqual(description, "half-turn")
-                elif order == 3:
-                    self.assertEqual(description, "one-third turn")
+                    self.assertEqual(direction, "direction-neutral")
+                    self.assertEqual(description, HALF_TURN_POLAR_DESCRIPTION)
                 else:
-                    self.assertRegex(
-                        description,
-                        r" (?:clockwise|counterclockwise)$",
-                    )
-                if order in {2, 3}:
-                    self.assertNotIn("clockwise", description)
-                    self.assertNotIn("counterclockwise", description)
+                    self.assertIn(direction, {"clockwise", "counterclockwise"})
+                    self.assertTrue(description.endswith(f" {direction}"))
+                if order == 3:
+                    self.assertTrue(description.startswith("one-third turn "))
+
+    def test_g226_forward_rotation_is_one_third_turn_counterclockwise(self) -> None:
+        group = next(group for group in self.page_groups if group["id"] == "g226")
+        presentation = group["chaim_presentation"]
+        forward_cycle = tuple(presentation["clock_cycle"]["permutation"])
+        qualifying = [
+            generator
+            for generator in presentation["generators"]
+            if generator["marker"]["kind"] == "rotation"
+            and tuple(generator["colour_permutation"]) == forward_cycle
+        ]
+        self.assertEqual([generator["generator"] for generator in qualifying], ["α", "β", "γ"])
+        self.assertEqual(
+            [
+                (
+                    generator["plate_visualization"]["angle_degrees"],
+                    generator["time_shift"],
+                    generator["clock_power"],
+                )
+                for generator in qualifying
+            ],
+            [(120, "1/3", 1)] * 3,
+        )
+        self.assertEqual(
+            FORWARD_ROTATION_LEGEND_FIXTURE["g226"],
+            (
+                (
+                    "rotation-3-1",
+                    "counterclockwise",
+                    "one-third turn counterclockwise",
+                ),
+            ),
+        )
+
+        section_start = self.page.index(
+            '<section class="correspondence-entry" id="g226"'
+        )
+        section_end = self.page.index("</section>", section_start)
+        section = self.page[section_start:section_end]
+        expected_aria = (
+            "Colour order: blue, orange, green. Rotation advancing the displayed "
+            "colour order by one step as polar height increases: 3 subscript 1 "
+            "screw-axis symbol, one-third turn counterclockwise."
+        )
+        self.assertIn(f'role="img" aria-label="{expected_aria}"', section)
+        self.assertIn(
+            'data-forward-rotation-symbol="rotation-3-1" '
+            'data-polar-turn-direction="counterclockwise" '
+            'data-turn-description="one-third turn counterclockwise"',
+            section,
+        )
 
     def test_turn_hover_uses_one_counterclockwise_face_order_convention(self) -> None:
         turn_generators = [
