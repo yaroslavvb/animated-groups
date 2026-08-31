@@ -344,6 +344,7 @@ class CorrespondenceParser(HTMLParser):
         self.crystal_close_buttons: list[dict[str, str | None]] = []
         self.crystal_previews: list[dict[str, str | None]] = []
         self.crystal_frame_hosts: list[dict[str, str | None]] = []
+        self.crystal_billiards_links: list[dict[str, str | None]] = []
         self.iframes: list[dict[str, str | None]] = []
         self.book_links: list[tuple[str, str, str]] = []
         self.book_excerpt_links: list[dict[str, str | None]] = []
@@ -534,6 +535,8 @@ class CorrespondenceParser(HTMLParser):
             self.crystal_previews.append(attributes)
         if "data-crystal-frame" in attributes:
             self.crystal_frame_hosts.append(attributes)
+        if tag == "a" and attributes.get("data-related-animation") == "billiards":
+            self.crystal_billiards_links.append(attributes)
         if tag == "iframe":
             self.iframes.append(attributes)
         if tag == "canvas" and "clockwork-canvas" in classes:
@@ -879,6 +882,38 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         ]
         self.assertEqual([example["id"] for example in mismatches], ["g7"])
         self.assertTrue(mismatches[0]["note"])
+
+        related_animation_examples = [
+            example for example in examples if "related_animation_url" in example
+        ]
+        self.assertEqual(
+            [
+                (
+                    example["id"],
+                    example["related_animation_url"],
+                    example["related_animation_label"],
+                )
+                for example in related_animation_examples
+            ],
+            [
+                (
+                    "g235",
+                    "https://yaroslavvb.github.io/animated-groups-fable/billiards.html",
+                    "Billiards animation",
+                )
+            ],
+        )
+
+    def test_proustite_entry_links_the_matching_billiards_animation(self) -> None:
+        self.assertEqual(len(self.parser.crystal_billiards_links), 1)
+        link = self.parser.crystal_billiards_links[0]
+        self.assertEqual(link.get("data-group-id"), "g235")
+        self.assertEqual(
+            link.get("href"),
+            "https://yaroslavvb.github.io/animated-groups-fable/billiards.html",
+        )
+        self.assertEqual(link.get("target"), "_blank")
+        self.assertEqual(set((link.get("rel") or "").split()), {"noopener"})
 
     def test_every_entry_has_a_lazy_real_crystal_viewer(self) -> None:
         examples = self.crystal_examples["groups"]
