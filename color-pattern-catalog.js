@@ -332,8 +332,11 @@
       "data-motif-y": y.toFixed(2),
       transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${angle.toFixed(2)}) scale(${mirrored ? -MOTIF_SCALE : MOTIF_SCALE} ${MOTIF_SCALE})`,
     });
-    const diamond = svgElement("polygon", {
-      points: "0,-13 13,0 0,13 -13,0",
+    // A kite rather than a square-on-its-point: an unusual aspect ratio makes
+    // orientation legible at a glance. The R stays because it is what breaks
+    // the kite's mirror, which a c1 motif needs.
+    const kite = svgElement("polygon", {
+      points: "0,-13 8,-2 0,11 -8,-2",
       fill: colour,
       stroke: "#26322e",
       "stroke-width": 1.25,
@@ -341,19 +344,19 @@
     });
     const letter = svgElement("text", {
       x: 0,
-      y: 0.75,
+      y: -2,
       fill: "#fffaf1",
       stroke: "#26322e",
       "stroke-width": 0.6,
       "paint-order": "stroke fill",
-      "font-family": "Arial, Helvetica, sans-serif",
-      "font-size": 13,
+      "font-family": "ui-sans-serif, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif",
+      "font-size": 11,
       "font-weight": 800,
       "text-anchor": "middle",
       "dominant-baseline": "middle",
     });
     letter.textContent = "R";
-    group.append(diamond, letter);
+    group.append(kite, letter);
     svg.append(group);
   }
 

@@ -292,7 +292,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
         }
         # Generic representatives retain one centre grid per wallpaper
         # family.  *632 and *442 use the incenter of their mirror triangles
-        # to keep the deliberately large R-diamonds apart; every other family
+        # to keep the deliberately large R-kites apart; every other family
         # keeps the common seed.  The optimizer changes orientation, not
         # position.
         self.assertEqual(
@@ -337,7 +337,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
             {(0.394338, 0.105662)},
         )
 
-        # The rendered diamond has circumradius 13 * 1.55.  Distinct visible
+        # The rendered kite is inscribed in circumradius 13 * 1.55.  Distinct visible
         # centres must be farther apart than two circumradii, independent of
         # motif orientation.
         required_clearance = 2 * 13 * 1.55
@@ -686,7 +686,7 @@ class ColorPatternCatalogTests(unittest.TestCase):
         script = (ROOT / "color-pattern-catalog.js").read_text(encoding="utf-8")
         for required in ("activateGroup", "activatePattern", "openFromHash", "ArrowLeft", "ArrowRight"):
             self.assertIn(required, script)
-        self.assertIn('points: "0,-13 13,0 0,13 -13,0"', script)
+        self.assertIn('points: "0,-13 8,-2 0,11 -8,-2"', script)
         self.assertIn('letter.textContent = "R"', script)
         self.assertIn("const MOTIF_SCALE = 1.55", script)
         self.assertIn("function enumerateGroupActions", script)
