@@ -3581,18 +3581,23 @@ def _rotation_symbol_accessible_name(order: int, screw_step: int) -> str:
     return f"{order} subscript {screw_step} screw-axis symbol"
 
 
-_VISIBLE_TURN_BY_ORDER = {
-    2: "½ turn",
-    3: "⅓ turn",
-    4: "¼ turn",
-    6: "⅙ turn",
-}
-
 _ACCESSIBLE_TURN_BY_ORDER = {
     2: "half-turn",
     3: "one-third turn",
     4: "quarter-turn",
     6: "one-sixth turn",
+}
+
+_ACCESSIBLE_PALETTE_STEP_BY_ORDER = {
+    2: "one-half",
+    3: "one-third",
+    4: "one-quarter",
+    6: "one-sixth",
+}
+
+_DIRECTION_ABBREVIATION = {
+    "clockwise": "CW",
+    "counterclockwise": "CCW",
 }
 
 _PLANE_SYMBOL_ACCESSIBLE_NAME = {
@@ -3607,11 +3612,39 @@ _PLANE_SYMBOL_ACCESSIBLE_NAME = {
 def _screw_drill_direction(order: int, screw_step: int) -> str:
     """Read the drawn screw glyph while moving up the polar axis."""
 
-    if order not in _VISIBLE_TURN_BY_ORDER:
+    if order not in _ACCESSIBLE_TURN_BY_ORDER:
         raise ValueError(f"unsupported forward rotation order: {order}")
     if not 0 < screw_step < order:
         raise ValueError(f"non-screw colour rotation: {order}_{screw_step}")
     return "counterclockwise" if screw_step <= order / 2 else "clockwise"
+
+
+def _forward_turn_descriptions(
+    spatial_order: int,
+    palette_order: int,
+    direction: str,
+) -> tuple[str, str]:
+    """Describe one palette-forward screw turn, exposing unequal fractions."""
+
+    try:
+        accessible_turn = _ACCESSIBLE_TURN_BY_ORDER[spatial_order]
+        accessible_palette_step = _ACCESSIBLE_PALETTE_STEP_BY_ORDER[palette_order]
+        direction_abbreviation = _DIRECTION_ABBREVIATION[direction]
+    except KeyError as error:
+        raise ValueError(
+            "unsupported compact turn description: "
+            f"spatial={spatial_order}, palette={palette_order}, "
+            f"direction={direction}"
+        ) from error
+    visible = f"1/{spatial_order} turn {direction_abbreviation}"
+    accessible = f"{accessible_turn} {direction}"
+    if spatial_order != palette_order:
+        visible += f" · colour +1/{palette_order}"
+        accessible += (
+            f", with colour advancing by {accessible_palette_step} of the fixed "
+            "palette cycle"
+        )
+    return visible, accessible
 
 
 def _one_step_source(record: dict[str, Any], generator: dict[str, Any]) -> str | None:
@@ -3660,9 +3693,10 @@ def _forward_colour_legend_items(record: dict[str, Any]) -> list[dict[str, Any]]
             )
             symbol_key = f"rotation-{order}-{screw_step}"
             polar_direction = _screw_drill_direction(order, screw_step)
-            description = f"{_VISIBLE_TURN_BY_ORDER[order]} {polar_direction}"
-            accessible_description = (
-                f"{_ACCESSIBLE_TURN_BY_ORDER[order]} {polar_direction}"
+            description, accessible_description = _forward_turn_descriptions(
+                order,
+                record["clock_order"],
+                polar_direction,
             )
             item = {
                 "kind": "rotation",
