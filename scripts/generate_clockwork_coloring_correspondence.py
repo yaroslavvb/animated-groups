@@ -66,7 +66,7 @@ SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CRYSTAL_EXAMPLE_DATA = ROOT / "data" / "crystal-examples.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=crystallographic-name-expansion"
+    "v=mobile-visual-viewport-polar-direction-v1"
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
@@ -76,6 +76,39 @@ CRYSTAL_VIEWER_SCRIPT_SRC = "crystal-viewer.js?v=one-live-real-crystal-viewer"
 SPACE_TIME_PREVIEW_VERSION = "stacked-clock-period"
 BOOK_EXCERPT_VIEWER_VERSION = "short-signature-audit-v2"
 CLOCKWORK_PLATE_VERSION = "reflection-centering-v1"
+MOBILE_VIEWPORT_BOOTSTRAP = """    (() => {
+      const root = document.documentElement;
+      const viewport = window.visualViewport;
+      let pendingFrame = 0;
+
+      const commit = () => {
+        pendingFrame = 0;
+        const layoutWidth = window.innerWidth;
+        const candidateWidth = viewport?.width;
+        const visibleWidth = Number.isFinite(candidateWidth) && candidateWidth > 0
+          ? Math.min(layoutWidth, candidateWidth)
+          : layoutWidth;
+        const constrained = layoutWidth <= 620 && visibleWidth + 1 < layoutWidth;
+        root.toggleAttribute("data-visual-viewport-constrained", constrained);
+        if (constrained) {
+          root.style.setProperty(
+            "--clockwork-visual-viewport-width",
+            visibleWidth + "px",
+          );
+        } else {
+          root.style.removeProperty("--clockwork-visual-viewport-width");
+        }
+      };
+
+      const schedule = () => {
+        if (pendingFrame) return;
+        pendingFrame = window.requestAnimationFrame(commit);
+      };
+
+      commit();
+      window.addEventListener("resize", schedule, { passive: true });
+      viewport?.addEventListener("resize", schedule, { passive: true });
+    })();"""
 COLOR_PATTERN_DATA = ROOT / "data" / "color-pattern-catalog.json"
 
 SOURCE_SHA256 = "040eebe747815557014c1dbf1d4265d204aaae35c110595f2a15b94ee7f68ca0"
@@ -3082,6 +3115,7 @@ def _colour_order_html(record: dict[str, Any], placement: str) -> str:
     rotations = "".join(
         '<span class="colour-order-rotation" '
         f'data-forward-rotation-symbol="{escape(item["symbol_key"])}" '
+        f'data-polar-turn-direction="{escape(item["polar_direction"])}" '
         f'data-turn-description="{escape(item["description"])}">'
         f'{item["symbol_html"]}'
         '<span class="colour-order-rotation-description" aria-hidden="true">'
@@ -3092,9 +3126,11 @@ def _colour_order_html(record: dict[str, Any], placement: str) -> str:
     accessible_order = "Colour order: " + ", ".join(color_names)
     if rotation_items:
         rotation_label = (
-            "Rotation advancing the colour order"
+            "Rotation advancing the displayed colour order by one step "
+            "as polar height increases"
             if len(rotation_items) == 1
-            else "Rotations advancing the colour order"
+            else "Rotations each advancing the displayed colour order by one "
+            "step as polar height increases"
         )
         rotation_descriptions = "; ".join(
             f'{item["accessible_name"]}, {item["description"]}'
@@ -3533,7 +3569,24 @@ def _forward_rotation_turn_description(
     order: int,
     angle_degrees: float,
 ) -> str:
-    """Describe the displayed spatial action that advances the palette once."""
+    """Describe the polar rotation that advances the displayed palette once."""
+
+    direction = _forward_rotation_direction(order, angle_degrees)
+    if order == 2:
+        return "half-turn (clockwise and counterclockwise are the same)"
+    turn_name = {
+        3: "one-third turn",
+        4: "quarter-turn",
+        6: "one-sixth turn",
+    }[order]
+    return f"{turn_name} {direction}"
+
+
+def _forward_rotation_direction(
+    order: int,
+    angle_degrees: float,
+) -> str:
+    """Return direction while moving toward increasing polar height."""
 
     if order not in {2, 3, 4, 6}:
         raise ValueError(f"unsupported forward rotation order: {order}")
@@ -3549,16 +3602,12 @@ def _forward_rotation_turn_description(
             f"{angle_degrees}"
         )
     if order == 2:
-        return "half-turn"
-    if order == 3:
-        return "one-third turn"
-    turn_name = {4: "quarter-turn", 6: "one-sixth turn"}[order]
-    direction = (
+        return "direction-neutral"
+    return (
         "counterclockwise"
         if math.isclose(normalized_angle, elementary_angle, abs_tol=1e-7)
         else "clockwise"
     )
-    return f"{turn_name} {direction}"
 
 
 def _forward_rotation_legend_items(record: dict[str, Any]) -> list[dict[str, Any]]:
@@ -3599,6 +3648,10 @@ def _forward_rotation_legend_items(record: dict[str, Any]) -> list[dict[str, Any
             order,
             angle_degrees,
         )
+        polar_direction = _forward_rotation_direction(
+            order,
+            angle_degrees,
+        )
         if symbol_key in seen_symbols:
             if seen_symbols[symbol_key] != description:
                 raise ValueError(
@@ -3612,6 +3665,7 @@ def _forward_rotation_legend_items(record: dict[str, Any]) -> list[dict[str, Any
             {
                 "symbol_key": symbol_key,
                 "description": description,
+                "polar_direction": polar_direction,
                 "accessible_name": _rotation_symbol_accessible_name(
                     order,
                     screw_step,
@@ -4983,6 +5037,9 @@ def page_html(payload: dict[str, Any]) -> str:
   <meta name="theme-color" content="#ffffff">
   <title>Clockwork/coloring correspondence</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script data-mobile-viewport-bootstrap>
+{MOBILE_VIEWPORT_BOOTSTRAP}
+  </script>
   <link rel="stylesheet" href="site-controls-v2.css">
   <link rel="stylesheet" href="{CORRESPONDENCE_STYLE_SRC}">
 </head>
