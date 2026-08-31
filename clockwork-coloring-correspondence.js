@@ -13,11 +13,14 @@ import {
   RING_W,
   buildClockworkGeometry,
   frac,
-} from "./clockwork-coloring-geometry.js";
+} from "./clockwork-coloring-geometry.js?v=reflection-centering-v1";
 
 "use strict";
 
-const DATA_URL = new URL("data/clockwork-coloring-correspondence.json", import.meta.url);
+const DATA_URL = new URL(
+  "data/clockwork-coloring-correspondence.json?v=reflection-centering-v1",
+  import.meta.url,
+);
 const BOOK_EXCERPT_TARGET = "clockwork-book-excerpt";
 const PERIOD_MS = 4000;
 const DPR_LIMIT = 1.5;
@@ -270,7 +273,13 @@ class ClockworkPlayer {
       this.canvas.width = targetWidth;
       this.canvas.height = targetHeight;
     }
-    this.geometry = buildClockworkGeometry(this.record.render, width, height, dpr);
+    this.geometry = buildClockworkGeometry(
+      this.record.render,
+      width,
+      height,
+      dpr,
+      this.record.viewport_center,
+    );
     this.stage.dataset.motifCircleDiameter = this.geometry.circleDiameter.toFixed(2);
     this.draw(this.phase);
   }
