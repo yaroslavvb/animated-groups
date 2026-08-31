@@ -40,7 +40,7 @@ from pathlib import Path
 import re
 import sys
 from typing import Any, Iterable
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 
 from PIL import Image, ImageDraw
 
@@ -4116,6 +4116,34 @@ def _crystal_examples_by_id() -> dict[str, dict[str, Any]]:
     if any(record.get("reference_match") not in {"exact", "same-space-group-substitute"}
            for record in groups):
         raise ValueError("unknown crystal-example reference status")
+    related_animation_examples = [
+        record
+        for record in groups
+        if "related_animation_url" in record or "related_animation_label" in record
+    ]
+    if [record["id"] for record in related_animation_examples] != ["g235"]:
+        raise ValueError("the related animation must belong only to g235")
+    for record in related_animation_examples:
+        if set(record) & {"related_animation_url", "related_animation_label"} != {
+            "related_animation_url",
+            "related_animation_label",
+        }:
+            raise ValueError("related animation URL and label must occur together")
+        url = record["related_animation_url"]
+        if not isinstance(url, str):
+            raise ValueError("the related animation URL must be a string")
+        if record["related_animation_label"] != "Billiards animation":
+            raise ValueError("unexpected related animation label")
+        parsed = urlparse(url)
+        if (
+            parsed.scheme != "https"
+            or parsed.netloc != "yaroslavvb.github.io"
+            or parsed.path != "/animated-groups-fable/billiards.html"
+            or parsed.params
+            or parsed.query
+            or parsed.fragment
+        ):
+            raise ValueError(f"unexpected related animation URL: {url!r}")
     return by_id
 
 
@@ -4480,6 +4508,16 @@ def _crystal_viewer_html(
         f"{space_group['image_alt']} Activate the interactive viewer to examine "
         f"{example['crystal_name']}."
     )
+    billiards_link = ""
+    if example.get("related_animation_url"):
+        billiards_link = (
+            '<span aria-hidden="true"> · </span>'
+            f'<a class="crystal-billiards-link" data-related-animation="billiards" '
+            f'data-group-id="{group_id}" '
+            f'href="{escape(example["related_animation_url"])}" '
+            f'target="_blank" rel="noopener">'
+            f'{escape(example["related_animation_label"])}</a>'
+        )
     return f"""
               <figure class="crystal-viewer" data-crystal-viewer="{group_id}" data-group-id="{group_id}" data-provider="{escape(provider)}" data-reference-match="{escape(example['reference_match'])}" data-crystal-name="{crystal_name}" data-crystal-embed="{escape(_crystal_embed_url(example))}">
                 <div class="crystal-viewer-stage" id="{stage_id}" data-crystal-stage data-state="idle" aria-describedby="{status_id}">
@@ -4493,7 +4531,7 @@ def _crystal_viewer_html(
                 </div>
                 <figcaption>
                   <span class="crystal-viewer-title"><strong>3D crystal · {crystal_name}</strong><span>No. {space_group['it_number']} {_hm_html(space_group['hm_short'])}</span></span>
-                  <span class="crystal-viewer-links"><a href="{escape(example['source_url'])}" target="_blank" rel="noopener">CrystalSymmetry example</a><span aria-hidden="true"> · </span><a href="{escape(example['viewer_url'])}" target="_blank" rel="noopener">{escape(provider_link_label)}</a></span>
+                  <span class="crystal-viewer-links"><a href="{escape(example['source_url'])}" target="_blank" rel="noopener">CrystalSymmetry example</a><span aria-hidden="true"> · </span><a href="{escape(example['viewer_url'])}" target="_blank" rel="noopener">{escape(provider_link_label)}</a>{billiards_link}</span>
                   <small>Before loading, this space–time lift shows the clockwork wallpaper; the vertical axis is time through one clock period. The interactive pane is the real-crystal exemplar via {escape(provider_name)}.</small>
                   {match_note}
                   {source_warning}
