@@ -66,7 +66,7 @@ SPACE_GROUP_DATA = ROOT / "data" / "space-group-correspondence.json"
 CRYSTAL_EXAMPLE_DATA = ROOT / "data" / "crystal-examples.json"
 CORRESPONDENCE_STYLE_SRC = (
     "clockwork-coloring-correspondence.css?"
-    "v=mobile-visual-viewport-polar-direction-v1"
+    "v=compact-generator-actions-v1"
 )
 CORRESPONDENCE_SCRIPT_SRC = (
     "clockwork-coloring-correspondence.js?"
@@ -3092,7 +3092,7 @@ def render_plate(record: dict[str, Any]) -> bytes:
 
 
 def _colour_order_html(record: dict[str, Any], placement: str) -> str:
-    """Render the compact palette, with its plate-only forward-rotation key."""
+    """Render the compact palette and its plate-only one-step action key."""
 
     if placement not in {"plate", "presentation"}:
         raise ValueError(f"unsupported colour-order placement: {placement}")
@@ -3107,41 +3107,51 @@ def _colour_order_html(record: dict[str, Any], placement: str) -> str:
         'aria-hidden="true"></span>'
         for color in colors
     )
-    rotation_items = (
-        _forward_rotation_legend_items(record)
+    action_items = (
+        _forward_colour_legend_items(record)
         if placement == "plate"
         else []
     )
-    rotations = "".join(
-        '<span class="colour-order-rotation" '
-        f'data-forward-rotation-symbol="{escape(item["symbol_key"])}" '
-        f'data-polar-turn-direction="{escape(item["polar_direction"])}" '
-        f'data-turn-description="{escape(item["description"])}">'
+    actions = "".join(
+        '<span class="colour-order-action '
+        f'colour-order-action--{escape(item["kind"])}" '
+        f'data-forward-symbol="{escape(item["symbol_key"])}" '
+        f'data-action-kind="{escape(item["kind"])}" '
+        f'data-palette-step-source="{escape(item["source"])}"'
+        + (
+            f' data-forward-rotation-symbol="{escape(item["symbol_key"])}"'
+            f' data-polar-turn-direction="{escape(item["polar_direction"])}"'
+            f' data-turn-description="{escape(item["description"])}"'
+            if item["kind"] == "rotation"
+            else f' data-forward-plane-symbol="{escape(item["symbol_key"])}"'
+        )
+        + '>'
         f'{item["symbol_html"]}'
-        '<span class="colour-order-rotation-description" aria-hidden="true">'
+        '<span class="colour-order-action-description" aria-hidden="true">'
         f'{escape(item["description"])}'
         '</span></span>'
-        for item in rotation_items
+        for item in action_items
     )
     accessible_order = "Colour order: " + ", ".join(color_names)
-    if rotation_items:
-        rotation_label = (
-            "Rotation advancing the displayed colour order by one step "
+    if action_items:
+        action_label = (
+            "Symbol advancing the displayed colour order by one step "
             "as polar height increases"
-            if len(rotation_items) == 1
-            else "Rotations each advancing the displayed colour order by one "
+            if len(action_items) == 1
+            else "Symbols each advancing the displayed colour order by one "
             "step as polar height increases"
         )
-        rotation_descriptions = "; ".join(
-            f'{item["accessible_name"]}, {item["description"]}'
-            for item in rotation_items
+        action_descriptions = "; ".join(
+            f'{item["accessible_name"]}, {item["accessible_description"]}'
+            for item in action_items
         )
-        accessible_order += f". {rotation_label}: {rotation_descriptions}."
+        accessible_order += f". {action_label}: {action_descriptions}."
     return (
         f'<p class="colour-order colour-order--{placement}" '
         f'role="img" aria-label="{escape(accessible_order)}">'
-        '<span class="colour-order-label" aria-hidden="true">order</span>'
-        f"{swatches}{rotations}</p>"
+        '<span class="colour-order-palette" aria-hidden="true">'
+        '<span class="colour-order-label">order</span>'
+        f"{swatches}</span>{actions}</p>"
     )
 
 
@@ -3300,7 +3310,12 @@ def _polar_plane_symbol(
     """Classify one orientation-reversing lift in projection along time."""
 
     marker_kind = generator["marker"]["kind"]
-    phase = Fraction(generator["phase"])
+    phase_value = (
+        generator["phase"]
+        if "phase" in generator
+        else generator["time_shift"]
+    )
+    phase = Fraction(phase_value)
     if marker_kind == "mirror":
         if phase == 0:
             return "m"
@@ -3550,7 +3565,8 @@ def _compact_rotation_symbol_html(order: int, screw_step: int) -> str:
 
     key = f"rotation-{order}-{screw_step}"
     return (
-        '<svg class="colour-order-rotation-glyph" '
+        '<svg class="colour-order-action-glyph '
+        'colour-order-action-glyph--rotation" '
         f'data-rotation-symbol="{key}" viewBox="0 0 32 32" '
         'aria-hidden="true" focusable="false">'
         '<g class="generator-symbol-body" transform="translate(16 16)">'
@@ -3565,106 +3581,95 @@ def _rotation_symbol_accessible_name(order: int, screw_step: int) -> str:
     return f"{order} subscript {screw_step} screw-axis symbol"
 
 
-def _forward_rotation_turn_description(
-    order: int,
-    angle_degrees: float,
-) -> str:
-    """Describe the polar rotation that advances the displayed palette once."""
+_VISIBLE_TURN_BY_ORDER = {
+    2: "½ turn",
+    3: "⅓ turn",
+    4: "¼ turn",
+    6: "⅙ turn",
+}
 
-    direction = _forward_rotation_direction(order, angle_degrees)
-    if order == 2:
-        return "half-turn (clockwise and counterclockwise are the same)"
-    turn_name = {
-        3: "one-third turn",
-        4: "quarter-turn",
-        6: "one-sixth turn",
-    }[order]
-    return f"{turn_name} {direction}"
+_ACCESSIBLE_TURN_BY_ORDER = {
+    2: "half-turn",
+    3: "one-third turn",
+    4: "quarter-turn",
+    6: "one-sixth turn",
+}
+
+_PLANE_SYMBOL_ACCESSIBLE_NAME = {
+    "m": "mirror-plane symbol",
+    "axial": "in-plane axial-glide symbol",
+    "c": "c-glide-plane symbol",
+    "n": "n-glide-plane symbol",
+    "d": "d-glide-plane symbol",
+}
 
 
-def _forward_rotation_direction(
-    order: int,
-    angle_degrees: float,
-) -> str:
-    """Return direction while moving toward increasing polar height."""
+def _screw_drill_direction(order: int, screw_step: int) -> str:
+    """Read the drawn screw glyph while moving up the polar axis."""
 
-    if order not in {2, 3, 4, 6}:
+    if order not in _VISIBLE_TURN_BY_ORDER:
         raise ValueError(f"unsupported forward rotation order: {order}")
-    normalized_angle = angle_degrees % 360
-    elementary_angle = 360 / order
-    opposite_angle = (360 - elementary_angle) % 360
-    if not (
-        math.isclose(normalized_angle, elementary_angle, abs_tol=1e-7)
-        or math.isclose(normalized_angle, opposite_angle, abs_tol=1e-7)
-    ):
-        raise ValueError(
-            f"forward rotation of order {order} has non-elementary angle "
-            f"{angle_degrees}"
-        )
-    if order == 2:
-        return "direction-neutral"
-    return (
-        "counterclockwise"
-        if math.isclose(normalized_angle, elementary_angle, abs_tol=1e-7)
-        else "clockwise"
+    if not 0 < screw_step < order:
+        raise ValueError(f"non-screw colour rotation: {order}_{screw_step}")
+    return "counterclockwise" if screw_step <= order / 2 else "clockwise"
+
+
+def _one_step_source(record: dict[str, Any], generator: dict[str, Any]) -> str | None:
+    """Say whether a marked generator or its inverse advances one palette step."""
+
+    order = record["clock_order"]
+    if order <= 1:
+        return None
+    clock_power = generator["clock_power"] % order
+    forward_cycle = tuple(
+        record["chaim_presentation"]["clock_cycle"]["permutation"]
     )
+    expected_permutation = _colour_permutation_power(forward_cycle, clock_power)
+    if tuple(generator["colour_permutation"]) != expected_permutation:
+        raise ValueError(
+            f'colour permutation/power mismatch in {record["id"]}:'
+            f'{generator["generator"]}'
+        )
+    if clock_power == 1:
+        return "direct"
+    if clock_power == order - 1:
+        return "inverse"
+    return None
 
 
-def _forward_rotation_legend_items(record: dict[str, Any]) -> list[dict[str, Any]]:
-    """Return distinct plate symbols whose generators advance one palette step."""
+def _forward_colour_legend_items(record: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return distinct marked symbols with a direct or inverse +1 palette step."""
 
     if record["clock_order"] <= 1:
         return []
-    presentation = record["chaim_presentation"]
-    forward_permutation = tuple(presentation["clock_cycle"]["permutation"])
     items: list[dict[str, Any]] = []
-    seen_symbols: dict[str, str] = {}
-    for generator in presentation["generators"]:
-        if generator["marker"]["kind"] != "rotation":
+    seen_symbols: dict[str, tuple[str, str]] = {}
+    for generator in record["chaim_presentation"]["generators"]:
+        source = _one_step_source(record, generator)
+        if source is None:
             continue
-        is_forward = tuple(generator["colour_permutation"]) == forward_permutation
-        if is_forward != (
-            generator["clock_power"] % record["clock_order"] == 1
-        ):
-            raise ValueError(
-                f'forward permutation/power mismatch in {record["id"]}:'
-                f'{generator["generator"]}'
+        marker = generator["marker"]
+        kind = marker["kind"]
+        if kind == "rotation":
+            order = marker["order"]
+            angle_degrees = generator["plate_visualization"]["angle_degrees"]
+            screw_step = _rotation_screw_step(
+                order,
+                generator["time_shift"],
+                angle_degrees,
             )
-        if not is_forward:
-            continue
-        order = generator["marker"]["order"]
-        angle_degrees = generator["plate_visualization"]["angle_degrees"]
-        screw_step = _rotation_screw_step(
-            order,
-            generator["time_shift"],
-            angle_degrees,
-        )
-        symbol_key = _rotation_symbol_key(
-            order,
-            generator["time_shift"],
-            angle_degrees,
-        )
-        description = _forward_rotation_turn_description(
-            order,
-            angle_degrees,
-        )
-        polar_direction = _forward_rotation_direction(
-            order,
-            angle_degrees,
-        )
-        if symbol_key in seen_symbols:
-            if seen_symbols[symbol_key] != description:
-                raise ValueError(
-                    f'conflicting forward rotation descriptions in {record["id"]}: '
-                    f'{symbol_key} is both {seen_symbols[symbol_key]!r} and '
-                    f'{description!r}'
-                )
-            continue
-        seen_symbols[symbol_key] = description
-        items.append(
-            {
+            symbol_key = f"rotation-{order}-{screw_step}"
+            polar_direction = _screw_drill_direction(order, screw_step)
+            description = f"{_VISIBLE_TURN_BY_ORDER[order]} {polar_direction}"
+            accessible_description = (
+                f"{_ACCESSIBLE_TURN_BY_ORDER[order]} {polar_direction}"
+            )
+            item = {
+                "kind": "rotation",
                 "symbol_key": symbol_key,
+                "source": source,
                 "description": description,
+                "accessible_description": accessible_description,
                 "polar_direction": polar_direction,
                 "accessible_name": _rotation_symbol_accessible_name(
                     order,
@@ -3672,30 +3677,60 @@ def _forward_rotation_legend_items(record: dict[str, Any]) -> list[dict[str, Any
                 ),
                 "symbol_html": _compact_rotation_symbol_html(order, screw_step),
             }
-        )
+        elif kind in {"mirror", "glide"}:
+            plane_symbol = _polar_plane_symbol(record["id"], generator)
+            symbol_key = f"plane-{plane_symbol}"
+            description = (
+                "colour reflection"
+                if plane_symbol in {"m", "c"}
+                else "colour glide reflection"
+            )
+            item = {
+                "kind": "reflection",
+                "symbol_key": symbol_key,
+                "source": source,
+                "description": description,
+                "accessible_description": description,
+                "polar_direction": "",
+                "accessible_name": _PLANE_SYMBOL_ACCESSIBLE_NAME[plane_symbol],
+                "symbol_html": _compact_plane_symbol_html(plane_symbol),
+            }
+        else:
+            continue
+        signature = (item["kind"], item["description"])
+        if symbol_key in seen_symbols:
+            if seen_symbols[symbol_key] != signature:
+                raise ValueError(
+                    f'conflicting one-step descriptions in {record["id"]}: '
+                    f'{symbol_key} is both {seen_symbols[symbol_key]!r} and '
+                    f'{signature!r}'
+                )
+            continue
+        seen_symbols[symbol_key] = signature
+        items.append(item)
     if len(items) > 2:
         raise ValueError(
-            f'more than two forward rotation symbols in {record["id"]}: '
+            f'more than two one-step symbols in {record["id"]}: '
             f'{[item["symbol_key"] for item in items]}'
         )
     return items
 
 
-def _diagram_plane_symbol_html(plane_symbol: str) -> str:
-    """Render one legend-sized International Tables plane/glide line."""
+def _plane_symbol_drawing_html(
+    plane_symbol: str,
+    axis: dict[str, tuple[float, float]],
+) -> str:
+    """Draw the shared International Tables plane/glide line primitive."""
 
     if plane_symbol not in _PLANE_LIFT_KIND:
         raise ValueError(f"unsupported legend plane symbol: {plane_symbol}")
-    axis = {
-        "start": (6.0, 16.0),
-        "end": (62.0, 16.0),
-        "direction": (1.0, 0.0),
-        "normal": (0.0, 1.0),
-    }
+    start = axis["start"]
+    end = axis["end"]
     drawing = (
         '<line class="diagram-symbol-plane '
         f'plate-generator-axis--plane-{plane_symbol}" '
-        'x1="6" y1="16" x2="62" y2="16"></line>'
+        f'x1="{_svg_number(start[0])}" y1="{_svg_number(start[1])}" '
+        f'x2="{_svg_number(end[0])}" y2="{_svg_number(end[1])}"></line>'
     )
     if plane_symbol == "d":
         drawing += "".join(
@@ -3706,11 +3741,41 @@ def _diagram_plane_symbol_html(plane_symbol: str) -> str:
                 time_shift=Fraction(1, 4),
             )
         )
+    return drawing
+
+
+def _diagram_plane_symbol_html(plane_symbol: str) -> str:
+    """Render one legend-sized International Tables plane/glide line."""
+
+    axis = {
+        "start": (6.0, 16.0),
+        "end": (62.0, 16.0),
+        "direction": (1.0, 0.0),
+        "normal": (0.0, 1.0),
+    }
     return (
         '<svg class="diagram-symbol-icon diagram-symbol-icon--plane" '
         f'data-legend-icon="plane-{plane_symbol}" viewBox="0 0 68 32" '
         'aria-hidden="true" focusable="false">'
-        f'{drawing}</svg>'
+        f'{_plane_symbol_drawing_html(plane_symbol, axis)}</svg>'
+    )
+
+
+def _compact_plane_symbol_html(plane_symbol: str) -> str:
+    """Render the plate's plane/glide mark as a compact caption glyph."""
+
+    axis = {
+        "start": (4.0, 16.0),
+        "end": (44.0, 16.0),
+        "direction": (1.0, 0.0),
+        "normal": (0.0, 1.0),
+    }
+    return (
+        '<svg class="colour-order-action-glyph '
+        'colour-order-action-glyph--reflection" '
+        f'data-plane-symbol="{escape(plane_symbol)}" viewBox="0 0 48 32" '
+        'aria-hidden="true" focusable="false">'
+        f'{_plane_symbol_drawing_html(plane_symbol, axis)}</svg>'
     )
 
 
@@ -4613,7 +4678,7 @@ def _other_names_html(
                 <h4 id="{group_id}-other-names-title">Identifications</h4>
                 <ul>
                   <li class="book-audit-row">{_term_help_html("Book type audit")}<span class="book-audit-value">{book_link}{short_form_support}</span></li>
-                  <li class="other-names-row"><span class="other-name-category">Other names</span><span class="other-name-list">{catalog_name}{fibrifold_name}{short_hm_name}{full_hm_name}{international_tables_number}{schoenflies_name}{hall_name}{mate_html}</span></li>
+                  <li class="other-names-row"><span class="other-name-category">Other names</span><span class="other-name-list">{fibrifold_name}{short_hm_name}{full_hm_name}{international_tables_number}{schoenflies_name}{hall_name}{mate_html}{catalog_name}</span></li>
                 </ul>
               </section>"""
 
@@ -4880,15 +4945,6 @@ def _tab_html(record: dict[str, Any]) -> str:
     )
 
 
-def _order_census_html(rows: list[dict[str, Any]]) -> str:
-    counts = Counter(row["clock_order"] for row in rows)
-    parts = [
-        f'C<sub>{order}</sub>: {counts[order]}'
-        for order in sorted(counts)
-    ]
-    return " · ".join(parts)
-
-
 def _directory_group_html(record: dict[str, Any]) -> str:
     group_id = escape(record["id"])
     signature = superscript_html(record["book_color_signature"])
@@ -4973,9 +5029,6 @@ def page_html(payload: dict[str, Any]) -> str:
     crystal_examples_by_id = _crystal_examples_by_id()
     displayed_groups = [group for group in groups if group["clock_order"] > 1]
     trivial_groups = [group for group in groups if group["clock_order"] == 1]
-    three_plus_colour_groups = [
-        group for group in displayed_groups if group["clock_order"] >= 3
-    ]
     if len(displayed_groups) != DISPLAYED_GROUP_COUNT:
         raise ValueError(f"expected {DISPLAYED_GROUP_COUNT} nontrivial display groups")
     if len(trivial_groups) != OMITTED_TRIVIAL_COUNT:
@@ -5067,17 +5120,11 @@ def page_html(payload: dict[str, Any]) -> str:
   <main class="correspondence-page">
     <nav class="directory" aria-labelledby="page-title">
       <h1 id="page-title">Clockwork/coloring correspondence</h1>
-      <p class="directory-legend">Colors follow one fixed clock: A = phase 0, B = phase 1/N, C = phase 2/N, and so on. C<sub>N</sub> = (ABC…) is one forward +1/N-period tick, so a row with Time +k/N has Color C<sub>N</sub><sup>k</sup>. Every action is a forward time skip; none reverses time. Raised numbers in the signature give colour-permutation orders, not time shifts.</p>
-      <p class="directory-viewer-note">Every record now carries the same three-part visual trail: clockwork film, static 2D colouring, then a click-to-load interactive example of a real crystal in the associated polar space group.</p>
+      <p class="directory-viewer-note">Each group has three corresponding visualizations: a clockwork animation, a static 2D colouring, and an interactive crystal model in the associated polar space group.</p>
       {_diagram_symbol_teaser_html()}
       <aside class="notation-caveat" aria-labelledby="notation-caveat-title">
         <h2 id="notation-caveat-title">Notation</h2>
         <p>The displayed names use Chaim Goodman–Strauss’s coloured-orbifold notation. Across all {len(trivial_groups) + len(displayed_groups)} forward groups it gives {len(trivial_groups) + colour_class_count} cyclic plane-colouring classes. Four types leave the two orientations of the polar fibre unresolved: 442<sup>4</sup>/◦, 333<sup>3</sup>/◦, 632<sup>6</sup>/◦, and 632<sup>3</sup>/2222. These are four two-to-one fibres, not missing colourings; standard fibrifold notation also identifies each pair under fibre reversal. <a href="docs/orbifold_notation.html#uncovered-cases">Four uncovered cases ↗</a> · <a href="{HIERARCHY_CHIRALITY_URL}">hierarchy ↗</a></p>
-      </aside>
-      <aside class="directory-census" aria-label="Forward group count overview">
-        <p><strong><span class="census-number">{len(trivial_groups)}</span> trivial groups</strong><span>Time is an independent direct-product factor.</span></p>
-        <p><strong><span class="census-number">{len(displayed_groups)}</span> nontrivial groups</strong><span>Some spatial symmetries advance time phase.</span></p>
-        <p><strong><span class="census-number">{len(three_plus_colour_groups)}</span> groups with 3 or more colours</strong><span>{_order_census_html(three_plus_colour_groups)}</span></p>
       </aside>
       <div class="directory-families">
         {directory}
