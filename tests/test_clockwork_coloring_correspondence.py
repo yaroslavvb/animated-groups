@@ -1255,7 +1255,6 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.assertNotIn("international-tables-reference", section, group_id)
             self.assertNotIn("ucl-reference", section, group_id)
             self.assertNotIn("space-group-correspondence.html#", section, group_id)
-            self.assertNotIn("Hall ", section, group_id)
             self.assertIn(
                 correspondence.fibrifold_html(
                     correspondence.FIBRIFOLD_BY_ID[group_id]
@@ -1264,9 +1263,39 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 group_id,
             )
             self.assertIn(
-                '<span class="international-tables-name">'
-                f'No. {space_group["it_number"]} '
+                '<span class="hermann-mauguin-name">'
                 f'{correspondence._hm_html(space_group["hm_short"])}</span>',
+                section,
+                group_id,
+            )
+            if correspondence._hm_compare_key(
+                space_group["hm_full"]
+            ) != correspondence._hm_compare_key(space_group["hm_short"]):
+                self.assertIn(
+                    '<span class="hermann-mauguin-name '
+                    'hermann-mauguin-name--full">'
+                    f'{correspondence._hm_html(space_group["hm_full"])}</span>',
+                    section,
+                    group_id,
+                )
+            else:
+                self.assertNotIn("hermann-mauguin-name--full", section, group_id)
+            self.assertIn(
+                '<span class="international-tables-number">'
+                f'No. {space_group["it_number"]}</span>',
+                section,
+                group_id,
+            )
+            self.assertIn(
+                '<span class="schoenflies-name" '
+                f'aria-label="{escape(space_group["schoenflies"])}">'
+                f'{correspondence._schoenflies_html(space_group["schoenflies"])}</span>',
+                section,
+                group_id,
+            )
+            self.assertIn(
+                '<span class="hall-symbol-name">'
+                f'{escape(space_group["hall"])}</span>',
                 section,
                 group_id,
             )
@@ -1291,7 +1320,25 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             68,
         )
         self.assertEqual(
-            self.page.count('class="international-tables-name"'),
+            self.page.count('class="hermann-mauguin-name"'),
+            68,
+        )
+        self.assertEqual(
+            self.page.count(
+                'class="hermann-mauguin-name hermann-mauguin-name--full"'
+            ),
+            7,
+        )
+        self.assertEqual(
+            self.page.count('class="international-tables-number"'),
+            68,
+        )
+        self.assertEqual(
+            self.page.count('class="schoenflies-name"'),
+            68,
+        )
+        self.assertEqual(
+            self.page.count('class="hall-symbol-name"'),
             68,
         )
         self.assertNotIn('class="fibrifold-orientation-note"', self.page)
@@ -1309,7 +1356,11 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
                 "Book type audit",
                 "Catalog instance",
                 "Conway fibrifold notation",
-                "International Tables space-group designation",
+                "Hermann–Mauguin space-group symbol",
+                "Full Hermann–Mauguin space-group symbol",
+                "International Tables number",
+                "Schoenflies space-group symbol",
+                "Hall setting symbol",
                 "Complementary forward skips",
             },
         )
@@ -1329,23 +1380,36 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             len(self.page_groups),
         )
 
-        expected_name_systems = [
-            (group["id"], system)
-            for group in self.page_groups
-            for system in (
+        space_payload = json.loads(
+            correspondence.SPACE_GROUP_DATA.read_text(encoding="utf-8")
+        )
+        space_by_id = {
+            group["id"]: group["space_group"] for group in space_payload["groups"]
+        }
+        expected_name_systems: list[tuple[str, str]] = []
+        for group in self.page_groups:
+            group_id = group["id"]
+            space_group = space_by_id[group_id]
+            systems = [
+                "Catalog instance",
+                "Conway fibrifold notation",
+                "Hermann–Mauguin space-group symbol",
+            ]
+            if correspondence._hm_compare_key(
+                space_group["hm_full"]
+            ) != correspondence._hm_compare_key(space_group["hm_short"]):
+                systems.append("Full Hermann–Mauguin space-group symbol")
+            systems.extend(
                 [
-                    "Catalog instance",
-                    "Conway fibrifold notation",
-                    "International Tables space-group designation",
+                    "International Tables number",
+                    "Schoenflies space-group symbol",
+                    "Hall setting symbol",
                 ]
-                + (
-                    ["Complementary forward skips"]
-                    if group["complementary_skip_mate"]
-                    else []
-                )
             )
-        ]
-        self.assertEqual(len(expected_name_systems), 68 * 3 + 8)
+            if group["complementary_skip_mate"]:
+                systems.append("Complementary forward skips")
+            expected_name_systems.extend((group_id, system) for system in systems)
+        self.assertEqual(len(expected_name_systems), 68 * 6 + 7 + 8)
         self.assertEqual(
             [
                 attributes.get("data-name-system")
@@ -1357,18 +1421,34 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             self.parser.identified_names,
             expected_name_systems,
         ):
+            space_group = space_by_id[group_id]
             classes = set((attributes.get("class") or "").split())
             self.assertTrue({"identified-name", "term-help"} <= classes, group_id)
             self.assertNotIn("tabindex", attributes, group_id)
             title = attributes.get("title") or ""
-            self.assertTrue(title.startswith(f"{system}: "), group_id)
-            self.assertIn(correspondence.TERM_HELP[system], title, group_id)
+            expected_help = correspondence.TERM_HELP[system]
+            setting_help = correspondence.SPACE_GROUP_SETTING_HELP.get(
+                space_group["choice"], ""
+            )
             if system == "Conway fibrifold notation":
                 orientation_note = "Two orientations share this fibrifold name"
                 if group_id in correspondence.FIBRIFOLD_ENANTIOMORPHIC_IDS:
-                    self.assertIn(orientation_note, title, group_id)
+                    expected_help += (
+                        " Two orientations share this fibrifold name; the current "
+                        "catalog record selects one orientation."
+                    )
                 else:
                     self.assertNotIn(orientation_note, title, group_id)
+            elif system == "Hermann–Mauguin space-group symbol":
+                expected_help += f' Full form: {space_group["hm_full"]}.'
+                if setting_help:
+                    expected_help += f" {setting_help}"
+            elif system in {
+                "Full Hermann–Mauguin space-group symbol",
+                "Hall setting symbol",
+            } and setting_help:
+                expected_help += f" {setting_help}"
+            self.assertEqual(title, f"{system}: {expected_help}", group_id)
 
         mates = [
             group for group in self.page_groups if group["complementary_skip_mate"]
@@ -1400,10 +1480,55 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         )
         self.assertIn(".term-help:hover .term-help-copy", css)
         self.assertIn(".term-help:focus-within .term-help-copy", css)
-        self.assertIn(".international-tables-name", css)
+        self.assertIn(".hermann-mauguin-name", css)
+        self.assertIn(".international-tables-number", css)
+        self.assertIn(".schoenflies-name", css)
+        self.assertIn(".hall-symbol-name", css)
         self.assertNotIn(".term-help[open]", css)
         self.assertNotIn("@media (hover: none)", css)
         self.assertIn("pointer-events: none", css)
+        self.assertEqual(
+            correspondence.CORRESPONDENCE_STYLE_SRC,
+            "clockwork-coloring-correspondence.css?"
+            "v=crystallographic-name-expansion",
+        )
+        self.assertIn(
+            f'href="{correspondence.CORRESPONDENCE_STYLE_SRC}"', self.page
+        )
+
+    def test_g235_lists_every_major_crystallographic_name_once_and_in_order(self) -> None:
+        section_start = self.page.index(
+            '<section class="other-names" aria-labelledby="g235-other-names-title">'
+        )
+        section_end = self.page.index("</section>", section_start)
+        section = self.page[section_start:section_end]
+        self.assertEqual(
+            re.findall(r'data-name-system="([^"]+)"', section),
+            [
+                "Catalog instance",
+                "Conway fibrifold notation",
+                "Hermann–Mauguin space-group symbol",
+                "International Tables number",
+                "Schoenflies space-group symbol",
+                "Hall setting symbol",
+            ],
+        )
+        expected_values = [
+            '<span class="hermann-mauguin-name">R3c</span>',
+            '<span class="international-tables-number">No. 161</span>',
+            '<span class="schoenflies-name" aria-label="C3v^6">'
+            'C<sub>3v</sub><sup>6</sup></span>',
+            '<span class="hall-symbol-name">R 3 -2&quot;c</span>',
+        ]
+        for markup in expected_values:
+            self.assertEqual(section.count(markup), 1, markup)
+        self.assertNotIn("Full Hermann–Mauguin space-group symbol", section)
+        self.assertNotIn("hermann-mauguin-name--full", section)
+        self.assertIn("Full form: R 3 c.", section)
+        self.assertIn(
+            "Selected setting: hexagonal axes for the rhombohedral lattice.",
+            section,
+        )
 
     def test_tos_notation_and_clock_orders_are_complete(self) -> None:
         groups = self.payload["groups"]
@@ -2047,7 +2172,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=forward-rotation-key", self.page)
+        self.assertIn("?v=crystallographic-name-expansion", self.page)
 
     def test_copy_uses_one_fixed_forward_clock(self) -> None:
         self.assertIn(
@@ -2587,7 +2712,13 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             "p31m/3 p3m1",
         )
         visible_parser = VisibleTextParser()
-        visible_parser.feed(self.page)
+        page_without_identifications = re.sub(
+            r'<section class="other-names".*?</section>',
+            "",
+            self.page,
+            flags=re.DOTALL,
+        )
+        visible_parser.feed(page_without_identifications)
         page_lower = " ".join(visible_parser.parts).lower()
         for term in forbidden_terms:
             self.assertNotIn(term, page_lower)

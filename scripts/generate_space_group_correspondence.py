@@ -9,8 +9,9 @@ lift
 
 The resulting ordinary three-dimensional crystallographic groups are the 68
 polar space-group types.  ``SPACE_GROUP_BY_ID`` is deliberately explicit:
-the International Tables number, Hermann--Mauguin names, Hall symbol, and
-setting choice are pinned data rather than a runtime spglib dependency.
+the International Tables number, Hermann--Mauguin names, Schoenflies name,
+Hall symbol, and setting choice are pinned data rather than a runtime spglib
+dependency.
 
 This statement has a narrow scope.  The selected forward catalog consists of
 regular cyclic colour actions.  General colour groups allow other permutation
@@ -361,6 +362,80 @@ SPACE_GROUP_BY_ID: dict[str, tuple[int, str, str, str, str]] = {
     "g269": (185, "P6_3cm", "P 6_3 c m", "P 6c -2", ""),
     "g270": (184, "P6cc", "P 6 c c", "P 6 -2c", ""),
     "g271": (186, "P6_3mc", "P 6_3 m c", "P 6c -2c", ""),
+}
+
+# The full space-group Schoenflies symbols for the same 68 International
+# Tables types.  These were independently rechecked against spglib 2.7.0; the
+# generator keeps them pinned so building the site does not depend on spglib.
+SCHOENFLIES_BY_IT_NUMBER: dict[int, str] = {
+    1: "C1^1",
+    3: "C2^1",
+    4: "C2^2",
+    5: "C2^3",
+    6: "Cs^1",
+    7: "Cs^2",
+    8: "Cs^3",
+    9: "Cs^4",
+    25: "C2v^1",
+    26: "C2v^2",
+    27: "C2v^3",
+    28: "C2v^4",
+    29: "C2v^5",
+    30: "C2v^6",
+    31: "C2v^7",
+    32: "C2v^8",
+    33: "C2v^9",
+    34: "C2v^10",
+    35: "C2v^11",
+    36: "C2v^12",
+    37: "C2v^13",
+    38: "C2v^14",
+    39: "C2v^15",
+    40: "C2v^16",
+    41: "C2v^17",
+    42: "C2v^18",
+    43: "C2v^19",
+    44: "C2v^20",
+    45: "C2v^21",
+    46: "C2v^22",
+    75: "C4^1",
+    76: "C4^2",
+    77: "C4^3",
+    78: "C4^4",
+    79: "C4^5",
+    80: "C4^6",
+    99: "C4v^1",
+    100: "C4v^2",
+    101: "C4v^3",
+    102: "C4v^4",
+    103: "C4v^5",
+    104: "C4v^6",
+    105: "C4v^7",
+    106: "C4v^8",
+    107: "C4v^9",
+    108: "C4v^10",
+    109: "C4v^11",
+    110: "C4v^12",
+    143: "C3^1",
+    144: "C3^2",
+    145: "C3^3",
+    146: "C3^4",
+    156: "C3v^1",
+    157: "C3v^2",
+    158: "C3v^3",
+    159: "C3v^4",
+    160: "C3v^5",
+    161: "C3v^6",
+    168: "C6^1",
+    169: "C6^2",
+    170: "C6^3",
+    171: "C6^4",
+    172: "C6^5",
+    173: "C6^6",
+    183: "C6v^1",
+    184: "C6v^2",
+    185: "C6v^3",
+    186: "C6v^4",
 }
 
 POLAR_IT_NUMBERS = frozenset(
@@ -922,6 +997,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
                 "it_number": number,
                 "hm_short": hm_short,
                 "hm_full": hm_full,
+                "schoenflies": SCHOENFLIES_BY_IT_NUMBER[number],
                 "hall": hall,
                 "choice": choice,
                 "crystal_system": _crystal_system(number),
@@ -962,7 +1038,7 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
 
     return {
         "meta": {
-            "schema_version": 4,
+            "schema_version": 5,
             "title": "Cyclic colourings and polar space groups",
             "source": "data/clockwork-coloring-correspondence.json",
             "source_sha256": digest,
@@ -973,7 +1049,10 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
             "displayed_wallpaper_families": DISPLAYED_FAMILY_COUNT,
             "omitted_trivial_products": OMITTED_TRIVIAL_COUNT,
             "space_group_numbering": "International Tables for Crystallography",
-            "mapping_database": "Pinned spglib 2.6.0 space-group type results",
+            "mapping_database": (
+                "Pinned spglib 2.6.0 space-group type results; naming fields "
+                "independently rechecked against spglib 2.7.0"
+            ),
             "construction": "Embed (M, v, τ) as (diag(M, 1), (v, τ)); cyclic phase becomes fractional height along the new z coordinate.",
             "scope_caveat": SCOPE_CAVEAT,
             "image_size": [IMAGE_WIDTH, IMAGE_HEIGHT],
@@ -991,8 +1070,8 @@ def build_payload(source_path: Path = SOURCE_DATA) -> dict[str, Any]:
 
 def validate_payload(payload: dict[str, Any]) -> None:
     meta = payload.get("meta", {})
-    if meta.get("schema_version") != 4:
-        raise ValueError("expected space-group correspondence schema 4")
+    if meta.get("schema_version") != 5:
+        raise ValueError("expected space-group correspondence schema 5")
     if meta.get("scope_caveat") != SCOPE_CAVEAT:
         raise ValueError("scope caveat is missing or changed")
     if meta.get("extra_catalog_count") != len(EXTRA_CATALOG_IDS):
@@ -1006,6 +1085,10 @@ def validate_payload(payload: dict[str, Any]) -> None:
         raise ValueError("point-group catalogue mapping must cover all polar classes")
     if len(EXTRA_CATALOG_IDS) != len(set(EXTRA_CATALOG_IDS)):
         raise ValueError("extra catalogue IDs must be unique")
+    if set(SCHOENFLIES_BY_IT_NUMBER) != POLAR_IT_NUMBERS:
+        raise ValueError("Schoenflies map must cover exactly the 68 polar types")
+    if len(set(SCHOENFLIES_BY_IT_NUMBER.values())) != len(POLAR_IT_NUMBERS):
+        raise ValueError("Schoenflies symbols must identify 68 distinct types")
     groups = payload.get("groups", [])
     if len(groups) != 68:
         raise ValueError("expected 68 group records")
@@ -1022,6 +1105,8 @@ def validate_payload(payload: dict[str, Any]) -> None:
         )
         if fields != expected:
             raise ValueError(f"unpinned space-group metadata for {group['id']}")
+        if actual.get("schoenflies") != SCHOENFLIES_BY_IT_NUMBER[actual["it_number"]]:
+            raise ValueError(f"incorrect Schoenflies symbol for {group['id']}")
         if group["parent"]["hm"] not in BASE_ORDER:
             raise ValueError(f"unknown wallpaper family for {group['id']}")
         expected_signature = clockwork.book_color_signature(
