@@ -2115,3 +2115,22 @@ a.short-signature-link[data-book-excerpt]::after {
     display: none !important;
   }
 }
+
+/* This repository is superseded by animated-groups-fable; the banner says so
+   and points at the maintained copy. Deliberately a visible link rather than a
+   meta refresh, so deep links still land where the reader expected. */
+.superseded-notice {
+  width: min(calc(100% - 2rem), 68rem);
+  margin: 1.25rem auto 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid #d9b38c;
+  border-left: 4px solid #b4661f;
+  border-radius: 8px;
+  background: #fdf3e4;
+  color: #4a3722;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.superseded-notice p { margin: 0 0 0.4rem; }
+.superseded-notice p:last-child { margin-bottom: 0; }
+.superseded-notice-link { color: #8a3d09; font-weight: 650; }
