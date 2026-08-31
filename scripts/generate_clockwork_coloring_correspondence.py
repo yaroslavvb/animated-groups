@@ -42,7 +42,7 @@ import sys
 from typing import Any, Iterable
 from urllib.parse import urlencode, urlparse
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageChops, ImageDraw
 
 from chaim_short_signatures import TWO_FOLD_SHORT_SIGNATURE_BY_TYPE
 from colour_generator_actions import (
@@ -139,6 +139,15 @@ MIN_VISIBLE_MOTIF_DIAMETER_PX = 38
 # At the reference card width, a radius of 36 output pixels gives the plate's
 # asymmetric stamp a 38 CSS-pixel circumscribed diameter after image scaling.
 PLATE_MIN_MOTIF_RADIUS_PX = 36
+# Browser measurements of the bold, stroked one-character SVG labels stay
+# inside this deliberately conservative box.  The extra clearance keeps the
+# visible halo away from the motif, rather than merely keeping the text's ink
+# from touching it.
+PLATE_LABEL_HALF_WIDTH_PX = 11
+PLATE_LABEL_HALF_HEIGHT_PX = 13
+PLATE_LABEL_CLEARANCE_PX = 2
+PLATE_LABEL_FRAME_INSET_PX = 8
+PLATE_ROTATION_GLYPH_HALF_SIZE_PX = 13
 PLATE_MOTIF_DIAMETER_FACTOR = 1.5057224179774968
 MIN_REFLECTION_SMALL_SIDE_FRACTION = 0.38
 PLATE_MOTIF_SHAPE = (
@@ -3014,7 +3023,7 @@ def _plate_generator_assignment(record: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
-def render_plate(record: dict[str, Any]) -> bytes:
+def _render_plate_image(record: dict[str, Any]) -> Image.Image:
     width = IMAGE_WIDTH * ANTIALIAS
     height = IMAGE_HEIGHT * ANTIALIAS
     background = "#F7F4EC"
@@ -3085,7 +3094,11 @@ def render_plate(record: dict[str, Any]) -> bytes:
                     width=max(1, ANTIALIAS),
                 )
 
-    image = image.resize((IMAGE_WIDTH, IMAGE_HEIGHT), Image.Resampling.LANCZOS)
+    return image.resize((IMAGE_WIDTH, IMAGE_HEIGHT), Image.Resampling.LANCZOS)
+
+
+def render_plate(record: dict[str, Any]) -> bytes:
+    image = _render_plate_image(record)
     buffer = io.BytesIO()
     image.save(buffer, format="WEBP", lossless=True, method=6)
     return buffer.getvalue()
@@ -3472,6 +3485,184 @@ def _plate_generator_label_html(
         f'y="{_svg_number(y)}" text-anchor="middle" '
         f'dominant-baseline="central">{escape(generator)}</text>'
     )
+
+
+PlateLabelBox = tuple[int, int, int, int]
+
+
+def _plate_motif_occupancy_mask(record: dict[str, Any]) -> Image.Image:
+    """Return the visible motif ink as a one-bit 720 by 420 collision mask."""
+
+    image = _render_plate_image(record)
+    background = Image.new("RGB", image.size, "#F7F4EC")
+    difference = ImageChops.difference(image, background).convert("L")
+    # Ignore only the faintest Lanczos ringing outside the visible outline.
+    return difference.point(lambda value: 255 if value > 4 else 0)
+
+
+def _plate_label_box(point: tuple[float, float]) -> PlateLabelBox:
+    x, y = point
+    half_width = PLATE_LABEL_HALF_WIDTH_PX + PLATE_LABEL_CLEARANCE_PX
+    half_height = PLATE_LABEL_HALF_HEIGHT_PX + PLATE_LABEL_CLEARANCE_PX
+    return (
+        math.floor(x - half_width),
+        math.floor(y - half_height),
+        math.ceil(x + half_width),
+        math.ceil(y + half_height),
+    )
+
+
+def _plate_box_intersection_area(
+    left: PlateLabelBox,
+    right: PlateLabelBox,
+) -> int:
+    return max(0, min(left[2], right[2]) - max(left[0], right[0])) * max(
+        0,
+        min(left[3], right[3]) - max(left[1], right[1]),
+    )
+
+
+def _plate_label_motif_pixels(
+    motif_mask: Image.Image,
+    bounds: PlateLabelBox,
+) -> int:
+    histogram = motif_mask.crop(bounds).histogram()
+    return histogram[255]
+
+
+def _choose_plate_label_position(
+    motif_mask: Image.Image,
+    candidates: Iterable[tuple[float, float]],
+    occupied_label_boxes: list[PlateLabelBox],
+    glyph_boxes: list[PlateLabelBox],
+) -> tuple[tuple[float, float], PlateLabelBox, int]:
+    """Choose the nearest candidate whose conservative text box is clear.
+
+    Candidates arrive in semantic preference order.  A clear candidate always
+    beats a colliding one; if a crowded plate offers no clear candidate, the
+    least-obstructed position wins.  Text/text and text/glyph collisions carry
+    more weight than background motif contact.
+    """
+
+    scored: list[
+        tuple[
+            tuple[int, int, int, int],
+            tuple[float, float],
+            PlateLabelBox,
+            int,
+        ]
+    ] = []
+    for preference, point in enumerate(candidates):
+        bounds = _plate_label_box(point)
+        if (
+            bounds[0] < PLATE_LABEL_FRAME_INSET_PX
+            or bounds[1] < PLATE_LABEL_FRAME_INSET_PX
+            or bounds[2] > IMAGE_WIDTH - PLATE_LABEL_FRAME_INSET_PX
+            or bounds[3] > IMAGE_HEIGHT - PLATE_LABEL_FRAME_INSET_PX
+        ):
+            continue
+        motif_pixels = _plate_label_motif_pixels(motif_mask, bounds)
+        label_overlap = sum(
+            _plate_box_intersection_area(bounds, other)
+            for other in occupied_label_boxes
+        )
+        glyph_overlap = sum(
+            _plate_box_intersection_area(bounds, other) for other in glyph_boxes
+        )
+        blocking_overlap = label_overlap + glyph_overlap
+        total_overlap = motif_pixels + 255 * blocking_overlap
+        scored.append(
+            (
+                (
+                    int(total_overlap > 0),
+                    int(blocking_overlap > 0),
+                    total_overlap,
+                    preference,
+                ),
+                point,
+                bounds,
+                motif_pixels,
+            )
+        )
+    if not scored:
+        raise ValueError("plate generator label has no in-frame candidate")
+    _score, point, bounds, motif_pixels = min(scored, key=lambda item: item[0])
+    return point, bounds, motif_pixels
+
+
+def _rotation_label_candidates(
+    centre: tuple[float, float],
+    generator_index: int,
+) -> list[tuple[float, float]]:
+    preferred_offsets = ((21, -17), (21, 18), (-21, 18), (-21, -17))
+    preferred = preferred_offsets[generator_index % len(preferred_offsets)]
+    preferred_angle = math.atan2(preferred[1], preferred[0])
+    angle_steps = [0]
+    for step in range(1, 24):
+        angle_steps.extend((step, -step))
+    angle_steps.append(24)
+    return [
+        (
+            centre[0] + radius * math.cos(preferred_angle + step * math.pi / 24),
+            centre[1] + radius * math.sin(preferred_angle + step * math.pi / 24),
+        )
+        for radius in range(27, 96, 4)
+        for step in angle_steps
+    ]
+
+
+def _axis_label_candidates(
+    axis: dict[str, tuple[float, float]],
+    generator_index: int,
+) -> list[tuple[float, float]]:
+    preferred_fractions = (0.18, 0.78, 0.42, 0.64)
+    preferred_fraction = preferred_fractions[
+        generator_index % len(preferred_fractions)
+    ]
+    fractions = [preferred_fraction]
+    fractions.extend(
+        fraction
+        for fraction in (0.04 + 0.02 * index for index in range(47))
+        if abs(fraction - preferred_fraction) > 1e-9
+    )
+    fractions.sort(key=lambda fraction: abs(fraction - preferred_fraction))
+    preferred_sign = 1 if generator_index % 2 == 0 else -1
+    signs = (preferred_sign, -preferred_sign)
+    start = axis["start"]
+    end = axis["end"]
+    normal = axis["normal"]
+    return [
+        (
+            start[0]
+            + (end[0] - start[0]) * fraction
+            + normal[0] * distance * sign,
+            start[1]
+            + (end[1] - start[1]) * fraction
+            + normal[1] * distance * sign,
+        )
+        for distance in range(14, 51, 6)
+        for fraction in fractions
+        for sign in signs
+    ]
+
+
+def _translation_label_candidates(
+    endpoint: tuple[float, float],
+    direction: tuple[float, float],
+) -> list[tuple[float, float]]:
+    preferred_angle = math.atan2(direction[1], direction[0])
+    angle_steps = [0]
+    for step in range(1, 6):
+        angle_steps.extend((step, -step))
+    angle_steps.append(6)
+    return [
+        (
+            endpoint[0] + radius * math.cos(preferred_angle + step * math.pi / 6),
+            endpoint[1] + radius * math.sin(preferred_angle + step * math.pi / 6),
+        )
+        for radius in range(16, 57, 6)
+        for step in angle_steps
+    ]
 
 
 def _plate_rotation_glyph_html(order: int, screw_step: int) -> str:
@@ -4081,9 +4272,26 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
         return ""
     scale = _plate_cell_scale(record["render"])
     viewport_center = record["viewport_center"]
+    motif_mask = _plate_motif_occupancy_mask(record)
+    occupied_label_boxes: list[PlateLabelBox] = []
+    glyph_boxes: list[PlateLabelBox] = []
+    for generator in placement:
+        if generator["marker"]["kind"] != "rotation":
+            continue
+        centre = _plate_screen_point(
+            generator["visualization"]["centre"],
+            scale,
+            viewport_center,
+        )
+        glyph_boxes.append(
+            (
+                math.floor(centre[0] - PLATE_ROTATION_GLYPH_HALF_SIZE_PX),
+                math.floor(centre[1] - PLATE_ROTATION_GLYPH_HALF_SIZE_PX),
+                math.ceil(centre[0] + PLATE_ROTATION_GLYPH_HALF_SIZE_PX),
+                math.ceil(centre[1] + PLATE_ROTATION_GLYPH_HALF_SIZE_PX),
+            )
+        )
     markers: list[str] = []
-    rotation_label_offsets = ((21, -17), (21, 18), (-21, 18), (-21, -17))
-    axis_label_fractions = (0.18, 0.78, 0.42, 0.64)
     for index, generator in enumerate(placement):
         name = generator["generator"]
         marker = generator["marker"]
@@ -4114,8 +4322,15 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
                 screen_vector[0] / vector_length,
                 screen_vector[1] / vector_length,
             )
-            label_x = max(15, min(IMAGE_WIDTH - 15, end[0] + 14 * direction[0]))
-            label_y = max(15, min(IMAGE_HEIGHT - 15, end[1] + 14 * direction[1]))
+            (label_x, label_y), label_box, _motif_pixels = (
+                _choose_plate_label_position(
+                    motif_mask,
+                    _translation_label_candidates(end, direction),
+                    occupied_label_boxes,
+                    glyph_boxes,
+                )
+            )
+            occupied_label_boxes.append(label_box)
             symbol_key = "translation"
             lift_kind = "translation-vector"
             classes += " plate-generator--translation-vector"
@@ -4153,9 +4368,17 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
                 scale,
                 viewport_center,
             )
-            label_dx, label_dy = rotation_label_offsets[
-                index % len(rotation_label_offsets)
-            ]
+            (label_x, label_y), label_box, _motif_pixels = (
+                _choose_plate_label_position(
+                    motif_mask,
+                    _rotation_label_candidates((centre_x, centre_y), index),
+                    occupied_label_boxes,
+                    glyph_boxes,
+                )
+            )
+            occupied_label_boxes.append(label_box)
+            label_dx = label_x - centre_x
+            label_dy = label_y - centre_y
             drawing = (
                 f'<g transform="translate({_svg_number(centre_x)} '
                 f'{_svg_number(centre_y)})">'
@@ -4195,20 +4418,15 @@ def _plate_generator_overlay_html(record: dict[str, Any]) -> str:
                     generator["visualization"]["glide_distance"],
                     generator["phase"],
                 )
-            label_fraction = axis_label_fractions[index % len(axis_label_fractions)]
-            label_normal = 14 if index % 2 == 0 else -14
-            label_x = (
-                start[0]
-                + (end[0] - start[0]) * label_fraction
-                + axis["normal"][0] * label_normal
+            (label_x, label_y), label_box, _motif_pixels = (
+                _choose_plate_label_position(
+                    motif_mask,
+                    _axis_label_candidates(axis, index),
+                    occupied_label_boxes,
+                    glyph_boxes,
+                )
             )
-            label_y = (
-                start[1]
-                + (end[1] - start[1]) * label_fraction
-                + axis["normal"][1] * label_normal
-            )
-            label_x = max(15, min(IMAGE_WIDTH - 15, label_x))
-            label_y = max(15, min(IMAGE_HEIGHT - 15, label_y))
+            occupied_label_boxes.append(label_box)
             drawing += _plate_generator_label_html(name, label_x, label_y)
         else:
             raise ValueError(
