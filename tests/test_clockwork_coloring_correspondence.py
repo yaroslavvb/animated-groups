@@ -73,45 +73,97 @@ SOURCE_LABELING_FIXTURE = {
     "g248": ["A", "B", "D", "F", "E", "C"],
 }
 
-# The compact legend below each static plate names every *distinct*
-# crystallographic rotation symbol whose named generator performs exactly one
-# forward step through that record's fixed colour palette.  Several wallpaper
-# presentations have multiple centres carrying the same symbol/action; those
-# repetitions intentionally collapse to one legend item.
-HALF_TURN_POLAR_DESCRIPTION = (
-    "half-turn (clockwise and counterclockwise are the same)"
-)
-FORWARD_ROTATION_LEGEND_FIXTURE = {
-    "g6": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g7": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g61": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g62": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g63": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g66": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g67": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g70": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g71": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g72": (("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),),
-    "g95": (("rotation-4-2", "clockwise", "quarter-turn clockwise"),),
-    "g97": (("rotation-4-3", "clockwise", "quarter-turn clockwise"),),
+# Each compact item below the static plate is a distinct crystallographic
+# symbol whose displayed generator, or its inverse, advances the fixed palette
+# exactly one step.  Repeated equivalent centres intentionally collapse to one
+# item.  Tuple fields are kind, symbol, source, direction, and visible label.
+FORWARD_COLOUR_ACTION_FIXTURE = {
+    "g6": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g7": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g9": (
+        ("reflection", "plane-c", "direct", "", "colour reflection"),
+        ("reflection", "plane-n", "direct", "", "colour glide reflection"),
+    ),
+    "g55": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g57": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g59": (("reflection", "plane-n", "direct", "", "colour glide reflection"),),
+    "g60": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g61": (
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("reflection", "plane-c", "direct", "", "colour reflection"),
+    ),
+    "g62": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g63": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g64": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g65": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g66": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g67": (
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("reflection", "plane-c", "direct", "", "colour reflection"),
+    ),
+    "g69": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g70": (
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("reflection", "plane-c", "direct", "", "colour reflection"),
+    ),
+    "g71": (("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),),
+    "g72": (
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
+        ("reflection", "plane-c", "direct", "", "colour reflection"),
+    ),
+    "g73": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g74": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g75": (("reflection", "plane-d", "direct", "", "colour glide reflection"),),
+    "g95": (("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),),
+    "g96": (("rotation", "rotation-4-1", "inverse", "counterclockwise", "¼ turn counterclockwise"),),
+    "g97": (("rotation", "rotation-4-3", "direct", "clockwise", "¼ turn clockwise"),),
     "g98": (
-        ("rotation-4-2", "clockwise", "quarter-turn clockwise"),
-        ("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
+        ("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
     ),
-    "g99": (("rotation-4-1", "counterclockwise", "quarter-turn counterclockwise"),),
-    "g133": (("rotation-4-2", "counterclockwise", "quarter-turn counterclockwise"),),
-    "g134": (("rotation-4-2", "counterclockwise", "quarter-turn counterclockwise"),),
-    "g137": (("rotation-4-1", "counterclockwise", "quarter-turn counterclockwise"),),
-    "g139": (("rotation-4-1", "counterclockwise", "quarter-turn counterclockwise"),),
-    "g226": (("rotation-3-1", "counterclockwise", "one-third turn counterclockwise"),),
-    "g227": (("rotation-3-1", "counterclockwise", "one-third turn counterclockwise"),),
-    "g244": (("rotation-6-2", "counterclockwise", "one-sixth turn counterclockwise"),),
-    "g245": (("rotation-3-1", "counterclockwise", "one-third turn counterclockwise"),),
+    "g99": (
+        ("rotation", "rotation-4-1", "direct", "counterclockwise", "¼ turn counterclockwise"),
+        ("rotation", "rotation-4-3", "inverse", "clockwise", "¼ turn clockwise"),
+    ),
+    "g129": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g130": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g131": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g133": (
+        ("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),
+        ("reflection", "plane-c", "direct", "", "colour reflection"),
+    ),
+    "g134": (("rotation", "rotation-4-2", "direct", "counterclockwise", "¼ turn counterclockwise"),),
+    "g135": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g136": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g137": (("rotation", "rotation-4-1", "direct", "counterclockwise", "¼ turn counterclockwise"),),
+    "g138": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g139": (("rotation", "rotation-4-1", "direct", "counterclockwise", "¼ turn counterclockwise"),),
+    "g225": (("rotation", "rotation-3-2", "inverse", "clockwise", "⅓ turn clockwise"),),
+    "g226": (("rotation", "rotation-3-1", "direct", "counterclockwise", "⅓ turn counterclockwise"),),
+    "g227": (
+        ("rotation", "rotation-3-1", "direct", "counterclockwise", "⅓ turn counterclockwise"),
+        ("rotation", "rotation-3-2", "inverse", "clockwise", "⅓ turn clockwise"),
+    ),
+    "g231": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g233": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g234": (("rotation", "rotation-3-1", "inverse", "counterclockwise", "⅓ turn counterclockwise"),),
+    "g244": (
+        ("rotation", "rotation-6-2", "direct", "counterclockwise", "⅙ turn counterclockwise"),
+        ("rotation", "rotation-3-2", "inverse", "clockwise", "⅓ turn clockwise"),
+    ),
+    "g245": (
+        ("rotation", "rotation-6-4", "inverse", "clockwise", "⅙ turn clockwise"),
+        ("rotation", "rotation-3-1", "direct", "counterclockwise", "⅓ turn counterclockwise"),
+    ),
     "g246": (
-        ("rotation-6-3", "counterclockwise", "one-sixth turn counterclockwise"),
-        ("rotation-2-1", "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
+        ("rotation", "rotation-6-3", "direct", "counterclockwise", "⅙ turn counterclockwise"),
+        ("rotation", "rotation-2-1", "direct", "counterclockwise", "½ turn counterclockwise"),
     ),
-    "g248": (("rotation-6-1", "counterclockwise", "one-sixth turn counterclockwise"),),
+    "g247": (("rotation", "rotation-6-5", "inverse", "clockwise", "⅙ turn clockwise"),),
+    "g248": (("rotation", "rotation-6-1", "direct", "counterclockwise", "⅙ turn counterclockwise"),),
+    "g269": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g270": (("reflection", "plane-c", "direct", "", "colour reflection"),),
+    "g271": (("reflection", "plane-c", "direct", "", "colour reflection"),),
 }
 SUPERSCRIPT_ASCII = str.maketrans("⁰¹²³⁴⁵⁶⁷⁸⁹", "0123456789")
 
@@ -408,10 +460,10 @@ class CorrespondenceParser(HTMLParser):
         self.colour_orders: list[
             tuple[str, dict[str, str | None], list[str]]
         ] = []
-        self.colour_order_rotations: list[
+        self.colour_order_actions: list[
             tuple[int | None, dict[str, str | None]]
         ] = []
-        self.colour_order_rotation_svgs: list[
+        self.colour_order_action_svgs: list[
             tuple[int | None, dict[str, str | None]]
         ] = []
         self.short_signature_links: list[dict[str, str | None]] = []
@@ -443,7 +495,7 @@ class CorrespondenceParser(HTMLParser):
         self._current_plate_generator = ""
         self._current_colour_order_index: int | None = None
         self._span_depth = 0
-        self._colour_order_rotation_span_depth: int | None = None
+        self._colour_order_action_span_depth: int | None = None
         self._current_other_names_id = ""
         self._inside_book_audit_row = False
         self._current_entry_heading_index: int | None = None
@@ -659,13 +711,13 @@ class CorrespondenceParser(HTMLParser):
                 placement = ""
             self.colour_orders.append((placement, attributes, []))
             self._current_colour_order_index = len(self.colour_orders) - 1
-        if tag == "span" and "colour-order-rotation" in classes:
-            self.colour_order_rotations.append(
+        if tag == "span" and "colour-order-action" in classes:
+            self.colour_order_actions.append(
                 (self._current_colour_order_index, attributes)
             )
-            self._colour_order_rotation_span_depth = self._span_depth
-        if tag == "svg" and self._colour_order_rotation_span_depth is not None:
-            self.colour_order_rotation_svgs.append(
+            self._colour_order_action_span_depth = self._span_depth
+        if tag == "svg" and self._colour_order_action_span_depth is not None:
+            self.colour_order_action_svgs.append(
                 (self._current_colour_order_index, attributes)
             )
         if tag == "a" and "short-signature-link" in classes:
@@ -745,8 +797,8 @@ class CorrespondenceParser(HTMLParser):
             self._current_plate_overlay = ""
             self._current_plate_generator = ""
         if tag == "span":
-            if self._span_depth == self._colour_order_rotation_span_depth:
-                self._colour_order_rotation_span_depth = None
+            if self._span_depth == self._colour_order_action_span_depth:
+                self._colour_order_action_span_depth = None
             self._span_depth -= 1
         if tag == "p" and self._current_colour_order_index is not None:
             self._current_colour_order_index = None
@@ -1398,7 +1450,6 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             group_id = group["id"]
             space_group = space_by_id[group_id]
             systems = [
-                "Catalog instance",
                 "Conway fibrifold notation",
                 "Hermann–Mauguin space-group symbol",
             ]
@@ -1415,6 +1466,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
             )
             if group["complementary_skip_mate"]:
                 systems.append("Complementary forward skips")
+            systems.append("Catalog instance")
             expected_name_systems.extend((group_id, system) for system in systems)
         self.assertEqual(len(expected_name_systems), 68 * 6 + 7 + 8)
         self.assertEqual(
@@ -1497,7 +1549,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(
             correspondence.CORRESPONDENCE_STYLE_SRC,
             "clockwork-coloring-correspondence.css?"
-            "v=mobile-visual-viewport-polar-direction-v1",
+            "v=compact-generator-actions-v1",
         )
         self.assertIn(
             f'href="{correspondence.CORRESPONDENCE_STYLE_SRC}"', self.page
@@ -1512,12 +1564,12 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(
             re.findall(r'data-name-system="([^"]+)"', section),
             [
-                "Catalog instance",
                 "Conway fibrifold notation",
                 "Hermann–Mauguin space-group symbol",
                 "International Tables number",
                 "Schoenflies space-group symbol",
                 "Hall setting symbol",
+                "Catalog instance",
             ],
         )
         expected_values = [
@@ -2179,7 +2231,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertIn("overflow-x: auto", css)
         self.assertIn(".directory-palette span", css)
         self.assertRegex(css, r"\.directory\s*\{[^}]*display: block;")
-        self.assertIn("?v=mobile-visual-viewport-polar-direction-v1", self.page)
+        self.assertIn("?v=compact-generator-actions-v1", self.page)
 
     def test_page_reflows_below_the_shared_320px_viewport_floor(self) -> None:
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
@@ -2214,7 +2266,7 @@ class ClockworkColoringCorrespondenceTests(unittest.TestCase):
         self.assertEqual(
             correspondence.CORRESPONDENCE_STYLE_SRC,
             "clockwork-coloring-correspondence.css?"
-            "v=mobile-visual-viewport-polar-direction-v1",
+            "v=compact-generator-actions-v1",
         )
         self.assertIn(
             f'href="{correspondence.CORRESPONDENCE_STYLE_SRC}"',
@@ -2457,7 +2509,7 @@ process.stdout.write(JSON.stringify({
         self.assertTrue(report["visualViewportPassive"])
         self.assertTrue(report["sharedResizeCallback"])
 
-        expected_version = "mobile-visual-viewport-polar-direction-v1"
+        expected_version = "compact-generator-actions-v1"
         self.assertEqual(
             correspondence.CORRESPONDENCE_STYLE_SRC,
             f"clockwork-coloring-correspondence.css?v={expected_version}",
@@ -2475,18 +2527,26 @@ process.stdout.write(JSON.stringify({
             self.page,
         )
 
-    def test_copy_uses_one_fixed_forward_clock(self) -> None:
+    def test_intro_is_one_concise_three_visualization_sentence(self) -> None:
+        intro = (
+            "Each group has three corresponding visualizations: a clockwork "
+            "animation, a static 2D colouring, and an interactive crystal model "
+            "in the associated polar space group."
+        )
+        self.assertEqual(self.page.count(intro), 1)
         self.assertIn(
-            "Colors follow one fixed clock: A = phase 0, B = phase 1/N, "
-            "C = phase 2/N, and so on.",
+            f'<p class="directory-viewer-note">{intro}</p>',
             self.page,
         )
-        self.assertIn(
-            "Every action is a forward time skip; none reverses time.",
-            self.page,
-        )
-        self.assertNotIn("cycles over", self.page)
-        self.assertNotIn("may be the inverse", self.page)
+        for retired_copy in (
+            "Colors follow one fixed clock",
+            "A = phase 0",
+            "Every action is a forward time skip",
+            "Raised numbers in the signature give colour-permutation orders",
+            "Every record now carries the same three-part visual trail",
+        ):
+            self.assertNotIn(retired_copy, self.page)
+        self.assertNotIn('class="directory-legend"', self.page)
         self.assertEqual(
             self.page.count('class="colour-order colour-order--presentation"'),
             len(self.page_groups),
@@ -2498,16 +2558,12 @@ process.stdout.write(JSON.stringify({
             "C<sub>N</sub> is a color/time cycle, not a spatial rotation,",
             self.page,
         )
-        self.assertNotIn(
-            "Spatial rotation angles are measured counterclockwise when the pattern",
-            self.page,
-        )
         self.assertEqual(
             self.page.count("fixed-clock powers and directed time shifts"),
             len(self.page_groups),
         )
 
-    def test_colour_legends_keep_the_palette_and_add_plate_only_forward_rotations(
+    def test_colour_legends_keep_the_palette_and_add_plate_only_forward_actions(
         self,
     ) -> None:
         expected_swatches = sum(
@@ -2528,7 +2584,13 @@ process.stdout.write(JSON.stringify({
         )
         self.assertEqual(
             self.page.count(
-                '<span class="colour-order-label" aria-hidden="true">order</span>'
+                '<span class="colour-order-label">order</span>'
+            ),
+            2 * len(self.page_groups),
+        )
+        self.assertEqual(
+            self.page.count(
+                '<span class="colour-order-palette" aria-hidden="true">'
             ),
             2 * len(self.page_groups),
         )
@@ -2546,26 +2608,38 @@ process.stdout.write(JSON.stringify({
             [placement for placement, _attributes, _text in self.parser.colour_orders],
             [placement for _group, placement in expected_order_sequence],
         )
-        rotations_by_order: defaultdict[
+        actions_by_order: defaultdict[
             int, list[dict[str, str | None]]
         ] = defaultdict(list)
-        for order_index, attributes in self.parser.colour_order_rotations:
+        for order_index, attributes in self.parser.colour_order_actions:
             self.assertIsNotNone(order_index)
-            rotations_by_order[order_index or 0].append(attributes)
+            actions_by_order[order_index or 0].append(attributes)
         svgs_by_order: defaultdict[
             int, list[dict[str, str | None]]
         ] = defaultdict(list)
-        for order_index, attributes in self.parser.colour_order_rotation_svgs:
+        for order_index, attributes in self.parser.colour_order_action_svgs:
             self.assertIsNotNone(order_index)
             svgs_by_order[order_index or 0].append(attributes)
 
-        expected_rotation_count = sum(
-            len(FORWARD_ROTATION_LEGEND_FIXTURE.get(group["id"], ()))
+        expected_action_count = sum(
+            len(FORWARD_COLOUR_ACTION_FIXTURE.get(group["id"], ()))
             for group in self.page_groups
         )
-        self.assertEqual(expected_rotation_count, 26)
-        self.assertEqual(len(self.parser.colour_order_rotations), 26)
-        self.assertEqual(len(self.parser.colour_order_rotation_svgs), 26)
+        self.assertEqual(expected_action_count, 62)
+        self.assertEqual(len(self.parser.colour_order_actions), 62)
+        self.assertEqual(len(self.parser.colour_order_action_svgs), 62)
+
+        accessible_turns = {
+            "½": "half-turn",
+            "⅓": "one-third turn",
+            "¼": "quarter-turn",
+            "⅙": "one-sixth turn",
+        }
+        plane_names = {
+            "plane-c": "c-glide-plane symbol",
+            "plane-n": "n-glide-plane symbol",
+            "plane-d": "d-glide-plane symbol",
+        }
 
         for order_index, (group, placement) in enumerate(expected_order_sequence):
             section_start = self.page.index(
@@ -2584,31 +2658,36 @@ process.stdout.write(JSON.stringify({
                 for residue in group["phase_residues"]
             ]
             palette_label = "Colour order: " + ", ".join(palette_names)
-            expected_rotations = (
-                FORWARD_ROTATION_LEGEND_FIXTURE.get(group["id"], ())
+            expected_actions = (
+                FORWARD_COLOUR_ACTION_FIXTURE.get(group["id"], ())
                 if placement == "plate"
                 else ()
             )
-            if expected_rotations:
-                rotation_pairs = []
-                for symbol, _direction, description in expected_rotations:
-                    _rotation, order, step = symbol.split("-")
-                    symbol_name = (
-                        f"{order}-fold rotation-axis symbol"
-                        if step == "0"
-                        else f"{order} subscript {step} screw-axis symbol"
+            if expected_actions:
+                accessible_pairs = []
+                for kind, symbol, _source, direction, description in expected_actions:
+                    if kind == "rotation":
+                        _rotation, order, step = symbol.split("-")
+                        symbol_name = f"{order} subscript {step} screw-axis symbol"
+                        accessible_description = (
+                            f"{accessible_turns[description[0]]} {direction}"
+                        )
+                    else:
+                        symbol_name = plane_names[symbol]
+                        accessible_description = description
+                    accessible_pairs.append(
+                        f"{symbol_name}, {accessible_description}"
                     )
-                    rotation_pairs.append(f"{symbol_name}, {description}")
                 prefix = (
-                    "Rotation advancing the displayed colour order by one step "
+                    "Symbol advancing the displayed colour order by one step "
                     "as polar height increases"
-                    if len(rotation_pairs) == 1
-                    else "Rotations each advancing the displayed colour order by "
+                    if len(accessible_pairs) == 1
+                    else "Symbols each advancing the displayed colour order by "
                     "one step as polar height increases"
                 )
                 expected_aria = (
                     f"{palette_label}. {prefix}: "
-                    + "; ".join(rotation_pairs)
+                    + "; ".join(accessible_pairs)
                     + "."
                 )
             else:
@@ -2616,35 +2695,80 @@ process.stdout.write(JSON.stringify({
             self.assertEqual(attributes.get("role"), "img")
             self.assertEqual(attributes.get("aria-label"), expected_aria)
 
-            actual_rotations = rotations_by_order[order_index]
+            actual_actions = actions_by_order[order_index]
             self.assertEqual(
                 [
                     (
-                        row.get("data-forward-rotation-symbol"),
-                        row.get("data-polar-turn-direction"),
-                        row.get("data-turn-description"),
+                        row.get("data-action-kind"),
+                        row.get("data-forward-symbol"),
+                        row.get("data-palette-step-source"),
+                        row.get("data-polar-turn-direction") or "",
+                        row.get("data-turn-description")
+                        or (
+                            "colour reflection"
+                            if row.get("data-forward-symbol") == "plane-c"
+                            else "colour glide reflection"
+                        ),
                     )
-                    for row in actual_rotations
+                    for row in actual_actions
                 ],
-                list(expected_rotations),
+                list(expected_actions),
                 f'{group["id"]}:{placement}',
             )
             self.assertEqual(
                 len(svgs_by_order[order_index]),
-                len(expected_rotations),
+                len(expected_actions),
                 f'{group["id"]}:{placement}',
             )
-            for svg, (symbol, _direction, _description) in zip(
-                svgs_by_order[order_index], expected_rotations, strict=True
+            for attributes, svg, expected_action in zip(
+                actual_actions,
+                svgs_by_order[order_index],
+                expected_actions,
+                strict=True,
             ):
+                kind, symbol, source, direction, description = expected_action
+                action_classes = set((attributes.get("class") or "").split())
+                self.assertEqual(
+                    action_classes,
+                    {"colour-order-action", f"colour-order-action--{kind}"},
+                )
+                self.assertEqual(attributes.get("data-forward-symbol"), symbol)
+                self.assertEqual(attributes.get("data-action-kind"), kind)
+                self.assertEqual(attributes.get("data-palette-step-source"), source)
                 self.assertEqual(svg.get("aria-hidden"), "true")
                 self.assertEqual(svg.get("focusable"), "false")
-                self.assertEqual(svg.get("viewbox"), "0 0 32 32")
-                self.assertIn(
-                    "colour-order-rotation-glyph",
-                    (svg.get("class") or "").split(),
+                svg_classes = set((svg.get("class") or "").split())
+                self.assertEqual(
+                    svg_classes,
+                    {
+                        "colour-order-action-glyph",
+                        f"colour-order-action-glyph--{kind}",
+                    },
                 )
-                self.assertEqual(svg.get("data-rotation-symbol"), symbol)
+                if kind == "rotation":
+                    self.assertEqual(svg.get("viewbox"), "0 0 32 32")
+                    self.assertEqual(svg.get("data-rotation-symbol"), symbol)
+                    self.assertEqual(
+                        attributes.get("data-forward-rotation-symbol"), symbol
+                    )
+                    self.assertEqual(
+                        attributes.get("data-polar-turn-direction"), direction
+                    )
+                    self.assertEqual(
+                        attributes.get("data-turn-description"), description
+                    )
+                    self.assertNotIn("data-forward-plane-symbol", attributes)
+                else:
+                    self.assertEqual(svg.get("viewbox"), "0 0 48 32")
+                    self.assertEqual(
+                        svg.get("data-plane-symbol"), symbol.removeprefix("plane-")
+                    )
+                    self.assertEqual(
+                        attributes.get("data-forward-plane-symbol"), symbol
+                    )
+                    self.assertNotIn("data-forward-rotation-symbol", attributes)
+                    self.assertNotIn("data-polar-turn-direction", attributes)
+                    self.assertNotIn("data-turn-description", attributes)
 
             visible_parts = [part.strip() for part in text_parts if part.strip()]
             self.assertEqual(
@@ -2653,14 +2777,17 @@ process.stdout.write(JSON.stringify({
                     "order",
                     *(
                         description
-                        for _symbol, _direction, description in expected_rotations
+                        for _kind, _symbol, _source, _direction, description
+                        in expected_actions
                     ),
                 ],
                 f'{group["id"]}:{placement}',
             )
             if placement == "presentation":
                 self.assertNotIn("<svg", expected_html, group["id"])
+                self.assertNotIn("data-forward-symbol", expected_html)
                 self.assertNotIn("data-forward-rotation-symbol", expected_html)
+                self.assertNotIn("data-forward-plane-symbol", expected_html)
                 self.assertNotIn("data-polar-turn-direction", expected_html)
 
         self.assertNotIn('class="colour-key"', self.page)
@@ -2672,121 +2799,152 @@ process.stdout.write(JSON.stringify({
         )
         self.assertIn(".colour-order--plate", css)
         self.assertIn(".colour-order--presentation", css)
+        self.assertIn(".colour-order-palette", css)
         self.assertIn(".colour-order-swatch", css)
-        self.assertIn(".colour-order-rotation", css)
-        self.assertIn(".colour-order-rotation-description", css)
+        self.assertIn(".colour-order-action", css)
+        self.assertIn(".colour-order-action-glyph--rotation", css)
+        self.assertIn(".colour-order-action-glyph--reflection", css)
+        self.assertIn(".colour-order-action-description", css)
+        self.assertNotIn(".colour-order-rotation", css)
         self.assertIn("border-radius: 2px", css)
         self.assertNotIn(".colour-key", css)
         self.assertNotIn(".presentation-colour {", css)
         self.assertNotIn(".presentation-colour i", css)
 
-    def test_forward_rotation_helpers_follow_increasing_polar_height(self) -> None:
-        cases = (
-            (2, 180, "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
-            (2, -180, "direction-neutral", HALF_TURN_POLAR_DESCRIPTION),
-            (3, 120, "counterclockwise", "one-third turn counterclockwise"),
-            (3, 240, "clockwise", "one-third turn clockwise"),
-            (4, 90, "counterclockwise", "quarter-turn counterclockwise"),
-            (4, 270, "clockwise", "quarter-turn clockwise"),
-            (6, 60, "counterclockwise", "one-sixth turn counterclockwise"),
-            (6, 300, "clockwise", "one-sixth turn clockwise"),
+        # Standard mobile widths keep the complete key on the palette line;
+        # only unusually narrow viewports may wrap whole, indivisible actions.
+        plate_rule = re.search(
+            r"(?ms)^\.colour-order--plate\s*\{(?P<declarations>.*?)^\}",
+            css,
         )
-        for order, angle, direction, description in cases:
-            with self.subTest(order=order, angle=angle):
+        self.assertIsNotNone(plate_rule)
+        self.assertIn("flex-wrap: nowrap;", plate_rule.group("declarations"))
+        action_rule = re.search(
+            r"(?ms)^\.colour-order-action\s*\{(?P<declarations>.*?)^\}",
+            css,
+        )
+        self.assertIsNotNone(action_rule)
+        action_declarations = action_rule.group("declarations")
+        self.assertIn("display: inline-flex;", action_declarations)
+        self.assertIn("flex: none;", action_declarations)
+        self.assertIn("white-space: nowrap;", action_declarations)
+        self.assertRegex(
+            css,
+            r"(?ms)@media \(max-width: 620px\).*?\.colour-order--plate\s*\{"
+            r"[^}]*font-size:\s*0\.6rem;",
+        )
+        self.assertRegex(
+            css,
+            r"(?ms)@media \(max-width: 410px\).*?\.colour-order--plate\s*\{"
+            r"[^}]*flex-wrap:\s*wrap;",
+        )
+
+    def test_screw_drill_direction_follows_increasing_polar_height(self) -> None:
+        cases = (
+            (2, 1, "counterclockwise"),
+            (3, 1, "counterclockwise"),
+            (3, 2, "clockwise"),
+            (4, 1, "counterclockwise"),
+            (4, 2, "counterclockwise"),
+            (4, 3, "clockwise"),
+            (6, 1, "counterclockwise"),
+            (6, 2, "counterclockwise"),
+            (6, 3, "counterclockwise"),
+            (6, 4, "clockwise"),
+            (6, 5, "clockwise"),
+        )
+        for order, screw_step, direction in cases:
+            with self.subTest(order=order, screw_step=screw_step):
                 self.assertEqual(
-                    correspondence._forward_rotation_direction(order, angle),
+                    correspondence._screw_drill_direction(order, screw_step),
                     direction,
                 )
-                self.assertEqual(
-                    correspondence._forward_rotation_turn_description(order, angle),
-                    description,
-                )
 
-    def test_forward_rotation_legend_uses_the_exact_palette_step_and_deduplicates(
+    def test_forward_action_legend_uses_direct_or_inverse_one_step_and_deduplicates(
         self,
     ) -> None:
-        def polar_direction(order: int, angle_degrees: float) -> str:
-            self.assertIn(order, {2, 3, 4, 6})
-            elementary = 360 / order
-            angle = angle_degrees % 360
-            if not (
-                math.isclose(angle, elementary, abs_tol=1e-7)
-                or math.isclose(angle, 360 - elementary, abs_tol=1e-7)
-            ):
-                self.fail(f"non-elementary {order}-fold turn: {angle_degrees}")
-            if order == 2:
-                return "direction-neutral"
-            if math.isclose(angle, elementary, abs_tol=1e-7):
-                return "counterclockwise"
-            return "clockwise"
-
-        def turn_description(
-            order: int,
-            direction: str,
-        ) -> str:
-            if order == 2:
-                return HALF_TURN_POLAR_DESCRIPTION
-            turn_name = {
-                3: "one-third turn",
-                4: "quarter-turn",
-                6: "one-sixth turn",
-            }[order]
-            return f"{turn_name} {direction}"
-
-        derived_fixture: dict[str, tuple[tuple[str, str, str], ...]] = {}
+        visible_turn = {2: "½ turn", 3: "⅓ turn", 4: "¼ turn", 6: "⅙ turn"}
+        derived_fixture: dict[
+            str, tuple[tuple[str, str, str, str, str], ...]
+        ] = {}
         item_census: Counter[int] = Counter()
         raw_match_counts: dict[str, int] = {}
         for group in self.page_groups:
-            presentation = group["chaim_presentation"]
-            forward_cycle = tuple(presentation["clock_cycle"]["permutation"])
             raw_matches = []
             semantic_items = []
-            seen_symbols: dict[str, tuple[str, str]] = {}
-            for generator in presentation["generators"]:
-                permutation_is_forward = (
-                    group["clock_order"] > 1
-                    and tuple(generator["colour_permutation"]) == forward_cycle
+            seen_symbols: dict[str, tuple[str, str, str, str]] = {}
+            for generator in group["chaim_presentation"]["generators"]:
+                if group["clock_order"] <= 1:
+                    expected_source = None
+                else:
+                    clock_power = generator["clock_power"] % group["clock_order"]
+                    if clock_power == 1:
+                        expected_source = "direct"
+                    elif clock_power == group["clock_order"] - 1:
+                        expected_source = "inverse"
+                    else:
+                        expected_source = None
+                self.assertEqual(
+                    correspondence._one_step_source(group, generator),
+                    expected_source,
+                    f'{group["id"]}:{generator["generator"]}',
                 )
-                if group["clock_order"] > 1:
-                    self.assertEqual(
-                        permutation_is_forward,
-                        generator["clock_power"] % group["clock_order"] == 1,
-                        f'{group["id"]}:{generator["generator"]}',
-                    )
-                if not (
-                    permutation_is_forward
-                    and generator["marker"]["kind"] == "rotation"
-                ):
+                if expected_source is None:
                     continue
                 raw_matches.append(generator)
-                order = generator["marker"]["order"]
-                angle = generator["plate_visualization"]["angle_degrees"]
-                direction = polar_direction(order, angle)
-                description = turn_description(order, direction)
-                symbol = correspondence._rotation_symbol_key(
-                    order,
-                    correspondence.Fraction(generator["time_shift"]),
-                    angle,
-                )
-                self.assertEqual(
-                    correspondence._forward_rotation_direction(order, angle),
-                    direction,
-                    f'{group["id"]}:{generator["generator"]}',
-                )
-                self.assertEqual(
-                    correspondence._forward_rotation_turn_description(order, angle),
-                    description,
-                    f'{group["id"]}:{generator["generator"]}',
-                )
+                kind = generator["marker"]["kind"]
+                if kind == "rotation":
+                    order = generator["marker"]["order"]
+                    angle = generator["plate_visualization"]["angle_degrees"]
+                    screw_step = correspondence._rotation_screw_step(
+                        order,
+                        correspondence.Fraction(generator["time_shift"]),
+                        angle,
+                    )
+                    symbol = f"rotation-{order}-{screw_step}"
+                    direction = (
+                        "counterclockwise"
+                        if screw_step <= order / 2
+                        else "clockwise"
+                    )
+                    description = f"{visible_turn[order]} {direction}"
+                    fixture_kind = "rotation"
+                elif kind in {"mirror", "glide"}:
+                    plane_symbol = correspondence._polar_plane_symbol(
+                        group["id"], generator
+                    )
+                    symbol = f"plane-{plane_symbol}"
+                    direction = ""
+                    description = (
+                        "colour reflection"
+                        if plane_symbol in {"m", "c"}
+                        else "colour glide reflection"
+                    )
+                    fixture_kind = "reflection"
+                else:
+                    continue
                 if symbol in seen_symbols:
                     self.assertEqual(
                         seen_symbols[symbol],
-                        (direction, description),
+                        (fixture_kind, expected_source, direction, description),
                         f'{group["id"]}:{symbol}',
                     )
                     continue
-                seen_symbols[symbol] = (direction, description)
-                semantic_items.append((symbol, direction, description))
+                seen_symbols[symbol] = (
+                    fixture_kind,
+                    expected_source,
+                    direction,
+                    description,
+                )
+                semantic_items.append(
+                    (
+                        fixture_kind,
+                        symbol,
+                        expected_source,
+                        direction,
+                        description,
+                    )
+                )
 
             raw_match_counts[group["id"]] = len(raw_matches)
             expected_items = tuple(semantic_items)
@@ -2794,12 +2952,14 @@ process.stdout.write(JSON.stringify({
                 derived_fixture[group["id"]] = expected_items
             item_census[len(expected_items)] += 1
 
-            rendered_items = correspondence._forward_rotation_legend_items(group)
+            rendered_items = correspondence._forward_colour_legend_items(group)
             self.assertLessEqual(len(rendered_items), 2, group["id"])
             self.assertEqual(
                 tuple(
                     (
+                        item["kind"],
                         item["symbol_key"],
+                        item["source"],
                         item["polar_direction"],
                         item["description"],
                     )
@@ -2812,114 +2972,152 @@ process.stdout.write(JSON.stringify({
                 self.assertEqual(
                     set(item),
                     {
+                        "kind",
                         "symbol_key",
+                        "source",
                         "polar_direction",
                         "description",
+                        "accessible_description",
                         "accessible_name",
                         "symbol_html",
                     },
                     group["id"],
                 )
-                _rotation, order, step = item["symbol_key"].split("-")
-                expected_name = (
-                    f"{order}-fold rotation-axis symbol"
-                    if step == "0"
-                    else f"{order} subscript {step} screw-axis symbol"
-                )
-                self.assertEqual(item["accessible_name"], expected_name)
                 self.assertEqual(item["symbol_html"].count("<svg"), 1)
-                self.assertIn(
-                    f'data-rotation-symbol="{item["symbol_key"]}"',
-                    item["symbol_html"],
-                )
+                if item["kind"] == "rotation":
+                    _rotation, order, step = item["symbol_key"].split("-")
+                    self.assertEqual(
+                        item["accessible_name"],
+                        f"{order} subscript {step} screw-axis symbol",
+                    )
+                    self.assertIn(
+                        f'data-rotation-symbol="{item["symbol_key"]}"',
+                        item["symbol_html"],
+                    )
+                else:
+                    plane = item["symbol_key"].removeprefix("plane-")
+                    self.assertIn(
+                        f'data-plane-symbol="{plane}"', item["symbol_html"]
+                    )
 
-        self.assertEqual(derived_fixture, FORWARD_ROTATION_LEGEND_FIXTURE)
-        self.assertEqual(item_census, Counter({0: 44, 1: 22, 2: 2}))
-        self.assertEqual(sum(size * count for size, count in item_census.items()), 26)
+        self.assertEqual(derived_fixture, FORWARD_COLOUR_ACTION_FIXTURE)
+        self.assertEqual(item_census, Counter({0: 18, 1: 38, 2: 12}))
+        self.assertEqual(sum(size * count for size, count in item_census.items()), 62)
+        self.assertEqual(
+            Counter(
+                kind
+                for items in derived_fixture.values()
+                for kind, _symbol, _source, _direction, _description in items
+            ),
+            Counter({"rotation": 34, "reflection": 28}),
+        )
+        self.assertEqual(
+            Counter(
+                source
+                for items in derived_fixture.values()
+                for _kind, _symbol, source, _direction, _description in items
+            ),
+            Counter({"direct": 54, "inverse": 8}),
+        )
         self.assertEqual(
             Counter(
                 direction
                 for items in derived_fixture.values()
-                for _symbol, direction, _description in items
+                for kind, _symbol, _source, direction, _description in items
+                if kind == "rotation"
             ),
-            Counter({"direction-neutral": 12, "counterclockwise": 11, "clockwise": 3}),
+            Counter({"counterclockwise": 27, "clockwise": 7}),
         )
 
         # Equivalent centres collapse to one symbol/action entry.
         self.assertEqual(raw_match_counts["g6"], 4)
         self.assertEqual(raw_match_counts["g226"], 3)
-        self.assertEqual(raw_match_counts["g95"], 2)
-        self.assertEqual(len(FORWARD_ROTATION_LEGEND_FIXTURE["g6"]), 1)
-        self.assertEqual(len(FORWARD_ROTATION_LEGEND_FIXTURE["g226"]), 1)
-        self.assertEqual(len(FORWARD_ROTATION_LEGEND_FIXTURE["g95"]), 1)
+        self.assertEqual(raw_match_counts["g55"], 4)
+        self.assertEqual(len(FORWARD_COLOUR_ACTION_FIXTURE["g6"]), 1)
+        self.assertEqual(len(FORWARD_COLOUR_ACTION_FIXTURE["g226"]), 1)
+        self.assertEqual(len(FORWARD_COLOUR_ACTION_FIXTURE["g55"]), 1)
 
-        # These cover each way an entry can correctly have no rotation legend:
-        # a trivial palette, a forward reflection, and non-forward rotations.
-        for group_id in ("g94", "g129", "g225", "g96"):
-            self.assertNotIn(group_id, FORWARD_ROTATION_LEGEND_FIXTURE)
+        # No named generator or inverse advances g235's six-colour palette once.
+        self.assertNotIn("g235", FORWARD_COLOUR_ACTION_FIXTURE)
+        self.assertEqual(raw_match_counts["g235"], 0)
 
-        for _group_id, items in FORWARD_ROTATION_LEGEND_FIXTURE.items():
-            for symbol, direction, description in items:
-                order = int(symbol.split("-")[1])
-                if order == 2:
-                    self.assertEqual(direction, "direction-neutral")
-                    self.assertEqual(description, HALF_TURN_POLAR_DESCRIPTION)
-                else:
-                    self.assertIn(direction, {"clockwise", "counterclockwise"})
-                    self.assertTrue(description.endswith(f" {direction}"))
-                if order == 3:
-                    self.assertTrue(description.startswith("one-third turn "))
-
-    def test_g226_forward_rotation_is_one_third_turn_counterclockwise(self) -> None:
-        group = next(group for group in self.page_groups if group["id"] == "g226")
-        presentation = group["chaim_presentation"]
-        forward_cycle = tuple(presentation["clock_cycle"]["permutation"])
-        qualifying = [
-            generator
-            for generator in presentation["generators"]
-            if generator["marker"]["kind"] == "rotation"
-            and tuple(generator["colour_permutation"]) == forward_cycle
-        ]
-        self.assertEqual([generator["generator"] for generator in qualifying], ["α", "β", "γ"])
+    def test_g225_uses_the_inverse_3_2_drill_to_advance_colours(self) -> None:
+        group = next(group for group in self.page_groups if group["id"] == "g225")
         self.assertEqual(
             [
-                (
-                    generator["plate_visualization"]["angle_degrees"],
-                    generator["time_shift"],
-                    generator["clock_power"],
-                )
-                for generator in qualifying
+                (generator["clock_power"], generator["time_shift"])
+                for generator in group["chaim_presentation"]["generators"]
             ],
-            [(120, "1/3", 1)] * 3,
+            [(2, "2/3")] * 3,
         )
         self.assertEqual(
-            FORWARD_ROTATION_LEGEND_FIXTURE["g226"],
+            FORWARD_COLOUR_ACTION_FIXTURE["g225"],
             (
                 (
-                    "rotation-3-1",
-                    "counterclockwise",
-                    "one-third turn counterclockwise",
+                    "rotation",
+                    "rotation-3-2",
+                    "inverse",
+                    "clockwise",
+                    "⅓ turn clockwise",
                 ),
             ),
         )
-
         section_start = self.page.index(
-            '<section class="correspondence-entry" id="g226"'
+            '<section class="correspondence-entry" id="g225"'
         )
         section_end = self.page.index("</section>", section_start)
         section = self.page[section_start:section_end]
         expected_aria = (
-            "Colour order: blue, orange, green. Rotation advancing the displayed "
-            "colour order by one step as polar height increases: 3 subscript 1 "
-            "screw-axis symbol, one-third turn counterclockwise."
+            "Colour order: blue, orange, green. Symbol advancing the displayed "
+            "colour order by one step as polar height increases: 3 subscript 2 "
+            "screw-axis symbol, one-third turn clockwise."
         )
         self.assertIn(f'role="img" aria-label="{expected_aria}"', section)
         self.assertIn(
-            'data-forward-rotation-symbol="rotation-3-1" '
-            'data-polar-turn-direction="counterclockwise" '
-            'data-turn-description="one-third turn counterclockwise"',
+            'data-forward-symbol="rotation-3-2" data-action-kind="rotation" '
+            'data-palette-step-source="inverse" '
+            'data-forward-rotation-symbol="rotation-3-2" '
+            'data-polar-turn-direction="clockwise" '
+            'data-turn-description="⅓ turn clockwise"',
             section,
         )
+
+    def test_g9_keys_both_colour_reflections_and_g235_stays_honest(self) -> None:
+        g9_start = self.page.index(
+            '<section class="correspondence-entry" id="g9"'
+        )
+        g9_end = self.page.index("</section>", g9_start)
+        g9 = self.page[g9_start:g9_end]
+        expected_g9_aria = (
+            "Colour order: blue, orange. Symbols each advancing the displayed "
+            "colour order by one step as polar height increases: c-glide-plane "
+            "symbol, colour reflection; n-glide-plane symbol, colour glide "
+            "reflection."
+        )
+        self.assertIn(f'role="img" aria-label="{expected_g9_aria}"', g9)
+        self.assertIn('data-forward-plane-symbol="plane-c"', g9)
+        self.assertIn('data-forward-plane-symbol="plane-n"', g9)
+        self.assertIn(">colour reflection</span>", g9)
+        self.assertIn(">colour glide reflection</span>", g9)
+
+        g235 = next(group for group in self.page_groups if group["id"] == "g235")
+        self.assertEqual(
+            [generator["clock_power"] for generator in g235["chaim_presentation"]["generators"]],
+            [4, 3],
+        )
+        self.assertEqual(correspondence._forward_colour_legend_items(g235), [])
+        g235_start = self.page.index(
+            '<section class="correspondence-entry" id="g235"'
+        )
+        g235_end = self.page.index("</section>", g235_start)
+        g235_section = self.page[g235_start:g235_end]
+        plate_caption_start = g235_section.index(
+            '<p class="colour-order colour-order--plate"'
+        )
+        plate_caption_end = g235_section.index("</p>", plate_caption_start)
+        plate_caption = g235_section[plate_caption_start:plate_caption_end]
+        self.assertNotIn("colour-order-action", plate_caption)
+        self.assertNotIn("advancing the displayed colour order", plate_caption)
 
     def test_turn_hover_uses_one_counterclockwise_face_order_convention(self) -> None:
         turn_generators = [
@@ -3183,46 +3381,21 @@ process.stdout.write(JSON.stringify({
         self.assertIn('href="#wallpaper-p1"', directory_html)
         self.assertIn('href="#wallpaper-pm"', directory_html)
         self.assertIn('href="#wallpaper-pg"', directory_html)
-        three_plus_groups = [
-            group for group in self.display_groups if group["clock_order"] >= 3
-        ]
-        self.assertIn(
-            f'<span class="census-number">{len(self.trivial_groups)}</span> '
+        self.assertNotIn('class="directory-census"', directory_html)
+        self.assertNotIn('class="census-number"', directory_html)
+        for retired_census_copy in (
             "trivial groups",
-            directory_html,
-        )
-        self.assertIn(
             "Time is an independent direct-product factor",
-            directory_html,
-        )
-        self.assertIn(
-            f'<span class="census-number">{len(self.display_groups)}</span> '
             "nontrivial groups",
-            directory_html,
-        )
-        self.assertIn(
-            f'<span class="census-number">{len(three_plus_groups)}</span> '
             "groups with 3 or more colours",
-            directory_html,
-        )
-        self.assertEqual(len(three_plus_groups), 15)
-        self.assertIn(
-            correspondence._order_census_html(three_plus_groups),
-            directory_html,
-        )
-        census_start = directory_html.index('class="directory-census"')
-        census_end = directory_html.index("</aside>", census_start)
-        self.assertNotIn("C<sub>2</sub>", directory_html[census_start:census_end])
+            "Some spatial symmetries advance time phase",
+        ):
+            self.assertNotIn(retired_census_copy, directory_html)
         css = (ROOT / "clockwork-coloring-correspondence.css").read_text(
             encoding="utf-8"
         )
-        self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr))", css)
-        self.assertRegex(
-            css,
-            r"@media \(max-width: 700px\)[\s\S]*?\.directory-census\s*\{"
-            r"[^}]*grid-template-columns: 1fr;",
-        )
-        self.assertIn("Raised numbers in the signature give colour-permutation orders", directory_html)
+        self.assertNotIn(".directory-census", css)
+        self.assertNotIn(".census-number", css)
         for group in self.page_groups:
             card_start = directory_html.index(f'data-directory-group="{group["id"]}"')
             card_end = directory_html.index("</a>", card_start)
