@@ -1,8 +1,19 @@
+# Repository status: superseded
+
+- Do not start new development work in this repository. All future Animated Groups
+  work is happening in the sibling `animated-groups-fable` repository, where the
+  necessary functionality has been ported.
+- If a request for Animated Groups work lands in this repository, stop and tell the
+  user to switch the workspace to `animated-groups-fable` rather than implementing
+  it here.
+- Only make changes in this repository when the user explicitly asks to modify this
+  legacy repository itself.
+
 # Workspace boundary
 
-- Keep all work for this repository inside `animated-groups`.
 - Do not inspect, edit, reset, clean, or run commands in the sibling
-  `animated-groups-fable` directory. That repository belongs to a separate agent.
+  `animated-groups-fable` directory from this workspace. Switch to that repository
+  first so its own instructions and working tree are in scope.
 - Only cross this boundary when the user explicitly overrides this instruction.
 
 # Deployment default
