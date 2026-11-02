@@ -921,7 +921,9 @@ class ColorPatternCatalogTests(unittest.TestCase):
         self.assertEqual(len(specs), 69)
         blank_path = "output/color-pattern-excerpts/tos-cg-p6-3-2.webp"
         source_pdf = ROOT / "Conway J., Goodman-Strauss C. (2008) The Symmetries of Things.pdf"
-        self.assertTrue(source_pdf.is_file())
+        if not source_pdf.is_file():
+            # The book is copyrighted: it is kept on disk beside the repo and never committed.
+            self.skipTest("needs The Symmetries of Things PDF, which is not in git")
 
         def outline_mask(rgb: Image.Image) -> Image.Image:
             red, green, blue = rgb.split()

@@ -3,3 +3,7 @@ __pycache__/
 .DS_Store
 .venv/
 tmp/
+
+# The Symmetries of Things (Conway, Burgiel, Goodman-Strauss) is a copyrighted book. The excerpt
+# scripts and one test read it from the repo root, so it stays on disk there, but it is never committed.
+*Symmetries of Things*.pdf
